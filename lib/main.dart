@@ -1,7 +1,9 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-import 'application/app.dart';
+// 🌎 Project imports:
+import 'package:enzitech_app/src/app_widget.dart';
 
 void main() {
-  runApp(const Application());
+  runApp(const AppWidget());
 }
