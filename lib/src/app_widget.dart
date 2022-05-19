@@ -1,5 +1,4 @@
 // 🐦 Flutter imports:
-import 'package:enzitech_app/src/shared/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -29,7 +28,7 @@ class AppWidget extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: AppColors.materialTheme,
         ),
-        initialRoute: '/auth',
+        initialRoute: RouteGenerator.initial,
         onGenerateRoute: RouteGenerator.generateRoute,
       ),
     );

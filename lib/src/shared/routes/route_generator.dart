@@ -37,9 +37,9 @@ class RouteGenerator {
       builder: (_) {
         return Scaffold(
           appBar: AppBar(
-            title: Text('Não encontrado'),
+            title: const Text('Não encontrado'),
           ),
-          body: Center(
+          body: const Center(
             child: Text('ERRO 404'),
           ),
         );
