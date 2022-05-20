@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
+import 'package:enzitech_app/src/shared/themes/app_text_styles.dart';
 import '../auth_controller.dart';
 
 class AuthButton extends StatelessWidget {
@@ -14,13 +15,22 @@ class AuthButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = context.watch<AuthController>();
 
-    return ElevatedButton(
-      onPressed: controller.state == AuthState.loading
-          ? null
-          : () {
-              controller.loginAction();
-            },
-      child: const Text('Login'),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        ElevatedButton(
+          style: ButtonStyle(
+            padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                const EdgeInsets.symmetric(vertical: 16)),
+          ),
+          onPressed: controller.state == AuthState.loading
+              ? null
+              : () {
+                  controller.loginAction();
+                },
+          child: Text('Entrar', style: TextStyles.buttonPrimary),
+        ),
+      ],
     );
   }
 }

@@ -8,10 +8,36 @@ import 'package:google_fonts/google_fonts.dart';
 import 'app_colors.dart';
 
 class TextStyles {
+  //* Revisado
   static final titleHome = GoogleFonts.ubuntu(
-    fontSize: 32,
+    fontSize: 30,
     fontWeight: FontWeight.w600,
     color: AppColors.heading,
+  );
+
+  //* Revisado
+  static final titleHomeRegular = GoogleFonts.ubuntu(
+    fontSize: 30,
+    color: AppColors.heading,
+  );
+
+  //* Revisado
+  static final detailRegular = GoogleFonts.ubuntu(
+    fontSize: 14,
+    color: AppColors.heading,
+  );
+
+  //* Revisado
+  static final link = GoogleFonts.ubuntu(
+    fontSize: 14,
+    fontWeight: FontWeight.bold,
+    color: AppColors.primary,
+  );
+
+  static final buttonPrimary = GoogleFonts.ubuntu(
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+    color: AppColors.background,
   );
 
   static final bodyMinRegular = GoogleFonts.ubuntu(
@@ -81,7 +107,7 @@ class TextStyles {
     fontWeight: FontWeight.w600,
     color: AppColors.heading,
   );
-  static final buttonPrimary = GoogleFonts.ubuntu(
+  static final xbuttonPrimary = GoogleFonts.ubuntu(
     fontSize: 15,
     fontWeight: FontWeight.w400,
     color: AppColors.primary,

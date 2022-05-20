@@ -1,8 +1,12 @@
 // 🐦 Flutter imports:
+import 'package:flutter/material.dart';
+
+// 📦 Package imports:
+import 'package:flutter_svg/flutter_svg.dart';
+
+// 🌎 Project imports:
 import 'package:enzitech_app/src/shared/routes/route_generator.dart';
 import 'package:enzitech_app/src/shared/themes/app_colors.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
