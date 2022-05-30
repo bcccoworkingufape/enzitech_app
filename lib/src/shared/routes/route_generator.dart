@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/auth/auth_page.dart';
+import 'package:enzitech_app/src/features/create_account/create_account_page.dart';
 import 'package:enzitech_app/src/features/home/home_page.dart';
 import 'package:enzitech_app/src/features/splash/splash_page.dart';
 
@@ -10,6 +11,7 @@ class RouteGenerator {
   static const initial = "/";
   static const auth = "/auth";
   static const home = "/home";
+  static const createAccount = "/createAccount";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     // ignore: unused_local_variable
@@ -22,6 +24,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const AuthPage());
       case home:
         return MaterialPageRoute(builder: (_) => const HomePage());
+      case createAccount:
+        return MaterialPageRoute(builder: (_) => const CreateAccountPage());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

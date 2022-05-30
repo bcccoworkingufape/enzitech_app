@@ -33,7 +33,7 @@ class AuthController extends ChangeNotifier {
       var authService = AuthService(client);
 
       var credential = AuthRequestModel.fromMap({
-        'email': 'armsa@email.com.br',
+        'email': 'arms@email.com.br',
         'password': '123',
       });
 

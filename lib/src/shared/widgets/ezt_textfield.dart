@@ -19,7 +19,7 @@ enum EZTTextFieldType {
   rounded,
 }
 
-class EZTTextFieldWidget extends StatefulWidget {
+class EZTTextField extends StatefulWidget {
   final FieldValidator? fieldValidator;
   final FocusNode? focusNode;
   final EZTTextFieldType eztTextFieldType;
@@ -57,7 +57,7 @@ class EZTTextFieldWidget extends StatefulWidget {
   final bool showSuffixValidationIcon;
   final bool readOnly;
 
-  const EZTTextFieldWidget({
+  const EZTTextField({
     Key? key,
     required this.eztTextFieldType,
     this.wdKey,
@@ -98,10 +98,10 @@ class EZTTextFieldWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<EZTTextFieldWidget> createState() => _EZTTextFieldWidgetState();
+  State<EZTTextField> createState() => _EZTTextFieldState();
 }
 
-class _EZTTextFieldWidgetState extends State<EZTTextFieldWidget> {
+class _EZTTextFieldState extends State<EZTTextField> {
   bool _passwordVisibile = false;
   bool? _validationSuccess;
 
@@ -192,7 +192,7 @@ class _EZTTextFieldWidgetState extends State<EZTTextFieldWidget> {
           color: AppColors.delete,
         ),
       ),
-      contentPadding: const EdgeInsets.only(bottom: 2, top: 15),
+      contentPadding: const EdgeInsets.only(bottom: 5, top: 15),
       suffixIcon: _validationSuffixIcon,
     );
   }
@@ -232,7 +232,7 @@ class _EZTTextFieldWidgetState extends State<EZTTextFieldWidget> {
       errorBorder: inputBorder,
       border: inputBorder,
       labelStyle: null,
-      contentPadding: const EdgeInsets.only(bottom: 2, top: 12),
+      contentPadding: const EdgeInsets.only(bottom: 5, top: 12),
       suffixIcon: _validationSuffixIcon,
     );
   }

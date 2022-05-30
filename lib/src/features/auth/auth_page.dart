@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:enzitech_app/src/features/auth/auth_controller.dart';
 import 'package:enzitech_app/src/shared/routes/route_generator.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
-import 'package:enzitech_app/src/shared/widgets/ezt_textfield_widget.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_textfield.dart';
 import '../../shared/failures/failures.dart';
 import 'components/auth_button.dart';
 
@@ -48,16 +48,10 @@ class AuthPageState extends State<AuthPage> {
     }
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    controller.dispose();
-  }
-
   Widget get _textFields {
     return Column(
       children: [
-        EZTTextFieldWidget(
+        EZTTextField(
           eztTextFieldType: EZTTextFieldType.underline,
           labelText: "Usuário",
           usePrimaryColorOnFocusedBorder: true,
@@ -66,7 +60,7 @@ class AuthPageState extends State<AuthPage> {
           onChanged: (value) => print(value),
         ),
         const SizedBox(height: 10),
-        EZTTextFieldWidget(
+        EZTTextField(
           eztTextFieldType: EZTTextFieldType.underline,
           labelText: "Senha",
           usePrimaryColorOnFocusedBorder: true,
@@ -129,7 +123,8 @@ class AuthPageState extends State<AuthPage> {
                           style: TextStyles.link,
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
-                              print("Navegar para tela de criação de conta");
+                              Navigator.of(context)
+                                  .pushNamed(RouteGenerator.createAccount);
                             },
                         ),
                       ],

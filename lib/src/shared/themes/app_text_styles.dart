@@ -8,23 +8,54 @@ import 'package:google_fonts/google_fonts.dart';
 import 'app_colors.dart';
 
 class TextStyles {
-  //* Revisado
+  /// `fontSize:` 30,
+  ///
+  /// `fontWeight:` FontWeight.w600,
+  ///
+  /// `color:`
+  ///
+  /// ![585666](https://www.colorhexa.com/585666.png)
   static final titleHome = GoogleFonts.ubuntu(
     fontSize: 30,
     fontWeight: FontWeight.w600,
     color: AppColors.heading,
   );
 
-  //* Revisado
+  /// `fontSize:` 30,
+  ///
+  /// `fontWeight:` FontWeight.normal,
+  ///
+  /// `color:`
+  ///
+  /// ![585666](https://www.colorhexa.com/585666.png)
   static final titleHomeRegular = GoogleFonts.ubuntu(
     fontSize: 30,
     color: AppColors.heading,
   );
 
-  //* Revisado
+  /// `fontSize:` 14,
+  ///
+  /// `fontWeight:` FontWeight.normal,
+  ///
+  /// `color:`
+  ///
+  /// ![585666](https://www.colorhexa.com/585666.png)
   static final detailRegular = GoogleFonts.ubuntu(
     fontSize: 14,
     color: AppColors.heading,
+  );
+
+  /// `fontSize:` 14,
+  ///
+  /// `fontWeight:` FontWeight.w700,
+  ///
+  /// `color:`
+  ///
+  /// ![544F4F](https://www.colorhexa.com/544F4F.png)
+  static final detailBold = GoogleFonts.ubuntu(
+    fontSize: 14,
+    fontWeight: FontWeight.w700,
+    color: AppColors.greyLight,
   );
 
   //* Revisado
@@ -35,6 +66,12 @@ class TextStyles {
   );
 
   static final buttonPrimary = GoogleFonts.ubuntu(
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+    color: AppColors.primary,
+  );
+
+  static final buttonBackground = GoogleFonts.ubuntu(
     fontSize: 16,
     fontWeight: FontWeight.w500,
     color: AppColors.background,
@@ -87,6 +124,12 @@ class TextStyles {
     fontWeight: FontWeight.w600,
     color: AppColors.heading,
   );
+
+  /// `fontSize:` 20,
+  ///
+  /// `fontWeight:` FontWeight.w600,
+  ///
+  /// `color:` AppColors.background,
   static final titleBoldBackground = GoogleFonts.ubuntu(
     fontSize: 20,
     fontWeight: FontWeight.w600,
@@ -122,11 +165,7 @@ class TextStyles {
     fontWeight: FontWeight.w400,
     color: AppColors.grey,
   );
-  static final buttonBackground = GoogleFonts.ubuntu(
-    fontSize: 15,
-    fontWeight: FontWeight.w400,
-    color: AppColors.background,
-  );
+
   static final buttonBoldPrimary = GoogleFonts.ubuntu(
     fontSize: 15,
     fontWeight: FontWeight.w700,

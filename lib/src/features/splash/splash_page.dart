@@ -24,7 +24,7 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   _checkAuth() async {
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 1));
     if (!mounted) return;
     Future.delayed(Duration.zero).then((_) {
       Navigator.pushReplacementNamed(context, RouteGenerator.auth);
