@@ -18,10 +18,10 @@ class AuthController extends ChangeNotifier {
 
   var authRequest = AuthRequestModel('', '');
 
-  String? _user;
-  String? get user => _user;
-  void setUser(String user) {
-    _user = user;
+  String? _email;
+  String? get email => _email;
+  void setEmail(String email) {
+    _email = email;
   }
 
   String? _password;
@@ -39,12 +39,11 @@ class AuthController extends ChangeNotifier {
   Future<void> loginAction() async {
     state = AuthState.loading;
     notifyListeners();
-    // await Future.delayed(const Duration(seconds: 2));
     try {
       var authService = AuthService(client);
 
       var credential = AuthRequestModel.fromMap({
-        'email': _user!.trim(),
+        'email': _email!.trim(),
         'password': _password!.trim(),
       });
 

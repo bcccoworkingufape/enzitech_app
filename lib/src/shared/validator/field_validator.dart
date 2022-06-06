@@ -72,7 +72,8 @@ class FieldValidator {
           {
             var isStrong = Validator.isStrongPassword(value);
             if (!isStrong) {
-              result = customErrorMessage ?? "TODO: MUDAR";
+              result = customErrorMessage ??
+                  "⚠  Senha não atende ao padrão informado.";
             } else {
               result = null;
             }
@@ -178,7 +179,7 @@ class FieldValidator {
           {
             var emailValid = Validator.email(value.toString());
             if (!emailValid) {
-              result = customErrorMessage ?? "TODO: MUDAR";
+              result = customErrorMessage ?? "⚠  E-mail inválido";
             } else {
               result = null;
             }
