@@ -243,7 +243,7 @@ class _EZTButtonState extends State<EZTButton> {
 
   Color _buildButtonColor(context) {
     if (!widget.enabled) {
-      return widget.disabledButtonColor ?? Theme.of(context).disabledColor;
+      return widget.disabledButtonColor ?? AppColors.materialTheme.shade50;
     }
 
     if (widget.color != null) {

@@ -8,6 +8,7 @@ import 'package:enzitech_app/src/shared/models/user_model.dart';
 
 abstract class IAuthService {
   Future<UserModel> auth(AuthRequestModel credential);
+  Future<void> recoverPassword(String email);
 }
 
 class AuthService implements IAuthService {
@@ -24,6 +25,20 @@ class AuthService implements IAuthService {
       );
 
       return UserModel.fromMap(jsonDecode(res.data));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> recoverPassword(String email) async {
+    try {
+      await client.post(
+        "/auth/send-recover-email",
+        data: {
+          "email": email,
+        },
+      );
     } catch (e) {
       rethrow;
     }

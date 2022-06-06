@@ -45,6 +45,18 @@ class TextStyles {
     color: AppColors.heading,
   );
 
+  /// `fontSize:` 20,
+  ///
+  /// `fontWeight:` FontWeight.normal,
+  ///
+  /// `color:`
+  ///
+  /// ![585666](https://www.colorhexa.com/585666.png)
+  static final informationRegular = GoogleFonts.ubuntu(
+    fontSize: 20,
+    color: AppColors.heading,
+  );
+
   /// `fontSize:` 14,
   ///
   /// `fontWeight:` FontWeight.w700,
