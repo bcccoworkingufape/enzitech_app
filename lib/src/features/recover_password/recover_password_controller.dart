@@ -6,14 +6,14 @@ import 'package:enzitech_app/src/shared/external/http_driver/dio_client.dart';
 import 'package:enzitech_app/src/shared/failures/failures.dart';
 import 'package:enzitech_app/src/shared/services/auth_service.dart';
 
-enum AuthState { idle, success, error, loading }
+enum RecoverPasswordState { idle, success, error, loading }
 
 class RecoverPasswordController extends ChangeNotifier {
   final DioClient client;
 
   RecoverPasswordController(this.client);
 
-  var state = AuthState.idle;
+  var state = RecoverPasswordState.idle;
 
   String? _email;
   String? get email => _email;
@@ -27,22 +27,22 @@ class RecoverPasswordController extends ChangeNotifier {
     _failure = failure;
   }
 
-  Future<void> recoverPassword(String email) async {
-    state = AuthState.loading;
+  Future<void> recoverPassword() async {
+    state = RecoverPasswordState.loading;
     notifyListeners();
     try {
       var authService = AuthService(client);
 
-      await authService.recoverPassword(email);
+      await authService.recoverPassword(email!);
 
       notifyListeners();
     } on Failure catch (failure) {
       _setFailure(ServerFailure(message: failure.message));
-      state = AuthState.error;
+      state = RecoverPasswordState.error;
       notifyListeners();
     } catch (e) {
       _setFailure(UnknownError());
-      state = AuthState.error;
+      state = RecoverPasswordState.error;
       notifyListeners();
     }
   }

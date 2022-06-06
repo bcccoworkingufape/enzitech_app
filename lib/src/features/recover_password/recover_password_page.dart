@@ -1,4 +1,5 @@
 // 🐦 Flutter imports:
+import 'package:enzitech_app/src/features/recover_password/recover_password_controller.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -21,15 +22,16 @@ class RecoverPasswordPage extends StatefulWidget {
 }
 
 class RecoverPasswordPageState extends State<RecoverPasswordPage> {
-  late final AuthController controller;
+  late final RecoverPasswordController controller;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _emailFieldController = TextEditingController(text: '');
   var buttonEnabled = false;
+  var enableTextField = true;
 
   @override
   void initState() {
     super.initState();
-    controller = context.read<AuthController>();
+    controller = context.read<RecoverPasswordController>();
 
     if (_formKey.currentState != null) {
       buttonEnabled = _formKey.currentState!.validate();
@@ -37,7 +39,7 @@ class RecoverPasswordPageState extends State<RecoverPasswordPage> {
 
     if (mounted) {
       controller.addListener(() {
-        if (controller.state == AuthState.error) {
+        if (controller.state == RecoverPasswordState.error) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(controller.failure!.message),
@@ -68,6 +70,7 @@ class RecoverPasswordPageState extends State<RecoverPasswordPage> {
       usePrimaryColorOnFocusedBorder: true,
       keyboardType: TextInputType.emailAddress,
       controller: _emailFieldController,
+      enabled: enableTextField,
       onChanged: (value) async {
         controller.setEmail(value);
         buttonEnabled = _formKey.currentState!.validate();
@@ -85,7 +88,19 @@ class RecoverPasswordPageState extends State<RecoverPasswordPage> {
         EZTButton(
           text: 'Solicitar alteração',
           onPressed: () {
-            Navigator.pop(context);
+            controller.recoverPassword().whenComplete(() async {
+              setState(
+                () {
+                  buttonEnabled = false;
+                  enableTextField = false;
+                },
+              );
+              setState(
+                () {
+                  _emailFieldController.text = 'Enviado, confira seu e-mail';
+                },
+              );
+            });
           },
           enabled: buttonEnabled,
         ),
