@@ -37,10 +37,6 @@ typedef CustomerId = String Function();
 typedef BaseUrl = String Function();
 typedef CallbackType<T> = T Function();
 
-// enum Method { POST, GET, PUT, DELETE, PATCH }
-
-// const BASE_URL = "https://fakestoreapi.com/";
-
 class DioClient {
   Dio dio = Dio();
 

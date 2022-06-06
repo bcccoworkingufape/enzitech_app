@@ -12,8 +12,9 @@ class AppColors {
   static const danger = Color(0xFFFF3B2D);
   static const warning = Color(0xFFE8D910);
   static const lines = Color(0xFFCCCCCC);
-  static const greyLight = Color(0xFF544F4F);
   static const grey = Color(0xFF585666);
+  static const greyDark = Color(0xFF3a3a3b);
+  static const greyLight = Color(0xFF544F4F);
   static const delete = Color(0xFFE83F5B);
   static const heading = Color(0xFF585666);
   static const body = Color(0xFF706E7A);

@@ -24,7 +24,7 @@ class AuthPage extends StatefulWidget {
 class AuthPageState extends State<AuthPage> {
   late final AuthController controller;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final _userFieldController = TextEditingController(text: '');
+  final _emailFieldController = TextEditingController(text: '');
   final _passwordFieldController = TextEditingController(text: '');
 
   @override
@@ -77,7 +77,7 @@ class AuthPageState extends State<AuthPage> {
       labelText: "E-mail",
       usePrimaryColorOnFocusedBorder: true,
       keyboardType: TextInputType.emailAddress,
-      controller: _userFieldController,
+      controller: _emailFieldController,
       onChanged: (value) => controller.setEmail(value),
       fieldValidator: fieldValidator,
     );
@@ -148,7 +148,7 @@ class AuthPageState extends State<AuthPage> {
                       onTap: () {
                         Navigator.pushNamed(
                           context,
-                          RouteGenerator.createAccount,
+                          RouteGenerator.recoverPassword,
                         );
                       },
                       child: Text(
