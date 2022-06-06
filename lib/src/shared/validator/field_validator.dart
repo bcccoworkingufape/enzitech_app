@@ -62,7 +62,7 @@ class FieldValidator {
         case ValidateTypes.required:
           {
             if (value == null || value.toString().trim().isEmpty) {
-              result = customErrorMessage ?? "TODO: MUDAR";
+              result = customErrorMessage ?? "⚠  Campo obrigatório";
             } else {
               result = null;
             }
@@ -187,7 +187,7 @@ class FieldValidator {
         case ValidateTypes.cpf:
           {
             if (!CPFValidator.isValid(value.toString())) {
-              result = customErrorMessage ?? "TODO: MUDAR";
+              result = customErrorMessage ?? "Insira um CPF válido";
             } else {
               result = null;
             }
@@ -309,45 +309,6 @@ class FieldValidator {
             }
             break;
           }
-        // case ValidateTypes.creditCardNumber:
-        //   {
-        //     var _creditCardValidator = CreditCardValidator();
-
-        //     var _creditCardNumberResults =
-        //         _creditCardValidator.validateCCNum(value);
-
-        //     if (_creditCardNumberResults.isValid) return result = null;
-        //     return result =
-        //         customErrorMessage ?? "TODO: MUDAR";
-        //   }
-
-        // case ValidateTypes.creditCardDueDate:
-        //   {
-        //     var _creditCardValidator = CreditCardValidator();
-
-        //     var _creditCardNumberResults =
-        //         _creditCardValidator.validateExpDate(value);
-
-        //     if (_creditCardNumberResults.isValid) return result = null;
-        //     return result =
-        //         customErrorMessage ?? Tr.of("error.invalidCreditCardExpDate");
-        //   }
-        // case ValidateTypes.creditCardSecurityCode:
-        //   {
-        //     var _creditCardValidator = CreditCardValidator();
-
-        //     var _creditCardNumberResults =
-        //         _creditCardValidator.validateCCNum(value);
-
-        //     var _creditCardCVVResults = _creditCardValidator.validateCVV(
-        //       value,
-        //       _creditCardNumberResults.ccType,
-        //     );
-
-        //     if (_creditCardCVVResults.isValid) return result = null;
-        //     return result = customErrorMessage ??
-        //         Tr.of("error.invalidCreditCardSecurityCode");
-        //   }
         default:
           {
             result = null;

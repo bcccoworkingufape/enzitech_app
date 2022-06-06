@@ -9,7 +9,8 @@ import 'package:enzitech_app/src/shared/widgets/ezt_button.dart';
 import '../auth_controller.dart';
 
 class AuthButton extends StatelessWidget {
-  const AuthButton({Key? key}) : super(key: key);
+  final GlobalKey<FormState> formKey;
+  const AuthButton({Key? key, required this.formKey}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,9 @@ class AuthButton extends StatelessWidget {
       onPressed: controller.state == AuthState.loading
           ? null
           : () {
-              controller.loginAction();
+              if (formKey.currentState!.validate()) {
+                controller.loginAction();
+              }
             },
     );
   }

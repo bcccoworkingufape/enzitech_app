@@ -19,7 +19,7 @@ class AuthService implements IAuthService {
   Future<UserModel> auth(AuthRequestModel credential) async {
     try {
       var res = await client.post(
-        "http://localhost:8080/auth",
+        "/auth/login",
         data: credential.toJson(),
       );
 
