@@ -18,41 +18,48 @@ class AuthController extends ChangeNotifier {
 
   var authRequest = AuthRequestModel('', '');
 
+  String? _user;
+  String? get user => _user;
+  void setUser(String user) {
+    _user = user;
+  }
+
+  String? _password;
+  String? get password => _password;
+  void setPassword(String password) {
+    _password = password;
+  }
+
   Failure? _failure;
   Failure? get failure => _failure;
   void _setFailure(Failure failure) {
     _failure = failure;
-    notifyListeners();
   }
 
   Future<void> loginAction() async {
     state = AuthState.loading;
     notifyListeners();
-    await Future.delayed(const Duration(seconds: 2));
+    // await Future.delayed(const Duration(seconds: 2));
     try {
       var authService = AuthService(client);
 
       var credential = AuthRequestModel.fromMap({
-        'email': 'arms@email.com.br',
-        'password': '123',
+        'email': _user!.trim(),
+        'password': _password!.trim(),
       });
 
       final response = await authService.auth(credential);
 
-      // final response2 = await client.get(
-      //   'https://fakestoreapi.com/products/',
-      // );
-
-      // store the response
+      // TODO: Store the response
 
       state = AuthState.success;
       notifyListeners();
-    } on ForbiddenFailure {
-      _setFailure(ForbiddenFailure(message: "Acesso não autorizado."));
-
+    } on Failure catch (failure) {
+      _setFailure(ServerFailure(message: failure.message));
       state = AuthState.error;
       notifyListeners();
     } catch (e) {
+      _setFailure(UnknownError());
       state = AuthState.error;
       notifyListeners();
     }

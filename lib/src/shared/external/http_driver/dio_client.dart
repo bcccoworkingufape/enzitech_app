@@ -21,15 +21,11 @@ class HttpDriverOptions {
   final AccessToken accessToken;
   final BaseUrl baseUrl;
   final String accessTokenType;
-  final String tenantId;
-  final String channelId;
   final String apiKey;
 
   HttpDriverOptions({
     required this.accessToken,
     required this.baseUrl,
-    required this.tenantId,
-    required this.channelId,
     required this.apiKey,
     this.accessTokenType = "Bearer",
   });
@@ -48,18 +44,24 @@ typedef CallbackType<T> = T Function();
 class DioClient {
   Dio dio = Dio();
 
-  // static header() => {"Content-Type": "application/json"};
+  final HttpDriverOptions httpDriverOptions;
 
-  // var logger = Logger();
+  DioClient(
+    this.httpDriverOptions,
+  ) {
+    _setConfig();
+  }
 
-  /* Future<DioClient> init() async {
-    dio = Dio(BaseOptions(baseUrl: BASE_URL, headers: header()));
-    initInterceptors();
-    return this;
-  } */
-
-  void initInterceptors() {
-    dio.interceptors.add(
+  void _setConfig() {
+    dio.options.baseUrl = httpDriverOptions.baseUrl();
+    dio.options.headers.addAll(
+      {
+        'content-type': "application/json; charset=utf-8",
+        'x-api-key':
+            '${httpDriverOptions.accessTokenType} ${httpDriverOptions.apiKey}',
+      },
+    );
+    dio.interceptors.addAll([
       PrettyDioLogger(
         requestHeader: true,
         requestBody: true,
@@ -69,72 +71,8 @@ class DioClient {
         compact: true,
         maxWidth: 90,
       ),
-    );
-    // dio.interceptors.add(
-    //   InterceptorsWrapper(
-    //     onRequest: (requestOptions, handler) {
-    //       // logger.i(
-    //       //     "REQUEST[${requestOptions.method}] => PATH: ${requestOptions.path}"
-    //       //     "=> REQUEST VALUES: ${requestOptions.queryParameters} => HEADERS: ${requestOptions.headers}");
-    //       return handler.next(requestOptions);
-    //     },
-    //     onResponse: (response, handler) {
-    //       // logger
-    //       //     .i("RESPONSE[${response.statusCode}] => DATA: ${response.data}");
-    //       return handler.next(response);
-    //     },
-    //     onError: (err, handler) {
-    //       // logger.i("Error[${err.response?.statusCode}]");
-    //       return handler.next(err);
-    //     },
-    //   ),
-    // );
+    ]);
   }
-
-  /*Future<dynamic> request(
-      {required String url,
-      required Method method,
-      Map<String, dynamic>? params}) async {
-    dio = Dio(BaseOptions(baseUrl: BASE_URL, headers: header()));
-    init();
-    Response response;
-
-    try {
-      if (method == Method.POST) {
-        response = await dio.post(url, data: params);
-      } else if (method == Method.DELETE) {
-        response = await dio.delete(url);
-      } else if (method == Method.PATCH) {
-        response = await dio.patch(url);
-      } else {
-        response = await dio.get(url, queryParameters: params);
-      }
-
-      if (response.statusCode == 200) {
-        return response;
-      } else if (response.statusCode == 401) {
-        throw Exception("Unauthorized");
-      } else if (response.statusCode == 403) {
-        throw Exception("Forbidden");
-      } else if (response.statusCode == 500) {
-        throw Exception("Server Error");
-      } else {
-        throw Exception("Something does wen't wrong");
-      }
-    } on SocketException catch (e) {
-      // logger.e(e);
-      throw Exception("Not Internet Connection");
-    } on FormatException catch (e) {
-      // logger.e(e);
-      throw Exception("Bad response format");
-    } on DioError catch (e) {
-      // logger.e(e);
-      throw Exception(e);
-    } catch (e) {
-      // logger.e(e);
-      throw Exception("Something wen't wrong");
-    }
-  } */
 
   Future<HttpDriverResponse> interceptRequests(Future request) async {
     try {
@@ -162,16 +100,20 @@ class DioClient {
             }
             message = message;
             errorCode = dioError.response!.data['data']["errorCode"];
+          } else if (data is Map<String, dynamic> &&
+              !data.containsKey('data')) {
+            //* API do EZT configurada assim
+            // var message = "";
+            if (dioError.response!.data["message"] is List) {
+              message = (dioError.response!.data["message"] as List).join(", ");
+            } else {
+              message = dioError.response!.data["message"];
+            }
+            message = message;
+            errorCode = dioError.response!.data["statusCode"];
           }
           if (message.isEmpty) {
             if (dioError.response == null) {
-              // ErrorReporter().report(
-              //   endpoint: dioError.requestOptions.path,
-              //   message: message,
-              //   stackTrace: dioError.stackTrace!,
-              //   requestParams: dioError.requestOptions.data,
-              // );
-
               throw dioError.message.contains('Connection timed out')
                   ? serverFailure
                   : ServerFailure(message: dioError.message);
@@ -186,13 +128,6 @@ class DioClient {
               message = dioError.message;
             }
             message = message.isEmpty ? serverFailure.message : message;
-
-            // ErrorReporter().report(
-            //   endpoint: dioError.requestOptions.path,
-            //   message: message,
-            //   stackTrace: dioError.stackTrace!,
-            //   requestParams: dioError.requestOptions.data,
-            // );
           }
 
           switch (dioError.response!.statusCode) {
@@ -232,8 +167,6 @@ class DioClient {
     HttpDriverProgressCallback? onReceiveProgress,
     Map<String, dynamic>? extraHeaders,
   }) async {
-    initInterceptors(); //Logger
-
     resetContentType();
     return await interceptRequests(
       dio.get(
@@ -252,8 +185,6 @@ class DioClient {
     Map<String, dynamic>? queryParameters,
     HttpDriverOptions? options,
   }) async {
-    initInterceptors(); //Logger
-
     dio.options.headers['content-type'] = 'image/png';
     return await interceptRequests(
       dio.get(
@@ -272,8 +203,6 @@ class DioClient {
     HttpDriverOptions? options,
     HttpDriverProgressCallback? onReceiveProgress,
   }) async {
-    initInterceptors(); //Logger
-
     resetContentType();
     return await interceptRequests(
       dio.patch(path,
@@ -290,14 +219,14 @@ class DioClient {
     HttpDriverOptions? options,
     HttpDriverProgressCallback? onReceiveProgress,
   }) async {
-    initInterceptors(); //Logger
-
     resetContentType();
     return await interceptRequests(
-      dio.post(path,
-          data: data,
-          queryParameters: queryParameters,
-          onReceiveProgress: onReceiveProgress),
+      dio.post(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+        onReceiveProgress: onReceiveProgress,
+      ),
     );
   }
 
@@ -308,8 +237,6 @@ class DioClient {
     HttpDriverOptions? options,
     HttpDriverProgressCallback? onReceiveProgress,
   }) async {
-    initInterceptors(); //Logger
-
     resetContentType();
     return await interceptRequests(
       dio.put(path,
@@ -325,8 +252,6 @@ class DioClient {
     Map<String, dynamic>? queryParameters,
     HttpDriverOptions? options,
   }) async {
-    initInterceptors(); //Logger
-
     resetContentType();
     return await interceptRequests(
       dio.delete<T>(
@@ -349,8 +274,6 @@ class DioClient {
     HttpDriverProgressCallback? onReceiveProgress,
     HttpDriverProgressCallback? onSendProgress,
   }) async {
-    initInterceptors(); //Logger
-
     dio.options.headers['content-type'] = 'multipart/form-data';
     return await interceptRequests(
       dio.post<T>(path,
