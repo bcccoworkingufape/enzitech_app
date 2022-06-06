@@ -12,13 +12,18 @@ import 'package:enzitech_app/src/shared/themes/app_colors.dart';
 import 'features/auth/auth_controller.dart';
 
 class AppWidget extends StatelessWidget {
-  const AppWidget({Key? key}) : super(key: key);
+  final HttpDriverOptions httpDriverOptions;
+
+  const AppWidget({Key? key, required this.httpDriverOptions})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider(create: (_) => DioClient()),
+        Provider(
+          create: (_) => DioClient(httpDriverOptions),
+        ),
         ChangeNotifierProvider(
           create: (context) => AuthController(context.read()),
         ),
@@ -26,14 +31,22 @@ class AppWidget extends StatelessWidget {
           create: (context) => CreateAccountController(context.read()),
         ),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: AppColors.materialTheme,
+      child: GestureDetector(
+        onTap: () {
+          FocusScopeNode currentFocus = FocusScope.of(context);
+          if (!currentFocus.hasPrimaryFocus) {
+            currentFocus.focusedChild?.unfocus();
+          }
+        },
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            primarySwatch: AppColors.materialTheme,
+          ),
+          initialRoute: RouteGenerator.initial,
+          onGenerateRoute: RouteGenerator.generateRoute,
         ),
-        initialRoute: RouteGenerator.initial,
-        onGenerateRoute: RouteGenerator.generateRoute,
       ),
     );
   }

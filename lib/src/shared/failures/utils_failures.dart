@@ -139,3 +139,8 @@ class NoResultQuery extends Failure {
   NoResultQuery({String message = "", dynamic key = ""})
       : super(message: message, key: key);
 }
+
+class UnknownError extends Failure {
+  UnknownError({String message = "Erro desconhecido!", dynamic key = ""})
+      : super(message: message, key: key);
+}
