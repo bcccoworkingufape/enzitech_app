@@ -209,9 +209,16 @@ class _EZTTextFieldState extends State<EZTTextField> {
       return null;
     }
 
+    if (widget.controller!.text.isEmpty) {
+      return null;
+    }
+
     return _validationSuccess!
         ? const Icon(PhosphorIcons.check)
-        : const Icon(PhosphorIcons.warningCircle);
+        : const Icon(
+            PhosphorIcons.warningCircle,
+            color: AppColors.danger,
+          );
   }
 
   InputDecoration get _underlinedInputDecoration {
@@ -243,8 +250,8 @@ class _EZTTextFieldState extends State<EZTTextField> {
         color: (_validationSuccess ?? false)
             ? widget.enableGreenSuccessBorder
                 ? AppColors.success
-                : AppColors.grey
-            : AppColors.grey,
+                : AppColors.lines
+            : AppColors.lines,
       ),
       borderRadius: const BorderRadius.all(
         Radius.circular(4),

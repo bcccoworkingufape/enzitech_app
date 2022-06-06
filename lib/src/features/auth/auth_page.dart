@@ -60,10 +60,13 @@ class AuthPageState extends State<AuthPage> {
     }
   }
 
-  Widget get _userInput {
+  Widget get _emailInput {
     final validations = <ValidateRule>[
       ValidateRule(
         ValidateTypes.required,
+      ),
+      ValidateRule(
+        ValidateTypes.email,
       ),
     ];
 
@@ -71,11 +74,11 @@ class AuthPageState extends State<AuthPage> {
 
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,
-      labelText: "Usuário",
+      labelText: "E-mail",
       usePrimaryColorOnFocusedBorder: true,
       keyboardType: TextInputType.emailAddress,
       controller: _userFieldController,
-      onChanged: (value) => controller.setUser(value),
+      onChanged: (value) => controller.setEmail(value),
       fieldValidator: fieldValidator,
     );
   }
@@ -93,7 +96,6 @@ class AuthPageState extends State<AuthPage> {
       eztTextFieldType: EZTTextFieldType.underline,
       labelText: "Senha",
       usePrimaryColorOnFocusedBorder: true,
-      keyboardType: TextInputType.emailAddress,
       controller: _passwordFieldController,
       onChanged: (value) => controller.setPassword(value),
       obscureText: true,
@@ -104,7 +106,7 @@ class AuthPageState extends State<AuthPage> {
   Widget get _textFields {
     return Column(
       children: [
-        _userInput,
+        _emailInput,
         const SizedBox(height: 10),
         _passwordInput,
       ],
