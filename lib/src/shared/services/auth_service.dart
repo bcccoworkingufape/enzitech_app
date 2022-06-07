@@ -9,6 +9,12 @@ import 'package:enzitech_app/src/shared/models/user_model.dart';
 abstract class IAuthService {
   Future<UserModel> auth(AuthRequestModel credential);
   Future<void> recoverPassword(String email);
+  Future<void> createUser(
+    String name,
+    String institution,
+    String email,
+    String password,
+  );
 }
 
 class AuthService implements IAuthService {
@@ -25,6 +31,28 @@ class AuthService implements IAuthService {
       );
 
       return UserModel.fromMap(jsonDecode(res.data));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> createUser(
+    String name,
+    String institution,
+    String email,
+    String password,
+  ) async {
+    try {
+      var res = await client.post(
+        "/users",
+        data: {
+          "name": name,
+          "email": email,
+          "password": password,
+          "institution": institution,
+        },
+      );
     } catch (e) {
       rethrow;
     }

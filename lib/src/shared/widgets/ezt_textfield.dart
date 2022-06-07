@@ -56,6 +56,7 @@ class EZTTextField extends StatefulWidget {
   final TextStyle? hintStyle;
   final bool showSuffixValidationIcon;
   final bool readOnly;
+  final bool disableSuffixIcon;
 
   const EZTTextField({
     Key? key,
@@ -95,6 +96,7 @@ class EZTTextField extends StatefulWidget {
     this.hintStyle,
     this.showSuffixValidationIcon = false,
     this.readOnly = false,
+    this.disableSuffixIcon = false,
   }) : super(key: key);
 
   @override
@@ -210,6 +212,10 @@ class _EZTTextFieldState extends State<EZTTextField> {
     }
 
     if (widget.controller!.text.isEmpty) {
+      return null;
+    }
+
+    if (widget.disableSuffixIcon) {
       return null;
     }
 
