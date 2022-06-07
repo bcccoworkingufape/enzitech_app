@@ -84,7 +84,8 @@ class FieldValidator {
           {
             var isStrong = Validator.isAlfanumeric(value);
             if (!isStrong) {
-              result = customErrorMessage ?? "TODO: MUDAR";
+              result = customErrorMessage ??
+                  "⚠  Campo não aceita caracteres especiais";
             } else {
               result = null;
             }
@@ -94,7 +95,7 @@ class FieldValidator {
           {
             var isStrong = Validator.isName(value);
             if (!isStrong) {
-              result = customErrorMessage ?? "TODO: MUDAR";
+              result = customErrorMessage ?? "⚠  Nome inválido";
             } else {
               result = null;
             }
@@ -109,7 +110,7 @@ class FieldValidator {
 
             var isStrong = Validator.isPhone(value);
             if (!isStrong) {
-              result = customErrorMessage ?? "TODO: MUDAR";
+              result = customErrorMessage ?? "⚠ Número inválido";
             } else {
               result = null;
             }
@@ -124,7 +125,7 @@ class FieldValidator {
 
             var isStrong = Validator.isCellPhone(value);
             if (!isStrong) {
-              result = customErrorMessage ?? "TODO: MUDAR";
+              result = customErrorMessage ?? "⚠ Número inválido";
             } else {
               result = null;
             }
@@ -137,7 +138,8 @@ class FieldValidator {
 
             var isStrong = pass == confirm;
             if (!isStrong) {
-              result = customErrorMessage ?? "TODO: MUDAR";
+              result =
+                  customErrorMessage ?? "⚠  As senhas digitadas não coincidem.";
             } else {
               result = null;
             }
@@ -151,7 +153,8 @@ class FieldValidator {
 
             var isDiff = pass != confirm;
             if (!isDiff) {
-              result = customErrorMessage ?? "TODO: MUDAR";
+              result = customErrorMessage ??
+                  "⚠  A nova senha não pode ser igual a senha atual.";
             } else {
               result = null;
             }
@@ -159,7 +162,7 @@ class FieldValidator {
           }
 
         case ValidateTypes.notFound:
-          result = "TODO: MUDAR";
+          result = "⚠  Não encontrado";
           break;
 
         case ValidateTypes.emailEquals:
@@ -169,7 +172,8 @@ class FieldValidator {
 
             var isStrong = pass == confirm;
             if (!isStrong) {
-              result = customErrorMessage ?? "TODO: MUDAR";
+              result = customErrorMessage ??
+                  "⚠  Os e-mails digitados não coincidem.";
             } else {
               result = null;
             }
@@ -188,7 +192,7 @@ class FieldValidator {
         case ValidateTypes.cpf:
           {
             if (!CPFValidator.isValid(value.toString())) {
-              result = customErrorMessage ?? "Insira um CPF válido";
+              result = customErrorMessage ?? "⚠  CPF inválido";
             } else {
               result = null;
             }
@@ -197,7 +201,7 @@ class FieldValidator {
         case ValidateTypes.cnpj:
           {
             if (!CNPJValidator.isValid(value.toString())) {
-              result = customErrorMessage ?? "TODO: MUDAR";
+              result = customErrorMessage ?? "⚠  CNPJ inválido";
             } else {
               result = null;
             }
@@ -208,13 +212,13 @@ class FieldValidator {
             var text = Toolkit.removeEspecialCharacters(value.toString());
             if (text.length <= 11) {
               if (!CPFValidator.isValid(value.toString())) {
-                result = customErrorMessage ?? "TODO: MUDAR";
+                result = customErrorMessage ?? "⚠  CPF inválido";
               } else {
                 result = null;
               }
             } else {
               if (!CNPJValidator.isValid(value.toString())) {
-                result = customErrorMessage ?? "TODO: MUDAR";
+                result = customErrorMessage ?? "⚠  CNPJ inválido";
               } else {
                 result = null;
               }
@@ -226,20 +230,23 @@ class FieldValidator {
             if (value.runtimeType == int || value.runtimeType == double) {
               if (value > valueRule) {
                 result = customErrorMessage ??
-                    "TODO: MUDAR".replaceAll("{{p1}}", valueRule.toString());
+                    "⚠  Número deve ser menor ou igual a {{p1}}."
+                        .replaceAll("{{p1}}", valueRule.toString());
               } else {
                 result = null;
               }
             } else if (value.runtimeType == String) {
               if (value.toString().length > valueRule) {
                 result = customErrorMessage ??
-                    "TODO: MUDAR".replaceAll("{{p1}}", valueRule.toString());
+                    "⚠  Esse campo deve ter no máximo {{p1}} caractere(s)"
+                        .replaceAll("{{p1}}", valueRule.toString());
               } else {
                 result = null;
               }
             } else {
               result = customErrorMessage ??
-                  "TODO: MUDAR".replaceAll("{{p1}}", valueRule.toString());
+                  "⚠  Esse campo deve ter no máximo {{p1}} caractere(s)"
+                      .replaceAll("{{p1}}", valueRule.toString());
             }
             break;
           }
@@ -249,7 +256,8 @@ class FieldValidator {
 
             if (val > valueRule) {
               result = customErrorMessage ??
-                  "TODO: MUDAR".replaceAll("{{p1}}", valueRule.toString());
+                  "⚠  Idade máxima {{p1}} anos"
+                      .replaceAll("{{p1}}", valueRule.toString());
             } else {
               result = null;
             }
@@ -261,7 +269,8 @@ class FieldValidator {
             var val = int.parse(value);
             if (valueRule > val) {
               result = customErrorMessage ??
-                  "TODO: MUDAR".replaceAll("{{p1}}", valueRule.toString());
+                  "⚠  Idade mínima {{p1}} anos"
+                      .replaceAll("{{p1}}", valueRule.toString());
             } else {
               result = null;
             }
@@ -273,20 +282,23 @@ class FieldValidator {
             if (value.runtimeType == int || value.runtimeType == double) {
               if (value < valueRule) {
                 result = customErrorMessage ??
-                    "TODO: MUDAR".replaceAll("{{p1}}", valueRule.toString());
+                    "⚠  Número deve ser maior ou igual a {{p1}}."
+                        .replaceAll("{{p1}}", valueRule.toString());
               } else {
                 result = null;
               }
             } else if (value.runtimeType == String) {
               if (value.toString().length < valueRule) {
                 result = customErrorMessage ??
-                    "TODO: MUDAR".replaceAll("{{p1}}", valueRule.toString());
+                    "⚠  Esse campo deve ter no mínimo {{p1}} caractere(s)"
+                        .replaceAll("{{p1}}", valueRule.toString());
               } else {
                 result = null;
               }
             } else {
               result = customErrorMessage ??
-                  "TODO: MUDAR".replaceAll("{{p1}}", valueRule.toString());
+                  "⚠  Esse campo deve ter no mínimo {{p1}} caractere(s)"
+                      .replaceAll("{{p1}}", valueRule.toString());
             }
             break;
           }
@@ -296,14 +308,16 @@ class FieldValidator {
               if (!EnrollValidator.isValid(value.toString()) &&
                   !CNPJValidator.isValid(value.toString()) &&
                   !CPFValidator.isValid(value.toString())) {
-                result = customErrorMessage ?? "TODO: MUDAR";
+                result =
+                    customErrorMessage ?? "⚠ E-mail ou matrícula inválido.";
               } else {
                 result = null;
               }
             } else {
               var emailValid = Validator.email(value.toString());
               if (!emailValid) {
-                result = customErrorMessage ?? "TODO: MUDAR";
+                result =
+                    customErrorMessage ?? "⚠ E-mail ou matrícula inválido.";
               } else {
                 result = null;
               }
