@@ -1,5 +1,4 @@
 // 🐦 Flutter imports:
-import 'package:enzitech_app/src/features/recover_password/recover_password_controller.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -8,6 +7,7 @@ import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/auth/auth_controller.dart';
+import 'package:enzitech_app/src/features/recover_password/recover_password_controller.dart';
 import 'package:enzitech_app/src/shared/routes/route_generator.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:enzitech_app/src/shared/validator/validator.dart';
