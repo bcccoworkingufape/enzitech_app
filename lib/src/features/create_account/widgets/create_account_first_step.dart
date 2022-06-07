@@ -1,3 +1,6 @@
+// 🎯 Dart imports:
+import 'dart:developer';
+
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -9,6 +12,7 @@ import 'package:provider/provider.dart';
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/create_account/create_account_controller.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
+import 'package:enzitech_app/src/shared/validator/validator.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_button.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_textfield.dart';
 import '../../../shared/util/util.dart';
@@ -17,9 +21,13 @@ class CreateAccountFirstStep extends StatefulWidget {
   const CreateAccountFirstStep({
     Key? key,
     required this.pageController,
+    required this.formKey,
+    required this.userDataCache,
   }) : super(key: key);
 
   final PageController pageController;
+  final GlobalKey<FormState> formKey;
+  final Map<String, String> userDataCache;
 
   @override
   CreateAccountFirstStepState createState() => CreateAccountFirstStepState();
@@ -30,33 +38,98 @@ class CreateAccountFirstStepState extends State<CreateAccountFirstStep> {
   final _nameFieldController = TextEditingController(text: '');
   final _institutionFieldController = TextEditingController(text: '');
 
+  bool enableNextButton = false;
+
   @override
   void initState() {
     super.initState();
     controller = context.read<CreateAccountController>();
+    initFieldControllerTexts();
+  }
+
+  void initFieldControllerTexts() {
+    _nameFieldController.text.isEmpty
+        ? _nameFieldController.text = widget.userDataCache['name'] ?? ''
+        : null;
+    _institutionFieldController.text.isEmpty
+        ? _institutionFieldController.text =
+            widget.userDataCache['institution'] ?? ''
+        : null;
+
+    enableNextButton = widget.userDataCache['enableNext'] != null
+        ? widget.userDataCache['enableNext']!.isNotEmpty
+        : false;
+
+    setState(() {});
+  }
+
+  get _validateFields {
+    if (_nameFieldController.text.isNotEmpty &&
+        _institutionFieldController.text.isNotEmpty) {
+      setState(() {
+        enableNextButton = widget.formKey.currentState!.validate();
+      });
+    } else {
+      setState(() {
+        enableNextButton = false;
+      });
+    }
+  }
+
+  Widget get _nameInput {
+    final validations = <ValidateRule>[
+      ValidateRule(
+        ValidateTypes.required,
+      ),
+      ValidateRule(
+        ValidateTypes.name,
+      ),
+    ];
+
+    final fieldValidator = FieldValidator(validations, context);
+
+    return EZTTextField(
+      eztTextFieldType: EZTTextFieldType.underline,
+      labelText: "Nome",
+      usePrimaryColorOnFocusedBorder: true,
+      keyboardType: TextInputType.emailAddress,
+      controller: _nameFieldController,
+      onChanged: (value) => _validateFields,
+      fieldValidator: fieldValidator,
+      // disableSuffixIcon: true,
+    );
+  }
+
+  Widget get _institutionInput {
+    final validations = <ValidateRule>[
+      ValidateRule(
+        ValidateTypes.required,
+      ),
+      ValidateRule(
+        ValidateTypes.name,
+      ),
+    ];
+
+    final fieldValidator = FieldValidator(validations, context);
+
+    return EZTTextField(
+      eztTextFieldType: EZTTextFieldType.underline,
+      labelText: "Instituição",
+      usePrimaryColorOnFocusedBorder: true,
+      keyboardType: TextInputType.emailAddress,
+      controller: _institutionFieldController,
+      onChanged: (value) => _validateFields,
+      fieldValidator: fieldValidator,
+      // disableSuffixIcon: true,
+    );
   }
 
   Widget get _textFields {
     return Column(
       children: [
-        EZTTextField(
-          eztTextFieldType: EZTTextFieldType.underline,
-          labelText: "Nome",
-          usePrimaryColorOnFocusedBorder: true,
-          keyboardType: TextInputType.emailAddress,
-          controller: _nameFieldController,
-          onChanged: (value) => print(value),
-        ),
+        _nameInput,
         const SizedBox(height: 10),
-        EZTTextField(
-          eztTextFieldType: EZTTextFieldType.underline,
-          labelText: "Instituição",
-          usePrimaryColorOnFocusedBorder: true,
-          keyboardType: TextInputType.emailAddress,
-          controller: _institutionFieldController,
-          onChanged: (value) => print(value),
-          obscureText: true,
-        ),
+        _institutionInput,
       ],
     );
   }
@@ -106,8 +179,17 @@ class CreateAccountFirstStepState extends State<CreateAccountFirstStep> {
     return Column(
       children: [
         EZTButton(
+          enabled: enableNextButton,
           text: 'Próximo',
           onPressed: () {
+            widget.formKey.currentState!.save();
+
+            widget.userDataCache
+                .update('name', (value) => _nameFieldController.text);
+            widget.userDataCache.update(
+                'institution', (value) => _institutionFieldController.text);
+            widget.userDataCache.update('enableNext', (value) => 'true');
+
             widget.pageController.animateTo(
               MediaQuery.of(context).size.width,
               duration: const Duration(milliseconds: 150),

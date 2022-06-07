@@ -80,6 +80,7 @@ class AuthPageState extends State<AuthPage> {
       controller: _emailFieldController,
       onChanged: (value) => controller.setEmail(value),
       fieldValidator: fieldValidator,
+      disableSuffixIcon: true,
     );
   }
 
