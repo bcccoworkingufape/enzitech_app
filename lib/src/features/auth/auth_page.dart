@@ -33,7 +33,7 @@ class AuthPageState extends State<AuthPage> {
     controller = context.read<AuthController>();
 
     if (mounted) {
-      controller.addListener(() {
+      controller.addListener(() async {
         if (controller.state == AuthState.error) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -54,6 +54,14 @@ class AuthPageState extends State<AuthPage> {
           //   );
           // }
         } else if (controller.state == AuthState.success) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("Bem vindo(a) ${controller.loggedName}!"),
+              backgroundColor: AppColors.success,
+            ),
+          );
+          await Future.delayed(const Duration(milliseconds: 500));
+          if (!mounted) return;
           Navigator.pushReplacementNamed(context, RouteGenerator.home);
         }
       });

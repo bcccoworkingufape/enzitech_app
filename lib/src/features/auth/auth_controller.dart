@@ -1,4 +1,6 @@
 // 🐦 Flutter imports:
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
@@ -17,6 +19,12 @@ class AuthController extends ChangeNotifier {
   var state = AuthState.idle;
 
   var authRequest = AuthRequestModel('', '');
+
+  String? _loggedName;
+  String? get loggedName => _loggedName;
+  void setLoggedName(String loggedName) {
+    _loggedName = loggedName;
+  }
 
   String? _email;
   String? get email => _email;
@@ -49,7 +57,10 @@ class AuthController extends ChangeNotifier {
 
       final response = await authService.auth(credential);
 
+      setLoggedName(response.name);
+
       // TODO: Store the response
+      // TODO: User token
 
       state = AuthState.success;
       notifyListeners();
