@@ -30,7 +30,7 @@ class AuthService implements IAuthService {
         data: credential.toJson(),
       );
 
-      return UserModel.fromMap(jsonDecode(res.data));
+      return UserModel.fromMap(res.data);
     } catch (e) {
       rethrow;
     }
