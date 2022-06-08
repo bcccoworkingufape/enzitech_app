@@ -39,6 +39,9 @@ dependencies:
   phosphor_flutter: ^1.4.0
   pretty_dio_logger: ^1.2.0-beta-1
   provider: ^6.0.2
+  toggle_switch: ^2.0.1
+  material_design_icons_flutter: 5.0.6595
+  percent_indicator: ^4.0.1
 
 import_sorter:
   emojis: true

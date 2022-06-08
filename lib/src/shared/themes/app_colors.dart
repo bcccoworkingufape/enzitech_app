@@ -8,6 +8,7 @@ class AppColors {
   //* Revisado
   static const primary = Color(0xFF06BC67);
   static const success = Color(0xFF74C627);
+  static const grenDark = Color(0xFF004735);
   static const info = Color(0xFF1C68ED);
   static const danger = Color(0xFFFF3B2D);
   static const warning = Color(0xFFE8D910);
