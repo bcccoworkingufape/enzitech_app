@@ -41,8 +41,23 @@ class Toolkit {
     return text.split(" ").map(capitalizeFirst).toList().join(" ");
   }
 
+  static String formatBrDate(DateTime date) {
+    var format = DateFormat("dd 'de' MMMM 'de' yyyy", "pt_BR");
+    return format.format(date);
+  }
+
   static String formatBrDateTime(DateTime date) {
-    var format = DateFormat("dd MMMM yyyy, HH:mm", "pt_BR");
+    var format = DateFormat("dd 'de' MMMM 'de' yyyy, HH:mm", "pt_BR");
+    return format.format(date);
+  }
+
+  static String formatBrDateNumbersOnly(DateTime date) {
+    var format = DateFormat("dd/MM/yyyy", "pt_BR");
+    return format.format(date);
+  }
+
+  static String formatBrDateTimeNumbersOnly(DateTime date) {
+    var format = DateFormat("dd/MM/yyyy, HH:mm", "pt_BR");
     return format.format(date);
   }
 

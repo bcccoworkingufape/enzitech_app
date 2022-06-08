@@ -7,6 +7,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/shared/themes/app_colors.dart';
+import 'package:enzitech_app/src/shared/themes/app_text_styles.dart';
 import 'package:enzitech_app/src/shared/validator/validator.dart';
 
 enum EZTTextFieldType {
@@ -123,7 +124,7 @@ class _EZTTextFieldState extends State<EZTTextField> {
       helperText: widget.helperText,
       helperStyle: const TextStyle(color: Colors.red),
       labelText: widget.labelText,
-      labelStyle: const TextStyle(color: AppColors.greyLight),
+      labelStyle: const TextStyle(color: AppColors.greyMedium),
       suffixIcon: widget.suffixIcon ?? _passwordSuffixIcon,
       fillColor: widget.fillColor,
       hintStyle: TextStyle(color: widget.hintColor),
@@ -172,9 +173,7 @@ class _EZTTextFieldState extends State<EZTTextField> {
 
     return _baseInputDecoration.copyWith(
       alignLabelWithHint: true,
-      hintStyle: widget.hintStyle ??
-          const TextStyle(
-              color: AppColors.grey, fontWeight: FontWeight.bold, fontSize: 18),
+      hintStyle: widget.hintStyle ?? TextStyles.termRegular,
       enabledBorder: inputBorder,
       focusedBorder: (widget.usePrimaryColorOnFocusedBorder)
           ? const UnderlineInputBorder(
@@ -275,8 +274,8 @@ class _EZTTextFieldState extends State<EZTTextField> {
 
     return _baseInputDecoration.copyWith(
       fillColor: widget.enabled
-          ? (widget.fillColor ?? AppColors.background)
-          : AppColors.background,
+          ? (widget.fillColor ?? AppColors.white)
+          : AppColors.white,
       border: outlineBorder,
       hintStyle: widget.hintStyle,
       suffixIcon:
@@ -312,7 +311,7 @@ class _EZTTextFieldState extends State<EZTTextField> {
 
     return _baseInputDecoration.copyWith(
       fillColor: widget.enabled
-          ? (widget.fillColor ?? AppColors.background)
+          ? (widget.fillColor ?? AppColors.white)
           : AppColors.grey,
       border: outlineBorder,
       hintStyle: widget.hintStyle,

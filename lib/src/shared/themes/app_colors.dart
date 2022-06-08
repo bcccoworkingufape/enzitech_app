@@ -8,19 +8,23 @@ class AppColors {
   //* Revisado
   static const primary = Color(0xFF06BC67);
   static const success = Color(0xFF74C627);
+  static const grenDark = Color(0xFF004735);
   static const info = Color(0xFF1C68ED);
   static const danger = Color(0xFFFF3B2D);
   static const warning = Color(0xFFE8D910);
   static const lines = Color(0xFFCCCCCC);
+
   static const grey = Color(0xFF585666);
+  static const greyLight = Color(0xFF9D9D9D);
+  static const greyMedium = Color(0xFF544F4F);
   static const greyDark = Color(0xFF3a3a3b);
-  static const greyLight = Color(0xFF544F4F);
+
   static const delete = Color(0xFFE83F5B);
   static const heading = Color(0xFF585666);
   static const body = Color(0xFF706E7A);
   static const stroke = Color(0xFFE3E3E6);
   static const shape = Color(0xFFFAFAFC);
-  static const background = Color(0xFFFFFFFF);
+  static const white = Color(0xFFFFFFFF);
 
   static MaterialColor materialTheme = const MaterialColor(
     0xFF06BC67, //primary
