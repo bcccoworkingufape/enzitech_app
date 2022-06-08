@@ -1,6 +1,3 @@
-// 🎯 Dart imports:
-import 'dart:developer';
-
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -11,7 +8,6 @@ import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/create_account/create_account_controller.dart';
-import 'package:enzitech_app/src/shared/routes/route_generator.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:enzitech_app/src/shared/util/util.dart';
 import 'package:enzitech_app/src/shared/validator/validator.dart';
@@ -174,7 +170,7 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
             children: [
               const Icon(
                 PhosphorIcons.atBold,
-                color: AppColors.greyLight,
+                color: AppColors.greyMedium,
               ),
               const SizedBox(width: 4),
               Text(

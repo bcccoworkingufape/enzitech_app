@@ -67,7 +67,19 @@ class TextStyles {
   static final detailBold = GoogleFonts.ubuntu(
     fontSize: 14,
     fontWeight: FontWeight.w700,
-    color: AppColors.greyLight,
+    color: AppColors.greyMedium,
+  );
+
+  /// `fontSize:` 18,
+  ///
+  /// `fontWeight:` FontWeight.normal,
+  ///
+  /// `color:`
+  ///
+  /// ![585666](https://www.colorhexa.com/585666.png)
+  static final termRegular = GoogleFonts.ubuntu(
+    fontSize: 18,
+    color: AppColors.greyMedium,
   );
 
   //* Revisado
@@ -86,7 +98,7 @@ class TextStyles {
   static final buttonBackground = GoogleFonts.ubuntu(
     fontSize: 16,
     fontWeight: FontWeight.w500,
-    color: AppColors.background,
+    color: AppColors.white,
   );
 
   static final bodyMinRegular = GoogleFonts.ubuntu(
@@ -113,7 +125,7 @@ class TextStyles {
   static final titleMinRegular = GoogleFonts.ubuntu(
     fontSize: 16,
     fontWeight: FontWeight.w400,
-    color: AppColors.background,
+    color: AppColors.white,
   );
   static final titleMinBoldHeading = GoogleFonts.ubuntu(
     fontSize: 16,
@@ -123,13 +135,13 @@ class TextStyles {
   static final titleMinBoldBackground = GoogleFonts.ubuntu(
     fontSize: 16,
     fontWeight: FontWeight.w600,
-    color: AppColors.background,
+    color: AppColors.white,
   );
 
   static final titleRegular = GoogleFonts.ubuntu(
     fontSize: 20,
     fontWeight: FontWeight.w400,
-    color: AppColors.background,
+    color: AppColors.white,
   );
   static final titleBoldHeading = GoogleFonts.ubuntu(
     fontSize: 20,
@@ -145,7 +157,7 @@ class TextStyles {
   static final titleBoldBackground = GoogleFonts.ubuntu(
     fontSize: 20,
     fontWeight: FontWeight.w600,
-    color: AppColors.background,
+    color: AppColors.white,
   );
   static final titleListTile = GoogleFonts.ubuntu(
     fontSize: 17,
@@ -193,15 +205,19 @@ class TextStyles {
     fontWeight: FontWeight.w700,
     color: AppColors.grey,
   );
+  static final buttonBold = GoogleFonts.ubuntu(
+    fontSize: 15,
+    fontWeight: FontWeight.w700,
+  );
   static final buttonBoldBackground = GoogleFonts.ubuntu(
     fontSize: 15,
     fontWeight: FontWeight.w700,
-    color: AppColors.background,
+    color: AppColors.white,
   );
   static final captionBackground = GoogleFonts.ubuntu(
     fontSize: 13,
     fontWeight: FontWeight.w400,
-    color: AppColors.background,
+    color: AppColors.white,
   );
   static final captionShape = GoogleFonts.ubuntu(
     fontSize: 13,
@@ -216,7 +232,7 @@ class TextStyles {
   static final captionBoldBackground = GoogleFonts.ubuntu(
     fontSize: 13,
     fontWeight: FontWeight.w600,
-    color: AppColors.background,
+    color: AppColors.white,
   );
   static final captionBoldShape = GoogleFonts.ubuntu(
     fontSize: 13,
