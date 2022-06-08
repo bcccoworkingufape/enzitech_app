@@ -46,37 +46,6 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  var mockedList = [
-    ExperimentCard(
-      name: 'Experimento 1',
-      modifiedAt: DateTime.now(),
-      description:
-          'Esta é uma descrição opcional muito grande de experimento, bem detalhado, com muitas linhas, onde será permitido no máximo quatro linhas...',
-      progress: .55,
-    ),
-    ExperimentCard(
-      name: 'Experimento 2',
-      modifiedAt: DateTime.now(),
-      description:
-          'Esta é uma descrição opcional muito grande de experimento, bem detalhado, com muitas linhas, onde será permitido no máximo quatro linhas...',
-      progress: .25,
-    ),
-    ExperimentCard(
-      name: 'Experimento 3',
-      modifiedAt: DateTime.now(),
-      description:
-          'Esta é uma descrição opcional muito grande de experimento, bem detalhado, com muitas linhas, onde será permitido no máximo quatro linhas...',
-      progress: .01,
-    ),
-    ExperimentCard(
-      name: 'Experimento 4',
-      modifiedAt: DateTime.now(),
-      description:
-          'Esta é uma descrição opcional muito grande de experimento, bem detalhado, com muitas linhas, onde será permitido no máximo quatro linhas...',
-      progress: .95,
-    ),
-  ];
-
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -124,13 +93,13 @@ class _HomePageState extends State<HomePage> {
     }
 
     return Visibility(
-      visible: mockedList.isNotEmpty,
+      visible: controller.mockedList.isNotEmpty,
       replacement: Column(
         children: [
           SizedBox(height: height / 4),
           Column(
             children: const [
-              Icon(PhosphorIcons.folderDotted),
+              Icon(PhosphorIcons.folderDotted, size: 64),
               Center(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 35.0),
@@ -147,17 +116,17 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-          SizedBox(height: height / 3)
+          SizedBox(height: height / 4)
         ],
       ),
       child: ListView.builder(
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
-        itemCount: mockedList.length,
+        itemCount: controller.mockedList.length,
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
-            child: mockedList[index],
+            child: controller.mockedList[index],
           );
         },
       ),
@@ -168,6 +137,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     var widthMQ = MediaQuery.of(context).size.width;
     var heightMQ = MediaQuery.of(context).size.height;
+    final controller = context.watch<HomeController>();
 
     return Scaffold(
       appBar: AppBar(
@@ -220,7 +190,22 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
+        onPressed: () {
+          //TODO: REMOVER ESTE TESTE
+          if (controller.mockedList.isEmpty) {
+            controller.setMockedList([
+              ExperimentCard(
+                name: 'Experimento 1',
+                modifiedAt: DateTime.now(),
+                description:
+                    'Esta é uma descrição opcional muito grande de experimento, bem detalhado, com muitas linhas, onde será permitido no máximo quatro linhas...',
+                progress: .55,
+              ),
+            ]);
+          } else {
+            controller.setMockedList([]);
+          }
+        },
         label: Text(
           "Cadastrar\nexperimento",
           style: TextStyles.buttonBackground,

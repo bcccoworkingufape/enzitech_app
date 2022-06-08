@@ -1,4 +1,5 @@
 // 🐦 Flutter imports:
+import 'package:enzitech_app/src/features/home/components/experiment_card.dart';
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
@@ -20,6 +21,47 @@ class HomeController extends ChangeNotifier {
     _failure = failure;
     notifyListeners();
   }
+
+  //TODO: REMOVER ESTE TESTE
+  List<ExperimentCard> get mockedList => _mockedList;
+
+  //TODO: REMOVER ESTE TESTE
+  void setMockedList(List<ExperimentCard> mockedList) {
+    _mockedList = mockedList;
+    notifyListeners();
+  }
+
+  //TODO: REMOVER ESTE TESTE
+  List<ExperimentCard> _mockedList = [
+    ExperimentCard(
+      name: 'Experimento 1',
+      modifiedAt: DateTime.now(),
+      description:
+          'Esta é uma descrição opcional muito grande de experimento, bem detalhado, com muitas linhas, onde será permitido no máximo quatro linhas...',
+      progress: .55,
+    ),
+    ExperimentCard(
+      name: 'Experimento 2',
+      modifiedAt: DateTime.now(),
+      description:
+          'Esta é uma descrição opcional muito grande de experimento, bem detalhado, com muitas linhas, onde será permitido no máximo quatro linhas...',
+      progress: .25,
+    ),
+    ExperimentCard(
+      name: 'Experimento 3',
+      modifiedAt: DateTime.now(),
+      description:
+          'Esta é uma descrição opcional muito grande de experimento, bem detalhado, com muitas linhas, onde será permitido no máximo quatro linhas...',
+      progress: .01,
+    ),
+    ExperimentCard(
+      name: 'Experimento 4',
+      modifiedAt: DateTime.now(),
+      description:
+          'Esta é uma descrição opcional muito grande de experimento, bem detalhado, com muitas linhas, onde será permitido no máximo quatro linhas...',
+      progress: .95,
+    ),
+  ];
 
   Future<void> fetchExperiments(
     String term,
