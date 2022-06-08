@@ -1,6 +1,3 @@
-// 🎯 Dart imports:
-import 'dart:developer';
-
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -159,7 +156,7 @@ class CreateAccountFirstStepState extends State<CreateAccountFirstStep> {
             children: [
               const Icon(
                 PhosphorIcons.identificationCardBold,
-                color: AppColors.greyLight,
+                color: AppColors.greyMedium,
               ),
               const SizedBox(width: 4),
               Text(
