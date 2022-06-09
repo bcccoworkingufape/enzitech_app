@@ -1,8 +1,8 @@
 // 🐦 Flutter imports:
-import 'package:enzitech_app/src/features/home/components/experiment_card.dart';
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
+import 'package:enzitech_app/src/features/home/components/experiment_card.dart';
 import 'package:enzitech_app/src/shared/external/http_driver/dio_client.dart';
 import 'package:enzitech_app/src/shared/failures/failures.dart';
 

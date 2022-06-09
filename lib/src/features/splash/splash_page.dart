@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 // 🌎 Project imports:
+import 'package:enzitech_app/src/app_config.dart';
 import 'package:enzitech_app/src/shared/routes/route_generator.dart';
 import 'package:enzitech_app/src/shared/themes/app_colors.dart';
 
@@ -25,9 +26,16 @@ class _SplashPageState extends State<SplashPage> {
 
   _checkAuth() async {
     await Future.delayed(const Duration(seconds: 1));
-    if (!mounted) return;
-    Future.delayed(Duration.zero).then((_) {
-      Navigator.pushReplacementNamed(context, RouteGenerator.auth);
+    Future.delayed(Duration.zero).then((_) async {
+      String token = await getToken() ?? '';
+
+      if (!mounted) return;
+
+      if (token.isEmpty) {
+        Navigator.pushReplacementNamed(context, RouteGenerator.auth);
+      } else {
+        Navigator.pushReplacementNamed(context, RouteGenerator.home);
+      }
     });
   }
 
