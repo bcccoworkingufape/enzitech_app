@@ -1,4 +1,5 @@
 // 🐦 Flutter imports:
+import 'package:enzitech_app/src/features/experiment/experiment_page.dart';
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
@@ -17,6 +18,7 @@ class RouteGenerator {
   static const createAccount = "/createAccount";
   static const recoverPassword = "/recoverPassword";
   static const createExperiment = "/createExperiment";
+  static const experiment = "/experiment";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     // ignore: unused_local_variable
@@ -35,6 +37,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const RecoverPasswordPage());
       case createExperiment:
         return MaterialPageRoute(builder: (_) => const CreateExperimentPage());
+      case experiment:
+        return MaterialPageRoute(builder: (_) => const ExperimentPage());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

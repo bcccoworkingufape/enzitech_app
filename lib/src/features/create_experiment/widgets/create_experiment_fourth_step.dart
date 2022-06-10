@@ -287,9 +287,9 @@ class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthS
                 .update('var4', (value) => _v4FieldController.text);
             widget.experimentDataCache.update('enableNext', (value) => 'true');
 
-            Navigator.pop(
+            Navigator.popAndPushNamed(
               context,
-              RouteGenerator.createExperiment,
+              RouteGenerator.experiment,
             );
 
           },
