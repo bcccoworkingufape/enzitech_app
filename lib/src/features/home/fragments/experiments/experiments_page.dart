@@ -1,6 +1,4 @@
 // 🐦 Flutter imports:
-import 'package:enzitech_app/src/features/home/fragments/experiments/components/experiment_card.dart';
-import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_controller.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -9,6 +7,8 @@ import 'package:provider/provider.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 // 🌎 Project imports:
+import 'package:enzitech_app/src/features/home/fragments/experiments/components/experiment_card.dart';
+import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_controller.dart';
 import 'package:enzitech_app/src/features/home/home_controller.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:enzitech_app/src/shared/validator/validator.dart';

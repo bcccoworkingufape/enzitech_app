@@ -9,6 +9,7 @@ import 'package:enzitech_app/src/features/create_account/create_account_controll
 import 'package:enzitech_app/src/features/create_account/widgets/create_account_first_step.dart';
 import 'package:enzitech_app/src/features/create_account/widgets/create_account_second_step.dart';
 import 'package:enzitech_app/src/shared/routes/route_generator.dart';
+import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 
 class CreateAccountPage extends StatefulWidget {
   const CreateAccountPage({Key? key}) : super(key: key);
@@ -46,9 +47,15 @@ class CreateAccountPageState extends State<CreateAccountPage> {
             ),
           );
         } else if (controller.state == CreateAccountState.success) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Conta criada com sucesso!"),
+              backgroundColor: AppColors.success,
+            ),
+          );
           Navigator.pushNamedAndRemoveUntil(
             context,
-            RouteGenerator.home,
+            RouteGenerator.auth,
             (Route<dynamic> route) => false,
           );
         }

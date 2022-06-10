@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 // 🌎 Project imports:
+import 'package:enzitech_app/src/app_config.dart';
 import 'package:enzitech_app/src/shared/failures/failures.dart';
 
 class HttpDriverResponse {
@@ -45,18 +46,21 @@ class DioClient {
   DioClient(
     this.httpDriverOptions,
   ) {
-    _setConfig();
+    setConfig();
   }
 
-  void _setConfig() {
+  setConfig({bool enableGetToken = false}) async {
+    String gettedToken = httpDriverOptions.accessToken();
+    if (enableGetToken) {
+      gettedToken = await getToken() ?? '';
+    }
     dio.options.baseUrl = httpDriverOptions.baseUrl();
     dio.options.headers.addAll(
       {
         'content-type': "application/json; charset=utf-8",
         'x-api-key':
             '${httpDriverOptions.accessTokenType} ${httpDriverOptions.apiKey}',
-        'Authorization':
-            '${httpDriverOptions.accessTokenType} ${httpDriverOptions.accessToken()}',
+        'Authorization': '${httpDriverOptions.accessTokenType} $gettedToken',
       },
     );
     dio.interceptors.addAll([
