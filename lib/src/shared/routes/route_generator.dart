@@ -8,12 +8,15 @@ import 'package:enzitech_app/src/features/home/home_page.dart';
 import 'package:enzitech_app/src/features/recover_password/recover_password_page.dart';
 import 'package:enzitech_app/src/features/splash/splash_page.dart';
 
+import '../../features/create_experiment/create_experiment_page.dart';
+
 class RouteGenerator {
   static const initial = "/";
   static const auth = "/auth";
   static const home = "/home";
   static const createAccount = "/createAccount";
   static const recoverPassword = "/recoverPassword";
+  static const createExperiment = "/createExperiment";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     // ignore: unused_local_variable
@@ -30,6 +33,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const CreateAccountPage());
       case recoverPassword:
         return MaterialPageRoute(builder: (_) => const RecoverPasswordPage());
+      case createExperiment:
+        return MaterialPageRoute(builder: (_) => const CreateExperimentPage());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

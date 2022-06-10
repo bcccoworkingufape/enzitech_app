@@ -14,6 +14,8 @@ import 'package:enzitech_app/src/features/home/fragments/treatments/treatments_p
 import 'package:enzitech_app/src/features/home/home_controller.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 
+import '../../shared/routes/route_generator.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -81,7 +83,12 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: controller.fragmentIndex == 0
           ? FloatingActionButton.extended(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  RouteGenerator.createExperiment,
+                );
+              },
               label: Text(
                 "Cadastrar\nexperimento",
                 style: TextStyles.buttonBackground,
