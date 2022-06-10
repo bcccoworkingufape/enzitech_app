@@ -22,6 +22,13 @@ class HomeController extends ChangeNotifier {
     notifyListeners();
   }
 
+  int _fragmentIndex = 0;
+  int get fragmentIndex => _fragmentIndex;
+  void setFragmentIndex(int fragmentIndex) {
+    _fragmentIndex = fragmentIndex;
+    notifyListeners();
+  }
+
   //TODO: REMOVER ESTE TESTE
   List<ExperimentCard> get mockedList => _mockedList;
 
@@ -62,6 +69,10 @@ class HomeController extends ChangeNotifier {
       progress: .95,
     ),
   ];
+
+  void onFragmentTapped(int index) {
+    setFragmentIndex(index);
+  }
 
   Future<void> fetchExperiments(
     String term,
