@@ -6,6 +6,7 @@ import 'package:enzitech_app/src/shared/external/http_driver/dio_client.dart';
 import 'package:enzitech_app/src/shared/failures/failures.dart';
 import 'package:enzitech_app/src/shared/models/auth_request_model.dart';
 import 'package:enzitech_app/src/shared/services/auth_service.dart';
+import 'package:enzitech_app/src/shared/services/user_prefs_service.dart';
 
 enum AuthState { idle, success, error, loading }
 
@@ -56,9 +57,8 @@ class AuthController extends ChangeNotifier {
       final response = await authService.auth(credential);
 
       setLoggedName(response.name);
-
-      // TODO: Store the response
-      // TODO: User token
+      UserPrefsServices userPrefsServices = UserPrefsServices();
+      userPrefsServices.saveUser(response.token, response.name, response.email);
 
       state = AuthState.success;
       notifyListeners();

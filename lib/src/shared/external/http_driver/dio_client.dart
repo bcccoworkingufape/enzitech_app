@@ -55,6 +55,8 @@ class DioClient {
         'content-type': "application/json; charset=utf-8",
         'x-api-key':
             '${httpDriverOptions.accessTokenType} ${httpDriverOptions.apiKey}',
+        'Authorization':
+            '${httpDriverOptions.accessTokenType} ${httpDriverOptions.accessToken()}',
       },
     );
     dio.interceptors.addAll([
