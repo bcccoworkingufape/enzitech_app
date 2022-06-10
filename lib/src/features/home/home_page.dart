@@ -24,16 +24,13 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late final HomeController controller;
 
-  final List<Widget> _fragments = const [
-    ExperimentsPage(),
-    TreatmentsPage(),
-    AccountPage(),
-  ];
+  late List<Widget> _fragments;
 
   @override
   void initState() {
     super.initState();
     controller = context.read<HomeController>();
+    initFragements();
     if (mounted) {
       controller.addListener(() {
         if (controller.state == HomeState.error) {
@@ -45,6 +42,20 @@ class _HomePageState extends State<HomePage> {
         }
       });
     }
+  }
+
+  initFragements() {
+    _fragments = [
+      ExperimentsPage(
+        homeController: controller,
+      ),
+      TreatmentsPage(
+        homeController: controller,
+      ),
+      AccountPage(
+        homeController: controller,
+      ),
+    ];
   }
 
   @override

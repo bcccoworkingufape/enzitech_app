@@ -40,29 +40,17 @@ class AuthPageState extends State<AuthPage> {
               content: Text(controller.failure!.message),
             ),
           );
-          // if (controller.failure is ForbiddenFailure) {
-          //   ScaffoldMessenger.of(context).showSnackBar(
-          //     SnackBar(
-          //       content: Text(controller.failure!.message),
-          //     ),
-          //   );
-          // } else {
-          //   ScaffoldMessenger.of(context).showSnackBar(
-          //     const SnackBar(
-          //       content: Text('Erro na autenticação'),
-          //     ),
-          //   );
-          // }
-        } else if (controller.state == AuthState.success) {
+        } else if (controller.state == AuthState.success && mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text("Bem vindo(a) ${controller.loggedName}!"),
               backgroundColor: AppColors.success,
             ),
           );
-          await Future.delayed(const Duration(milliseconds: 500));
-          if (!mounted) return;
-          Navigator.pushReplacementNamed(context, RouteGenerator.home);
+
+          if (mounted) {
+            Navigator.pushReplacementNamed(context, RouteGenerator.home);
+          }
         }
       });
     }

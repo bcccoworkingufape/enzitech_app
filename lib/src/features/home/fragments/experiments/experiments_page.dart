@@ -13,8 +13,12 @@ import 'package:enzitech_app/src/shared/validator/validator.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_textfield.dart';
 
 class ExperimentsPage extends StatefulWidget {
-  const ExperimentsPage({Key? key}) : super(key: key);
+  const ExperimentsPage({
+    Key? key,
+    required this.homeController,
+  }) : super(key: key);
 
+  final HomeController homeController;
   @override
   State<ExperimentsPage> createState() => _ExperimentsPageState();
 }
@@ -24,8 +28,6 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
 
   final _searchTermController = TextEditingController(text: '');
   List<bool> isSelected = [true, false];
-
-  int _selectedIndex = 0;
 
   @override
   void initState() {

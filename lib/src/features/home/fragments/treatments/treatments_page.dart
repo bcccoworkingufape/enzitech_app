@@ -8,7 +8,12 @@ import 'package:provider/provider.dart';
 import 'package:enzitech_app/src/features/home/home_controller.dart';
 
 class TreatmentsPage extends StatefulWidget {
-  const TreatmentsPage({Key? key}) : super(key: key);
+  const TreatmentsPage({
+    Key? key,
+    required this.homeController,
+  }) : super(key: key);
+
+  final HomeController homeController;
 
   @override
   State<TreatmentsPage> createState() => _TreatmentsPageState();

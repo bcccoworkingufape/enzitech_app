@@ -58,10 +58,7 @@ class AuthController extends ChangeNotifier {
 
       setLoggedName(response.name);
       UserPrefsServices userPrefsServices = UserPrefsServices();
-      userPrefsServices.saveToken(response.token);
-
-      // TODO: Store the response
-      // TODO: User token
+      userPrefsServices.saveUser(response.token, response.name, response.email);
 
       state = AuthState.success;
       notifyListeners();
