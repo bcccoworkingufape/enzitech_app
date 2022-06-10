@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/create_account/create_account_controller.dart';
+import 'package:enzitech_app/src/features/home/fragments/account/account_controller.dart';
 import 'package:enzitech_app/src/features/home/home_controller.dart';
 import 'package:enzitech_app/src/features/recover_password/recover_password_controller.dart';
 import 'package:enzitech_app/src/shared/external/http_driver/dio_client.dart';
@@ -38,6 +39,9 @@ class AppWidget extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => HomeController(context.read()),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AccountController(context.read()),
         ),
       ],
       child: GestureDetector(

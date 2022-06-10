@@ -8,6 +8,12 @@ class UserPrefsServices {
 
   final ISharedPrefs _prefs = SharedPrefs();
 
+  Future<void> saveUser(String token, String userName, String email) async {
+    await saveToken(token);
+    await saveName(userName);
+    await saveEmail(email);
+  }
+
   Future<void> saveName(String userName) async {
     await _prefs.setString(_nameKey, userName);
   }
