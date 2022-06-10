@@ -1,4 +1,5 @@
 // 🐦 Flutter imports:
+import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_controller.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -42,6 +43,9 @@ class AppWidget extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => AccountController(context.read()),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ExperimentsController(context.read()),
         ),
       ],
       child: GestureDetector(
