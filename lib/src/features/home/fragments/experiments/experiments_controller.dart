@@ -1,11 +1,11 @@
 // 🐦 Flutter imports:
-import 'package:enzitech_app/src/shared/models/experiment_model.dart';
-import 'package:enzitech_app/src/shared/services/experiments_service.dart';
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/shared/external/http_driver/dio_client.dart';
 import 'package:enzitech_app/src/shared/failures/failures.dart';
+import 'package:enzitech_app/src/shared/models/experiment_model.dart';
+import 'package:enzitech_app/src/shared/services/experiments_service.dart';
 
 enum ExperimentsState { idle, success, error, loading }
 
