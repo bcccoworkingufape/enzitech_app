@@ -12,13 +12,13 @@ class ExperimentCard extends StatefulWidget {
   const ExperimentCard({
     Key? key,
     required this.name,
-    required this.modifiedAt,
+    required this.updatedAt,
     required this.description,
     required this.progress,
   }) : super(key: key);
 
   final String name;
-  final DateTime modifiedAt;
+  final DateTime updatedAt;
   final String description;
   final double progress;
 
@@ -47,7 +47,7 @@ class _ExperimentCardState extends State<ExperimentCard> {
                     height: 2,
                   ),
                   Text(
-                    'Modificado em ${Toolkit.formatBrDate(widget.modifiedAt)}',
+                    'Modificado em ${Toolkit.formatBrDate(widget.updatedAt)}',
                     style: TextStyles.bodyMinRegular,
                   ),
                   const SizedBox(

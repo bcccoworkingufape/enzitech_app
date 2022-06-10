@@ -1,4 +1,6 @@
 // 🐦 Flutter imports:
+import 'package:enzitech_app/src/features/home/fragments/experiments/components/experiment_card.dart';
+import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_controller.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -24,7 +26,7 @@ class ExperimentsPage extends StatefulWidget {
 }
 
 class _ExperimentsPageState extends State<ExperimentsPage> {
-  late final HomeController controller;
+  late final ExperimentsController controller;
 
   final _searchTermController = TextEditingController(text: '');
   List<bool> isSelected = [true, false];
@@ -32,10 +34,10 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
   @override
   void initState() {
     super.initState();
-    controller = context.read<HomeController>();
+    controller = context.read<ExperimentsController>();
     if (mounted) {
       controller.addListener(() {
-        if (controller.state == HomeState.error) {
+        if (controller.state == ExperimentsState.error) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(controller.failure!.message),
@@ -71,59 +73,33 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
     );
   }
 
-  Widget _buildExperimentsList(double height) {
-    if (controller.state == HomeState.loading) {
-      return Column(
-        children: [
-          SizedBox(
-            height: height / 3,
-          ),
-          const CircularProgressIndicator(),
-          SizedBox(
-            height: height / 3,
-          ),
-        ],
+  Widget get _buildExperimentsList {
+    if (controller.state == ExperimentsState.error) {
+      return const Center(
+        child: Text("Erro ao carregar experimentos"),
       );
     }
 
-    return Visibility(
-      visible: controller.mockedList.isNotEmpty,
-      replacement: Column(
-        children: [
-          SizedBox(height: height / 4),
-          Column(
-            children: const [
-              Icon(PhosphorIcons.folderDotted, size: 64),
-              Center(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 35.0),
-                  child: Text(
-                    "Não existem experimentos!",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24,
-                      color: AppColors.greyDark,
-                    ),
-                  ),
-                ),
-              ),
-            ],
+    if (controller.state == ExperimentsState.loading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const BouncingScrollPhysics(),
+      itemCount: controller.experiments.length,
+      itemBuilder: (context, index) {
+        var experiment = controller.experiments[index];
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 8.0),
+          child: ExperimentCard(
+            name: experiment.name,
+            updatedAt: experiment.updatedAt,
+            description: experiment.description,
+            progress: experiment.progress,
           ),
-          SizedBox(height: height / 4)
-        ],
-      ),
-      child: ListView.builder(
-        shrinkWrap: true,
-        physics: const BouncingScrollPhysics(),
-        itemCount: controller.mockedList.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: controller.mockedList[index],
-          );
-        },
-      ),
+        );
+      },
     );
   }
 
@@ -131,7 +107,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
   Widget build(BuildContext context) {
     var widthMQ = MediaQuery.of(context).size.width;
     var heightMQ = MediaQuery.of(context).size.height;
-    final controller = context.watch<HomeController>();
+    final controller = context.watch<ExperimentsController>();
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -168,7 +144,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
               child: GlowingOverscrollIndicator(
                 axisDirection: AxisDirection.down,
                 color: AppColors.primary,
-                child: _buildExperimentsList(heightMQ),
+                child: _buildExperimentsList,
               ),
             ),
           ),

@@ -1,4 +1,5 @@
 // 🐦 Flutter imports:
+import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_controller.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -7,7 +8,6 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
-import 'package:enzitech_app/src/features/home/components/experiment_card.dart';
 import 'package:enzitech_app/src/features/home/fragments/account/account_page.dart';
 import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_page.dart';
 import 'package:enzitech_app/src/features/home/fragments/treatments/treatments_page.dart';
@@ -23,6 +23,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late final HomeController controller;
+  late final ExperimentsController experimentsController;
 
   late List<Widget> _fragments;
 
@@ -30,8 +31,12 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     controller = context.read<HomeController>();
+    experimentsController = context.read<ExperimentsController>();
     initFragements();
     if (mounted) {
+      Future.delayed(Duration.zero, () async {
+        await experimentsController.loadExperiments();
+      });
       controller.addListener(() {
         if (controller.state == HomeState.error) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -76,22 +81,7 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: controller.fragmentIndex == 0
           ? FloatingActionButton.extended(
-              onPressed: () {
-                //TODO: REMOVER ESTE TESTE
-                if (controller.mockedList.isEmpty) {
-                  controller.setMockedList([
-                    ExperimentCard(
-                      name: 'Experimento 1',
-                      modifiedAt: DateTime.now(),
-                      description:
-                          'Esta é uma descrição opcional muito grande de experimento, bem detalhado, com muitas linhas, onde será permitido no máximo quatro linhas...',
-                      progress: .55,
-                    ),
-                  ]);
-                } else {
-                  controller.setMockedList([]);
-                }
-              },
+              onPressed: () {},
               label: Text(
                 "Cadastrar\nexperimento",
                 style: TextStyles.buttonBackground,
