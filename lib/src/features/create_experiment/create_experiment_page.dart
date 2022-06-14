@@ -10,14 +10,11 @@ import 'package:enzitech_app/src/features/create_experiment/widgets/create_exper
 class CreateExperimentPage extends StatefulWidget {
   const CreateExperimentPage({Key? key}) : super(key: key);
 
-
-
   @override
   State<CreateExperimentPage> createState() => _CreateExperimentPageState();
 }
 
 class _CreateExperimentPageState extends State<CreateExperimentPage> {
-
   final _pageController = PageController(initialPage: 0);
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -33,7 +30,10 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
     "var2": "",
     "var3": "",
     "var4": "",
-    "enableNext": "",
+    "enableNextButton1": "",
+    "enableNextButton2": "",
+    "enableNextButton3": "",
+    "createExperimentButton": "",
   };
 
   @override

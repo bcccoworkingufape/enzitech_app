@@ -1,4 +1,5 @@
 // 🐦 Flutter imports:
+import 'package:enzitech_app/src/features/create_experiment/create_experiment_controller.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -29,7 +30,11 @@ class CreateExperimentThirdStepPage extends StatefulWidget {
 
 class _CreateExperimentThirdStepPageState
     extends State<CreateExperimentThirdStepPage> {
+  late final CreateExperimentController controller;
+
   bool enableNextButton = false;
+
+  //TODO: Integrar API para obter as enzimas
 
   final List<Map> _enzymeSelection = [
     {"name": "Enzima 1", "isChecked": false},
@@ -43,6 +48,7 @@ class _CreateExperimentThirdStepPageState
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
       child: Column(
         children: [
+          const SizedBox(height: 48),
           Align(
             alignment: Alignment.center,
             child: SvgPicture.asset(
@@ -116,7 +122,8 @@ class _CreateExperimentThirdStepPageState
 
             widget.experimentDataCache.update(
                 'enzymeSelection', (value) => _enzymeSelection.toString());
-            widget.experimentDataCache.update('enableNext', (value) => 'true');
+            widget.experimentDataCache
+                .update('enableNextButton3', (value) => 'true');
 
             widget.pageController.nextPage(
               duration: const Duration(milliseconds: 150),
@@ -129,7 +136,11 @@ class _CreateExperimentThirdStepPageState
           text: 'Voltar',
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
-            Navigator.pop(context);
+            widget.pageController.animateTo(
+              MediaQuery.of(context).size.width,
+              duration: const Duration(milliseconds: 150),
+              curve: Curves.easeIn,
+            );
           },
         ),
       ],

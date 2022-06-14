@@ -26,11 +26,12 @@ class CreateExperimentFourthStepPage extends StatefulWidget {
   final Map<String, String> experimentDataCache;
 
   @override
-  State<CreateExperimentFourthStepPage> createState() => _CreateExperimentFourthStepPageState();
+  State<CreateExperimentFourthStepPage> createState() =>
+      _CreateExperimentFourthStepPageState();
 }
 
-class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthStepPage> {
-
+class _CreateExperimentFourthStepPageState
+    extends State<CreateExperimentFourthStepPage> {
   final _aFieldController = TextEditingController(text: '');
   final _bFieldController = TextEditingController(text: '');
   final _v1FieldController = TextEditingController(text: '');
@@ -40,12 +41,40 @@ class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthS
 
   bool enableNextButton = false;
 
+  void initFieldControllerTexts() {
+    _aFieldController.text.isEmpty
+        ? _aFieldController.text = widget.experimentDataCache['varA'] ?? ''
+        : null;
+
+    _bFieldController.text.isEmpty
+        ? _bFieldController.text = widget.experimentDataCache['varB'] ?? ''
+        : null;
+
+    _v1FieldController.text.isEmpty
+        ? _v1FieldController.text = widget.experimentDataCache['var1'] ?? ''
+        : null;
+
+    _v2FieldController.text.isEmpty
+        ? _v2FieldController.text = widget.experimentDataCache['var2'] ?? ''
+        : null;
+
+    _v3FieldController.text.isEmpty
+        ? _v3FieldController.text = widget.experimentDataCache['var3'] ?? ''
+        : null;
+
+    _v4FieldController.text.isEmpty
+        ? _v4FieldController.text = widget.experimentDataCache['var4'] ?? ''
+        : null;
+  }
+
   get _validateFields {
     if (_aFieldController.text.isNotEmpty &&
         _bFieldController.text.isNotEmpty) {
       setState(() {
         enableNextButton = widget.formKey.currentState!.validate();
       });
+
+      initFieldControllerTexts();
     } else {
       setState(() {
         enableNextButton = false;
@@ -58,6 +87,7 @@ class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthS
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
       child: Column(
         children: [
+          const SizedBox(height: 48),
           Align(
             alignment: Alignment.center,
             child: SvgPicture.asset(
@@ -289,13 +319,13 @@ class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthS
                 .update('var3', (value) => _v3FieldController.text);
             widget.experimentDataCache
                 .update('var4', (value) => _v4FieldController.text);
-            widget.experimentDataCache.update('enableNext', (value) => 'true');
+            widget.experimentDataCache
+                .update('createExperimentButton', (value) => 'true');
 
             Navigator.popAndPushNamed(
               context,
               RouteGenerator.experiment,
             );
-
           },
         ),
         const SizedBox(height: 16),
@@ -303,7 +333,11 @@ class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthS
           text: 'Voltar',
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
-            Navigator.pop(context);
+            widget.pageController.animateTo(
+              MediaQuery.of(context).size.width * 2,
+              duration: const Duration(milliseconds: 150),
+              curve: Curves.easeIn,
+            );
           },
         ),
       ],

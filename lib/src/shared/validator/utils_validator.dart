@@ -31,6 +31,10 @@ class Validator {
     return RegExp(r"^[a-zA-Z0-9À-ÖØ-öø-ÿ&\- ]*$").hasMatch(text);
   }
 
+  static bool isNumeric(String text) {
+    return RegExp(r"^[0-9]*$").hasMatch(text);
+  }
+
   static bool isName(String text) {
     return RegExp(r"^[A-Za-zÀ-ÖØ-öø-ÿ&\- ]*$").hasMatch(text);
   }

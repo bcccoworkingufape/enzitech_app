@@ -1,9 +1,11 @@
 // 🐦 Flutter imports:
+import 'package:enzitech_app/src/features/create_experiment/create_experiment_controller.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:flutter_svg/svg.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import '../../../shared/themes/app_complete_theme.dart';
@@ -25,25 +27,50 @@ class CreateExperimentFirstStepPage extends StatefulWidget {
   final Map<String, String> experimentDataCache;
 
   @override
-  State<CreateExperimentFirstStepPage> createState() => _CreateExperimentFirstStepPageState();
+  State<CreateExperimentFirstStepPage> createState() =>
+      _CreateExperimentFirstStepPageState();
 }
 
-class _CreateExperimentFirstStepPageState extends State<CreateExperimentFirstStepPage> {
-
+class _CreateExperimentFirstStepPageState
+    extends State<CreateExperimentFirstStepPage> {
+  late final CreateExperimentController controller;
   final _nameFieldController = TextEditingController(text: '');
   final _descriptionFieldController = TextEditingController(text: '');
 
-  bool enableNextButton = false;
+  bool enableNextButton1 = false;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = context.read<CreateExperimentController>();
+    initFieldControllerTexts();
+  }
+
+  void initFieldControllerTexts() {
+    _nameFieldController.text.isEmpty
+        ? _nameFieldController.text = widget.experimentDataCache['name'] ?? ''
+        : null;
+    _descriptionFieldController.text.isEmpty
+        ? _descriptionFieldController.text =
+            widget.experimentDataCache['description'] ?? ''
+        : null;
+
+    enableNextButton1 = widget.experimentDataCache['enableNextButton1'] != null
+        ? widget.experimentDataCache['enableNextButton1']!.isNotEmpty
+        : false;
+
+    setState(() {});
+  }
 
   get _validateFields {
     if (_nameFieldController.text.isNotEmpty &&
         _descriptionFieldController.text.isNotEmpty) {
       setState(() {
-        enableNextButton = widget.formKey.currentState!.validate();
+        enableNextButton1 = widget.formKey.currentState!.validate();
       });
     } else {
       setState(() {
-        enableNextButton = false;
+        enableNextButton1 = false;
       });
     }
   }
@@ -152,7 +179,7 @@ class _CreateExperimentFirstStepPageState extends State<CreateExperimentFirstSte
     return Column(
       children: [
         EZTButton(
-          enabled: enableNextButton,
+          enabled: enableNextButton1,
           text: 'Próximo',
           onPressed: () {
             widget.formKey.currentState!.save();
@@ -161,7 +188,8 @@ class _CreateExperimentFirstStepPageState extends State<CreateExperimentFirstSte
                 .update('name', (value) => _nameFieldController.text);
             widget.experimentDataCache.update(
                 'description', (value) => _descriptionFieldController.text);
-            widget.experimentDataCache.update('enableNext', (value) => 'true');
+            widget.experimentDataCache
+                .update('enableNextButton1', (value) => 'true');
 
             widget.pageController.animateTo(
               MediaQuery.of(context).size.width,

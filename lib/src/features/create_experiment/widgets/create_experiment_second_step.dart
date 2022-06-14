@@ -1,9 +1,12 @@
 // 🐦 Flutter imports:
+import 'package:enzitech_app/src/features/create_experiment/create_experiment_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // 📦 Package imports:
 import 'package:flutter_svg/svg.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import '../../../shared/themes/app_complete_theme.dart';
@@ -25,25 +28,52 @@ class CreateExperimentSecondStepPage extends StatefulWidget {
   final Map<String, String> experimentDataCache;
 
   @override
-  State<CreateExperimentSecondStepPage> createState() => _CreateExperimentSecondStepPageState();
+  State<CreateExperimentSecondStepPage> createState() =>
+      _CreateExperimentSecondStepPageState();
 }
 
-class _CreateExperimentSecondStepPageState extends State<CreateExperimentSecondStepPage> {
+class _CreateExperimentSecondStepPageState
+    extends State<CreateExperimentSecondStepPage> {
+  late final CreateExperimentController controller;
 
   final _treatmentFieldController = TextEditingController(text: '');
   final _repetitionsFieldController = TextEditingController(text: '');
 
-  bool enableNextButton = false;
+  bool enableNextButton2 = false;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = context.read<CreateExperimentController>();
+    initFieldControllerTexts();
+  }
+
+  void initFieldControllerTexts() {
+    _treatmentFieldController.text.isEmpty
+        ? _treatmentFieldController.text =
+            widget.experimentDataCache['treatment'] ?? ''
+        : null;
+    _treatmentFieldController.text.isEmpty
+        ? _treatmentFieldController.text =
+            widget.experimentDataCache['treatment'] ?? ''
+        : null;
+
+    enableNextButton2 = widget.experimentDataCache['enableNextButton2'] != null
+        ? widget.experimentDataCache['enableNextButton2']!.isNotEmpty
+        : false;
+
+    setState(() {});
+  }
 
   get _validateFields {
     if (_treatmentFieldController.text.isNotEmpty &&
         _repetitionsFieldController.text.isNotEmpty) {
       setState(() {
-        enableNextButton = widget.formKey.currentState!.validate();
+        enableNextButton2 = widget.formKey.currentState!.validate();
       });
     } else {
       setState(() {
-        enableNextButton = false;
+        enableNextButton2 = false;
       });
     }
   }
@@ -88,8 +118,11 @@ class _CreateExperimentSecondStepPageState extends State<CreateExperimentSecondS
         ValidateTypes.required,
       ),
       ValidateRule(
-        ValidateTypes.name,
+        ValidateTypes.number,
       ),
+      ValidateRule(
+        ValidateTypes.greaterThanZero,
+      )
     ];
 
     final fieldValidator = FieldValidator(validations, context);
@@ -102,6 +135,7 @@ class _CreateExperimentSecondStepPageState extends State<CreateExperimentSecondS
       controller: _repetitionsFieldController,
       onChanged: (value) => _validateFields,
       fieldValidator: fieldValidator,
+      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
       // disableSuffixIcon: true,
     );
   }
@@ -152,7 +186,7 @@ class _CreateExperimentSecondStepPageState extends State<CreateExperimentSecondS
     return Column(
       children: [
         EZTButton(
-          enabled: enableNextButton,
+          enabled: enableNextButton2,
           text: 'Próximo',
           onPressed: () {
             widget.formKey.currentState!.save();
@@ -161,13 +195,13 @@ class _CreateExperimentSecondStepPageState extends State<CreateExperimentSecondS
                 .update('treatment', (value) => _treatmentFieldController.text);
             widget.experimentDataCache.update(
                 'repetitions', (value) => _repetitionsFieldController.text);
-            widget.experimentDataCache.update('enableNext', (value) => 'true');
+            widget.experimentDataCache
+                .update('enableNextButton2', (value) => 'true');
 
             widget.pageController.nextPage(
               duration: const Duration(milliseconds: 150),
               curve: Curves.easeIn,
             );
-
           },
         ),
         const SizedBox(height: 16),
@@ -175,7 +209,11 @@ class _CreateExperimentSecondStepPageState extends State<CreateExperimentSecondS
           text: 'Voltar',
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
-            Navigator.pop(context);
+            widget.pageController.animateTo(
+              0,
+              duration: const Duration(milliseconds: 150),
+              curve: Curves.easeIn,
+            );
           },
         ),
       ],
@@ -200,7 +238,6 @@ class _CreateExperimentSecondStepPageState extends State<CreateExperimentSecondS
             ),
           ),
         ),
-
       ],
     );
   }
