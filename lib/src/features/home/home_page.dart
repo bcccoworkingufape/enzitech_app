@@ -1,4 +1,5 @@
 // 🐦 Flutter imports:
+import 'package:enzitech_app/src/features/home/fragments/account/account_controller.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -26,6 +27,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late final HomeController controller;
   late final ExperimentsController experimentsController;
+  late final AccountController accountController;
 
   late List<Widget> _fragments;
 
@@ -34,10 +36,12 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     controller = context.read<HomeController>();
     experimentsController = context.read<ExperimentsController>();
+    accountController = context.read<AccountController>();
     initFragements();
     if (mounted) {
       Future.delayed(Duration.zero, () async {
         await experimentsController.loadExperiments();
+        await accountController.loadAccount();
       });
       controller.addListener(() {
         if (controller.state == HomeState.error) {

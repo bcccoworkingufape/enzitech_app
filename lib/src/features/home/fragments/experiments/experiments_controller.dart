@@ -36,8 +36,8 @@ class ExperimentsController extends ChangeNotifier {
     try {
       var experimentsService = ExperimentsService(client);
 
-      final response = await experimentsService.fetchExperiments();
-      _setExperiments(response);
+      final experimentsList = await experimentsService.fetchExperiments();
+      _setExperiments(experimentsList);
 
       state = ExperimentsState.success;
       notifyListeners();
