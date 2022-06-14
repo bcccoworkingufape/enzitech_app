@@ -41,6 +41,7 @@ class AuthService implements IAuthService {
     String password,
   ) async {
     try {
+      // ignore: unused_local_variable
       var res = await client.post(
         "/users",
         data: {

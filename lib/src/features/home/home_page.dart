@@ -1,5 +1,4 @@
 // 🐦 Flutter imports:
-import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_controller.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -8,11 +7,14 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
+import 'package:enzitech_app/src/features/home/fragments/account/account_controller.dart';
 import 'package:enzitech_app/src/features/home/fragments/account/account_page.dart';
+import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_controller.dart';
 import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_page.dart';
 import 'package:enzitech_app/src/features/home/fragments/treatments/treatments_page.dart';
 import 'package:enzitech_app/src/features/home/home_controller.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
+import '../../shared/routes/route_generator.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -24,6 +26,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late final HomeController controller;
   late final ExperimentsController experimentsController;
+  late final AccountController accountController;
 
   late List<Widget> _fragments;
 
@@ -32,10 +35,12 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     controller = context.read<HomeController>();
     experimentsController = context.read<ExperimentsController>();
+    accountController = context.read<AccountController>();
     initFragements();
     if (mounted) {
       Future.delayed(Duration.zero, () async {
         await experimentsController.loadExperiments();
+        await accountController.loadAccount();
       });
       controller.addListener(() {
         if (controller.state == HomeState.error) {
@@ -81,7 +86,12 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: controller.fragmentIndex == 0
           ? FloatingActionButton.extended(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  RouteGenerator.createExperiment,
+                );
+              },
               label: Text(
                 "Cadastrar\nexperimento",
                 style: TextStyles.buttonBackground,

@@ -43,6 +43,7 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
   Widget build(BuildContext context) {
     var widthMQ = MediaQuery.of(context).size.width;
     var heightMQ = MediaQuery.of(context).size.height;
+    // ignore: unused_local_variable
     final controller = context.watch<HomeController>();
 
     return Container(
