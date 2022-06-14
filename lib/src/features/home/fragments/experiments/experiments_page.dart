@@ -1,7 +1,5 @@
 // 🐦 Flutter imports:
-import 'package:enzitech_app/src/shared/widgets/ezt_pull_to_refresh.dart';
 import 'package:flutter/material.dart';
-import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 // 📦 Package imports:
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -14,6 +12,7 @@ import 'package:enzitech_app/src/features/home/fragments/experiments/experiments
 import 'package:enzitech_app/src/features/home/home_controller.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:enzitech_app/src/shared/validator/validator.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_pull_to_refresh.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_textfield.dart';
 
 class ExperimentsPage extends StatefulWidget {

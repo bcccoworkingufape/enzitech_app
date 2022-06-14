@@ -1,5 +1,4 @@
 // 🐦 Flutter imports:
-import 'package:enzitech_app/src/features/home/fragments/account/account_controller.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -8,13 +7,13 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
+import 'package:enzitech_app/src/features/home/fragments/account/account_controller.dart';
 import 'package:enzitech_app/src/features/home/fragments/account/account_page.dart';
 import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_controller.dart';
 import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_page.dart';
 import 'package:enzitech_app/src/features/home/fragments/treatments/treatments_page.dart';
 import 'package:enzitech_app/src/features/home/home_controller.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
-
 import '../../shared/routes/route_generator.dart';
 
 class HomePage extends StatefulWidget {

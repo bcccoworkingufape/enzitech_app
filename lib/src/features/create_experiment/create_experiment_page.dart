@@ -1,8 +1,11 @@
+// 🐦 Flutter imports:
+import 'package:flutter/material.dart';
+
+// 🌎 Project imports:
 import 'package:enzitech_app/src/features/create_experiment/widgets/create_experiment_first_step.dart';
 import 'package:enzitech_app/src/features/create_experiment/widgets/create_experiment_fourth_step.dart';
 import 'package:enzitech_app/src/features/create_experiment/widgets/create_experiment_second_step.dart';
 import 'package:enzitech_app/src/features/create_experiment/widgets/create_experiment_third_step.dart';
-import 'package:flutter/material.dart';
 
 class CreateExperimentPage extends StatefulWidget {
   const CreateExperimentPage({Key? key}) : super(key: key);

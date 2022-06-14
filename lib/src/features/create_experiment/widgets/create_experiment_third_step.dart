@@ -1,8 +1,11 @@
-
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
 import 'package:flutter_svg/svg.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
+// 🌎 Project imports:
 import '../../../shared/themes/app_complete_theme.dart';
 import '../../../shared/util/constants.dart';
 import '../../../shared/widgets/ezt_button.dart';
@@ -20,14 +23,15 @@ class CreateExperimentThirdStepPage extends StatefulWidget {
   final Map<String, String> experimentDataCache;
 
   @override
-  State<CreateExperimentThirdStepPage> createState() => _CreateExperimentThirdStepPageState();
+  State<CreateExperimentThirdStepPage> createState() =>
+      _CreateExperimentThirdStepPageState();
 }
 
-class _CreateExperimentThirdStepPageState extends State<CreateExperimentThirdStepPage> {
-
+class _CreateExperimentThirdStepPageState
+    extends State<CreateExperimentThirdStepPage> {
   bool enableNextButton = false;
 
-  List<Map> _enzymeSelection = [
+  final List<Map> _enzymeSelection = [
     {"name": "Enzima 1", "isChecked": false},
     {"name": "Enzima 2", "isChecked": false},
     {"name": "Enzima 3", "isChecked": false},
@@ -79,27 +83,25 @@ class _CreateExperimentThirdStepPageState extends State<CreateExperimentThirdSte
 
   Widget get _checkBoxListTile {
     return Column(
-      children:
-      _enzymeSelection.map((enzyme) {
+      children: _enzymeSelection.map((enzyme) {
         return CheckboxListTile(
-          value: enzyme["isChecked"],
-          title: Text(enzyme["name"], style: TextStyles.titleBoldHeading),
-          controlAffinity: ListTileControlAffinity.leading,
-          onChanged: (newValue) {
-            setState(() {
-              enzyme["isChecked"] = newValue;
-              for(int i=0; i<_enzymeSelection.length; i++){
-                if(_enzymeSelection[i]["isChecked"]){
-                  enableNextButton = true;
-                  break;
-                }else if (i == _enzymeSelection.length-1){
-                  enableNextButton = false;
+            value: enzyme["isChecked"],
+            title: Text(enzyme["name"], style: TextStyles.titleBoldHeading),
+            controlAffinity: ListTileControlAffinity.leading,
+            onChanged: (newValue) {
+              setState(() {
+                enzyme["isChecked"] = newValue;
+                for (int i = 0; i < _enzymeSelection.length; i++) {
+                  if (_enzymeSelection[i]["isChecked"]) {
+                    enableNextButton = true;
+                    break;
+                  } else if (i == _enzymeSelection.length - 1) {
+                    enableNextButton = false;
+                  }
                 }
-              }
+              });
             });
-          });
       }).toList(),
-
     );
   }
 
@@ -112,15 +114,14 @@ class _CreateExperimentThirdStepPageState extends State<CreateExperimentThirdSte
           onPressed: () {
             widget.formKey.currentState!.save();
 
-            widget.experimentDataCache
-                .update('enzymeSelection', (value) => _enzymeSelection.toString());
+            widget.experimentDataCache.update(
+                'enzymeSelection', (value) => _enzymeSelection.toString());
             widget.experimentDataCache.update('enableNext', (value) => 'true');
 
             widget.pageController.nextPage(
               duration: const Duration(milliseconds: 150),
               curve: Curves.easeIn,
             );
-
           },
         ),
         const SizedBox(height: 16),

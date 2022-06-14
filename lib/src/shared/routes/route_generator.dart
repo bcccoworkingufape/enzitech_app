@@ -1,14 +1,13 @@
 // 🐦 Flutter imports:
-import 'package:enzitech_app/src/features/experiment/experiment_page.dart';
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/auth/auth_page.dart';
 import 'package:enzitech_app/src/features/create_account/create_account_page.dart';
+import 'package:enzitech_app/src/features/experiment/experiment_page.dart';
 import 'package:enzitech_app/src/features/home/home_page.dart';
 import 'package:enzitech_app/src/features/recover_password/recover_password_page.dart';
 import 'package:enzitech_app/src/features/splash/splash_page.dart';
-
 import '../../features/create_experiment/create_experiment_page.dart';
 
 class RouteGenerator {
@@ -49,6 +48,7 @@ class RouteGenerator {
     }
   }
 
+  // ignore: unused_element
   static Route<dynamic> _errorRoute() {
     return MaterialPageRoute(
       builder: (_) {

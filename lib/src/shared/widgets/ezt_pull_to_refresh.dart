@@ -1,7 +1,7 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-// 🌎 Project imports:
+// 📦 Package imports:
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 enum EZTPullToRefreshType {
