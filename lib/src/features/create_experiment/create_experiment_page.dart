@@ -42,10 +42,11 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
         } else if (controller.state == CreateExperimentState.success) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text("Conta criada com sucesso!"),
+              content: Text("Experimento criado com sucesso!"),
               backgroundColor: AppColors.success,
             ),
           );
+          if (!mounted) return;
           Navigator.popAndPushNamed(
             context,
             RouteGenerator.experiment,
