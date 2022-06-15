@@ -78,7 +78,11 @@ class _CreateExperimentFourthStepPageState
 
   get _validateFields {
     if (_aFieldController.text.isNotEmpty &&
-        _bFieldController.text.isNotEmpty) {
+        _bFieldController.text.isNotEmpty &&
+        _v1FieldController.text.isNotEmpty &&
+        _v2FieldController.text.isNotEmpty &&
+        _v3FieldController.text.isNotEmpty &&
+        _v4FieldController.text.isNotEmpty) {
       setState(() {
         enableNextButton = widget.formKey.currentState!.validate();
       });
