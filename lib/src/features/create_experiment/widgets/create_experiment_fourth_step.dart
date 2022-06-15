@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/create_experiment/create_experiment_controller.dart';
-import '../../../shared/routes/route_generator.dart';
 import '../../../shared/themes/app_complete_theme.dart';
 import '../../../shared/util/constants.dart';
 import '../../../shared/validator/field_validator.dart';
