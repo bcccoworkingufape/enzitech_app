@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 // 📦 Package imports:
 import 'package:flutter_svg/svg.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
+import 'package:enzitech_app/src/features/create_experiment/create_experiment_controller.dart';
 import '../../../shared/routes/route_generator.dart';
 import '../../../shared/themes/app_complete_theme.dart';
 import '../../../shared/util/constants.dart';
@@ -32,6 +34,8 @@ class CreateExperimentFourthStepPage extends StatefulWidget {
 
 class _CreateExperimentFourthStepPageState
     extends State<CreateExperimentFourthStepPage> {
+  late final CreateExperimentController controller;
+
   final _aFieldController = TextEditingController(text: '');
   final _bFieldController = TextEditingController(text: '');
   final _v1FieldController = TextEditingController(text: '');
@@ -40,6 +44,12 @@ class _CreateExperimentFourthStepPageState
   final _v4FieldController = TextEditingController(text: '');
 
   bool enableNextButton = false;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = context.read<CreateExperimentController>();
+  }
 
   void initFieldControllerTexts() {
     _aFieldController.text.isEmpty
@@ -304,7 +314,7 @@ class _CreateExperimentFourthStepPageState
         EZTButton(
           enabled: enableNextButton,
           text: 'Criar Experimento',
-          onPressed: () {
+          onPressed: () async {
             widget.formKey.currentState!.save();
 
             widget.experimentDataCache
@@ -322,10 +332,13 @@ class _CreateExperimentFourthStepPageState
             widget.experimentDataCache
                 .update('createExperimentButton', (value) => 'true');
 
-            Navigator.popAndPushNamed(
-              context,
-              RouteGenerator.experiment,
-            );
+            if (widget.formKey.currentState!.validate()) {
+              await controller.createExperiment(
+                widget.experimentDataCache['name']!,
+                widget.experimentDataCache['description']!,
+                int.parse(widget.experimentDataCache['repetitions']!),
+              );
+            }
           },
         ),
         const SizedBox(height: 16),

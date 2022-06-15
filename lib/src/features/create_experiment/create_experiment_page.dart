@@ -1,11 +1,17 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
+// 📦 Package imports:
+import 'package:provider/provider.dart';
+
 // 🌎 Project imports:
+import 'package:enzitech_app/src/features/create_experiment/create_experiment_controller.dart';
 import 'package:enzitech_app/src/features/create_experiment/widgets/create_experiment_first_step.dart';
 import 'package:enzitech_app/src/features/create_experiment/widgets/create_experiment_fourth_step.dart';
 import 'package:enzitech_app/src/features/create_experiment/widgets/create_experiment_second_step.dart';
 import 'package:enzitech_app/src/features/create_experiment/widgets/create_experiment_third_step.dart';
+import 'package:enzitech_app/src/shared/routes/route_generator.dart';
+import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 
 class CreateExperimentPage extends StatefulWidget {
   const CreateExperimentPage({Key? key}) : super(key: key);
@@ -15,8 +21,39 @@ class CreateExperimentPage extends StatefulWidget {
 }
 
 class _CreateExperimentPageState extends State<CreateExperimentPage> {
+  late final CreateExperimentController controller;
+
   final _pageController = PageController(initialPage: 0);
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    controller = context.read<CreateExperimentController>();
+    // experimentDataCache.updateAll((key, value) => '');
+    if (mounted) {
+      controller.addListener(() {
+        if (controller.state == CreateExperimentState.error) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(controller.failure!.message),
+            ),
+          );
+        } else if (controller.state == CreateExperimentState.success) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Conta criada com sucesso!"),
+              backgroundColor: AppColors.success,
+            ),
+          );
+          Navigator.popAndPushNamed(
+            context,
+            RouteGenerator.experiment,
+          );
+        }
+      });
+    }
+  }
 
   var experimentDataCache = {
     "name": "",

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 // 🌎 Project imports:
 import 'package:enzitech_app/src/shared/external/http_driver/dio_client.dart';
 import 'package:enzitech_app/src/shared/failures/failures.dart';
-import 'package:enzitech_app/src/shared/services/auth_service.dart';
+import 'package:enzitech_app/src/shared/services/experiments_service.dart';
 
 enum CreateExperimentState { idle, success, error, loading }
 
@@ -22,18 +22,28 @@ class CreateExperimentController extends ChangeNotifier {
     notifyListeners();
   }
 
+  // ExperimentRequestModel _experimentRequestModel;
+  // ExperimentRequestModel get experimentRequestModel => _experimentRequestModel;
+  // void _setExperimentRequestModel(
+  //   ExperimentRequestModel experimentRequestModel,
+  // ) {
+  //   _experimentRequestModel = experimentRequestModel;
+  //   notifyListeners();
+  // }
+
   Future<void> createExperiment(
     String name,
-    String institution,
-    String email,
-    String password,
+    String description,
+    int repetitions,
+    // List<String> processes,
+    // List<EnzymeModel> experimentsEnzymes,
   ) async {
     state = CreateExperimentState.loading;
     notifyListeners();
     try {
-      var authService = AuthService(client);
+      var experimentService = ExperimentsService(client);
 
-      await authService.createUser(name, institution, email, password);
+      await experimentService.createExperiment(name, description, repetitions);
 
       state = CreateExperimentState.success;
       notifyListeners();
