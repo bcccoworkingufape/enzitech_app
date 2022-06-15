@@ -138,24 +138,24 @@ class AuthPageState extends State<AuthPage> {
                   ),
                   const SizedBox(height: 16),
                   _textFields,
-                  const SizedBox(height: 16),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          RouteGenerator.recoverPassword,
-                        );
-                      },
-                      child: Text(
-                        "Esqueci minha senha",
-                        style: TextStyles.detailRegular.copyWith(
-                          decoration: TextDecoration.underline,
-                        ),
-                      ),
-                    ),
-                  ),
+                  // const SizedBox(height: 16),
+                  // Align(
+                  //   alignment: Alignment.centerRight,
+                  //   child: GestureDetector(
+                  //     onTap: () {
+                  //       Navigator.pushNamed(
+                  //         context,
+                  //         RouteGenerator.recoverPassword,
+                  //       );
+                  //     },
+                  //     child: Text(
+                  //       "Esqueci minha senha",
+                  //       style: TextStyles.detailRegular.copyWith(
+                  //         decoration: TextDecoration.underline,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   const SizedBox(height: 64),
                   AuthButton(formKey: _formKey),
                   const SizedBox(height: 32),
