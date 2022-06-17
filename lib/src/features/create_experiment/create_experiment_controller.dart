@@ -2,16 +2,15 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
-import 'package:enzitech_app/src/shared/external/http_driver/dio_client.dart';
 import 'package:enzitech_app/src/shared/failures/failures.dart';
 import 'package:enzitech_app/src/shared/services/experiments_service.dart';
 
 enum CreateExperimentState { idle, success, error, loading }
 
 class CreateExperimentController extends ChangeNotifier {
-  final DioClient client;
+  final ExperimentsService experimentService;
 
-  CreateExperimentController(this.client);
+  CreateExperimentController(this.experimentService);
 
   var state = CreateExperimentState.idle;
 
@@ -41,8 +40,6 @@ class CreateExperimentController extends ChangeNotifier {
     state = CreateExperimentState.loading;
     notifyListeners();
     try {
-      var experimentService = ExperimentsService(client);
-
       await experimentService.createExperiment(name, description, repetitions);
 
       state = CreateExperimentState.success;

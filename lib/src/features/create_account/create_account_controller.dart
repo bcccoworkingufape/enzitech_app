@@ -10,8 +10,9 @@ enum CreateAccountState { idle, success, error, loading }
 
 class CreateAccountController extends ChangeNotifier {
   final DioClient client;
+  final AuthService authService;
 
-  CreateAccountController(this.client);
+  CreateAccountController(this.client, this.authService);
 
   var state = CreateAccountState.idle;
 
@@ -31,8 +32,6 @@ class CreateAccountController extends ChangeNotifier {
     state = CreateAccountState.loading;
     notifyListeners();
     try {
-      var authService = AuthService(client);
-
       await authService.createUser(name, institution, email, password);
 
       state = CreateAccountState.success;

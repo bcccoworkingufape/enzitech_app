@@ -12,8 +12,9 @@ enum AuthState { idle, success, error, loading }
 
 class AuthController extends ChangeNotifier {
   final DioClient client;
+  final AuthService authService;
 
-  AuthController(this.client);
+  AuthController(this.client, this.authService);
 
   var state = AuthState.idle;
 
@@ -47,8 +48,6 @@ class AuthController extends ChangeNotifier {
     state = AuthState.loading;
     notifyListeners();
     try {
-      var authService = AuthService(client);
-
       var credential = AuthRequestModel.fromMap({
         'email': _email!.trim(),
         'password': _password!.trim(),
@@ -62,14 +61,13 @@ class AuthController extends ChangeNotifier {
       await client.setConfig(enableGetToken: true);
 
       state = AuthState.success;
-      notifyListeners();
     } on Failure catch (failure) {
       _setFailure(ServerFailure(message: failure.message));
       state = AuthState.error;
-      notifyListeners();
     } catch (e) {
       _setFailure(UnknownError());
       state = AuthState.error;
+    } finally {
       notifyListeners();
     }
   }

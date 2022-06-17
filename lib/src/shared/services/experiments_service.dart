@@ -2,23 +2,11 @@
 import 'package:enzitech_app/src/shared/external/http_driver/dio_client.dart';
 import 'package:enzitech_app/src/shared/models/experiment_model.dart';
 
-abstract class IExperimentsService {
-  Future<List<ExperimentModel>> fetchExperiments();
-  Future<void> createExperiment(
-    String name,
-    String description,
-    int repetitions,
-    // List<String> processes,
-    // List<EnzymeModel> experimentsEnzymes,
-  );
-}
-
-class ExperimentsService implements IExperimentsService {
+class ExperimentsService {
   final DioClient client;
 
   ExperimentsService(this.client);
 
-  @override
   Future<List<ExperimentModel>> fetchExperiments() async {
     try {
       List<ExperimentModel> experiments = [];
@@ -36,7 +24,6 @@ class ExperimentsService implements IExperimentsService {
     }
   }
 
-  @override
   Future<void> createExperiment(
     String name,
     String description,

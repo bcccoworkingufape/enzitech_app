@@ -11,6 +11,7 @@ import 'package:enzitech_app/src/features/home/fragments/account/account_control
 import 'package:enzitech_app/src/features/home/fragments/account/account_page.dart';
 import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_controller.dart';
 import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_page.dart';
+import 'package:enzitech_app/src/features/home/fragments/treatments/treatments_controller.dart';
 import 'package:enzitech_app/src/features/home/fragments/treatments/treatments_page.dart';
 import 'package:enzitech_app/src/features/home/home_controller.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
@@ -26,6 +27,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late final HomeController controller;
   late final ExperimentsController experimentsController;
+  late final TreatmentsController treatmentsController;
   late final AccountController accountController;
 
   late List<Widget> _fragments;
@@ -35,11 +37,13 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     controller = context.read<HomeController>();
     experimentsController = context.read<ExperimentsController>();
+    treatmentsController = context.read<TreatmentsController>();
     accountController = context.read<AccountController>();
     initFragements();
     if (mounted) {
       Future.delayed(Duration.zero, () async {
         await experimentsController.loadExperiments();
+        await treatmentsController.loadTreatments();
         await accountController.loadAccount();
       });
       controller.addListener(() {
@@ -68,6 +72,50 @@ class _HomePageState extends State<HomePage> {
     ];
   }
 
+  Widget? get dealWithFloatingActionButton {
+    if (controller.fragmentIndex == 0) {
+      return FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.pushNamed(
+            context,
+            RouteGenerator.createExperiment,
+          );
+        },
+        label: Text(
+          "Cadastrar\nexperimento",
+          style: TextStyles.buttonBackground,
+        ),
+        icon: const Icon(
+          PhosphorIcons.pencilLine,
+          color: AppColors.white,
+          size: 30,
+        ),
+      );
+    }
+
+    if (controller.fragmentIndex == 1) {
+      return FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.pushNamed(
+            context,
+            RouteGenerator.createTreatment,
+          );
+        },
+        label: Text(
+          "Cadastrar\ntratamento",
+          style: TextStyles.buttonBackground,
+        ),
+        icon: const Icon(
+          PhosphorIcons.pencilLine,
+          color: AppColors.white,
+          size: 30,
+        ),
+      );
+    }
+
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     final controller = context.watch<HomeController>();
@@ -84,25 +132,7 @@ class _HomePageState extends State<HomePage> {
         create: (BuildContext context) {},
         child: _fragments[controller.fragmentIndex],
       ),
-      floatingActionButton: controller.fragmentIndex == 0
-          ? FloatingActionButton.extended(
-              onPressed: () {
-                Navigator.pushNamed(
-                  context,
-                  RouteGenerator.createExperiment,
-                );
-              },
-              label: Text(
-                "Cadastrar\nexperimento",
-                style: TextStyles.buttonBackground,
-              ),
-              icon: const Icon(
-                PhosphorIcons.pencilLine,
-                color: AppColors.white,
-                size: 30,
-              ),
-            )
-          : null,
+      floatingActionButton: dealWithFloatingActionButton,
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(

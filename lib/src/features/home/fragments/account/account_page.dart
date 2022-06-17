@@ -104,10 +104,13 @@ class _AccountPageState extends State<AccountPage> {
                         ),
                         value: Flexible(
                           flex: 2,
-                          child: Text(
-                            controller.email ?? 'Não definido',
-                            overflow: TextOverflow.ellipsis,
-                            style: customTextStyle,
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              controller.email ?? 'Não definido',
+                              overflow: TextOverflow.ellipsis,
+                              style: customTextStyle,
+                            ),
                           ),
                         ),
                       ),
