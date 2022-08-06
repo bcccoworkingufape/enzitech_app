@@ -1,4 +1,5 @@
 // 🐦 Flutter imports:
+import 'package:enzitech_app/src/shared/failures/failures.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -38,15 +39,17 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
     super.initState();
     controller = context.read<ExperimentsController>();
     if (mounted) {
-      controller.addListener(() {
-        if (controller.state == ExperimentsState.error) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(controller.failure!.message),
-            ),
-          );
-        }
-      });
+      controller.addListener(
+        () {
+          if (controller.state == ExperimentsState.error && mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(HandleFailure.of(controller.failure!)),
+              ),
+            );
+          }
+        },
+      );
     }
   }
 
