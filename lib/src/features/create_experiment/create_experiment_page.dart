@@ -1,4 +1,6 @@
 // 🐦 Flutter imports:
+import 'package:enzitech_app/src/shared/failures/failures.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -34,18 +36,21 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
     if (mounted) {
       controller.addListener(() {
         if (controller.state == CreateExperimentState.error) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(controller.failure!.message),
+          EZTSnackBar.show(
+            context,
+            HandleFailure.of(
+              controller.failure!,
+              enableStatusCode: true,
+              overrideDefaultMessage: true,
             ),
           );
         } else if (controller.state == CreateExperimentState.success) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text("Experimento criado com sucesso!"),
-              backgroundColor: AppColors.success,
-            ),
+          EZTSnackBar.show(
+            context,
+            "Experimento criado com sucesso!",
+            eztSnackBarType: EZTSnackBarType.success,
           );
+
           if (!mounted) return;
           Navigator.popAndPushNamed(
             context,

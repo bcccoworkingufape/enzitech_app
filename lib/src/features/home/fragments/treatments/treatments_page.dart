@@ -1,4 +1,6 @@
 // 🐦 Flutter imports:
+import 'package:enzitech_app/src/shared/failures/failures.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -31,15 +33,13 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
     super.initState();
     controller = context.read<TreatmentsController>();
     if (mounted) {
-      controller.addListener(() {
-        if (controller.state == TreatmentsState.error) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(controller.failure!.message),
-            ),
-          );
-        }
-      });
+      controller.addListener(
+        () {
+          if (controller.state == TreatmentsState.error) {
+            EZTSnackBar.show(context, HandleFailure.of(controller.failure!));
+          }
+        },
+      );
     }
   }
 

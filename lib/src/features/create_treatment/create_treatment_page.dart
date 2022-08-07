@@ -1,4 +1,6 @@
 // 🐦 Flutter imports:
+import 'package:enzitech_app/src/shared/failures/failures.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -37,18 +39,14 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
     if (mounted) {
       controller.addListener(() {
         if (controller.state == CreateTreatmentState.error) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(controller.failure!.message),
-            ),
-          );
+          EZTSnackBar.show(context, HandleFailure.of(controller.failure!));
         } else if (controller.state == CreateTreatmentState.success) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text("Tratamento criado com sucesso!"),
-              backgroundColor: AppColors.success,
-            ),
+          EZTSnackBar.show(
+            context,
+            "Tratamento criado com sucesso!",
+            eztSnackBarType: EZTSnackBarType.success,
           );
+
           if (!mounted) return;
           Navigator.pop(context);
         }

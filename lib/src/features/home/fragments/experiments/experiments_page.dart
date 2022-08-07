@@ -1,5 +1,5 @@
 // 🐦 Flutter imports:
-import 'package:enzitech_app/src/shared/failures/failures.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -11,6 +11,7 @@ import 'package:toggle_switch/toggle_switch.dart';
 import 'package:enzitech_app/src/features/home/fragments/experiments/components/experiment_card.dart';
 import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_controller.dart';
 import 'package:enzitech_app/src/features/home/home_controller.dart';
+import 'package:enzitech_app/src/shared/failures/failures.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:enzitech_app/src/shared/validator/validator.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_pull_to_refresh.dart';
@@ -42,11 +43,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
       controller.addListener(
         () {
           if (controller.state == ExperimentsState.error && mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(HandleFailure.of(controller.failure!)),
-              ),
-            );
+            EZTSnackBar.show(context, HandleFailure.of(controller.failure!));
           }
         },
       );

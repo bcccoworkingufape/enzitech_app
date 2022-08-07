@@ -34,12 +34,8 @@ class CreateTreatmentController extends ChangeNotifier {
 
       state = CreateTreatmentState.success;
       notifyListeners();
-    } on Failure catch (failure) {
-      _setFailure(ServerFailure(message: failure.message));
-      state = CreateTreatmentState.error;
-      notifyListeners();
     } catch (e) {
-      _setFailure(UnknownError());
+      _setFailure(e as Failure);
       state = CreateTreatmentState.error;
       notifyListeners();
     }

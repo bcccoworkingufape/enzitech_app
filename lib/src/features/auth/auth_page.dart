@@ -1,4 +1,6 @@
 // 🐦 Flutter imports:
+import 'package:enzitech_app/src/shared/failures/failures.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -35,17 +37,18 @@ class AuthPageState extends State<AuthPage> {
     if (mounted) {
       controller.addListener(() async {
         if (controller.state == AuthState.error) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(controller.failure!.message),
+          EZTSnackBar.show(
+            context,
+            HandleFailure.of(
+              controller.failure!,
+              overrideDefaultMessage: true,
             ),
           );
         } else if (controller.state == AuthState.success && mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text("Bem vindo(a) ${controller.loggedName}!"),
-              backgroundColor: AppColors.success,
-            ),
+          EZTSnackBar.show(
+            context,
+            "Bem vindo(a) ${controller.loggedName}!",
+            eztSnackBarType: EZTSnackBarType.success,
           );
 
           if (mounted) {

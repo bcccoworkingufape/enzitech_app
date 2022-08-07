@@ -44,12 +44,8 @@ class AccountController extends ChangeNotifier {
 
       state = AccountState.success;
       notifyListeners();
-    } on Failure catch (failure) {
-      _setFailure(ServerFailure(message: failure.message));
-      state = AccountState.error;
-      notifyListeners();
     } catch (e) {
-      _setFailure(UnknownError());
+      _setFailure(e as Failure);
       state = AccountState.error;
       notifyListeners();
     }
@@ -63,12 +59,8 @@ class AccountController extends ChangeNotifier {
       await loadEmail();
 
       notifyListeners();
-    } on Failure catch (failure) {
-      _setFailure(ServerFailure(message: failure.message));
-      state = AccountState.error;
-      notifyListeners();
     } catch (e) {
-      _setFailure(UnknownError());
+      _setFailure(e as Failure);
       state = AccountState.error;
       notifyListeners();
     }
@@ -83,12 +75,8 @@ class AccountController extends ChangeNotifier {
 
       state = AccountState.success;
       notifyListeners();
-    } on Failure catch (failure) {
-      _setFailure(ServerFailure(message: failure.message));
-      state = AccountState.error;
-      notifyListeners();
     } catch (e) {
-      _setFailure(UnknownError());
+      _setFailure(e as Failure);
       state = AccountState.error;
       notifyListeners();
     }
@@ -104,12 +92,8 @@ class AccountController extends ChangeNotifier {
 
       state = AccountState.success;
       notifyListeners();
-    } on Failure catch (failure) {
-      _setFailure(ServerFailure(message: failure.message));
-      state = AccountState.error;
-      notifyListeners();
     } catch (e) {
-      _setFailure(UnknownError());
+      _setFailure(e as Failure);
       state = AccountState.error;
       notifyListeners();
     }
