@@ -61,11 +61,8 @@ class AuthController extends ChangeNotifier {
       await client.setConfig(enableGetToken: true);
 
       state = AuthState.success;
-    } on Failure catch (failure) {
-      _setFailure(ServerFailure(message: failure.message));
-      state = AuthState.error;
     } catch (e) {
-      _setFailure(UnknownError());
+      _setFailure(e as Failure);
       state = AuthState.error;
     } finally {
       notifyListeners();

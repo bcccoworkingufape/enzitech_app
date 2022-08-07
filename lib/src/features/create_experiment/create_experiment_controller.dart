@@ -44,12 +44,8 @@ class CreateExperimentController extends ChangeNotifier {
 
       state = CreateExperimentState.success;
       notifyListeners();
-    } on Failure catch (failure) {
-      _setFailure(ServerFailure(message: failure.message));
-      state = CreateExperimentState.error;
-      notifyListeners();
     } catch (e) {
-      _setFailure(UnknownError());
+      _setFailure(e as Failure);
       state = CreateExperimentState.error;
       notifyListeners();
     }

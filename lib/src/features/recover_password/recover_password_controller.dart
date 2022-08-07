@@ -36,12 +36,8 @@ class RecoverPasswordController extends ChangeNotifier {
       await authService.recoverPassword(email!);
 
       notifyListeners();
-    } on Failure catch (failure) {
-      _setFailure(ServerFailure(message: failure.message));
-      state = RecoverPasswordState.error;
-      notifyListeners();
     } catch (e) {
-      _setFailure(UnknownError());
+      _setFailure(e as Failure);
       state = RecoverPasswordState.error;
       notifyListeners();
     }

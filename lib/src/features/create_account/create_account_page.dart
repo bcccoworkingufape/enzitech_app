@@ -1,4 +1,6 @@
 // 🐦 Flutter imports:
+import 'package:enzitech_app/src/shared/failures/failures.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -40,19 +42,21 @@ class CreateAccountPageState extends State<CreateAccountPage> {
     userDataCache.updateAll((key, value) => '');
     if (mounted) {
       controller.addListener(() {
-        if (controller.state == CreateAccountState.error) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(controller.failure!.message),
+        if (controller.state == CreateAccountState.error && mounted) {
+          EZTSnackBar.show(
+            context,
+            HandleFailure.of(
+              controller.failure!,
+              overrideDefaultMessage: true,
             ),
           );
         } else if (controller.state == CreateAccountState.success) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text("Conta criada com sucesso!"),
-              backgroundColor: AppColors.success,
-            ),
+          EZTSnackBar.show(
+            context,
+            "Conta criada com sucesso!",
+            eztSnackBarType: EZTSnackBarType.success,
           );
+
           Navigator.pushNamedAndRemoveUntil(
             context,
             RouteGenerator.auth,

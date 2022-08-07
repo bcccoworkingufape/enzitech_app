@@ -1,4 +1,6 @@
 // 🐦 Flutter imports:
+import 'package:enzitech_app/src/shared/failures/failures.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -38,19 +40,11 @@ class _AccountPageState extends State<AccountPage> {
     if (mounted) {
       controller.addListener(() async {
         if (controller.state == AccountState.error) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(controller.failure!.message),
-            ),
-          );
+          EZTSnackBar.show(context, HandleFailure.of(controller.failure!));
         }
 
         if (controller.state == AccountState.success && mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text("Até logo..."),
-            ),
-          );
+          EZTSnackBar.show(context, "Até logo...");
           await Future.delayed(const Duration(milliseconds: 500));
           if (mounted) {
             Navigator.pushReplacementNamed(context, RouteGenerator.auth);

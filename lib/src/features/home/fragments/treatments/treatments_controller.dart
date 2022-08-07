@@ -62,12 +62,8 @@ class TreatmentsController extends ChangeNotifier {
 
       state = TreatmentsState.success;
       notifyListeners();
-    } on Failure catch (failure) {
-      _setFailure(ServerFailure(message: failure.message));
-      state = TreatmentsState.error;
-      notifyListeners();
     } catch (e) {
-      _setFailure(UnknownError());
+      _setFailure(e as Failure);
       state = TreatmentsState.error;
       notifyListeners();
     }

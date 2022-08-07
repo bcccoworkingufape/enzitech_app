@@ -36,12 +36,8 @@ class CreateAccountController extends ChangeNotifier {
 
       state = CreateAccountState.success;
       notifyListeners();
-    } on Failure catch (failure) {
-      _setFailure(ServerFailure(message: failure.message));
-      state = CreateAccountState.error;
-      notifyListeners();
     } catch (e) {
-      _setFailure(UnknownError());
+      _setFailure(e as Failure);
       state = CreateAccountState.error;
       notifyListeners();
     }

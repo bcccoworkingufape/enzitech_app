@@ -1,4 +1,6 @@
 // 🐦 Flutter imports:
+import 'package:enzitech_app/src/shared/failures/failures.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -38,17 +40,15 @@ class RecoverPasswordPageState extends State<RecoverPasswordPage> {
     }
 
     if (mounted) {
-      controller.addListener(() {
-        if (controller.state == RecoverPasswordState.error) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(controller.failure!.message),
-            ),
-          );
-        } else if (controller.state == AuthState.success) {
-          Navigator.pushReplacementNamed(context, RouteGenerator.home);
-        }
-      });
+      controller.addListener(
+        () {
+          if (controller.state == RecoverPasswordState.error) {
+            EZTSnackBar.show(context, HandleFailure.of(controller.failure!));
+          } else if (controller.state == AuthState.success) {
+            Navigator.pushReplacementNamed(context, RouteGenerator.home);
+          }
+        },
+      );
     }
   }
 
