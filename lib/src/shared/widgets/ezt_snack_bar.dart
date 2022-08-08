@@ -1,6 +1,8 @@
 // 🐦 Flutter imports:
-import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:flutter/material.dart';
+
+// 🌎 Project imports:
+import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 
 // 📦 Package imports:
 
