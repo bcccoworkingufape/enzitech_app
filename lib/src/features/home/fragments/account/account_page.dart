@@ -40,7 +40,11 @@ class _AccountPageState extends State<AccountPage> {
     if (mounted) {
       controller.addListener(() async {
         if (controller.state == AccountState.error) {
-          EZTSnackBar.show(context, HandleFailure.of(controller.failure!));
+          EZTSnackBar.show(
+            context,
+            HandleFailure.of(controller.failure!),
+            eztSnackBarType: EZTSnackBarType.error,
+          );
         }
 
         if (controller.state == AccountState.success && mounted) {

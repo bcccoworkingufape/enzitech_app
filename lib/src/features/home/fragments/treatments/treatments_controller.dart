@@ -34,31 +34,32 @@ class TreatmentsController extends ChangeNotifier {
     notifyListeners();
     try {
       final treatmentsList = await treatmentsService.fetchTreatments();
-      // _setTreatments(treatmentsList); TODO: mudar quando a API retornar dados
+      _setTreatments(
+          treatmentsList); //* TODO: mudar quando a API retornar dados
 
-      _setTreatments([
-        TreatmentModel(
-          id: '1',
-          name: 'Tratamento 1',
-          description: 'Descrição do tratamento 1',
-          createdAt: DateTime.now(),
-          updatedAt: DateTime.now(),
-        ),
-        TreatmentModel(
-          id: '2',
-          name: 'Tratamento 2',
-          description: 'Descrição do tratamento 2',
-          createdAt: DateTime.now(),
-          updatedAt: DateTime.now(),
-        ),
-        TreatmentModel(
-          id: '3',
-          name: 'Tratamento 3',
-          description: 'Descrição do tratamento 3',
-          createdAt: DateTime.now(),
-          updatedAt: DateTime.now(),
-        ),
-      ]);
+      // _setTreatments([
+      //   TreatmentModel(
+      //     id: '1',
+      //     name: 'Tratamento 1',
+      //     description: 'Descrição do tratamento 1',
+      //     createdAt: DateTime.now(),
+      //     updatedAt: DateTime.now(),
+      //   ),
+      //   TreatmentModel(
+      //     id: '2',
+      //     name: 'Tratamento 2',
+      //     description: 'Descrição do tratamento 2',
+      //     createdAt: DateTime.now(),
+      //     updatedAt: DateTime.now(),
+      //   ),
+      //   TreatmentModel(
+      //     id: '3',
+      //     name: 'Tratamento 3',
+      //     description: 'Descrição do tratamento 3',
+      //     createdAt: DateTime.now(),
+      //     updatedAt: DateTime.now(),
+      //   ),
+      // ]);
 
       state = TreatmentsState.success;
       notifyListeners();

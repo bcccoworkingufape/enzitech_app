@@ -12,7 +12,6 @@ import 'package:enzitech_app/src/features/create_experiment/widgets/create_exper
 import 'package:enzitech_app/src/features/create_experiment/widgets/create_experiment_third_step.dart';
 import 'package:enzitech_app/src/shared/failures/failures.dart';
 import 'package:enzitech_app/src/shared/routes/route_generator.dart';
-import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
 
 class CreateExperimentPage extends StatefulWidget {
@@ -43,6 +42,7 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
               enableStatusCode: true,
               overrideDefaultMessage: true,
             ),
+            eztSnackBarType: EZTSnackBarType.error,
           );
         } else if (controller.state == CreateExperimentState.success) {
           EZTSnackBar.show(

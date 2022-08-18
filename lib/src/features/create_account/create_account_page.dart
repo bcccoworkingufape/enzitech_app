@@ -10,7 +10,6 @@ import 'package:enzitech_app/src/features/create_account/widgets/create_account_
 import 'package:enzitech_app/src/features/create_account/widgets/create_account_second_step.dart';
 import 'package:enzitech_app/src/shared/failures/failures.dart';
 import 'package:enzitech_app/src/shared/routes/route_generator.dart';
-import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
 
 class CreateAccountPage extends StatefulWidget {
@@ -49,6 +48,7 @@ class CreateAccountPageState extends State<CreateAccountPage> {
               controller.failure!,
               overrideDefaultMessage: true,
             ),
+            eztSnackBarType: EZTSnackBarType.error,
           );
         } else if (controller.state == CreateAccountState.success) {
           EZTSnackBar.show(
