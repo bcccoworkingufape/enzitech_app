@@ -51,7 +51,11 @@ class _HomePageState extends State<HomePage> {
       controller.addListener(
         () {
           if (controller.state == HomeState.error) {
-            EZTSnackBar.show(context, HandleFailure.of(controller.failure!));
+            EZTSnackBar.show(
+              context,
+              HandleFailure.of(controller.failure!),
+              eztSnackBarType: EZTSnackBarType.error,
+            );
           }
         },
       );

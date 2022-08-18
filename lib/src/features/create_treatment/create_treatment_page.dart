@@ -39,7 +39,11 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
     if (mounted) {
       controller.addListener(() {
         if (controller.state == CreateTreatmentState.error) {
-          EZTSnackBar.show(context, HandleFailure.of(controller.failure!));
+          EZTSnackBar.show(
+            context,
+            HandleFailure.of(controller.failure!),
+            eztSnackBarType: EZTSnackBarType.error,
+          );
         } else if (controller.state == CreateTreatmentState.success) {
           EZTSnackBar.show(
             context,

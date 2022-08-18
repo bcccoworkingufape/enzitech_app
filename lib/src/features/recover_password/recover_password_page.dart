@@ -43,7 +43,11 @@ class RecoverPasswordPageState extends State<RecoverPasswordPage> {
       controller.addListener(
         () {
           if (controller.state == RecoverPasswordState.error) {
-            EZTSnackBar.show(context, HandleFailure.of(controller.failure!));
+            EZTSnackBar.show(
+              context,
+              HandleFailure.of(controller.failure!),
+              eztSnackBarType: EZTSnackBarType.error,
+            );
           } else if (controller.state == AuthState.success) {
             Navigator.pushReplacementNamed(context, RouteGenerator.home);
           }

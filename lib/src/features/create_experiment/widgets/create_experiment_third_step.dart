@@ -7,6 +7,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/create_experiment/create_experiment_controller.dart';
+import 'package:provider/provider.dart';
 import '../../../shared/themes/app_complete_theme.dart';
 import '../../../shared/util/constants.dart';
 import '../../../shared/widgets/ezt_button.dart';
@@ -31,6 +32,13 @@ class CreateExperimentThirdStepPage extends StatefulWidget {
 class _CreateExperimentThirdStepPageState
     extends State<CreateExperimentThirdStepPage> {
   late final CreateExperimentController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = context.read<CreateExperimentController>();
+    controller.loadEnzymes();
+  }
 
   bool enableNextButton = false;
 

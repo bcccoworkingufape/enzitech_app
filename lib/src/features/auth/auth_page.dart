@@ -43,6 +43,7 @@ class AuthPageState extends State<AuthPage> {
               controller.failure!,
               overrideDefaultMessage: true,
             ),
+            eztSnackBarType: EZTSnackBarType.error,
           );
         } else if (controller.state == AuthState.success && mounted) {
           EZTSnackBar.show(

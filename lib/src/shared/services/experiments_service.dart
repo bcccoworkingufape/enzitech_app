@@ -1,11 +1,29 @@
 // 🌎 Project imports:
 import 'package:enzitech_app/src/shared/external/http_driver/dio_client.dart';
+import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
 import 'package:enzitech_app/src/shared/models/experiment_model.dart';
 
 class ExperimentsService {
   final DioClient client;
 
   ExperimentsService(this.client);
+
+  Future<List<EnzymeModel>> fetchEnzymes() async {
+    try {
+      List<EnzymeModel> experiments = [];
+      var res = await client.get(
+        "/enzymes",
+      );
+
+      res.data["enzymes"].forEach((experiment) {
+        experiments.add(EnzymeModel.fromMap(experiment));
+      });
+
+      return experiments;
+    } catch (e) {
+      rethrow;
+    }
+  }
 
   Future<List<ExperimentModel>> fetchExperiments() async {
     try {

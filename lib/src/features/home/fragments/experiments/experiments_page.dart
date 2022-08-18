@@ -1,4 +1,6 @@
 // 🐦 Flutter imports:
+import 'package:enzitech_app/src/features/home/fragments/account/account_controller.dart';
+import 'package:enzitech_app/src/shared/routes/route_generator.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -41,9 +43,28 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
     controller = context.read<ExperimentsController>();
     if (mounted) {
       controller.addListener(
-        () {
+        () async {
           if (controller.state == ExperimentsState.error && mounted) {
-            EZTSnackBar.show(context, HandleFailure.of(controller.failure!));
+            EZTSnackBar.clear(context);
+            EZTSnackBar.show(
+              context,
+              HandleFailure.of(controller.failure!),
+              eztSnackBarType: EZTSnackBarType.error,
+            );
+            var accountController = context.read<AccountController>();
+            accountController.logout();
+
+            if (accountController.state == AccountState.success && mounted) {
+              EZTSnackBar.show(
+                context,
+                "Faça seu login novamente.",
+              );
+              await Future.delayed(const Duration(milliseconds: 500));
+              if (mounted) {
+                Navigator.pushReplacementNamed(context, RouteGenerator.auth);
+                widget.homeController.setFragmentIndex(0);
+              }
+            }
           }
         },
       );

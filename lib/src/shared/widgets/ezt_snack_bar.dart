@@ -108,4 +108,10 @@ class EZTSnackBar {
       instance._eztSnackBarType(context, message, eztSnackBarType),
     );
   }
+
+  static clear(
+    BuildContext context,
+  ) {
+    ScaffoldMessenger.of(context).clearSnackBars();
+  }
 }

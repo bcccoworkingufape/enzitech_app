@@ -1,4 +1,5 @@
 // 🐦 Flutter imports:
+import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
@@ -29,6 +30,29 @@ class CreateExperimentController extends ChangeNotifier {
   //   _experimentRequestModel = experimentRequestModel;
   //   notifyListeners();
   // }
+
+  List<EnzymeModel> _enzymes = [];
+  List<EnzymeModel> get enzymes => _enzymes;
+  void _setEnzymes(List<EnzymeModel> enzymes) {
+    _enzymes = enzymes;
+    notifyListeners();
+  }
+
+  Future<void> loadEnzymes() async {
+    state = CreateExperimentState.loading;
+    notifyListeners();
+    try {
+      final enzymesList = await experimentService.fetchEnzymes();
+      _setEnzymes(enzymesList);
+
+      state = CreateExperimentState.success;
+      notifyListeners();
+    } catch (e) {
+      _setFailure(e as Failure);
+      state = CreateExperimentState.error;
+      notifyListeners();
+    }
+  }
 
   Future<void> createExperiment(
     String name,
