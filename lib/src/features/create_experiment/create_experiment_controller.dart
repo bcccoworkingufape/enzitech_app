@@ -14,6 +14,7 @@ class CreateExperimentController extends ChangeNotifier {
   CreateExperimentController(this.experimentService);
 
   var state = CreateExperimentState.idle;
+  var experimentCreated = false;
 
   Failure? _failure;
   Failure? get failure => _failure;
@@ -67,6 +68,7 @@ class CreateExperimentController extends ChangeNotifier {
       await experimentService.createExperiment(name, description, repetitions);
 
       state = CreateExperimentState.success;
+      experimentCreated = true;
       notifyListeners();
     } catch (e) {
       _setFailure(e as Failure);

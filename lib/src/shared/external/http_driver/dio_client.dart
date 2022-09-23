@@ -58,8 +58,8 @@ class DioClient {
     dio.options.headers.addAll(
       {
         'content-type': "application/json; charset=utf-8",
-        'x-api-key':
-            '${httpDriverOptions.accessTokenType} ${httpDriverOptions.apiKey}',
+        // 'x-api-key':
+        //     '${httpDriverOptions.accessTokenType} ${httpDriverOptions.apiKey}',
         'Authorization': '${httpDriverOptions.accessTokenType} $gettedToken',
       },
     );

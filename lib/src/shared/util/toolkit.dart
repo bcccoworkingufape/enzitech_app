@@ -107,4 +107,11 @@ class Toolkit {
       limitSum++;
     });
   }
+
+  static dynamic encodeDateTime(dynamic item) {
+    if (item is DateTime) {
+      return item.toIso8601String();
+    }
+    return item;
+  }
 }

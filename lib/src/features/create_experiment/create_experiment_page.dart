@@ -44,7 +44,8 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
             ),
             eztSnackBarType: EZTSnackBarType.error,
           );
-        } else if (controller.state == CreateExperimentState.success) {
+        } else if (controller.state == CreateExperimentState.success &&
+            controller.experimentCreated) {
           EZTSnackBar.show(
             context,
             "Experimento criado com sucesso!",
@@ -61,18 +62,30 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
     }
   }
 
-  var experimentDataCache = {
+  // var experimentDataCache = {
+  //   "name": "",
+  //   "description": "",
+  //   "treatment": "",
+  //   "repetitions": "",
+  //   "enzymeSelection": "",
+  //   "varA": "",
+  //   "varB": "",
+  //   "var1": "",
+  //   "var2": "",
+  //   "var3": "",
+  //   "var4": "",
+  //   "enableNextButton1": "",
+  //   "enableNextButton2": "",
+  //   "enableNextButton3": "",
+  //   "createExperimentButton": "",
+  // };
+
+  var experimentDataCacheParaMudar = {
     "name": "",
     "description": "",
-    "treatment": "",
     "repetitions": "",
-    "enzymeSelection": "",
-    "varA": "",
-    "varB": "",
-    "var1": "",
-    "var2": "",
-    "var3": "",
-    "var4": "",
+    "processes": [].toString(),
+    "experimentsEnzymes": [].toString(),
     "enableNextButton1": "",
     "enableNextButton2": "",
     "enableNextButton3": "",
@@ -91,22 +104,22 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
             CreateExperimentFirstStepPage(
               pageController: _pageController,
               formKey: _formKey,
-              experimentDataCache: experimentDataCache,
+              experimentDataCache: experimentDataCacheParaMudar,
             ),
             CreateExperimentSecondStepPage(
               pageController: _pageController,
               formKey: _formKey,
-              experimentDataCache: experimentDataCache,
+              experimentDataCache: experimentDataCacheParaMudar,
             ),
             CreateExperimentThirdStepPage(
               pageController: _pageController,
               formKey: _formKey,
-              experimentDataCache: experimentDataCache,
+              experimentDataCache: experimentDataCacheParaMudar,
             ),
             CreateExperimentFourthStepPage(
               pageController: _pageController,
               formKey: _formKey,
-              experimentDataCache: experimentDataCache,
+              experimentDataCache: experimentDataCacheParaMudar,
             ),
           ],
         ),

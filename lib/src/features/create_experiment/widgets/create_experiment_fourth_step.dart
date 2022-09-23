@@ -14,6 +14,7 @@ import '../../../shared/validator/field_validator.dart';
 import '../../../shared/widgets/ezt_button.dart';
 import '../../../shared/widgets/ezt_textfield.dart';
 
+// TODO: REDO 4th STEP
 class CreateExperimentFourthStepPage extends StatefulWidget {
   const CreateExperimentFourthStepPage({
     Key? key,
@@ -48,6 +49,7 @@ class _CreateExperimentFourthStepPageState
   void initState() {
     super.initState();
     controller = context.read<CreateExperimentController>();
+    // initFieldControllerTexts();
   }
 
   void initFieldControllerTexts() {
@@ -87,7 +89,7 @@ class _CreateExperimentFourthStepPageState
         enableNextButton = widget.formKey.currentState!.validate();
       });
 
-      initFieldControllerTexts();
+      // initFieldControllerTexts();
     } else {
       setState(() {
         enableNextButton = false;
@@ -320,18 +322,18 @@ class _CreateExperimentFourthStepPageState
           onPressed: () async {
             widget.formKey.currentState!.save();
 
-            widget.experimentDataCache
-                .update('varA', (value) => _aFieldController.text);
-            widget.experimentDataCache
-                .update('varB', (value) => _bFieldController.text);
-            widget.experimentDataCache
-                .update('var1', (value) => _v1FieldController.text);
-            widget.experimentDataCache
-                .update('var2', (value) => _v2FieldController.text);
-            widget.experimentDataCache
-                .update('var3', (value) => _v3FieldController.text);
-            widget.experimentDataCache
-                .update('var4', (value) => _v4FieldController.text);
+            // widget.experimentDataCache
+            //     .update('varA', (value) => _aFieldController.text);
+            // widget.experimentDataCache
+            //     .update('varB', (value) => _bFieldController.text);
+            // widget.experimentDataCache
+            //     .update('var1', (value) => _v1FieldController.text);
+            // widget.experimentDataCache
+            //     .update('var2', (value) => _v2FieldController.text);
+            // widget.experimentDataCache
+            //     .update('var3', (value) => _v3FieldController.text);
+            // widget.experimentDataCache
+            //     .update('var4', (value) => _v4FieldController.text);
             widget.experimentDataCache
                 .update('createExperimentButton', (value) => 'true');
 

@@ -15,7 +15,7 @@ class ExperimentsService {
         "/enzymes",
       );
 
-      res.data["enzymes"].forEach((experiment) {
+      res.data.forEach((experiment) {
         experiments.add(EnzymeModel.fromMap(experiment));
       });
 

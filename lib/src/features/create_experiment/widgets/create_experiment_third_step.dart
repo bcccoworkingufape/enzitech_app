@@ -1,8 +1,13 @@
 // 🐦 Flutter imports:
+import 'dart:convert';
+import 'dart:developer';
+
+import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:flutter_svg/svg.dart';
+import 'package:group_button/group_button.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 // 🌎 Project imports:
@@ -10,7 +15,9 @@ import 'package:enzitech_app/src/features/create_experiment/create_experiment_co
 import 'package:provider/provider.dart';
 import '../../../shared/themes/app_complete_theme.dart';
 import '../../../shared/util/constants.dart';
+import '../../../shared/util/util.dart';
 import '../../../shared/widgets/ezt_button.dart';
+import '../../../shared/widgets/ezt_checkbox_tile.dart';
 
 class CreateExperimentThirdStepPage extends StatefulWidget {
   const CreateExperimentThirdStepPage({
@@ -32,24 +39,33 @@ class CreateExperimentThirdStepPage extends StatefulWidget {
 class _CreateExperimentThirdStepPageState
     extends State<CreateExperimentThirdStepPage> {
   late final CreateExperimentController controller;
+  late GroupButtonController _checkboxesController;
+  late final _checkboxButtons = [];
+  final _choosedCheckboxList = <EnzymeModel>[];
 
   @override
   void initState() {
     super.initState();
     controller = context.read<CreateExperimentController>();
-    controller.loadEnzymes();
+
+    Future.delayed(Duration.zero, () async {
+      controller.loadEnzymes().whenComplete(
+            () => controller.enzymes.forEach(
+              (enz) {
+                _checkboxButtons.add(enz.name);
+              },
+            ),
+          );
+    });
+
+    _checkboxesController = GroupButtonController();
+
+    super.initState();
   }
 
   bool enableNextButton = false;
 
   //TODO: Integrar API para obter as enzimas
-
-  final List<Map> _enzymeSelection = [
-    {"name": "Enzima 1", "isChecked": false},
-    {"name": "Enzima 2", "isChecked": false},
-    {"name": "Enzima 3", "isChecked": false},
-    {"name": "Enzima 4", "isChecked": false},
-  ];
 
   Widget get _body {
     return SingleChildScrollView(
@@ -87,39 +103,96 @@ class _CreateExperimentThirdStepPageState
               ),
             ],
           ),
-          const SizedBox(height: 40),
-          _checkBoxListTile,
-          const SizedBox(height: 64),
+          Visibility(
+            visible: controller.state == CreateExperimentState.loading,
+            replacement: GroupButton(
+              controller: _checkboxesController,
+              isRadio: false,
+              options: const GroupButtonOptions(
+                groupingType: GroupingType.column,
+              ),
+              buttons: _checkboxButtons,
+              buttonIndexedBuilder: (selected, index, context) {
+                return EZTCheckBoxTile(
+                  title: _checkboxButtons[index],
+                  selected: selected,
+                  onTap: () {
+                    if (!selected) {
+                      _checkboxesController.selectIndex(index);
+                      _choosedCheckboxList.add(controller.enzymes[index]);
+                      log(_choosedCheckboxList.toString());
+                      setState(() {
+                        enableNextButton = _choosedCheckboxList.isNotEmpty;
+                      });
+
+                      return;
+                    }
+                    _checkboxesController.unselectIndex(index);
+                    _choosedCheckboxList.remove(controller.enzymes[index]);
+                    setState(() {
+                      enableNextButton = _choosedCheckboxList.isNotEmpty;
+                    });
+
+                    log(_choosedCheckboxList.toString());
+                  },
+                );
+              },
+              onSelected: (val, i, selected) =>
+                  debugPrint('Button: $val index: $i $selected'),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(64),
+              child: Column(
+                children: const [
+                  CircularProgressIndicator(),
+                  SizedBox(
+                    height: 24,
+                  ),
+                  Text("Carregando enzimas..."),
+                ],
+              ),
+            ),
+          ),
+          // const SizedBox(height: 40),
+          // _checkBoxListTile,
+          // const SizedBox(height: 64),
         ],
       ),
     );
   }
 
-  Widget get _checkBoxListTile {
-    return Column(
-      children: _enzymeSelection.map((enzyme) {
-        return CheckboxListTile(
-            value: enzyme["isChecked"],
-            title: Text(enzyme["name"], style: TextStyles.titleBoldHeading),
-            controlAffinity: ListTileControlAffinity.leading,
-            onChanged: (newValue) {
-              setState(() {
-                enzyme["isChecked"] = newValue;
-                for (int i = 0; i < _enzymeSelection.length; i++) {
-                  if (_enzymeSelection[i]["isChecked"]) {
-                    enableNextButton = true;
-                    break;
-                  } else if (i == _enzymeSelection.length - 1) {
-                    enableNextButton = false;
-                  }
-                }
-              });
-            });
-      }).toList(),
-    );
-  }
+  // Widget get _checkBoxListTile {
+  //   return Column(
+  //     children: _enzymeSelection.map((enzyme) {
+  //       return CheckboxListTile(
+  //           dense: true,
+  //           contentPadding: const EdgeInsets.all(0),
+  //           value: enzyme["isChecked"],
+  //           title: Text(enzyme["name"], style: TextStyles.titleBoldHeading),
+  //           controlAffinity: ListTileControlAffinity.leading,
+  //           onChanged: (newValue) {
+  //             setState(() {
+  //               enzyme["isChecked"] = newValue;
+  //               for (int i = 0; i < _enzymeSelection.length; i++) {
+  //                 if (_enzymeSelection[i]["isChecked"]) {
+  //                   enableNextButton = true;
+  //                   break;
+  //                 } else if (i == _enzymeSelection.length - 1) {
+  //                   enableNextButton = false;
+  //                 }
+  //               }
+  //             });
+  //           });
+  //     }).toList(),
+  //   );
+  // }
 
   Widget get _buttons {
+    var _choosedCheckboxListFormatted = [];
+    _choosedCheckboxList.forEach((element) {
+      _choosedCheckboxListFormatted.add(element.toMap());
+    });
+
     return Column(
       children: [
         EZTButton(
@@ -129,7 +202,10 @@ class _CreateExperimentThirdStepPageState
             widget.formKey.currentState!.save();
 
             widget.experimentDataCache.update(
-                'enzymeSelection', (value) => _enzymeSelection.toString());
+              'experimentsEnzymes',
+              (value) => json.encode(_choosedCheckboxListFormatted,
+                  toEncodable: Toolkit.encodeDateTime),
+            );
             widget.experimentDataCache
                 .update('enableNextButton3', (value) => 'true');
 
@@ -157,6 +233,8 @@ class _CreateExperimentThirdStepPageState
 
   @override
   Widget build(BuildContext context) {
+    context.watch<CreateExperimentController>();
+
     return Column(
       children: [
         Expanded(

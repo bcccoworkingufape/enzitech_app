@@ -7,11 +7,19 @@ class HandleFailure {
     bool enableStatusCode = false,
     bool overrideDefaultMessage = false,
   }) {
+    // EZT custom error when API is down
+    if (failure is ServerFailure) {
+      if (failure.message.contains("Connection refused")) {
+        return "⚠ Erro de Servidor, tente novamente mais tarde.";
+      }
+    }
+
     if (overrideDefaultMessage) {
       return enableStatusCode
           ? "⚠ SC${failure.key} - ${failure.message}"
           : "⚠ ${failure.message}";
     }
+
     switch (failure.key) {
       case 400:
         return "⚠ Dados incorretos: Algum campo inválido ou ausente.";

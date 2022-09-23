@@ -2,65 +2,65 @@
 import 'dart:convert';
 
 class EnzymeModel {
-  String enzyme;
+  String id;
+  String name;
   double variableA;
   double variableB;
-  double duration;
-  double weightSample;
-  double weightGround;
-  double size;
+  String type;
+  DateTime createdAt;
+  DateTime updatedAt;
 
   EnzymeModel({
-    required this.enzyme,
+    required this.id,
+    required this.name,
     required this.variableA,
     required this.variableB,
-    required this.duration,
-    required this.weightSample,
-    required this.weightGround,
-    required this.size,
+    required this.type,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   EnzymeModel copyWith(
-    String enzyme,
+    String id,
+    String name,
     double variableA,
     double variableB,
-    double duration,
-    double weightSample,
-    double weightGround,
-    double size,
+    String type,
+    DateTime createdAt,
+    DateTime updatedAt,
   ) {
     return EnzymeModel(
-      enzyme: enzyme,
+      id: id,
+      name: name,
       variableA: variableA,
       variableB: variableB,
-      duration: duration,
-      weightSample: weightSample,
-      weightGround: weightGround,
-      size: size,
+      type: type,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'enzyme': enzyme,
+      'id': id,
+      'name': name,
       'variableA': variableA,
       'variableB': variableB,
-      'duration': duration,
-      'weightSample': weightSample,
-      'weightGround': weightGround,
-      'size': size,
+      'type': type,
+      'createdAt': createdAt,
+      'updatedAt': updatedAt,
     };
   }
 
   factory EnzymeModel.fromMap(Map<String, dynamic> map) {
     return EnzymeModel(
-      enzyme: map['enzyme'],
-      variableA: map['variableA'],
-      variableB: map['variableB'],
-      duration: map['duration'],
-      weightSample: map['weightSample'],
-      weightGround: map['weightGround'],
-      size: map['size'],
+      id: map['id'],
+      name: map['name'],
+      variableA: double.parse(map['variableA']),
+      variableB: double.parse(map['variableB']),
+      type: map['type'],
+      createdAt: DateTime.parse(map['createdAt']),
+      updatedAt: DateTime.parse(map['updatedAt']),
     );
   }
 
@@ -68,4 +68,9 @@ class EnzymeModel {
 
   factory EnzymeModel.fromJson(String source) =>
       EnzymeModel.fromMap(json.decode(source));
+
+  @override
+  String toString() {
+    return "{id: $id, name: $name, variableA: $variableA, variableB: $variableB, type: $type}";
+  }
 }
