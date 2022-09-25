@@ -59,13 +59,19 @@ class CreateExperimentController extends ChangeNotifier {
     String name,
     String description,
     int repetitions,
-    // List<String> processes,
-    // List<EnzymeModel> experimentsEnzymes,
+    List<String> processes,
+    List<EnzymeModel> experimentsEnzymes,
   ) async {
     state = CreateExperimentState.loading;
     notifyListeners();
     try {
-      await experimentService.createExperiment(name, description, repetitions);
+      await experimentService.createExperiment(
+        name,
+        description,
+        repetitions,
+        processes,
+        experimentsEnzymes,
+      );
 
       state = CreateExperimentState.success;
       experimentCreated = true;

@@ -1,4 +1,6 @@
 // 🌎 Project imports:
+import 'dart:convert';
+
 import 'package:enzitech_app/src/shared/external/http_driver/dio_client.dart';
 import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
 import 'package:enzitech_app/src/shared/models/experiment_model.dart';
@@ -46,10 +48,14 @@ class ExperimentsService {
     String name,
     String description,
     int repetitions,
-    // List<String> processes,
-    // List<EnzymeModel> experimentsEnzymes,
+    List<String> processes,
+    List<EnzymeModel> experimentsEnzymes,
   ) async {
     try {
+      var a = experimentsEnzymes
+          .map((enzyme) => enzyme.toJsonCreateExperiment(1, 0.123, 0.234, 0.5))
+          .toList();
+
       // ignore: unused_local_variable
       var res = await client.post(
         "/experiments",
@@ -57,23 +63,12 @@ class ExperimentsService {
           "name": name,
           "description": description,
           "repetitions": repetitions,
-          "processes": [
-            "25a243db-1008-4268-a08b-efb7429f6bfa",
-            "123a243db-2153-4268-a08b-efb7429f6bfa "
-          ],
-          "experimentsEnzymes": [
-            {
-              "enzyme": "25a243db-1008-4268-a08b-efb7429f6bfa",
-              "variableA": 0.452,
-              "variableB": 1.642,
-              "duration": 1,
-              "weightSample": 0.37,
-              "weightGround": 0.59,
-              "size": 1.642
-            }
-          ]
+          "processes": json.encode(processes),
+          "experimentsEnzymes": a,
         },
       );
+
+      print(res.statusCode);
     } catch (e) {
       rethrow;
     }

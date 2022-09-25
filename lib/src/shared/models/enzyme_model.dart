@@ -1,6 +1,10 @@
 // 🎯 Dart imports:
 import 'dart:convert';
 
+import 'package:enzitech_app/src/shared/extensions/extensions.dart';
+
+import '../util/util.dart';
+
 class EnzymeModel {
   String id;
   String name;
@@ -52,19 +56,47 @@ class EnzymeModel {
     };
   }
 
+  Map<String, dynamic> toMapCreateExperiment(
+    int duration,
+    double weightSample,
+    double weightGround,
+    double size,
+  ) {
+    return {
+      'enzyme': id,
+      'variableA': variableA,
+      'variableB': variableB,
+      'duration': duration,
+      'weightSample': weightSample,
+      'weightGround': weightGround,
+      'size': size,
+    };
+  }
+
   factory EnzymeModel.fromMap(Map<String, dynamic> map) {
     return EnzymeModel(
       id: map['id'],
       name: map['name'],
-      variableA: double.parse(map['variableA']),
-      variableB: double.parse(map['variableB']),
+      variableA: double.parse(map['variableA']).toPrecision(3),
+      variableB: double.parse(map['variableB']).toPrecision(3),
       type: map['type'],
       createdAt: DateTime.parse(map['createdAt']),
       updatedAt: DateTime.parse(map['updatedAt']),
     );
   }
 
-  String toJson() => json.encode(toMap());
+  String toJson() => json.encode(toMap(), toEncodable: Toolkit.encodeDateTime);
+
+  String toJsonCreateExperiment(
+    int duration,
+    double weightSample,
+    double weightGround,
+    double size,
+  ) =>
+      json.encode(
+        toMapCreateExperiment(duration, weightSample, weightGround, size),
+        toEncodable: Toolkit.encodeDateTime,
+      );
 
   factory EnzymeModel.fromJson(String source) =>
       EnzymeModel.fromMap(json.decode(source));

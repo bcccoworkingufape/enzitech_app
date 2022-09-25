@@ -1,4 +1,5 @@
 // 🐦 Flutter imports:
+import 'package:enzitech_app/src/shared/models/experiment_request_model.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -19,12 +20,12 @@ class CreateExperimentFirstStepPage extends StatefulWidget {
     Key? key,
     required this.pageController,
     required this.formKey,
-    required this.experimentDataCache,
+    required this.experimentRequestModel,
   }) : super(key: key);
 
   final PageController pageController;
   final GlobalKey<FormState> formKey;
-  final Map<String, String> experimentDataCache;
+  final ExperimentRequestModel experimentRequestModel;
 
   @override
   State<CreateExperimentFirstStepPage> createState() =>
@@ -48,16 +49,16 @@ class _CreateExperimentFirstStepPageState
 
   void initFieldControllerTexts() {
     _nameFieldController.text.isEmpty
-        ? _nameFieldController.text = widget.experimentDataCache['name'] ?? ''
+        ? _nameFieldController.text = widget.experimentRequestModel.name
         : null;
     _descriptionFieldController.text.isEmpty
         ? _descriptionFieldController.text =
-            widget.experimentDataCache['description'] ?? ''
+            widget.experimentRequestModel.description
         : null;
 
-    enableNextButton1 = widget.experimentDataCache['enableNextButton1'] != null
-        ? widget.experimentDataCache['enableNextButton1']!.isNotEmpty
-        : false;
+    // enableNextButton1 = widget.experimentDataCache['enableNextButton1'] != null
+    //     ? widget.experimentDataCache['enableNextButton1']!.isNotEmpty
+    //     : false;
 
     setState(() {});
   }
@@ -184,12 +185,11 @@ class _CreateExperimentFirstStepPageState
           onPressed: () {
             widget.formKey.currentState!.save();
 
-            widget.experimentDataCache
-                .update('name', (value) => _nameFieldController.text);
-            widget.experimentDataCache.update(
-                'description', (value) => _descriptionFieldController.text);
-            widget.experimentDataCache
-                .update('enableNextButton1', (value) => 'true');
+            widget.experimentRequestModel.name = _nameFieldController.text;
+            widget.experimentRequestModel.description =
+                _descriptionFieldController.text;
+            // widget.experimentDataCache
+            //     .update('enableNextButton1', (value) => 'true');
 
             widget.pageController.animateTo(
               MediaQuery.of(context).size.width,

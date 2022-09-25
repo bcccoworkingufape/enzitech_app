@@ -1,4 +1,6 @@
 // 🐦 Flutter imports:
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -8,6 +10,7 @@ import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/create_experiment/create_experiment_controller.dart';
+import '../../../shared/models/experiment_request_model.dart';
 import '../../../shared/themes/app_complete_theme.dart';
 import '../../../shared/util/constants.dart';
 import '../../../shared/validator/field_validator.dart';
@@ -20,12 +23,12 @@ class CreateExperimentFourthStepPage extends StatefulWidget {
     Key? key,
     required this.pageController,
     required this.formKey,
-    required this.experimentDataCache,
+    required this.experimentRequestModel,
   }) : super(key: key);
 
   final PageController pageController;
   final GlobalKey<FormState> formKey;
-  final Map<String, String> experimentDataCache;
+  final ExperimentRequestModel experimentRequestModel;
 
   @override
   State<CreateExperimentFourthStepPage> createState() =>
@@ -53,29 +56,29 @@ class _CreateExperimentFourthStepPageState
   }
 
   void initFieldControllerTexts() {
-    _aFieldController.text.isEmpty
-        ? _aFieldController.text = widget.experimentDataCache['varA'] ?? ''
-        : null;
+    // _aFieldController.text.isEmpty
+    //     ? _aFieldController.text = widget.experimentDataCache['varA'] ?? ''
+    //     : null;
 
-    _bFieldController.text.isEmpty
-        ? _bFieldController.text = widget.experimentDataCache['varB'] ?? ''
-        : null;
+    // _bFieldController.text.isEmpty
+    //     ? _bFieldController.text = widget.experimentDataCache['varB'] ?? ''
+    //     : null;
 
-    _v1FieldController.text.isEmpty
-        ? _v1FieldController.text = widget.experimentDataCache['var1'] ?? ''
-        : null;
+    // _v1FieldController.text.isEmpty
+    //     ? _v1FieldController.text = widget.experimentDataCache['var1'] ?? ''
+    //     : null;
 
-    _v2FieldController.text.isEmpty
-        ? _v2FieldController.text = widget.experimentDataCache['var2'] ?? ''
-        : null;
+    // _v2FieldController.text.isEmpty
+    //     ? _v2FieldController.text = widget.experimentDataCache['var2'] ?? ''
+    //     : null;
 
-    _v3FieldController.text.isEmpty
-        ? _v3FieldController.text = widget.experimentDataCache['var3'] ?? ''
-        : null;
+    // _v3FieldController.text.isEmpty
+    //     ? _v3FieldController.text = widget.experimentDataCache['var3'] ?? ''
+    //     : null;
 
-    _v4FieldController.text.isEmpty
-        ? _v4FieldController.text = widget.experimentDataCache['var4'] ?? ''
-        : null;
+    // _v4FieldController.text.isEmpty
+    //     ? _v4FieldController.text = widget.experimentDataCache['var4'] ?? ''
+    //     : null;
   }
 
   get _validateFields {
@@ -134,7 +137,7 @@ class _CreateExperimentFourthStepPageState
             ],
           ),
           const SizedBox(height: 40),
-          _textFields,
+          // _textFields,
           const SizedBox(height: 64),
         ],
       ),
@@ -317,7 +320,7 @@ class _CreateExperimentFourthStepPageState
     return Column(
       children: [
         EZTButton(
-          enabled: enableNextButton,
+          enabled: true,
           text: 'Criar Experimento',
           onPressed: () async {
             widget.formKey.currentState!.save();
@@ -334,15 +337,21 @@ class _CreateExperimentFourthStepPageState
             //     .update('var3', (value) => _v3FieldController.text);
             // widget.experimentDataCache
             //     .update('var4', (value) => _v4FieldController.text);
-            widget.experimentDataCache
-                .update('createExperimentButton', (value) => 'true');
+            // widget.experimentDataCache
+            //     .update('createExperimentButton', (value) => 'true');
 
             if (widget.formKey.currentState!.validate()) {
-              await controller.createExperiment(
-                widget.experimentDataCache['name']!,
-                widget.experimentDataCache['description']!,
-                int.parse(widget.experimentDataCache['repetitions']!),
-              );
+              if (mounted) {
+                await controller.createExperiment(
+                  widget.experimentRequestModel.name,
+                  widget.experimentRequestModel.description,
+                  widget.experimentRequestModel.repetitions,
+                  widget.experimentRequestModel.processes,
+                  widget.experimentRequestModel.experimentsEnzymes,
+                );
+              }
+
+              return;
             }
           },
         ),

@@ -35,7 +35,7 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
     if (mounted) {
       controller.addListener(
         () {
-          if (controller.state == TreatmentsState.error) {
+          if (mounted && controller.state == TreatmentsState.error) {
             EZTSnackBar.show(
               context,
               HandleFailure.of(controller.failure!),

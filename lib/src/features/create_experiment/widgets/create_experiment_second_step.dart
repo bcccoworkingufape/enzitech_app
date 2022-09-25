@@ -15,6 +15,7 @@ import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/create_experiment/create_experiment_controller.dart';
+import '../../../shared/models/experiment_request_model.dart';
 import '../../../shared/themes/app_complete_theme.dart';
 import '../../../shared/util/constants.dart';
 import '../../../shared/validator/field_validator.dart';
@@ -27,12 +28,12 @@ class CreateExperimentSecondStepPage extends StatefulWidget {
     Key? key,
     required this.pageController,
     required this.formKey,
-    required this.experimentDataCache,
+    required this.experimentRequestModel,
   }) : super(key: key);
 
   final PageController pageController;
   final GlobalKey<FormState> formKey;
-  final Map<String, String> experimentDataCache;
+  final ExperimentRequestModel experimentRequestModel;
 
   @override
   State<CreateExperimentSecondStepPage> createState() =>
@@ -74,8 +75,7 @@ class _CreateExperimentSecondStepPageState
   }
 
   void initFieldControllerTexts() {
-    var a = json.decode(widget.experimentDataCache['processes']!) as List;
-    var b = a.isNotEmpty;
+    var b = widget.experimentRequestModel.processes.isNotEmpty;
 
     // _choosedCheckboxList.isEmpty
     //     ? _choosedCheckboxList =
@@ -84,15 +84,10 @@ class _CreateExperimentSecondStepPageState
     //     : null;
     _repetitionsFieldController.text.isEmpty
         ? _treatmentFieldController.text =
-            widget.experimentDataCache['repetitions'] ?? ''
+            widget.experimentRequestModel.repetitions.toString()
         : null;
 
-    enableNextButton2 = widget.experimentDataCache['enableNextButton2'] != null
-        ? widget.experimentDataCache['enableNextButton2']!.isNotEmpty &&
-            widget.experimentDataCache['repetitions']!.isNotEmpty &&
-            (json.decode(widget.experimentDataCache['processes']!) as List)
-                .isNotEmpty
-        : false;
+    enableNextButton2 = false;
 
     setState(() {});
   }
@@ -278,12 +273,12 @@ class _CreateExperimentSecondStepPageState
             // initFieldControllerTexts();
             widget.formKey.currentState!.save();
 
-            widget.experimentDataCache.update(
-                'processes', (value) => json.encode(_choosedCheckboxList));
-            widget.experimentDataCache.update(
-                'repetitions', (value) => _repetitionsFieldController.text);
-            widget.experimentDataCache
-                .update('enableNextButton2', (value) => 'true');
+            widget.experimentRequestModel.processes =
+                _choosedCheckboxList.map((processes) => processes.id).toList();
+            widget.experimentRequestModel.repetitions =
+                int.parse(_repetitionsFieldController.text);
+            // widget.experimentDataCache
+            //     .update('enableNextButton2', (value) => 'true');
 
             widget.pageController.nextPage(
               duration: const Duration(milliseconds: 150),
