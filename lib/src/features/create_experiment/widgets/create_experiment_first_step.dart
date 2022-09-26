@@ -1,5 +1,4 @@
 // 🐦 Flutter imports:
-import 'package:enzitech_app/src/shared/models/experiment_request_model.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -18,14 +17,14 @@ import '../../../shared/widgets/ezt_textfield.dart';
 class CreateExperimentFirstStepPage extends StatefulWidget {
   const CreateExperimentFirstStepPage({
     Key? key,
-    required this.pageController,
+    // required this.pageController,
     required this.formKey,
-    required this.experimentRequestModel,
+    // required this.experimentRequestModel,
   }) : super(key: key);
 
-  final PageController pageController;
+  // final PageController pageController;
   final GlobalKey<FormState> formKey;
-  final ExperimentRequestModel experimentRequestModel;
+  // final ExperimentRequestModel experimentRequestModel;
 
   @override
   State<CreateExperimentFirstStepPage> createState() =>
@@ -49,11 +48,11 @@ class _CreateExperimentFirstStepPageState
 
   void initFieldControllerTexts() {
     _nameFieldController.text.isEmpty
-        ? _nameFieldController.text = widget.experimentRequestModel.name
+        ? _nameFieldController.text = controller.experimentRequestModel.name
         : null;
     _descriptionFieldController.text.isEmpty
         ? _descriptionFieldController.text =
-            widget.experimentRequestModel.description
+            controller.experimentRequestModel.description
         : null;
 
     // enableNextButton1 = widget.experimentDataCache['enableNextButton1'] != null
@@ -185,13 +184,13 @@ class _CreateExperimentFirstStepPageState
           onPressed: () {
             widget.formKey.currentState!.save();
 
-            widget.experimentRequestModel.name = _nameFieldController.text;
-            widget.experimentRequestModel.description =
+            controller.experimentRequestModel.name = _nameFieldController.text;
+            controller.experimentRequestModel.description =
                 _descriptionFieldController.text;
             // widget.experimentDataCache
             //     .update('enableNextButton1', (value) => 'true');
 
-            widget.pageController.animateTo(
+            controller.pageController.animateTo(
               MediaQuery.of(context).size.width,
               duration: const Duration(milliseconds: 150),
               curve: Curves.easeIn,

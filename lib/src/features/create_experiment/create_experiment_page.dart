@@ -14,8 +14,6 @@ import 'package:enzitech_app/src/shared/failures/failures.dart';
 import 'package:enzitech_app/src/shared/routes/route_generator.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
 
-import '../../shared/models/experiment_request_model.dart';
-
 class CreateExperimentPage extends StatefulWidget {
   const CreateExperimentPage({Key? key}) : super(key: key);
 
@@ -26,7 +24,7 @@ class CreateExperimentPage extends StatefulWidget {
 class _CreateExperimentPageState extends State<CreateExperimentPage> {
   late final CreateExperimentController controller;
 
-  final _pageController = PageController(initialPage: 0);
+  // final _pageController = PageController(initialPage: 0);
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -82,25 +80,25 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
   //   "createExperimentButton": "",
   // };
 
-  var experimentDataCacheParaMudar = {
-    "name": "",
-    "description": "",
-    "repetitions": "",
-    "processes": [].toString(),
-    "experimentsEnzymes": [].toString(),
-    "enableNextButton1": "",
-    "enableNextButton2": "",
-    "enableNextButton3": "",
-    "createExperimentButton": "",
-  };
+  // var experimentDataCacheParaMudar = {
+  //   "name": "",
+  //   "description": "",
+  //   "repetitions": "",
+  //   "processes": [].toString(),
+  //   "experimentsEnzymes": [].toString(),
+  //   "enableNextButton1": "",
+  //   "enableNextButton2": "",
+  //   "enableNextButton3": "",
+  //   "createExperimentButton": "",
+  // };
 
-  ExperimentRequestModel experimentRequestModel = ExperimentRequestModel(
-    name: "",
-    description: "",
-    repetitions: 0,
-    processes: [],
-    experimentsEnzymes: [],
-  );
+  // ExperimentRequestModel experimentRequestModel = ExperimentRequestModel(
+  //   name: "",
+  //   description: "",
+  //   repetitions: 0,
+  //   processes: [],
+  //   experimentsEnzymes: [],
+  // );
 
   @override
   Widget build(BuildContext context) {
@@ -108,31 +106,35 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
       body: Form(
         key: _formKey,
         child: PageView(
-          controller: _pageController,
+          controller: controller.pageController,
           physics: const NeverScrollableScrollPhysics(),
           children: [
             CreateExperimentFirstStepPage(
-              pageController: _pageController,
+              // pageController: _pageController,
               formKey: _formKey,
               // experimentDataCache: experimentDataCacheParaMudar,
-              experimentRequestModel: experimentRequestModel,
+              // experimentRequestModel: experimentRequestModel,
             ),
             CreateExperimentSecondStepPage(
-              pageController: _pageController,
+              // pageController: _pageController,
               formKey: _formKey,
-              experimentRequestModel: experimentRequestModel,
+              // experimentRequestModel: experimentRequestModel,
 
               // experimentDataCache: experimentDataCacheParaMudar,
             ),
             CreateExperimentThirdStepPage(
-              pageController: _pageController,
-              formKey: _formKey, experimentRequestModel: experimentRequestModel,
+              // pageController: _pageController,
+              formKey: _formKey,
+              // experimentRequestModel: experimentRequestModel,
 
               // experimentDataCache: experimentDataCacheParaMudar,
             ),
             CreateExperimentFourthStepPage(
-              pageController: _pageController,
-              formKey: _formKey, experimentRequestModel: experimentRequestModel,
+              // pageController: _pageController,
+              formKey: _formKey,
+              listOfEnzymes:
+                  controller.experimentRequestModel.experimentsEnzymes,
+              //  experimentRequestModel: experimentRequestModel,
 
               // experimentDataCache: experimentDataCacheParaMudar,
             ),

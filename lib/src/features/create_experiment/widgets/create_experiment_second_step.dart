@@ -1,5 +1,4 @@
 // 🐦 Flutter imports:
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:enzitech_app/src/features/home/fragments/treatments/treatments_controller.dart';
@@ -26,14 +25,14 @@ import '../../../shared/widgets/ezt_checkbox_tile.dart';
 class CreateExperimentSecondStepPage extends StatefulWidget {
   const CreateExperimentSecondStepPage({
     Key? key,
-    required this.pageController,
+    // required this.pageController,
     required this.formKey,
-    required this.experimentRequestModel,
+    // required this.experimentRequestModel,
   }) : super(key: key);
 
-  final PageController pageController;
+  // final PageController pageController;
   final GlobalKey<FormState> formKey;
-  final ExperimentRequestModel experimentRequestModel;
+  // final ExperimentRequestModel experimentRequestModel;
 
   @override
   State<CreateExperimentSecondStepPage> createState() =>
@@ -75,16 +74,11 @@ class _CreateExperimentSecondStepPageState
   }
 
   void initFieldControllerTexts() {
-    var b = widget.experimentRequestModel.processes.isNotEmpty;
+    var b = controller.experimentRequestModel.processes.isNotEmpty;
 
-    // _choosedCheckboxList.isEmpty
-    //     ? _choosedCheckboxList =
-    //         (jsonDecode(widget.experimentDataCache['processes']!)
-    //             as List<TreatmentModel>)
-    //     : null;
     _repetitionsFieldController.text.isEmpty
         ? _treatmentFieldController.text =
-            widget.experimentRequestModel.repetitions.toString()
+            controller.experimentRequestModel.repetitions.toString()
         : null;
 
     enableNextButton2 = false;
@@ -273,14 +267,14 @@ class _CreateExperimentSecondStepPageState
             // initFieldControllerTexts();
             widget.formKey.currentState!.save();
 
-            widget.experimentRequestModel.processes =
+            controller.experimentRequestModel.processes =
                 _choosedCheckboxList.map((processes) => processes.id).toList();
-            widget.experimentRequestModel.repetitions =
+            controller.experimentRequestModel.repetitions =
                 int.parse(_repetitionsFieldController.text);
             // widget.experimentDataCache
             //     .update('enableNextButton2', (value) => 'true');
 
-            widget.pageController.nextPage(
+            controller.pageController.nextPage(
               duration: const Duration(milliseconds: 150),
               curve: Curves.easeIn,
             );
@@ -291,7 +285,7 @@ class _CreateExperimentSecondStepPageState
           text: 'Voltar',
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
-            widget.pageController.animateTo(
+            controller.pageController.animateTo(
               0,
               duration: const Duration(milliseconds: 150),
               curve: Curves.easeIn,

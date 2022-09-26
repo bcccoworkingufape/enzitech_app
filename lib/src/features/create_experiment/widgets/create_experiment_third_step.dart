@@ -1,5 +1,4 @@
 // 🐦 Flutter imports:
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
@@ -13,7 +12,6 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/create_experiment/create_experiment_controller.dart';
 import 'package:provider/provider.dart';
-import '../../../shared/models/experiment_request_model.dart';
 import '../../../shared/themes/app_complete_theme.dart';
 import '../../../shared/util/constants.dart';
 import '../../../shared/util/util.dart';
@@ -23,14 +21,14 @@ import '../../../shared/widgets/ezt_checkbox_tile.dart';
 class CreateExperimentThirdStepPage extends StatefulWidget {
   const CreateExperimentThirdStepPage({
     Key? key,
-    required this.pageController,
+    // required this.pageController,
     required this.formKey,
-    required this.experimentRequestModel,
+    // required this.experimentRequestModel,
   }) : super(key: key);
 
-  final PageController pageController;
+  // final PageController pageController;
   final GlobalKey<FormState> formKey;
-  final ExperimentRequestModel experimentRequestModel;
+  // final ExperimentRequestModel experimentRequestModel;
 
   @override
   State<CreateExperimentThirdStepPage> createState() =>
@@ -201,9 +199,11 @@ class _CreateExperimentThirdStepPageState
           text: 'Próximo',
           onPressed: () {
             widget.formKey.currentState!.save();
-
-            widget.experimentRequestModel.experimentsEnzymes =
+            controller.experimentRequestModel.experimentsEnzymes =
                 _choosedCheckboxList;
+
+            controller
+                .setExperimentRequestModel(controller.experimentRequestModel);
 
             // widget.experimentDataCache.update(
             //   'experimentsEnzymes',
@@ -213,7 +213,7 @@ class _CreateExperimentThirdStepPageState
             // widget.experimentDataCache
             //     .update('enableNextButton3', (value) => 'true');
 
-            widget.pageController.nextPage(
+            controller.pageController.nextPage(
               duration: const Duration(milliseconds: 150),
               curve: Curves.easeIn,
             );
@@ -224,7 +224,7 @@ class _CreateExperimentThirdStepPageState
           text: 'Voltar',
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
-            widget.pageController.animateTo(
+            controller.pageController.animateTo(
               MediaQuery.of(context).size.width,
               duration: const Duration(milliseconds: 150),
               curve: Curves.easeIn,

@@ -21,6 +21,7 @@ enum ValidateTypes {
   cnpj,
   cpfOrCnpj,
   number,
+  numeric,
   greaterThanZero,
   alfanumeric,
   maxAge,
@@ -223,6 +224,18 @@ class FieldValidator {
               } else {
                 result = null;
               }
+            }
+            break;
+          }
+
+        case ValidateTypes.numeric:
+          {
+            if (value == null) {
+              result = customErrorMessage ?? "⚠  Número inválido";
+            }
+
+            if (double.tryParse(value) != null) {
+              result = null;
             }
             break;
           }

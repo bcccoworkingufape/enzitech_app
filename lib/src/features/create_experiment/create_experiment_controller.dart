@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:enzitech_app/src/shared/failures/failures.dart';
 import 'package:enzitech_app/src/shared/services/experiments_service.dart';
 
+import '../../shared/models/experiment_request_model.dart';
+import '../../shared/widgets/ezt_textfield.dart';
+
 enum CreateExperimentState { idle, success, error, loading }
 
 class CreateExperimentController extends ChangeNotifier {
@@ -20,6 +23,42 @@ class CreateExperimentController extends ChangeNotifier {
   Failure? get failure => _failure;
   void _setFailure(Failure failure) {
     _failure = failure;
+    notifyListeners();
+  }
+
+  PageController _pageController = PageController(initialPage: 0);
+  PageController get pageController => _pageController;
+  void setPageController(PageController pageController) {
+    _pageController = pageController;
+    notifyListeners();
+  }
+
+  int _stepPage = 0;
+  int get stepPage => _stepPage;
+  void setStepPage(int stepPage, {bool notify = true}) {
+    _stepPage = stepPage;
+    if (notify) notifyListeners();
+  }
+
+  Map<String, EZTTextField> _textFields = {};
+  Map<String, EZTTextField> get textFields => _textFields;
+  void setTextFields(Map<String, EZTTextField> textFields) {
+    _textFields = textFields;
+    notifyListeners();
+  }
+
+  ExperimentRequestModel _experimentRequestModel = ExperimentRequestModel(
+    name: "",
+    description: "",
+    repetitions: 0,
+    processes: [],
+    experimentsEnzymes: [],
+  );
+  ExperimentRequestModel get experimentRequestModel => _experimentRequestModel;
+  void setExperimentRequestModel(
+    ExperimentRequestModel experimentRequestModel,
+  ) {
+    _experimentRequestModel = experimentRequestModel;
     notifyListeners();
   }
 
@@ -61,6 +100,7 @@ class CreateExperimentController extends ChangeNotifier {
     int repetitions,
     List<String> processes,
     List<EnzymeModel> experimentsEnzymes,
+    Map<String, EZTTextField> textFieldsOfEnzymes,
   ) async {
     state = CreateExperimentState.loading;
     notifyListeners();
@@ -71,6 +111,7 @@ class CreateExperimentController extends ChangeNotifier {
         repetitions,
         processes,
         experimentsEnzymes,
+        textFieldsOfEnzymes,
       );
 
       state = CreateExperimentState.success;

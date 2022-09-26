@@ -5,6 +5,8 @@ import 'package:enzitech_app/src/shared/external/http_driver/dio_client.dart';
 import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
 import 'package:enzitech_app/src/shared/models/experiment_model.dart';
 
+import '../widgets/ezt_textfield.dart';
+
 class ExperimentsService {
   final DioClient client;
 
@@ -50,25 +52,38 @@ class ExperimentsService {
     int repetitions,
     List<String> processes,
     List<EnzymeModel> experimentsEnzymes,
+    Map<String, EZTTextField> textFieldsOfEnzymes,
   ) async {
     try {
       var a = experimentsEnzymes
-          .map((enzyme) => enzyme.toJsonCreateExperiment(1, 0.123, 0.234, 0.5))
+          .map(
+            (enzyme) => enzyme.toJsonCreateExperiment(
+              int.parse(textFieldsOfEnzymes['duration-${enzyme.id}']!
+                  .controller!
+                  .text),
+              double.parse(textFieldsOfEnzymes['weightSample-${enzyme.id}']!
+                  .controller!
+                  .text),
+              double.parse(textFieldsOfEnzymes['weightGround-${enzyme.id}']!
+                  .controller!
+                  .text),
+              double.parse(
+                  textFieldsOfEnzymes['size-${enzyme.id}']!.controller!.text),
+            ),
+          )
           .toList();
 
       // ignore: unused_local_variable
       var res = await client.post(
         "/experiments",
         data: {
-          "name": name,
-          "description": description,
+          "name": name.toString(),
+          "description": description.toString(),
           "repetitions": repetitions,
           "processes": json.encode(processes),
           "experimentsEnzymes": a,
         },
       );
-
-      print(res.statusCode);
     } catch (e) {
       rethrow;
     }
