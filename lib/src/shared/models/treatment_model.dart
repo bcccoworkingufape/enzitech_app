@@ -7,15 +7,15 @@ class TreatmentModel {
   String name;
   String description;
   String id;
-  DateTime createdAt;
-  DateTime updatedAt;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   TreatmentModel({
     required this.name,
     required this.description,
     required this.id,
-    required this.createdAt,
-    required this.updatedAt,
+    this.createdAt,
+    this.updatedAt,
   });
 
   TreatmentModel copyWith(
@@ -39,8 +39,8 @@ class TreatmentModel {
       'name': name,
       'description': description,
       'id': id,
-      'createdAt': createdAt.toString(),
-      'updatedAt': updatedAt.toString(),
+      'createdAt': createdAt?.toString(),
+      'updatedAt': updatedAt?.toString(),
     };
   }
 
@@ -49,8 +49,10 @@ class TreatmentModel {
       name: map['name'],
       description: map['description'],
       id: map['id'],
-      createdAt: DateTime.parse(map['createdAt']),
-      updatedAt: DateTime.parse(map['updatedAt']),
+      createdAt:
+          map['createdAt'] != null ? DateTime.parse(map['createdAt']) : null,
+      updatedAt:
+          map['updatedAt'] != null ? DateTime.parse(map['updatedAt']) : null,
     );
   }
 

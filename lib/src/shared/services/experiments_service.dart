@@ -43,7 +43,7 @@ class ExperimentsService {
     }
   }
 
-  Future<void> createExperiment(
+  Future<ExperimentModel> createExperiment(
     String name,
     String description,
     int repetitions,
@@ -81,6 +81,8 @@ class ExperimentsService {
           "experimentsEnzymes": enzymes,
         },
       );
+
+      return ExperimentModel.fromMap(res.data);
     } catch (e) {
       rethrow;
     }
@@ -94,6 +96,20 @@ class ExperimentsService {
       var res = await client.delete(
         "/experiments/$id",
       );
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<ExperimentModel> getExperimentDetailed(
+    String id,
+  ) async {
+    try {
+      var res = await client.get(
+        "/experiments/$id",
+      );
+
+      return ExperimentModel.fromMap(res.data);
     } catch (e) {
       rethrow;
     }

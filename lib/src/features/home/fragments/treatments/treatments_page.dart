@@ -56,7 +56,7 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
             SizedBox(
               height: height / 1.75,
               child: const Center(
-                child: Text("Erro ao carregar experimentos"),
+                child: Text("Erro ao carregar tratamentos"),
               ),
             ),
           ],
@@ -121,7 +121,7 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
               width: MediaQuery.of(context).size.width,
               child: TreatmentCard(
                 name: treatment.name,
-                createdAt: treatment.createdAt,
+                createdAt: treatment.createdAt!,
                 description: treatment.description,
               ),
             ),

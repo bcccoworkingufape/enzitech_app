@@ -22,6 +22,7 @@ import 'package:enzitech_app/src/shared/services/treatments_service.dart';
 import 'package:enzitech_app/src/shared/services/user_prefs_service.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'features/auth/auth_controller.dart';
+import 'features/experiment_detailed/experiment_detailed_controller.dart';
 
 class AppWidget extends StatelessWidget {
   final HttpDriverOptions httpDriverOptions;
@@ -77,6 +78,11 @@ class AppWidget extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => CreateTreatmentController(
             TreatmentsService(context.read()),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ExperimentDetailedController(
+            ExperimentsService(context.read()),
           ),
         ),
       ],
