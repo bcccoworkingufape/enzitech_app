@@ -16,6 +16,8 @@ import 'package:enzitech_app/src/shared/widgets/ezt_button.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_textfield.dart';
 
+import '../home/fragments/treatments/treatments_controller.dart';
+
 class CreateTreatmentPage extends StatefulWidget {
   const CreateTreatmentPage({Key? key}) : super(key: key);
 
@@ -25,6 +27,7 @@ class CreateTreatmentPage extends StatefulWidget {
 
 class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
   late final CreateTreatmentController controller;
+  late final TreatmentsController treatmentsController;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _nameFieldController = TextEditingController(text: '');
@@ -36,6 +39,8 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
   void initState() {
     super.initState();
     controller = context.read<CreateTreatmentController>();
+    treatmentsController = context.read<TreatmentsController>();
+
     if (mounted) {
       controller.addListener(() {
         if (controller.state == CreateTreatmentState.error) {
@@ -45,6 +50,9 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
             eztSnackBarType: EZTSnackBarType.error,
           );
         } else if (controller.state == CreateTreatmentState.success) {
+          // reload the experiments list
+          treatmentsController.loadTreatments();
+
           EZTSnackBar.show(
             context,
             "Tratamento criado com sucesso!",
