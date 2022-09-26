@@ -35,7 +35,7 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
     if (mounted) {
       controller.addListener(
         () {
-          if (controller.state == TreatmentsState.error) {
+          if (mounted && controller.state == TreatmentsState.error) {
             EZTSnackBar.show(
               context,
               HandleFailure.of(controller.failure!),
@@ -93,10 +93,38 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
         var treatment = controller.treatments[index];
         return Padding(
           padding: const EdgeInsets.only(bottom: 8.0),
-          child: TreatmentCard(
-            name: treatment.name,
-            createdAt: treatment.createdAt,
-            description: treatment.description,
+          child: Dismissible(
+            key: Key(treatment.id),
+            onDismissed: (direction) {
+              controller.deleteTreatment(treatment.id);
+
+              // Remove the item from the data source.
+              setState(() {
+                controller.treatments.removeAt(index);
+              });
+
+              EZTSnackBar.clear(context);
+
+              EZTSnackBar.show(
+                context,
+                '${treatment.name} excluído!',
+                eztSnackBarType: EZTSnackBarType.error,
+              );
+
+              // Then show a snackbar.
+              // ScaffoldMessenger.of(context).showSnackBar(
+              //     SnackBar(content: Text('${experiment.name} excluído!')));
+            },
+            // Show a red background as the item is swiped away.
+            background: Container(color: Colors.red),
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: TreatmentCard(
+                name: treatment.name,
+                createdAt: treatment.createdAt,
+                description: treatment.description,
+              ),
+            ),
           ),
         );
       },
@@ -105,7 +133,6 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
 
   @override
   Widget build(BuildContext context) {
-    var widthMQ = MediaQuery.of(context).size.width;
     var heightMQ = MediaQuery.of(context).size.height;
     final controller = context.watch<TreatmentsController>();
 

@@ -1,10 +1,12 @@
 // 🐦 Flutter imports:
-import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/shared/failures/failures.dart';
+import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
 import 'package:enzitech_app/src/shared/services/experiments_service.dart';
+import '../../shared/models/experiment_request_model.dart';
+import '../../shared/widgets/ezt_textfield.dart';
 
 enum CreateExperimentState { idle, success, error, loading }
 
@@ -23,14 +25,41 @@ class CreateExperimentController extends ChangeNotifier {
     notifyListeners();
   }
 
-  // ExperimentRequestModel _experimentRequestModel;
-  // ExperimentRequestModel get experimentRequestModel => _experimentRequestModel;
-  // void _setExperimentRequestModel(
-  //   ExperimentRequestModel experimentRequestModel,
-  // ) {
-  //   _experimentRequestModel = experimentRequestModel;
-  //   notifyListeners();
-  // }
+  PageController _pageController = PageController(initialPage: 0);
+  PageController get pageController => _pageController;
+  void setPageController(PageController pageController) {
+    _pageController = pageController;
+    notifyListeners();
+  }
+
+  int _stepPage = 0;
+  int get stepPage => _stepPage;
+  void setStepPage(int stepPage, {bool notify = true}) {
+    _stepPage = stepPage;
+    if (notify) notifyListeners();
+  }
+
+  Map<String, EZTTextField> _textFields = {};
+  Map<String, EZTTextField> get textFields => _textFields;
+  void setTextFields(Map<String, EZTTextField> textFields) {
+    _textFields = textFields;
+    notifyListeners();
+  }
+
+  ExperimentRequestModel _experimentRequestModel = ExperimentRequestModel(
+    name: "",
+    description: "",
+    repetitions: 0,
+    processes: [],
+    experimentsEnzymes: [],
+  );
+  ExperimentRequestModel get experimentRequestModel => _experimentRequestModel;
+  void setExperimentRequestModel(
+    ExperimentRequestModel experimentRequestModel,
+  ) {
+    _experimentRequestModel = experimentRequestModel;
+    notifyListeners();
+  }
 
   List<EnzymeModel> _enzymes = [];
   List<EnzymeModel> get enzymes => _enzymes;
@@ -59,13 +88,21 @@ class CreateExperimentController extends ChangeNotifier {
     String name,
     String description,
     int repetitions,
-    // List<String> processes,
-    // List<EnzymeModel> experimentsEnzymes,
+    List<String> processes,
+    List<EnzymeModel> experimentsEnzymes,
+    Map<String, EZTTextField> textFieldsOfEnzymes,
   ) async {
     state = CreateExperimentState.loading;
     notifyListeners();
     try {
-      await experimentService.createExperiment(name, description, repetitions);
+      await experimentService.createExperiment(
+        name,
+        description,
+        repetitions,
+        processes,
+        experimentsEnzymes,
+        textFieldsOfEnzymes,
+      );
 
       state = CreateExperimentState.success;
       experimentCreated = true;

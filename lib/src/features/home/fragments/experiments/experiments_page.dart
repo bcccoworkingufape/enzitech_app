@@ -1,6 +1,4 @@
 // 🐦 Flutter imports:
-import 'package:enzitech_app/src/features/home/fragments/account/account_controller.dart';
-import 'package:enzitech_app/src/shared/routes/route_generator.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -9,10 +7,12 @@ import 'package:provider/provider.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 // 🌎 Project imports:
+import 'package:enzitech_app/src/features/home/fragments/account/account_controller.dart';
 import 'package:enzitech_app/src/features/home/fragments/experiments/components/experiment_card.dart';
 import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_controller.dart';
 import 'package:enzitech_app/src/features/home/home_controller.dart';
 import 'package:enzitech_app/src/shared/failures/failures.dart';
+import 'package:enzitech_app/src/shared/routes/route_generator.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:enzitech_app/src/shared/validator/validator.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_pull_to_refresh.dart';
@@ -52,17 +52,21 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
               eztSnackBarType: EZTSnackBarType.error,
             );
             var accountController = context.read<AccountController>();
-            accountController.logout();
+            if (controller.failure is ExpiredTokenOrWrongUserFailure ||
+                controller.failure is UserNotFoundOrWrongTokenFailure ||
+                controller.failure is SessionNotFoundFailure) {
+              accountController.logout();
 
-            if (accountController.state == AccountState.success && mounted) {
-              EZTSnackBar.show(
-                context,
-                "Faça seu login novamente.",
-              );
-              await Future.delayed(const Duration(milliseconds: 500));
-              if (mounted) {
-                Navigator.pushReplacementNamed(context, RouteGenerator.auth);
-                widget.homeController.setFragmentIndex(0);
+              if (accountController.state == AccountState.success && mounted) {
+                EZTSnackBar.show(
+                  context,
+                  "Faça seu login novamente.",
+                );
+                await Future.delayed(const Duration(milliseconds: 500));
+                if (mounted) {
+                  Navigator.pushReplacementNamed(context, RouteGenerator.auth);
+                  widget.homeController.setFragmentIndex(0);
+                }
               }
             }
           }
@@ -142,11 +146,36 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
         var experiment = controller.experiments[index];
         return Padding(
           padding: const EdgeInsets.only(bottom: 8.0),
-          child: ExperimentCard(
-            name: experiment.name,
-            updatedAt: experiment.updatedAt,
-            description: experiment.description,
-            progress: experiment.progress,
+          child: Dismissible(
+            key: Key(experiment.id),
+            onDismissed: (direction) {
+              controller.deleteExperiment(experiment.id);
+
+              // Remove the item from the data source.
+              setState(() {
+                controller.experiments.removeAt(index);
+              });
+
+              EZTSnackBar.clear(context);
+
+              EZTSnackBar.show(
+                context,
+                '${experiment.name} excluído!',
+                eztSnackBarType: EZTSnackBarType.error,
+              );
+
+              // Then show a snackbar.
+              // ScaffoldMessenger.of(context).showSnackBar(
+              //     SnackBar(content: Text('${experiment.name} excluído!')));
+            },
+            // Show a red background as the item is swiped away.
+            background: Container(color: Colors.red),
+            child: ExperimentCard(
+              name: experiment.name,
+              updatedAt: experiment.updatedAt,
+              description: experiment.description,
+              progress: experiment.progress,
+            ),
           ),
         );
       },

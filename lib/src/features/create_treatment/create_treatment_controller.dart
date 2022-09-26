@@ -23,7 +23,7 @@ class CreateTreatmentController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> createExperiment(
+  Future<void> createTreatment(
     String name,
     String description,
   ) async {

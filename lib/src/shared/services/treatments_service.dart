@@ -41,4 +41,17 @@ class TreatmentsService {
       rethrow;
     }
   }
+
+  Future<void> deleteTreatment(
+    String id,
+  ) async {
+    try {
+      // ignore: unused_local_variable
+      var res = await client.delete(
+        "/processes/$id",
+      );
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

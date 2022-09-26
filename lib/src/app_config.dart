@@ -23,6 +23,7 @@ Future<void> initApp() async {
       return token;
     },
     baseUrl: () =>
+        // "https://fc2b-2804-7f7-d480-c166-d9f9-a911-af3b-119d.sa.ngrok.io/",
         "http://ec2-18-218-79-222.us-east-2.compute.amazonaws.com:3333",
     apiKey: 'ezt_bcc_coworking',
   );

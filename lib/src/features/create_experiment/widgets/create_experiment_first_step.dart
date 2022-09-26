@@ -17,14 +17,11 @@ import '../../../shared/widgets/ezt_textfield.dart';
 class CreateExperimentFirstStepPage extends StatefulWidget {
   const CreateExperimentFirstStepPage({
     Key? key,
-    required this.pageController,
+    required this.callback,
     required this.formKey,
-    required this.experimentDataCache,
   }) : super(key: key);
-
-  final PageController pageController;
+  final void Function() callback;
   final GlobalKey<FormState> formKey;
-  final Map<String, String> experimentDataCache;
 
   @override
   State<CreateExperimentFirstStepPage> createState() =>
@@ -48,16 +45,12 @@ class _CreateExperimentFirstStepPageState
 
   void initFieldControllerTexts() {
     _nameFieldController.text.isEmpty
-        ? _nameFieldController.text = widget.experimentDataCache['name'] ?? ''
+        ? _nameFieldController.text = controller.experimentRequestModel.name
         : null;
     _descriptionFieldController.text.isEmpty
         ? _descriptionFieldController.text =
-            widget.experimentDataCache['description'] ?? ''
+            controller.experimentRequestModel.description
         : null;
-
-    enableNextButton1 = widget.experimentDataCache['enableNextButton1'] != null
-        ? widget.experimentDataCache['enableNextButton1']!.isNotEmpty
-        : false;
 
     setState(() {});
   }
@@ -184,14 +177,11 @@ class _CreateExperimentFirstStepPageState
           onPressed: () {
             widget.formKey.currentState!.save();
 
-            widget.experimentDataCache
-                .update('name', (value) => _nameFieldController.text);
-            widget.experimentDataCache.update(
-                'description', (value) => _descriptionFieldController.text);
-            widget.experimentDataCache
-                .update('enableNextButton1', (value) => 'true');
+            controller.experimentRequestModel.name = _nameFieldController.text;
+            controller.experimentRequestModel.description =
+                _descriptionFieldController.text;
 
-            widget.pageController.animateTo(
+            controller.pageController.animateTo(
               MediaQuery.of(context).size.width,
               duration: const Duration(milliseconds: 150),
               curve: Curves.easeIn,
@@ -203,6 +193,7 @@ class _CreateExperimentFirstStepPageState
           text: 'Voltar',
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
+            widget.callback();
             Navigator.pop(context);
           },
         ),

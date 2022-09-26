@@ -43,4 +43,19 @@ class TreatmentsController extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<void> deleteTreatment(String id) async {
+    // state = TreatmentsState.loading;
+    // notifyListeners();
+    try {
+      await treatmentsService.deleteTreatment(id);
+
+      // state = TreatmentsState.success;
+      // notifyListeners();
+    } catch (e) {
+      _setFailure(e as Failure);
+      state = TreatmentsState.error;
+      notifyListeners();
+    }
+  }
 }

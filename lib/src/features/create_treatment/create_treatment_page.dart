@@ -180,7 +180,7 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
           onPressed: () async {
             _formKey.currentState!.save();
             if (_formKey.currentState!.validate()) {
-              await controller.createExperiment(
+              await controller.createTreatment(
                 _nameFieldController.text.trim(),
                 _descriptionFieldController.text.trim(),
               );
