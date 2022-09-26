@@ -142,11 +142,36 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
         var experiment = controller.experiments[index];
         return Padding(
           padding: const EdgeInsets.only(bottom: 8.0),
-          child: ExperimentCard(
-            name: experiment.name,
-            updatedAt: experiment.updatedAt,
-            description: experiment.description,
-            progress: experiment.progress,
+          child: Dismissible(
+            key: Key(experiment.id),
+            onDismissed: (direction) {
+              controller.deleteExperiment(experiment.id);
+
+              // Remove the item from the data source.
+              setState(() {
+                controller.experiments.removeAt(index);
+              });
+
+              EZTSnackBar.clear(context);
+
+              EZTSnackBar.show(
+                context,
+                '${experiment.name} excluído!',
+                eztSnackBarType: EZTSnackBarType.error,
+              );
+
+              // Then show a snackbar.
+              // ScaffoldMessenger.of(context).showSnackBar(
+              //     SnackBar(content: Text('${experiment.name} excluído!')));
+            },
+            // Show a red background as the item is swiped away.
+            background: Container(color: Colors.red),
+            child: ExperimentCard(
+              name: experiment.name,
+              updatedAt: experiment.updatedAt,
+              description: experiment.description,
+              progress: experiment.progress,
+            ),
           ),
         );
       },

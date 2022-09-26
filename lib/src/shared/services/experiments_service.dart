@@ -55,7 +55,7 @@ class ExperimentsService {
     Map<String, EZTTextField> textFieldsOfEnzymes,
   ) async {
     try {
-      var a = experimentsEnzymes
+      var enzymes = experimentsEnzymes
           .map(
             (enzyme) => enzyme.toJsonCreateExperiment(
               int.parse(textFieldsOfEnzymes['duration-${enzyme.id}']!
@@ -77,12 +77,25 @@ class ExperimentsService {
       var res = await client.post(
         "/experiments",
         data: {
-          "name": name.toString(),
-          "description": description.toString(),
+          "name": name,
+          "description": description,
           "repetitions": repetitions,
-          "processes": json.encode(processes),
-          "experimentsEnzymes": a,
+          "processes": processes,
+          "experimentsEnzymes": enzymes,
         },
+      );
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> deleteExperiment(
+    String id,
+  ) async {
+    try {
+      // ignore: unused_local_variable
+      var res = await client.delete(
+        "/experiments/$id",
       );
     } catch (e) {
       rethrow;

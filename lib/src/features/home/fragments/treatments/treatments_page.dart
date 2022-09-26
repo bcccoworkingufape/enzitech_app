@@ -93,10 +93,38 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
         var treatment = controller.treatments[index];
         return Padding(
           padding: const EdgeInsets.only(bottom: 8.0),
-          child: TreatmentCard(
-            name: treatment.name,
-            createdAt: treatment.createdAt,
-            description: treatment.description,
+          child: Dismissible(
+            key: Key(treatment.id),
+            onDismissed: (direction) {
+              controller.deleteTreatment(treatment.id);
+
+              // Remove the item from the data source.
+              setState(() {
+                controller.treatments.removeAt(index);
+              });
+
+              EZTSnackBar.clear(context);
+
+              EZTSnackBar.show(
+                context,
+                '${treatment.name} excluído!',
+                eztSnackBarType: EZTSnackBarType.error,
+              );
+
+              // Then show a snackbar.
+              // ScaffoldMessenger.of(context).showSnackBar(
+              //     SnackBar(content: Text('${experiment.name} excluído!')));
+            },
+            // Show a red background as the item is swiped away.
+            background: Container(color: Colors.red),
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              child: TreatmentCard(
+                name: treatment.name,
+                createdAt: treatment.createdAt,
+                description: treatment.description,
+              ),
+            ),
           ),
         );
       },

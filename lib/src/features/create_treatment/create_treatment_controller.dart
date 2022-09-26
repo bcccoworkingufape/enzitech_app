@@ -1,4 +1,5 @@
 // 🐦 Flutter imports:
+import 'package:enzitech_app/src/features/home/fragments/treatments/treatments_controller.dart';
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
@@ -23,7 +24,7 @@ class CreateTreatmentController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> createExperiment(
+  Future<void> createTreatment(
     String name,
     String description,
   ) async {

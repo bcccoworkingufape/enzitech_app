@@ -44,4 +44,19 @@ class ExperimentsController extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<void> deleteExperiment(String id) async {
+    // state = ExperimentsState.loading;
+    // notifyListeners();
+    try {
+      await experimentsService.deleteExperiment(id);
+
+      // state = ExperimentsState.success;
+      // notifyListeners();
+    } catch (e) {
+      _setFailure(e as Failure);
+      state = ExperimentsState.error;
+      notifyListeners();
+    }
+  }
 }

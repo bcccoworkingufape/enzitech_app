@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 class ExperimentModel {
+  String id;
   String name;
   String description;
   int repetitions;
@@ -10,6 +11,7 @@ class ExperimentModel {
   DateTime updatedAt;
 
   ExperimentModel({
+    required this.id,
     required this.name,
     required this.description,
     required this.repetitions,
@@ -19,6 +21,7 @@ class ExperimentModel {
   });
 
   ExperimentModel copyWith(
+    String id,
     String name,
     String description,
     int repetitions,
@@ -27,6 +30,7 @@ class ExperimentModel {
     DateTime updatedAt,
   ) {
     return ExperimentModel(
+      id: id,
       name: name,
       description: description,
       repetitions: repetitions,
@@ -38,6 +42,7 @@ class ExperimentModel {
 
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'name': name,
       'description': description,
       'repetitions': repetitions,
@@ -49,6 +54,7 @@ class ExperimentModel {
 
   factory ExperimentModel.fromMap(Map<String, dynamic> map) {
     return ExperimentModel(
+      id: map['id'],
       name: map['name'],
       description: map['description'],
       repetitions: map['repetitions'],
