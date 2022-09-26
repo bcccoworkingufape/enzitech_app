@@ -62,15 +62,6 @@ class CreateExperimentController extends ChangeNotifier {
     notifyListeners();
   }
 
-  // ExperimentRequestModel _experimentRequestModel;
-  // ExperimentRequestModel get experimentRequestModel => _experimentRequestModel;
-  // void _setExperimentRequestModel(
-  //   ExperimentRequestModel experimentRequestModel,
-  // ) {
-  //   _experimentRequestModel = experimentRequestModel;
-  //   notifyListeners();
-  // }
-
   List<EnzymeModel> _enzymes = [];
   List<EnzymeModel> get enzymes => _enzymes;
   void _setEnzymes(List<EnzymeModel> enzymes) {

@@ -9,7 +9,7 @@
 
 import 'package:flutter/material.dart';
 
-// TODO(dragostis): Missing functionality:
+// TO DO(dragostis): Missing functionality:
 //   * mobile horizontal mode with adding/removing steps
 //   * alternative labeling
 //   * stepper feedback in the case of high-latency interactions
@@ -206,8 +206,8 @@ class EZTStepper extends StatefulWidget {
     this.margin,
   })  : assert(steps != null),
         assert(type != null),
-        assert(currentStep != null),
-        assert(0 <= currentStep && currentStep < steps.length);
+        assert(currentStep != null);
+  // assert(0 <= currentStep && currentStep < steps.length);
 
   /// The steps of the stepper whose titles, subtitles, icons always get shown.
   ///

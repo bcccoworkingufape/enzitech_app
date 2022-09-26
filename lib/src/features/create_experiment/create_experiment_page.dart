@@ -14,6 +14,8 @@ import 'package:enzitech_app/src/shared/failures/failures.dart';
 import 'package:enzitech_app/src/shared/routes/route_generator.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
 
+import '../../shared/models/experiment_request_model.dart';
+
 class CreateExperimentPage extends StatefulWidget {
   const CreateExperimentPage({Key? key}) : super(key: key);
 
@@ -24,14 +26,12 @@ class CreateExperimentPage extends StatefulWidget {
 class _CreateExperimentPageState extends State<CreateExperimentPage> {
   late final CreateExperimentController controller;
 
-  // final _pageController = PageController(initialPage: 0);
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
     controller = context.read<CreateExperimentController>();
-    // experimentDataCache.updateAll((key, value) => '');
     if (mounted) {
       controller.addListener(() {
         if (mounted && controller.state == CreateExperimentState.error) {
@@ -46,99 +46,81 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
           );
         } else if (controller.state == CreateExperimentState.success &&
             controller.experimentCreated) {
-          EZTSnackBar.show(
-            context,
-            "Experimento criado com sucesso!",
-            eztSnackBarType: EZTSnackBarType.success,
-          );
+          if (mounted) {
+            controller.experimentCreated = false;
+            controller.setExperimentRequestModel(
+              ExperimentRequestModel(
+                name: "",
+                description: "",
+                repetitions: 0,
+                processes: [],
+                experimentsEnzymes: [],
+              ),
+            );
 
-          if (!mounted) return;
-          Navigator.popAndPushNamed(
-            context,
-            RouteGenerator.experiment,
-          );
+            EZTSnackBar.show(
+              context,
+              "Experimento criado com sucesso!",
+              eztSnackBarType: EZTSnackBarType.success,
+            );
+
+            if (!mounted) return;
+            Navigator.popAndPushNamed(
+              context,
+              RouteGenerator.experiment,
+            );
+          }
         }
       });
     }
   }
 
-  // var experimentDataCache = {
-  //   "name": "",
-  //   "description": "",
-  //   "treatment": "",
-  //   "repetitions": "",
-  //   "enzymeSelection": "",
-  //   "varA": "",
-  //   "varB": "",
-  //   "var1": "",
-  //   "var2": "",
-  //   "var3": "",
-  //   "var4": "",
-  //   "enableNextButton1": "",
-  //   "enableNextButton2": "",
-  //   "enableNextButton3": "",
-  //   "createExperimentButton": "",
-  // };
-
-  // var experimentDataCacheParaMudar = {
-  //   "name": "",
-  //   "description": "",
-  //   "repetitions": "",
-  //   "processes": [].toString(),
-  //   "experimentsEnzymes": [].toString(),
-  //   "enableNextButton1": "",
-  //   "enableNextButton2": "",
-  //   "enableNextButton3": "",
-  //   "createExperimentButton": "",
-  // };
-
-  // ExperimentRequestModel experimentRequestModel = ExperimentRequestModel(
-  //   name: "",
-  //   description: "",
-  //   repetitions: 0,
-  //   processes: [],
-  //   experimentsEnzymes: [],
-  // );
+  void onBack() {
+    if (mounted) {
+      controller.experimentCreated = false;
+      controller.setExperimentRequestModel(
+        ExperimentRequestModel(
+          name: "",
+          description: "",
+          repetitions: 0,
+          processes: [],
+          experimentsEnzymes: [],
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Form(
-        key: _formKey,
-        child: PageView(
-          controller: controller.pageController,
-          physics: const NeverScrollableScrollPhysics(),
-          children: [
-            CreateExperimentFirstStepPage(
-              // pageController: _pageController,
-              formKey: _formKey,
-              // experimentDataCache: experimentDataCacheParaMudar,
-              // experimentRequestModel: experimentRequestModel,
-            ),
-            CreateExperimentSecondStepPage(
-              // pageController: _pageController,
-              formKey: _formKey,
-              // experimentRequestModel: experimentRequestModel,
-
-              // experimentDataCache: experimentDataCacheParaMudar,
-            ),
-            CreateExperimentThirdStepPage(
-              // pageController: _pageController,
-              formKey: _formKey,
-              // experimentRequestModel: experimentRequestModel,
-
-              // experimentDataCache: experimentDataCacheParaMudar,
-            ),
-            CreateExperimentFourthStepPage(
-              // pageController: _pageController,
-              formKey: _formKey,
-              listOfEnzymes:
-                  controller.experimentRequestModel.experimentsEnzymes,
-              //  experimentRequestModel: experimentRequestModel,
-
-              // experimentDataCache: experimentDataCacheParaMudar,
-            ),
-          ],
+    return WillPopScope(
+      onWillPop: () async {
+        onBack();
+        return true;
+      },
+      child: Scaffold(
+        body: Form(
+          key: _formKey,
+          child: PageView(
+            controller: controller.pageController,
+            physics: const NeverScrollableScrollPhysics(),
+            children: [
+              CreateExperimentFirstStepPage(
+                callback: onBack,
+                formKey: _formKey,
+              ),
+              CreateExperimentSecondStepPage(
+                formKey: _formKey,
+              ),
+              CreateExperimentThirdStepPage(
+                formKey: _formKey,
+              ),
+              CreateExperimentFourthStepPage(
+                formKey: _formKey,
+                listOfEnzymes:
+                    controller.experimentRequestModel.experimentsEnzymes,
+              ),
+            ],
+          ),
         ),
       ),
     );

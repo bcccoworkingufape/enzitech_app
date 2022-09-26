@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_function_literals_in_foreach_calls
+
 import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
 import 'package:flutter/material.dart';
 
@@ -14,16 +16,13 @@ import '../../../shared/widgets/ezt_button.dart';
 import '../../../shared/widgets/ezt_stepper.dart';
 import '../../../shared/widgets/ezt_textfield.dart';
 
-// TODO: REDO 4th STEP
 class CreateExperimentFourthStepPage extends StatefulWidget {
   const CreateExperimentFourthStepPage({
     Key? key,
-    // required this.pageController,
     required this.formKey,
     required this.listOfEnzymes,
   }) : super(key: key);
 
-  // final PageController pageController;
   final GlobalKey<FormState> formKey;
   final List<EnzymeModel> listOfEnzymes;
 
@@ -36,11 +35,7 @@ class _CreateExperimentFourthStepPageState
     extends State<CreateExperimentFourthStepPage> {
   late final CreateExperimentController controller;
 
-  // int _index = 0;
-
-  // This list of controllers can be used to set and get the text from/to the TextFields
   Map<String, TextEditingController> textEditingControllers = {};
-  // Map<String, EZTTextField> textFields = {};
 
   final validations = <ValidateRule>[
     ValidateRule(
@@ -206,7 +201,6 @@ class _CreateExperimentFourthStepPageState
     textEditingControllers.forEach((key, value) {
       isAllFilled.add(value.text.isNotEmpty);
     });
-    var a = isAllFilled.every((boolean) => boolean == true);
     if (mounted && isAllFilled.every((boolean) => boolean == true)) {
       setState(() {
         enableNextButton = true;
@@ -276,9 +270,7 @@ class _CreateExperimentFourthStepPageState
                       ),
                     )
                     .toList(),
-                key: ValueKey(widget.listOfEnzymes.hashCode)
-                // key: Key(Random.secure().nextDouble().toString()),
-                ),
+                key: ValueKey(widget.listOfEnzymes.hashCode)),
           ),
           const SizedBox(height: 40),
           // _textFields,

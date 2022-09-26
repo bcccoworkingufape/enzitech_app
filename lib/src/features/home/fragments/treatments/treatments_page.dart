@@ -117,7 +117,7 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
             },
             // Show a red background as the item is swiped away.
             background: Container(color: Colors.red),
-            child: Container(
+            child: SizedBox(
               width: MediaQuery.of(context).size.width,
               child: TreatmentCard(
                 name: treatment.name,
@@ -133,7 +133,6 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
 
   @override
   Widget build(BuildContext context) {
-    var widthMQ = MediaQuery.of(context).size.width;
     var heightMQ = MediaQuery.of(context).size.height;
     final controller = context.watch<TreatmentsController>();
 

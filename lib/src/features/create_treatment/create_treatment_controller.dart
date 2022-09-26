@@ -1,5 +1,4 @@
 // 🐦 Flutter imports:
-import 'package:enzitech_app/src/features/home/fragments/treatments/treatments_controller.dart';
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:

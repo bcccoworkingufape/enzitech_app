@@ -52,17 +52,21 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
               eztSnackBarType: EZTSnackBarType.error,
             );
             var accountController = context.read<AccountController>();
-            accountController.logout();
+            if (controller.failure is ExpiredTokenOrWrongUserFailure ||
+                controller.failure is UserNotFoundOrWrongTokenFailure ||
+                controller.failure is SessionNotFoundFailure) {
+              accountController.logout();
 
-            if (accountController.state == AccountState.success && mounted) {
-              EZTSnackBar.show(
-                context,
-                "Faça seu login novamente.",
-              );
-              await Future.delayed(const Duration(milliseconds: 500));
-              if (mounted) {
-                Navigator.pushReplacementNamed(context, RouteGenerator.auth);
-                widget.homeController.setFragmentIndex(0);
+              if (accountController.state == AccountState.success && mounted) {
+                EZTSnackBar.show(
+                  context,
+                  "Faça seu login novamente.",
+                );
+                await Future.delayed(const Duration(milliseconds: 500));
+                if (mounted) {
+                  Navigator.pushReplacementNamed(context, RouteGenerator.auth);
+                  widget.homeController.setFragmentIndex(0);
+                }
               }
             }
           }

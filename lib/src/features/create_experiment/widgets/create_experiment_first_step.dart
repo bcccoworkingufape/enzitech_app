@@ -17,14 +17,11 @@ import '../../../shared/widgets/ezt_textfield.dart';
 class CreateExperimentFirstStepPage extends StatefulWidget {
   const CreateExperimentFirstStepPage({
     Key? key,
-    // required this.pageController,
+    required this.callback,
     required this.formKey,
-    // required this.experimentRequestModel,
   }) : super(key: key);
-
-  // final PageController pageController;
+  final void Function() callback;
   final GlobalKey<FormState> formKey;
-  // final ExperimentRequestModel experimentRequestModel;
 
   @override
   State<CreateExperimentFirstStepPage> createState() =>
@@ -54,10 +51,6 @@ class _CreateExperimentFirstStepPageState
         ? _descriptionFieldController.text =
             controller.experimentRequestModel.description
         : null;
-
-    // enableNextButton1 = widget.experimentDataCache['enableNextButton1'] != null
-    //     ? widget.experimentDataCache['enableNextButton1']!.isNotEmpty
-    //     : false;
 
     setState(() {});
   }
@@ -187,8 +180,6 @@ class _CreateExperimentFirstStepPageState
             controller.experimentRequestModel.name = _nameFieldController.text;
             controller.experimentRequestModel.description =
                 _descriptionFieldController.text;
-            // widget.experimentDataCache
-            //     .update('enableNextButton1', (value) => 'true');
 
             controller.pageController.animateTo(
               MediaQuery.of(context).size.width,
@@ -202,6 +193,7 @@ class _CreateExperimentFirstStepPageState
           text: 'Voltar',
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
+            widget.callback();
             Navigator.pop(context);
           },
         ),

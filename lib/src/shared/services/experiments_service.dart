@@ -1,6 +1,4 @@
 // 🌎 Project imports:
-import 'dart:convert';
-
 import 'package:enzitech_app/src/shared/external/http_driver/dio_client.dart';
 import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
 import 'package:enzitech_app/src/shared/models/experiment_model.dart';
@@ -57,7 +55,7 @@ class ExperimentsService {
     try {
       var enzymes = experimentsEnzymes
           .map(
-            (enzyme) => enzyme.toJsonCreateExperiment(
+            (enzyme) => enzyme.toMapCreateExperiment(
               int.parse(textFieldsOfEnzymes['duration-${enzyme.id}']!
                   .controller!
                   .text),

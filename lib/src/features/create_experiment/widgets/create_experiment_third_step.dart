@@ -1,5 +1,5 @@
 // 🐦 Flutter imports:
-import 'dart:developer';
+// ignore_for_file: avoid_function_literals_in_foreach_calls
 
 import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
 import 'package:flutter/material.dart';
@@ -21,14 +21,10 @@ import '../../../shared/widgets/ezt_checkbox_tile.dart';
 class CreateExperimentThirdStepPage extends StatefulWidget {
   const CreateExperimentThirdStepPage({
     Key? key,
-    // required this.pageController,
     required this.formKey,
-    // required this.experimentRequestModel,
   }) : super(key: key);
 
-  // final PageController pageController;
   final GlobalKey<FormState> formKey;
-  // final ExperimentRequestModel experimentRequestModel;
 
   @override
   State<CreateExperimentThirdStepPage> createState() =>
@@ -63,8 +59,6 @@ class _CreateExperimentThirdStepPageState
   }
 
   bool enableNextButton = false;
-
-  //TODO: Integrar API para obter as enzimas
 
   Widget get _body {
     return SingleChildScrollView(
@@ -119,7 +113,6 @@ class _CreateExperimentThirdStepPageState
                     if (!selected) {
                       _checkboxesController.selectIndex(index);
                       _choosedCheckboxList.add(controller.enzymes[index]);
-                      log(_choosedCheckboxList.toString());
                       setState(() {
                         enableNextButton = _choosedCheckboxList.isNotEmpty;
                       });
@@ -131,13 +124,9 @@ class _CreateExperimentThirdStepPageState
                     setState(() {
                       enableNextButton = _choosedCheckboxList.isNotEmpty;
                     });
-
-                    log(_choosedCheckboxList.toString());
                   },
                 );
               },
-              onSelected: (val, i, selected) =>
-                  debugPrint('Button: $val index: $i $selected'),
             ),
             child: Padding(
               padding: const EdgeInsets.all(64),
@@ -152,44 +141,15 @@ class _CreateExperimentThirdStepPageState
               ),
             ),
           ),
-          // const SizedBox(height: 40),
-          // _checkBoxListTile,
-          // const SizedBox(height: 64),
         ],
       ),
     );
   }
 
-  // Widget get _checkBoxListTile {
-  //   return Column(
-  //     children: _enzymeSelection.map((enzyme) {
-  //       return CheckboxListTile(
-  //           dense: true,
-  //           contentPadding: const EdgeInsets.all(0),
-  //           value: enzyme["isChecked"],
-  //           title: Text(enzyme["name"], style: TextStyles.titleBoldHeading),
-  //           controlAffinity: ListTileControlAffinity.leading,
-  //           onChanged: (newValue) {
-  //             setState(() {
-  //               enzyme["isChecked"] = newValue;
-  //               for (int i = 0; i < _enzymeSelection.length; i++) {
-  //                 if (_enzymeSelection[i]["isChecked"]) {
-  //                   enableNextButton = true;
-  //                   break;
-  //                 } else if (i == _enzymeSelection.length - 1) {
-  //                   enableNextButton = false;
-  //                 }
-  //               }
-  //             });
-  //           });
-  //     }).toList(),
-  //   );
-  // }
-
   Widget get _buttons {
-    var _choosedCheckboxListFormatted = [];
+    var choosedCheckboxListFormatted = [];
     _choosedCheckboxList.forEach((element) {
-      _choosedCheckboxListFormatted.add(element.toMap());
+      choosedCheckboxListFormatted.add(element.toMap());
     });
 
     return Column(
@@ -204,14 +164,6 @@ class _CreateExperimentThirdStepPageState
 
             controller
                 .setExperimentRequestModel(controller.experimentRequestModel);
-
-            // widget.experimentDataCache.update(
-            //   'experimentsEnzymes',
-            //   (value) => json.encode(_choosedCheckboxListFormatted,
-            //       toEncodable: Toolkit.encodeDateTime),
-            // );
-            // widget.experimentDataCache
-            //     .update('enableNextButton3', (value) => 'true');
 
             controller.pageController.nextPage(
               duration: const Duration(milliseconds: 150),
