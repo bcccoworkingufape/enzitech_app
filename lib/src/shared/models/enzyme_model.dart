@@ -1,8 +1,8 @@
 // 🎯 Dart imports:
 import 'dart:convert';
 
+// 🌎 Project imports:
 import 'package:enzitech_app/src/shared/extensions/extensions.dart';
-
 import '../util/util.dart';
 
 class EnzymeModel {

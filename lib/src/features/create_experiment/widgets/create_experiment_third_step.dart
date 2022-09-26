@@ -1,17 +1,18 @@
 // 🐦 Flutter imports:
 // ignore_for_file: avoid_function_literals_in_foreach_calls
 
-import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:flutter_svg/svg.dart';
 import 'package:group_button/group_button.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/create_experiment/create_experiment_controller.dart';
-import 'package:provider/provider.dart';
+import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
 import '../../../shared/themes/app_complete_theme.dart';
 import '../../../shared/util/constants.dart';
 import '../../../shared/util/util.dart';

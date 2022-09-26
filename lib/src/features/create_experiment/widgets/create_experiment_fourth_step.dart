@@ -1,6 +1,6 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls
 
-import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/create_experiment/create_experiment_controller.dart';
+import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
 import '../../../shared/themes/app_complete_theme.dart';
 import '../../../shared/util/constants.dart';
 import '../../../shared/validator/field_validator.dart';

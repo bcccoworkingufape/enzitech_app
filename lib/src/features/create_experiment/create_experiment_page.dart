@@ -13,7 +13,6 @@ import 'package:enzitech_app/src/features/create_experiment/widgets/create_exper
 import 'package:enzitech_app/src/shared/failures/failures.dart';
 import 'package:enzitech_app/src/shared/routes/route_generator.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
-
 import '../../shared/models/experiment_request_model.dart';
 
 class CreateExperimentPage extends StatefulWidget {

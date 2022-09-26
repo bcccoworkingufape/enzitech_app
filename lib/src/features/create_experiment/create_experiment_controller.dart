@@ -1,11 +1,10 @@
 // 🐦 Flutter imports:
-import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/shared/failures/failures.dart';
+import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
 import 'package:enzitech_app/src/shared/services/experiments_service.dart';
-
 import '../../shared/models/experiment_request_model.dart';
 import '../../shared/widgets/ezt_textfield.dart';
 
