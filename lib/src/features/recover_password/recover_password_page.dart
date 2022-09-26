@@ -8,10 +8,12 @@ import 'package:provider/provider.dart';
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/auth/auth_controller.dart';
 import 'package:enzitech_app/src/features/recover_password/recover_password_controller.dart';
+import 'package:enzitech_app/src/shared/failures/failures.dart';
 import 'package:enzitech_app/src/shared/routes/route_generator.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:enzitech_app/src/shared/validator/validator.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_button.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_textfield.dart';
 
 class RecoverPasswordPage extends StatefulWidget {
@@ -38,17 +40,19 @@ class RecoverPasswordPageState extends State<RecoverPasswordPage> {
     }
 
     if (mounted) {
-      controller.addListener(() {
-        if (controller.state == RecoverPasswordState.error) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(controller.failure!.message),
-            ),
-          );
-        } else if (controller.state == AuthState.success) {
-          Navigator.pushReplacementNamed(context, RouteGenerator.home);
-        }
-      });
+      controller.addListener(
+        () {
+          if (controller.state == RecoverPasswordState.error) {
+            EZTSnackBar.show(
+              context,
+              HandleFailure.of(controller.failure!),
+              eztSnackBarType: EZTSnackBarType.error,
+            );
+          } else if (controller.state == AuthState.success) {
+            Navigator.pushReplacementNamed(context, RouteGenerator.home);
+          }
+        },
+      );
     }
   }
 

@@ -1,26 +1,31 @@
 // 🐦 Flutter imports:
+// ignore_for_file: avoid_function_literals_in_foreach_calls
+
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:flutter_svg/svg.dart';
+import 'package:group_button/group_button.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
+import 'package:enzitech_app/src/features/create_experiment/create_experiment_controller.dart';
+import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
 import '../../../shared/themes/app_complete_theme.dart';
 import '../../../shared/util/constants.dart';
+import '../../../shared/util/util.dart';
 import '../../../shared/widgets/ezt_button.dart';
+import '../../../shared/widgets/ezt_checkbox_tile.dart';
 
 class CreateExperimentThirdStepPage extends StatefulWidget {
   const CreateExperimentThirdStepPage({
     Key? key,
-    required this.pageController,
     required this.formKey,
-    required this.experimentDataCache,
   }) : super(key: key);
 
-  final PageController pageController;
   final GlobalKey<FormState> formKey;
-  final Map<String, String> experimentDataCache;
 
   @override
   State<CreateExperimentThirdStepPage> createState() =>
@@ -29,20 +34,39 @@ class CreateExperimentThirdStepPage extends StatefulWidget {
 
 class _CreateExperimentThirdStepPageState
     extends State<CreateExperimentThirdStepPage> {
-  bool enableNextButton = false;
+  late final CreateExperimentController controller;
+  late GroupButtonController _checkboxesController;
+  late final _checkboxButtons = [];
+  final _choosedCheckboxList = <EnzymeModel>[];
 
-  final List<Map> _enzymeSelection = [
-    {"name": "Enzima 1", "isChecked": false},
-    {"name": "Enzima 2", "isChecked": false},
-    {"name": "Enzima 3", "isChecked": false},
-    {"name": "Enzima 4", "isChecked": false},
-  ];
+  @override
+  void initState() {
+    super.initState();
+    controller = context.read<CreateExperimentController>();
+
+    Future.delayed(Duration.zero, () async {
+      controller.loadEnzymes().whenComplete(
+            () => controller.enzymes.forEach(
+              (enz) {
+                _checkboxButtons.add(enz.name);
+              },
+            ),
+          );
+    });
+
+    _checkboxesController = GroupButtonController();
+
+    super.initState();
+  }
+
+  bool enableNextButton = false;
 
   Widget get _body {
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
       child: Column(
         children: [
+          const SizedBox(height: 48),
           Align(
             alignment: Alignment.center,
             child: SvgPicture.asset(
@@ -73,39 +97,62 @@ class _CreateExperimentThirdStepPageState
               ),
             ],
           ),
-          const SizedBox(height: 40),
-          _checkBoxListTile,
-          const SizedBox(height: 64),
+          Visibility(
+            visible: controller.state == CreateExperimentState.loading,
+            replacement: GroupButton(
+              controller: _checkboxesController,
+              isRadio: false,
+              options: const GroupButtonOptions(
+                groupingType: GroupingType.column,
+              ),
+              buttons: _checkboxButtons,
+              buttonIndexedBuilder: (selected, index, context) {
+                return EZTCheckBoxTile(
+                  title: _checkboxButtons[index],
+                  selected: selected,
+                  onTap: () {
+                    if (!selected) {
+                      _checkboxesController.selectIndex(index);
+                      _choosedCheckboxList.add(controller.enzymes[index]);
+                      setState(() {
+                        enableNextButton = _choosedCheckboxList.isNotEmpty;
+                      });
+
+                      return;
+                    }
+                    _checkboxesController.unselectIndex(index);
+                    _choosedCheckboxList.remove(controller.enzymes[index]);
+                    setState(() {
+                      enableNextButton = _choosedCheckboxList.isNotEmpty;
+                    });
+                  },
+                );
+              },
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(64),
+              child: Column(
+                children: const [
+                  CircularProgressIndicator(),
+                  SizedBox(
+                    height: 24,
+                  ),
+                  Text("Carregando enzimas..."),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
   }
 
-  Widget get _checkBoxListTile {
-    return Column(
-      children: _enzymeSelection.map((enzyme) {
-        return CheckboxListTile(
-            value: enzyme["isChecked"],
-            title: Text(enzyme["name"], style: TextStyles.titleBoldHeading),
-            controlAffinity: ListTileControlAffinity.leading,
-            onChanged: (newValue) {
-              setState(() {
-                enzyme["isChecked"] = newValue;
-                for (int i = 0; i < _enzymeSelection.length; i++) {
-                  if (_enzymeSelection[i]["isChecked"]) {
-                    enableNextButton = true;
-                    break;
-                  } else if (i == _enzymeSelection.length - 1) {
-                    enableNextButton = false;
-                  }
-                }
-              });
-            });
-      }).toList(),
-    );
-  }
-
   Widget get _buttons {
+    var choosedCheckboxListFormatted = [];
+    _choosedCheckboxList.forEach((element) {
+      choosedCheckboxListFormatted.add(element.toMap());
+    });
+
     return Column(
       children: [
         EZTButton(
@@ -113,12 +160,13 @@ class _CreateExperimentThirdStepPageState
           text: 'Próximo',
           onPressed: () {
             widget.formKey.currentState!.save();
+            controller.experimentRequestModel.experimentsEnzymes =
+                _choosedCheckboxList;
 
-            widget.experimentDataCache.update(
-                'enzymeSelection', (value) => _enzymeSelection.toString());
-            widget.experimentDataCache.update('enableNext', (value) => 'true');
+            controller
+                .setExperimentRequestModel(controller.experimentRequestModel);
 
-            widget.pageController.nextPage(
+            controller.pageController.nextPage(
               duration: const Duration(milliseconds: 150),
               curve: Curves.easeIn,
             );
@@ -129,7 +177,11 @@ class _CreateExperimentThirdStepPageState
           text: 'Voltar',
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
-            Navigator.pop(context);
+            controller.pageController.animateTo(
+              MediaQuery.of(context).size.width,
+              duration: const Duration(milliseconds: 150),
+              curve: Curves.easeIn,
+            );
           },
         ),
       ],
@@ -138,6 +190,8 @@ class _CreateExperimentThirdStepPageState
 
   @override
   Widget build(BuildContext context) {
+    context.watch<CreateExperimentController>();
+
     return Column(
       children: [
         Expanded(

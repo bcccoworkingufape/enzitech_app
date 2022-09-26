@@ -8,8 +8,9 @@ import 'package:provider/provider.dart';
 import 'package:enzitech_app/src/features/create_account/create_account_controller.dart';
 import 'package:enzitech_app/src/features/create_account/widgets/create_account_first_step.dart';
 import 'package:enzitech_app/src/features/create_account/widgets/create_account_second_step.dart';
+import 'package:enzitech_app/src/shared/failures/failures.dart';
 import 'package:enzitech_app/src/shared/routes/route_generator.dart';
-import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
 
 class CreateAccountPage extends StatefulWidget {
   const CreateAccountPage({Key? key}) : super(key: key);
@@ -40,19 +41,22 @@ class CreateAccountPageState extends State<CreateAccountPage> {
     userDataCache.updateAll((key, value) => '');
     if (mounted) {
       controller.addListener(() {
-        if (controller.state == CreateAccountState.error) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(controller.failure!.message),
+        if (controller.state == CreateAccountState.error && mounted) {
+          EZTSnackBar.show(
+            context,
+            HandleFailure.of(
+              controller.failure!,
+              overrideDefaultMessage: true,
             ),
+            eztSnackBarType: EZTSnackBarType.error,
           );
         } else if (controller.state == CreateAccountState.success) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text("Conta criada com sucesso!"),
-              backgroundColor: AppColors.success,
-            ),
+          EZTSnackBar.show(
+            context,
+            "Conta criada com sucesso!",
+            eztSnackBarType: EZTSnackBarType.success,
           );
+
           Navigator.pushNamedAndRemoveUntil(
             context,
             RouteGenerator.auth,

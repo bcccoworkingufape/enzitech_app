@@ -2,16 +2,15 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
-import 'package:enzitech_app/src/shared/external/http_driver/dio_client.dart';
 import 'package:enzitech_app/src/shared/failures/failures.dart';
 import 'package:enzitech_app/src/shared/services/user_prefs_service.dart';
 
 enum AccountState { idle, success, error, loading }
 
 class AccountController extends ChangeNotifier {
-  final DioClient client;
+  final UserPrefsServices userPrefsServices;
 
-  AccountController(this.client);
+  AccountController(this.userPrefsServices);
 
   var state = AccountState.idle;
 
@@ -45,12 +44,8 @@ class AccountController extends ChangeNotifier {
 
       state = AccountState.success;
       notifyListeners();
-    } on Failure catch (failure) {
-      _setFailure(ServerFailure(message: failure.message));
-      state = AccountState.error;
-      notifyListeners();
     } catch (e) {
-      _setFailure(UnknownError());
+      _setFailure(e as Failure);
       state = AccountState.error;
       notifyListeners();
     }
@@ -64,12 +59,8 @@ class AccountController extends ChangeNotifier {
       await loadEmail();
 
       notifyListeners();
-    } on Failure catch (failure) {
-      _setFailure(ServerFailure(message: failure.message));
-      state = AccountState.error;
-      notifyListeners();
     } catch (e) {
-      _setFailure(UnknownError());
+      _setFailure(e as Failure);
       state = AccountState.error;
       notifyListeners();
     }
@@ -79,18 +70,13 @@ class AccountController extends ChangeNotifier {
     state = AccountState.loading;
     notifyListeners();
     try {
-      UserPrefsServices userPrefsServices = UserPrefsServices();
       String username = await userPrefsServices.getName() ?? '';
       _setUsername(username);
 
       state = AccountState.success;
       notifyListeners();
-    } on Failure catch (failure) {
-      _setFailure(ServerFailure(message: failure.message));
-      state = AccountState.error;
-      notifyListeners();
     } catch (e) {
-      _setFailure(UnknownError());
+      _setFailure(e as Failure);
       state = AccountState.error;
       notifyListeners();
     }
@@ -100,18 +86,14 @@ class AccountController extends ChangeNotifier {
     state = AccountState.loading;
     notifyListeners();
     try {
-      UserPrefsServices userPrefsServices = UserPrefsServices();
+      // UserPrefsServices userPrefsServices = UserPrefsServices();
       String email = await userPrefsServices.getEmail() ?? '';
       _setEmail(email);
 
       state = AccountState.success;
       notifyListeners();
-    } on Failure catch (failure) {
-      _setFailure(ServerFailure(message: failure.message));
-      state = AccountState.error;
-      notifyListeners();
     } catch (e) {
-      _setFailure(UnknownError());
+      _setFailure(e as Failure);
       state = AccountState.error;
       notifyListeners();
     }

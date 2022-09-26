@@ -13,6 +13,7 @@ class AppColors {
   static const danger = Color(0xFFFF3B2D);
   static const warning = Color(0xFFE8D910);
   static const lines = Color(0xFFCCCCCC);
+  static const background = Color(0xFFFAFAFA);
 
   static const grey = Color(0xFF585666);
   static const greyLight = Color(0xFF9D9D9D);

@@ -1,49 +1,94 @@
 // 🐦 Flutter imports:
+// ignore_for_file: avoid_function_literals_in_foreach_calls
+
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // 📦 Package imports:
 import 'package:flutter_svg/svg.dart';
+import 'package:group_button/group_button.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
+import 'package:enzitech_app/src/features/create_experiment/create_experiment_controller.dart';
+import 'package:enzitech_app/src/features/home/fragments/treatments/treatments_controller.dart';
+import 'package:enzitech_app/src/shared/models/treatment_model.dart';
 import '../../../shared/themes/app_complete_theme.dart';
 import '../../../shared/util/constants.dart';
 import '../../../shared/validator/field_validator.dart';
 import '../../../shared/widgets/ezt_button.dart';
+import '../../../shared/widgets/ezt_checkbox_tile.dart';
 import '../../../shared/widgets/ezt_textfield.dart';
 
 class CreateExperimentSecondStepPage extends StatefulWidget {
   const CreateExperimentSecondStepPage({
     Key? key,
-    required this.pageController,
     required this.formKey,
-    required this.experimentDataCache,
   }) : super(key: key);
 
-  final PageController pageController;
   final GlobalKey<FormState> formKey;
-  final Map<String, String> experimentDataCache;
 
   @override
-  State<CreateExperimentSecondStepPage> createState() => _CreateExperimentSecondStepPageState();
+  State<CreateExperimentSecondStepPage> createState() =>
+      _CreateExperimentSecondStepPageState();
 }
 
-class _CreateExperimentSecondStepPageState extends State<CreateExperimentSecondStepPage> {
+class _CreateExperimentSecondStepPageState
+    extends State<CreateExperimentSecondStepPage> {
+  late final CreateExperimentController controller;
+  late final TreatmentsController treatmentsController;
+
+  late GroupButtonController _checkboxesController;
+  late final _checkboxButtons = [];
+  List<TreatmentModel> choosedCheckboxList = <TreatmentModel>[];
 
   final _treatmentFieldController = TextEditingController(text: '');
   final _repetitionsFieldController = TextEditingController(text: '');
 
-  bool enableNextButton = false;
+  bool enableNextButton2 = false;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = context.read<CreateExperimentController>();
+    treatmentsController = context.read<TreatmentsController>();
+    Future.delayed(Duration.zero, () async {
+      treatmentsController.loadTreatments().whenComplete(
+            () => treatmentsController.treatments.forEach(
+              (treat) {
+                _checkboxButtons.add(treat.name);
+              },
+            ),
+          );
+    });
+
+    _checkboxesController = GroupButtonController();
+
+    initFieldControllerTexts();
+  }
+
+  void initFieldControllerTexts() {
+    _repetitionsFieldController.text.isEmpty
+        ? _treatmentFieldController.text =
+            controller.experimentRequestModel.repetitions.toString()
+        : null;
+
+    enableNextButton2 = false;
+
+    setState(() {});
+  }
 
   get _validateFields {
-    if (_treatmentFieldController.text.isNotEmpty &&
-        _repetitionsFieldController.text.isNotEmpty) {
+    if (_repetitionsFieldController.text.isNotEmpty &&
+        choosedCheckboxList.isNotEmpty) {
       setState(() {
-        enableNextButton = widget.formKey.currentState!.validate();
+        enableNextButton2 = widget.formKey.currentState!.validate();
       });
     } else {
       setState(() {
-        enableNextButton = false;
+        enableNextButton2 = false;
       });
     }
   }
@@ -51,34 +96,9 @@ class _CreateExperimentSecondStepPageState extends State<CreateExperimentSecondS
   Widget get _textFields {
     return Column(
       children: [
-        _treatmentInput,
         const SizedBox(height: 10),
         _repetitionsInput,
       ],
-    );
-  }
-
-  Widget get _treatmentInput {
-    final validations = <ValidateRule>[
-      ValidateRule(
-        ValidateTypes.required,
-      ),
-      ValidateRule(
-        ValidateTypes.name,
-      ),
-    ];
-
-    final fieldValidator = FieldValidator(validations, context);
-
-    return EZTTextField(
-      eztTextFieldType: EZTTextFieldType.underline,
-      labelText: "Tratamentos",
-      usePrimaryColorOnFocusedBorder: true,
-      keyboardType: TextInputType.name,
-      controller: _treatmentFieldController,
-      onChanged: (value) => _validateFields,
-      fieldValidator: fieldValidator,
-      // disableSuffixIcon: true,
     );
   }
 
@@ -88,8 +108,11 @@ class _CreateExperimentSecondStepPageState extends State<CreateExperimentSecondS
         ValidateTypes.required,
       ),
       ValidateRule(
-        ValidateTypes.name,
+        ValidateTypes.number,
       ),
+      ValidateRule(
+        ValidateTypes.greaterThanZero,
+      )
     ];
 
     final fieldValidator = FieldValidator(validations, context);
@@ -102,6 +125,7 @@ class _CreateExperimentSecondStepPageState extends State<CreateExperimentSecondS
       controller: _repetitionsFieldController,
       onChanged: (value) => _validateFields,
       fieldValidator: fieldValidator,
+      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
       // disableSuffixIcon: true,
     );
   }
@@ -141,6 +165,49 @@ class _CreateExperimentSecondStepPageState extends State<CreateExperimentSecondS
               ),
             ],
           ),
+          Visibility(
+            visible: treatmentsController.state == TreatmentsState.loading,
+            replacement: GroupButton(
+              controller: _checkboxesController,
+              isRadio: false,
+              options: const GroupButtonOptions(
+                groupingType: GroupingType.column,
+              ),
+              buttons: _checkboxButtons,
+              buttonIndexedBuilder: (selected, index, context) {
+                return EZTCheckBoxTile(
+                  title: _checkboxButtons[index],
+                  selected: selected,
+                  onTap: () {
+                    _validateFields;
+
+                    if (!selected) {
+                      _checkboxesController.selectIndex(index);
+                      choosedCheckboxList
+                          .add(treatmentsController.treatments[index]);
+
+                      return;
+                    }
+                    _checkboxesController.unselectIndex(index);
+                    choosedCheckboxList
+                        .remove(treatmentsController.treatments[index]);
+                  },
+                );
+              },
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(64),
+              child: Column(
+                children: const [
+                  CircularProgressIndicator(),
+                  SizedBox(
+                    height: 24,
+                  ),
+                  Text("Carregando tratamentos..."),
+                ],
+              ),
+            ),
+          ),
           _textFields,
           const SizedBox(height: 64),
         ],
@@ -152,22 +219,20 @@ class _CreateExperimentSecondStepPageState extends State<CreateExperimentSecondS
     return Column(
       children: [
         EZTButton(
-          enabled: enableNextButton,
+          enabled: enableNextButton2,
           text: 'Próximo',
           onPressed: () {
             widget.formKey.currentState!.save();
 
-            widget.experimentDataCache
-                .update('treatment', (value) => _treatmentFieldController.text);
-            widget.experimentDataCache.update(
-                'repetitions', (value) => _repetitionsFieldController.text);
-            widget.experimentDataCache.update('enableNext', (value) => 'true');
+            controller.experimentRequestModel.processes =
+                choosedCheckboxList.map((processes) => processes.id).toList();
+            controller.experimentRequestModel.repetitions =
+                int.parse(_repetitionsFieldController.text);
 
-            widget.pageController.nextPage(
+            controller.pageController.nextPage(
               duration: const Duration(milliseconds: 150),
               curve: Curves.easeIn,
             );
-
           },
         ),
         const SizedBox(height: 16),
@@ -175,7 +240,11 @@ class _CreateExperimentSecondStepPageState extends State<CreateExperimentSecondS
           text: 'Voltar',
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
-            Navigator.pop(context);
+            controller.pageController.animateTo(
+              0,
+              duration: const Duration(milliseconds: 150),
+              curve: Curves.easeIn,
+            );
           },
         ),
       ],
@@ -184,6 +253,8 @@ class _CreateExperimentSecondStepPageState extends State<CreateExperimentSecondS
 
   @override
   Widget build(BuildContext context) {
+    context.watch<TreatmentsController>();
+
     return Column(
       children: [
         Expanded(
@@ -200,7 +271,6 @@ class _CreateExperimentSecondStepPageState extends State<CreateExperimentSecondS
             ),
           ),
         ),
-
       ],
     );
   }

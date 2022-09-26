@@ -2,68 +2,71 @@
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
-import 'package:enzitech_app/src/features/create_experiment/create_experiment_controller.dart';
-import '../../../shared/themes/app_complete_theme.dart';
-import '../../../shared/util/constants.dart';
-import '../../../shared/validator/field_validator.dart';
-import '../../../shared/widgets/ezt_button.dart';
-import '../../../shared/widgets/ezt_textfield.dart';
+import 'package:enzitech_app/src/features/create_treatment/create_treatment_controller.dart';
+import 'package:enzitech_app/src/shared/failures/failures.dart';
+import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
+import 'package:enzitech_app/src/shared/util/util.dart';
+import 'package:enzitech_app/src/shared/validator/validator.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_button.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_textfield.dart';
 
-class CreateExperimentFirstStepPage extends StatefulWidget {
-  const CreateExperimentFirstStepPage({
-    Key? key,
-    required this.callback,
-    required this.formKey,
-  }) : super(key: key);
-  final void Function() callback;
-  final GlobalKey<FormState> formKey;
+class CreateTreatmentPage extends StatefulWidget {
+  const CreateTreatmentPage({Key? key}) : super(key: key);
 
   @override
-  State<CreateExperimentFirstStepPage> createState() =>
-      _CreateExperimentFirstStepPageState();
+  State<CreateTreatmentPage> createState() => _CreateTreatmentPageState();
 }
 
-class _CreateExperimentFirstStepPageState
-    extends State<CreateExperimentFirstStepPage> {
-  late final CreateExperimentController controller;
+class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
+  late final CreateTreatmentController controller;
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _nameFieldController = TextEditingController(text: '');
   final _descriptionFieldController = TextEditingController(text: '');
 
-  bool enableNextButton1 = false;
+  bool enableCreate = false;
 
   @override
   void initState() {
     super.initState();
-    controller = context.read<CreateExperimentController>();
-    initFieldControllerTexts();
-  }
+    controller = context.read<CreateTreatmentController>();
+    if (mounted) {
+      controller.addListener(() {
+        if (controller.state == CreateTreatmentState.error) {
+          EZTSnackBar.show(
+            context,
+            HandleFailure.of(controller.failure!),
+            eztSnackBarType: EZTSnackBarType.error,
+          );
+        } else if (controller.state == CreateTreatmentState.success) {
+          EZTSnackBar.show(
+            context,
+            "Tratamento criado com sucesso!",
+            eztSnackBarType: EZTSnackBarType.success,
+          );
 
-  void initFieldControllerTexts() {
-    _nameFieldController.text.isEmpty
-        ? _nameFieldController.text = controller.experimentRequestModel.name
-        : null;
-    _descriptionFieldController.text.isEmpty
-        ? _descriptionFieldController.text =
-            controller.experimentRequestModel.description
-        : null;
-
-    setState(() {});
+          if (!mounted) return;
+          Navigator.pop(context);
+        }
+      });
+    }
   }
 
   get _validateFields {
     if (_nameFieldController.text.isNotEmpty &&
         _descriptionFieldController.text.isNotEmpty) {
       setState(() {
-        enableNextButton1 = widget.formKey.currentState!.validate();
+        enableCreate = _formKey.currentState!.validate();
       });
     } else {
       setState(() {
-        enableNextButton1 = false;
+        enableCreate = false;
       });
     }
   }
@@ -84,7 +87,7 @@ class _CreateExperimentFirstStepPageState
           const SizedBox(height: 16),
           Center(
             child: Text(
-              "Cadastre um novo\nexperimento",
+              "Cadastre um novo\ntratamento",
               style: TextStyles.titleHome,
               textAlign: TextAlign.center,
             ),
@@ -98,7 +101,7 @@ class _CreateExperimentFirstStepPageState
               ),
               const SizedBox(width: 4),
               Text(
-                'Identidicação do experimento',
+                'Identidicação do tratamento',
                 style: TextStyles.detailBold,
               ),
             ],
@@ -172,20 +175,16 @@ class _CreateExperimentFirstStepPageState
     return Column(
       children: [
         EZTButton(
-          enabled: enableNextButton1,
-          text: 'Próximo',
-          onPressed: () {
-            widget.formKey.currentState!.save();
-
-            controller.experimentRequestModel.name = _nameFieldController.text;
-            controller.experimentRequestModel.description =
-                _descriptionFieldController.text;
-
-            controller.pageController.animateTo(
-              MediaQuery.of(context).size.width,
-              duration: const Duration(milliseconds: 150),
-              curve: Curves.easeIn,
-            );
+          enabled: enableCreate,
+          text: 'Criar tratamento',
+          onPressed: () async {
+            _formKey.currentState!.save();
+            if (_formKey.currentState!.validate()) {
+              await controller.createTreatment(
+                _nameFieldController.text.trim(),
+                _descriptionFieldController.text.trim(),
+              );
+            }
           },
         ),
         const SizedBox(height: 16),
@@ -193,7 +192,6 @@ class _CreateExperimentFirstStepPageState
           text: 'Voltar',
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
-            widget.callback();
             Navigator.pop(context);
           },
         ),
@@ -203,23 +201,28 @@ class _CreateExperimentFirstStepPageState
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          flex: 11,
-          child: Center(child: _body),
-        ),
-        Expanded(
-          flex: 4,
-          child: SingleChildScrollView(
-            physics: const NeverScrollableScrollPhysics(),
-            child: Padding(
-              padding: Constants.padding16all,
-              child: _buttons,
+    return Scaffold(
+      body: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            Expanded(
+              flex: 11,
+              child: Center(child: _body),
             ),
-          ),
+            Expanded(
+              flex: 4,
+              child: SingleChildScrollView(
+                physics: const NeverScrollableScrollPhysics(),
+                child: Padding(
+                  padding: Constants.padding16all,
+                  child: _buttons,
+                ),
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
-import 'package:enzitech_app/src/shared/external/http_driver/dio_client.dart';
 import 'package:enzitech_app/src/shared/failures/failures.dart';
 import 'package:enzitech_app/src/shared/models/experiment_model.dart';
 import 'package:enzitech_app/src/shared/services/experiments_service.dart';
@@ -10,9 +9,9 @@ import 'package:enzitech_app/src/shared/services/experiments_service.dart';
 enum ExperimentsState { idle, success, error, loading }
 
 class ExperimentsController extends ChangeNotifier {
-  final DioClient client;
+  final ExperimentsService experimentsService;
 
-  ExperimentsController(this.client);
+  ExperimentsController(this.experimentsService);
 
   var state = ExperimentsState.idle;
 
@@ -34,19 +33,28 @@ class ExperimentsController extends ChangeNotifier {
     state = ExperimentsState.loading;
     notifyListeners();
     try {
-      var experimentsService = ExperimentsService(client);
-
       final experimentsList = await experimentsService.fetchExperiments();
       _setExperiments(experimentsList);
 
       state = ExperimentsState.success;
       notifyListeners();
-    } on Failure catch (failure) {
-      _setFailure(ServerFailure(message: failure.message));
+    } catch (e) {
+      _setFailure(e as Failure);
       state = ExperimentsState.error;
       notifyListeners();
+    }
+  }
+
+  Future<void> deleteExperiment(String id) async {
+    // state = ExperimentsState.loading;
+    // notifyListeners();
+    try {
+      await experimentsService.deleteExperiment(id);
+
+      // state = ExperimentsState.success;
+      // notifyListeners();
     } catch (e) {
-      _setFailure(UnknownError());
+      _setFailure(e as Failure);
       state = ExperimentsState.error;
       notifyListeners();
     }

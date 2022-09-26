@@ -6,4 +6,6 @@ class Constants {
     horizontal: 16.0,
     vertical: 16.0,
   );
+
+  static const bccCoworkingLink = 'http://app.uag.ufrpe.br/bcccoworking/home';
 }

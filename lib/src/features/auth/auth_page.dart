@@ -8,9 +8,11 @@ import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/auth/auth_controller.dart';
+import 'package:enzitech_app/src/shared/failures/failures.dart';
 import 'package:enzitech_app/src/shared/routes/route_generator.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:enzitech_app/src/shared/validator/validator.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_textfield.dart';
 import 'components/auth_button.dart';
 
@@ -35,17 +37,19 @@ class AuthPageState extends State<AuthPage> {
     if (mounted) {
       controller.addListener(() async {
         if (controller.state == AuthState.error) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(controller.failure!.message),
+          EZTSnackBar.show(
+            context,
+            HandleFailure.of(
+              controller.failure!,
+              overrideDefaultMessage: true,
             ),
+            eztSnackBarType: EZTSnackBarType.error,
           );
         } else if (controller.state == AuthState.success && mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text("Bem vindo(a) ${controller.loggedName}!"),
-              backgroundColor: AppColors.success,
-            ),
+          EZTSnackBar.show(
+            context,
+            "Bem vindo(a) ${controller.loggedName}!",
+            eztSnackBarType: EZTSnackBarType.success,
           );
 
           if (mounted) {
@@ -138,24 +142,24 @@ class AuthPageState extends State<AuthPage> {
                   ),
                   const SizedBox(height: 16),
                   _textFields,
-                  const SizedBox(height: 16),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          RouteGenerator.recoverPassword,
-                        );
-                      },
-                      child: Text(
-                        "Esqueci minha senha",
-                        style: TextStyles.detailRegular.copyWith(
-                          decoration: TextDecoration.underline,
-                        ),
-                      ),
-                    ),
-                  ),
+                  // const SizedBox(height: 16),
+                  // Align(
+                  //   alignment: Alignment.centerRight,
+                  //   child: GestureDetector(
+                  //     onTap: () {
+                  //       Navigator.pushNamed(
+                  //         context,
+                  //         RouteGenerator.recoverPassword,
+                  //       );
+                  //     },
+                  //     child: Text(
+                  //       "Esqueci minha senha",
+                  //       style: TextStyles.detailRegular.copyWith(
+                  //         decoration: TextDecoration.underline,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   const SizedBox(height: 64),
                   AuthButton(formKey: _formKey),
                   const SizedBox(height: 32),
