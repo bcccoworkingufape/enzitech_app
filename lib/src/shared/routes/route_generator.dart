@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/auth/auth_page.dart';
 import 'package:enzitech_app/src/features/create_account/create_account_page.dart';
+import 'package:enzitech_app/src/features/create_experiment/create_experiment_page.dart';
 import 'package:enzitech_app/src/features/create_treatment/create_treatment_page.dart';
 import 'package:enzitech_app/src/features/experiment_detailed/experiment_detailed_page.dart';
 import 'package:enzitech_app/src/features/home/home_page.dart';
 import 'package:enzitech_app/src/features/recover_password/recover_password_page.dart';
 import 'package:enzitech_app/src/features/splash/splash_page.dart';
 import 'package:enzitech_app/src/shared/models/experiment_model.dart';
-import '../../features/create_experiment/create_experiment_page.dart';
 
 class RouteGenerator {
   static const initial = "/";

@@ -6,11 +6,11 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
+import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_controller.dart';
 import 'package:enzitech_app/src/shared/models/experiment_model.dart';
+import 'package:enzitech_app/src/shared/routes/route_generator.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:enzitech_app/src/shared/util/util.dart';
-import '../../../../../shared/routes/route_generator.dart';
-import '../experiments_controller.dart';
 
 class ExperimentCard extends StatefulWidget {
   const ExperimentCard({

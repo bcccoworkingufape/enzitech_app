@@ -2,7 +2,7 @@
 import 'package:enzitech_app/src/shared/external/http_driver/dio_client.dart';
 import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
 import 'package:enzitech_app/src/shared/models/experiment_model.dart';
-import '../widgets/ezt_textfield.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_textfield.dart';
 
 class ExperimentsService {
   final DioClient client;

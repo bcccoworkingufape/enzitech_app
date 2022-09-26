@@ -11,13 +11,13 @@ import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/experiment_detailed/experiment_detailed_controller.dart';
-import '../../shared/failures/failures.dart';
-import '../../shared/models/experiment_model.dart';
-import '../../shared/themes/app_complete_theme.dart';
-import '../../shared/util/util.dart';
-import '../../shared/widgets/ezt_button.dart';
-import '../../shared/widgets/ezt_snack_bar.dart';
-import '../home/fragments/experiments/experiments_controller.dart';
+import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_controller.dart';
+import 'package:enzitech_app/src/shared/failures/failures.dart';
+import 'package:enzitech_app/src/shared/models/experiment_model.dart';
+import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
+import 'package:enzitech_app/src/shared/util/util.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_button.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
 
 class ExperimentDetailedPage extends StatefulWidget {
   const ExperimentDetailedPage({

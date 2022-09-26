@@ -15,12 +15,12 @@ import 'package:provider/provider.dart';
 import 'package:enzitech_app/src/features/create_experiment/create_experiment_controller.dart';
 import 'package:enzitech_app/src/features/home/fragments/treatments/treatments_controller.dart';
 import 'package:enzitech_app/src/shared/models/treatment_model.dart';
-import '../../../shared/themes/app_complete_theme.dart';
-import '../../../shared/util/constants.dart';
-import '../../../shared/validator/field_validator.dart';
-import '../../../shared/widgets/ezt_button.dart';
-import '../../../shared/widgets/ezt_checkbox_tile.dart';
-import '../../../shared/widgets/ezt_textfield.dart';
+import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
+import 'package:enzitech_app/src/shared/util/constants.dart';
+import 'package:enzitech_app/src/shared/validator/field_validator.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_button.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_checkbox_tile.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_textfield.dart';
 
 class CreateExperimentSecondStepPage extends StatefulWidget {
   const CreateExperimentSecondStepPage({

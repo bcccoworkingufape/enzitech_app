@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:enzitech_app/src/shared/failures/failures.dart';
 import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
 import 'package:enzitech_app/src/shared/models/experiment_model.dart';
+import 'package:enzitech_app/src/shared/models/experiment_request_model.dart';
 import 'package:enzitech_app/src/shared/services/experiments_service.dart';
-import '../../shared/models/experiment_request_model.dart';
-import '../../shared/widgets/ezt_textfield.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_textfield.dart';
 
 enum CreateExperimentState { idle, success, error, loading }
 

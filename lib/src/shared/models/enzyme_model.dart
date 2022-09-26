@@ -3,7 +3,7 @@ import 'dart:convert';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/shared/extensions/extensions.dart';
-import '../util/util.dart';
+import 'package:enzitech_app/src/shared/util/util.dart';
 
 class EnzymeModel {
   String id;
