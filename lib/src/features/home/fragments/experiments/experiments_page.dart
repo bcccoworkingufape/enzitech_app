@@ -32,6 +32,7 @@ class ExperimentsPage extends StatefulWidget {
 
 class _ExperimentsPageState extends State<ExperimentsPage> {
   late final ExperimentsController controller;
+  late ScrollController scrollController;
   final Key _refreshIndicatorKey = GlobalKey();
 
   final _searchTermController = TextEditingController(text: '');
@@ -41,6 +42,14 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
   void initState() {
     super.initState();
     controller = context.read<ExperimentsController>();
+    scrollController = ScrollController()
+      ..addListener(() {
+        if (scrollController.position.maxScrollExtent ==
+                scrollController.offset &&
+            controller.hasNextPage) {
+          controller.loadExperiments(controller.page);
+        }
+      });
     if (mounted) {
       controller.addListener(
         () async {
@@ -117,7 +126,8 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
       );
     }
 
-    if (controller.state == ExperimentsState.loading) {
+    if (controller.state == ExperimentsState.loading &&
+        controller.isLoadingMoreRunning == false) {
       return const Center(child: CircularProgressIndicator());
     }
 
@@ -139,42 +149,84 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
     }
 
     return ListView.builder(
+      controller: scrollController,
       shrinkWrap: true,
       physics: const AlwaysScrollableScrollPhysics(),
-      itemCount: controller.experiments.length,
+      itemCount: controller.experiments.length + 1,
       itemBuilder: (context, index) {
-        var experiment = controller.experiments[index];
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 8.0),
-          child: Dismissible(
-            key: Key(experiment.id),
-            onDismissed: (direction) {
-              controller.deleteExperiment(experiment.id);
+        if (index < controller.experiments.length) {
+          var experiment = controller.experiments[index];
 
-              // Remove the item from the data source.
-              setState(() {
-                controller.experiments.removeAt(index);
-              });
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Dismissible(
+                  key: Key(experiment.id),
+                  onDismissed: (direction) async {
+                    await controller.deleteExperiment(experiment.id);
 
-              EZTSnackBar.clear(context);
+                    // Remove the item from the data source.
+                    setState(() {
+                      controller.experiments.removeAt(index);
+                    });
 
-              EZTSnackBar.show(
-                context,
-                '${experiment.name} excluído!',
-                eztSnackBarType: EZTSnackBarType.error,
-              );
+                    if (mounted) {
+                      EZTSnackBar.clear(context);
 
-              // Then show a snackbar.
-              // ScaffoldMessenger.of(context).showSnackBar(
-              //     SnackBar(content: Text('${experiment.name} excluído!')));
-            },
-            // Show a red background as the item is swiped away.
-            background: Container(color: Colors.red),
-            child: ExperimentCard(
-              experiment: experiment,
-            ),
-          ),
-        );
+                      EZTSnackBar.show(
+                        context,
+                        '${experiment.name} excluído!',
+                        eztSnackBarType: EZTSnackBarType.error,
+                      );
+                    }
+                  },
+                  // Show a red background as the item is swiped away.
+                  background: Container(color: Colors.red),
+                  child: ExperimentCard(
+                    experiment: experiment,
+                  ),
+                ),
+              ),
+              if (controller.isLoadingMoreRunning == false &&
+                  controller.hasNextPage == true &&
+                  index == controller.experiments.length - 1)
+                SizedBox(height: height / 7),
+            ],
+          );
+        } else {
+          return Column(
+            children: [
+              if (controller.isLoadingMoreRunning == true)
+                const Padding(
+                  padding: EdgeInsets.only(top: 10, bottom: 40),
+                  child: Center(child: CircularProgressIndicator()),
+                ),
+              if (controller.hasNextPage == false &&
+                  controller.state == ExperimentsState.success)
+                Card(
+                  elevation: 4,
+                  shadowColor: AppColors.white,
+                  color: AppColors.yellow300,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 30, bottom: 30),
+                    child: Center(
+                      child: Text(
+                        'Todos os experimentos exibidos!',
+                        style: TextStyles.buttonPrimary.copyWith(
+                          color: AppColors.greyMedium,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              if (controller.isLoadingMoreRunning == false &&
+                  controller.hasNextPage == false)
+                SizedBox(height: height / 13),
+            ],
+          );
+        }
       },
     );
   }
@@ -187,7 +239,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
 
     return EZTPullToRefresh(
       key: _refreshIndicatorKey,
-      onRefresh: controller.loadExperiments,
+      onRefresh: () => controller.loadExperiments(1),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: Column(

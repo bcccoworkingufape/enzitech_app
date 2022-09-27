@@ -82,7 +82,7 @@ class CreateExperimentController extends ChangeNotifier {
     state = CreateExperimentState.loading;
     notifyListeners();
     try {
-      final enzymesList = await experimentService.fetchEnzymes();
+      final enzymesList = await experimentService.getEnzymes();
       _setEnzymes(enzymesList);
 
       state = CreateExperimentState.success;

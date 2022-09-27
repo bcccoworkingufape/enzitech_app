@@ -15,6 +15,8 @@ class AppColors {
   static const lines = Color(0xFFCCCCCC);
   static const background = Color(0xFFFAFAFA);
 
+  static const yellow300 = Color(0xFFF8EF6C);
+
   static const grey = Color(0xFF585666);
   static const greyLight = Color(0xFF9D9D9D);
   static const greyMedium = Color(0xFF544F4F);

@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
     initFragements();
     if (mounted) {
       Future.delayed(Duration.zero, () async {
-        await experimentsController.loadExperiments();
+        await experimentsController.loadExperiments(1);
         await treatmentsController.loadTreatments();
         await accountController.loadAccount();
       });

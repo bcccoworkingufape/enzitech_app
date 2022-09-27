@@ -31,12 +31,13 @@ class _ExperimentCardState extends State<ExperimentCard> {
 
     return Card(
       elevation: 4,
+      shadowColor: AppColors.white,
       child: InkWell(
         onTap: () => Navigator.pushNamed(
           context,
           RouteGenerator.experimentDetailed,
           arguments: widget.experiment,
-        ) /* .then((_) => setState(() {})) */,
+        ),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
           child: Row(
