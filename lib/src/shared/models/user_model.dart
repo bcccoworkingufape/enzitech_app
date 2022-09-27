@@ -1,6 +1,7 @@
 // 🎯 Dart imports:
 import 'dart:convert';
 
+// 🌎 Project imports:
 import 'package:enzitech_app/src/shared/extensions/extensions.dart';
 
 enum UserTypeEnum {

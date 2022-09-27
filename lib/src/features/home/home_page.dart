@@ -1,5 +1,4 @@
 // 🐦 Flutter imports:
-import 'package:enzitech_app/src/shared/models/user_model.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -18,6 +17,7 @@ import 'package:enzitech_app/src/features/home/fragments/treatments/treatments_c
 import 'package:enzitech_app/src/features/home/fragments/treatments/treatments_page.dart';
 import 'package:enzitech_app/src/features/home/home_controller.dart';
 import 'package:enzitech_app/src/shared/failures/failures.dart';
+import 'package:enzitech_app/src/shared/models/user_model.dart';
 import 'package:enzitech_app/src/shared/routes/route_generator.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';

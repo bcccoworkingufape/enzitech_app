@@ -1,11 +1,12 @@
-// 🐦 Flutter imports:
+// 🎯 Dart imports:
 import 'dart:convert';
 
-import 'package:enzitech_app/src/shared/models/user_model.dart';
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/shared/failures/failures.dart';
+import 'package:enzitech_app/src/shared/models/user_model.dart';
 import 'package:enzitech_app/src/shared/services/user_prefs_service.dart';
 
 enum AccountState { idle, success, error, loading }

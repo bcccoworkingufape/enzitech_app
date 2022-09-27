@@ -1,5 +1,4 @@
 // 🐦 Flutter imports:
-import 'package:enzitech_app/src/features/create_enzyme/create_enzyme_controller.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -9,6 +8,7 @@ import 'package:provider/provider.dart';
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/auth/auth_controller.dart';
 import 'package:enzitech_app/src/features/create_account/create_account_controller.dart';
+import 'package:enzitech_app/src/features/create_enzyme/create_enzyme_controller.dart';
 import 'package:enzitech_app/src/features/create_experiment/create_experiment_controller.dart';
 import 'package:enzitech_app/src/features/create_treatment/create_treatment_controller.dart';
 import 'package:enzitech_app/src/features/experiment_detailed/experiment_detailed_controller.dart';

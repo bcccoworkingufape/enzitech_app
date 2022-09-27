@@ -1,9 +1,9 @@
 // 🐦 Flutter imports:
-import 'package:enzitech_app/src/shared/services/enzymes_service.dart';
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/shared/failures/failures.dart';
+import 'package:enzitech_app/src/shared/services/enzymes_service.dart';
 
 enum CreateEnzymeState { idle, success, error, loading }
 

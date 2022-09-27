@@ -1,7 +1,4 @@
 // 🐦 Flutter imports:
-import 'package:enzitech_app/src/features/create_enzyme/create_enzyme_controller.dart';
-import 'package:enzitech_app/src/features/home/fragments/enzymes/enzymes_controller.dart';
-import 'package:enzitech_app/src/shared/input_formatters.dart/input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -11,7 +8,10 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
+import 'package:enzitech_app/src/features/create_enzyme/create_enzyme_controller.dart';
+import 'package:enzitech_app/src/features/home/fragments/enzymes/enzymes_controller.dart';
 import 'package:enzitech_app/src/shared/failures/failures.dart';
+import 'package:enzitech_app/src/shared/input_formatters.dart/input_formatter.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:enzitech_app/src/shared/util/util.dart';
 import 'package:enzitech_app/src/shared/validator/validator.dart';
