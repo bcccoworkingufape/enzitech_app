@@ -1,4 +1,5 @@
 // 🐦 Flutter imports:
+import 'package:enzitech_app/src/features/create_enzyme/create_enzyme_page.dart';
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
@@ -21,6 +22,7 @@ class RouteGenerator {
   static const createExperiment = "/createExperiment";
   static const experimentDetailed = "/experimentDetailed";
   static const createTreatment = "/createTreatment";
+  static const createEnzyme = "/createEnzyme";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     // ignore: unused_local_variable
@@ -51,6 +53,8 @@ class RouteGenerator {
         }
       case createTreatment:
         return MaterialPageRoute(builder: (_) => const CreateTreatmentPage());
+      case createEnzyme:
+        return MaterialPageRoute(builder: (_) => const CreateEnzymePage());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

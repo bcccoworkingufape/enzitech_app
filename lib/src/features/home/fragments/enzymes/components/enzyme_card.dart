@@ -19,6 +19,20 @@ class EnzymeCard extends StatefulWidget {
 }
 
 class _EnzymeCardState extends State<EnzymeCard> {
+  get dealWithChipColor {
+    if (widget.enzyme.type == Constants.betaGlucosidase) {
+      return AppColors.betaGlucosidase;
+    } else if (widget.enzyme.type == Constants.aryl) {
+      return AppColors.aryl;
+    } else if (widget.enzyme.type == Constants.fosfataseAcida) {
+      return AppColors.fosfataseAcida;
+    } else if (widget.enzyme.type == Constants.fosfataseAlcalina) {
+      return AppColors.fosfataseAlcalina;
+    } else {
+      return AppColors.grenDark;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -28,9 +42,23 @@ class _EnzymeCardState extends State<EnzymeCard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              widget.enzyme.name,
-              style: TextStyles.titleHome,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  widget.enzyme.name,
+                  style: TextStyles.titleHome,
+                ),
+                Chip(
+                  padding: const EdgeInsets.all(0),
+                  backgroundColor: dealWithChipColor,
+                  label: Text(
+                      Constants.typesOfEnzymesListFormmated[Constants
+                          .typesOfEnzymesList
+                          .indexOf(widget.enzyme.type)],
+                      style: const TextStyle(color: Colors.white)),
+                ),
+              ],
             ),
             const SizedBox(
               height: 2,

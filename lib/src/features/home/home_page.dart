@@ -1,4 +1,5 @@
 // 🐦 Flutter imports:
+import 'package:enzitech_app/src/shared/models/user_model.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -125,12 +126,13 @@ class _HomePageState extends State<HomePage> {
       );
     }
 
-    /* if (controller.fragmentIndex == 2) {
+    if (controller.fragmentIndex == 2 &&
+        accountController.user!.userType == UserTypeEnum.admin) {
       return FloatingActionButton.extended(
         onPressed: () {
           Navigator.pushNamed(
             context,
-            RouteGenerator.createTreatment,
+            RouteGenerator.createEnzyme,
           );
         },
         label: Text(
@@ -143,7 +145,7 @@ class _HomePageState extends State<HomePage> {
           size: 30,
         ),
       );
-    } */
+    }
 
     return null;
   }

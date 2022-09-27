@@ -1,4 +1,6 @@
 // 🐦 Flutter imports:
+import 'package:enzitech_app/src/features/home/fragments/account/account_controller.dart';
+import 'package:enzitech_app/src/shared/models/user_model.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -26,12 +28,16 @@ class EnzymesPage extends StatefulWidget {
 
 class _EnzymesPageState extends State<EnzymesPage> {
   late final EnzymesController controller;
+  late final AccountController accountController;
+
   final Key _refreshIndicatorKey = GlobalKey();
 
   @override
   void initState() {
     super.initState();
     controller = context.read<EnzymesController>();
+    accountController = context.read<AccountController>();
+
     if (mounted) {
       controller.addListener(
         () {
@@ -56,7 +62,7 @@ class _EnzymesPageState extends State<EnzymesPage> {
             SizedBox(
               height: height / 1.75,
               child: const Center(
-                child: Text("Erro ao carregar tratamentos"),
+                child: Text("Erro ao carregar enzimas"),
               ),
             ),
           ],
@@ -91,14 +97,9 @@ class _EnzymesPageState extends State<EnzymesPage> {
       itemCount: controller.enzymes.length,
       itemBuilder: (context, index) {
         var enzyme = controller.enzymes[index];
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 8.0),
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: EnzymeCard(
-              enzyme: enzyme,
-            ),
-          ), /* Dismissible(
+        return Visibility(
+          visible: accountController.user!.userType == UserTypeEnum.user,
+          replacement: Dismissible(
             key: Key(enzyme.id),
             onDismissed: (direction) {
               controller.deleteEnzyme(enzyme.id);
@@ -128,7 +129,16 @@ class _EnzymesPageState extends State<EnzymesPage> {
                 enzyme: enzyme,
               ),
             ),
-          ), */
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: EnzymeCard(
+                enzyme: enzyme,
+              ),
+            ),
+          ),
         );
       },
     );

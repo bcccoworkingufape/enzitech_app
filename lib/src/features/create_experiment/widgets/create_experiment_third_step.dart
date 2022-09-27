@@ -102,7 +102,7 @@ class _CreateExperimentThirdStepPageState
             ],
           ),
           Visibility(
-            visible: controller.state == CreateExperimentState.loading,
+            visible: enzymesController.state == EnzymesState.loading,
             replacement: GroupButton(
               controller: _checkboxesController,
               isRadio: false,
@@ -197,6 +197,7 @@ class _CreateExperimentThirdStepPageState
   @override
   Widget build(BuildContext context) {
     context.watch<CreateExperimentController>();
+    context.watch<EnzymesController>();
 
     return Column(
       children: [

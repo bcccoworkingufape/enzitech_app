@@ -1,4 +1,5 @@
 // 🐦 Flutter imports:
+import 'package:enzitech_app/src/features/create_enzyme/create_enzyme_controller.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -89,6 +90,11 @@ class AppWidget extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => EnzymesController(
+            EnzymesService(context.read()),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => CreateEnzymeController(
             EnzymesService(context.read()),
           ),
         ),
