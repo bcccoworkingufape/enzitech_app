@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/shared/util/util.dart';
+import 'package:enzitech_app/src/shared/validator/cnpj_validator.dart';
+import 'package:enzitech_app/src/shared/validator/cpf_validator.dart';
 import 'package:enzitech_app/src/shared/validator/enroll_validator.dart';
-import 'cnpj_validator.dart';
-import 'cpf_validator.dart';
-import 'utils_validator.dart';
+import 'package:enzitech_app/src/shared/validator/utils_validator.dart';
 
 enum ValidateTypes {
   required,

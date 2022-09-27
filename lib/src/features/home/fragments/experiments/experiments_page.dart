@@ -171,10 +171,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
             // Show a red background as the item is swiped away.
             background: Container(color: Colors.red),
             child: ExperimentCard(
-              name: experiment.name,
-              updatedAt: experiment.updatedAt,
-              description: experiment.description,
-              progress: experiment.progress,
+              experiment: experiment,
             ),
           ),
         );

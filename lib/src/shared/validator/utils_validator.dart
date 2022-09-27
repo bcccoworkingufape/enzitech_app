@@ -1,7 +1,7 @@
 // 🌎 Project imports:
-import '../util/toolkit.dart';
-import 'cnpj_validator.dart';
-import 'cpf_validator.dart';
+import 'package:enzitech_app/src/shared/util/toolkit.dart';
+import 'package:enzitech_app/src/shared/validator/cnpj_validator.dart';
+import 'package:enzitech_app/src/shared/validator/cpf_validator.dart';
 
 class Validator {
   static bool email(String email) {

@@ -13,11 +13,11 @@ import 'package:provider/provider.dart';
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/create_experiment/create_experiment_controller.dart';
 import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
-import '../../../shared/themes/app_complete_theme.dart';
-import '../../../shared/util/constants.dart';
-import '../../../shared/util/util.dart';
-import '../../../shared/widgets/ezt_button.dart';
-import '../../../shared/widgets/ezt_checkbox_tile.dart';
+import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
+import 'package:enzitech_app/src/shared/util/constants.dart';
+import 'package:enzitech_app/src/shared/util/util.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_button.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_checkbox_tile.dart';
 
 class CreateExperimentThirdStepPage extends StatefulWidget {
   const CreateExperimentThirdStepPage({

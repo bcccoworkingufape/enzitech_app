@@ -8,13 +8,13 @@ import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/auth/auth_controller.dart';
+import 'package:enzitech_app/src/features/auth/components/auth_button.dart';
 import 'package:enzitech_app/src/shared/failures/failures.dart';
 import 'package:enzitech_app/src/shared/routes/route_generator.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:enzitech_app/src/shared/validator/validator.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_textfield.dart';
-import 'components/auth_button.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({Key? key}) : super(key: key);

@@ -76,6 +76,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   icons_launcher: ^1.1.8
+  import_path_converter: ^1.0.1
 
 flutter_icons:
   image_path: "assets/launcher/icon.png"

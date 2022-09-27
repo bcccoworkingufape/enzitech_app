@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // 🌎 Project imports:
-import 'app_colors.dart';
+import 'package:enzitech_app/src/shared/themes/app_colors.dart';
 
 class TextStyles {
   /// `fontSize:` 30,
