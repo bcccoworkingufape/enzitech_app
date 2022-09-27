@@ -62,7 +62,7 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
             );
 
             // reload the experiments list
-            experimentsController.loadExperiments();
+            experimentsController.loadExperiments(1);
 
             EZTSnackBar.show(
               context,

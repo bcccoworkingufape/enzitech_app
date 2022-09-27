@@ -2,6 +2,7 @@
 import 'package:enzitech_app/src/shared/external/http_driver/dio_client.dart';
 import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
 import 'package:enzitech_app/src/shared/models/experiment_model.dart';
+import 'package:enzitech_app/src/shared/models/experiment_pagination_model.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_textfield.dart';
 
 class ExperimentsService {
@@ -9,7 +10,7 @@ class ExperimentsService {
 
   ExperimentsService(this.client);
 
-  Future<List<EnzymeModel>> fetchEnzymes() async {
+  Future<List<EnzymeModel>> getEnzymes() async {
     try {
       List<EnzymeModel> experiments = [];
       var res = await client.get(
@@ -26,18 +27,13 @@ class ExperimentsService {
     }
   }
 
-  Future<List<ExperimentModel>> fetchExperiments() async {
+  Future<ExperimentPaginationModel> getExperiments(int page) async {
     try {
-      List<ExperimentModel> experiments = [];
       var res = await client.get(
-        "/experiments",
+        "/experiments?page=$page",
       );
 
-      res.data["experiments"].forEach((experiment) {
-        experiments.add(ExperimentModel.fromMap(experiment));
-      });
-
-      return experiments;
+      return ExperimentPaginationModel.fromMap(res.data);
     } catch (e) {
       rethrow;
     }
@@ -70,7 +66,6 @@ class ExperimentsService {
           )
           .toList();
 
-      // ignore: unused_local_variable
       var res = await client.post(
         "/experiments",
         data: {

@@ -29,14 +29,64 @@ class ExperimentsController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> loadExperiments() async {
+  void _addToExperiments(List<ExperimentModel> experiments) {
+    _experiments = _experiments + experiments;
+    notifyListeners();
+  }
+
+  int _totalOfExperiments = 0;
+  int get totalOfExperiments => _totalOfExperiments;
+  void _setTotalOfExperiments(int totalOfExperiments) {
+    _totalOfExperiments = totalOfExperiments;
+    notifyListeners();
+  }
+
+  int _page = 1;
+  int get page => _page;
+  void _setPage(int page) {
+    _page = page;
+    notifyListeners();
+  }
+
+  bool get hasNextPage => _experiments.isEmpty
+      ? false
+      : (_totalOfExperiments % _experiments.length) > 0;
+
+  bool _isLoadingMoreRunning = false;
+  bool get isLoadingMoreRunning => _isLoadingMoreRunning;
+  void _setIsLoadingMoreRunning(bool isLoadingMoreRunning) {
+    _isLoadingMoreRunning = isLoadingMoreRunning;
+    notifyListeners();
+  }
+
+  Future<void> loadExperiments(
+    int page, {
+    String? orderBy,
+    String? ordering,
+    int? limit,
+    bool? finished,
+  }) async {
     state = ExperimentsState.loading;
     notifyListeners();
     try {
-      final experimentsList = await experimentsService.fetchExperiments();
-      _setExperiments(experimentsList);
+      if (page == 1) {
+        _setPage(1);
+        _setExperiments([]);
+      } else {
+        _setIsLoadingMoreRunning(true);
+      }
+
+      final experimentsWithPagination =
+          await experimentsService.getExperiments(page);
+      _addToExperiments(experimentsWithPagination.experiments);
+      _setTotalOfExperiments(experimentsWithPagination.total);
+
+      if (hasNextPage && experimentsWithPagination.experiments.isNotEmpty) {
+        _setPage(page + 1);
+      }
 
       state = ExperimentsState.success;
+      _setIsLoadingMoreRunning(false);
       notifyListeners();
     } catch (e) {
       _setFailure(e as Failure);
@@ -50,6 +100,7 @@ class ExperimentsController extends ChangeNotifier {
     // notifyListeners();
     try {
       await experimentsService.deleteExperiment(id);
+      _setTotalOfExperiments(_totalOfExperiments - 1);
 
       // state = ExperimentsState.success;
       // notifyListeners();
