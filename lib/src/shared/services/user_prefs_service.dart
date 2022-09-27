@@ -2,28 +2,17 @@
 import 'package:enzitech_app/src/shared/external/shared_prefs.dart';
 
 class UserPrefsServices {
-  final String _nameKey = "name";
   final String _tokenKey = "token";
-  final String _emailKey = "email";
+  final String _userKey = "user";
 
   final ISharedPrefs _prefs = SharedPrefs();
 
-  Future<void> saveUser(String token, String userName, String email) async {
-    await saveToken(token);
-    await saveName(userName);
-    await saveEmail(email);
+  Future<void> saveFullUser(String jsonEncoded) async {
+    await _prefs.setString(_userKey, jsonEncoded);
   }
 
-  Future<void> saveName(String userName) async {
-    await _prefs.setString(_nameKey, userName);
-  }
-
-  Future<String?> getName() async {
-    return await _prefs.getString(_nameKey);
-  }
-
-  Future<void> removeName() async {
-    await _prefs.remove(_nameKey);
+  Future<String?> getFullUser() async {
+    return await _prefs.getString(_userKey);
   }
 
   Future<void> saveToken(String token) async {
@@ -36,18 +25,6 @@ class UserPrefsServices {
 
   Future<void> removeToken() async {
     await _prefs.remove(_tokenKey);
-  }
-
-  Future<void> saveEmail(String email) async {
-    await _prefs.setString(_emailKey, email);
-  }
-
-  Future<String?> getEmail() async {
-    return await _prefs.getString(_emailKey);
-  }
-
-  Future<void> removeEmail() async {
-    await _prefs.remove(_emailKey);
   }
 
   Future<void> clearAll() async {

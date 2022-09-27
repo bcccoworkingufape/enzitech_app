@@ -1,4 +1,5 @@
 // 🐦 Flutter imports:
+import 'package:enzitech_app/src/shared/models/user_model.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -89,9 +90,9 @@ class _AccountPageState extends State<AccountPage> {
                     tiles: <SettingsTile>[
                       SettingsTile(
                         leading: const Icon(PhosphorIcons.user),
-                        title: const Text('Usuário'),
+                        title: const Text('Nome'),
                         value: Text(
-                          controller.username ?? 'Não definido',
+                          controller.user!.name,
                           style: customTextStyle,
                         ),
                       ),
@@ -105,11 +106,21 @@ class _AccountPageState extends State<AccountPage> {
                           child: Align(
                             alignment: Alignment.centerRight,
                             child: Text(
-                              controller.email ?? 'Não definido',
+                              controller.user!.email,
                               overflow: TextOverflow.ellipsis,
                               style: customTextStyle,
                             ),
                           ),
+                        ),
+                      ),
+                      SettingsTile(
+                        leading: const Icon(PhosphorIcons.identificationBadge),
+                        title: const Text('Tipo de usuário'),
+                        value: Text(
+                          controller.user!.userType == UserTypeEnum.admin
+                              ? 'Administrador'
+                              : 'Comum',
+                          style: customTextStyle,
                         ),
                       ),
                       SettingsTile.navigation(

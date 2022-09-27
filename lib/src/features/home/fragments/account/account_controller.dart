@@ -1,4 +1,7 @@
 // 🐦 Flutter imports:
+import 'dart:convert';
+
+import 'package:enzitech_app/src/shared/models/user_model.dart';
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
@@ -21,17 +24,10 @@ class AccountController extends ChangeNotifier {
     notifyListeners();
   }
 
-  String? _username;
-  String? get username => _username;
-  void _setUsername(String username) {
-    _username = username;
-    notifyListeners();
-  }
-
-  String? _email;
-  String? get email => _email;
-  void _setEmail(String email) {
-    _email = email;
+  UserModel? _user;
+  UserModel? get user => _user;
+  void _setUser(UserModel user) {
+    _user = user;
     notifyListeners();
   }
 
@@ -55,8 +51,7 @@ class AccountController extends ChangeNotifier {
     state = AccountState.loading;
     notifyListeners();
     try {
-      await loadUsername();
-      await loadEmail();
+      await loadUser();
 
       notifyListeners();
     } catch (e) {
@@ -66,29 +61,17 @@ class AccountController extends ChangeNotifier {
     }
   }
 
-  Future<void> loadUsername() async {
+  Future<void> loadUser() async {
     state = AccountState.loading;
     notifyListeners();
     try {
-      String username = await userPrefsServices.getName() ?? '';
-      _setUsername(username);
+      String? user = await userPrefsServices.getFullUser();
 
-      state = AccountState.success;
-      notifyListeners();
-    } catch (e) {
-      _setFailure(e as Failure);
-      state = AccountState.error;
-      notifyListeners();
-    }
-  }
-
-  Future<void> loadEmail() async {
-    state = AccountState.loading;
-    notifyListeners();
-    try {
-      // UserPrefsServices userPrefsServices = UserPrefsServices();
-      String email = await userPrefsServices.getEmail() ?? '';
-      _setEmail(email);
+      _setUser(
+        UserModel.fromJson(
+          jsonDecode(user!),
+        ),
+      );
 
       state = AccountState.success;
       notifyListeners();
