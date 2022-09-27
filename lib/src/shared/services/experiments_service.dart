@@ -10,22 +10,22 @@ class ExperimentsService {
 
   ExperimentsService(this.client);
 
-  Future<List<EnzymeModel>> getEnzymes() async {
-    try {
-      List<EnzymeModel> experiments = [];
-      var res = await client.get(
-        "/enzymes",
-      );
+  // Future<List<EnzymeModel>> getEnzymes() async {
+  //   try {
+  //     List<EnzymeModel> experiments = [];
+  //     var res = await client.get(
+  //       "/enzymes",
+  //     );
 
-      res.data.forEach((experiment) {
-        experiments.add(EnzymeModel.fromMap(experiment));
-      });
+  //     res.data.forEach((experiment) {
+  //       experiments.add(EnzymeModel.fromMap(experiment));
+  //     });
 
-      return experiments;
-    } catch (e) {
-      rethrow;
-    }
-  }
+  //     return experiments;
+  //   } catch (e) {
+  //     rethrow;
+  //   }
+  // }
 
   Future<ExperimentPaginationModel> getExperiments(int page) async {
     try {

@@ -9,6 +9,8 @@ import 'package:provider/provider.dart';
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/home/fragments/account/account_controller.dart';
 import 'package:enzitech_app/src/features/home/fragments/account/account_page.dart';
+import 'package:enzitech_app/src/features/home/fragments/enzymes/enzymes_controller.dart';
+import 'package:enzitech_app/src/features/home/fragments/enzymes/enzymes_page.dart';
 import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_controller.dart';
 import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_page.dart';
 import 'package:enzitech_app/src/features/home/fragments/treatments/treatments_controller.dart';
@@ -30,6 +32,7 @@ class _HomePageState extends State<HomePage> {
   late final HomeController controller;
   late final ExperimentsController experimentsController;
   late final TreatmentsController treatmentsController;
+  late final EnzymesController enzymesController;
   late final AccountController accountController;
 
   late List<Widget> _fragments;
@@ -40,12 +43,14 @@ class _HomePageState extends State<HomePage> {
     controller = context.read<HomeController>();
     experimentsController = context.read<ExperimentsController>();
     treatmentsController = context.read<TreatmentsController>();
+    enzymesController = context.read<EnzymesController>();
     accountController = context.read<AccountController>();
     initFragements();
     if (mounted) {
       Future.delayed(Duration.zero, () async {
         await experimentsController.loadExperiments(1);
         await treatmentsController.loadTreatments();
+        await enzymesController.loadEnzymes();
         await accountController.loadAccount();
       });
       controller.addListener(
@@ -68,6 +73,9 @@ class _HomePageState extends State<HomePage> {
         homeController: controller,
       ),
       TreatmentsPage(
+        homeController: controller,
+      ),
+      EnzymesPage(
         homeController: controller,
       ),
       AccountPage(
@@ -117,6 +125,26 @@ class _HomePageState extends State<HomePage> {
       );
     }
 
+    /* if (controller.fragmentIndex == 2) {
+      return FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.pushNamed(
+            context,
+            RouteGenerator.createTreatment,
+          );
+        },
+        label: Text(
+          "Cadastrar\nenzima",
+          style: TextStyles.buttonBackground,
+        ),
+        icon: const Icon(
+          PhosphorIcons.pencilLine,
+          color: AppColors.white,
+          size: 30,
+        ),
+      );
+    } */
+
     return null;
   }
 
@@ -138,22 +166,32 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: dealWithFloatingActionButton,
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.shifting,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(PhosphorIcons.flask),
             label: 'Experimentos',
+            backgroundColor: AppColors.primary,
           ),
           BottomNavigationBarItem(
             icon: Icon(PhosphorIcons.testTube),
             label: 'Tratamentos',
+            backgroundColor: AppColors.primary,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(PhosphorIcons.atom),
+            label: 'Enzimas',
+            backgroundColor: AppColors.primary,
           ),
           BottomNavigationBarItem(
             icon: Icon(PhosphorIcons.userCircleGear),
             label: 'Conta',
+            backgroundColor: AppColors.primary,
           ),
         ],
         currentIndex: controller.fragmentIndex,
         selectedItemColor: AppColors.white,
+        unselectedItemColor: Colors.white70,
         backgroundColor: AppColors.primary,
         onTap: (index) => controller.setFragmentIndex(index),
       ),

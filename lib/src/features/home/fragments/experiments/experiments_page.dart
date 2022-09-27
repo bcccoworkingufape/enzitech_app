@@ -84,6 +84,12 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
     }
   }
 
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
   Widget get _searchTermInput {
     final validations = <ValidateRule>[
       ValidateRule(
@@ -162,7 +168,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 8.0),
                 child: Dismissible(
-                  key: Key(experiment.id),
+                  key: UniqueKey(),
                   onDismissed: (direction) async {
                     await controller.deleteExperiment(experiment.id);
 
