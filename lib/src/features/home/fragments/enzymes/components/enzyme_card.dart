@@ -55,7 +55,7 @@ class _EnzymeCardState extends State<EnzymeCard> {
                       key: UniqueKey(),
                       // switchWidth: 100,
                       text: widget.enzyme.name,
-                      textStyle: TextStyles.titleHome,
+                      textStyle: TextStyles.titleBoldHeading,
                       marqueeBuilder: (context, text, textStyle) => Marquee(
                         text: text,
                         style: textStyle,

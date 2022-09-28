@@ -1,5 +1,6 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 // 📦 Package imports:
 import 'package:flutter_svg/svg.dart';
@@ -36,7 +37,12 @@ class _HomePageState extends State<HomePage> {
   late final EnzymesController enzymesController;
   late final AccountController accountController;
 
+  // late ScrollController experimentsController.scrollController;
+
   late List<Widget> _fragments;
+
+  // ignore: prefer_typing_uninitialized_variables
+  var _isVisible;
 
   @override
   void initState() {
@@ -46,7 +52,9 @@ class _HomePageState extends State<HomePage> {
     treatmentsController = context.read<TreatmentsController>();
     enzymesController = context.read<EnzymesController>();
     accountController = context.read<AccountController>();
+
     initFragements();
+
     if (mounted) {
       Future.delayed(Duration.zero, () async {
         await experimentsController.loadExperiments(1);
@@ -66,6 +74,30 @@ class _HomePageState extends State<HomePage> {
         },
       );
     }
+
+    setState(() {
+      _isVisible = true;
+    });
+    experimentsController.scrollController.addListener(() {
+      if (experimentsController.scrollController.position.userScrollDirection ==
+          ScrollDirection.reverse) {
+        if (_isVisible == true) {
+          setState(() {
+            _isVisible = false;
+            print("**** $_isVisible up");
+          });
+        }
+      }
+      if (experimentsController.scrollController.position.userScrollDirection ==
+          ScrollDirection.forward) {
+        if (_isVisible == false) {
+          setState(() {
+            _isVisible = true;
+            print("**** $_isVisible down");
+          });
+        }
+      }
+    });
   }
 
   initFragements() {
@@ -86,7 +118,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget? get dealWithFloatingActionButton {
-    if (controller.fragmentIndex == 0) {
+    if (controller.fragmentIndex == 0 && _isVisible) {
       return FloatingActionButton.extended(
         onPressed: () {
           Navigator.pushNamed(
@@ -195,7 +227,20 @@ class _HomePageState extends State<HomePage> {
         selectedItemColor: AppColors.white,
         unselectedItemColor: Colors.white70,
         backgroundColor: AppColors.primary,
-        onTap: (index) => controller.setFragmentIndex(index),
+        onTap: (index) {
+          int beforeSet = controller.fragmentIndex;
+          controller.setFragmentIndex(index);
+          if (index == 0 &&
+              beforeSet == 0 &&
+              experimentsController.scrollController.hasClients) {
+            experimentsController.scrollController.animateTo(
+              experimentsController.scrollController.position.minScrollExtent +
+                  (kBottomNavigationBarHeight / 1000),
+              duration: const Duration(milliseconds: 1500),
+              curve: Curves.fastOutSlowIn,
+            );
+          }
+        },
       ),
     );
   }
