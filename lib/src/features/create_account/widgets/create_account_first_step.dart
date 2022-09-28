@@ -156,7 +156,7 @@ class CreateAccountFirstStepState extends State<CreateAccountFirstStep> {
             children: [
               const Icon(
                 PhosphorIcons.identificationCardBold,
-                color: AppColors.greyMedium,
+                color: AppColors.greySweet,
               ),
               const SizedBox(width: 4),
               Text(

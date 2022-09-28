@@ -1,6 +1,4 @@
 // 🐦 Flutter imports:
-import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
-import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -9,10 +7,13 @@ import 'package:provider/provider.dart';
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/home/fragments/account/account_controller.dart';
 import 'package:enzitech_app/src/features/home/fragments/enzymes/components/enzyme_card.dart';
+import 'package:enzitech_app/src/features/home/fragments/enzymes/components/enzymes_summary.dart';
 import 'package:enzitech_app/src/features/home/fragments/enzymes/enzymes_controller.dart';
 import 'package:enzitech_app/src/features/home/home_controller.dart';
 import 'package:enzitech_app/src/shared/failures/failures.dart';
+import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
 import 'package:enzitech_app/src/shared/models/user_model.dart';
+import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_pull_to_refresh.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
 
@@ -109,34 +110,42 @@ class _EnzymesPageState extends State<EnzymesPage> {
       itemCount: controller.enzymes.length,
       itemBuilder: (context, index) {
         var enzyme = controller.enzymes[index];
-        return Visibility(
-          visible: accountController.user!.userType == UserTypeEnum.user,
-          replacement: Dismissible(
-            key: Key(enzyme.id),
-            onDismissed: (direction) {
-              controller.deleteEnzyme(enzyme.id);
+        return Column(
+          children: [
+            Visibility(
+              visible: accountController.user!.userType == UserTypeEnum.user,
+              replacement: Dismissible(
+                key: Key(enzyme.id),
+                onDismissed: (direction) {
+                  controller.deleteEnzyme(enzyme.id);
 
-              // Remove the item from the data source.
-              setState(() {
-                controller.enzymes.removeAt(index);
-              });
+                  // Remove the item from the data source.
+                  setState(() {
+                    controller.enzymes.removeAt(index);
+                  });
 
-              EZTSnackBar.clear(context);
+                  EZTSnackBar.clear(context);
 
-              EZTSnackBar.show(
-                context,
-                '${enzyme.name} excluído!',
-                eztSnackBarType: EZTSnackBarType.error,
-              );
-            },
-            // Show a red background as the item is swiped away.
-            background: Container(color: Colors.red),
-            child: getEnzymeCard(enzyme),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: getEnzymeCard(enzyme),
-          ),
+                  EZTSnackBar.show(
+                    context,
+                    '${enzyme.name} excluído!',
+                    eztSnackBarType: EZTSnackBarType.error,
+                  );
+                },
+                // Show a red background as the item is swiped away.
+                background: Container(color: Colors.red),
+                child: getEnzymeCard(enzyme),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: getEnzymeCard(enzyme),
+              ),
+            ),
+            if (index == controller.enzymes.length - 1)
+              const Padding(
+                padding: EdgeInsets.only(bottom: 8),
+              )
+          ],
         );
       },
     );
@@ -148,7 +157,7 @@ class _EnzymesPageState extends State<EnzymesPage> {
     final controller = context.watch<EnzymesController>();
 
     return EZTPullToRefresh(
-      key: _refreshIndicatorKey,
+      // key: _refreshIndicatorKey,
       onRefresh: controller.loadEnzymes,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -163,8 +172,12 @@ class _EnzymesPageState extends State<EnzymesPage> {
                   ),
                   Text(
                     "🧬 ${controller.enzymes.length} enzima${controller.enzymes.length > 1 ? 's ' : ' '}encontrada${controller.enzymes.length > 1 ? 's ' : ' '}",
-                    style: TextStyles.link,
+                    style: TextStyles.link.copyWith(fontSize: 16),
                   ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  const EnzymesSummary(),
                   const SizedBox(
                     height: 8,
                   ),

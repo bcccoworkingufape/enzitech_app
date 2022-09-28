@@ -220,7 +220,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                         child: Text(
                           'Todos os experimentos exibidos!',
                           style: TextStyles.buttonPrimary.copyWith(
-                            color: AppColors.greyMedium,
+                            color: AppColors.greySweet,
                             fontSize: 20,
                           ),
                         ),
@@ -282,7 +282,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
               if (controller.experiments.isNotEmpty)
                 Text(
                   "🔬 ${controller.totalOfExperiments} experimento${controller.experiments.length > 1 ? 's ' : ' '}encontrado${controller.experiments.length > 1 ? 's ' : ' '}",
-                  style: TextStyles.link,
+                  style: TextStyles.link.copyWith(fontSize: 16),
                 ),
               const SizedBox(
                 height: 16,

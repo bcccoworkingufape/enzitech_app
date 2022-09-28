@@ -64,7 +64,7 @@ class _AccountPageState extends State<AccountPage> {
   Widget build(BuildContext context) {
     var widthMQ = MediaQuery.of(context).size.width;
     var heightMQ = MediaQuery.of(context).size.height;
-    var customTextStyle = const TextStyle(
+    var descriptionTextStyle = const TextStyle(
       color: Color(0xFF97979A),
       fontSize: 17,
       fontWeight: FontWeight.w400,
@@ -89,42 +89,77 @@ class _AccountPageState extends State<AccountPage> {
                     title: const Text('Conta'),
                     tiles: <SettingsTile>[
                       SettingsTile(
-                        leading: const Icon(PhosphorIcons.user),
-                        title: const Text('Nome'),
-                        value: Text(
-                          controller.user!.name,
-                          style: customTextStyle,
+                        leading: const Icon(
+                          PhosphorIcons.user,
+                          color: AppColors.greyBlack,
                         ),
-                      ),
-                      SettingsTile(
-                        leading: const Icon(PhosphorIcons.at),
-                        title: const Text(
-                          'Email',
+                        title: Flex(
+                          direction: Axis.horizontal,
+                          children: const [Text('Nome')],
                         ),
                         value: Flexible(
-                          flex: 2,
+                          flex: 4,
                           child: Align(
                             alignment: Alignment.centerRight,
                             child: Text(
-                              controller.user!.email,
+                              controller.user!.name,
                               overflow: TextOverflow.ellipsis,
-                              style: customTextStyle,
+                              style: descriptionTextStyle,
                             ),
                           ),
                         ),
                       ),
                       SettingsTile(
-                        leading: const Icon(PhosphorIcons.identificationBadge),
-                        title: const Text('Tipo de usuário'),
-                        value: Text(
-                          controller.user!.userType == UserTypeEnum.admin
-                              ? 'Administrador'
-                              : 'Comum',
-                          style: customTextStyle,
+                        leading: const Icon(
+                          PhosphorIcons.at,
+                          color: AppColors.greyBlack,
+                        ),
+                        title: Flex(
+                          direction: Axis.horizontal,
+                          children: const [Text('Email')],
+                        ),
+                        value: Flexible(
+                          flex: 4,
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              controller.user!.email,
+                              overflow: TextOverflow.ellipsis,
+                              style: descriptionTextStyle,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SettingsTile(
+                        leading: const Icon(
+                          PhosphorIcons.identificationBadge,
+                          color: AppColors.greyBlack,
+                        ),
+                        title: Flex(
+                          direction: Axis.horizontal,
+                          children: const [
+                            Text('Tipo de usuário'),
+                          ],
+                        ),
+                        value: Flexible(
+                          flex: 1,
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              controller.user!.userType == UserTypeEnum.admin
+                                  ? 'Administrador'
+                                  : 'Comum',
+                              overflow: TextOverflow.ellipsis,
+                              style: descriptionTextStyle,
+                            ),
+                          ),
                         ),
                       ),
                       SettingsTile.navigation(
-                        leading: const Icon(PhosphorIcons.signOut),
+                        leading: const Icon(
+                          PhosphorIcons.signOut,
+                          color: AppColors.greyBlack,
+                        ),
                         title: const Text(
                           'Sair',
                         ),

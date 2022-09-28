@@ -124,7 +124,7 @@ class _EZTTextFieldState extends State<EZTTextField> {
       helperText: widget.helperText,
       helperStyle: const TextStyle(color: Colors.red),
       labelText: widget.labelText,
-      labelStyle: const TextStyle(color: AppColors.greyMedium),
+      labelStyle: const TextStyle(color: AppColors.greySweet),
       suffixIcon: widget.suffixIcon ?? _passwordSuffixIcon,
       fillColor: widget.fillColor,
       hintStyle: TextStyle(color: widget.hintColor),
