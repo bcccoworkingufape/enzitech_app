@@ -1,14 +1,13 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-// 📦 Package imports:
-import 'package:marquee/marquee.dart';
-
 // 🌎 Project imports:
-import 'package:enzitech_app/src/shared/external/over_packages/marquee_on_demand.dart';
 import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:enzitech_app/src/shared/util/util.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_marquee_on_demand.dart';
+
+// 📦 Package imports:
 
 class EnzymeCard extends StatefulWidget {
   const EnzymeCard({
@@ -54,27 +53,14 @@ class _EnzymeCardState extends State<EnzymeCard> {
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        height: 28,
-                        child: MarqueeOnDemand(
-                          key: UniqueKey(),
-                          // switchWidth: 100,
-                          text: widget.enzyme.name * 10,
-                          textStyle: TextStyles.titleBoldHeading,
-                          marqueeBuilder: (context, text, textStyle) => Marquee(
-                            text: text,
-                            style: textStyle,
-                            scrollAxis: Axis.horizontal,
-                            blankSpace: 20.0,
-                            velocity: 10.0,
-                          ),
-                          textBuilder: (context, text, textStyle) => Text(
-                            text,
-                            style: textStyle,
-                          ),
-                        ),
+                      EZTMarqueeOnDemand(
+                        text: widget.enzyme.name,
+                        textStyle: TextStyles.titleBoldHeading,
                       ),
+                      // Text(
+                      //   widget.enzyme.name,
+                      //   style: TextStyles.titleBoldHeading,
+                      // ),
                       Text(
                         'Criado em ${Toolkit.formatBrDate(widget.enzyme.createdAt!)}',
                         style: TextStyles.bodyMinRegular,

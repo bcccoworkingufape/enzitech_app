@@ -157,7 +157,7 @@ class _EnzymesPageState extends State<EnzymesPage> {
     final controller = context.watch<EnzymesController>();
 
     return EZTPullToRefresh(
-      // key: _refreshIndicatorKey,
+      key: _refreshIndicatorKey,
       onRefresh: controller.loadEnzymes,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),

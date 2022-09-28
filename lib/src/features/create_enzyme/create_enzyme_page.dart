@@ -197,7 +197,7 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
       onChanged: (value) => _validateFields,
       fieldValidator: fieldValidator,
       inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\,?\d{0,3}')),
+        FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\,?\d{0,5}')),
         CommaTextInputFormatter(),
       ],
     );
