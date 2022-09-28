@@ -12,6 +12,7 @@ import 'package:url_launcher/url_launcher.dart' as url_launcher;
 import 'package:enzitech_app/src/features/home/fragments/account/account_controller.dart';
 import 'package:enzitech_app/src/features/home/home_controller.dart';
 import 'package:enzitech_app/src/shared/failures/failures.dart';
+import 'package:enzitech_app/src/shared/models/user_model.dart';
 import 'package:enzitech_app/src/shared/routes/route_generator.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:enzitech_app/src/shared/util/util.dart';
@@ -89,9 +90,9 @@ class _AccountPageState extends State<AccountPage> {
                     tiles: <SettingsTile>[
                       SettingsTile(
                         leading: const Icon(PhosphorIcons.user),
-                        title: const Text('Usuário'),
+                        title: const Text('Nome'),
                         value: Text(
-                          controller.username ?? 'Não definido',
+                          controller.user!.name,
                           style: customTextStyle,
                         ),
                       ),
@@ -105,11 +106,21 @@ class _AccountPageState extends State<AccountPage> {
                           child: Align(
                             alignment: Alignment.centerRight,
                             child: Text(
-                              controller.email ?? 'Não definido',
+                              controller.user!.email,
                               overflow: TextOverflow.ellipsis,
                               style: customTextStyle,
                             ),
                           ),
+                        ),
+                      ),
+                      SettingsTile(
+                        leading: const Icon(PhosphorIcons.identificationBadge),
+                        title: const Text('Tipo de usuário'),
+                        value: Text(
+                          controller.user!.userType == UserTypeEnum.admin
+                              ? 'Administrador'
+                              : 'Comum',
+                          style: customTextStyle,
                         ),
                       ),
                       SettingsTile.navigation(

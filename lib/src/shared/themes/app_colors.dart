@@ -25,9 +25,15 @@ class AppColors {
   static const delete = Color(0xFFE83F5B);
   static const heading = Color(0xFF585666);
   static const body = Color(0xFF706E7A);
+  static const line = Color(0xFFD1D1D1);
   static const stroke = Color(0xFFE3E3E6);
   static const shape = Color(0xFFFAFAFC);
   static const white = Color(0xFFFFFFFF);
+
+  static const betaGlucosidase = Color(0xFFf24646);
+  static const aryl = Color(0xFFf5b949);
+  static const fosfataseAcida = Color(0xFF4646f2);
+  static const fosfataseAlcalina = Color(0xFF5e5041);
 
   static MaterialColor materialTheme = const MaterialColor(
     0xFF06BC67, //primary

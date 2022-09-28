@@ -16,9 +16,11 @@ class ExperimentCard extends StatefulWidget {
   const ExperimentCard({
     Key? key,
     required this.experiment,
+    this.indexOfExperiment,
   }) : super(key: key);
 
   final ExperimentModel experiment;
+  final int? indexOfExperiment;
 
   @override
   State<ExperimentCard> createState() => _ExperimentCardState();
@@ -29,66 +31,108 @@ class _ExperimentCardState extends State<ExperimentCard> {
   Widget build(BuildContext context) {
     context.watch<ExperimentsController>();
 
-    return Card(
-      elevation: 4,
-      shadowColor: AppColors.white,
-      child: InkWell(
-        onTap: () => Navigator.pushNamed(
-          context,
-          RouteGenerator.experimentDetailed,
-          arguments: widget.experiment,
+    return IntrinsicHeight(
+      child: Container(
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(8),
+            bottomRight: Radius.circular(8),
+          ),
         ),
+        margin: const EdgeInsets.all(0),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.experiment.name,
-                      style: TextStyles.titleHome,
+          padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
+          child: Material(
+            elevation: 8,
+            shadowColor: Colors.white,
+            borderRadius: BorderRadius.circular(8),
+            child: InkWell(
+              onTap: () => Navigator.pushNamed(
+                context,
+                RouteGenerator.experimentDetailed,
+                arguments: widget.experiment,
+              ),
+              borderRadius: const BorderRadius.all(
+                Radius.circular(8),
+              ),
+              child: Row(
+                children: [
+                  if (widget.indexOfExperiment != null)
+                    Container(
+                      decoration: const BoxDecoration(
+                        color: AppColors.primary,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(8),
+                          bottomLeft: Radius.circular(8),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Center(
+                            child: Text(
+                          widget.indexOfExperiment.toString(),
+                          style: TextStyles.titleMinBoldBackground,
+                        )),
+                      ),
                     ),
+                  if (widget.indexOfExperiment != null)
                     const SizedBox(
-                      height: 2,
+                      width: 8,
                     ),
-                    Text(
-                      'Modificado em ${Toolkit.formatBrDate(widget.experiment.updatedAt)}',
-                      style: TextStyles.bodyMinRegular,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Text(
+                          widget.experiment.name,
+                          style: TextStyles.titleBoldHeading,
+                        ),
+                        const SizedBox(
+                          height: 2,
+                        ),
+                        Text(
+                          'Modificado em ${Toolkit.formatBrDate(widget.experiment.updatedAt)}',
+                          style: TextStyles.bodyMinRegular,
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        Text(
+                          widget.experiment.description,
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyles.bodyRegular.copyWith(
+                              color: AppColors.greyLight, fontSize: 16),
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                      ],
                     ),
-                    const SizedBox(
-                      height: 16,
+                  ),
+                  const SizedBox(
+                    width: 32,
+                  ),
+                  CircularPercentIndicator(
+                    radius: 40,
+                    lineWidth: 10.0,
+                    percent: widget.experiment.progress,
+                    center: Text(
+                      Toolkit.doubleToPercentual(widget.experiment.progress),
+                      style: TextStyles.buttonPrimary,
                     ),
-                    Text(
-                      widget.experiment.description,
-                      maxLines: 4,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.justify,
-                      style: TextStyles.bodyRegular
-                          .copyWith(color: AppColors.greyLight, fontSize: 16),
-                    ),
-                  ],
-                ),
+                    progressColor: AppColors.primary,
+                    backgroundColor: AppColors.primary.withOpacity(0.4),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                ],
               ),
-              const SizedBox(
-                width: 32,
-              ),
-              CircularPercentIndicator(
-                radius: 40,
-                lineWidth: 10.0,
-                percent: widget.experiment.progress,
-                center: Text(
-                  Toolkit.doubleToPercentual(widget.experiment.progress),
-                  style: TextStyles.buttonPrimary,
-                ),
-                progressColor: AppColors.primary,
-                backgroundColor: AppColors.primary.withOpacity(0.4),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-            ],
+            ),
           ),
         ),
       ),

@@ -41,6 +41,8 @@ class _CreateExperimentFirstStepPageState
     super.initState();
     controller = context.read<CreateExperimentController>();
     initFieldControllerTexts();
+    Future.delayed(const Duration(milliseconds: 1))
+        .whenComplete(() => _validateFields);
   }
 
   void initFieldControllerTexts() {
@@ -58,9 +60,13 @@ class _CreateExperimentFirstStepPageState
   get _validateFields {
     if (_nameFieldController.text.isNotEmpty &&
         _descriptionFieldController.text.isNotEmpty) {
-      setState(() {
-        enableNextButton1 = widget.formKey.currentState!.validate();
-      });
+      if (widget.formKey.currentState != null) {
+        if (widget.formKey.currentState!.validate() && mounted) {
+          setState(() {
+            enableNextButton1 = true;
+          });
+        }
+      }
     } else {
       setState(() {
         enableNextButton1 = false;
@@ -177,15 +183,18 @@ class _CreateExperimentFirstStepPageState
           onPressed: () {
             widget.formKey.currentState!.save();
 
-            controller.experimentRequestModel.name = _nameFieldController.text;
-            controller.experimentRequestModel.description =
-                _descriptionFieldController.text;
+            if (widget.formKey.currentState!.validate()) {
+              controller.experimentRequestModel.name =
+                  _nameFieldController.text;
+              controller.experimentRequestModel.description =
+                  _descriptionFieldController.text;
 
-            controller.pageController.animateTo(
-              MediaQuery.of(context).size.width,
-              duration: const Duration(milliseconds: 150),
-              curve: Curves.easeIn,
-            );
+              controller.pageController.animateTo(
+                MediaQuery.of(context).size.width,
+                duration: const Duration(milliseconds: 150),
+                curve: Curves.easeIn,
+              );
+            }
           },
         ),
         const SizedBox(height: 16),

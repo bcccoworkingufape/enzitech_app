@@ -33,7 +33,7 @@ class _TreatmentCardState extends State<TreatmentCard> {
           children: [
             Text(
               widget.name,
-              style: TextStyles.titleHome,
+              style: TextStyles.titleBoldHeading,
             ),
             const SizedBox(
               height: 2,

@@ -16,6 +16,14 @@ extension StringExtension on String {
     return DateFormat('dd/MM/yyyy').parse(this);
   }
 
+  String capitalizeFirstLetter() {
+    if (this != '') {
+      return "${this[0].toUpperCase()}${substring(1).toLowerCase()}";
+    }
+
+    return '';
+  }
+
   /// This function will convert a valid input to a list
   /// In case the input is invalid, it will print out a message
   List? get convertStringToList {

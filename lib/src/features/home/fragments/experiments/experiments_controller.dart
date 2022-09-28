@@ -22,6 +22,13 @@ class ExperimentsController extends ChangeNotifier {
     notifyListeners();
   }
 
+  ScrollController _scrollController = ScrollController();
+  ScrollController get scrollController => _scrollController;
+  void setScrollController(ScrollController scrollController) {
+    _scrollController = scrollController;
+    // notifyListeners();
+  }
+
   List<ExperimentModel> _experiments = [];
   List<ExperimentModel> get experiments => _experiments;
   void _setExperiments(List<ExperimentModel> experiments) {
@@ -48,7 +55,7 @@ class ExperimentsController extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool get hasNextPage => _experiments.isEmpty
+  bool get hasNextPage => _experiments.isEmpty || _totalOfExperiments == 0
       ? false
       : (_totalOfExperiments % _experiments.length) > 0;
 

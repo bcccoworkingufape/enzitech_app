@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/auth/auth_page.dart';
 import 'package:enzitech_app/src/features/create_account/create_account_page.dart';
+import 'package:enzitech_app/src/features/create_enzyme/create_enzyme_page.dart';
 import 'package:enzitech_app/src/features/create_experiment/create_experiment_page.dart';
 import 'package:enzitech_app/src/features/create_treatment/create_treatment_page.dart';
 import 'package:enzitech_app/src/features/experiment_detailed/experiment_detailed_page.dart';
@@ -21,6 +22,7 @@ class RouteGenerator {
   static const createExperiment = "/createExperiment";
   static const experimentDetailed = "/experimentDetailed";
   static const createTreatment = "/createTreatment";
+  static const createEnzyme = "/createEnzyme";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     // ignore: unused_local_variable
@@ -51,6 +53,8 @@ class RouteGenerator {
         }
       case createTreatment:
         return MaterialPageRoute(builder: (_) => const CreateTreatmentPage());
+      case createEnzyme:
+        return MaterialPageRoute(builder: (_) => const CreateEnzymePage());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

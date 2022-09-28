@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/create_experiment/create_experiment_controller.dart';
+import 'package:enzitech_app/src/features/home/fragments/enzymes/enzymes_controller.dart';
 import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:enzitech_app/src/shared/util/constants.dart';
@@ -35,6 +36,8 @@ class CreateExperimentThirdStepPage extends StatefulWidget {
 class _CreateExperimentThirdStepPageState
     extends State<CreateExperimentThirdStepPage> {
   late final CreateExperimentController controller;
+  late final EnzymesController enzymesController;
+
   late GroupButtonController _checkboxesController;
   late final _checkboxButtons = [];
   final _choosedCheckboxList = <EnzymeModel>[];
@@ -43,10 +46,11 @@ class _CreateExperimentThirdStepPageState
   void initState() {
     super.initState();
     controller = context.read<CreateExperimentController>();
+    enzymesController = context.read<EnzymesController>();
 
     Future.delayed(Duration.zero, () async {
-      controller.loadEnzymes().whenComplete(
-            () => controller.enzymes.forEach(
+      enzymesController.loadEnzymes().whenComplete(
+            () => enzymesController.enzymes.forEach(
               (enz) {
                 _checkboxButtons.add(enz.name);
               },
@@ -98,7 +102,7 @@ class _CreateExperimentThirdStepPageState
             ],
           ),
           Visibility(
-            visible: controller.state == CreateExperimentState.loading,
+            visible: enzymesController.state == EnzymesState.loading,
             replacement: GroupButton(
               controller: _checkboxesController,
               isRadio: false,
@@ -113,7 +117,8 @@ class _CreateExperimentThirdStepPageState
                   onTap: () {
                     if (!selected) {
                       _checkboxesController.selectIndex(index);
-                      _choosedCheckboxList.add(controller.enzymes[index]);
+                      _choosedCheckboxList
+                          .add(enzymesController.enzymes[index]);
                       setState(() {
                         enableNextButton = _choosedCheckboxList.isNotEmpty;
                       });
@@ -121,7 +126,8 @@ class _CreateExperimentThirdStepPageState
                       return;
                     }
                     _checkboxesController.unselectIndex(index);
-                    _choosedCheckboxList.remove(controller.enzymes[index]);
+                    _choosedCheckboxList
+                        .remove(enzymesController.enzymes[index]);
                     setState(() {
                       enableNextButton = _choosedCheckboxList.isNotEmpty;
                     });
@@ -191,6 +197,7 @@ class _CreateExperimentThirdStepPageState
   @override
   Widget build(BuildContext context) {
     context.watch<CreateExperimentController>();
+    context.watch<EnzymesController>();
 
     return Column(
       children: [

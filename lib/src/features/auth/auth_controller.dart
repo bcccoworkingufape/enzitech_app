@@ -1,3 +1,6 @@
+// 🎯 Dart imports:
+import 'dart:convert';
+
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -57,7 +60,8 @@ class AuthController extends ChangeNotifier {
 
       setLoggedName(response.name);
       UserPrefsServices userPrefsServices = UserPrefsServices();
-      userPrefsServices.saveUser(response.token, response.name, response.email);
+      await userPrefsServices.saveFullUser(jsonEncode(response));
+      userPrefsServices.saveToken(response.token);
       await client.setConfig(enableGetToken: true);
 
       state = AuthState.success;

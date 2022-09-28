@@ -102,7 +102,7 @@ class TextStyles {
   );
 
   static final bodyMinRegular = GoogleFonts.ubuntu(
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: FontWeight.w400,
     color: AppColors.body,
   );

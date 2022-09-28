@@ -32,7 +32,6 @@ class ExperimentsPage extends StatefulWidget {
 
 class _ExperimentsPageState extends State<ExperimentsPage> {
   late final ExperimentsController controller;
-  late ScrollController scrollController;
   final Key _refreshIndicatorKey = GlobalKey();
 
   final _searchTermController = TextEditingController(text: '');
@@ -42,14 +41,17 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
   void initState() {
     super.initState();
     controller = context.read<ExperimentsController>();
-    scrollController = ScrollController()
-      ..addListener(() {
-        if (scrollController.position.maxScrollExtent ==
-                scrollController.offset &&
-            controller.hasNextPage) {
+
+    controller.scrollController.addListener(() {
+      if (controller.scrollController.position.pixels >
+              controller.scrollController.position.maxScrollExtent - 200 &&
+          controller.hasNextPage) {
+        if (controller.state != ExperimentsState.loading) {
           controller.loadExperiments(controller.page);
         }
-      });
+      }
+    });
+
     if (mounted) {
       controller.addListener(
         () async {
@@ -149,7 +151,8 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
     }
 
     return ListView.builder(
-      controller: scrollController,
+      key: PageStorageKey(widget.homeController.fragmentIndex),
+      controller: controller.scrollController,
       shrinkWrap: true,
       physics: const AlwaysScrollableScrollPhysics(),
       itemCount: controller.experiments.length + 1,
@@ -162,7 +165,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 8.0),
                 child: Dismissible(
-                  key: Key(experiment.id),
+                  key: UniqueKey(),
                   onDismissed: (direction) async {
                     await controller.deleteExperiment(experiment.id);
 
@@ -185,6 +188,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                   background: Container(color: Colors.red),
                   child: ExperimentCard(
                     experiment: experiment,
+                    indexOfExperiment: index + 1,
                   ),
                 ),
               ),
@@ -199,31 +203,31 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
             children: [
               if (controller.isLoadingMoreRunning == true)
                 const Padding(
-                  padding: EdgeInsets.only(top: 10, bottom: 40),
+                  padding: EdgeInsets.only(top: 10, bottom: 20),
                   child: Center(child: CircularProgressIndicator()),
                 ),
               if (controller.hasNextPage == false &&
                   controller.state == ExperimentsState.success)
-                Card(
-                  elevation: 4,
-                  shadowColor: AppColors.white,
-                  color: AppColors.yellow300,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 30, bottom: 30),
-                    child: Center(
-                      child: Text(
-                        'Todos os experimentos exibidos!',
-                        style: TextStyles.buttonPrimary.copyWith(
-                          color: AppColors.greyMedium,
-                          fontSize: 20,
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: Card(
+                    elevation: 4,
+                    shadowColor: AppColors.white,
+                    color: AppColors.yellow300,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 30, bottom: 30),
+                      child: Center(
+                        child: Text(
+                          'Todos os experimentos exibidos!',
+                          style: TextStyles.buttonPrimary.copyWith(
+                            color: AppColors.greyMedium,
+                            fontSize: 20,
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              if (controller.isLoadingMoreRunning == false &&
-                  controller.hasNextPage == false)
-                SizedBox(height: height / 13),
             ],
           );
         }
@@ -237,42 +241,57 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
     var heightMQ = MediaQuery.of(context).size.height;
     final controller = context.watch<ExperimentsController>();
 
-    return EZTPullToRefresh(
-      key: _refreshIndicatorKey,
-      onRefresh: () => controller.loadExperiments(1),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: _searchTermInput,
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            ToggleSwitch(
-              minWidth: widthMQ,
-              totalSwitches: 2,
-              labels: const ['Em andamento', 'Concluído'],
-              activeFgColor: AppColors.white,
-              inactiveFgColor: AppColors.primary,
-              activeBgColor: const [AppColors.primary],
-              inactiveBgColor: AppColors.white,
-              borderColor: const [AppColors.primary],
-              borderWidth: 1.5,
-              onToggle: (index) {
-                print(index);
-                // call controller to update search when this changes
-              },
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            Expanded(
-              child: _buildExperimentsList(heightMQ),
-            ),
-          ],
+    return AbsorbPointer(
+      absorbing: controller.scrollController.hasClients
+          ? controller.state == ExperimentsState.loading &&
+              controller.scrollController.position.maxScrollExtent ==
+                  controller.scrollController.offset
+          : controller.state == ExperimentsState.loading,
+      child: EZTPullToRefresh(
+        key: _refreshIndicatorKey,
+        onRefresh: () => controller.loadExperiments(1),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: _searchTermInput,
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              ToggleSwitch(
+                minWidth: widthMQ,
+                totalSwitches: 2,
+                labels: const ['Em andamento', 'Concluído'],
+                activeFgColor: AppColors.white,
+                inactiveFgColor: AppColors.primary,
+                activeBgColor: const [AppColors.primary],
+                inactiveBgColor: AppColors.white,
+                borderColor: const [AppColors.primary],
+                borderWidth: 1.5,
+                onToggle: (index) {
+                  print(index);
+                  // call controller to update search when this changes
+                },
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              if (controller.experiments.isNotEmpty)
+                Text(
+                  "🔬 ${controller.totalOfExperiments} experimento${controller.experiments.length > 1 ? 's ' : ' '}encontrado${controller.experiments.length > 1 ? 's ' : ' '}",
+                  style: TextStyles.link,
+                ),
+              const SizedBox(
+                height: 16,
+              ),
+              Expanded(
+                child: _buildExperimentsList(heightMQ),
+              ),
+            ],
+          ),
         ),
       ),
     );
