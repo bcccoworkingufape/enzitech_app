@@ -1,4 +1,5 @@
 // 🐦 Flutter imports:
+import 'package:enzitech_app/src/shared/themes/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -86,6 +87,7 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
     }
 
     return ListView.builder(
+      controller: controller.scrollController,
       shrinkWrap: true,
       physics: const AlwaysScrollableScrollPhysics(),
       itemCount: controller.treatments.length,
@@ -143,9 +145,22 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: Column(
           children: [
-            const SizedBox(
-              height: 16,
-            ),
+            if (controller.treatments.isNotEmpty &&
+                controller.state != TreatmentsState.loading)
+              Column(
+                children: [
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Text(
+                    "🧪 ${controller.treatments.length} tratamento${controller.treatments.length > 1 ? 's ' : ' '}encontrado${controller.treatments.length > 1 ? 's ' : ' '}",
+                    style: TextStyles.link,
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                ],
+              ),
             Expanded(
               child: _buildTreatmentsList(heightMQ),
             ),

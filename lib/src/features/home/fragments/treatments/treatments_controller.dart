@@ -22,6 +22,9 @@ class TreatmentsController extends ChangeNotifier {
     notifyListeners();
   }
 
+  final ScrollController _scrollController = ScrollController();
+  ScrollController get scrollController => _scrollController;
+
   List<TreatmentModel> _treatments = [];
   List<TreatmentModel> get treatments => _treatments;
   void _setTreatments(List<TreatmentModel> treatments) {
