@@ -1,4 +1,5 @@
 // 🐦 Flutter imports:
+import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -31,6 +32,15 @@ class _EnzymesPageState extends State<EnzymesPage> {
   late final AccountController accountController;
 
   final Key _refreshIndicatorKey = GlobalKey();
+
+  Widget getEnzymeCard(EnzymeModel enzyme) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      child: EnzymeCard(
+        enzyme: enzyme,
+      ),
+    );
+  }
 
   @override
   void initState() {
@@ -116,28 +126,14 @@ class _EnzymesPageState extends State<EnzymesPage> {
                 '${enzyme.name} excluído!',
                 eztSnackBarType: EZTSnackBarType.error,
               );
-
-              // Then show a snackbar.
-              // ScaffoldMessenger.of(context).showSnackBar(
-              //     SnackBar(content: Text('${experiment.name} excluído!')));
             },
             // Show a red background as the item is swiped away.
             background: Container(color: Colors.red),
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              child: EnzymeCard(
-                enzyme: enzyme,
-              ),
-            ),
+            child: getEnzymeCard(enzyme),
           ),
           child: Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              child: EnzymeCard(
-                enzyme: enzyme,
-              ),
-            ),
+            child: getEnzymeCard(enzyme),
           ),
         );
       },

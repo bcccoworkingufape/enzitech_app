@@ -1,10 +1,12 @@
 // 🐦 Flutter imports:
+import 'package:enzitech_app/src/shared/external/over_packages/marquee_on_demand.dart';
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:enzitech_app/src/shared/util/util.dart';
+import 'package:marquee/marquee.dart';
 
 class EnzymeCard extends StatefulWidget {
   const EnzymeCard({
@@ -45,9 +47,31 @@ class _EnzymeCardState extends State<EnzymeCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  widget.enzyme.name,
-                  style: TextStyles.titleHome,
+                Flexible(
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: 30,
+                    child: MarqueeOnDemand(
+                      key: UniqueKey(),
+                      // switchWidth: 100,
+                      text: widget.enzyme.name,
+                      textStyle: TextStyles.titleHome,
+                      marqueeBuilder: (context, text, textStyle) => Marquee(
+                        text: text,
+                        style: textStyle,
+                        scrollAxis: Axis.horizontal,
+                        blankSpace: 20.0,
+                        velocity: 10.0,
+                      ),
+                      textBuilder: (context, text, textStyle) => Text(
+                        text,
+                        style: textStyle,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  width: 16,
                 ),
                 Chip(
                   padding: const EdgeInsets.all(0),
