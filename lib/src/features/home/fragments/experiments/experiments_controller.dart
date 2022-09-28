@@ -22,12 +22,8 @@ class ExperimentsController extends ChangeNotifier {
     notifyListeners();
   }
 
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
   ScrollController get scrollController => _scrollController;
-  void setScrollController(ScrollController scrollController) {
-    _scrollController = scrollController;
-    // notifyListeners();
-  }
 
   List<ExperimentModel> _experiments = [];
   List<ExperimentModel> get experiments => _experiments;

@@ -1,5 +1,6 @@
 // 🐦 Flutter imports:
 import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
+import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -102,6 +103,7 @@ class _EnzymesPageState extends State<EnzymesPage> {
     }
 
     return ListView.builder(
+      controller: controller.scrollController,
       shrinkWrap: true,
       physics: const AlwaysScrollableScrollPhysics(),
       itemCount: controller.enzymes.length,
@@ -152,9 +154,22 @@ class _EnzymesPageState extends State<EnzymesPage> {
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: Column(
           children: [
-            const SizedBox(
-              height: 16,
-            ),
+            if (controller.enzymes.isNotEmpty &&
+                controller.state != EnzymesState.loading)
+              Column(
+                children: [
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Text(
+                    "🧬 ${controller.enzymes.length} enzima${controller.enzymes.length > 1 ? 's ' : ' '}encontrada${controller.enzymes.length > 1 ? 's ' : ' '}",
+                    style: TextStyles.link,
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                ],
+              ),
             Expanded(
               child: _buildEnzymesList(heightMQ),
             ),

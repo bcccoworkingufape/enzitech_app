@@ -22,6 +22,9 @@ class EnzymesController extends ChangeNotifier {
     notifyListeners();
   }
 
+  final ScrollController _scrollController = ScrollController();
+  ScrollController get scrollController => _scrollController;
+
   List<EnzymeModel> _enzymes = [];
   List<EnzymeModel> get enzymes => _enzymes;
   void _setEnzymes(List<EnzymeModel> treatments) {

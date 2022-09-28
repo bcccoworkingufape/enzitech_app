@@ -41,8 +41,9 @@ class _HomePageState extends State<HomePage> {
 
   late List<Widget> _fragments;
 
-  // ignore: prefer_typing_uninitialized_variables
-  var _isVisible;
+  var _isVisibleExperimentButton; // ignore: prefer_typing_uninitialized_variables
+  var _isVisibleTreatmentButton; // ignore: prefer_typing_uninitialized_variables
+  var _isVisibleEnzymeButton; // ignore: prefer_typing_uninitialized_variables
 
   @override
   void initState() {
@@ -75,28 +76,74 @@ class _HomePageState extends State<HomePage> {
       );
     }
 
+    setAllButtonsVisible();
+    if (mounted) {
+      experimentsController.scrollController.addListener(() {
+        if (experimentsController
+                .scrollController.position.userScrollDirection ==
+            ScrollDirection.reverse) {
+          if (_isVisibleExperimentButton == true) {
+            setState(() {
+              _isVisibleExperimentButton = false;
+            });
+          }
+        }
+        if (experimentsController
+                .scrollController.position.userScrollDirection ==
+            ScrollDirection.forward) {
+          if (_isVisibleExperimentButton == false) {
+            setState(() {
+              _isVisibleExperimentButton = true;
+            });
+          }
+        }
+      });
+      treatmentsController.scrollController.addListener(() {
+        if (treatmentsController
+                .scrollController.position.userScrollDirection ==
+            ScrollDirection.reverse) {
+          if (_isVisibleTreatmentButton == true) {
+            setState(() {
+              _isVisibleTreatmentButton = false;
+            });
+          }
+        }
+        if (treatmentsController
+                .scrollController.position.userScrollDirection ==
+            ScrollDirection.forward) {
+          if (_isVisibleTreatmentButton == false) {
+            setState(() {
+              _isVisibleTreatmentButton = true;
+            });
+          }
+        }
+      });
+      enzymesController.scrollController.addListener(() {
+        if (enzymesController.scrollController.position.userScrollDirection ==
+            ScrollDirection.reverse) {
+          if (_isVisibleEnzymeButton == true) {
+            setState(() {
+              _isVisibleEnzymeButton = false;
+            });
+          }
+        }
+        if (enzymesController.scrollController.position.userScrollDirection ==
+            ScrollDirection.forward) {
+          if (_isVisibleEnzymeButton == false) {
+            setState(() {
+              _isVisibleEnzymeButton = true;
+            });
+          }
+        }
+      });
+    }
+  }
+
+  setAllButtonsVisible() {
     setState(() {
-      _isVisible = true;
-    });
-    experimentsController.scrollController.addListener(() {
-      if (experimentsController.scrollController.position.userScrollDirection ==
-          ScrollDirection.reverse) {
-        if (_isVisible == true) {
-          setState(() {
-            _isVisible = false;
-            print("**** $_isVisible up");
-          });
-        }
-      }
-      if (experimentsController.scrollController.position.userScrollDirection ==
-          ScrollDirection.forward) {
-        if (_isVisible == false) {
-          setState(() {
-            _isVisible = true;
-            print("**** $_isVisible down");
-          });
-        }
-      }
+      _isVisibleExperimentButton = true;
+      _isVisibleTreatmentButton = true;
+      _isVisibleEnzymeButton = true;
     });
   }
 
@@ -118,7 +165,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget? get dealWithFloatingActionButton {
-    if (controller.fragmentIndex == 0 && _isVisible) {
+    if (controller.fragmentIndex == 0 && _isVisibleExperimentButton) {
       return FloatingActionButton.extended(
         onPressed: () {
           Navigator.pushNamed(
@@ -138,7 +185,7 @@ class _HomePageState extends State<HomePage> {
       );
     }
 
-    if (controller.fragmentIndex == 1) {
+    if (controller.fragmentIndex == 1 && _isVisibleTreatmentButton) {
       return FloatingActionButton.extended(
         onPressed: () {
           Navigator.pushNamed(
@@ -159,7 +206,8 @@ class _HomePageState extends State<HomePage> {
     }
 
     if (controller.fragmentIndex == 2 &&
-        accountController.user!.userType == UserTypeEnum.admin) {
+        accountController.user!.userType == UserTypeEnum.admin &&
+        _isVisibleEnzymeButton) {
       return FloatingActionButton.extended(
         onPressed: () {
           Navigator.pushNamed(
@@ -228,6 +276,7 @@ class _HomePageState extends State<HomePage> {
         unselectedItemColor: Colors.white70,
         backgroundColor: AppColors.primary,
         onTap: (index) {
+          setAllButtonsVisible();
           int beforeSet = controller.fragmentIndex;
           controller.setFragmentIndex(index);
           if (index == 0 &&
