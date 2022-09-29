@@ -20,17 +20,26 @@ class EZTSnackBar {
   _buildSnackBar(
     BuildContext context,
     String message,
+    Color? snackBarColor,
+    TextStyle? textStyle,
   ) {
     return SnackBar(
       // elevation: 0.0,
       //behavior: SnackBarBehavior.floating,
-      content: Text(message),
+      // content: Text(message, style: textStyle),
+      content: SizedBox(
+        height: 19,
+        width: MediaQuery.of(context).size.width,
+        child: Center(
+          child: Text(message, style: textStyle),
+        ),
+      ),
       // duration: new Duration(seconds: 5000000),
       // shape: RoundedRectangleBorder(
       //   borderRadius: BorderRadius.only(
       //       topLeft: Radius.circular(16.0), topRight: Radius.circular(16.0)),
       // ),
-      //backgroundColor: Colors.redAccent,
+      backgroundColor: snackBarColor,
       // action: SnackBarAction(
       //   textColor: Color(0xFFFAF2FB),
       //   label: 'OK',
@@ -85,6 +94,8 @@ class EZTSnackBar {
     BuildContext context,
     String message,
     EZTSnackBarType eztSnackBarType,
+    Color? snackBarColor,
+    TextStyle? textStyle,
   ) {
     switch (eztSnackBarType) {
       case EZTSnackBarType.success:
@@ -93,7 +104,7 @@ class EZTSnackBar {
         return _buildErrorSnackBar(context, message);
       case EZTSnackBarType.regular:
       default:
-        return _buildSnackBar(context, message);
+        return _buildSnackBar(context, message, snackBarColor, textStyle);
     }
   }
 
@@ -101,11 +112,19 @@ class EZTSnackBar {
     BuildContext context,
     String message, {
     EZTSnackBarType eztSnackBarType = EZTSnackBarType.regular,
+    Color? color,
+    TextStyle? textStyle,
   }) {
     const instance = EZTSnackBar();
 
     ScaffoldMessenger.of(context).showSnackBar(
-      instance._eztSnackBarType(context, message, eztSnackBarType),
+      instance._eztSnackBarType(
+        context,
+        message,
+        eztSnackBarType,
+        color,
+        textStyle,
+      ),
     );
   }
 
