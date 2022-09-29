@@ -205,28 +205,31 @@ class _HomePageState extends State<HomePage> {
       );
     }
 
-    if (controller.fragmentIndex == 2 &&
-        accountController.user!.userType == UserTypeEnum.admin &&
-        _isVisibleEnzymeButton) {
-      return FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.pushNamed(
-            context,
-            RouteGenerator.createEnzyme,
-          );
-        },
-        label: Text(
-          "Cadastrar\nenzima",
-          style: TextStyles.buttonBackground,
-        ),
-        icon: const Icon(
-          PhosphorIcons.pencilLine,
-          color: AppColors.white,
-          size: 30,
-        ),
-      );
-    }
+    if (accountController.user != null) {
+      if (controller.fragmentIndex == 2 &&
+          accountController.user!.userType == UserTypeEnum.admin &&
+          _isVisibleEnzymeButton) {
+        return FloatingActionButton.extended(
+          onPressed: () {
+            Navigator.pushNamed(
+              context,
+              RouteGenerator.createEnzyme,
+            );
+          },
+          label: Text(
+            "Cadastrar\nenzima",
+            style: TextStyles.buttonBackground,
+          ),
+          icon: const Icon(
+            PhosphorIcons.pencilLine,
+            color: AppColors.white,
+            size: 30,
+          ),
+        );
+      }
 
+      return null;
+    }
     return null;
   }
 

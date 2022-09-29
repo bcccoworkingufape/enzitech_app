@@ -2,12 +2,14 @@
 import 'dart:convert';
 
 // 🐦 Flutter imports:
+import 'package:enzitech_app/src/shared/util/util.dart';
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/shared/failures/failures.dart';
 import 'package:enzitech_app/src/shared/models/user_model.dart';
 import 'package:enzitech_app/src/shared/services/user_prefs_service.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 enum AccountState { idle, success, error, loading }
 
@@ -27,7 +29,7 @@ class AccountController extends ChangeNotifier {
 
   UserModel? _user;
   UserModel? get user => _user;
-  void _setUser(UserModel user) {
+  void _setUser(UserModel? user) {
     _user = user;
     notifyListeners();
   }
@@ -41,6 +43,8 @@ class AccountController extends ChangeNotifier {
 
       state = AccountState.success;
       notifyListeners();
+
+      _setUser(null);
     } catch (e) {
       _setFailure(e as Failure);
       state = AccountState.error;
@@ -49,20 +53,6 @@ class AccountController extends ChangeNotifier {
   }
 
   Future<void> loadAccount() async {
-    state = AccountState.loading;
-    notifyListeners();
-    try {
-      await loadUser();
-
-      notifyListeners();
-    } catch (e) {
-      _setFailure(e as Failure);
-      state = AccountState.error;
-      notifyListeners();
-    }
-  }
-
-  Future<void> loadUser() async {
     state = AccountState.loading;
     notifyListeners();
     try {
@@ -77,6 +67,20 @@ class AccountController extends ChangeNotifier {
       state = AccountState.success;
       notifyListeners();
     } catch (e) {
+      _setFailure(e as Failure);
+      state = AccountState.error;
+      notifyListeners();
+    }
+  }
+
+  Future<void> openUrl() async {
+    try {
+      if (!await launchUrl(Uri.parse(Constants.bccCoworkingLink))) {
+        throw UnableToOpenURL(
+            message:
+                'Não foi possível acessar ${Uri.parse(Constants.bccCoworkingLink)}');
+      }
+    } on Exception catch (e) {
       _setFailure(e as Failure);
       state = AccountState.error;
       notifyListeners();

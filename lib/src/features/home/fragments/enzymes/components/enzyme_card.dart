@@ -53,9 +53,12 @@ class _EnzymeCardState extends State<EnzymeCard> {
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      EZTMarqueeOnDemand(
-                        text: widget.enzyme.name,
-                        textStyle: TextStyles.titleBoldHeading,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4.0),
+                        child: EZTMarqueeOnDemand(
+                          text: widget.enzyme.name,
+                          textStyle: TextStyles.titleBoldHeading,
+                        ),
                       ),
                       // Text(
                       //   widget.enzyme.name,
