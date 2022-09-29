@@ -61,62 +61,93 @@ class _EnzymesSummaryState extends State<EnzymesSummary> {
           ),
         ),
         margin: const EdgeInsets.all(0),
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  enzymeTag(
-                      Constants.typesOfEnzymesListFormmated[0],
-                      controller.enzymes
-                          .map((element) =>
-                              element.type == Constants.typesOfEnzymesList[0]
-                                  ? 1
-                                  : 0)
-                          .reduce((value, element) => value + element),
-                      AppColors.betaGlucosidase),
-                  enzymeTag(
-                      Constants.typesOfEnzymesListFormmated[1],
-                      controller.enzymes
-                          .map((element) =>
-                              element.type == Constants.typesOfEnzymesList[1]
-                                  ? 1
-                                  : 0)
-                          .reduce((value, element) => value + element),
-                      AppColors.aryl),
-                ],
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              color: AppColors.primary,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4.0),
+                child: Center(
+                  child: Text(
+                    "Sumário de enzimas",
+                    style:
+                        TextStyles.bodyMinBold.copyWith(color: AppColors.white),
+                  ),
+                ),
               ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  enzymeTag(
-                      Constants.typesOfEnzymesListFormmated[2],
-                      controller.enzymes
-                          .map((element) =>
-                              element.type == Constants.typesOfEnzymesList[2]
-                                  ? 1
-                                  : 0)
-                          .reduce((value, element) => value + element),
-                      AppColors.fosfataseAcida),
-                  enzymeTag(
-                      Constants.typesOfEnzymesListFormmated[3],
-                      controller.enzymes
-                          .map((element) =>
-                              element.type == Constants.typesOfEnzymesList[3]
-                                  ? 1
-                                  : 0)
-                          .reduce((value, element) => value + element),
-                      AppColors.fosfataseAlcalina),
-                ],
-              ),
-            ],
-          ),
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                enzymeTag(
+                    Constants.typesOfEnzymesListFormmated[0],
+                    controller.enzymes
+                        .map((element) =>
+                            element.type == Constants.typesOfEnzymesList[0]
+                                ? 1
+                                : 0)
+                        .reduce((value, element) => value + element),
+                    AppColors.betaGlucosidase),
+                enzymeTag(
+                    Constants.typesOfEnzymesListFormmated[1],
+                    controller.enzymes
+                        .map((element) =>
+                            element.type == Constants.typesOfEnzymesList[1]
+                                ? 1
+                                : 0)
+                        .reduce((value, element) => value + element),
+                    AppColors.aryl),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                enzymeTag(
+                    Constants.typesOfEnzymesListFormmated[2],
+                    controller.enzymes
+                        .map((element) =>
+                            element.type == Constants.typesOfEnzymesList[2]
+                                ? 1
+                                : 0)
+                        .reduce((value, element) => value + element),
+                    AppColors.fosfataseAcida),
+                enzymeTag(
+                    Constants.typesOfEnzymesListFormmated[3],
+                    controller.enzymes
+                        .map((element) =>
+                            element.type == Constants.typesOfEnzymesList[3]
+                                ? 1
+                                : 0)
+                        .reduce((value, element) => value + element),
+                    AppColors.fosfataseAlcalina),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                enzymeTag(
+                    Constants.typesOfEnzymesListFormmated[4],
+                    controller.enzymes
+                        .map((element) =>
+                            element.type == Constants.typesOfEnzymesList[4]
+                                ? 1
+                                : 0)
+                        .reduce((value, element) => value + element),
+                    AppColors.urease),
+              ],
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+          ],
         ),
       ),
     );

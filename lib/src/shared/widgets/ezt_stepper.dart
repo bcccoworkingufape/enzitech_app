@@ -53,9 +53,9 @@ enum EZTStepperType {
 ///
 /// Used by [EZTStepper.controlsBuilder].
 @immutable
-class ControlsDetails {
+class EZTControlsDetails {
   /// Creates a set of details describing the Stepper.
-  const ControlsDetails({
+  const EZTControlsDetails({
     required this.currentStep,
     required this.stepIndex,
     this.onStepCancel,
@@ -99,7 +99,7 @@ class ControlsDetails {
 ///
 ///  * [WidgetBuilder], which is similar but only takes a [BuildContext].
 typedef ControlsWidgetBuilder = Widget Function(
-    BuildContext context, ControlsDetails details);
+    BuildContext context, EZTControlsDetails details);
 
 const TextStyle _kStepStyle = TextStyle(
   fontSize: 12.0,
@@ -251,10 +251,10 @@ class EZTStepper extends StatefulWidget {
   ///
   /// If null, the default controls from the current theme will be used.
   ///
-  /// This callback which takes in a context and a [ControlsDetails] object, which
+  /// This callback which takes in a context and a [EZTControlsDetails] object, which
   /// contains step information and two functions: [onStepContinue] and [onStepCancel].
   /// These can be used to control the stepper. For example, reading the
-  /// [ControlsDetails.currentStep] value within the callback can change the text
+  /// [EZTControlsDetails.currentStep] value within the callback can change the text
   /// of the continue or cancel button depending on which step users are at.
   ///
   /// {@tool dartpad}
@@ -487,7 +487,7 @@ class _EZTStepperState extends State<EZTStepper> with TickerProviderStateMixin {
     if (widget.controlsBuilder != null) {
       return widget.controlsBuilder!(
         context,
-        ControlsDetails(
+        EZTControlsDetails(
           currentStep: widget.currentStep,
           onStepContinue: widget.onStepContinue,
           onStepCancel: widget.onStepCancel,
@@ -808,12 +808,10 @@ class _EZTStepperState extends State<EZTStepper> with TickerProviderStateMixin {
           ),
         ),
         if (!_isLast(i))
-          Expanded(
-            child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 8.0),
-              height: 1.0,
-              color: Colors.grey.shade400,
-            ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 8.0),
+            height: 1.0,
+            color: Colors.grey.shade400,
           ),
       ],
     ];
@@ -833,10 +831,23 @@ class _EZTStepperState extends State<EZTStepper> with TickerProviderStateMixin {
       children: <Widget>[
         Material(
           elevation: widget.elevation ?? 2,
-          child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: Row(
-              children: children,
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: Flex(
+              direction: Axis.horizontal,
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 24.0),
+                      child: Row(
+                        children: children,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),

@@ -34,6 +34,12 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
 
   bool enableCreate = false;
 
+  final validations = <ValidateRule>[
+    ValidateRule(
+      ValidateTypes.required,
+    ),
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -131,15 +137,6 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
   }
 
   Widget get _nameInput {
-    final validations = <ValidateRule>[
-      ValidateRule(
-        ValidateTypes.required,
-      ),
-      ValidateRule(
-        ValidateTypes.name,
-      ),
-    ];
-
     final fieldValidator = FieldValidator(validations, context);
 
     return EZTTextField(
@@ -155,15 +152,6 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
   }
 
   Widget get _descriptionInput {
-    final validations = <ValidateRule>[
-      ValidateRule(
-        ValidateTypes.required,
-      ),
-      ValidateRule(
-        ValidateTypes.name,
-      ),
-    ];
-
     final fieldValidator = FieldValidator(validations, context);
 
     return EZTTextField(

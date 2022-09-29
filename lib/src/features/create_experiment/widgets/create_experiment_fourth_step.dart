@@ -235,21 +235,58 @@ class _CreateExperimentFourthStepPageState
               textAlign: TextAlign.center,
             ),
           ),
-          const SizedBox(height: 64),
+          const SizedBox(height: 16),
           ConstrainedBox(
             constraints: BoxConstraints.tightFor(height: height),
             child: EZTStepper(
                 currentStep: controller.stepPage,
-                onStepCancel: () {
-                  if (controller.stepPage > 0) {
-                    controller.setStepPage(controller.stepPage - 1);
-                  }
+                controlsBuilder:
+                    (BuildContext context, EZTControlsDetails details) {
+                  return Row(
+                    children: <Widget>[
+                      if (controller.stepPage <
+                          Provider.of<CreateExperimentController>(context,
+                                      listen: false)
+                                  .experimentRequestModel
+                                  .experimentsEnzymes
+                                  .length -
+                              1)
+                        TextButton(
+                          onPressed: () {
+                            if (controller.stepPage <
+                                Provider.of<CreateExperimentController>(context,
+                                            listen: false)
+                                        .experimentRequestModel
+                                        .experimentsEnzymes
+                                        .length -
+                                    1) {
+                              controller.setStepPage(controller.stepPage + 1);
+                            }
+                          },
+                          child: const Text('Próximo'),
+                        ),
+                      if (controller.stepPage > 0)
+                        TextButton(
+                          onPressed: () {
+                            if (controller.stepPage > 0) {
+                              controller.setStepPage(controller.stepPage - 1);
+                            }
+                          },
+                          child: const Text('Voltar'),
+                        ),
+                    ],
+                  );
                 },
-                onStepContinue: () {
-                  if (controller.stepPage <= 0) {
-                    controller.setStepPage(controller.stepPage + 1);
-                  }
-                },
+                // onStepCancel: () {
+                //   if (controller.stepPage > 0) {
+                //     controller.setStepPage(controller.stepPage - 1);
+                //   }
+                // },
+                // onStepContinue: () {
+                //   if (controller.stepPage <= 0) {
+                //     controller.setStepPage(controller.stepPage + 1);
+                //   }
+                // },
                 onStepTapped: (int index) {
                   controller.setStepPage(index);
                 },
@@ -258,19 +295,20 @@ class _CreateExperimentFourthStepPageState
                     .experimentRequestModel
                     .experimentsEnzymes
                     .map(
-                      (enzyme) => EZTStep(
-                        title: Text(enzyme.name),
-                        content: Container(
-                          alignment: Alignment.centerLeft,
-                          child: Visibility(
-                              visible: controller
-                                      .textFields["aVariable-${enzyme.id}"] !=
-                                  null,
-                              child: _textFields(enzyme)),
-                        ),
+                  (enzyme) {
+                    return EZTStep(
+                      title: Text(enzyme.name),
+                      content: Container(
+                        alignment: Alignment.centerLeft,
+                        child: Visibility(
+                            visible: controller
+                                    .textFields["aVariable-${enzyme.id}"] !=
+                                null,
+                            child: _textFields(enzyme)),
                       ),
-                    )
-                    .toList(),
+                    );
+                  },
+                ).toList(),
                 key: ValueKey(widget.listOfEnzymes.hashCode)),
           ),
           const SizedBox(height: 40),
@@ -286,7 +324,7 @@ class _CreateExperimentFourthStepPageState
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Informações da Curva',
+          'Informações da Curva para ${enzyme.name}',
           style: TextStyles.detailBold,
         ),
         Row(
@@ -302,7 +340,7 @@ class _CreateExperimentFourthStepPageState
         ),
         const SizedBox(height: 40),
         Text(
-          'Demais Variáveis',
+          'Demais Variáveis para ${enzyme.name}',
           style: TextStyles.detailBold,
         ),
         const SizedBox(height: 10),
@@ -383,7 +421,7 @@ class _CreateExperimentFourthStepPageState
       children: [
         Expanded(
           flex: 11,
-          child: Center(child: _body(MediaQuery.of(context).size.height / 2.5)),
+          child: _body(MediaQuery.of(context).size.height / 2),
         ),
         Expanded(
           flex: 4,

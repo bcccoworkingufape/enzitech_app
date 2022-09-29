@@ -2,14 +2,16 @@
 import 'dart:convert';
 
 // 🐦 Flutter imports:
-import 'package:enzitech_app/src/shared/util/util.dart';
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
+import 'package:url_launcher/url_launcher.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/shared/failures/failures.dart';
 import 'package:enzitech_app/src/shared/models/user_model.dart';
 import 'package:enzitech_app/src/shared/services/user_prefs_service.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:enzitech_app/src/shared/util/util.dart';
 
 enum AccountState { idle, success, error, loading }
 

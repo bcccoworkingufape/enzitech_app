@@ -31,10 +31,11 @@ class AppColors {
   static const shape = Color(0xFFFAFAFC);
   static const white = Color(0xFFFFFFFF);
 
-  static const betaGlucosidase = Color(0xFFf24646);
-  static const aryl = Color(0xFFf5b949);
-  static const fosfataseAcida = Color(0xFF4646f2);
-  static const fosfataseAlcalina = Color(0xFF5e5041);
+  static const betaGlucosidase = Color(0xFF721817);
+  static const aryl = Color(0xFFFA9F42);
+  static const fosfataseAcida = Color(0xFF2B4162);
+  static const fosfataseAlcalina = Color(0xFF88AB75);
+  static const urease = Color(0xFF675C38);
 
   static MaterialColor materialTheme = const MaterialColor(
     0xFF06BC67, //primary

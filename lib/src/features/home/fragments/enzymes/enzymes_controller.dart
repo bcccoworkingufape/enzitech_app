@@ -49,12 +49,13 @@ class EnzymesController extends ChangeNotifier {
 
   Future<void> deleteEnzyme(String id) async {
     // state = TreatmentsState.loading;
-    // notifyListeners();
+    // if (notify) notifyListeners();
     try {
       await enzymesService.deleteEnzyme(id);
 
       // state = TreatmentsState.success;
       // notifyListeners();
+      notifyListeners();
     } catch (e) {
       _setFailure(e as Failure);
       state = EnzymesState.error;

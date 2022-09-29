@@ -36,6 +36,12 @@ class _CreateExperimentFirstStepPageState
 
   bool enableNextButton1 = false;
 
+  final validations = <ValidateRule>[
+    ValidateRule(
+      ValidateTypes.required,
+    ),
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -127,15 +133,6 @@ class _CreateExperimentFirstStepPageState
   }
 
   Widget get _nameInput {
-    final validations = <ValidateRule>[
-      ValidateRule(
-        ValidateTypes.required,
-      ),
-      ValidateRule(
-        ValidateTypes.name,
-      ),
-    ];
-
     final fieldValidator = FieldValidator(validations, context);
 
     return EZTTextField(
@@ -151,15 +148,6 @@ class _CreateExperimentFirstStepPageState
   }
 
   Widget get _descriptionInput {
-    final validations = <ValidateRule>[
-      ValidateRule(
-        ValidateTypes.required,
-      ),
-      ValidateRule(
-        ValidateTypes.name,
-      ),
-    ];
-
     final fieldValidator = FieldValidator(validations, context);
 
     return EZTTextField(

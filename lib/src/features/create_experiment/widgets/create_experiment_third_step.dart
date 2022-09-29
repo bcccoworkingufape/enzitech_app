@@ -19,6 +19,7 @@ import 'package:enzitech_app/src/shared/util/constants.dart';
 import 'package:enzitech_app/src/shared/util/util.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_button.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_checkbox_tile.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
 
 class CreateExperimentThirdStepPage extends StatefulWidget {
   const CreateExperimentThirdStepPage({
@@ -64,6 +65,27 @@ class _CreateExperimentThirdStepPageState
   }
 
   bool enableNextButton = false;
+
+  Color leadWithColor(String type) {
+    // 'Betaglucosidase',
+    // 'Aryl',
+    // 'FosfataseAcida',
+    // 'FosfataseAlcalina',
+    // 'Urease'
+    if (type == Constants.typesOfEnzymesList[0]) {
+      return AppColors.betaGlucosidase;
+    } else if (type == Constants.typesOfEnzymesList[1]) {
+      return AppColors.aryl;
+    } else if (type == Constants.typesOfEnzymesList[2]) {
+      return AppColors.fosfataseAcida;
+    } else if (type == Constants.typesOfEnzymesList[3]) {
+      return AppColors.fosfataseAlcalina;
+    } else if (type == Constants.typesOfEnzymesList[4]) {
+      return AppColors.urease;
+    } else {
+      return Colors.black;
+    }
+  }
 
   Widget get _body {
     return SingleChildScrollView(
@@ -131,6 +153,18 @@ class _CreateExperimentThirdStepPageState
                     setState(() {
                       enableNextButton = _choosedCheckboxList.isNotEmpty;
                     });
+                  },
+                  color: leadWithColor(enzymesController.enzymes[index].type),
+                  onTapTrailing: () {
+                    EZTSnackBar.clear(context);
+                    EZTSnackBar.show(
+                      context,
+                      "Tipo da enzima: ${Constants.typesOfEnzymesListFormmated[Constants.typesOfEnzymesList.indexOf(enzymesController.enzymes[index].type)]}",
+                      color: leadWithColor(
+                        enzymesController.enzymes[index].type,
+                      ),
+                      textStyle: TextStyles.titleMinBoldBackground,
+                    );
                   },
                 );
               },
