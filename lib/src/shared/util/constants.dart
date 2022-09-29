@@ -19,6 +19,7 @@ class Constants {
     'Aryl',
     'FosfataseAcida',
     'FosfataseAlcalina',
+    'Urease'
   ];
 
   static const List<String> typesOfEnzymesListFormmated = <String>[
@@ -26,5 +27,6 @@ class Constants {
     'Aryl',
     'Fosfatase Ácida',
     'Fosfatase Alcalina',
+    'Urease',
   ];
 }

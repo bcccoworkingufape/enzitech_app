@@ -179,18 +179,20 @@ class _CreateExperimentSecondStepPageState
                   title: _checkboxButtons[index],
                   selected: selected,
                   onTap: () {
-                    _validateFields;
-
                     if (!selected) {
                       _checkboxesController.selectIndex(index);
                       choosedCheckboxList
                           .add(treatmentsController.treatments[index]);
+
+                      _validateFields;
 
                       return;
                     }
                     _checkboxesController.unselectIndex(index);
                     choosedCheckboxList
                         .remove(treatmentsController.treatments[index]);
+
+                    _validateFields;
                   },
                 );
               },
