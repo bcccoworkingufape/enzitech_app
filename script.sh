@@ -40,13 +40,14 @@ else
         echo "☑️ ENZITECH SCRIPT ☑️\n💻 EXECUTANDO FLUTTER CLEAN E PUB GET NOS REPOSITÓRIOS...\n"
     fi
 
-    if [ "$1" = "--flutter" -o "$1" = "-f" ]
-        then
-            flutter clean && flutter pub get && echo "✅ FLUTTER CLEAN\n"
-        else
-            f clean && f pub get && echo "✅ FLUTTER CLEAN\n"
+    # if [ "$1" = "--flutter" -o "$1" = "-f" ]
+    #     then
+    #         flutter clean && flutter pub get && echo "✅ FLUTTER CLEAN\n"
+    #     else
+    #         f clean && f pub get && echo "✅ FLUTTER CLEAN\n"
 
-        fi
+    #     fi
+    flutter clean && flutter pub get && echo "✅ FLUTTER CLEAN\n"
 
     echo "🔀 REMOÇÃO DE BRANCHS INATIVAS" && git fetch --prune && echo "\n------------------------------------------------------------------------- \n"
 

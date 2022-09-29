@@ -17,10 +17,11 @@ class AppColors {
 
   static const yellow300 = Color(0xFFF8EF6C);
 
-  static const grey = Color(0xFF585666);
   static const greyLight = Color(0xFF9D9D9D);
-  static const greyMedium = Color(0xFF544F4F);
+  static const grey = Color(0xFF585666);
+  static const greySweet = Color(0xFF544F4F);
   static const greyDark = Color(0xFF3a3a3b);
+  static const greyBlack = Color(0xFF393939);
 
   static const delete = Color(0xFFE83F5B);
   static const heading = Color(0xFF585666);

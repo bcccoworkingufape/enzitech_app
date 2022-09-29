@@ -27,6 +27,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  auto_size_text: ^3.0.0
   cupertino_icons: ^1.0.4
   dio: ^4.0.6
   flutter:
@@ -40,7 +41,6 @@ dependencies:
   import_sorter: ^4.6.0
   intl: ^0.17.0
   liquid_pull_to_refresh: ^3.0.1
-  marquee: ^2.2.3
   percent_indicator: ^4.0.1
   phosphor_flutter: ^1.4.0
   pretty_dio_logger: ^1.2.0-beta-1

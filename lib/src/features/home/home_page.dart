@@ -63,6 +63,8 @@ class _HomePageState extends State<HomePage> {
         await enzymesController.loadEnzymes();
         await accountController.loadAccount();
       });
+      setAllButtonsVisible();
+
       controller.addListener(
         () {
           if (controller.state == HomeState.error) {
@@ -74,15 +76,11 @@ class _HomePageState extends State<HomePage> {
           }
         },
       );
-    }
-
-    setAllButtonsVisible();
-    if (mounted) {
       experimentsController.scrollController.addListener(() {
         if (experimentsController
                 .scrollController.position.userScrollDirection ==
             ScrollDirection.reverse) {
-          if (_isVisibleExperimentButton == true) {
+          if (_isVisibleExperimentButton == true && mounted) {
             setState(() {
               _isVisibleExperimentButton = false;
             });
@@ -91,7 +89,7 @@ class _HomePageState extends State<HomePage> {
         if (experimentsController
                 .scrollController.position.userScrollDirection ==
             ScrollDirection.forward) {
-          if (_isVisibleExperimentButton == false) {
+          if (_isVisibleExperimentButton == false && mounted) {
             setState(() {
               _isVisibleExperimentButton = true;
             });
@@ -102,7 +100,7 @@ class _HomePageState extends State<HomePage> {
         if (treatmentsController
                 .scrollController.position.userScrollDirection ==
             ScrollDirection.reverse) {
-          if (_isVisibleTreatmentButton == true) {
+          if (_isVisibleTreatmentButton == true && mounted) {
             setState(() {
               _isVisibleTreatmentButton = false;
             });
@@ -111,7 +109,7 @@ class _HomePageState extends State<HomePage> {
         if (treatmentsController
                 .scrollController.position.userScrollDirection ==
             ScrollDirection.forward) {
-          if (_isVisibleTreatmentButton == false) {
+          if (_isVisibleTreatmentButton == false && mounted) {
             setState(() {
               _isVisibleTreatmentButton = true;
             });
@@ -121,7 +119,7 @@ class _HomePageState extends State<HomePage> {
       enzymesController.scrollController.addListener(() {
         if (enzymesController.scrollController.position.userScrollDirection ==
             ScrollDirection.reverse) {
-          if (_isVisibleEnzymeButton == true) {
+          if (_isVisibleEnzymeButton == true && mounted) {
             setState(() {
               _isVisibleEnzymeButton = false;
             });
@@ -129,7 +127,7 @@ class _HomePageState extends State<HomePage> {
         }
         if (enzymesController.scrollController.position.userScrollDirection ==
             ScrollDirection.forward) {
-          if (_isVisibleEnzymeButton == false) {
+          if (_isVisibleEnzymeButton == false && mounted) {
             setState(() {
               _isVisibleEnzymeButton = true;
             });
@@ -140,11 +138,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   setAllButtonsVisible() {
-    setState(() {
-      _isVisibleExperimentButton = true;
-      _isVisibleTreatmentButton = true;
-      _isVisibleEnzymeButton = true;
-    });
+    if (mounted) {
+      setState(() {
+        _isVisibleExperimentButton = true;
+        _isVisibleTreatmentButton = true;
+        _isVisibleEnzymeButton = true;
+      });
+    }
   }
 
   initFragements() {
@@ -205,28 +205,31 @@ class _HomePageState extends State<HomePage> {
       );
     }
 
-    if (controller.fragmentIndex == 2 &&
-        accountController.user!.userType == UserTypeEnum.admin &&
-        _isVisibleEnzymeButton) {
-      return FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.pushNamed(
-            context,
-            RouteGenerator.createEnzyme,
-          );
-        },
-        label: Text(
-          "Cadastrar\nenzima",
-          style: TextStyles.buttonBackground,
-        ),
-        icon: const Icon(
-          PhosphorIcons.pencilLine,
-          color: AppColors.white,
-          size: 30,
-        ),
-      );
-    }
+    if (accountController.user != null) {
+      if (controller.fragmentIndex == 2 &&
+          accountController.user!.userType == UserTypeEnum.admin &&
+          _isVisibleEnzymeButton) {
+        return FloatingActionButton.extended(
+          onPressed: () {
+            Navigator.pushNamed(
+              context,
+              RouteGenerator.createEnzyme,
+            );
+          },
+          label: Text(
+            "Cadastrar\nenzima",
+            style: TextStyles.buttonBackground,
+          ),
+          icon: const Icon(
+            PhosphorIcons.pencilLine,
+            color: AppColors.white,
+            size: 30,
+          ),
+        );
+      }
 
+      return null;
+    }
     return null;
   }
 

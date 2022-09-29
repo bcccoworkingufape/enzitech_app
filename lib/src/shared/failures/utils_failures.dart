@@ -144,3 +144,8 @@ class UnknownError extends Failure {
   UnknownError({String message = "Erro desconhecido!", dynamic key = ""})
       : super(message: message, key: key);
 }
+
+class UnableToOpenURL extends Failure {
+  UnableToOpenURL({String message = "", dynamic key = ""})
+      : super(message: message, key: key);
+}

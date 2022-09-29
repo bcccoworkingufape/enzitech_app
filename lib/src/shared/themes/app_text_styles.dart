@@ -67,7 +67,7 @@ class TextStyles {
   static final detailBold = GoogleFonts.ubuntu(
     fontSize: 14,
     fontWeight: FontWeight.w700,
-    color: AppColors.greyMedium,
+    color: AppColors.greySweet,
   );
 
   /// `fontSize:` 18,
@@ -79,7 +79,7 @@ class TextStyles {
   /// ![585666](https://www.colorhexa.com/585666.png)
   static final termRegular = GoogleFonts.ubuntu(
     fontSize: 18,
-    color: AppColors.greyMedium,
+    color: AppColors.greySweet,
   );
 
   //* Revisado

@@ -1,12 +1,13 @@
 // 🐦 Flutter imports:
-import 'package:enzitech_app/src/shared/external/over_packages/marquee_on_demand.dart';
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:enzitech_app/src/shared/util/util.dart';
-import 'package:marquee/marquee.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_marquee_on_demand.dart';
+
+// 📦 Package imports:
 
 class EnzymeCard extends StatefulWidget {
   const EnzymeCard({
@@ -40,7 +41,7 @@ class _EnzymeCardState extends State<EnzymeCard> {
     return Card(
       elevation: 4,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
+        padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -48,26 +49,28 @@ class _EnzymeCardState extends State<EnzymeCard> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Flexible(
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: 30,
-                    child: MarqueeOnDemand(
-                      key: UniqueKey(),
-                      // switchWidth: 100,
-                      text: widget.enzyme.name,
-                      textStyle: TextStyles.titleBoldHeading,
-                      marqueeBuilder: (context, text, textStyle) => Marquee(
-                        text: text,
-                        style: textStyle,
-                        scrollAxis: Axis.horizontal,
-                        blankSpace: 20.0,
-                        velocity: 10.0,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Text(
+                      //   widget.enzyme.name,
+                      //   maxLines: 2,
+                      //   overflow: TextOverflow.ellipsis,
+                      //   style: TextStyles.titleBoldHeading,
+                      // ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4.0),
+                        child: EZTMarqueeOnDemand(
+                          text: widget.enzyme.name,
+                          textStyle: TextStyles.titleBoldHeading,
+                        ),
                       ),
-                      textBuilder: (context, text, textStyle) => Text(
-                        text,
-                        style: textStyle,
+                      Text(
+                        'Criado em ${Toolkit.formatBrDate(widget.enzyme.createdAt!)}',
+                        style: TextStyles.bodyMinRegular,
                       ),
-                    ),
+                    ],
                   ),
                 ),
                 const SizedBox(
@@ -84,40 +87,52 @@ class _EnzymeCardState extends State<EnzymeCard> {
                 ),
               ],
             ),
+            // const SizedBox(
+            //   height: 2,
+            // ),
+            // Text(
+            //   'Criado em ${Toolkit.formatBrDate(widget.enzyme.createdAt!)}',
+            //   style: TextStyles.bodyMinRegular,
+            // ),
             const SizedBox(
               height: 2,
             ),
-            Text(
-              'Criado em ${Toolkit.formatBrDate(widget.enzyme.createdAt!)}',
-              style: TextStyles.bodyMinRegular,
-            ),
-            const SizedBox(
-              height: 8,
-            ),
             const Divider(),
             const SizedBox(
-              height: 8,
+              height: 2,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
-                    Text(
-                      "Variável A: ",
-                      style: TextStyles.bodyRegular.copyWith(
-                        color: AppColors.heading,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Variável A: ",
+                          style: TextStyles.bodyRegular.copyWith(
+                            color: AppColors.heading,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
                     ),
-                    Text(
-                      widget.enzyme.variableA.toString(),
-                      maxLines: 4,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.justify,
-                      style: TextStyles.bodyRegular
-                          .copyWith(color: AppColors.heading, fontSize: 16),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.enzyme.variableA.toString(),
+                          maxLines: 4,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.justify,
+                          style: TextStyles.bodyRegular
+                              .copyWith(color: AppColors.heading, fontSize: 16),
+                        ),
+                      ],
                     ),
                   ],
                 ),

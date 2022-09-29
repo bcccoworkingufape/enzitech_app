@@ -122,7 +122,7 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
             children: [
               const Icon(
                 PhosphorIcons.flask,
-                color: AppColors.greyMedium,
+                color: AppColors.greySweet,
               ),
               const SizedBox(width: 4),
               Text(
@@ -197,7 +197,7 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
       onChanged: (value) => _validateFields,
       fieldValidator: fieldValidator,
       inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\,?\d{0,3}')),
+        FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\,?\d{0,5}')),
         CommaTextInputFormatter(),
       ],
     );
