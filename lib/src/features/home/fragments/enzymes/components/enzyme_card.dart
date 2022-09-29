@@ -53,6 +53,12 @@ class _EnzymeCardState extends State<EnzymeCard> {
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      // Text(
+                      //   widget.enzyme.name,
+                      //   maxLines: 2,
+                      //   overflow: TextOverflow.ellipsis,
+                      //   style: TextStyles.titleBoldHeading,
+                      // ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 4.0),
                         child: EZTMarqueeOnDemand(
@@ -60,10 +66,6 @@ class _EnzymeCardState extends State<EnzymeCard> {
                           textStyle: TextStyles.titleBoldHeading,
                         ),
                       ),
-                      // Text(
-                      //   widget.enzyme.name,
-                      //   style: TextStyles.titleBoldHeading,
-                      // ),
                       Text(
                         'Criado em ${Toolkit.formatBrDate(widget.enzyme.createdAt!)}',
                         style: TextStyles.bodyMinRegular,

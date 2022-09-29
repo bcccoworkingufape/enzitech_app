@@ -88,6 +88,8 @@ class _ExperimentCardState extends State<ExperimentCard> {
                         ),
                         Text(
                           widget.experiment.name,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyles.titleBoldHeading,
                         ),
                         const SizedBox(
