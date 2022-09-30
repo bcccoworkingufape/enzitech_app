@@ -1,6 +1,7 @@
 // 🐦 Flutter imports:
 
 // 🐦 Flutter imports:
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -17,6 +18,8 @@ import 'package:enzitech_app/src/shared/models/user_model.dart';
 import 'package:enzitech_app/src/shared/routes/route_generator.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
+
+import 'dart:io' show Platform;
 
 class AccountPage extends StatefulWidget {
   const AccountPage({
@@ -73,6 +76,7 @@ class _AccountPageState extends State<AccountPage> {
     );
 
     final controller = context.watch<AccountController>();
+    final scaleFactor = MediaQuery.of(context).textScaleFactor;
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -90,6 +94,8 @@ class _AccountPageState extends State<AccountPage> {
                 child: SettingsList(
                   lightTheme: const SettingsThemeData(
                     settingsListBackground: AppColors.background,
+                    titleTextColor: AppColors.grenDark,
+                    // leadingIconsColor: AppColors.greyBlack,
                   ),
                   sections: [
                     SettingsSection(
@@ -98,82 +104,119 @@ class _AccountPageState extends State<AccountPage> {
                         SettingsTile(
                           leading: const Icon(
                             PhosphorIcons.user,
-                            color: AppColors.greyBlack,
                           ),
-                          title: Flex(
-                            direction: Axis.horizontal,
-                            children: const [Text('Nome')],
-                          ),
-                          value: Flexible(
-                            flex: 4,
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                              child: Text(
-                                controller.user!.name,
-                                overflow: TextOverflow.ellipsis,
-                                style: descriptionTextStyle,
-                              ),
-                            ),
-                          ),
+                          title: Platform.isIOS
+                              ? Flex(
+                                  direction: Axis.horizontal,
+                                  children: const [Text('Nome')],
+                                )
+                              : const Text('Nome'),
+                          value: Platform.isIOS
+                              ? Flexible(
+                                  flex: 4,
+                                  child: Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Text(
+                                      controller.user!.name,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: descriptionTextStyle,
+                                    ),
+                                  ),
+                                )
+                              : Text(
+                                  controller.user!.name,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: descriptionTextStyle,
+                                ),
                         ),
                         SettingsTile(
                           leading: const Icon(
                             PhosphorIcons.at,
-                            color: AppColors.greyBlack,
                           ),
-                          title: Flex(
-                            direction: Axis.horizontal,
-                            children: const [Text('Email')],
-                          ),
-                          value: Flexible(
-                            flex: 4,
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                              child: Text(
-                                controller.user!.email,
-                                overflow: TextOverflow.ellipsis,
-                                style: descriptionTextStyle,
-                              ),
-                            ),
-                          ),
+                          title: Platform.isIOS
+                              ? Flex(
+                                  direction: Axis.horizontal,
+                                  children: const [Text('Email')],
+                                )
+                              : const Text('Email'),
+                          value: Platform.isIOS
+                              ? Flexible(
+                                  flex: 4,
+                                  child: Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Text(
+                                      controller.user!.email,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: descriptionTextStyle,
+                                    ),
+                                  ),
+                                )
+                              : Text(
+                                  controller.user!.email,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: descriptionTextStyle,
+                                ),
                         ),
                         SettingsTile(
                           leading: const Icon(
                             PhosphorIcons.identificationBadge,
-                            color: AppColors.greyBlack,
                           ),
-                          title: Flex(
-                            direction: Axis.horizontal,
-                            children: const [
-                              Text('Tipo de usuário'),
-                            ],
-                          ),
-                          value: Flexible(
-                            flex: 1,
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                              child: Text(
-                                controller.user!.userType == UserTypeEnum.admin
-                                    ? 'Administrador'
-                                    : 'Comum',
-                                overflow: TextOverflow.ellipsis,
-                                style: descriptionTextStyle,
-                              ),
-                            ),
-                          ),
+                          title: Platform.isIOS
+                              ? Flex(
+                                  direction: Axis.horizontal,
+                                  children: const [
+                                    Text('Tipo de usuário'),
+                                  ],
+                                )
+                              : const Text('Tipo de usuário'),
+                          value: Platform.isIOS
+                              ? Flexible(
+                                  flex: 1,
+                                  child: Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Text(
+                                      controller.user!.userType ==
+                                              UserTypeEnum.admin
+                                          ? 'Administrador'
+                                          : 'Comum',
+                                      overflow: TextOverflow.ellipsis,
+                                      style: descriptionTextStyle,
+                                    ),
+                                  ),
+                                )
+                              : Text(
+                                  controller.user!.userType ==
+                                          UserTypeEnum.admin
+                                      ? 'Administrador'
+                                      : 'Comum',
+                                  overflow: TextOverflow.ellipsis,
+                                  style: descriptionTextStyle,
+                                ),
                         ),
+                      ],
+                    ),
+                    SettingsSection(
+                      tiles: [
                         SettingsTile.navigation(
                           leading: const Icon(
                             PhosphorIcons.signOut,
-                            color: AppColors.greyBlack,
+                            color: AppColors.danger,
                           ),
+                          trailing: Platform.isIOS
+                              ? Icon(
+                                  CupertinoIcons.chevron_forward,
+                                  size: 18 * scaleFactor,
+                                  color: AppColors.danger,
+                                )
+                              : null,
                           title: const Text(
                             'Sair',
+                            style: TextStyle(color: AppColors.danger),
                           ),
                           onPressed: (_) => controller.logout(),
                         ),
                       ],
-                    ),
+                    )
                   ],
                 ),
               ),
