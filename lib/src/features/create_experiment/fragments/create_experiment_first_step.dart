@@ -2,12 +2,12 @@
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
-import 'package:flutter_svg/svg.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/create_experiment/create_experiment_controller.dart';
+import 'package:enzitech_app/src/features/create_experiment/widgets/ezt_create_experiment_step_indicator.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:enzitech_app/src/shared/util/constants.dart';
 import 'package:enzitech_app/src/shared/validator/field_validator.dart';
@@ -85,23 +85,13 @@ class _CreateExperimentFirstStepPageState
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
       child: Column(
         children: [
-          Align(
-            alignment: Alignment.center,
-            child: SvgPicture.asset(
-              AppSvgs.iconLogo,
-              alignment: Alignment.center,
-              width: 75,
-            ),
+          const EZTCreateExperimentStepIndicator(
+            title: "Cadastre um novo experimento",
+            message: "Etapa 1 de 4 - Identificação",
           ),
-          const SizedBox(height: 16),
-          Center(
-            child: Text(
-              "Cadastre um novo\nexperimento",
-              style: TextStyles.titleHome,
-              textAlign: TextAlign.center,
-            ),
+          const SizedBox(
+            height: 64,
           ),
-          const SizedBox(height: 64),
           Row(
             children: [
               const Icon(
@@ -200,23 +190,25 @@ class _CreateExperimentFirstStepPageState
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          flex: 11,
-          child: Center(child: _body),
-        ),
-        Expanded(
-          flex: 4,
-          child: SingleChildScrollView(
-            physics: const NeverScrollableScrollPhysics(),
-            child: Padding(
-              padding: Constants.padding16all,
-              child: _buttons,
+    return SafeArea(
+      child: Column(
+        children: [
+          Expanded(
+            flex: 11,
+            child: Center(child: _body),
+          ),
+          Expanded(
+            flex: 4,
+            child: SingleChildScrollView(
+              physics: const NeverScrollableScrollPhysics(),
+              child: Padding(
+                padding: Constants.padding16all,
+                child: _buttons,
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

@@ -4,11 +4,11 @@
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
-import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/create_experiment/create_experiment_controller.dart';
+import 'package:enzitech_app/src/features/create_experiment/widgets/ezt_create_experiment_step_indicator.dart';
 import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:enzitech_app/src/shared/util/constants.dart';
@@ -325,24 +325,16 @@ class _CreateExperimentFourthStepPageState
   Widget _body(double height) {
     return Column(
       children: [
-        const SizedBox(height: 48 * 2),
-        Align(
-          alignment: Alignment.center,
-          child: SvgPicture.asset(
-            AppSvgs.iconLogo,
-            alignment: Alignment.center,
-            width: 75,
-          ),
+        const SizedBox(
+          height: 16,
         ),
-        const SizedBox(height: 16),
-        Center(
-          child: Text(
-            "Cadastre um novo\nexperimento",
-            style: TextStyles.titleHome,
-            textAlign: TextAlign.center,
-          ),
+        const EZTCreateExperimentStepIndicator(
+          title: "Cadastre um novo experimento",
+          message: "Etapa 4 de 4 - Preencher variáveis",
         ),
-        const SizedBox(height: 16),
+        const SizedBox(
+          height: 64,
+        ),
         Expanded(
           child: SingleChildScrollView(
             child: EZTStepper(
@@ -523,23 +515,25 @@ class _CreateExperimentFourthStepPageState
   Widget build(BuildContext context) {
     context.watch<CreateExperimentController>();
 
-    return Column(
-      children: [
-        Expanded(
-          flex: 11,
-          child: _body(MediaQuery.of(context).size.height),
-        ),
-        Expanded(
-          flex: enableNextButton ? 4 : 3,
-          child: SingleChildScrollView(
-            physics: const NeverScrollableScrollPhysics(),
-            child: Padding(
-              padding: Constants.padding16all,
-              child: _buttons,
+    return SafeArea(
+      child: Column(
+        children: [
+          Expanded(
+            flex: 11,
+            child: _body(MediaQuery.of(context).size.height),
+          ),
+          Expanded(
+            flex: enableNextButton ? 4 : 3,
+            child: SingleChildScrollView(
+              physics: const NeverScrollableScrollPhysics(),
+              child: Padding(
+                padding: Constants.padding16all,
+                child: _buttons,
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

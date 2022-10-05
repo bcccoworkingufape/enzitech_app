@@ -1,6 +1,7 @@
 // 🐦 Flutter imports:
+
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 // 📦 Package imports:
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -15,10 +16,9 @@ import 'package:enzitech_app/src/features/home/home_controller.dart';
 import 'package:enzitech_app/src/shared/failures/failures.dart';
 import 'package:enzitech_app/src/shared/routes/route_generator.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
-import 'package:enzitech_app/src/shared/validator/validator.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_not_founded.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_pull_to_refresh.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
-import 'package:enzitech_app/src/shared/widgets/ezt_textfield.dart';
 
 class ExperimentsPage extends StatefulWidget {
   const ExperimentsPage({
@@ -35,7 +35,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
   late final ExperimentsController controller;
   final Key _refreshIndicatorKey = GlobalKey();
 
-  final _searchTermController = TextEditingController(text: '');
+  // final _searchTermController = TextEditingController(text: '');
   List<bool> isSelected = [true, false];
 
   @override
@@ -87,7 +87,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
     }
   }
 
-  Widget get _searchTermInput {
+  /* Widget get _searchTermInput {
     final validations = <ValidateRule>[
       ValidateRule(
         ValidateTypes.name,
@@ -110,7 +110,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
       ),
       fieldValidator: fieldValidator,
     );
-  }
+  } */
 
   Widget _buildExperimentsList(double height) {
     if (controller.state == ExperimentsState.error) {
@@ -142,22 +142,8 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
           children: [
             SizedBox(
               height: height / 1.65,
-              child: Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      AppSvgs.notFound,
-                      alignment: Alignment.center,
-                      width: MediaQuery.of(context).size.width,
-                    ),
-                    Text(
-                      "Experimentos não encontrados",
-                      style: TextStyles.termRegular,
-                    ),
-                  ],
-                ),
+              child: const EZTNotFounded(
+                message: "Experimentos não encontrados",
               ),
             ),
           ],

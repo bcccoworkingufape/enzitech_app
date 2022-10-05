@@ -10,6 +10,7 @@ import 'package:enzitech_app/src/features/home/fragments/treatments/treatments_c
 import 'package:enzitech_app/src/features/home/home_controller.dart';
 import 'package:enzitech_app/src/shared/failures/failures.dart';
 import 'package:enzitech_app/src/shared/themes/app_text_styles.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_not_founded.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_pull_to_refresh.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
 
@@ -76,9 +77,9 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
         child: Column(
           children: [
             SizedBox(
-              height: height / 1.35,
-              child: const Center(
-                child: Text("Tratamentos não encontrados"),
+              height: height / 1.65,
+              child: const EZTNotFounded(
+                message: "Tratamentos não encontrados",
               ),
             ),
           ],
