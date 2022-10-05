@@ -22,18 +22,21 @@ class EZTSnackBar {
     String message,
     Color? snackBarColor,
     TextStyle? textStyle,
+    bool centerTitle,
   ) {
     return SnackBar(
       // elevation: 0.0,
       //behavior: SnackBarBehavior.floating,
       // content: Text(message, style: textStyle),
-      content: SizedBox(
-        height: 19,
-        width: MediaQuery.of(context).size.width,
-        child: Center(
-          child: Text(message, style: textStyle),
-        ),
-      ),
+      content: centerTitle
+          ? SizedBox(
+              height: 19,
+              width: MediaQuery.of(context).size.width,
+              child: Center(
+                child: Text(message, style: textStyle),
+              ),
+            )
+          : Text(message, style: textStyle),
       // duration: new Duration(seconds: 5000000),
       // shape: RoundedRectangleBorder(
       //   borderRadius: BorderRadius.only(
@@ -96,6 +99,7 @@ class EZTSnackBar {
     EZTSnackBarType eztSnackBarType,
     Color? snackBarColor,
     TextStyle? textStyle,
+    bool centerTitle,
   ) {
     switch (eztSnackBarType) {
       case EZTSnackBarType.success:
@@ -104,7 +108,8 @@ class EZTSnackBar {
         return _buildErrorSnackBar(context, message);
       case EZTSnackBarType.regular:
       default:
-        return _buildSnackBar(context, message, snackBarColor, textStyle);
+        return _buildSnackBar(
+            context, message, snackBarColor, textStyle, centerTitle);
     }
   }
 
@@ -114,6 +119,7 @@ class EZTSnackBar {
     EZTSnackBarType eztSnackBarType = EZTSnackBarType.regular,
     Color? color,
     TextStyle? textStyle,
+    bool centerTitle = false,
   }) {
     const instance = EZTSnackBar();
 
@@ -124,6 +130,7 @@ class EZTSnackBar {
         eztSnackBarType,
         color,
         textStyle,
+        centerTitle,
       ),
     );
   }

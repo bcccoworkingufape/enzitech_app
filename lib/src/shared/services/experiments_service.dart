@@ -27,10 +27,21 @@ class ExperimentsService {
   //   }
   // }
 
-  Future<ExperimentPaginationModel> getExperiments(int page) async {
+  Future<ExperimentPaginationModel> getExperiments(
+    int page, {
+    String? orderBy,
+    String? ordering,
+    int? limit,
+    bool? finished,
+  }) async {
     try {
+      var addOrderBy = orderBy != null ? "&orderBy=$orderBy" : "";
+      var addOrdering = ordering != null ? "&ordering=$ordering" : "";
+      var addLimit = limit != null ? "&limit=$limit" : "";
+      var addFinished = finished != null ? "&finished=$finished" : "";
+
       var res = await client.get(
-        "/experiments?page=$page",
+        "/experiments?page=$page$addOrderBy$addOrdering$addLimit$addFinished",
       );
 
       return ExperimentPaginationModel.fromMap(res.data);

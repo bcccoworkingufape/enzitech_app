@@ -1,6 +1,5 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 // 📦 Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
@@ -11,7 +10,6 @@ import 'package:provider/provider.dart';
 import 'package:enzitech_app/src/features/create_enzyme/create_enzyme_controller.dart';
 import 'package:enzitech_app/src/features/home/fragments/enzymes/enzymes_controller.dart';
 import 'package:enzitech_app/src/shared/failures/failures.dart';
-import 'package:enzitech_app/src/shared/input_formatters.dart/input_formatter.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:enzitech_app/src/shared/util/util.dart';
 import 'package:enzitech_app/src/shared/validator/validator.dart';
@@ -196,10 +194,7 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
       controller: _variableAFieldController,
       onChanged: (value) => _validateFields,
       fieldValidator: fieldValidator,
-      inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\,?\d{0,5}')),
-        CommaTextInputFormatter(),
-      ],
+      inputFormatters: Constants.enzymeDecimalInputFormatters,
     );
   }
 
@@ -223,10 +218,7 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
       controller: _variableBFieldController,
       onChanged: (value) => _validateFields,
       fieldValidator: fieldValidator,
-      inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\,?\d{0,3}')),
-        CommaTextInputFormatter(),
-      ],
+      inputFormatters: Constants.enzymeDecimalInputFormatters,
     );
   }
 

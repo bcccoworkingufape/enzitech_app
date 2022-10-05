@@ -6,10 +6,10 @@ import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/create_experiment/create_experiment_controller.dart';
-import 'package:enzitech_app/src/features/create_experiment/widgets/create_experiment_first_step.dart';
-import 'package:enzitech_app/src/features/create_experiment/widgets/create_experiment_fourth_step.dart';
-import 'package:enzitech_app/src/features/create_experiment/widgets/create_experiment_second_step.dart';
-import 'package:enzitech_app/src/features/create_experiment/widgets/create_experiment_third_step.dart';
+import 'package:enzitech_app/src/features/create_experiment/fragments/create_experiment_first_step.dart';
+import 'package:enzitech_app/src/features/create_experiment/fragments/create_experiment_fourth_step.dart';
+import 'package:enzitech_app/src/features/create_experiment/fragments/create_experiment_second_step.dart';
+import 'package:enzitech_app/src/features/create_experiment/fragments/create_experiment_third_step.dart';
 import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_controller.dart';
 import 'package:enzitech_app/src/shared/failures/failures.dart';
 import 'package:enzitech_app/src/shared/models/experiment_request_model.dart';

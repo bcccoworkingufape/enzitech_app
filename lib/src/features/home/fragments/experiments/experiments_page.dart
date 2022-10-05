@@ -1,4 +1,6 @@
 // 🐦 Flutter imports:
+
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -14,10 +16,9 @@ import 'package:enzitech_app/src/features/home/home_controller.dart';
 import 'package:enzitech_app/src/shared/failures/failures.dart';
 import 'package:enzitech_app/src/shared/routes/route_generator.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
-import 'package:enzitech_app/src/shared/validator/validator.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_not_founded.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_pull_to_refresh.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
-import 'package:enzitech_app/src/shared/widgets/ezt_textfield.dart';
 
 class ExperimentsPage extends StatefulWidget {
   const ExperimentsPage({
@@ -34,7 +35,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
   late final ExperimentsController controller;
   final Key _refreshIndicatorKey = GlobalKey();
 
-  final _searchTermController = TextEditingController(text: '');
+  // final _searchTermController = TextEditingController(text: '');
   List<bool> isSelected = [true, false];
 
   @override
@@ -86,7 +87,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
     }
   }
 
-  Widget get _searchTermInput {
+  /* Widget get _searchTermInput {
     final validations = <ValidateRule>[
       ValidateRule(
         ValidateTypes.name,
@@ -109,7 +110,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
       ),
       fieldValidator: fieldValidator,
     );
-  }
+  } */
 
   Widget _buildExperimentsList(double height) {
     if (controller.state == ExperimentsState.error) {
@@ -140,9 +141,9 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
         child: Column(
           children: [
             SizedBox(
-              height: height / 1.75,
-              child: const Center(
-                child: Text("Experimentos não encontrados"),
+              height: height / 1.65,
+              child: const EZTNotFounded(
+                message: "Experimentos não encontrados",
               ),
             ),
           ],
@@ -249,36 +250,77 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
           : controller.state == ExperimentsState.loading,
       child: EZTPullToRefresh(
         key: _refreshIndicatorKey,
-        onRefresh: () => controller.loadExperiments(1),
+        onRefresh: () {
+          // controller.setFinishedFilter(false);
+          return controller.loadExperiments(1);
+        },
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Column(
             children: [
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              //   child: _searchTermInput,
+              // ),
+              // const SizedBox(
+              //   height: 16,
+              // ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: _searchTermInput,
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Row(
+                  children: [
+                    ToggleSwitch(
+                      initialLabelIndex: controller.finishedFilter ? 1 : 0,
+                      minWidth: (widthMQ * 0.4),
+                      totalSwitches: 2,
+                      labels: const ['Em andamento', 'Concluído'],
+                      activeFgColor: AppColors.white,
+                      inactiveFgColor: AppColors.primary,
+                      activeBgColor: const [AppColors.primary],
+                      inactiveBgColor: AppColors.white,
+                      borderColor: const [AppColors.primary],
+                      borderWidth: 1.5,
+                      onToggle: (index) {
+                        if (index == 0) {
+                          if (controller.finishedFilter != false) {
+                            controller.setFinishedFilter(false);
+                            controller.loadExperiments(1);
+                            return;
+                          }
+
+                          return;
+                        }
+
+                        if (controller.finishedFilter) return;
+
+                        controller.setFinishedFilter(true);
+                        controller.loadExperiments(1);
+                      },
+                    ),
+                    const SizedBox(
+                      width: 4,
+                    ),
+                    Expanded(
+                      child: InkWell(
+                        customBorder: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        onTap: () => print("filtro"),
+                        child: const Padding(
+                          padding: EdgeInsets.all(10.0),
+                          child: Icon(
+                            PhosphorIcons.funnelFill,
+                            color: AppColors.primary,
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
-              const SizedBox(
-                height: 16,
-              ),
-              ToggleSwitch(
-                minWidth: widthMQ,
-                totalSwitches: 2,
-                labels: const ['Em andamento', 'Concluído'],
-                activeFgColor: AppColors.white,
-                inactiveFgColor: AppColors.primary,
-                activeBgColor: const [AppColors.primary],
-                inactiveBgColor: AppColors.white,
-                borderColor: const [AppColors.primary],
-                borderWidth: 1.5,
-                onToggle: (index) {
-                  print(index);
-                  // call controller to update search when this changes
-                },
-              ),
-              const SizedBox(
-                height: 16,
-              ),
+              // const SizedBox(
+              //   height: 16,
+              // ),
               if (controller.experiments.isNotEmpty)
                 Text(
                   "🔬 ${controller.totalOfExperiments} experimento${controller.experiments.length > 1 ? 's ' : ' '}encontrado${controller.experiments.length > 1 ? 's ' : ' '}",

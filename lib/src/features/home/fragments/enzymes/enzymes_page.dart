@@ -14,6 +14,7 @@ import 'package:enzitech_app/src/shared/failures/failures.dart';
 import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
 import 'package:enzitech_app/src/shared/models/user_model.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_not_founded.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_pull_to_refresh.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
 
@@ -93,9 +94,9 @@ class _EnzymesPageState extends State<EnzymesPage> {
         child: Column(
           children: [
             SizedBox(
-              height: height / 1.35,
-              child: const Center(
-                child: Text("Tratamentos não encontrados"),
+              height: height / 1.65,
+              child: const EZTNotFounded(
+                message: "Enzimas não encontrados",
               ),
             ),
           ],

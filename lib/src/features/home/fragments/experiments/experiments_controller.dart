@@ -22,6 +22,13 @@ class ExperimentsController extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool _finishedFilter = false;
+  bool get finishedFilter => _finishedFilter;
+  void setFinishedFilter(bool finishedFilter) {
+    _finishedFilter = finishedFilter;
+    notifyListeners();
+  }
+
   final ScrollController _scrollController = ScrollController();
   ScrollController get scrollController => _scrollController;
 
@@ -79,8 +86,13 @@ class ExperimentsController extends ChangeNotifier {
         _setIsLoadingMoreRunning(true);
       }
 
-      final experimentsWithPagination =
-          await experimentsService.getExperiments(page);
+      final experimentsWithPagination = await experimentsService.getExperiments(
+        page,
+        orderBy: orderBy,
+        ordering: ordering,
+        limit: limit,
+        finished: finishedFilter,
+      );
       _addToExperiments(experimentsWithPagination.experiments);
       _setTotalOfExperiments(experimentsWithPagination.total);
 

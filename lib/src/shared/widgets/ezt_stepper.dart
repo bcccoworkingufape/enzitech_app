@@ -21,7 +21,7 @@ import 'package:flutter/material.dart';
 /// See also:
 ///
 ///  * [EZTStep]
-enum StepState {
+enum EZTStepState {
   /// A step that displays its index in its circle.
   indexed,
 
@@ -132,7 +132,7 @@ class EZTStep {
     required this.title,
     this.subtitle,
     required this.content,
-    this.state = StepState.indexed,
+    this.state = EZTStepState.indexed,
     this.isActive = false,
     this.label,
   })  : assert(title != null),
@@ -155,7 +155,7 @@ class EZTStep {
 
   /// The state of the step which determines the styling of its components
   /// and whether steps are interactive.
-  final StepState state;
+  final EZTStepState state;
 
   /// Whether or not the step is active. The flag only influences styling.
   final bool isActive;
@@ -313,7 +313,7 @@ class EZTStepper extends StatefulWidget {
 
 class _EZTStepperState extends State<EZTStepper> with TickerProviderStateMixin {
   late List<GlobalKey> _keys;
-  final Map<int, StepState> _oldStates = <int, StepState>{};
+  final Map<int, EZTStepState> _oldStates = <int, EZTStepState>{};
 
   @override
   void initState() {
@@ -372,32 +372,32 @@ class _EZTStepperState extends State<EZTStepper> with TickerProviderStateMixin {
   }
 
   Widget _buildCircleChild(int index, bool oldState) {
-    final StepState state =
+    final EZTStepState state =
         oldState ? _oldStates[index]! : widget.steps[index].state;
     final bool isDarkActive = _isDark() && widget.steps[index].isActive;
     assert(state != null);
     switch (state) {
-      case StepState.indexed:
-      case StepState.disabled:
+      case EZTStepState.indexed:
+      case EZTStepState.disabled:
         return Text(
           '${index + 1}',
           style: isDarkActive
               ? _kStepStyle.copyWith(color: Colors.black87)
               : _kStepStyle,
         );
-      case StepState.editing:
+      case EZTStepState.editing:
         return Icon(
           Icons.edit,
           color: isDarkActive ? _kCircleActiveDark : _kCircleActiveLight,
           size: 18.0,
         );
-      case StepState.complete:
+      case EZTStepState.complete:
         return Icon(
           Icons.check,
           color: isDarkActive ? _kCircleActiveDark : _kCircleActiveLight,
           size: 18.0,
         );
-      case StepState.error:
+      case EZTStepState.error:
         return const Text('!', style: _kStepStyle);
     }
   }
@@ -428,8 +428,8 @@ class _EZTStepperState extends State<EZTStepper> with TickerProviderStateMixin {
           shape: BoxShape.circle,
         ),
         child: Center(
-          child: _buildCircleChild(
-              index, oldState && widget.steps[index].state == StepState.error),
+          child: _buildCircleChild(index,
+              oldState && widget.steps[index].state == EZTStepState.error),
         ),
       ),
     );
@@ -453,7 +453,7 @@ class _EZTStepperState extends State<EZTStepper> with TickerProviderStateMixin {
               alignment: const Alignment(
                   0.0, 0.8), // 0.8 looks better than the geometrical 0.33.
               child: _buildCircleChild(index,
-                  oldState && widget.steps[index].state != StepState.error),
+                  oldState && widget.steps[index].state != EZTStepState.error),
             ),
           ),
         ),
@@ -469,13 +469,13 @@ class _EZTStepperState extends State<EZTStepper> with TickerProviderStateMixin {
         firstCurve: const Interval(0.0, 0.6, curve: Curves.fastOutSlowIn),
         secondCurve: const Interval(0.4, 1.0, curve: Curves.fastOutSlowIn),
         sizeCurve: Curves.fastOutSlowIn,
-        crossFadeState: widget.steps[index].state == StepState.error
+        crossFadeState: widget.steps[index].state == EZTStepState.error
             ? CrossFadeState.showSecond
             : CrossFadeState.showFirst,
         duration: kThemeAnimationDuration,
       );
     } else {
-      if (widget.steps[index].state != StepState.error) {
+      if (widget.steps[index].state != EZTStepState.error) {
         return _buildCircle(index, false);
       } else {
         return _buildTriangle(index, false);
@@ -572,15 +572,15 @@ class _EZTStepperState extends State<EZTStepper> with TickerProviderStateMixin {
 
     assert(widget.steps[index].state != null);
     switch (widget.steps[index].state) {
-      case StepState.indexed:
-      case StepState.editing:
-      case StepState.complete:
+      case EZTStepState.indexed:
+      case EZTStepState.editing:
+      case EZTStepState.complete:
         return textTheme.bodyText1!;
-      case StepState.disabled:
+      case EZTStepState.disabled:
         return textTheme.bodyText1!.copyWith(
           color: _isDark() ? _kDisabledDark : _kDisabledLight,
         );
-      case StepState.error:
+      case EZTStepState.error:
         return textTheme.bodyText1!.copyWith(
           color: _isDark() ? _kErrorDark : _kErrorLight,
         );
@@ -593,15 +593,15 @@ class _EZTStepperState extends State<EZTStepper> with TickerProviderStateMixin {
 
     assert(widget.steps[index].state != null);
     switch (widget.steps[index].state) {
-      case StepState.indexed:
-      case StepState.editing:
-      case StepState.complete:
+      case EZTStepState.indexed:
+      case EZTStepState.editing:
+      case EZTStepState.complete:
         return textTheme.caption!;
-      case StepState.disabled:
+      case EZTStepState.disabled:
         return textTheme.caption!.copyWith(
           color: _isDark() ? _kDisabledDark : _kDisabledLight,
         );
-      case StepState.error:
+      case EZTStepState.error:
         return textTheme.caption!.copyWith(
           color: _isDark() ? _kErrorDark : _kErrorLight,
         );
@@ -614,15 +614,15 @@ class _EZTStepperState extends State<EZTStepper> with TickerProviderStateMixin {
 
     assert(widget.steps[index].state != null);
     switch (widget.steps[index].state) {
-      case StepState.indexed:
-      case StepState.editing:
-      case StepState.complete:
+      case EZTStepState.indexed:
+      case EZTStepState.editing:
+      case EZTStepState.complete:
         return textTheme.bodyText1!;
-      case StepState.disabled:
+      case EZTStepState.disabled:
         return textTheme.bodyText1!.copyWith(
           color: _isDark() ? _kDisabledDark : _kDisabledLight,
         );
-      case StepState.error:
+      case EZTStepState.error:
         return textTheme.bodyText1!.copyWith(
           color: _isDark() ? _kErrorDark : _kErrorLight,
         );
@@ -747,7 +747,7 @@ class _EZTStepperState extends State<EZTStepper> with TickerProviderStateMixin {
             key: _keys[i],
             children: <Widget>[
               InkWell(
-                onTap: widget.steps[i].state != StepState.disabled
+                onTap: widget.steps[i].state != EZTStepState.disabled
                     ? () {
                         // In the vertical case we need to scroll to the newly tapped
                         // step.
@@ -760,7 +760,7 @@ class _EZTStepperState extends State<EZTStepper> with TickerProviderStateMixin {
                         widget.onStepTapped?.call(i);
                       }
                     : null,
-                canRequestFocus: widget.steps[i].state != StepState.disabled,
+                canRequestFocus: widget.steps[i].state != EZTStepState.disabled,
                 child: _buildVerticalHeader(i),
               ),
               _buildVerticalBody(i),
@@ -774,12 +774,12 @@ class _EZTStepperState extends State<EZTStepper> with TickerProviderStateMixin {
     final List<Widget> children = <Widget>[
       for (int i = 0; i < widget.steps.length; i += 1) ...<Widget>[
         InkResponse(
-          onTap: widget.steps[i].state != StepState.disabled
+          onTap: widget.steps[i].state != EZTStepState.disabled
               ? () {
                   widget.onStepTapped?.call(i);
                 }
               : null,
-          canRequestFocus: widget.steps[i].state != StepState.disabled,
+          canRequestFocus: widget.steps[i].state != EZTStepState.disabled,
           child: Row(
             children: <Widget>[
               SizedBox(

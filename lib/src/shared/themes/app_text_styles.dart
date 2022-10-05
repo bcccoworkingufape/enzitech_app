@@ -122,6 +122,18 @@ class TextStyles {
     color: AppColors.body,
   );
 
+  static final informationExperimentStepTitle = GoogleFonts.ubuntu(
+    fontSize: 20,
+    fontWeight: FontWeight.w700,
+    color: AppColors.heading,
+  );
+
+  static final informationExperimentStepMessage = GoogleFonts.ubuntu(
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+    color: AppColors.body,
+  );
+
   static final titleMinRegular = GoogleFonts.ubuntu(
     fontSize: 16,
     fontWeight: FontWeight.w400,

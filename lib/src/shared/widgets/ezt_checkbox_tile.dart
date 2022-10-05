@@ -23,10 +23,13 @@ class EZTCheckBoxTile extends StatelessWidget {
       trailing: color != null
           ? GestureDetector(
               onTap: onTapTrailing,
-              child: Icon(
-                Icons.circle,
-                color: color,
-                size: 16,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(
+                  Icons.circle,
+                  color: color,
+                  size: 20,
+                ),
               ),
             )
           : null,

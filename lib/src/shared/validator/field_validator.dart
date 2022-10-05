@@ -22,6 +22,7 @@ enum ValidateTypes {
   emailEquals,
   emailOrRegistration,
   greaterThanZero,
+  greaterThanZeroDecimal,
   max,
   maxAge,
   min,
@@ -245,6 +246,17 @@ class FieldValidator {
             var isNumber = Validator.isNumeric(value);
             if (!isNumber) {
               result = customErrorMessage ?? "⚠  Número inválido";
+            } else {
+              result = null;
+            }
+            break;
+          }
+        case ValidateTypes.greaterThanZeroDecimal:
+          {
+            var number = double.parse(value);
+            if (number <= 0) {
+              result =
+                  customErrorMessage ?? "⚠  Insira um número maior que zero";
             } else {
               result = null;
             }

@@ -1,5 +1,9 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+// 🌎 Project imports:
+import 'package:enzitech_app/src/shared/input_formatters.dart/input_formatter.dart';
 
 class Constants {
   static const padding16all = EdgeInsets.symmetric(
@@ -13,6 +17,11 @@ class Constants {
   static const aryl = 'Aryl';
   static const fosfataseAcida = 'FosfataseAcida';
   static const fosfataseAlcalina = 'FosfataseAlcalina';
+
+  static final enzymeDecimalInputFormatters = [
+    FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\,?\d{0,5}')),
+    CommaTextInputFormatter(),
+  ];
 
   static const List<String> typesOfEnzymesList = <String>[
     'Betaglucosidase',
