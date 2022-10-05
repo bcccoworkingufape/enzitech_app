@@ -254,31 +254,41 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Column(
             children: [
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              //   child: _searchTermInput,
+              // ),
+              // const SizedBox(
+              //   height: 16,
+              // ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: _searchTermInput,
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: ToggleSwitch(
+                  initialLabelIndex: controller.finishedFilter ? 1 : 0,
+                  minWidth: widthMQ,
+                  totalSwitches: 2,
+                  labels: const ['Em andamento', 'Concluído'],
+                  activeFgColor: AppColors.white,
+                  inactiveFgColor: AppColors.primary,
+                  activeBgColor: const [AppColors.primary],
+                  inactiveBgColor: AppColors.white,
+                  borderColor: const [AppColors.primary],
+                  borderWidth: 1.5,
+                  onToggle: (index) {
+                    if (index == 0) {
+                      controller.loadExperiments(1, finished: false);
+                      controller.setFinishedFilter(false);
+                    } else if (index == 1) {
+                      controller.loadExperiments(1, finished: true);
+                      controller.setFinishedFilter(true);
+                    }
+                    // call controller to update search when this changes
+                  },
+                ),
               ),
-              const SizedBox(
-                height: 16,
-              ),
-              ToggleSwitch(
-                minWidth: widthMQ,
-                totalSwitches: 2,
-                labels: const ['Em andamento', 'Concluído'],
-                activeFgColor: AppColors.white,
-                inactiveFgColor: AppColors.primary,
-                activeBgColor: const [AppColors.primary],
-                inactiveBgColor: AppColors.white,
-                borderColor: const [AppColors.primary],
-                borderWidth: 1.5,
-                onToggle: (index) {
-                  print(index);
-                  // call controller to update search when this changes
-                },
-              ),
-              const SizedBox(
-                height: 16,
-              ),
+              // const SizedBox(
+              //   height: 16,
+              // ),
               if (controller.experiments.isNotEmpty)
                 Text(
                   "🔬 ${controller.totalOfExperiments} experimento${controller.experiments.length > 1 ? 's ' : ' '}encontrado${controller.experiments.length > 1 ? 's ' : ' '}",
