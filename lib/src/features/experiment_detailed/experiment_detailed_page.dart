@@ -17,6 +17,7 @@ import 'package:enzitech_app/src/shared/models/experiment_model.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:enzitech_app/src/shared/util/util.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_button.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_expansion_tile.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
 
 class ExperimentDetailedPage extends StatefulWidget {
@@ -34,6 +35,7 @@ class ExperimentDetailedPage extends StatefulWidget {
 class _ExperimentDetailedPageState extends State<ExperimentDetailedPage> {
   late final ExperimentDetailedController controller;
   late final ExperimentsController experimentsController;
+  bool _expandToSeeMoreVisible = true;
 
   @override
   void initState() {
@@ -56,6 +58,28 @@ class _ExperimentDetailedPageState extends State<ExperimentDetailedPage> {
     }
 
     controller.getExperimentDetailed(widget.resumedExperiment.id);
+  }
+
+  get leadWithEnzymes {
+    if (controller.experiment!.enzymes != null) {
+      if (controller.experiment!.enzymes!.isNotEmpty) {
+        return controller.experiment!.enzymes!
+            .map((element) => Text(element.name))
+            .toList();
+      }
+    }
+    return const [Text("Sem dados!")];
+  }
+
+  get leadWithTreatments {
+    if (controller.experiment!.treatments != null) {
+      if (controller.experiment!.treatments!.isNotEmpty) {
+        return controller.experiment!.treatments!
+            .map((element) => Text(element.name))
+            .toList();
+      }
+    }
+    return const [Text("Sem dados!")];
   }
 
   Widget _buildBody(double height) {
@@ -127,62 +151,113 @@ class _ExperimentDetailedPageState extends State<ExperimentDetailedPage> {
         const SizedBox(
           height: 20,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Column(
-              children: [
-                Text(
-                  controller.experiment!.enzymes!.length.toString(),
-                  style: TextStyles.titleHome,
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  "Enzimas",
-                  style: TextStyles.detailRegular,
-                )
-              ],
+        Theme(
+          data: ThemeData().copyWith(dividerColor: Colors.transparent),
+          child: EZTExpansionTile(
+            // trailing: Text("test"),
+            disableTrailing: true,
+            onExpansionChanged: (_) {
+              setState(() {
+                _expandToSeeMoreVisible = !_expandToSeeMoreVisible;
+              });
+            },
+            title: Center(
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        children: [
+                          Text(
+                            controller.experiment!.treatments!.length
+                                .toString(),
+                            style: TextStyles.titleHome,
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            "Tratamentos",
+                            style: TextStyles.detailRegular,
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        width: 50,
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            controller.experiment!.repetitions.toString(),
+                            style: TextStyles.titleHome,
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            "Repetições",
+                            style: TextStyles.detailRegular,
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        width: 50,
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            controller.experiment!.enzymes!.length.toString(),
+                            style: TextStyles.titleHome,
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            "Enzimas",
+                            style: TextStyles.detailRegular,
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                  if (_expandToSeeMoreVisible) ...[
+                    const SizedBox(
+                      height: 32,
+                    ),
+                    const Text(
+                      "Toque para mais informações",
+                      style: TextStyle(
+                        fontStyle: FontStyle.italic,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ]
+                ],
+              ),
             ),
-            const SizedBox(
-              width: 50,
-            ),
-            Column(
-              children: [
-                Text(
-                  controller.experiment!.treatments!.length.toString(),
-                  style: TextStyles.titleHome,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Center(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: leadWithTreatments,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: leadWithEnzymes,
+                      ),
+                    ],
+                  ),
                 ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  "Tratamentos",
-                  style: TextStyles.detailRegular,
-                )
-              ],
-            ),
-            const SizedBox(
-              width: 50,
-            ),
-            Column(
-              children: [
-                Text(
-                  controller.experiment!.repetitions.toString(),
-                  style: TextStyles.titleHome,
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  "Repetições",
-                  style: TextStyles.detailRegular,
-                )
-              ],
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
         const SizedBox(
           height: 20,

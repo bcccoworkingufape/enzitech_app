@@ -17,6 +17,7 @@ import 'package:enzitech_app/src/shared/widgets/ezt_button.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_stepper.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_textfield.dart';
 
+// TODO: Verify dispose error
 class CreateExperimentFourthStepPage extends StatefulWidget {
   const CreateExperimentFourthStepPage({
     Key? key,
@@ -45,6 +46,9 @@ class _CreateExperimentFourthStepPageState
     ValidateRule(
       ValidateTypes.numeric,
     ),
+    ValidateRule(
+      ValidateTypes.greaterThanZeroDecimal,
+    ),
   ];
 
   bool enableNextButton = false;
@@ -54,146 +58,170 @@ class _CreateExperimentFourthStepPageState
     super.initState();
     controller = context.read<CreateExperimentController>();
 
-    if (mounted) {
-      controller.setStepPage(0, notify: false);
+    Future.delayed(const Duration(milliseconds: 0)).whenComplete(() {
+      if (mounted) {
+        controller.setStepPage(0, notify: false);
 
-      final fieldValidator = FieldValidator(validations, context);
+        final fieldValidator = FieldValidator(validations, context);
 
-      setState(() {
-        textEditingControllers.clear();
-        controller.textFields.clear();
+        setState(() {
+          textEditingControllers.clear();
+          controller.textFields.clear();
 
-        controller.experimentRequestModel.experimentsEnzymes.forEach((enzyme) {
-          var aFieldController = TextEditingController(text: '');
-          textEditingControllers.putIfAbsent(
-            'aVariable-${enzyme.id}',
-            () => aFieldController,
-          );
-          controller.textFields.putIfAbsent('aVariable-${enzyme.id}', () {
-            aFieldController.text = enzyme.variableA.toString();
-
-            return EZTTextField(
-              eztTextFieldType: EZTTextFieldType.underline,
-              labelText: "Variável A",
-              usePrimaryColorOnFocusedBorder: true,
-              keyboardType: TextInputType.number,
-              controller: aFieldController,
-              enabled: false,
-              onChanged: (value) => _validateFields,
-              fieldValidator: fieldValidator,
-              // disableSuffixIcon: true,
+          controller.experimentRequestModel.experimentsEnzymes
+              .forEach((enzyme) {
+            TextEditingController aFieldController =
+                TextEditingController(text: '');
+            textEditingControllers.putIfAbsent(
+              'aVariable-${enzyme.id}',
+              () => aFieldController,
             );
-          });
-
-          var bFieldController = TextEditingController(text: '');
-          textEditingControllers.putIfAbsent(
-            'bVariable-${enzyme.id}',
-            () => bFieldController,
-          );
-          controller.textFields.putIfAbsent(
-            'bVariable-${enzyme.id}',
-            () {
-              bFieldController.text = enzyme.variableB.toString();
+            controller.textFields.putIfAbsent('aVariable-${enzyme.id}', () {
+              aFieldController.text = enzyme.variableA.toString();
               return EZTTextField(
                 eztTextFieldType: EZTTextFieldType.underline,
-                labelText: "Variável B",
+                labelText: "Variável A",
                 usePrimaryColorOnFocusedBorder: true,
-                keyboardType: TextInputType.number,
-                controller: bFieldController,
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                controller: aFieldController,
                 enabled: false,
                 onChanged: (value) => _validateFields,
                 fieldValidator: fieldValidator,
+                inputFormatters: Constants.enzymeDecimalInputFormatters,
                 // disableSuffixIcon: true,
               );
-            },
-          );
+            });
 
-          final durationFieldController = TextEditingController(text: '');
-          textEditingControllers.putIfAbsent(
-            'duration-${enzyme.id}',
-            () => durationFieldController,
-          );
-          controller.textFields.putIfAbsent(
-            'duration-${enzyme.id}',
-            () => EZTTextField(
-              eztTextFieldType: EZTTextFieldType.underline,
-              labelText: "Duração",
-              usePrimaryColorOnFocusedBorder: true,
-              keyboardType: TextInputType.number,
-              controller: durationFieldController,
-              onChanged: (value) => _validateFields,
-              fieldValidator: fieldValidator,
-              // disableSuffixIcon: true,
-            ),
-          );
+            TextEditingController bFieldController =
+                TextEditingController(text: '');
+            textEditingControllers.putIfAbsent(
+              'bVariable-${enzyme.id}',
+              () => bFieldController,
+            );
+            controller.textFields.putIfAbsent(
+              'bVariable-${enzyme.id}',
+              () {
+                bFieldController.text = enzyme.variableB.toString();
+                return EZTTextField(
+                  eztTextFieldType: EZTTextFieldType.underline,
+                  labelText: "Variável B",
+                  usePrimaryColorOnFocusedBorder: true,
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: true),
+                  controller: bFieldController,
+                  enabled: false,
+                  onChanged: (value) => _validateFields,
+                  fieldValidator: fieldValidator,
+                  inputFormatters: Constants.enzymeDecimalInputFormatters,
+                  // disableSuffixIcon: true,
+                );
+              },
+            );
 
-          final sizeFieldController = TextEditingController(text: '');
-          textEditingControllers.putIfAbsent(
-            'size-${enzyme.id}',
-            () => sizeFieldController,
-          );
-          controller.textFields.putIfAbsent(
-            'size-${enzyme.id}',
-            () => EZTTextField(
-              eztTextFieldType: EZTTextFieldType.underline,
-              labelText: "Volume",
-              usePrimaryColorOnFocusedBorder: true,
-              keyboardType: TextInputType.number,
-              controller: sizeFieldController,
-              onChanged: (value) => _validateFields,
-              fieldValidator: fieldValidator,
-              // disableSuffixIcon: true,
-            ),
-          );
+            TextEditingController durationFieldController =
+                TextEditingController(text: '');
+            textEditingControllers.putIfAbsent(
+              'duration-${enzyme.id}',
+              () => durationFieldController,
+            );
+            controller.textFields.putIfAbsent(
+              'duration-${enzyme.id}',
+              () => EZTTextField(
+                eztTextFieldType: EZTTextFieldType.underline,
+                labelText: "Duração",
+                usePrimaryColorOnFocusedBorder: true,
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                controller: durationFieldController,
+                onChanged: (value) => _validateFields,
+                fieldValidator: fieldValidator,
+                inputFormatters: Constants.enzymeDecimalInputFormatters,
+                // disableSuffixIcon: true,
+              ),
+            );
 
-          final weightSampleFieldController = TextEditingController(text: '');
-          textEditingControllers.putIfAbsent(
-            'weightSample-${enzyme.id}',
-            () => weightSampleFieldController,
-          );
-          controller.textFields.putIfAbsent(
-            'weightSample-${enzyme.id}',
-            () => EZTTextField(
-              eztTextFieldType: EZTTextFieldType.underline,
-              labelText: "Peso da amostra",
-              usePrimaryColorOnFocusedBorder: true,
-              keyboardType: TextInputType.number,
-              controller: weightSampleFieldController,
-              onChanged: (value) => _validateFields,
-              fieldValidator: fieldValidator,
-              // disableSuffixIcon: true,
-            ),
-          );
+            TextEditingController sizeFieldController =
+                TextEditingController(text: '');
+            textEditingControllers.putIfAbsent(
+              'size-${enzyme.id}',
+              () => sizeFieldController,
+            );
+            controller.textFields.putIfAbsent(
+              'size-${enzyme.id}',
+              () => EZTTextField(
+                eztTextFieldType: EZTTextFieldType.underline,
+                labelText: "Volume",
+                usePrimaryColorOnFocusedBorder: true,
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                controller: sizeFieldController,
+                onChanged: (value) => _validateFields,
+                fieldValidator: fieldValidator,
+                inputFormatters: Constants.enzymeDecimalInputFormatters,
+                // disableSuffixIcon: true,
+              ),
+            );
 
-          final weightGroundFieldController = TextEditingController(text: '');
-          textEditingControllers.putIfAbsent(
-            'weightGround-${enzyme.id}',
-            () => weightGroundFieldController,
-          );
-          controller.textFields.putIfAbsent(
-            'weightGround-${enzyme.id}',
-            () => EZTTextField(
-              eztTextFieldType: EZTTextFieldType.underline,
-              labelText: "Peso do solo",
-              usePrimaryColorOnFocusedBorder: true,
-              keyboardType: TextInputType.number,
-              controller: weightGroundFieldController,
-              onChanged: (value) => _validateFields,
-              fieldValidator: fieldValidator,
-              // disableSuffixIcon: true,
-            ),
-          );
-          // return;
+            TextEditingController weightSampleFieldController =
+                TextEditingController(text: '');
+            textEditingControllers.putIfAbsent(
+              'weightSample-${enzyme.id}',
+              () => weightSampleFieldController,
+            );
+            controller.textFields.putIfAbsent(
+              'weightSample-${enzyme.id}',
+              () => EZTTextField(
+                eztTextFieldType: EZTTextFieldType.underline,
+                labelText: "Peso da amostra",
+                usePrimaryColorOnFocusedBorder: true,
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                controller: weightSampleFieldController,
+                onChanged: (value) => _validateFields,
+                fieldValidator: fieldValidator,
+                inputFormatters: Constants.enzymeDecimalInputFormatters,
+                // disableSuffixIcon: true,
+              ),
+            );
+
+            TextEditingController weightGroundFieldController =
+                TextEditingController(text: '');
+            textEditingControllers.putIfAbsent(
+              'weightGround-${enzyme.id}',
+              () => weightGroundFieldController,
+            );
+            controller.textFields.putIfAbsent(
+              'weightGround-${enzyme.id}',
+              () => EZTTextField(
+                eztTextFieldType: EZTTextFieldType.underline,
+                labelText: "Peso do solo",
+                usePrimaryColorOnFocusedBorder: true,
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                controller: weightGroundFieldController,
+                onChanged: (value) => _validateFields,
+                fieldValidator: fieldValidator,
+                inputFormatters: Constants.enzymeDecimalInputFormatters,
+                // disableSuffixIcon: true,
+              ),
+            );
+            // return;
+          });
         });
-      });
-    }
+      }
+    });
   }
 
   @override
   void dispose() {
-    textEditingControllers.forEach((_, tec) {
-      tec.dispose();
-    });
+    try {
+      textEditingControllers.forEach((_, tec) {
+        tec.dispose();
+      });
+    } catch (e) {
+      // DO NOTHING
+    }
     super.dispose();
   }
 
@@ -213,109 +241,186 @@ class _CreateExperimentFourthStepPageState
     }
   }
 
+  bool _checkIfTextIsGTZAndNumeric(text) {
+    // Numeric
+    if (text == null) {
+      return false;
+    }
+
+    if (double.tryParse(text) == null) {
+      return false;
+    }
+
+    // GTZ
+    var number = double.parse(text);
+    if (number <= 0) {
+      return false;
+    }
+
+    return true;
+  }
+
+  bool _isEnzymeStillEmpty(String enzymeId) {
+    Map<String, EZTTextField> filteredMap = Map.from(controller.textFields)
+      ..removeWhere((k, v) => !k.toString().contains(enzymeId));
+
+    var listOfAllTextsOfEnzymes = [];
+    filteredMap.forEach((k, v) {
+      listOfAllTextsOfEnzymes.add(v.controller!.text);
+    });
+
+    if (listOfAllTextsOfEnzymes.isNotEmpty &&
+        listOfAllTextsOfEnzymes.sublist(2).any((element) => element.isEmpty)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  bool _isEnzymeCorrectlyFilled(String enzymeId) {
+    Map<String, EZTTextField> filteredMap = Map.from(controller.textFields)
+      ..removeWhere((k, v) => !k.toString().contains(enzymeId));
+
+    var listOfBools = [];
+    var listOfBoolsIfAllIsEmpty = [];
+    var listOfAllTextsOfEnzymes = [];
+
+    filteredMap.forEach((k, v) {
+      listOfBools.add(_checkIfTextIsGTZAndNumeric(v.controller!.text));
+      listOfBoolsIfAllIsEmpty.add(v.controller!.text.isEmpty);
+      listOfAllTextsOfEnzymes.add(v.controller!.text);
+    });
+
+    if (listOfAllTextsOfEnzymes.isNotEmpty &&
+        listOfAllTextsOfEnzymes.sublist(2).any((element) => element.isEmpty)) {
+      return true;
+    }
+
+    if (listOfBoolsIfAllIsEmpty.isNotEmpty &&
+        listOfBoolsIfAllIsEmpty
+            .sublist(2)
+            .every((element) => element == true)) {
+      return true;
+    }
+
+    return listOfBools.every((b) => b == true);
+  }
+
+  EZTStepState _leadWithStepState(EnzymeModel enzyme) {
+    if (controller.stepPage ==
+        Provider.of<CreateExperimentController>(context)
+            .experimentRequestModel
+            .experimentsEnzymes
+            .indexOf(enzyme)) {
+      return EZTStepState.editing;
+    } else if (_isEnzymeStillEmpty(enzyme.id)) {
+      return EZTStepState.indexed;
+    } else if (_isEnzymeCorrectlyFilled(enzyme.id)) {
+      return EZTStepState.complete;
+    } else {
+      return EZTStepState.error;
+    }
+  }
+
   Widget _body(double height) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
-      child: Column(
-        children: [
-          const SizedBox(height: 48),
-          Align(
+    return Column(
+      children: [
+        const SizedBox(height: 48 * 2),
+        Align(
+          alignment: Alignment.center,
+          child: SvgPicture.asset(
+            AppSvgs.iconLogo,
             alignment: Alignment.center,
-            child: SvgPicture.asset(
-              AppSvgs.iconLogo,
-              alignment: Alignment.center,
-              width: 75,
-            ),
+            width: 75,
           ),
-          const SizedBox(height: 16),
-          Center(
-            child: Text(
-              "Cadastre um novo\nexperimento",
-              style: TextStyles.titleHome,
-              textAlign: TextAlign.center,
-            ),
+        ),
+        const SizedBox(height: 16),
+        Center(
+          child: Text(
+            "Cadastre um novo\nexperimento",
+            style: TextStyles.titleHome,
+            textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 16),
-          ConstrainedBox(
-            constraints: BoxConstraints.tightFor(height: height),
+        ),
+        const SizedBox(height: 16),
+        Expanded(
+          child: SingleChildScrollView(
             child: EZTStepper(
-                currentStep: controller.stepPage,
-                controlsBuilder:
-                    (BuildContext context, EZTControlsDetails details) {
-                  return Row(
-                    children: <Widget>[
-                      if (controller.stepPage <
-                          Provider.of<CreateExperimentController>(context,
-                                      listen: false)
-                                  .experimentRequestModel
-                                  .experimentsEnzymes
-                                  .length -
-                              1)
-                        TextButton(
-                          onPressed: () {
-                            if (controller.stepPage <
-                                Provider.of<CreateExperimentController>(context,
-                                            listen: false)
-                                        .experimentRequestModel
-                                        .experimentsEnzymes
-                                        .length -
-                                    1) {
-                              controller.setStepPage(controller.stepPage + 1);
-                            }
-                          },
-                          child: const Text('Próximo'),
-                        ),
-                      if (controller.stepPage > 0)
-                        TextButton(
-                          onPressed: () {
-                            if (controller.stepPage > 0) {
-                              controller.setStepPage(controller.stepPage - 1);
-                            }
-                          },
-                          child: const Text('Voltar'),
-                        ),
-                    ],
+              physics: const ClampingScrollPhysics(),
+              currentStep: controller.stepPage,
+              controlsBuilder:
+                  (BuildContext context, EZTControlsDetails details) {
+                return Row(
+                  children: <Widget>[
+                    if (controller.stepPage <
+                        Provider.of<CreateExperimentController>(context,
+                                    listen: false)
+                                .experimentRequestModel
+                                .experimentsEnzymes
+                                .length -
+                            1)
+                      TextButton(
+                        onPressed: () {
+                          if (controller.stepPage <
+                              Provider.of<CreateExperimentController>(context,
+                                          listen: false)
+                                      .experimentRequestModel
+                                      .experimentsEnzymes
+                                      .length -
+                                  1) {
+                            controller.setStepPage(controller.stepPage + 1);
+                          }
+                        },
+                        child: const Text('Próximo'),
+                      ),
+                    if (controller.stepPage > 0)
+                      TextButton(
+                        onPressed: () {
+                          if (controller.stepPage > 0) {
+                            controller.setStepPage(controller.stepPage - 1);
+                          }
+                        },
+                        child: const Text('Voltar'),
+                      ),
+                  ],
+                );
+              },
+              onStepTapped: (int index) {
+                controller.setStepPage(index);
+              },
+              type: EZTStepperType.vertical,
+              steps: Provider.of<CreateExperimentController>(context)
+                  .experimentRequestModel
+                  .experimentsEnzymes
+                  .map(
+                (enzyme) {
+                  return EZTStep(
+                    state: _leadWithStepState(enzyme),
+                    title: _isEnzymeCorrectlyFilled(enzyme.id)
+                        ? Text(enzyme.name)
+                        : Text(
+                            "⚠  ${enzyme.name}",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.danger,
+                            ),
+                          ),
+                    content: Container(
+                      alignment: Alignment.centerLeft,
+                      child: Visibility(
+                          visible:
+                              controller.textFields["aVariable-${enzyme.id}"] !=
+                                  null,
+                          child: _textFields(enzyme)),
+                    ),
                   );
                 },
-                // onStepCancel: () {
-                //   if (controller.stepPage > 0) {
-                //     controller.setStepPage(controller.stepPage - 1);
-                //   }
-                // },
-                // onStepContinue: () {
-                //   if (controller.stepPage <= 0) {
-                //     controller.setStepPage(controller.stepPage + 1);
-                //   }
-                // },
-                onStepTapped: (int index) {
-                  controller.setStepPage(index);
-                },
-                type: EZTStepperType.horizontal,
-                steps: Provider.of<CreateExperimentController>(context)
-                    .experimentRequestModel
-                    .experimentsEnzymes
-                    .map(
-                  (enzyme) {
-                    return EZTStep(
-                      title: Text(enzyme.name),
-                      content: Container(
-                        alignment: Alignment.centerLeft,
-                        child: Visibility(
-                            visible: controller
-                                    .textFields["aVariable-${enzyme.id}"] !=
-                                null,
-                            child: _textFields(enzyme)),
-                      ),
-                    );
-                  },
-                ).toList(),
-                key: ValueKey(widget.listOfEnzymes.hashCode)),
+              ).toList(),
+              key: ValueKey(widget.listOfEnzymes.hashCode),
+            ),
           ),
-          const SizedBox(height: 40),
-          // _textFields,
-          const SizedBox(height: 64),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -324,7 +429,7 @@ class _CreateExperimentFourthStepPageState
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Informações da Curva para ${enzyme.name}',
+          'Informações da Curva:',
           style: TextStyles.detailBold,
         ),
         Row(
@@ -340,7 +445,7 @@ class _CreateExperimentFourthStepPageState
         ),
         const SizedBox(height: 40),
         Text(
-          'Demais Variáveis para ${enzyme.name}',
+          'Demais Variáveis:',
           style: TextStyles.detailBold,
         ),
         const SizedBox(height: 10),
@@ -374,28 +479,29 @@ class _CreateExperimentFourthStepPageState
   Widget get _buttons {
     return Column(
       children: [
-        EZTButton(
-          enabled: enableNextButton,
-          text: 'Criar Experimento',
-          onPressed: () async {
-            widget.formKey.currentState!.save();
+        if (enableNextButton)
+          EZTButton(
+            enabled: enableNextButton,
+            text: 'Criar Experimento',
+            onPressed: () async {
+              widget.formKey.currentState!.save();
 
-            if (widget.formKey.currentState!.validate()) {
-              if (mounted) {
-                await controller.createExperiment(
-                  controller.experimentRequestModel.name,
-                  controller.experimentRequestModel.description,
-                  controller.experimentRequestModel.repetitions,
-                  controller.experimentRequestModel.processes,
-                  controller.experimentRequestModel.experimentsEnzymes,
-                  controller.textFields,
-                );
+              if (widget.formKey.currentState!.validate()) {
+                if (mounted) {
+                  await controller.createExperiment(
+                    controller.experimentRequestModel.name,
+                    controller.experimentRequestModel.description,
+                    controller.experimentRequestModel.repetitions,
+                    controller.experimentRequestModel.processes,
+                    controller.experimentRequestModel.experimentsEnzymes,
+                    controller.textFields,
+                  );
+                }
+
+                return;
               }
-
-              return;
-            }
-          },
-        ),
+            },
+          ),
         const SizedBox(height: 16),
         EZTButton(
           text: 'Voltar',
@@ -421,10 +527,10 @@ class _CreateExperimentFourthStepPageState
       children: [
         Expanded(
           flex: 11,
-          child: _body(MediaQuery.of(context).size.height / 2),
+          child: _body(MediaQuery.of(context).size.height),
         ),
         Expanded(
-          flex: 4,
+          flex: enableNextButton ? 4 : 3,
           child: SingleChildScrollView(
             physics: const NeverScrollableScrollPhysics(),
             child: Padding(

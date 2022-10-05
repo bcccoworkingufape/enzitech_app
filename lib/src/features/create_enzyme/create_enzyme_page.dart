@@ -196,10 +196,7 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
       controller: _variableAFieldController,
       onChanged: (value) => _validateFields,
       fieldValidator: fieldValidator,
-      inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\,?\d{0,5}')),
-        CommaTextInputFormatter(),
-      ],
+      inputFormatters: Constants.enzymeDecimalInputFormatters,
     );
   }
 
@@ -223,10 +220,7 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
       controller: _variableBFieldController,
       onChanged: (value) => _validateFields,
       fieldValidator: fieldValidator,
-      inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\,?\d{0,3}')),
-        CommaTextInputFormatter(),
-      ],
+      inputFormatters: Constants.enzymeDecimalInputFormatters,
     );
   }
 

@@ -119,7 +119,7 @@ class _CreateExperimentSecondStepPageState
 
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,
-      labelText: "Qtd. de repetições por tratamento",
+      labelText: "Quantidade de repetições por tratamento",
       usePrimaryColorOnFocusedBorder: true,
       keyboardType: TextInputType.number,
       controller: _repetitionsFieldController,

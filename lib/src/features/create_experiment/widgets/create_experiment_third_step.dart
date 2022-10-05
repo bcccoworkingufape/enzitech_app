@@ -164,6 +164,7 @@ class _CreateExperimentThirdStepPageState
                         enzymesController.enzymes[index].type,
                       ),
                       textStyle: TextStyles.titleMinBoldBackground,
+                      centerTitle: true,
                     );
                   },
                 );

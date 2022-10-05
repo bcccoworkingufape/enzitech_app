@@ -1,5 +1,8 @@
 // 🐦 Flutter imports:
 
+// 🎯 Dart imports:
+import 'dart:io' show Platform;
+
 // 🐦 Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,8 +21,6 @@ import 'package:enzitech_app/src/shared/models/user_model.dart';
 import 'package:enzitech_app/src/shared/routes/route_generator.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
-
-import 'dart:io' show Platform;
 
 class AccountPage extends StatefulWidget {
   const AccountPage({
