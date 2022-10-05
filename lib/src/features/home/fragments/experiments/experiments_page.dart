@@ -1,5 +1,6 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 // 📦 Package imports:
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -140,9 +141,23 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
         child: Column(
           children: [
             SizedBox(
-              height: height / 1.75,
-              child: const Center(
-                child: Text("Experimentos não encontrados"),
+              height: height / 1.65,
+              child: Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      AppSvgs.notFound,
+                      alignment: Alignment.center,
+                      width: MediaQuery.of(context).size.width,
+                    ),
+                    Text(
+                      "Experimentos não encontrados",
+                      style: TextStyles.termRegular,
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
@@ -249,7 +264,10 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
           : controller.state == ExperimentsState.loading,
       child: EZTPullToRefresh(
         key: _refreshIndicatorKey,
-        onRefresh: () => controller.loadExperiments(1),
+        onRefresh: () {
+          // controller.setFinishedFilter(false);
+          return controller.loadExperiments(1);
+        },
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Column(
@@ -263,27 +281,55 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
               // ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: ToggleSwitch(
-                  initialLabelIndex: controller.finishedFilter ? 1 : 0,
-                  minWidth: widthMQ,
-                  totalSwitches: 2,
-                  labels: const ['Em andamento', 'Concluído'],
-                  activeFgColor: AppColors.white,
-                  inactiveFgColor: AppColors.primary,
-                  activeBgColor: const [AppColors.primary],
-                  inactiveBgColor: AppColors.white,
-                  borderColor: const [AppColors.primary],
-                  borderWidth: 1.5,
-                  onToggle: (index) {
-                    if (index == 0) {
-                      controller.loadExperiments(1, finished: false);
-                      controller.setFinishedFilter(false);
-                    } else if (index == 1) {
-                      controller.loadExperiments(1, finished: true);
-                      controller.setFinishedFilter(true);
-                    }
-                    // call controller to update search when this changes
-                  },
+                child: Row(
+                  children: [
+                    ToggleSwitch(
+                      initialLabelIndex: controller.finishedFilter ? 1 : 0,
+                      minWidth: (widthMQ * 0.4),
+                      totalSwitches: 2,
+                      labels: const ['Em andamento', 'Concluído'],
+                      activeFgColor: AppColors.white,
+                      inactiveFgColor: AppColors.primary,
+                      activeBgColor: const [AppColors.primary],
+                      inactiveBgColor: AppColors.white,
+                      borderColor: const [AppColors.primary],
+                      borderWidth: 1.5,
+                      onToggle: (index) {
+                        if (index == 0) {
+                          if (controller.finishedFilter != false) {
+                            controller.setFinishedFilter(false);
+                            controller.loadExperiments(1);
+                            return;
+                          }
+
+                          return;
+                        }
+
+                        if (controller.finishedFilter) return;
+
+                        controller.setFinishedFilter(true);
+                        controller.loadExperiments(1);
+                      },
+                    ),
+                    const SizedBox(
+                      width: 4,
+                    ),
+                    Expanded(
+                      child: InkWell(
+                        customBorder: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        onTap: () => print("filtro"),
+                        child: const Padding(
+                          padding: EdgeInsets.all(10.0),
+                          child: Icon(
+                            PhosphorIcons.funnelFill,
+                            color: AppColors.primary,
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
                 ),
               ),
               // const SizedBox(

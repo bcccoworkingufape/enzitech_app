@@ -91,7 +91,7 @@ class ExperimentsController extends ChangeNotifier {
         orderBy: orderBy,
         ordering: ordering,
         limit: limit,
-        finished: finished,
+        finished: finishedFilter,
       );
       _addToExperiments(experimentsWithPagination.experiments);
       _setTotalOfExperiments(experimentsWithPagination.total);
