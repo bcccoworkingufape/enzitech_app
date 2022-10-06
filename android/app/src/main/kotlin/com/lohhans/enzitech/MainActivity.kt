@@ -1,4 +1,4 @@
-package com.example.enzitech_app
+package com.lohhans.enzitech
 
 import io.flutter.embedding.android.FlutterActivity
 

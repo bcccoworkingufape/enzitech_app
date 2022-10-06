@@ -1,5 +1,5 @@
 name: enzitech_app
-description: A new Flutter project.
+description: Aplicativo para Experimento e Análise de Solo.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+1
+version: 0.1.1+2
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
@@ -41,6 +41,7 @@ dependencies:
   import_sorter: ^4.6.0
   intl: ^0.17.0
   liquid_pull_to_refresh: ^3.0.1
+  package_info_plus: ^1.4.3+1
   percent_indicator: ^4.0.1
   phosphor_flutter: ^1.4.0
   pretty_dio_logger: ^1.2.0-beta-1

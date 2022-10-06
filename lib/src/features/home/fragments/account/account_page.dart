@@ -96,7 +96,7 @@ class _AccountPageState extends State<AccountPage> {
                   lightTheme: const SettingsThemeData(
                     settingsListBackground: AppColors.background,
                     titleTextColor: AppColors.grenDark,
-                    // leadingIconsColor: AppColors.greyBlack,
+                    leadingIconsColor: AppColors.greyBlack,
                   ),
                   sections: [
                     SettingsSection(
@@ -197,7 +197,38 @@ class _AccountPageState extends State<AccountPage> {
                       ],
                     ),
                     SettingsSection(
+                      title: const Text('App'),
                       tiles: [
+                        SettingsTile(
+                          leading: const Icon(
+                            PhosphorIcons.gitBranch,
+                          ),
+                          title: Platform.isIOS
+                              ? Flex(
+                                  direction: Axis.horizontal,
+                                  children: const [
+                                    Text('Versão'),
+                                  ],
+                                )
+                              : const Text('Versão'),
+                          value: Platform.isIOS
+                              ? Flexible(
+                                  flex: 1,
+                                  child: Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Text(
+                                      "${controller.appInfo!.version}+${controller.appInfo!.buildNumber}",
+                                      overflow: TextOverflow.ellipsis,
+                                      style: descriptionTextStyle,
+                                    ),
+                                  ),
+                                )
+                              : Text(
+                                  "${controller.appInfo!.version}+${controller.appInfo!.buildNumber}",
+                                  overflow: TextOverflow.ellipsis,
+                                  style: descriptionTextStyle,
+                                ),
+                        ),
                         SettingsTile.navigation(
                           leading: const Icon(
                             PhosphorIcons.signOut,
