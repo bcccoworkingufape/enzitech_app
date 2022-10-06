@@ -11,6 +11,7 @@ import 'package:toggle_switch/toggle_switch.dart';
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/home/fragments/account/account_controller.dart';
 import 'package:enzitech_app/src/features/home/fragments/experiments/components/experiment_card.dart';
+import 'package:enzitech_app/src/features/home/fragments/experiments/components/experiment_filter_dialog.dart';
 import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_controller.dart';
 import 'package:enzitech_app/src/features/home/home_controller.dart';
 import 'package:enzitech_app/src/shared/failures/failures.dart';
@@ -111,6 +112,16 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
       fieldValidator: fieldValidator,
     );
   } */
+
+  Future<void> _showFiltersDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return const ExperimentFilterDialog();
+      },
+    );
+  }
 
   Widget _buildExperimentsList(double height) {
     if (controller.state == ExperimentsState.error) {
@@ -305,11 +316,13 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                         customBorder: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        onTap: () => print("filtro"),
-                        child: const Padding(
-                          padding: EdgeInsets.all(10.0),
+                        onTap: _showFiltersDialog,
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
                           child: Icon(
-                            PhosphorIcons.funnelFill,
+                            controller.anyFilterIsEnabled()
+                                ? PhosphorIcons.funnelFill
+                                : PhosphorIcons.funnel,
                             color: AppColors.primary,
                           ),
                         ),

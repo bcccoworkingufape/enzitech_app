@@ -22,10 +22,35 @@ class ExperimentsController extends ChangeNotifier {
     notifyListeners();
   }
 
+  // FILTER - FINISHED
   bool _finishedFilter = false;
   bool get finishedFilter => _finishedFilter;
   void setFinishedFilter(bool finishedFilter) {
     _finishedFilter = finishedFilter;
+    notifyListeners();
+  }
+
+  // FILTER - ORDER BY
+  String? _orderBy;
+  String? get orderBy => _orderBy;
+  void setOrderBy(String? orderBy) {
+    _orderBy = orderBy;
+    notifyListeners();
+  }
+
+  // FILTER - ORDERING
+  String? _ordering;
+  String? get ordering => _ordering;
+  void setOrdering(String? ordering) {
+    _ordering = ordering;
+    notifyListeners();
+  }
+
+  // FILTER - LIMIT
+  String? _limit;
+  String? get limit => _limit;
+  void setLimit(String? limit) {
+    _limit = limit;
     notifyListeners();
   }
 
@@ -69,13 +94,34 @@ class ExperimentsController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> loadExperiments(
-    int page, {
-    String? orderBy,
-    String? ordering,
-    int? limit,
-    bool? finished,
-  }) async {
+  bool anyFilterIsEnabled() {
+    if (limit != null || orderBy != null || ordering != null) {
+      return true;
+    }
+
+    return false;
+  }
+
+  Future<void> clearFilters() async {
+    state = ExperimentsState.loading;
+    notifyListeners();
+    try {
+      setLimit(null);
+      setOrderBy(null);
+      setOrdering(null);
+      setFinishedFilter(false);
+      await loadExperiments(1);
+
+      state = ExperimentsState.success;
+      notifyListeners();
+    } catch (e) {
+      _setFailure(e as Failure);
+      state = ExperimentsState.error;
+      notifyListeners();
+    }
+  }
+
+  Future<void> loadExperiments(int page) async {
     state = ExperimentsState.loading;
     notifyListeners();
     try {
@@ -90,7 +136,7 @@ class ExperimentsController extends ChangeNotifier {
         page,
         orderBy: orderBy,
         ordering: ordering,
-        limit: limit,
+        limit: null, // disabled for now
         finished: finishedFilter,
       );
       _addToExperiments(experimentsWithPagination.experiments);
