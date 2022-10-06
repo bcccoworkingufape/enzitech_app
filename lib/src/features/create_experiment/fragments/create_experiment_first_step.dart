@@ -2,17 +2,17 @@
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
-import 'package:flutter_svg/svg.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/create_experiment/create_experiment_controller.dart';
-import '../../../shared/themes/app_complete_theme.dart';
-import '../../../shared/util/constants.dart';
-import '../../../shared/validator/field_validator.dart';
-import '../../../shared/widgets/ezt_button.dart';
-import '../../../shared/widgets/ezt_textfield.dart';
+import 'package:enzitech_app/src/features/create_experiment/widgets/ezt_create_experiment_step_indicator.dart';
+import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
+import 'package:enzitech_app/src/shared/util/constants.dart';
+import 'package:enzitech_app/src/shared/validator/field_validator.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_button.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_textfield.dart';
 
 class CreateExperimentFirstStepPage extends StatefulWidget {
   const CreateExperimentFirstStepPage({
@@ -36,11 +36,19 @@ class _CreateExperimentFirstStepPageState
 
   bool enableNextButton1 = false;
 
+  final validations = <ValidateRule>[
+    ValidateRule(
+      ValidateTypes.required,
+    ),
+  ];
+
   @override
   void initState() {
     super.initState();
     controller = context.read<CreateExperimentController>();
     initFieldControllerTexts();
+    Future.delayed(const Duration(milliseconds: 1))
+        .whenComplete(() => _validateFields);
   }
 
   void initFieldControllerTexts() {
@@ -58,9 +66,13 @@ class _CreateExperimentFirstStepPageState
   get _validateFields {
     if (_nameFieldController.text.isNotEmpty &&
         _descriptionFieldController.text.isNotEmpty) {
-      setState(() {
-        enableNextButton1 = widget.formKey.currentState!.validate();
-      });
+      if (widget.formKey.currentState != null) {
+        if (widget.formKey.currentState!.validate() && mounted) {
+          setState(() {
+            enableNextButton1 = true;
+          });
+        }
+      }
     } else {
       setState(() {
         enableNextButton1 = false;
@@ -73,28 +85,18 @@ class _CreateExperimentFirstStepPageState
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
       child: Column(
         children: [
-          Align(
-            alignment: Alignment.center,
-            child: SvgPicture.asset(
-              AppSvgs.iconLogo,
-              alignment: Alignment.center,
-              width: 75,
-            ),
+          const EZTCreateExperimentStepIndicator(
+            title: "Cadastre um novo experimento",
+            message: "Etapa 1 de 4 - Identificação",
           ),
-          const SizedBox(height: 16),
-          Center(
-            child: Text(
-              "Cadastre um novo\nexperimento",
-              style: TextStyles.titleHome,
-              textAlign: TextAlign.center,
-            ),
+          const SizedBox(
+            height: 64,
           ),
-          const SizedBox(height: 64),
           Row(
             children: [
               const Icon(
                 PhosphorIcons.flask,
-                color: AppColors.greyMedium,
+                color: AppColors.greySweet,
               ),
               const SizedBox(width: 4),
               Text(
@@ -121,15 +123,6 @@ class _CreateExperimentFirstStepPageState
   }
 
   Widget get _nameInput {
-    final validations = <ValidateRule>[
-      ValidateRule(
-        ValidateTypes.required,
-      ),
-      ValidateRule(
-        ValidateTypes.name,
-      ),
-    ];
-
     final fieldValidator = FieldValidator(validations, context);
 
     return EZTTextField(
@@ -145,15 +138,6 @@ class _CreateExperimentFirstStepPageState
   }
 
   Widget get _descriptionInput {
-    final validations = <ValidateRule>[
-      ValidateRule(
-        ValidateTypes.required,
-      ),
-      ValidateRule(
-        ValidateTypes.name,
-      ),
-    ];
-
     final fieldValidator = FieldValidator(validations, context);
 
     return EZTTextField(
@@ -177,15 +161,18 @@ class _CreateExperimentFirstStepPageState
           onPressed: () {
             widget.formKey.currentState!.save();
 
-            controller.experimentRequestModel.name = _nameFieldController.text;
-            controller.experimentRequestModel.description =
-                _descriptionFieldController.text;
+            if (widget.formKey.currentState!.validate()) {
+              controller.experimentRequestModel.name =
+                  _nameFieldController.text;
+              controller.experimentRequestModel.description =
+                  _descriptionFieldController.text;
 
-            controller.pageController.animateTo(
-              MediaQuery.of(context).size.width,
-              duration: const Duration(milliseconds: 150),
-              curve: Curves.easeIn,
-            );
+              controller.pageController.animateTo(
+                MediaQuery.of(context).size.width,
+                duration: const Duration(milliseconds: 150),
+                curve: Curves.easeIn,
+              );
+            }
           },
         ),
         const SizedBox(height: 16),
@@ -203,23 +190,25 @@ class _CreateExperimentFirstStepPageState
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          flex: 11,
-          child: Center(child: _body),
-        ),
-        Expanded(
-          flex: 4,
-          child: SingleChildScrollView(
-            physics: const NeverScrollableScrollPhysics(),
-            child: Padding(
-              padding: Constants.padding16all,
-              child: _buttons,
+    return SafeArea(
+      child: Column(
+        children: [
+          Expanded(
+            flex: 11,
+            child: Center(child: _body),
+          ),
+          Expanded(
+            flex: 4,
+            child: SingleChildScrollView(
+              physics: const NeverScrollableScrollPhysics(),
+              child: Padding(
+                padding: Constants.padding16all,
+                child: _buttons,
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

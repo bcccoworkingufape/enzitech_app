@@ -1,5 +1,5 @@
 // 🌎 Project imports:
-import 'failures.dart';
+import 'package:enzitech_app/src/shared/failures/failures.dart';
 
 class HandleFailure {
   static String of(

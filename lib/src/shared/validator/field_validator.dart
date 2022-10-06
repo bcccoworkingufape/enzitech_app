@@ -3,37 +3,38 @@ import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/shared/util/util.dart';
+import 'package:enzitech_app/src/shared/validator/cnpj_validator.dart';
+import 'package:enzitech_app/src/shared/validator/cpf_validator.dart';
 import 'package:enzitech_app/src/shared/validator/enroll_validator.dart';
-import 'cnpj_validator.dart';
-import 'cpf_validator.dart';
-import 'utils_validator.dart';
+import 'package:enzitech_app/src/shared/validator/utils_validator.dart';
 
 enum ValidateTypes {
   required,
-  email,
-  min,
-  max,
-  strongPassword,
-  passwordEquals,
-  passwordMustBeDiff,
-  emailEquals,
-  cpf,
-  cnpj,
-  cpfOrCnpj,
-  number,
-  numeric,
-  greaterThanZero,
   alfanumeric,
+  cellphone,
+  cnpj,
+  cpf,
+  cpfOrCnpj,
+  creditCardDueDate,
+  creditCardNumber,
+  creditCardSecurityCode,
+  email,
+  emailEquals,
+  emailOrRegistration,
+  greaterThanZero,
+  greaterThanZeroDecimal,
+  max,
   maxAge,
+  min,
   minAge,
   name,
-  phone,
-  cellphone,
-  emailOrRegistration,
-  creditCardNumber,
-  creditCardDueDate,
-  creditCardSecurityCode,
   notFound,
+  number,
+  numeric,
+  passwordEquals,
+  passwordMustBeDiff,
+  phone,
+  strongPassword,
 }
 
 class ValidateRule {
@@ -245,6 +246,17 @@ class FieldValidator {
             var isNumber = Validator.isNumeric(value);
             if (!isNumber) {
               result = customErrorMessage ?? "⚠  Número inválido";
+            } else {
+              result = null;
+            }
+            break;
+          }
+        case ValidateTypes.greaterThanZeroDecimal:
+          {
+            var number = double.parse(value);
+            if (number <= 0) {
+              result =
+                  customErrorMessage ?? "⚠  Insira um número maior que zero";
             } else {
               result = null;
             }

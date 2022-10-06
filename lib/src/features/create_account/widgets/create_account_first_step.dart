@@ -9,10 +9,10 @@ import 'package:provider/provider.dart';
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/create_account/create_account_controller.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
+import 'package:enzitech_app/src/shared/util/util.dart';
 import 'package:enzitech_app/src/shared/validator/validator.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_button.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_textfield.dart';
-import '../../../shared/util/util.dart';
 
 class CreateAccountFirstStep extends StatefulWidget {
   const CreateAccountFirstStep({
@@ -156,7 +156,7 @@ class CreateAccountFirstStepState extends State<CreateAccountFirstStep> {
             children: [
               const Icon(
                 PhosphorIcons.identificationCardBold,
-                color: AppColors.greyMedium,
+                color: AppColors.greySweet,
               ),
               const SizedBox(width: 4),
               Text(

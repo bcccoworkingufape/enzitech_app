@@ -1,4 +1,6 @@
 // 🐦 Flutter imports:
+
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -9,15 +11,15 @@ import 'package:toggle_switch/toggle_switch.dart';
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/home/fragments/account/account_controller.dart';
 import 'package:enzitech_app/src/features/home/fragments/experiments/components/experiment_card.dart';
+import 'package:enzitech_app/src/features/home/fragments/experiments/components/experiment_filter_dialog.dart';
 import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_controller.dart';
 import 'package:enzitech_app/src/features/home/home_controller.dart';
 import 'package:enzitech_app/src/shared/failures/failures.dart';
 import 'package:enzitech_app/src/shared/routes/route_generator.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
-import 'package:enzitech_app/src/shared/validator/validator.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_not_founded.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_pull_to_refresh.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
-import 'package:enzitech_app/src/shared/widgets/ezt_textfield.dart';
 
 class ExperimentsPage extends StatefulWidget {
   const ExperimentsPage({
@@ -34,13 +36,24 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
   late final ExperimentsController controller;
   final Key _refreshIndicatorKey = GlobalKey();
 
-  final _searchTermController = TextEditingController(text: '');
+  // final _searchTermController = TextEditingController(text: '');
   List<bool> isSelected = [true, false];
 
   @override
   void initState() {
     super.initState();
     controller = context.read<ExperimentsController>();
+
+    controller.scrollController.addListener(() {
+      if (controller.scrollController.position.pixels >
+              controller.scrollController.position.maxScrollExtent - 200 &&
+          controller.hasNextPage) {
+        if (controller.state != ExperimentsState.loading) {
+          controller.loadExperiments(controller.page);
+        }
+      }
+    });
+
     if (mounted) {
       controller.addListener(
         () async {
@@ -75,7 +88,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
     }
   }
 
-  Widget get _searchTermInput {
+  /* Widget get _searchTermInput {
     final validations = <ValidateRule>[
       ValidateRule(
         ValidateTypes.name,
@@ -98,6 +111,16 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
       ),
       fieldValidator: fieldValidator,
     );
+  } */
+
+  Future<void> _showFiltersDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return const ExperimentFilterDialog();
+      },
+    );
   }
 
   Widget _buildExperimentsList(double height) {
@@ -117,7 +140,8 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
       );
     }
 
-    if (controller.state == ExperimentsState.loading) {
+    if (controller.state == ExperimentsState.loading &&
+        controller.isLoadingMoreRunning == false) {
       return const Center(child: CircularProgressIndicator());
     }
 
@@ -128,9 +152,9 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
         child: Column(
           children: [
             SizedBox(
-              height: height / 1.75,
-              child: const Center(
-                child: Text("Experimentos não encontrados"),
+              height: height / 1.65,
+              child: const EZTNotFounded(
+                message: "Experimentos não encontrados",
               ),
             ),
           ],
@@ -139,45 +163,86 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
     }
 
     return ListView.builder(
+      key: PageStorageKey(widget.homeController.fragmentIndex),
+      controller: controller.scrollController,
       shrinkWrap: true,
       physics: const AlwaysScrollableScrollPhysics(),
-      itemCount: controller.experiments.length,
+      itemCount: controller.experiments.length + 1,
       itemBuilder: (context, index) {
-        var experiment = controller.experiments[index];
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 8.0),
-          child: Dismissible(
-            key: Key(experiment.id),
-            onDismissed: (direction) {
-              controller.deleteExperiment(experiment.id);
+        if (index < controller.experiments.length) {
+          var experiment = controller.experiments[index];
 
-              // Remove the item from the data source.
-              setState(() {
-                controller.experiments.removeAt(index);
-              });
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Dismissible(
+                  key: UniqueKey(),
+                  onDismissed: (direction) async {
+                    await controller.deleteExperiment(experiment.id);
 
-              EZTSnackBar.clear(context);
+                    // Remove the item from the data source.
+                    setState(() {
+                      controller.experiments.removeAt(index);
+                    });
 
-              EZTSnackBar.show(
-                context,
-                '${experiment.name} excluído!',
-                eztSnackBarType: EZTSnackBarType.error,
-              );
+                    if (mounted) {
+                      EZTSnackBar.clear(context);
 
-              // Then show a snackbar.
-              // ScaffoldMessenger.of(context).showSnackBar(
-              //     SnackBar(content: Text('${experiment.name} excluído!')));
-            },
-            // Show a red background as the item is swiped away.
-            background: Container(color: Colors.red),
-            child: ExperimentCard(
-              name: experiment.name,
-              updatedAt: experiment.updatedAt,
-              description: experiment.description,
-              progress: experiment.progress,
-            ),
-          ),
-        );
+                      EZTSnackBar.show(
+                        context,
+                        '${experiment.name} excluído!',
+                        eztSnackBarType: EZTSnackBarType.error,
+                      );
+                    }
+                  },
+                  // Show a red background as the item is swiped away.
+                  background: Container(color: Colors.red),
+                  child: ExperimentCard(
+                    experiment: experiment,
+                    indexOfExperiment: index + 1,
+                  ),
+                ),
+              ),
+              if (controller.isLoadingMoreRunning == false &&
+                  controller.hasNextPage == true &&
+                  index == controller.experiments.length - 1)
+                SizedBox(height: height / 7),
+            ],
+          );
+        } else {
+          return Column(
+            children: [
+              if (controller.isLoadingMoreRunning == true)
+                const Padding(
+                  padding: EdgeInsets.only(top: 10, bottom: 20),
+                  child: Center(child: CircularProgressIndicator()),
+                ),
+              if (controller.hasNextPage == false &&
+                  controller.state == ExperimentsState.success)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: Card(
+                    elevation: 4,
+                    shadowColor: AppColors.white,
+                    color: AppColors.yellow300,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 30, bottom: 30),
+                      child: Center(
+                        child: Text(
+                          'Todos os experimentos exibidos!',
+                          style: TextStyles.buttonPrimary.copyWith(
+                            color: AppColors.greySweet,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+            ],
+          );
+        }
       },
     );
   }
@@ -188,42 +253,100 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
     var heightMQ = MediaQuery.of(context).size.height;
     final controller = context.watch<ExperimentsController>();
 
-    return EZTPullToRefresh(
-      key: _refreshIndicatorKey,
-      onRefresh: controller.loadExperiments,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: _searchTermInput,
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            ToggleSwitch(
-              minWidth: widthMQ,
-              totalSwitches: 2,
-              labels: const ['Em andamento', 'Concluído'],
-              activeFgColor: AppColors.white,
-              inactiveFgColor: AppColors.primary,
-              activeBgColor: const [AppColors.primary],
-              inactiveBgColor: AppColors.white,
-              borderColor: const [AppColors.primary],
-              borderWidth: 1.5,
-              onToggle: (index) {
-                print(index);
-                // call controller to update search when this changes
-              },
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            Expanded(
-              child: _buildExperimentsList(heightMQ),
-            ),
-          ],
+    return AbsorbPointer(
+      absorbing: controller.scrollController.hasClients
+          ? controller.state == ExperimentsState.loading &&
+              controller.scrollController.position.maxScrollExtent ==
+                  controller.scrollController.offset
+          : controller.state == ExperimentsState.loading,
+      child: EZTPullToRefresh(
+        key: _refreshIndicatorKey,
+        onRefresh: () {
+          // controller.setFinishedFilter(false);
+          return controller.loadExperiments(1);
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Column(
+            children: [
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              //   child: _searchTermInput,
+              // ),
+              // const SizedBox(
+              //   height: 16,
+              // ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Row(
+                  children: [
+                    ToggleSwitch(
+                      initialLabelIndex: controller.finishedFilter ? 1 : 0,
+                      minWidth: (widthMQ * 0.4),
+                      totalSwitches: 2,
+                      labels: const ['Em andamento', 'Concluído'],
+                      activeFgColor: AppColors.white,
+                      inactiveFgColor: AppColors.primary,
+                      activeBgColor: const [AppColors.primary],
+                      inactiveBgColor: AppColors.white,
+                      borderColor: const [AppColors.primary],
+                      borderWidth: 1.5,
+                      onToggle: (index) {
+                        if (index == 0) {
+                          if (controller.finishedFilter != false) {
+                            controller.setFinishedFilter(false);
+                            controller.loadExperiments(1);
+                            return;
+                          }
+
+                          return;
+                        }
+
+                        if (controller.finishedFilter) return;
+
+                        controller.setFinishedFilter(true);
+                        controller.loadExperiments(1);
+                      },
+                    ),
+                    const SizedBox(
+                      width: 4,
+                    ),
+                    Expanded(
+                      child: InkWell(
+                        customBorder: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        onTap: _showFiltersDialog,
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Icon(
+                            controller.anyFilterIsEnabled()
+                                ? PhosphorIcons.funnelFill
+                                : PhosphorIcons.funnel,
+                            color: AppColors.primary,
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              // const SizedBox(
+              //   height: 16,
+              // ),
+              if (controller.experiments.isNotEmpty)
+                Text(
+                  "🔬 ${controller.totalOfExperiments} experimento${controller.experiments.length > 1 ? 's ' : ' '}encontrado${controller.experiments.length > 1 ? 's ' : ' '}",
+                  style: TextStyles.link.copyWith(fontSize: 16),
+                ),
+              const SizedBox(
+                height: 16,
+              ),
+              Expanded(
+                child: _buildExperimentsList(heightMQ),
+              ),
+            ],
+          ),
         ),
       ),
     );

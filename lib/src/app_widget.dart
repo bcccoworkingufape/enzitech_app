@@ -6,10 +6,14 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
+import 'package:enzitech_app/src/features/auth/auth_controller.dart';
 import 'package:enzitech_app/src/features/create_account/create_account_controller.dart';
+import 'package:enzitech_app/src/features/create_enzyme/create_enzyme_controller.dart';
 import 'package:enzitech_app/src/features/create_experiment/create_experiment_controller.dart';
 import 'package:enzitech_app/src/features/create_treatment/create_treatment_controller.dart';
+import 'package:enzitech_app/src/features/experiment_detailed/experiment_detailed_controller.dart';
 import 'package:enzitech_app/src/features/home/fragments/account/account_controller.dart';
+import 'package:enzitech_app/src/features/home/fragments/enzymes/enzymes_controller.dart';
 import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_controller.dart';
 import 'package:enzitech_app/src/features/home/fragments/treatments/treatments_controller.dart';
 import 'package:enzitech_app/src/features/home/home_controller.dart';
@@ -17,11 +21,11 @@ import 'package:enzitech_app/src/features/recover_password/recover_password_cont
 import 'package:enzitech_app/src/shared/external/http_driver/dio_client.dart';
 import 'package:enzitech_app/src/shared/routes/route_generator.dart';
 import 'package:enzitech_app/src/shared/services/auth_service.dart';
+import 'package:enzitech_app/src/shared/services/enzymes_service.dart';
 import 'package:enzitech_app/src/shared/services/experiments_service.dart';
 import 'package:enzitech_app/src/shared/services/treatments_service.dart';
 import 'package:enzitech_app/src/shared/services/user_prefs_service.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
-import 'features/auth/auth_controller.dart';
 
 class AppWidget extends StatelessWidget {
   final HttpDriverOptions httpDriverOptions;
@@ -77,6 +81,21 @@ class AppWidget extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => CreateTreatmentController(
             TreatmentsService(context.read()),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ExperimentDetailedController(
+            ExperimentsService(context.read()),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => EnzymesController(
+            EnzymesService(context.read()),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => CreateEnzymeController(
+            EnzymesService(context.read()),
           ),
         ),
       ],

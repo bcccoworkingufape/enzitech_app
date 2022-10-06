@@ -6,21 +6,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // 📦 Package imports:
-import 'package:flutter_svg/svg.dart';
 import 'package:group_button/group_button.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/create_experiment/create_experiment_controller.dart';
+import 'package:enzitech_app/src/features/create_experiment/widgets/ezt_create_experiment_step_indicator.dart';
 import 'package:enzitech_app/src/features/home/fragments/treatments/treatments_controller.dart';
 import 'package:enzitech_app/src/shared/models/treatment_model.dart';
-import '../../../shared/themes/app_complete_theme.dart';
-import '../../../shared/util/constants.dart';
-import '../../../shared/validator/field_validator.dart';
-import '../../../shared/widgets/ezt_button.dart';
-import '../../../shared/widgets/ezt_checkbox_tile.dart';
-import '../../../shared/widgets/ezt_textfield.dart';
+import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
+import 'package:enzitech_app/src/shared/util/constants.dart';
+import 'package:enzitech_app/src/shared/validator/field_validator.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_button.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_checkbox_tile.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_textfield.dart';
 
 class CreateExperimentSecondStepPage extends StatefulWidget {
   const CreateExperimentSecondStepPage({
@@ -119,7 +119,7 @@ class _CreateExperimentSecondStepPageState
 
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,
-      labelText: "Qtd. de repetições por tratamento",
+      labelText: "Quantidade de repetições por tratamento",
       usePrimaryColorOnFocusedBorder: true,
       keyboardType: TextInputType.number,
       controller: _repetitionsFieldController,
@@ -135,28 +135,18 @@ class _CreateExperimentSecondStepPageState
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
       child: Column(
         children: [
-          Align(
-            alignment: Alignment.center,
-            child: SvgPicture.asset(
-              AppSvgs.iconLogo,
-              alignment: Alignment.center,
-              width: 75,
-            ),
+          const EZTCreateExperimentStepIndicator(
+            title: "Cadastre um novo experimento",
+            message: "Etapa 2 de 4 - Tratamentos e Repetições",
           ),
-          const SizedBox(height: 16),
-          Center(
-            child: Text(
-              "Cadastre um novo\nexperimento",
-              style: TextStyles.titleHome,
-              textAlign: TextAlign.center,
-            ),
+          const SizedBox(
+            height: 64,
           ),
-          const SizedBox(height: 64),
           Row(
             children: [
               const Icon(
                 PhosphorIcons.flask,
-                color: AppColors.greyMedium,
+                color: AppColors.greySweet,
               ),
               const SizedBox(width: 4),
               Text(
@@ -179,18 +169,20 @@ class _CreateExperimentSecondStepPageState
                   title: _checkboxButtons[index],
                   selected: selected,
                   onTap: () {
-                    _validateFields;
-
                     if (!selected) {
                       _checkboxesController.selectIndex(index);
                       choosedCheckboxList
                           .add(treatmentsController.treatments[index]);
+
+                      _validateFields;
 
                       return;
                     }
                     _checkboxesController.unselectIndex(index);
                     choosedCheckboxList
                         .remove(treatmentsController.treatments[index]);
+
+                    _validateFields;
                   },
                 );
               },
@@ -255,23 +247,25 @@ class _CreateExperimentSecondStepPageState
   Widget build(BuildContext context) {
     context.watch<TreatmentsController>();
 
-    return Column(
-      children: [
-        Expanded(
-          flex: 11,
-          child: Center(child: _body),
-        ),
-        Expanded(
-          flex: 4,
-          child: SingleChildScrollView(
-            physics: const NeverScrollableScrollPhysics(),
-            child: Padding(
-              padding: Constants.padding16all,
-              child: _buttons,
+    return SafeArea(
+      child: Column(
+        children: [
+          Expanded(
+            flex: 11,
+            child: Center(child: _body),
+          ),
+          Expanded(
+            flex: 4,
+            child: SingleChildScrollView(
+              physics: const NeverScrollableScrollPhysics(),
+              child: Padding(
+                padding: Constants.padding16all,
+                child: _buttons,
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

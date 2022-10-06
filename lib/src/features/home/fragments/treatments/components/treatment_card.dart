@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // 🌎 Project imports:
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:enzitech_app/src/shared/util/util.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_marquee_on_demand.dart';
 
 class TreatmentCard extends StatefulWidget {
   const TreatmentCard({
@@ -31,9 +32,16 @@ class _TreatmentCardState extends State<TreatmentCard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              widget.name,
-              style: TextStyles.titleHome,
+            // Text(
+            //   widget.name,
+            //   style: TextStyles.titleBoldHeading,
+            // ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4.0),
+              child: EZTMarqueeOnDemand(
+                text: widget.name,
+                textStyle: TextStyles.titleBoldHeading,
+              ),
             ),
             const SizedBox(
               height: 2,

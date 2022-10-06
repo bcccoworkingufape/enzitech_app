@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
+import 'package:enzitech_app/src/features/auth/auth_controller.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_button.dart';
-import '../auth_controller.dart';
 
 class AuthButton extends StatelessWidget {
   final GlobalKey<FormState> formKey;

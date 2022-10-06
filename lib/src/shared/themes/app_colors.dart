@@ -15,17 +15,27 @@ class AppColors {
   static const lines = Color(0xFFCCCCCC);
   static const background = Color(0xFFFAFAFA);
 
-  static const grey = Color(0xFF585666);
+  static const yellow300 = Color(0xFFF8EF6C);
+
   static const greyLight = Color(0xFF9D9D9D);
-  static const greyMedium = Color(0xFF544F4F);
+  static const grey = Color(0xFF585666);
+  static const greySweet = Color(0xFF544F4F);
   static const greyDark = Color(0xFF3a3a3b);
+  static const greyBlack = Color(0xFF393939);
 
   static const delete = Color(0xFFE83F5B);
   static const heading = Color(0xFF585666);
   static const body = Color(0xFF706E7A);
+  static const line = Color(0xFFD1D1D1);
   static const stroke = Color(0xFFE3E3E6);
   static const shape = Color(0xFFFAFAFC);
   static const white = Color(0xFFFFFFFF);
+
+  static const betaGlucosidase = Color(0xFF721817);
+  static const aryl = Color(0xFFFA9F42);
+  static const fosfataseAcida = Color(0xFF2B4162);
+  static const fosfataseAlcalina = Color(0xFF88AB75);
+  static const urease = Color(0xFF675C38);
 
   static MaterialColor materialTheme = const MaterialColor(
     0xFF06BC67, //primary

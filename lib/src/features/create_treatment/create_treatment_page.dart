@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/create_treatment/create_treatment_controller.dart';
+import 'package:enzitech_app/src/features/home/fragments/treatments/treatments_controller.dart';
 import 'package:enzitech_app/src/shared/failures/failures.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:enzitech_app/src/shared/util/util.dart';
@@ -25,6 +26,7 @@ class CreateTreatmentPage extends StatefulWidget {
 
 class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
   late final CreateTreatmentController controller;
+  late final TreatmentsController treatmentsController;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _nameFieldController = TextEditingController(text: '');
@@ -32,10 +34,18 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
 
   bool enableCreate = false;
 
+  final validations = <ValidateRule>[
+    ValidateRule(
+      ValidateTypes.required,
+    ),
+  ];
+
   @override
   void initState() {
     super.initState();
     controller = context.read<CreateTreatmentController>();
+    treatmentsController = context.read<TreatmentsController>();
+
     if (mounted) {
       controller.addListener(() {
         if (controller.state == CreateTreatmentState.error) {
@@ -45,6 +55,9 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
             eztSnackBarType: EZTSnackBarType.error,
           );
         } else if (controller.state == CreateTreatmentState.success) {
+          // reload the experiments list
+          treatmentsController.loadTreatments();
+
           EZTSnackBar.show(
             context,
             "Tratamento criado com sucesso!",
@@ -97,7 +110,7 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
             children: [
               const Icon(
                 PhosphorIcons.flask,
-                color: AppColors.greyMedium,
+                color: AppColors.greySweet,
               ),
               const SizedBox(width: 4),
               Text(
@@ -124,15 +137,6 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
   }
 
   Widget get _nameInput {
-    final validations = <ValidateRule>[
-      ValidateRule(
-        ValidateTypes.required,
-      ),
-      ValidateRule(
-        ValidateTypes.name,
-      ),
-    ];
-
     final fieldValidator = FieldValidator(validations, context);
 
     return EZTTextField(
@@ -148,15 +152,6 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
   }
 
   Widget get _descriptionInput {
-    final validations = <ValidateRule>[
-      ValidateRule(
-        ValidateTypes.required,
-      ),
-      ValidateRule(
-        ValidateTypes.name,
-      ),
-    ];
-
     final fieldValidator = FieldValidator(validations, context);
 
     return EZTTextField(

@@ -3,7 +3,7 @@ import 'dart:convert';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/shared/extensions/extensions.dart';
-import '../util/util.dart';
+import 'package:enzitech_app/src/shared/util/util.dart';
 
 class EnzymeModel {
   String id;
@@ -11,8 +11,12 @@ class EnzymeModel {
   double variableA;
   double variableB;
   String type;
-  DateTime createdAt;
-  DateTime updatedAt;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  int? duration;
+  double? weightSample;
+  double? weightGround;
+  double? size;
 
   EnzymeModel({
     required this.id,
@@ -20,29 +24,13 @@ class EnzymeModel {
     required this.variableA,
     required this.variableB,
     required this.type,
-    required this.createdAt,
-    required this.updatedAt,
+    this.createdAt,
+    this.updatedAt,
+    this.duration,
+    this.weightSample,
+    this.weightGround,
+    this.size,
   });
-
-  EnzymeModel copyWith(
-    String id,
-    String name,
-    double variableA,
-    double variableB,
-    String type,
-    DateTime createdAt,
-    DateTime updatedAt,
-  ) {
-    return EnzymeModel(
-      id: id,
-      name: name,
-      variableA: variableA,
-      variableB: variableB,
-      type: type,
-      createdAt: createdAt,
-      updatedAt: updatedAt,
-    );
-  }
 
   Map<String, dynamic> toMap() {
     return {
@@ -51,8 +39,12 @@ class EnzymeModel {
       'variableA': variableA,
       'variableB': variableB,
       'type': type,
-      'createdAt': createdAt,
-      'updatedAt': updatedAt,
+      'createdAt': createdAt?.toString(),
+      'updatedAt': updatedAt?.toString(),
+      'duration': duration,
+      'weightSample': weightSample,
+      'weightGround': weightGround,
+      'size': size,
     };
   }
 
@@ -80,8 +72,18 @@ class EnzymeModel {
       variableA: double.parse(map['variableA']).toPrecision(3),
       variableB: double.parse(map['variableB']).toPrecision(3),
       type: map['type'],
-      createdAt: DateTime.parse(map['createdAt']),
-      updatedAt: DateTime.parse(map['updatedAt']),
+      createdAt:
+          map['createdAt'] != null ? DateTime.parse(map['createdAt']) : null,
+      updatedAt:
+          map['updatedAt'] != null ? DateTime.parse(map['updatedAt']) : null,
+      duration: map['duration'] != null ? int.parse(map['duration']) : null,
+      weightSample: map['weightSample'] != null
+          ? double.parse(map['weightSample'])
+          : null,
+      weightGround: map['weightGround'] != null
+          ? double.parse(map['weightGround'])
+          : null,
+      size: map['size'] != null ? double.parse(map['size']) : null,
     );
   }
 

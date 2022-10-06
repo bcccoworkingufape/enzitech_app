@@ -6,14 +6,15 @@ import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/create_experiment/create_experiment_controller.dart';
-import 'package:enzitech_app/src/features/create_experiment/widgets/create_experiment_first_step.dart';
-import 'package:enzitech_app/src/features/create_experiment/widgets/create_experiment_fourth_step.dart';
-import 'package:enzitech_app/src/features/create_experiment/widgets/create_experiment_second_step.dart';
-import 'package:enzitech_app/src/features/create_experiment/widgets/create_experiment_third_step.dart';
+import 'package:enzitech_app/src/features/create_experiment/fragments/create_experiment_first_step.dart';
+import 'package:enzitech_app/src/features/create_experiment/fragments/create_experiment_fourth_step.dart';
+import 'package:enzitech_app/src/features/create_experiment/fragments/create_experiment_second_step.dart';
+import 'package:enzitech_app/src/features/create_experiment/fragments/create_experiment_third_step.dart';
+import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_controller.dart';
 import 'package:enzitech_app/src/shared/failures/failures.dart';
+import 'package:enzitech_app/src/shared/models/experiment_request_model.dart';
 import 'package:enzitech_app/src/shared/routes/route_generator.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
-import '../../shared/models/experiment_request_model.dart';
 
 class CreateExperimentPage extends StatefulWidget {
   const CreateExperimentPage({Key? key}) : super(key: key);
@@ -24,6 +25,7 @@ class CreateExperimentPage extends StatefulWidget {
 
 class _CreateExperimentPageState extends State<CreateExperimentPage> {
   late final CreateExperimentController controller;
+  late final ExperimentsController experimentsController;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -31,6 +33,8 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
   void initState() {
     super.initState();
     controller = context.read<CreateExperimentController>();
+    experimentsController = context.read<ExperimentsController>();
+
     if (mounted) {
       controller.addListener(() {
         if (mounted && controller.state == CreateExperimentState.error) {
@@ -57,6 +61,9 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
               ),
             );
 
+            // reload the experiments list
+            experimentsController.loadExperiments(1);
+
             EZTSnackBar.show(
               context,
               "Experimento criado com sucesso!",
@@ -66,8 +73,11 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
             if (!mounted) return;
             Navigator.popAndPushNamed(
               context,
-              RouteGenerator.experiment,
+              RouteGenerator.experimentDetailed,
+              arguments: controller.experimentModel,
             );
+
+            controller.setExperimentModel(null);
           }
         }
       });

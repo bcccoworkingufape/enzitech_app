@@ -1,9 +1,17 @@
+// 🎯 Dart imports:
+import 'dart:convert';
+
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
+// 📦 Package imports:
+import 'package:url_launcher/url_launcher.dart';
+
 // 🌎 Project imports:
 import 'package:enzitech_app/src/shared/failures/failures.dart';
+import 'package:enzitech_app/src/shared/models/user_model.dart';
 import 'package:enzitech_app/src/shared/services/user_prefs_service.dart';
+import 'package:enzitech_app/src/shared/util/util.dart';
 
 enum AccountState { idle, success, error, loading }
 
@@ -21,17 +29,10 @@ class AccountController extends ChangeNotifier {
     notifyListeners();
   }
 
-  String? _username;
-  String? get username => _username;
-  void _setUsername(String username) {
-    _username = username;
-    notifyListeners();
-  }
-
-  String? _email;
-  String? get email => _email;
-  void _setEmail(String email) {
-    _email = email;
+  UserModel? _user;
+  UserModel? get user => _user;
+  void _setUser(UserModel? user) {
+    _user = user;
     notifyListeners();
   }
 
@@ -44,6 +45,8 @@ class AccountController extends ChangeNotifier {
 
       state = AccountState.success;
       notifyListeners();
+
+      _setUser(null);
     } catch (e) {
       _setFailure(e as Failure);
       state = AccountState.error;
@@ -55,23 +58,13 @@ class AccountController extends ChangeNotifier {
     state = AccountState.loading;
     notifyListeners();
     try {
-      await loadUsername();
-      await loadEmail();
+      String? user = await userPrefsServices.getFullUser();
 
-      notifyListeners();
-    } catch (e) {
-      _setFailure(e as Failure);
-      state = AccountState.error;
-      notifyListeners();
-    }
-  }
-
-  Future<void> loadUsername() async {
-    state = AccountState.loading;
-    notifyListeners();
-    try {
-      String username = await userPrefsServices.getName() ?? '';
-      _setUsername(username);
+      _setUser(
+        UserModel.fromJson(
+          jsonDecode(user!),
+        ),
+      );
 
       state = AccountState.success;
       notifyListeners();
@@ -82,17 +75,14 @@ class AccountController extends ChangeNotifier {
     }
   }
 
-  Future<void> loadEmail() async {
-    state = AccountState.loading;
-    notifyListeners();
+  Future<void> openUrl() async {
     try {
-      // UserPrefsServices userPrefsServices = UserPrefsServices();
-      String email = await userPrefsServices.getEmail() ?? '';
-      _setEmail(email);
-
-      state = AccountState.success;
-      notifyListeners();
-    } catch (e) {
+      if (!await launchUrl(Uri.parse(Constants.bccCoworkingLink))) {
+        throw UnableToOpenURL(
+            message:
+                'Não foi possível acessar ${Uri.parse(Constants.bccCoworkingLink)}');
+      }
+    } on Exception catch (e) {
       _setFailure(e as Failure);
       state = AccountState.error;
       notifyListeners();

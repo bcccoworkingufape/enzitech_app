@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // 🌎 Project imports:
-import 'app_colors.dart';
+import 'package:enzitech_app/src/shared/themes/app_colors.dart';
 
 class TextStyles {
   /// `fontSize:` 30,
@@ -67,7 +67,7 @@ class TextStyles {
   static final detailBold = GoogleFonts.ubuntu(
     fontSize: 14,
     fontWeight: FontWeight.w700,
-    color: AppColors.greyMedium,
+    color: AppColors.greySweet,
   );
 
   /// `fontSize:` 18,
@@ -79,7 +79,7 @@ class TextStyles {
   /// ![585666](https://www.colorhexa.com/585666.png)
   static final termRegular = GoogleFonts.ubuntu(
     fontSize: 18,
-    color: AppColors.greyMedium,
+    color: AppColors.greySweet,
   );
 
   //* Revisado
@@ -102,7 +102,7 @@ class TextStyles {
   );
 
   static final bodyMinRegular = GoogleFonts.ubuntu(
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: FontWeight.w400,
     color: AppColors.body,
   );
@@ -119,6 +119,18 @@ class TextStyles {
   static final bodyBold = GoogleFonts.ubuntu(
     fontSize: 18,
     fontWeight: FontWeight.w600,
+    color: AppColors.body,
+  );
+
+  static final informationExperimentStepTitle = GoogleFonts.ubuntu(
+    fontSize: 20,
+    fontWeight: FontWeight.w700,
+    color: AppColors.heading,
+  );
+
+  static final informationExperimentStepMessage = GoogleFonts.ubuntu(
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
     color: AppColors.body,
   );
 

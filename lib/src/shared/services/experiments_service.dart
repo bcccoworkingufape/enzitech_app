@@ -2,48 +2,55 @@
 import 'package:enzitech_app/src/shared/external/http_driver/dio_client.dart';
 import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
 import 'package:enzitech_app/src/shared/models/experiment_model.dart';
-import '../widgets/ezt_textfield.dart';
+import 'package:enzitech_app/src/shared/models/experiment_pagination_model.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_textfield.dart';
 
 class ExperimentsService {
   final DioClient client;
 
   ExperimentsService(this.client);
 
-  Future<List<EnzymeModel>> fetchEnzymes() async {
+  // Future<List<EnzymeModel>> getEnzymes() async {
+  //   try {
+  //     List<EnzymeModel> experiments = [];
+  //     var res = await client.get(
+  //       "/enzymes",
+  //     );
+
+  //     res.data.forEach((experiment) {
+  //       experiments.add(EnzymeModel.fromMap(experiment));
+  //     });
+
+  //     return experiments;
+  //   } catch (e) {
+  //     rethrow;
+  //   }
+  // }
+
+  Future<ExperimentPaginationModel> getExperiments(
+    int page, {
+    String? orderBy,
+    String? ordering,
+    int? limit,
+    bool? finished,
+  }) async {
     try {
-      List<EnzymeModel> experiments = [];
+      var addOrderBy = orderBy != null ? "&orderBy=$orderBy" : "";
+      var addOrdering = ordering != null ? "&ordering=$ordering" : "";
+      var addLimit = limit != null ? "&limit=$limit" : "";
+      var addFinished = finished != null ? "&finished=$finished" : "";
+
       var res = await client.get(
-        "/enzymes",
+        "/experiments?page=$page$addOrderBy$addOrdering$addLimit$addFinished",
       );
 
-      res.data.forEach((experiment) {
-        experiments.add(EnzymeModel.fromMap(experiment));
-      });
-
-      return experiments;
+      return ExperimentPaginationModel.fromMap(res.data);
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<List<ExperimentModel>> fetchExperiments() async {
-    try {
-      List<ExperimentModel> experiments = [];
-      var res = await client.get(
-        "/experiments",
-      );
-
-      res.data["experiments"].forEach((experiment) {
-        experiments.add(ExperimentModel.fromMap(experiment));
-      });
-
-      return experiments;
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  Future<void> createExperiment(
+  Future<ExperimentModel> createExperiment(
     String name,
     String description,
     int repetitions,
@@ -70,7 +77,6 @@ class ExperimentsService {
           )
           .toList();
 
-      // ignore: unused_local_variable
       var res = await client.post(
         "/experiments",
         data: {
@@ -81,6 +87,8 @@ class ExperimentsService {
           "experimentsEnzymes": enzymes,
         },
       );
+
+      return ExperimentModel.fromMap(res.data);
     } catch (e) {
       rethrow;
     }
@@ -94,6 +102,20 @@ class ExperimentsService {
       var res = await client.delete(
         "/experiments/$id",
       );
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<ExperimentModel> getExperimentDetailed(
+    String id,
+  ) async {
+    try {
+      var res = await client.get(
+        "/experiments/$id",
+      );
+
+      return ExperimentModel.fromMap(res.data);
     } catch (e) {
       rethrow;
     }

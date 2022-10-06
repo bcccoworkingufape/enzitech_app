@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 // 🌎 Project imports:
 import 'package:enzitech_app/src/shared/failures/failures.dart';
 import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
+import 'package:enzitech_app/src/shared/models/experiment_model.dart';
+import 'package:enzitech_app/src/shared/models/experiment_request_model.dart';
 import 'package:enzitech_app/src/shared/services/experiments_service.dart';
-import '../../shared/models/experiment_request_model.dart';
-import '../../shared/widgets/ezt_textfield.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_textfield.dart';
 
 enum CreateExperimentState { idle, success, error, loading }
 
@@ -61,27 +62,13 @@ class CreateExperimentController extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<EnzymeModel> _enzymes = [];
-  List<EnzymeModel> get enzymes => _enzymes;
-  void _setEnzymes(List<EnzymeModel> enzymes) {
-    _enzymes = enzymes;
+  ExperimentModel? _experimentModel;
+  ExperimentModel? get experimentModel => _experimentModel;
+  void setExperimentModel(
+    ExperimentModel? experimentModel,
+  ) {
+    _experimentModel = experimentModel;
     notifyListeners();
-  }
-
-  Future<void> loadEnzymes() async {
-    state = CreateExperimentState.loading;
-    notifyListeners();
-    try {
-      final enzymesList = await experimentService.fetchEnzymes();
-      _setEnzymes(enzymesList);
-
-      state = CreateExperimentState.success;
-      notifyListeners();
-    } catch (e) {
-      _setFailure(e as Failure);
-      state = CreateExperimentState.error;
-      notifyListeners();
-    }
   }
 
   Future<void> createExperiment(
@@ -95,7 +82,7 @@ class CreateExperimentController extends ChangeNotifier {
     state = CreateExperimentState.loading;
     notifyListeners();
     try {
-      await experimentService.createExperiment(
+      var experiment = await experimentService.createExperiment(
         name,
         description,
         repetitions,
@@ -106,6 +93,7 @@ class CreateExperimentController extends ChangeNotifier {
 
       state = CreateExperimentState.success;
       experimentCreated = true;
+      setExperimentModel(experiment);
       notifyListeners();
     } catch (e) {
       _setFailure(e as Failure);

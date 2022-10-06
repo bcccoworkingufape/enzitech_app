@@ -27,6 +27,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  auto_size_text: ^3.0.0
   cupertino_icons: ^1.0.4
   dio: ^4.0.6
   flutter:
@@ -76,6 +77,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   icons_launcher: ^1.1.8
+  import_path_converter: ^1.0.1
 
 flutter_icons:
   image_path: "assets/launcher/icon.png"

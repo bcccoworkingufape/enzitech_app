@@ -9,6 +9,8 @@ import 'package:enzitech_app/src/features/home/fragments/treatments/components/t
 import 'package:enzitech_app/src/features/home/fragments/treatments/treatments_controller.dart';
 import 'package:enzitech_app/src/features/home/home_controller.dart';
 import 'package:enzitech_app/src/shared/failures/failures.dart';
+import 'package:enzitech_app/src/shared/themes/app_text_styles.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_not_founded.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_pull_to_refresh.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
 
@@ -56,7 +58,7 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
             SizedBox(
               height: height / 1.75,
               child: const Center(
-                child: Text("Erro ao carregar experimentos"),
+                child: Text("Erro ao carregar tratamentos"),
               ),
             ),
           ],
@@ -75,9 +77,9 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
         child: Column(
           children: [
             SizedBox(
-              height: height / 1.35,
-              child: const Center(
-                child: Text("Tratamentos não encontrados"),
+              height: height / 1.65,
+              child: const EZTNotFounded(
+                message: "Tratamentos não encontrados",
               ),
             ),
           ],
@@ -86,46 +88,51 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
     }
 
     return ListView.builder(
+      controller: controller.scrollController,
       shrinkWrap: true,
       physics: const AlwaysScrollableScrollPhysics(),
       itemCount: controller.treatments.length,
       itemBuilder: (context, index) {
         var treatment = controller.treatments[index];
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 8.0),
-          child: Dismissible(
-            key: Key(treatment.id),
-            onDismissed: (direction) {
-              controller.deleteTreatment(treatment.id);
+        return Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Dismissible(
+                key: Key(treatment.id),
+                onDismissed: (direction) {
+                  controller.deleteTreatment(treatment.id);
 
-              // Remove the item from the data source.
-              setState(() {
-                controller.treatments.removeAt(index);
-              });
+                  // Remove the item from the data source.
+                  setState(() {
+                    controller.treatments.removeAt(index);
+                  });
 
-              EZTSnackBar.clear(context);
+                  EZTSnackBar.clear(context);
 
-              EZTSnackBar.show(
-                context,
-                '${treatment.name} excluído!',
-                eztSnackBarType: EZTSnackBarType.error,
-              );
-
-              // Then show a snackbar.
-              // ScaffoldMessenger.of(context).showSnackBar(
-              //     SnackBar(content: Text('${experiment.name} excluído!')));
-            },
-            // Show a red background as the item is swiped away.
-            background: Container(color: Colors.red),
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              child: TreatmentCard(
-                name: treatment.name,
-                createdAt: treatment.createdAt,
-                description: treatment.description,
+                  EZTSnackBar.show(
+                    context,
+                    '${treatment.name} excluído!',
+                    eztSnackBarType: EZTSnackBarType.error,
+                  );
+                },
+                // Show a red background as the item is swiped away.
+                background: Container(color: Colors.red),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: TreatmentCard(
+                    name: treatment.name,
+                    createdAt: treatment.createdAt!,
+                    description: treatment.description,
+                  ),
+                ),
               ),
             ),
-          ),
+            if (index == controller.treatments.length - 1)
+              const Padding(
+                padding: EdgeInsets.only(bottom: 8),
+              )
+          ],
         );
       },
     );
@@ -143,9 +150,22 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: Column(
           children: [
-            const SizedBox(
-              height: 16,
-            ),
+            if (controller.treatments.isNotEmpty &&
+                controller.state != TreatmentsState.loading)
+              Column(
+                children: [
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Text(
+                    "🧪 ${controller.treatments.length} tratamento${controller.treatments.length > 1 ? 's ' : ' '}encontrado${controller.treatments.length > 1 ? 's ' : ' '}",
+                    style: TextStyles.link.copyWith(fontSize: 16),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                ],
+              ),
             Expanded(
               child: _buildTreatmentsList(heightMQ),
             ),

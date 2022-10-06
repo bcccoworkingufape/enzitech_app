@@ -11,6 +11,10 @@ import 'package:enzitech_app/src/shared/validator/validator.dart';
 typedef WhenCondition = bool Function();
 
 class Toolkit {
+  static String doubleToPercentual(double value) {
+    return '${(value * 100).round()}%';
+  }
+
   static String formatDocumentType(String document) {
     document = removeEspecialCharacters(document);
 
