@@ -62,6 +62,7 @@ class _HomePageState extends State<HomePage> {
         await treatmentsController.loadTreatments();
         await enzymesController.loadEnzymes();
         await accountController.loadAccount();
+        await accountController.loadAppInfo();
       });
       setAllButtonsVisible();
 
