@@ -1,6 +1,7 @@
 // 🐦 Flutter imports:
 
 // 🐦 Flutter imports:
+import 'package:enzitech_app/src/shared/models/experiment_model.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -179,25 +180,80 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                 child: Dismissible(
                   key: UniqueKey(),
                   onDismissed: (direction) async {
-                    await controller.deleteExperiment(experiment.id);
-
                     // Remove the item from the data source.
                     setState(() {
                       controller.experiments.removeAt(index);
                     });
 
-                    if (mounted) {
-                      EZTSnackBar.clear(context);
+                    EZTSnackBar.clear(context);
 
-                      EZTSnackBar.show(
-                        context,
-                        '${experiment.name} excluído!',
-                        eztSnackBarType: EZTSnackBarType.error,
-                      );
-                    }
+                    bool permanentlyDeleted = true;
+
+                    EZTSnackBar.show(
+                      context,
+                      '${experiment.name} excluído!',
+                      eztSnackBarType: EZTSnackBarType.error,
+                      action: SnackBarAction(
+                        label: 'Desfazer',
+                        textColor: AppColors.white,
+                        onPressed: () {
+                          setState(() {
+                            controller.experiments.insert(index, experiment);
+                            permanentlyDeleted = false;
+                          });
+                          // todoRepository.saveTodoList(todos);
+                        },
+                      ),
+                      onDismissFunction: () async {
+                        if (permanentlyDeleted) {
+                          await controller.deleteExperiment(experiment.id);
+                        }
+                      },
+                    );
                   },
-                  // Show a red background as the item is swiped away.
-                  background: Container(color: Colors.red),
+                  background: Container(
+                    color: Colors.red,
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: const [
+                          Icon(
+                            PhosphorIcons.trashLight,
+                            color: Colors.white,
+                          ),
+                          Text(
+                            'Excluir',
+                            style: TextStyle(color: Colors.white),
+                            textAlign: TextAlign.right,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  direction: DismissDirection.endToStart,
+                  /* confirmDismiss: (DismissDirection direction) async {
+                    return await showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Excluir o experimento?'),
+                          content: const Text(
+                              'Você tem certeza que excluir este experimento?'),
+                          actions: [
+                            TextButton(
+                                onPressed: () =>
+                                    Navigator.of(context).pop(true),
+                                child: const Text("EXCLUIR")),
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(false),
+                              child: const Text("CANCELAR"),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }, */
                   child: ExperimentCard(
                     experiment: experiment,
                     indexOfExperiment: index + 1,
