@@ -96,9 +96,10 @@ class _AccountPageState extends State<AccountPage> {
                   lightTheme: const SettingsThemeData(
                     settingsListBackground: AppColors.background,
                     titleTextColor: AppColors.grenDark,
-                    // leadingIconsColor: AppColors.greyBlack,
+                    leadingIconsColor: AppColors.greyBlack,
                   ),
                   sections: [
+                    // ACCOUNT
                     SettingsSection(
                       title: const Text('Conta'),
                       tiles: <SettingsTile>[
@@ -196,8 +197,55 @@ class _AccountPageState extends State<AccountPage> {
                         ),
                       ],
                     ),
+                    // PREFERENCES
                     SettingsSection(
+                      title: const Text('Preferências'),
                       tiles: [
+                        SettingsTile.switchTile(
+                          initialValue: controller.enableExcludeConfirmation,
+                          onToggle: (value) =>
+                              controller.setEnableExcludeConfirmation(value),
+                          leading: const Icon(
+                            PhosphorIcons.trash,
+                          ),
+                          title: const Text('Confirmação de exclusão'),
+                        ),
+                      ],
+                    ),
+                    // APP
+                    SettingsSection(
+                      title: const Text('App'),
+                      tiles: [
+                        SettingsTile(
+                          leading: const Icon(
+                            PhosphorIcons.gitBranch,
+                          ),
+                          title: Platform.isIOS
+                              ? Flex(
+                                  direction: Axis.horizontal,
+                                  children: const [
+                                    Text('Versão'),
+                                  ],
+                                )
+                              : const Text('Versão'),
+                          value: Platform.isIOS
+                              ? Flexible(
+                                  flex: 1,
+                                  child: Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Text(
+                                      "${controller.appInfo!.version}+${controller.appInfo!.buildNumber}",
+                                      overflow: TextOverflow.ellipsis,
+                                      style: descriptionTextStyle,
+                                    ),
+                                  ),
+                                )
+                              : Text(
+                                  "${controller.appInfo!.version}+${controller.appInfo!.buildNumber}",
+                                  overflow: TextOverflow.ellipsis,
+                                  style: descriptionTextStyle,
+                                ),
+                        ),
                         SettingsTile.navigation(
                           leading: const Icon(
                             PhosphorIcons.signOut,

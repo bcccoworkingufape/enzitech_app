@@ -61,7 +61,8 @@ class AuthController extends ChangeNotifier {
       setLoggedName(response.name);
       UserPrefsServices userPrefsServices = UserPrefsServices();
       await userPrefsServices.saveFullUser(jsonEncode(response));
-      userPrefsServices.saveToken(response.token);
+      await userPrefsServices.saveToken(response.token);
+      await userPrefsServices.initConfirmationsEnabled();
       await client.setConfig(enableGetToken: true);
 
       state = AuthState.success;

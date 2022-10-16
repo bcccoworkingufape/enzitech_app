@@ -2,14 +2,16 @@
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
+import 'package:enzitech_app/src/features/home/fragments/account/account_controller.dart';
 import 'package:enzitech_app/src/features/home/fragments/treatments/components/treatment_card.dart';
 import 'package:enzitech_app/src/features/home/fragments/treatments/treatments_controller.dart';
 import 'package:enzitech_app/src/features/home/home_controller.dart';
 import 'package:enzitech_app/src/shared/failures/failures.dart';
-import 'package:enzitech_app/src/shared/themes/app_text_styles.dart';
+import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_not_founded.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_pull_to_refresh.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
@@ -101,8 +103,6 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
               child: Dismissible(
                 key: Key(treatment.id),
                 onDismissed: (direction) {
-                  controller.deleteTreatment(treatment.id);
-
                   // Remove the item from the data source.
                   setState(() {
                     controller.treatments.removeAt(index);
@@ -110,14 +110,77 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
 
                   EZTSnackBar.clear(context);
 
+                  bool permanentlyDeleted = true;
+
                   EZTSnackBar.show(
                     context,
                     '${treatment.name} excluído!',
                     eztSnackBarType: EZTSnackBarType.error,
+                    action: SnackBarAction(
+                      label: 'Desfazer',
+                      textColor: AppColors.white,
+                      onPressed: () {
+                        setState(() {
+                          controller.treatments.insert(index, treatment);
+                          permanentlyDeleted = false;
+                        });
+                        // todoRepository.saveTodoList(todos);
+                      },
+                    ),
+                    onDismissFunction: () async {
+                      if (permanentlyDeleted) {
+                        await controller.deleteTreatment(treatment.id);
+                      }
+                    },
                   );
                 },
-                // Show a red background as the item is swiped away.
-                background: Container(color: Colors.red),
+                background: Container(
+                  color: Colors.red,
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: const [
+                        Icon(
+                          PhosphorIcons.trashLight,
+                          color: Colors.white,
+                        ),
+                        Text(
+                          'Excluir',
+                          style: TextStyle(color: Colors.white),
+                          textAlign: TextAlign.right,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                direction: DismissDirection.endToStart,
+                confirmDismiss:
+                    context.read<AccountController>().enableExcludeConfirmation!
+                        ? (DismissDirection direction) async {
+                            return await showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text('Excluir o tratamento?'),
+                                  content: const Text(
+                                      'Você tem certeza que deseja excluir este tratamento?'),
+                                  actions: [
+                                    TextButton(
+                                        onPressed: () =>
+                                            Navigator.of(context).pop(true),
+                                        child: const Text("EXCLUIR")),
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.of(context).pop(false),
+                                      child: const Text("CANCELAR"),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          }
+                        : null,
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: TreatmentCard(

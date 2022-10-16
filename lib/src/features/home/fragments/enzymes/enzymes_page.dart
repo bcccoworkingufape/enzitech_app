@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
@@ -118,8 +119,6 @@ class _EnzymesPageState extends State<EnzymesPage> {
               replacement: Dismissible(
                 key: Key(enzyme.id),
                 onDismissed: (direction) {
-                  controller.deleteEnzyme(enzyme.id);
-
                   // Remove the item from the data source.
                   setState(() {
                     controller.enzymes.removeAt(index);
@@ -127,14 +126,77 @@ class _EnzymesPageState extends State<EnzymesPage> {
 
                   EZTSnackBar.clear(context);
 
+                  bool permanentlyDeleted = true;
+
                   EZTSnackBar.show(
                     context,
                     '${enzyme.name} excluído!',
                     eztSnackBarType: EZTSnackBarType.error,
+                    action: SnackBarAction(
+                      label: 'Desfazer',
+                      textColor: AppColors.white,
+                      onPressed: () {
+                        setState(() {
+                          controller.enzymes.insert(index, enzyme);
+                          permanentlyDeleted = false;
+                        });
+                        // todoRepository.saveTodoList(todos);
+                      },
+                    ),
+                    onDismissFunction: () async {
+                      if (permanentlyDeleted) {
+                        await controller.deleteEnzyme(enzyme.id);
+                      }
+                    },
                   );
                 },
-                // Show a red background as the item is swiped away.
-                background: Container(color: Colors.red),
+                background: Container(
+                  color: Colors.red,
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: const [
+                        Icon(
+                          PhosphorIcons.trashLight,
+                          color: Colors.white,
+                        ),
+                        Text(
+                          'Excluir',
+                          style: TextStyle(color: Colors.white),
+                          textAlign: TextAlign.right,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                direction: DismissDirection.endToStart,
+                confirmDismiss:
+                    context.read<AccountController>().enableExcludeConfirmation!
+                        ? (DismissDirection direction) async {
+                            return await showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text('Excluir a enzima?'),
+                                  content: const Text(
+                                      'Você tem certeza que deseja excluir esta enzima?'),
+                                  actions: [
+                                    TextButton(
+                                        onPressed: () =>
+                                            Navigator.of(context).pop(true),
+                                        child: const Text("EXCLUIR")),
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.of(context).pop(false),
+                                      child: const Text("CANCELAR"),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          }
+                        : null,
                 child: getEnzymeCard(enzyme),
               ),
               child: Padding(

@@ -1,8 +1,9 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-// 📦 Package imports:
-import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+// 🌎 Project imports:
+import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
+import 'package:enzitech_app/src/shared/widgets/full_widgets_override/liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 enum EZTPullToRefreshType {
   regular,
@@ -39,6 +40,9 @@ class _EZTPullToRefreshState extends State<EZTPullToRefresh> {
       onRefresh: widget.onRefresh,
       showChildOpacityTransition: widget.showChildOpacityTransition,
       springAnimationDurationInMilliseconds: 500,
+      backgroundImage: const AssetImage(
+        AppImages.logoWhite,
+      ),
       child: widget.child,
     );
   }

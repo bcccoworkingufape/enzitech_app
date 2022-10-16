@@ -5,10 +5,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/shared/failures/failures.dart';
+import 'package:enzitech_app/src/shared/models/app_info_model.dart';
 import 'package:enzitech_app/src/shared/models/user_model.dart';
 import 'package:enzitech_app/src/shared/services/user_prefs_service.dart';
 import 'package:enzitech_app/src/shared/util/util.dart';
@@ -36,6 +38,22 @@ class AccountController extends ChangeNotifier {
     notifyListeners();
   }
 
+  AppInfoModel? _appInfo;
+  AppInfoModel? get appInfo => _appInfo;
+  void _setAppInfo(AppInfoModel? appInfo) {
+    _appInfo = appInfo;
+    notifyListeners();
+  }
+
+  bool? _enableExcludeConfirmation;
+  bool? get enableExcludeConfirmation => _enableExcludeConfirmation;
+  void setEnableExcludeConfirmation(bool enableExcludeExperimentConfirmation) {
+    _enableExcludeConfirmation = enableExcludeExperimentConfirmation;
+    userPrefsServices
+        .saveExcludeConfirmation(enableExcludeExperimentConfirmation);
+    notifyListeners();
+  }
+
   Future<void> logout() async {
     state = AccountState.loading;
     notifyListeners();
@@ -47,6 +65,49 @@ class AccountController extends ChangeNotifier {
       notifyListeners();
 
       _setUser(null);
+      _setAppInfo(null);
+    } catch (e) {
+      _setFailure(e as Failure);
+      state = AccountState.error;
+      notifyListeners();
+    }
+  }
+
+  Future<void> loadAccountFragment() async {
+    state = AccountState.loading;
+    notifyListeners();
+
+    await loadAccount();
+    await loadPreferences();
+    await loadAppInfo();
+
+    state = AccountState.success;
+    notifyListeners();
+  }
+
+  Future<void> loadPreferences() async {
+    bool enable = await userPrefsServices.getExcludeConfirmation();
+    setEnableExcludeConfirmation(enable);
+    notifyListeners();
+  }
+
+  Future<void> loadAppInfo() async {
+    state = AccountState.loading;
+    notifyListeners();
+    try {
+      PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+      AppInfoModel appInfoModel = AppInfoModel(
+        appName: packageInfo.appName,
+        buildNumber: packageInfo.buildNumber,
+        packageName: packageInfo.packageName,
+        version: packageInfo.version,
+      );
+
+      _setAppInfo(appInfoModel);
+
+      state = AccountState.success;
+      notifyListeners();
     } catch (e) {
       _setFailure(e as Failure);
       state = AccountState.error;
