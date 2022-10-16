@@ -56,9 +56,6 @@ class AppWidget extends StatelessWidget {
           create: (context) => RecoverPasswordController(context.read()),
         ),
         ChangeNotifierProvider(
-          create: (context) => HomeController(),
-        ),
-        ChangeNotifierProvider(
           create: (context) => AccountController(
             UserPrefsServices(),
           ),
@@ -96,6 +93,14 @@ class AppWidget extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => CreateEnzymeController(
             EnzymesService(context.read()),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => HomeController(
+            accountController: context.read(),
+            enzymesController: context.read(),
+            experimentsController: context.read(),
+            treatmentsController: context.read(),
           ),
         ),
       ],

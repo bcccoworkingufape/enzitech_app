@@ -1,3 +1,6 @@
+// 🎯 Dart imports:
+import 'dart:math' as math;
+
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -8,13 +11,9 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
-import 'package:enzitech_app/src/features/home/fragments/account/account_controller.dart';
 import 'package:enzitech_app/src/features/home/fragments/account/account_page.dart';
-import 'package:enzitech_app/src/features/home/fragments/enzymes/enzymes_controller.dart';
 import 'package:enzitech_app/src/features/home/fragments/enzymes/enzymes_page.dart';
-import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_controller.dart';
 import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_page.dart';
-import 'package:enzitech_app/src/features/home/fragments/treatments/treatments_controller.dart';
 import 'package:enzitech_app/src/features/home/fragments/treatments/treatments_page.dart';
 import 'package:enzitech_app/src/features/home/home_controller.dart';
 import 'package:enzitech_app/src/shared/failures/failures.dart';
@@ -30,12 +29,17 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
   late final HomeController controller;
-  late final ExperimentsController experimentsController;
-  late final TreatmentsController treatmentsController;
-  late final EnzymesController enzymesController;
-  late final AccountController accountController;
+  late final AnimationController animationController =
+      AnimationController(vsync: this, duration: const Duration(seconds: 2))
+        ..repeat();
+
+  // late final ExperimentsController experimentsController;
+  // late final TreatmentsController treatmentsController;
+  // late final EnzymesController enzymesController;
+  // late final AccountController accountController;
 
   // late ScrollController experimentsController.scrollController;
 
@@ -49,22 +53,26 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     controller = context.read<HomeController>();
-    experimentsController = context.read<ExperimentsController>();
-    treatmentsController = context.read<TreatmentsController>();
-    enzymesController = context.read<EnzymesController>();
-    accountController = context.read<AccountController>();
-
-    initFragements();
+    // experimentsController = context.read<ExperimentsController>();
+    // treatmentsController = context.read<TreatmentsController>();
+    // enzymesController = context.read<EnzymesController>();
+    // accountController = context.read<AccountController>();
 
     if (mounted) {
+      // Future.delayed(Duration.zero, () async {
+      //   await controller.experimentsController.loadExperiments(1);
+      //   await controller.treatmentsController.loadTreatments();
+      //   await controller.enzymesController.loadEnzymes();
+      //   await controller.accountController.loadAccountFragment();
+      // });
+
       Future.delayed(Duration.zero, () async {
-        await experimentsController.loadExperiments(1);
-        await treatmentsController.loadTreatments();
-        await enzymesController.loadEnzymes();
-        await accountController.loadAccount();
-        await accountController.loadAppInfo();
+        await controller.getContent();
       });
+
       setAllButtonsVisible();
+      initFragements();
+      // initFragements();
 
       controller.addListener(
         () {
@@ -77,9 +85,9 @@ class _HomePageState extends State<HomePage> {
           }
         },
       );
-      experimentsController.scrollController.addListener(() {
-        if (experimentsController
-                .scrollController.position.userScrollDirection ==
+      controller.experimentsController.scrollController.addListener(() {
+        if (controller.experimentsController.scrollController.position
+                .userScrollDirection ==
             ScrollDirection.reverse) {
           if (_isVisibleExperimentButton == true && mounted) {
             setState(() {
@@ -87,8 +95,8 @@ class _HomePageState extends State<HomePage> {
             });
           }
         }
-        if (experimentsController
-                .scrollController.position.userScrollDirection ==
+        if (controller.experimentsController.scrollController.position
+                .userScrollDirection ==
             ScrollDirection.forward) {
           if (_isVisibleExperimentButton == false && mounted) {
             setState(() {
@@ -97,9 +105,9 @@ class _HomePageState extends State<HomePage> {
           }
         }
       });
-      treatmentsController.scrollController.addListener(() {
-        if (treatmentsController
-                .scrollController.position.userScrollDirection ==
+      controller.treatmentsController.scrollController.addListener(() {
+        if (controller.treatmentsController.scrollController.position
+                .userScrollDirection ==
             ScrollDirection.reverse) {
           if (_isVisibleTreatmentButton == true && mounted) {
             setState(() {
@@ -107,8 +115,8 @@ class _HomePageState extends State<HomePage> {
             });
           }
         }
-        if (treatmentsController
-                .scrollController.position.userScrollDirection ==
+        if (controller.treatmentsController.scrollController.position
+                .userScrollDirection ==
             ScrollDirection.forward) {
           if (_isVisibleTreatmentButton == false && mounted) {
             setState(() {
@@ -117,8 +125,9 @@ class _HomePageState extends State<HomePage> {
           }
         }
       });
-      enzymesController.scrollController.addListener(() {
-        if (enzymesController.scrollController.position.userScrollDirection ==
+      controller.enzymesController.scrollController.addListener(() {
+        if (controller.enzymesController.scrollController.position
+                .userScrollDirection ==
             ScrollDirection.reverse) {
           if (_isVisibleEnzymeButton == true && mounted) {
             setState(() {
@@ -126,7 +135,8 @@ class _HomePageState extends State<HomePage> {
             });
           }
         }
-        if (enzymesController.scrollController.position.userScrollDirection ==
+        if (controller.enzymesController.scrollController.position
+                .userScrollDirection ==
             ScrollDirection.forward) {
           if (_isVisibleEnzymeButton == false && mounted) {
             setState(() {
@@ -206,9 +216,9 @@ class _HomePageState extends State<HomePage> {
       );
     }
 
-    if (accountController.user != null) {
+    if (controller.accountController.user != null) {
       if (controller.fragmentIndex == 2 &&
-          accountController.user!.userType == UserTypeEnum.admin &&
+          controller.accountController.user!.userType == UserTypeEnum.admin &&
           _isVisibleEnzymeButton) {
         return FloatingActionButton.extended(
           onPressed: () {
@@ -246,10 +256,28 @@ class _HomePageState extends State<HomePage> {
           alignment: Alignment.center,
         ),
       ),
-      body: ChangeNotifierProvider(
-        create: (BuildContext context) {},
-        child: _fragments[controller.fragmentIndex],
-      ),
+      body: Consumer(builder: (context, _, __) {
+        if (controller.state == HomeState.loading) {
+          return Center(
+            child: AnimatedBuilder(
+              animation: animationController,
+              builder: (_, child) {
+                return Transform.rotate(
+                  angle: animationController.value * 2 * math.pi,
+                  child: child,
+                );
+              },
+              child: SvgPicture.asset(
+                AppSvgs.iconLogo,
+                alignment: Alignment.center,
+                width: 75,
+              ),
+            ),
+          );
+        }
+
+        return _fragments[controller.fragmentIndex];
+      }),
       floatingActionButton: dealWithFloatingActionButton,
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.shifting,
@@ -285,9 +313,10 @@ class _HomePageState extends State<HomePage> {
           controller.setFragmentIndex(index);
           if (index == 0 &&
               beforeSet == 0 &&
-              experimentsController.scrollController.hasClients) {
-            experimentsController.scrollController.animateTo(
-              experimentsController.scrollController.position.minScrollExtent +
+              controller.experimentsController.scrollController.hasClients) {
+            controller.experimentsController.scrollController.animateTo(
+              controller.experimentsController.scrollController.position
+                      .minScrollExtent +
                   (kBottomNavigationBarHeight / 1000),
               duration: const Duration(milliseconds: 1500),
               curve: Curves.fastOutSlowIn,

@@ -1,7 +1,4 @@
 // 🐦 Flutter imports:
-
-// 🐦 Flutter imports:
-import 'package:enzitech_app/src/shared/models/experiment_model.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -232,28 +229,32 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                     ),
                   ),
                   direction: DismissDirection.endToStart,
-                  /* confirmDismiss: (DismissDirection direction) async {
-                    return await showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text('Excluir o experimento?'),
-                          content: const Text(
-                              'Você tem certeza que excluir este experimento?'),
-                          actions: [
-                            TextButton(
-                                onPressed: () =>
-                                    Navigator.of(context).pop(true),
-                                child: const Text("EXCLUIR")),
-                            TextButton(
-                              onPressed: () => Navigator.of(context).pop(false),
-                              child: const Text("CANCELAR"),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  }, */
+                  confirmDismiss: widget.homeController.accountController
+                          .enableExcludeConfirmation!
+                      ? (DismissDirection direction) async {
+                          return await showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text('Excluir o experimento?'),
+                                content: const Text(
+                                    'Você tem certeza que deseja excluir este experimento?'),
+                                actions: [
+                                  TextButton(
+                                      onPressed: () =>
+                                          Navigator.of(context).pop(true),
+                                      child: const Text("EXCLUIR")),
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(false),
+                                    child: const Text("CANCELAR"),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
+                      : null,
                   child: ExperimentCard(
                     experiment: experiment,
                     indexOfExperiment: index + 1,

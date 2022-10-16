@@ -45,6 +45,15 @@ class AccountController extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool? _enableExcludeConfirmation;
+  bool? get enableExcludeConfirmation => _enableExcludeConfirmation;
+  void setEnableExcludeConfirmation(bool enableExcludeExperimentConfirmation) {
+    _enableExcludeConfirmation = enableExcludeExperimentConfirmation;
+    userPrefsServices
+        .saveExcludeConfirmation(enableExcludeExperimentConfirmation);
+    notifyListeners();
+  }
+
   Future<void> logout() async {
     state = AccountState.loading;
     notifyListeners();
@@ -62,6 +71,24 @@ class AccountController extends ChangeNotifier {
       state = AccountState.error;
       notifyListeners();
     }
+  }
+
+  Future<void> loadAccountFragment() async {
+    state = AccountState.loading;
+    notifyListeners();
+
+    await loadAccount();
+    await loadPreferences();
+    await loadAppInfo();
+
+    state = AccountState.success;
+    notifyListeners();
+  }
+
+  Future<void> loadPreferences() async {
+    bool enable = await userPrefsServices.getExcludeConfirmation();
+    setEnableExcludeConfirmation(enable);
+    notifyListeners();
   }
 
   Future<void> loadAppInfo() async {

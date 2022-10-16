@@ -99,6 +99,7 @@ class _AccountPageState extends State<AccountPage> {
                     leadingIconsColor: AppColors.greyBlack,
                   ),
                   sections: [
+                    // ACCOUNT
                     SettingsSection(
                       title: const Text('Conta'),
                       tiles: <SettingsTile>[
@@ -196,6 +197,22 @@ class _AccountPageState extends State<AccountPage> {
                         ),
                       ],
                     ),
+                    // PREFERENCES
+                    SettingsSection(
+                      title: const Text('Preferências'),
+                      tiles: [
+                        SettingsTile.switchTile(
+                          initialValue: controller.enableExcludeConfirmation,
+                          onToggle: (value) =>
+                              controller.setEnableExcludeConfirmation(value),
+                          leading: const Icon(
+                            PhosphorIcons.trash,
+                          ),
+                          title: const Text('Confirmação de exclusão'),
+                        ),
+                      ],
+                    ),
+                    // APP
                     SettingsSection(
                       title: const Text('App'),
                       tiles: [
