@@ -251,7 +251,7 @@ class _HomePageState extends State<HomePage>
     return Scaffold(
       appBar: AppBar(
         title: SvgPicture.asset(
-          'assets/images/logo.svg',
+          AppSvgs.logo,
           fit: BoxFit.contain,
           alignment: Alignment.center,
         ),
