@@ -1,7 +1,4 @@
 class AppImages {
-  // static const scan = "assets/images/scan.png";
-  // static const union = "assets/images/union.png";
-  // static const google = "assets/images/google.png";
-  // static const logo = "assets/images/logo_min.png";
-  // static const fullLogo = "assets/images/place_servicos_min.png";
+  static const logoGreen = "assets/images/logo_green.png";
+  static const logoWhite = "assets/images/logo_white.png";
 }

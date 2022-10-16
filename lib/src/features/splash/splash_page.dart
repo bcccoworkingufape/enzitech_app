@@ -7,7 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 // 🌎 Project imports:
 import 'package:enzitech_app/src/app_config.dart';
 import 'package:enzitech_app/src/shared/routes/route_generator.dart';
-import 'package:enzitech_app/src/shared/themes/app_colors.dart';
+import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -44,7 +44,7 @@ class _SplashPageState extends State<SplashPage> {
     return Scaffold(
       backgroundColor: AppColors.primary,
       body: SvgPicture.asset(
-        'assets/images/splash.svg',
+        AppSvgs.splash,
         fit: BoxFit.contain,
         alignment: Alignment.center,
       ),

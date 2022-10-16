@@ -1,6 +1,8 @@
 class AppSvgs {
-  static const fullLogo = "assets/images/full_logo.svg";
-  static const iconLogo = "assets/images/icon_logo.svg";
-  static const developedBy = "assets/images/developed_by.svg";
-  static const notFound = "assets/images/not_found.svg";
+  static const fullLogo = "assets/svgs/full_logo.svg";
+  static const iconLogo = "assets/svgs/icon_logo.svg";
+  static const developedBy = "assets/svgs/developed_by.svg";
+  static const notFound = "assets/svgs/not_found.svg";
+  static const splash = "assets/svgs/splash.svg";
+  static const logo = "assets/svgs/logo.svg";
 }

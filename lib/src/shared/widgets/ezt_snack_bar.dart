@@ -23,6 +23,7 @@ class EZTSnackBar {
     Color? snackBarColor,
     TextStyle? textStyle,
     bool centerTitle,
+    SnackBarAction? action,
   ) {
     return SnackBar(
       // elevation: 0.0,
@@ -48,12 +49,14 @@ class EZTSnackBar {
       //   label: 'OK',
       //   onPressed: () {},
       // ),
+      action: action,
     );
   }
 
   _buildSuccessSnackBar(
     BuildContext context,
     String message,
+    SnackBarAction? action,
   ) {
     return SnackBar(
       // elevation: 0.0,
@@ -69,12 +72,14 @@ class EZTSnackBar {
       //   label: 'OK',
       //   onPressed: () {},
       // ),
+      action: action,
     );
   }
 
   _buildErrorSnackBar(
     BuildContext context,
     String message,
+    SnackBarAction? action,
   ) {
     return SnackBar(
       // elevation: 0.0,
@@ -90,6 +95,7 @@ class EZTSnackBar {
       //   label: 'OK',
       //   onPressed: () {},
       // ),
+      action: action,
     );
   }
 
@@ -100,39 +106,50 @@ class EZTSnackBar {
     Color? snackBarColor,
     TextStyle? textStyle,
     bool centerTitle,
+    SnackBarAction? action,
   ) {
     switch (eztSnackBarType) {
       case EZTSnackBarType.success:
-        return _buildSuccessSnackBar(context, message);
+        return _buildSuccessSnackBar(context, message, action);
       case EZTSnackBarType.error:
-        return _buildErrorSnackBar(context, message);
+        return _buildErrorSnackBar(context, message, action);
       case EZTSnackBarType.regular:
       default:
         return _buildSnackBar(
-            context, message, snackBarColor, textStyle, centerTitle);
+            context, message, snackBarColor, textStyle, centerTitle, action);
     }
   }
 
-  static show(
+  static Future show(
     BuildContext context,
     String message, {
     EZTSnackBarType eztSnackBarType = EZTSnackBarType.regular,
     Color? color,
     TextStyle? textStyle,
     bool centerTitle = false,
-  }) {
+    SnackBarAction? action,
+    void Function()? onDismissFunction,
+  }) async {
     const instance = EZTSnackBar();
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      instance._eztSnackBarType(
-        context,
-        message,
-        eztSnackBarType,
-        color,
-        textStyle,
-        centerTitle,
-      ),
-    );
+    ScaffoldMessenger.of(context)
+        .showSnackBar(
+          instance._eztSnackBarType(
+            context,
+            message,
+            eztSnackBarType,
+            color,
+            textStyle,
+            centerTitle,
+            action,
+          ),
+        )
+        .closed
+        .then((reason) {
+      if (onDismissFunction != null) {
+        onDismissFunction();
+      }
+    });
   }
 
   static clear(
