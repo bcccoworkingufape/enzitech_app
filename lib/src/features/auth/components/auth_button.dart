@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/auth/auth_controller.dart';
+import 'package:enzitech_app/src/features/home/home_controller.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_button.dart';
 
 class AuthButton extends StatelessWidget {
@@ -19,7 +20,9 @@ class AuthButton extends StatelessWidget {
     return EZTButton(
       text: 'Entrar',
       eztButtonType: EZTButtonType.checkout,
-      loading: controller.state == AuthState.loading,
+      loading: controller.state == AuthState.loading ||
+          Provider.of<HomeController>(context, listen: false).state ==
+              HomeState.loading,
       onPressed: controller.state == AuthState.loading
           ? null
           : () {
