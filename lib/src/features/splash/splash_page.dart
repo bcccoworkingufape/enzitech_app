@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/app_config.dart';
+import 'package:enzitech_app/src/features/home/home_controller.dart';
 import 'package:enzitech_app/src/shared/routes/route_generator.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 
@@ -34,7 +36,10 @@ class _SplashPageState extends State<SplashPage> {
       if (token.isEmpty) {
         Navigator.pushReplacementNamed(context, RouteGenerator.auth);
       } else {
-        Navigator.pushReplacementNamed(context, RouteGenerator.home);
+        await Provider.of<HomeController>(context, listen: false)
+            .getContent()
+            .then((value) =>
+                Navigator.pushReplacementNamed(context, RouteGenerator.home));
       }
     });
   }
