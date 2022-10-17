@@ -32,16 +32,10 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   late final HomeController controller;
-  late final AnimationController animationController =
-      AnimationController(vsync: this, duration: const Duration(seconds: 2))
-        ..repeat();
-
-  // late final ExperimentsController experimentsController;
-  // late final TreatmentsController treatmentsController;
-  // late final EnzymesController enzymesController;
-  // late final AccountController accountController;
-
-  // late ScrollController experimentsController.scrollController;
+  late final AnimationController animationController = AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 2),
+  )..repeat();
 
   late List<Widget> _fragments;
 
@@ -53,26 +47,10 @@ class _HomePageState extends State<HomePage>
   void initState() {
     super.initState();
     controller = context.read<HomeController>();
-    // experimentsController = context.read<ExperimentsController>();
-    // treatmentsController = context.read<TreatmentsController>();
-    // enzymesController = context.read<EnzymesController>();
-    // accountController = context.read<AccountController>();
 
     if (mounted) {
-      // Future.delayed(Duration.zero, () async {
-      //   await controller.experimentsController.loadExperiments(1);
-      //   await controller.treatmentsController.loadTreatments();
-      //   await controller.enzymesController.loadEnzymes();
-      //   await controller.accountController.loadAccountFragment();
-      // });
-
-      Future.delayed(Duration.zero, () async {
-        await controller.getContent();
-      });
-
       setAllButtonsVisible();
       initFragements();
-      // initFragements();
 
       controller.addListener(
         () {
@@ -85,6 +63,7 @@ class _HomePageState extends State<HomePage>
           }
         },
       );
+
       controller.experimentsController.scrollController.addListener(() {
         if (controller.experimentsController.scrollController.position
                 .userScrollDirection ==
@@ -105,6 +84,7 @@ class _HomePageState extends State<HomePage>
           }
         }
       });
+
       controller.treatmentsController.scrollController.addListener(() {
         if (controller.treatmentsController.scrollController.position
                 .userScrollDirection ==
@@ -125,6 +105,7 @@ class _HomePageState extends State<HomePage>
           }
         }
       });
+
       controller.enzymesController.scrollController.addListener(() {
         if (controller.enzymesController.scrollController.position
                 .userScrollDirection ==
