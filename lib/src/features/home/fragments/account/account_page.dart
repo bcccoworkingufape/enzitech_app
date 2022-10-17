@@ -55,8 +55,9 @@ class _AccountPageState extends State<AccountPage> {
         if (controller.state == AccountState.success &&
             controller.user == null &&
             mounted) {
+          EZTSnackBar.clear(context);
           EZTSnackBar.show(context, "Até logo...");
-          await Future.delayed(const Duration(milliseconds: 500));
+          await Future.delayed(const Duration(milliseconds: 250));
           if (mounted) {
             Navigator.pushReplacementNamed(context, RouteGenerator.auth);
             widget.homeController.setFragmentIndex(0);
