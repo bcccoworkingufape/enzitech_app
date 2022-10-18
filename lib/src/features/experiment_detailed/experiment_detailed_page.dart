@@ -2,6 +2,8 @@
 // ignore_for_file: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
 
 // 🐦 Flutter imports:
+import 'package:enzitech_app/src/shared/widgets/ezt_not_founded.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_progress_indicator.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -84,42 +86,17 @@ class _ExperimentDetailedPageState extends State<ExperimentDetailedPage> {
 
   Widget _buildBody(double height) {
     if (controller.state == ExperimentDetailedState.error) {
-      return SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        child: Column(
-          children: [
-            SizedBox(
-              height: height / 1.75,
-              child: Center(
-                child: Text(
-                    'Erro ao carregar experimento "${widget.resumedExperiment.name}"'),
-              ),
-            ),
-          ],
-        ),
+      return EZTNotFounded(
+        message:
+            'Erro ao carregar o experimento "${widget.resumedExperiment.name}"',
       );
     }
 
     if (controller.state == ExperimentDetailedState.loading) {
-      return const Center(child: CircularProgressIndicator());
+      return const EZTProgressIndicator(
+        message: "Carregando experimento...",
+      );
     }
-
-    // if (controller.state == ExperimentDetailedState.success &&
-    //     controller.treatments.isEmpty) {
-    //   return SingleChildScrollView(
-    //     physics: const AlwaysScrollableScrollPhysics(),
-    //     child: Column(
-    //       children: [
-    //         SizedBox(
-    //           height: height / 1.35,
-    //           child: const Center(
-    //             child: Text("Tratamentos não encontrados"),
-    //           ),
-    //         ),
-    //       ],
-    //     ),
-    //   );
-    // }
 
     return Column(
       children: [
@@ -334,8 +311,8 @@ class _ExperimentDetailedPageState extends State<ExperimentDetailedPage> {
           color: AppColors.white,
         ),
       ), */
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(15),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
         child: _buildBody(
           MediaQuery.of(context).size.height,
         ),

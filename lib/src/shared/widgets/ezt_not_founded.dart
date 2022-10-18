@@ -24,9 +24,13 @@ class EZTNotFounded extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
           ),
           if (message != null)
-            Text(
-              message!,
-              style: TextStyles.termRegular,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Text(
+                message!,
+                style: TextStyles.termRegular,
+                textAlign: TextAlign.center,
+              ),
             ),
         ],
       ),
