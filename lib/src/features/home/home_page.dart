@@ -298,7 +298,27 @@ class _HomePageState extends State<HomePage>
             controller.experimentsController.scrollController.animateTo(
               controller.experimentsController.scrollController.position
                       .minScrollExtent +
-                  (kBottomNavigationBarHeight / 1000),
+                  (kBottomNavigationBarHeight / 10000),
+              duration: const Duration(milliseconds: 1500),
+              curve: Curves.fastOutSlowIn,
+            );
+          } else if (index == 1 &&
+              beforeSet == 1 &&
+              controller.treatmentsController.scrollController.hasClients) {
+            controller.treatmentsController.scrollController.animateTo(
+              controller.treatmentsController.scrollController.position
+                      .minScrollExtent +
+                  (kBottomNavigationBarHeight / 10000),
+              duration: const Duration(milliseconds: 1500),
+              curve: Curves.fastOutSlowIn,
+            );
+          } else if (index == 2 &&
+              beforeSet == 2 &&
+              controller.enzymesController.scrollController.hasClients) {
+            controller.enzymesController.scrollController.animateTo(
+              controller.enzymesController.scrollController.position
+                      .minScrollExtent +
+                  (kBottomNavigationBarHeight / 10000),
               duration: const Duration(milliseconds: 1500),
               curve: Curves.fastOutSlowIn,
             );

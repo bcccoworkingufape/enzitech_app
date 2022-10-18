@@ -17,7 +17,9 @@ import 'package:enzitech_app/src/shared/models/experiment_model.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:enzitech_app/src/shared/util/util.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_button.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_error.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_expansion_tile.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_progress_indicator.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
 
 class ExperimentDetailedPage extends StatefulWidget {
@@ -84,42 +86,17 @@ class _ExperimentDetailedPageState extends State<ExperimentDetailedPage> {
 
   Widget _buildBody(double height) {
     if (controller.state == ExperimentDetailedState.error) {
-      return SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        child: Column(
-          children: [
-            SizedBox(
-              height: height / 1.75,
-              child: Center(
-                child: Text(
-                    'Erro ao carregar experimento "${widget.resumedExperiment.name}"'),
-              ),
-            ),
-          ],
-        ),
+      return EZTError(
+        message:
+            'Erro ao carregar o experimento "${widget.resumedExperiment.name}"',
       );
     }
 
     if (controller.state == ExperimentDetailedState.loading) {
-      return const Center(child: CircularProgressIndicator());
+      return const EZTProgressIndicator(
+        message: "Carregando experimento...",
+      );
     }
-
-    // if (controller.state == ExperimentDetailedState.success &&
-    //     controller.treatments.isEmpty) {
-    //   return SingleChildScrollView(
-    //     physics: const AlwaysScrollableScrollPhysics(),
-    //     child: Column(
-    //       children: [
-    //         SizedBox(
-    //           height: height / 1.35,
-    //           child: const Center(
-    //             child: Text("Tratamentos não encontrados"),
-    //           ),
-    //         ),
-    //       ],
-    //     ),
-    //   );
-    // }
 
     return Column(
       children: [
@@ -294,32 +271,34 @@ class _ExperimentDetailedPageState extends State<ExperimentDetailedPage> {
       appBar: AppBar(
         backgroundColor: AppColors.primary,
         title: Text(
-          widget.resumedExperiment.name,
+          "Detalhes do experimento",
           style: TextStyles.titleBoldBackground,
         ),
         actions: [
-          IconButton(
-            onPressed: () {
-              experimentsController.deleteExperiment(controller.experiment!.id);
-              experimentsController.experiments
-                  .removeWhere((exp) => exp.id == controller.experiment!.id);
-              experimentsController.notifyListeners();
+          if (controller.state == ExperimentDetailedState.success)
+            IconButton(
+              onPressed: () {
+                experimentsController
+                    .deleteExperiment(controller.experiment!.id);
+                experimentsController.experiments
+                    .removeWhere((exp) => exp.id == controller.experiment!.id);
+                experimentsController.notifyListeners();
 
-              Navigator.pop(context);
+                Navigator.pop(context);
 
-              EZTSnackBar.clear(context);
-              EZTSnackBar.show(
-                context,
-                '${controller.experiment!.name} excluído!',
-                eztSnackBarType: EZTSnackBarType.error,
-              );
-            },
-            icon: const Icon(
-              PhosphorIcons.trash,
-              color: AppColors.white,
-              size: 25,
+                EZTSnackBar.clear(context);
+                EZTSnackBar.show(
+                  context,
+                  '${controller.experiment!.name} excluído!',
+                  eztSnackBarType: EZTSnackBarType.error,
+                );
+              },
+              icon: const Icon(
+                PhosphorIcons.trash,
+                color: AppColors.white,
+                size: 25,
+              ),
             ),
-          ),
         ],
       ),
       /* floatingActionButton: FloatingActionButton.extended(
@@ -334,8 +313,8 @@ class _ExperimentDetailedPageState extends State<ExperimentDetailedPage> {
           color: AppColors.white,
         ),
       ), */
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(15),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
         child: _buildBody(
           MediaQuery.of(context).size.height,
         ),

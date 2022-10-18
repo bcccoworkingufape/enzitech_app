@@ -1,4 +1,5 @@
 class AppSvgs {
+  static const error = "assets/svgs/error.svg";
   static const fullLogo = "assets/svgs/full_logo.svg";
   static const iconLogo = "assets/svgs/icon_logo.svg";
   static const developedBy = "assets/svgs/developed_by.svg";

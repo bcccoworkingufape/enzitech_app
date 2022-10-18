@@ -7,12 +7,14 @@ class CurveHillClipper extends CustomClipper<Path> {
   double curveHeight;
   final double peakHeight;
   final double peakWidth;
+  final bool hasImage;
 
   CurveHillClipper({
     required this.centreHeight,
     required this.curveHeight,
     required this.peakHeight,
     required this.peakWidth,
+    required this.hasImage,
   });
 
   @override
@@ -28,17 +30,19 @@ class CurveHillClipper extends CustomClipper<Path> {
       path.quadraticBezierTo(size.width / 4, centreHeight + curveHeight,
           (size.width / 2) - (peakWidth / 2), centreHeight + curveHeight);
 
-      path.quadraticBezierTo(
-          (size.width / 2) - (peakWidth / 4),
-          centreHeight + curveHeight - peakHeight,
-          (size.width / 2),
-          centreHeight + curveHeight - peakHeight);
+      if (!hasImage) {
+        path.quadraticBezierTo(
+            (size.width / 2) - (peakWidth / 4),
+            centreHeight + curveHeight - peakHeight,
+            (size.width / 2),
+            centreHeight + curveHeight - peakHeight);
 
-      path.quadraticBezierTo(
-          (size.width / 2) + (peakWidth / 4),
-          centreHeight + curveHeight - peakHeight,
-          (size.width / 2) + (peakWidth / 2),
-          centreHeight + curveHeight);
+        path.quadraticBezierTo(
+            (size.width / 2) + (peakWidth / 4),
+            centreHeight + curveHeight - peakHeight,
+            (size.width / 2) + (peakWidth / 2),
+            centreHeight + curveHeight);
+      }
 
       path.quadraticBezierTo(size.width * 3 / 4, centreHeight + curveHeight,
           size.width, centreHeight);

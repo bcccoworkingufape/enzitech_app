@@ -12,7 +12,10 @@ import 'package:enzitech_app/src/features/home/fragments/treatments/treatments_c
 import 'package:enzitech_app/src/features/home/home_controller.dart';
 import 'package:enzitech_app/src/shared/failures/failures.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
-import 'package:enzitech_app/src/shared/widgets/ezt_not_founded.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_error.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_forced_center.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_not_found.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_progress_indicator.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_pull_to_refresh.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
 
@@ -53,38 +56,24 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
 
   Widget _buildTreatmentsList(double height) {
     if (controller.state == TreatmentsState.error) {
-      return SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        child: Column(
-          children: [
-            SizedBox(
-              height: height / 1.75,
-              child: const Center(
-                child: Text("Erro ao carregar tratamentos"),
-              ),
-            ),
-          ],
+      return const EZTForcedCenter(
+        child: EZTError(
+          message: 'Erro ao carregar tratamentos',
         ),
       );
     }
 
     if (controller.state == TreatmentsState.loading) {
-      return const Center(child: CircularProgressIndicator());
+      return const EZTProgressIndicator(
+        message: "Carregando tratamentos...",
+      );
     }
 
     if (controller.state == TreatmentsState.success &&
         controller.treatments.isEmpty) {
-      return SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        child: Column(
-          children: [
-            SizedBox(
-              height: height / 1.65,
-              child: const EZTNotFounded(
-                message: "Tratamentos não encontrados",
-              ),
-            ),
-          ],
+      return const EZTForcedCenter(
+        child: EZTNotFound(
+          message: "Tratamentos não encontrados",
         ),
       );
     }
