@@ -39,7 +39,8 @@ class _EnzymeCardState extends State<EnzymeCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 4,
+      elevation: 8,
+      shadowColor: Colors.white,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
         child: Column(

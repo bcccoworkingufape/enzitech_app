@@ -1,4 +1,7 @@
 // 🐦 Flutter imports:
+import 'package:enzitech_app/src/shared/widgets/ezt_error.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_not_found.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_progress_indicator.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -15,7 +18,6 @@ import 'package:enzitech_app/src/shared/failures/failures.dart';
 import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
 import 'package:enzitech_app/src/shared/models/user_model.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
-import 'package:enzitech_app/src/shared/widgets/ezt_not_founded.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_pull_to_refresh.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
 
@@ -75,8 +77,8 @@ class _EnzymesPageState extends State<EnzymesPage> {
           children: [
             SizedBox(
               height: height / 1.75,
-              child: const Center(
-                child: Text("Erro ao carregar enzimas"),
+              child: const EZTError(
+                message: 'Erro ao carregar enzimas',
               ),
             ),
           ],
@@ -85,7 +87,9 @@ class _EnzymesPageState extends State<EnzymesPage> {
     }
 
     if (controller.state == EnzymesState.loading) {
-      return const Center(child: CircularProgressIndicator());
+      return const EZTProgressIndicator(
+        message: "Carregando enzimas...",
+      );
     }
 
     if (controller.state == EnzymesState.success &&
@@ -96,8 +100,9 @@ class _EnzymesPageState extends State<EnzymesPage> {
           children: [
             SizedBox(
               height: height / 1.65,
-              child: const EZTNotFounded(
-                message: "Enzimas não encontrados",
+              child: const EZTNotFound(
+                message:
+                    "Nenhuma enzima cadastrada, entre em contato com o seu Administrador para solucionar este problema.",
               ),
             ),
           ],

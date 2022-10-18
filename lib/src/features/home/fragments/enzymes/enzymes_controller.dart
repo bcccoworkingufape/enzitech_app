@@ -36,8 +36,8 @@ class EnzymesController extends ChangeNotifier {
     state = EnzymesState.loading;
     notifyListeners();
     try {
-      final treatmentsList = await enzymesService.getEnzymes();
-      _setEnzymes(treatmentsList);
+      final enzymesList = await enzymesService.getEnzymes();
+      _setEnzymes(enzymesList);
       state = EnzymesState.success;
       notifyListeners();
     } catch (e) {

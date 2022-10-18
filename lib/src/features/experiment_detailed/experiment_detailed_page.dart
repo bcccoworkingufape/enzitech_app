@@ -2,7 +2,8 @@
 // ignore_for_file: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
 
 // 🐦 Flutter imports:
-import 'package:enzitech_app/src/shared/widgets/ezt_not_founded.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_error.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_not_found.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_progress_indicator.dart';
 import 'package:flutter/material.dart';
 
@@ -86,7 +87,7 @@ class _ExperimentDetailedPageState extends State<ExperimentDetailedPage> {
 
   Widget _buildBody(double height) {
     if (controller.state == ExperimentDetailedState.error) {
-      return EZTNotFounded(
+      return EZTError(
         message:
             'Erro ao carregar o experimento "${widget.resumedExperiment.name}"',
       );

@@ -1,4 +1,6 @@
 // 🐦 Flutter imports:
+import 'package:enzitech_app/src/shared/widgets/ezt_error.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_progress_indicator.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -12,7 +14,7 @@ import 'package:enzitech_app/src/features/home/fragments/treatments/treatments_c
 import 'package:enzitech_app/src/features/home/home_controller.dart';
 import 'package:enzitech_app/src/shared/failures/failures.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
-import 'package:enzitech_app/src/shared/widgets/ezt_not_founded.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_not_found.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_pull_to_refresh.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
 
@@ -59,8 +61,8 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
           children: [
             SizedBox(
               height: height / 1.75,
-              child: const Center(
-                child: Text("Erro ao carregar tratamentos"),
+              child: const EZTError(
+                message: 'Erro ao carregar tratamentos',
               ),
             ),
           ],
@@ -69,7 +71,9 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
     }
 
     if (controller.state == TreatmentsState.loading) {
-      return const Center(child: CircularProgressIndicator());
+      return const EZTProgressIndicator(
+        message: "Carregando tratamentos...",
+      );
     }
 
     if (controller.state == TreatmentsState.success &&
@@ -80,7 +84,7 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
           children: [
             SizedBox(
               height: height / 1.65,
-              child: const EZTNotFounded(
+              child: const EZTNotFound(
                 message: "Tratamentos não encontrados",
               ),
             ),

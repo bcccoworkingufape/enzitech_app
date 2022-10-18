@@ -26,7 +26,8 @@ class _TreatmentCardState extends State<TreatmentCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 4,
+      elevation: 8,
+      shadowColor: Colors.white,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
         child: Column(
