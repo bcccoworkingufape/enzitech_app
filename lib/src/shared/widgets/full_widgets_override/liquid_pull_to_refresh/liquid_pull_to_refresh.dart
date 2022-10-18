@@ -625,6 +625,7 @@ class LiquidPullToRefreshState extends State<LiquidPullToRefresh>
           builder: (BuildContext buildContext, Widget? child) {
             return ClipPath(
               clipper: CurveHillClipper(
+                hasImage: widget.backgroundImage != null,
                 centreHeight: height,
                 curveHeight: height / 2 * _springAnimation.value, // 50.0
                 peakHeight: height *
