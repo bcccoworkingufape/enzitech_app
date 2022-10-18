@@ -271,32 +271,34 @@ class _ExperimentDetailedPageState extends State<ExperimentDetailedPage> {
       appBar: AppBar(
         backgroundColor: AppColors.primary,
         title: Text(
-          widget.resumedExperiment.name,
+          "Detalhes do experimento",
           style: TextStyles.titleBoldBackground,
         ),
         actions: [
-          IconButton(
-            onPressed: () {
-              experimentsController.deleteExperiment(controller.experiment!.id);
-              experimentsController.experiments
-                  .removeWhere((exp) => exp.id == controller.experiment!.id);
-              experimentsController.notifyListeners();
+          if (controller.state == ExperimentDetailedState.success)
+            IconButton(
+              onPressed: () {
+                experimentsController
+                    .deleteExperiment(controller.experiment!.id);
+                experimentsController.experiments
+                    .removeWhere((exp) => exp.id == controller.experiment!.id);
+                experimentsController.notifyListeners();
 
-              Navigator.pop(context);
+                Navigator.pop(context);
 
-              EZTSnackBar.clear(context);
-              EZTSnackBar.show(
-                context,
-                '${controller.experiment!.name} excluído!',
-                eztSnackBarType: EZTSnackBarType.error,
-              );
-            },
-            icon: const Icon(
-              PhosphorIcons.trash,
-              color: AppColors.white,
-              size: 25,
+                EZTSnackBar.clear(context);
+                EZTSnackBar.show(
+                  context,
+                  '${controller.experiment!.name} excluído!',
+                  eztSnackBarType: EZTSnackBarType.error,
+                );
+              },
+              icon: const Icon(
+                PhosphorIcons.trash,
+                color: AppColors.white,
+                size: 25,
+              ),
             ),
-          ),
         ],
       ),
       /* floatingActionButton: FloatingActionButton.extended(

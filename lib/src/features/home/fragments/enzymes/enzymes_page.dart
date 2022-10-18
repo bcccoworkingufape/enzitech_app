@@ -16,6 +16,7 @@ import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
 import 'package:enzitech_app/src/shared/models/user_model.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_error.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_forced_center.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_not_found.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_progress_indicator.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_pull_to_refresh.dart';
@@ -71,17 +72,9 @@ class _EnzymesPageState extends State<EnzymesPage> {
 
   Widget _buildEnzymesList(double height) {
     if (controller.state == EnzymesState.error) {
-      return SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        child: Column(
-          children: [
-            SizedBox(
-              height: height / 1.75,
-              child: const EZTError(
-                message: 'Erro ao carregar enzimas',
-              ),
-            ),
-          ],
+      return const EZTForcedCenter(
+        child: EZTError(
+          message: 'Erro ao carregar enzimas',
         ),
       );
     }
@@ -94,18 +87,10 @@ class _EnzymesPageState extends State<EnzymesPage> {
 
     if (controller.state == EnzymesState.success &&
         controller.enzymes.isEmpty) {
-      return SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        child: Column(
-          children: [
-            SizedBox(
-              height: height / 1.65,
-              child: const EZTNotFound(
-                message:
-                    "Nenhuma enzima cadastrada, entre em contato com o seu Administrador para solucionar este problema.",
-              ),
-            ),
-          ],
+      return const EZTForcedCenter(
+        child: EZTNotFound(
+          message:
+              "Nenhuma enzima cadastrada, entre em contato com o seu Administrador para solucionar este problema.",
         ),
       );
     }

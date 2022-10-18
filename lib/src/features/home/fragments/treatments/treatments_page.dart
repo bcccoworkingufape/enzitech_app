@@ -13,6 +13,7 @@ import 'package:enzitech_app/src/features/home/home_controller.dart';
 import 'package:enzitech_app/src/shared/failures/failures.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_error.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_forced_center.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_not_found.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_progress_indicator.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_pull_to_refresh.dart';
@@ -55,17 +56,9 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
 
   Widget _buildTreatmentsList(double height) {
     if (controller.state == TreatmentsState.error) {
-      return SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        child: Column(
-          children: [
-            SizedBox(
-              height: height / 1.75,
-              child: const EZTError(
-                message: 'Erro ao carregar tratamentos',
-              ),
-            ),
-          ],
+      return const EZTForcedCenter(
+        child: EZTError(
+          message: 'Erro ao carregar tratamentos',
         ),
       );
     }
@@ -78,17 +71,9 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
 
     if (controller.state == TreatmentsState.success &&
         controller.treatments.isEmpty) {
-      return SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        child: Column(
-          children: [
-            SizedBox(
-              height: height / 1.65,
-              child: const EZTNotFound(
-                message: "Tratamentos não encontrados",
-              ),
-            ),
-          ],
+      return const EZTForcedCenter(
+        child: EZTNotFound(
+          message: "Tratamentos não encontrados",
         ),
       );
     }
