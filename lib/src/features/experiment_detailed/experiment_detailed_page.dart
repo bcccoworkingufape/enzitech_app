@@ -2,9 +2,6 @@
 // ignore_for_file: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
 
 // 🐦 Flutter imports:
-import 'package:enzitech_app/src/shared/widgets/ezt_error.dart';
-import 'package:enzitech_app/src/shared/widgets/ezt_not_found.dart';
-import 'package:enzitech_app/src/shared/widgets/ezt_progress_indicator.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -20,7 +17,9 @@ import 'package:enzitech_app/src/shared/models/experiment_model.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:enzitech_app/src/shared/util/util.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_button.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_error.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_expansion_tile.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_progress_indicator.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
 
 class ExperimentDetailedPage extends StatefulWidget {
