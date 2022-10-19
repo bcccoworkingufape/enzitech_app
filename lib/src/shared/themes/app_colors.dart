@@ -5,7 +5,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 
 class AppColors {
-  //* Revisado
+  //* Basic colors
   static const primary = Color(0xFF06BC67);
   static const success = Color(0xFF74C627);
   static const grenDark = Color(0xFF004735);
@@ -15,14 +15,16 @@ class AppColors {
   static const lines = Color(0xFFCCCCCC);
   static const background = Color(0xFFFAFAFA);
 
-  static const yellow300 = Color(0xFFF8EF6C);
+  static const yellow = Color(0xFFF8EF6C);
 
+  //* Grey colors
   static const greyLight = Color(0xFF9D9D9D);
   static const grey = Color(0xFF585666);
   static const greySweet = Color(0xFF544F4F);
   static const greyDark = Color(0xFF3a3a3b);
   static const greyBlack = Color(0xFF393939);
 
+  //* Other colors
   static const delete = Color(0xFFE83F5B);
   static const heading = Color(0xFF585666);
   static const body = Color(0xFF706E7A);
@@ -31,6 +33,7 @@ class AppColors {
   static const shape = Color(0xFFFAFAFC);
   static const white = Color(0xFFFFFFFF);
 
+  //* Enzymes colors
   static const betaGlucosidase = Color(0xFF721817);
   static const aryl = Color(0xFFFA9F42);
   static const fosfataseAcida = Color(0xFF2B4162);

@@ -28,6 +28,7 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
   late final ExperimentsController experimentsController;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -100,6 +101,14 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
   }
 
   @override
+  void dispose() {
+    if (_scaffoldKey.currentState != null) {
+      _scaffoldKey.currentState!.dispose();
+    }
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
@@ -107,6 +116,7 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
         return true;
       },
       child: Scaffold(
+        key: _scaffoldKey,
         body: Form(
           key: _formKey,
           child: PageView(

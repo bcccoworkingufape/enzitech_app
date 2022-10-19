@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
@@ -12,6 +13,7 @@ import 'package:enzitech_app/src/features/create_enzyme/create_enzyme_controller
 import 'package:enzitech_app/src/features/create_experiment/create_experiment_controller.dart';
 import 'package:enzitech_app/src/features/create_treatment/create_treatment_controller.dart';
 import 'package:enzitech_app/src/features/experiment_detailed/experiment_detailed_controller.dart';
+import 'package:enzitech_app/src/features/experiment_insert_data/experiment_insert_data_controller.dart';
 import 'package:enzitech_app/src/features/home/fragments/account/account_controller.dart';
 import 'package:enzitech_app/src/features/home/fragments/enzymes/enzymes_controller.dart';
 import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_controller.dart';
@@ -103,6 +105,11 @@ class AppWidget extends StatelessWidget {
             treatmentsController: context.read(),
           ),
         ),
+        ChangeNotifierProvider(
+          create: (context) => ExperimentInsertDataController(
+            ExperimentsService(context.read()),
+          ),
+        ),
       ],
       child: GestureDetector(
         onTap: () {
@@ -113,7 +120,7 @@ class AppWidget extends StatelessWidget {
         },
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
+          title: 'Enzitech',
           theme: ThemeData(
             appBarTheme: const AppBarTheme(
               iconTheme: IconThemeData(
@@ -128,7 +135,9 @@ class AppWidget extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
+            FormBuilderLocalizations.delegate,
           ],
+          supportedLocales: FormBuilderLocalizations.delegate.supportedLocales,
         ),
       ),
     );

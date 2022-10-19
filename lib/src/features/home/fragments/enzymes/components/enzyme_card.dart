@@ -22,20 +22,6 @@ class EnzymeCard extends StatefulWidget {
 }
 
 class _EnzymeCardState extends State<EnzymeCard> {
-  get dealWithChipColor {
-    if (widget.enzyme.type == Constants.betaGlucosidase) {
-      return AppColors.betaGlucosidase;
-    } else if (widget.enzyme.type == Constants.aryl) {
-      return AppColors.aryl;
-    } else if (widget.enzyme.type == Constants.fosfataseAcida) {
-      return AppColors.fosfataseAcida;
-    } else if (widget.enzyme.type == Constants.fosfataseAlcalina) {
-      return AppColors.fosfataseAlcalina;
-    } else {
-      return AppColors.grenDark;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -79,7 +65,8 @@ class _EnzymeCardState extends State<EnzymeCard> {
                 ),
                 Chip(
                   padding: const EdgeInsets.all(0),
-                  backgroundColor: dealWithChipColor,
+                  backgroundColor:
+                      Constants.dealWithEnzymeChipColor(widget.enzyme.type),
                   label: Text(
                       Constants.typesOfEnzymesListFormmated[Constants
                           .typesOfEnzymesList

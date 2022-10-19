@@ -94,6 +94,45 @@ class ExperimentsService {
     }
   }
 
+  Future<void> calculateExperiment(
+    String id,
+  ) async {
+    try {
+      // var enzymes = experimentsEnzymes
+      //     .map(
+      //       (enzyme) => enzyme.toMapCreateExperiment(
+      //         int.parse(textFieldsOfEnzymes['duration-${enzyme.id}']!
+      //             .controller!
+      //             .text),
+      //         double.parse(textFieldsOfEnzymes['weightSample-${enzyme.id}']!
+      //             .controller!
+      //             .text),
+      //         double.parse(textFieldsOfEnzymes['weightGround-${enzyme.id}']!
+      //             .controller!
+      //             .text),
+      //         double.parse(
+      //             textFieldsOfEnzymes['size-${enzyme.id}']!.controller!.text),
+      //       ),
+      //     )
+      //     .toList();
+
+      // var res = await client.post(
+      //   "/experiments",
+      //   data: {
+      //     "name": name,
+      //     "description": description,
+      //     "repetitions": repetitions,
+      //     "processes": processes,
+      //     "experimentsEnzymes": enzymes,
+      //   },
+      // );
+
+      // return ExperimentModel.fromMap(res.data);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<void> deleteExperiment(
     String id,
   ) async {

@@ -271,7 +271,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                   child: Card(
                     elevation: 4,
                     shadowColor: AppColors.white,
-                    color: AppColors.yellow300,
+                    color: AppColors.yellow,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 30, bottom: 30),
                       child: Center(

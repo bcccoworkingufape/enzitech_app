@@ -66,27 +66,6 @@ class _CreateExperimentThirdStepPageState
 
   bool enableNextButton = false;
 
-  Color leadWithColor(String type) {
-    // 'Betaglucosidase',
-    // 'Aryl',
-    // 'FosfataseAcida',
-    // 'FosfataseAlcalina',
-    // 'Urease'
-    if (type == Constants.typesOfEnzymesList[0]) {
-      return AppColors.betaGlucosidase;
-    } else if (type == Constants.typesOfEnzymesList[1]) {
-      return AppColors.aryl;
-    } else if (type == Constants.typesOfEnzymesList[2]) {
-      return AppColors.fosfataseAcida;
-    } else if (type == Constants.typesOfEnzymesList[3]) {
-      return AppColors.fosfataseAlcalina;
-    } else if (type == Constants.typesOfEnzymesList[4]) {
-      return AppColors.urease;
-    } else {
-      return Colors.black;
-    }
-  }
-
   Widget get _body {
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
@@ -143,13 +122,14 @@ class _CreateExperimentThirdStepPageState
                       enableNextButton = _choosedCheckboxList.isNotEmpty;
                     });
                   },
-                  color: leadWithColor(enzymesController.enzymes[index].type),
+                  color: Constants.dealWithEnzymeChipColor(
+                      enzymesController.enzymes[index].type),
                   onTapTrailing: () {
                     EZTSnackBar.clear(context);
                     EZTSnackBar.show(
                       context,
                       "Tipo da enzima: ${Constants.typesOfEnzymesListFormmated[Constants.typesOfEnzymesList.indexOf(enzymesController.enzymes[index].type)]}",
-                      color: leadWithColor(
+                      color: Constants.dealWithEnzymeChipColor(
                         enzymesController.enzymes[index].type,
                       ),
                       textStyle: TextStyles.titleMinBoldBackground,

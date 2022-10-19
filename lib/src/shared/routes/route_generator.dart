@@ -8,39 +8,40 @@ import 'package:enzitech_app/src/features/create_enzyme/create_enzyme_page.dart'
 import 'package:enzitech_app/src/features/create_experiment/create_experiment_page.dart';
 import 'package:enzitech_app/src/features/create_treatment/create_treatment_page.dart';
 import 'package:enzitech_app/src/features/experiment_detailed/experiment_detailed_page.dart';
+import 'package:enzitech_app/src/features/experiment_insert_data/experiment_insert_data_page.dart';
 import 'package:enzitech_app/src/features/home/home_page.dart';
 import 'package:enzitech_app/src/features/recover_password/recover_password_page.dart';
 import 'package:enzitech_app/src/features/splash/splash_page.dart';
 import 'package:enzitech_app/src/shared/models/experiment_model.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_error.dart';
 
 class RouteGenerator {
-  static const initial = "/";
   static const auth = "/auth";
-  static const home = "/home";
   static const createAccount = "/createAccount";
-  static const recoverPassword = "/recoverPassword";
-  static const createExperiment = "/createExperiment";
-  static const experimentDetailed = "/experimentDetailed";
-  static const createTreatment = "/createTreatment";
   static const createEnzyme = "/createEnzyme";
+  static const createExperiment = "/createExperiment";
+  static const createTreatment = "/createTreatment";
+  static const experimentDetailed = "/experimentDetailed";
+  static const experimentInsertData = "/experimentInsertData";
+  static const home = "/home";
+  static const initial = "/";
+  static const recoverPassword = "/recoverPassword";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     // ignore: unused_local_variable
     final args = settings.arguments;
 
     switch (settings.name) {
-      case initial:
-        return MaterialPageRoute(builder: (_) => const SplashPage());
       case auth:
         return MaterialPageRoute(builder: (_) => const AuthPage());
-      case home:
-        return MaterialPageRoute(builder: (_) => const HomePage());
       case createAccount:
         return MaterialPageRoute(builder: (_) => const CreateAccountPage());
-      case recoverPassword:
-        return MaterialPageRoute(builder: (_) => const RecoverPasswordPage());
+      case createEnzyme:
+        return MaterialPageRoute(builder: (_) => const CreateEnzymePage());
       case createExperiment:
         return MaterialPageRoute(builder: (_) => const CreateExperimentPage());
+      case createTreatment:
+        return MaterialPageRoute(builder: (_) => const CreateTreatmentPage());
       case experimentDetailed:
         if (args is ExperimentModel) {
           return MaterialPageRoute(
@@ -51,10 +52,22 @@ class RouteGenerator {
         } else {
           return _errorRoute();
         }
-      case createTreatment:
-        return MaterialPageRoute(builder: (_) => const CreateTreatmentPage());
-      case createEnzyme:
-        return MaterialPageRoute(builder: (_) => const CreateEnzymePage());
+      case experimentInsertData:
+        if (args is ExperimentModel) {
+          return MaterialPageRoute(
+            builder: (_) => ExperimentInsertDataPage(
+              experiment: args,
+            ),
+          );
+        } else {
+          return _errorRoute();
+        }
+      case home:
+        return MaterialPageRoute(builder: (_) => const HomePage());
+      case initial:
+        return MaterialPageRoute(builder: (_) => const SplashPage());
+      case recoverPassword:
+        return MaterialPageRoute(builder: (_) => const RecoverPasswordPage());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
@@ -72,9 +85,7 @@ class RouteGenerator {
           appBar: AppBar(
             title: const Text('Não encontrado'),
           ),
-          body: const Center(
-            child: Text('ERRO 404'),
-          ),
+          body: const EZTError(message: 'ERRO 404'),
         );
       },
     );

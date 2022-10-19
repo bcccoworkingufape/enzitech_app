@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/shared/input_formatters.dart/input_formatter.dart';
+import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 
 class Constants {
   static const padding16all = EdgeInsets.symmetric(
@@ -38,4 +39,20 @@ class Constants {
     'Fosfatase Alcalina',
     'Urease',
   ];
+
+  static Color dealWithEnzymeChipColor(String type) {
+    if (type == Constants.typesOfEnzymesList[0]) {
+      return AppColors.betaGlucosidase;
+    } else if (type == Constants.typesOfEnzymesList[1]) {
+      return AppColors.aryl;
+    } else if (type == Constants.typesOfEnzymesList[2]) {
+      return AppColors.fosfataseAcida;
+    } else if (type == Constants.typesOfEnzymesList[3]) {
+      return AppColors.fosfataseAlcalina;
+    } else if (type == Constants.typesOfEnzymesList[4]) {
+      return AppColors.urease;
+    } else {
+      return Colors.black;
+    }
+  }
 }
