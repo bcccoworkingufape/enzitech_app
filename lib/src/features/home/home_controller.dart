@@ -54,7 +54,31 @@ class HomeController extends ChangeNotifier {
 
       notifyListeners();
 
-      state = HomeState.success;
+      if (experimentsController.state == ExperimentsState.error) {
+        _setFailure(experimentsController.failure!);
+        state = HomeState.error;
+      } else if (treatmentsController.state == ExperimentsState.error) {
+        _setFailure(treatmentsController.failure!);
+
+        state = HomeState.error;
+      } else if (enzymesController.state == EnzymesState.error) {
+        _setFailure(enzymesController.failure!);
+
+        state = HomeState.error;
+      } else if (accountController.state == AccountState.error) {
+        _setFailure(accountController.failure!);
+
+        state = HomeState.success;
+      } /*  else if (experimentsController.state == ExperimentsState.success &&
+          treatmentsController.state == ExperimentsState.success &&
+          enzymesController.state == EnzymesState.success &&
+          accountController.state == AccountState.success) {
+        state = HomeState.success;
+      } */
+      else {
+        state = HomeState.success;
+      }
+
       notifyListeners();
     } catch (e) {
       _setFailure(e as Failure);

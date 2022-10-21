@@ -197,25 +197,24 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Form(
-        key: _formKey,
-        child: Column(
-          children: [
-            Expanded(
-              flex: 11,
-              child: Center(child: _body),
-            ),
-            Expanded(
-              flex: 4,
-              child: SingleChildScrollView(
-                physics: const NeverScrollableScrollPhysics(),
+      body: SafeArea(
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              Expanded(
+                flex: 11,
+                child: Center(child: _body),
+              ),
+              SizedBox(
+                height: 160,
                 child: Padding(
                   padding: Constants.padding16all,
                   child: _buttons,
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

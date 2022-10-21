@@ -522,14 +522,11 @@ class _CreateExperimentFourthStepPageState
             flex: 11,
             child: _body(MediaQuery.of(context).size.height),
           ),
-          Expanded(
-            flex: enableNextButton ? 4 : 3,
-            child: SingleChildScrollView(
-              physics: const NeverScrollableScrollPhysics(),
-              child: Padding(
-                padding: Constants.padding16all,
-                child: _buttons,
-              ),
+          SizedBox(
+            height: enableNextButton ? 160 : 100,
+            child: Padding(
+              padding: Constants.padding16all,
+              child: _buttons,
             ),
           ),
         ],

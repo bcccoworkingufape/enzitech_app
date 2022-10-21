@@ -303,14 +303,11 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
               flex: 11,
               child: Center(child: _body),
             ),
-            Expanded(
-              flex: 4,
-              child: SingleChildScrollView(
-                physics: const NeverScrollableScrollPhysics(),
-                child: Padding(
-                  padding: Constants.padding16all,
-                  child: _buttons,
-                ),
+            SizedBox(
+              height: 160,
+              child: Padding(
+                padding: Constants.padding16all,
+                child: _buttons,
               ),
             ),
           ],

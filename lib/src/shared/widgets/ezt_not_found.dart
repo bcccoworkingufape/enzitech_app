@@ -9,7 +9,9 @@ import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 
 class EZTNotFound extends StatelessWidget {
   final String? message;
-  const EZTNotFound({super.key, this.message});
+  final String? title;
+
+  const EZTNotFound({super.key, this.message, this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +25,21 @@ class EZTNotFound extends StatelessWidget {
             alignment: Alignment.center,
             width: MediaQuery.of(context).size.width,
           ),
+          if (title != null) ...[
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.7,
+              child: Text(
+                title!,
+                style: TextStyles.informationExperimentStepTitle,
+                textAlign: TextAlign.center,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            const SizedBox(
+              height: 16,
+            )
+          ],
           if (message != null) ...[
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),

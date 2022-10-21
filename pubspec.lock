@@ -124,7 +124,7 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_native_splash:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: flutter_native_splash
       url: "https://pub.dartlang.org"
@@ -211,7 +211,7 @@ packages:
     source: hosted
     version: "1.0.1"
   import_sorter:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: import_sorter
       url: "https://pub.dartlang.org"

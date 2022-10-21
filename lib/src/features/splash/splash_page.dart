@@ -7,9 +7,13 @@ import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/app_config.dart';
+import 'package:enzitech_app/src/features/home/fragments/account/account_controller.dart';
 import 'package:enzitech_app/src/features/home/home_controller.dart';
+import 'package:enzitech_app/src/shared/failures/handle_failure.dart';
+import 'package:enzitech_app/src/shared/failures/utils_failures.dart';
 import 'package:enzitech_app/src/shared/routes/route_generator.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
+import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -19,10 +23,45 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+  late final HomeController controller;
+
   @override
   void initState() {
     super.initState();
+    controller = context.read<HomeController>();
 
+    if (mounted) {
+      controller.addListener(
+        () async {
+          if (controller.state == HomeState.error && mounted) {
+            EZTSnackBar.clear(context);
+            EZTSnackBar.show(
+              context,
+              HandleFailure.of(controller.failure!),
+              eztSnackBarType: EZTSnackBarType.error,
+            );
+            var accountController = context.read<AccountController>();
+            if (controller.failure is ExpiredTokenOrWrongUserFailure ||
+                controller.failure is UserNotFoundOrWrongTokenFailure ||
+                controller.failure is SessionNotFoundFailure) {
+              accountController.logout();
+
+              if (accountController.state == AccountState.success && mounted) {
+                EZTSnackBar.show(
+                  context,
+                  "Faça seu login novamente.",
+                );
+                await Future.delayed(const Duration(milliseconds: 500));
+                if (mounted) {
+                  Navigator.pushReplacementNamed(context, RouteGenerator.auth);
+                  controller.setFragmentIndex(0);
+                }
+              }
+            }
+          }
+        },
+      );
+    }
     _checkAuth();
   }
 
