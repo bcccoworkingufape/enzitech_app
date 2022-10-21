@@ -42,7 +42,7 @@ class _ExperimentFillFieldsPageState extends State<ExperimentFillFieldsPage> {
     controller = context.read<ExperimentInsertDataController>();
     experimentsController = context.read<ExperimentsController>();
 
-    if (mounted) {
+    /* if (mounted) {
       controller.addListener(
         () {
           if (mounted && controller.state == ExperimentInsertDataState.error) {
@@ -54,7 +54,7 @@ class _ExperimentFillFieldsPageState extends State<ExperimentFillFieldsPage> {
           }
         },
       );
-    }
+    } */
   }
 
   bool _checkIfTextIsGTZAndNumeric(text) {
@@ -235,7 +235,9 @@ class _ExperimentFillFieldsPageState extends State<ExperimentFillFieldsPage> {
           enabled: controller.enableNextButton ?? false,
           text: 'Próximo',
           onPressed: () {
-            widget.formKey.currentState!.save();
+            // widget.formKey.currentState!.save();
+            controller.insertExperimentData();
+            print(controller.choosedEnzymeAndTreatment);
 
             controller.pageController.animateTo(
               MediaQuery.of(context).size.width,
@@ -249,6 +251,8 @@ class _ExperimentFillFieldsPageState extends State<ExperimentFillFieldsPage> {
           text: 'Voltar',
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
+            controller.setStepPage(0, notify: false);
+
             controller.pageController.animateTo(
               0,
               duration: const Duration(milliseconds: 150),

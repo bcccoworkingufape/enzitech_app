@@ -47,7 +47,7 @@ class _ExperimentChooseEnzymeAndTreatmentPageState
     controller = context.read<ExperimentInsertDataController>();
     experimentsController = context.read<ExperimentsController>();
 
-    if (mounted) {
+    /* if (mounted) {
       controller.addListener(
         () {
           if (mounted && controller.state == ExperimentInsertDataState.error) {
@@ -59,7 +59,7 @@ class _ExperimentChooseEnzymeAndTreatmentPageState
           }
         },
       );
-    }
+    } */
   }
 
   Widget get _body {

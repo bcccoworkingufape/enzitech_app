@@ -91,13 +91,13 @@ class ExperimentInsertDataController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> insertExperimentData(
-    String id,
-  ) async {
+  Future<void> insertExperimentData() async {
     state = ExperimentInsertDataState.loading;
     // notifyListeners();
     try {
-      var experiment = await experimentsService.calculateExperiment(id);
+      _createCalculateJson();
+      var a = await experimentsService
+          .calculateExperiment(choosedEnzymeAndTreatment);
       // _setExperimentModel(experiment);
       state = ExperimentInsertDataState.success;
       notifyListeners();
@@ -109,6 +109,8 @@ class ExperimentInsertDataController extends ChangeNotifier {
   }
 
   void generateTextFields(BuildContext context) {
+    state = ExperimentInsertDataState.idle;
+
     setTextEditingControllers({});
 
     final validations = <ValidateRule>[
@@ -140,7 +142,7 @@ class ExperimentInsertDataController extends ChangeNotifier {
     textEditingControllers.clear();
     textFields.clear();
 
-    for (var i = 0; i < experiment.repetitions; i++) {
+    for (var i = 0; i < listOfExperimentData.length; i++) {
       TextEditingController sampleFieldController =
           TextEditingController(text: '');
       textEditingControllers.putIfAbsent(
@@ -155,7 +157,9 @@ class ExperimentInsertDataController extends ChangeNotifier {
           usePrimaryColorOnFocusedBorder: true,
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
           controller: sampleFieldController,
-          onChanged: (value) => _validateFields,
+          onChanged: (value) {
+            _validateFields(value, i.toDouble(), "sample");
+          },
           fieldValidator: fieldValidator,
           inputFormatters: Constants.enzymeDecimalInputFormatters,
           // disableSuffixIcon: true,
@@ -176,23 +180,45 @@ class ExperimentInsertDataController extends ChangeNotifier {
           usePrimaryColorOnFocusedBorder: true,
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
           controller: whiteSampleFieldController,
-          onChanged: (value) => _validateFields,
+          onChanged: (value) {
+            _validateFields(value, i.toDouble(), "whiteSample");
+          },
           fieldValidator: fieldValidator,
           inputFormatters: Constants.enzymeDecimalInputFormatters,
           // disableSuffixIcon: true,
         ),
       );
     }
-    notifyListeners();
+
+    // notifyListeners();
   }
 
-  get _validateFields {
+  void _createCalculateJson() {
+    /* List<Map<String, double?>?> tempListOfData = [];
+    tempListOfData.addAll(listOfExperimentData);
+
+    for (var element in tempListOfData) {
+      element!.removeWhere((key, value) => key == "_id");
+    } */
+
+    Map<String, dynamic> tempMap = Map.from(choosedEnzymeAndTreatment);
+
+    tempMap["experimentData"] = listOfExperimentData;
+
+    setChoosedEnzymeAndTreatment(tempMap);
+  }
+
+  void _validateFields(String value, double id, String type) {
     var isAllFilled = <bool>[];
     textEditingControllers.forEach((key, value) {
       isAllFilled.add(value.text.isNotEmpty);
     });
+    var b = listOfExperimentData.firstWhere((element) => element!["_id"] == id);
+    if (value != "") {
+      b![type] = double.parse(value);
+    }
     if (/* mounted && */ isAllFilled.every((boolean) => boolean == true)) {
-      log(textEditingControllers.toString());
+      // log(textEditingControllers.toString());
       setEnableNextButton(true);
     } else {
       setEnableNextButton(false);

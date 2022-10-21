@@ -1,4 +1,6 @@
 // 🌎 Project imports:
+import 'dart:convert';
+
 import 'package:enzitech_app/src/shared/external/http_driver/dio_client.dart';
 import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
 import 'package:enzitech_app/src/shared/models/experiment_model.dart';
@@ -95,7 +97,7 @@ class ExperimentsService {
   }
 
   Future<void> calculateExperiment(
-    String id,
+    Map<String, dynamic> jsonBody,
   ) async {
     try {
       // var enzymes = experimentsEnzymes
@@ -116,18 +118,16 @@ class ExperimentsService {
       //     )
       //     .toList();
 
-      // var res = await client.post(
-      //   "/experiments",
-      //   data: {
-      //     "name": name,
-      //     "description": description,
-      //     "repetitions": repetitions,
-      //     "processes": processes,
-      //     "experimentsEnzymes": enzymes,
-      //   },
-      // );
+      //  List<Map<String, double>> listEncoded =
+      // (jsonBody["experimentData"] as List<Map<String, double?>?>)
+      //     .forEach((item) => item!..remove("_id"));
 
-      // return ExperimentModel.fromMap(res.data);
+      var res = await client.post(
+        "/experiments",
+        data: jsonBody,
+      );
+
+      return res.data;
     } catch (e) {
       rethrow;
     }

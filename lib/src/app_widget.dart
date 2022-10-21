@@ -71,6 +71,7 @@ class AppWidget extends StatelessWidget {
           create: (context) => CreateExperimentController(
             ExperimentsService(context.read()),
           ),
+          lazy: true,
         ),
         ChangeNotifierProvider(
           create: (context) => TreatmentsController(
@@ -81,11 +82,13 @@ class AppWidget extends StatelessWidget {
           create: (context) => CreateTreatmentController(
             TreatmentsService(context.read()),
           ),
+          lazy: true,
         ),
         ChangeNotifierProvider(
           create: (context) => ExperimentDetailedController(
             ExperimentsService(context.read()),
           ),
+          lazy: true,
         ),
         ChangeNotifierProvider(
           create: (context) => EnzymesController(
@@ -96,6 +99,7 @@ class AppWidget extends StatelessWidget {
           create: (context) => CreateEnzymeController(
             EnzymesService(context.read()),
           ),
+          lazy: true,
         ),
         ChangeNotifierProvider(
           create: (context) => HomeController(
@@ -109,6 +113,7 @@ class AppWidget extends StatelessWidget {
           create: (context) => ExperimentInsertDataController(
             ExperimentsService(context.read()),
           ),
+          lazy: true,
         ),
       ],
       child: GestureDetector(

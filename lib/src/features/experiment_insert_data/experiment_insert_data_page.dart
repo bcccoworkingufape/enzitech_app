@@ -1,13 +1,8 @@
 // 🐦 Flutter imports:
-import 'package:enzitech_app/src/shared/validator/validator.dart';
-import 'package:enzitech_app/src/shared/widgets/ezt_textfield.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
@@ -17,8 +12,6 @@ import 'package:enzitech_app/src/features/experiment_insert_data/fragments/exper
 import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_controller.dart';
 import 'package:enzitech_app/src/shared/failures/failures.dart';
 import 'package:enzitech_app/src/shared/models/experiment_model.dart';
-import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
-import 'package:enzitech_app/src/shared/util/util.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
 
 class ExperimentInsertDataPage extends StatefulWidget {
