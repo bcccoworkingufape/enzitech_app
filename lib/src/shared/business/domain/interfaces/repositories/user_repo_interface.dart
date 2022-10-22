@@ -1,8 +1,8 @@
 abstract class IUserRepo {
-  Future<void> createUser(
-    String name,
-    String institution,
-    String email,
-    String password,
-  );
+  Future<void> createUser({
+    required String name,
+    required String institution,
+    required String email,
+    required String password,
+  });
 }

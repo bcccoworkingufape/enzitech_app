@@ -5,12 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
-import 'package:enzitech_app/src/features/create_account/create_account_controller.dart';
-import 'package:enzitech_app/src/features/create_account/widgets/create_account_first_step.dart';
-import 'package:enzitech_app/src/features/create_account/widgets/create_account_second_step.dart';
+import 'package:enzitech_app/src/features/create_account/ui/components/create_account_first_step.dart';
+import 'package:enzitech_app/src/features/create_account/ui/components/create_account_second_step.dart';
+import 'package:enzitech_app/src/features/create_account/viewmodel/create_account_viewmodel.dart';
+import 'package:enzitech_app/src/shared/business/domain/enums/state_enum.dart';
+import 'package:enzitech_app/src/shared/ui/widgets/ezt_snack_bar.dart';
 import 'package:enzitech_app/src/shared/utilities/failures/failures.dart';
 import 'package:enzitech_app/src/shared/utilities/routes/route_generator.dart';
-import 'package:enzitech_app/src/shared/ui/widgets/ezt_snack_bar.dart';
 
 class CreateAccountPage extends StatefulWidget {
   const CreateAccountPage({Key? key}) : super(key: key);
@@ -20,7 +21,7 @@ class CreateAccountPage extends StatefulWidget {
 }
 
 class CreateAccountPageState extends State<CreateAccountPage> {
-  late final CreateAccountController controller;
+  late final CreateAccountViewmodel viewmodel;
 
   final _pageController = PageController(initialPage: 0);
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -37,20 +38,20 @@ class CreateAccountPageState extends State<CreateAccountPage> {
   @override
   void initState() {
     super.initState();
-    controller = context.read<CreateAccountController>();
+    viewmodel = context.read<CreateAccountViewmodel>();
     userDataCache.updateAll((key, value) => '');
     if (mounted) {
-      controller.addListener(() {
-        if (controller.state == CreateAccountState.error && mounted) {
+      viewmodel.addListener(() {
+        if (viewmodel.state == StateEnum.error && mounted) {
           EZTSnackBar.show(
             context,
             HandleFailure.of(
-              controller.failure!,
+              viewmodel.failure!,
               overrideDefaultMessage: true,
             ),
             eztSnackBarType: EZTSnackBarType.error,
           );
-        } else if (controller.state == CreateAccountState.success) {
+        } else if (viewmodel.state == StateEnum.success) {
           EZTSnackBar.show(
             context,
             "Conta criada com sucesso!",

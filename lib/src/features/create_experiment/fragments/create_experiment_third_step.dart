@@ -15,11 +15,11 @@ import 'package:enzitech_app/src/features/create_experiment/widgets/ezt_create_e
 import 'package:enzitech_app/src/features/home/fragments/enzymes/enzymes_controller.dart';
 import 'package:enzitech_app/src/shared/models_/enzyme_model.dart';
 import 'package:enzitech_app/src/shared/ui/themes/themes.dart';
-import 'package:enzitech_app/src/shared/utilities/util/constants.dart';
-import 'package:enzitech_app/src/shared/utilities/util/util.dart';
 import 'package:enzitech_app/src/shared/ui/widgets/ezt_button.dart';
 import 'package:enzitech_app/src/shared/ui/widgets/ezt_checkbox_tile.dart';
 import 'package:enzitech_app/src/shared/ui/widgets/ezt_snack_bar.dart';
+import 'package:enzitech_app/src/shared/utilities/util/constants.dart';
+import 'package:enzitech_app/src/shared/utilities/util/util.dart';
 
 class CreateExperimentThirdStepPage extends StatefulWidget {
   const CreateExperimentThirdStepPage({

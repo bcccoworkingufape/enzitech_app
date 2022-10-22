@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // 🌎 Project imports:
-import 'package:enzitech_app/src/shared/utilities/input_formatters/input_formatter.dart';
 import 'package:enzitech_app/src/shared/ui/themes/themes.dart';
+import 'package:enzitech_app/src/shared/utilities/input_formatters/input_formatter.dart';
 
 class Constants {
   static const padding16all = EdgeInsets.symmetric(

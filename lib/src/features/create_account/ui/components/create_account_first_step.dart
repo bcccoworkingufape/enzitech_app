@@ -7,12 +7,11 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
-import 'package:enzitech_app/src/features/create_account/create_account_controller.dart';
 import 'package:enzitech_app/src/shared/ui/themes/themes.dart';
-import 'package:enzitech_app/src/shared/utilities/util/util.dart';
-import 'package:enzitech_app/src/shared/utilities/validator/validator.dart';
 import 'package:enzitech_app/src/shared/ui/widgets/ezt_button.dart';
 import 'package:enzitech_app/src/shared/ui/widgets/ezt_textfield.dart';
+import 'package:enzitech_app/src/shared/utilities/util/util.dart';
+import 'package:enzitech_app/src/shared/utilities/validator/validator.dart';
 
 class CreateAccountFirstStep extends StatefulWidget {
   const CreateAccountFirstStep({
@@ -31,7 +30,7 @@ class CreateAccountFirstStep extends StatefulWidget {
 }
 
 class CreateAccountFirstStepState extends State<CreateAccountFirstStep> {
-  late final CreateAccountController controller;
+  // late final CreateAccountController controller;
   final _nameFieldController = TextEditingController(text: '');
   final _institutionFieldController = TextEditingController(text: '');
 
@@ -40,7 +39,7 @@ class CreateAccountFirstStepState extends State<CreateAccountFirstStep> {
   @override
   void initState() {
     super.initState();
-    controller = context.read<CreateAccountController>();
+    // controller = context.read<CreateAccountController>();
     initFieldControllerTexts();
   }
 

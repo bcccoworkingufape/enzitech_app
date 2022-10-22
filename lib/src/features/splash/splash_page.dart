@@ -9,11 +9,11 @@ import 'package:provider/provider.dart';
 import 'package:enzitech_app/src/app_config.dart';
 import 'package:enzitech_app/src/features/home/fragments/account/account_controller.dart';
 import 'package:enzitech_app/src/features/home/home_controller.dart';
+import 'package:enzitech_app/src/shared/ui/themes/themes.dart';
+import 'package:enzitech_app/src/shared/ui/widgets/ezt_snack_bar.dart';
 import 'package:enzitech_app/src/shared/utilities/failures/handle_failure.dart';
 import 'package:enzitech_app/src/shared/utilities/failures/utils_failures.dart';
 import 'package:enzitech_app/src/shared/utilities/routes/route_generator.dart';
-import 'package:enzitech_app/src/shared/ui/themes/themes.dart';
-import 'package:enzitech_app/src/shared/ui/widgets/ezt_snack_bar.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);

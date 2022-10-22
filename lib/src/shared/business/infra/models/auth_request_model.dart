@@ -1,6 +1,7 @@
 // 🎯 Dart imports:
 import 'dart:convert';
 
+// 🌎 Project imports:
 import 'package:enzitech_app/src/shared/business/domain/entities/auth_request_entity.dart';
 
 class AuthRequestModel {

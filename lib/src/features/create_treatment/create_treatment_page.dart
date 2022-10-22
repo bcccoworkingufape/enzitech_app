@@ -9,13 +9,13 @@ import 'package:provider/provider.dart';
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/create_treatment/create_treatment_controller.dart';
 import 'package:enzitech_app/src/features/home/fragments/treatments/treatments_controller.dart';
-import 'package:enzitech_app/src/shared/utilities/failures/failures.dart';
 import 'package:enzitech_app/src/shared/ui/themes/themes.dart';
-import 'package:enzitech_app/src/shared/utilities/util/util.dart';
-import 'package:enzitech_app/src/shared/utilities/validator/validator.dart';
 import 'package:enzitech_app/src/shared/ui/widgets/ezt_button.dart';
 import 'package:enzitech_app/src/shared/ui/widgets/ezt_snack_bar.dart';
 import 'package:enzitech_app/src/shared/ui/widgets/ezt_textfield.dart';
+import 'package:enzitech_app/src/shared/utilities/failures/failures.dart';
+import 'package:enzitech_app/src/shared/utilities/util/util.dart';
+import 'package:enzitech_app/src/shared/utilities/validator/validator.dart';
 
 class CreateTreatmentPage extends StatefulWidget {
   const CreateTreatmentPage({Key? key}) : super(key: key);

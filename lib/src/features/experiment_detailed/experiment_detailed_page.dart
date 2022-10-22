@@ -12,16 +12,16 @@ import 'package:provider/provider.dart';
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/experiment_detailed/experiment_detailed_controller.dart';
 import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_controller.dart';
-import 'package:enzitech_app/src/shared/utilities/failures/failures.dart';
 import 'package:enzitech_app/src/shared/models_/experiment_model.dart';
-import 'package:enzitech_app/src/shared/utilities/routes/route_generator.dart';
 import 'package:enzitech_app/src/shared/ui/themes/themes.dart';
-import 'package:enzitech_app/src/shared/utilities/util/util.dart';
 import 'package:enzitech_app/src/shared/ui/widgets/ezt_button.dart';
 import 'package:enzitech_app/src/shared/ui/widgets/ezt_error.dart';
 import 'package:enzitech_app/src/shared/ui/widgets/ezt_expansion_tile.dart';
 import 'package:enzitech_app/src/shared/ui/widgets/ezt_progress_indicator.dart';
 import 'package:enzitech_app/src/shared/ui/widgets/ezt_snack_bar.dart';
+import 'package:enzitech_app/src/shared/utilities/failures/failures.dart';
+import 'package:enzitech_app/src/shared/utilities/routes/route_generator.dart';
+import 'package:enzitech_app/src/shared/utilities/util/util.dart';
 
 class ExperimentDetailedPage extends StatefulWidget {
   const ExperimentDetailedPage({

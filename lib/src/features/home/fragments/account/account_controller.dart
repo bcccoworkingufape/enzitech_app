@@ -9,10 +9,10 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // 🌎 Project imports:
-import 'package:enzitech_app/src/shared/utilities/failures/failures.dart';
-import 'package:enzitech_app/src/shared/models_/app_info_model.dart';
 import 'package:enzitech_app/src/shared/business/infra/models/user_model.dart';
+import 'package:enzitech_app/src/shared/models_/app_info_model.dart';
 import 'package:enzitech_app/src/shared/services_/user_prefs_service.dart';
+import 'package:enzitech_app/src/shared/utilities/failures/failures.dart';
 import 'package:enzitech_app/src/shared/utilities/util/util.dart';
 
 enum AccountState { idle, success, error, loading }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/auth/ui/auth_page.dart';
-import 'package:enzitech_app/src/features/create_account/create_account_page.dart';
+import 'package:enzitech_app/src/features/create_account/ui/create_account_page.dart';
 import 'package:enzitech_app/src/features/create_enzyme/create_enzyme_page.dart';
 import 'package:enzitech_app/src/features/create_experiment/create_experiment_page.dart';
 import 'package:enzitech_app/src/features/create_treatment/create_treatment_page.dart';

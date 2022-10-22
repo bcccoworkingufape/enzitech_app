@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
-import 'package:enzitech_app/src/shared/utilities/failures/failures.dart';
 import 'package:enzitech_app/src/shared/models_/experiment_model.dart';
 import 'package:enzitech_app/src/shared/services_/experiments_service.dart';
+import 'package:enzitech_app/src/shared/utilities/failures/failures.dart';
 
 enum ExperimentDetailedState { idle, success, error, loading }
 

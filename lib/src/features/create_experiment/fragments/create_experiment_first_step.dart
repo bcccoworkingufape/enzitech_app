@@ -9,10 +9,10 @@ import 'package:provider/provider.dart';
 import 'package:enzitech_app/src/features/create_experiment/create_experiment_controller.dart';
 import 'package:enzitech_app/src/features/create_experiment/widgets/ezt_create_experiment_step_indicator.dart';
 import 'package:enzitech_app/src/shared/ui/themes/themes.dart';
-import 'package:enzitech_app/src/shared/utilities/util/constants.dart';
-import 'package:enzitech_app/src/shared/utilities/validator/field_validator.dart';
 import 'package:enzitech_app/src/shared/ui/widgets/ezt_button.dart';
 import 'package:enzitech_app/src/shared/ui/widgets/ezt_textfield.dart';
+import 'package:enzitech_app/src/shared/utilities/util/constants.dart';
+import 'package:enzitech_app/src/shared/utilities/validator/field_validator.dart';
 
 class CreateExperimentFirstStepPage extends StatefulWidget {
   const CreateExperimentFirstStepPage({

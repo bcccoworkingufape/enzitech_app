@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/shared/external/http_driver/dio_client.dart';
-import 'package:enzitech_app/src/shared/utilities/failures/failures.dart';
 import 'package:enzitech_app/src/shared/services_/auth_service.dart';
+import 'package:enzitech_app/src/shared/utilities/failures/failures.dart';
 
 enum RecoverPasswordState { idle, success, error, loading }
 

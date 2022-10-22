@@ -1,9 +1,10 @@
-import 'package:enzitech_app/src/shared/business/domain/interfaces/repositories/auth_repo_interface.dart';
-import 'package:enzitech_app/src/shared/business/domain/entities/user_entity.dart';
+// 🌎 Project imports:
 import 'package:enzitech_app/src/shared/business/domain/entities/auth_request_entity.dart';
-import 'package:enzitech_app/src/shared/external/http_driver/dio_client.dart';
+import 'package:enzitech_app/src/shared/business/domain/entities/user_entity.dart';
+import 'package:enzitech_app/src/shared/business/domain/interfaces/repositories/auth_repo_interface.dart';
 import 'package:enzitech_app/src/shared/business/infra/models/auth_request_model.dart';
 import 'package:enzitech_app/src/shared/business/infra/models/user_model.dart';
+import 'package:enzitech_app/src/shared/external/http_driver/dio_client.dart';
 
 class AuthRepo implements IAuthRepo {
   final DioClient client;

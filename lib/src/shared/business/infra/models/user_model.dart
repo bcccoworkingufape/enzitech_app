@@ -2,8 +2,8 @@
 import 'dart:convert';
 
 // 🌎 Project imports:
-import 'package:enzitech_app/src/shared/business/domain/enums/user_type_enum.dart';
 import 'package:enzitech_app/src/shared/business/domain/entities/user_entity.dart';
+import 'package:enzitech_app/src/shared/business/domain/enums/user_type_enum.dart';
 import 'package:enzitech_app/src/shared/utilities/extensions/extensions.dart';
 
 class UserModel {

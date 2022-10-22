@@ -1,7 +1,7 @@
 // 🌎 Project imports:
-import 'package:enzitech_app/src/shared/external/http_driver/dio_client.dart';
 import 'package:enzitech_app/src/shared/business/infra/models/auth_request_model.dart';
 import 'package:enzitech_app/src/shared/business/infra/models/user_model.dart';
+import 'package:enzitech_app/src/shared/external/http_driver/dio_client.dart';
 
 class AuthService {
   final DioClient client;

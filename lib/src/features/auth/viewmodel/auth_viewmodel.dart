@@ -1,5 +1,7 @@
+// 🎯 Dart imports:
 import 'dart:convert';
 
+// 🌎 Project imports:
 import 'package:enzitech_app/src/shared/business/domain/controllers/auth_controller.dart';
 import 'package:enzitech_app/src/shared/business/domain/enums/state_enum.dart';
 import 'package:enzitech_app/src/shared/business/domain/interfaces/providers/disposable_provider_interface.dart';
@@ -30,19 +32,19 @@ class AuthViewmodel extends IDisposableProvider {
 
   String? _loggedName;
   String? get loggedName => _loggedName;
-  void setLoggedName(String loggedName) {
+  void setLoggedName(String? loggedName) {
     _loggedName = loggedName;
   }
 
   String? _email;
   String? get email => _email;
-  void setEmail(String email) {
+  void setEmail(String? email) {
     _email = email;
   }
 
   String? _password;
   String? get password => _password;
-  void setPassword(String password) {
+  void setPassword(String? password) {
     _password = password;
   }
 
@@ -73,7 +75,10 @@ class AuthViewmodel extends IDisposableProvider {
 
   @override
   void disposeValues() {
-    setStateEnum(StateEnum.idle);
     _setFailure(null);
+    setStateEnum(StateEnum.idle);
+    setLoggedName(null);
+    setEmail(null);
+    setPassword(null);
   }
 }

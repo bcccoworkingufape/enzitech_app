@@ -1,3 +1,4 @@
+// 🌎 Project imports:
 import 'package:enzitech_app/src/shared/business/domain/enums/user_type_enum.dart';
 
 class UserEntity {

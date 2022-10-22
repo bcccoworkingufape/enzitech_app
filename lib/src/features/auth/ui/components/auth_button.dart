@@ -1,14 +1,13 @@
 // 🐦 Flutter imports:
-import 'package:enzitech_app/src/features/auth/viewmodel/auth_viewmodel.dart';
-import 'package:enzitech_app/src/shared/business/domain/enums/state_enum.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
-import 'package:enzitech_app/src/features/auth/auth_controller.dart';
+import 'package:enzitech_app/src/features/auth/viewmodel/auth_viewmodel.dart';
 import 'package:enzitech_app/src/features/home/home_controller.dart';
+import 'package:enzitech_app/src/shared/business/domain/enums/state_enum.dart';
 import 'package:enzitech_app/src/shared/ui/widgets/ezt_button.dart';
 
 class AuthButton extends StatelessWidget {

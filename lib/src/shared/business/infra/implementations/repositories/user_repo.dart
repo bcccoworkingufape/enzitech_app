@@ -1,6 +1,5 @@
+// 🌎 Project imports:
 import 'package:enzitech_app/src/shared/business/domain/interfaces/repositories/user_repo_interface.dart';
-import 'package:enzitech_app/src/shared/business/domain/entities/user_entity.dart';
-import 'package:enzitech_app/src/shared/business/domain/entities/auth_request_entity.dart';
 import 'package:enzitech_app/src/shared/external/http_driver/dio_client.dart';
 
 class UserRepo implements IUserRepo {
@@ -9,12 +8,12 @@ class UserRepo implements IUserRepo {
   UserRepo(this.client);
 
   @override
-  Future<void> createUser(
-    String name,
-    String institution,
-    String email,
-    String password,
-  ) async {
+  Future<void> createUser({
+    required String name,
+    required String institution,
+    required String email,
+    required String password,
+  }) async {
     try {
       await client.post(
         "/users",

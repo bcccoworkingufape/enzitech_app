@@ -4,7 +4,6 @@
 import 'dart:io' show Platform;
 
 // 🐦 Flutter imports:
-import 'package:enzitech_app/src/shared/business/domain/enums/user_type_enum.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -17,10 +16,12 @@ import 'package:settings_ui/settings_ui.dart';
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/home/fragments/account/account_controller.dart';
 import 'package:enzitech_app/src/features/home/home_controller.dart';
-import 'package:enzitech_app/src/shared/utilities/failures/failures.dart';
-import 'package:enzitech_app/src/shared/utilities/routes/route_generator.dart';
+import 'package:enzitech_app/src/shared/business/domain/enums/user_type_enum.dart';
+import 'package:enzitech_app/src/shared/business/infra/implementations/providers/app_providers.dart';
 import 'package:enzitech_app/src/shared/ui/themes/themes.dart';
 import 'package:enzitech_app/src/shared/ui/widgets/ezt_snack_bar.dart';
+import 'package:enzitech_app/src/shared/utilities/failures/failures.dart';
+import 'package:enzitech_app/src/shared/utilities/routes/route_generator.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({
@@ -263,7 +264,10 @@ class _AccountPageState extends State<AccountPage> {
                             'Sair',
                             style: TextStyle(color: AppColors.danger),
                           ),
-                          onPressed: (_) => controller.logout(),
+                          onPressed: (_) {
+                            controller.logout();
+                            AppProviders.disposeAllDisposableProviders(context);
+                          },
                         ),
                       ],
                     )
