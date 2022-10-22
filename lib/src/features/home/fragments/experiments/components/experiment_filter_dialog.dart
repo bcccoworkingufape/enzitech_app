@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_controller.dart';
-import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
+import 'package:enzitech_app/src/shared/ui/themes/themes.dart';
 
 class ExperimentFilterDialog extends StatefulWidget {
   const ExperimentFilterDialog({super.key});

@@ -1,14 +1,14 @@
 // 🐦 Flutter imports:
 
-import 'package:enzitech_app/src/shared/util/util.dart';
-import 'package:enzitech_app/src/shared/validator/validator.dart';
-import 'package:enzitech_app/src/shared/widgets/ezt_textfield.dart';
+import 'package:enzitech_app/src/shared/utilities/util/util.dart';
+import 'package:enzitech_app/src/shared/utilities/validator/validator.dart';
+import 'package:enzitech_app/src/shared/ui/widgets/ezt_textfield.dart';
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
-import 'package:enzitech_app/src/shared/failures/failures.dart';
-import 'package:enzitech_app/src/shared/models/experiment_model.dart';
-import 'package:enzitech_app/src/shared/services/experiments_service.dart';
+import 'package:enzitech_app/src/shared/utilities/failures/failures.dart';
+import 'package:enzitech_app/src/shared/models_/experiment_model.dart';
+import 'package:enzitech_app/src/shared/services_/experiments_service.dart';
 
 enum ExperimentInsertDataState { idle, success, error, loading }
 

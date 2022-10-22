@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
-import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
-import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
-import 'package:enzitech_app/src/shared/util/util.dart';
-import 'package:enzitech_app/src/shared/widgets/ezt_marquee_on_demand.dart';
+import 'package:enzitech_app/src/shared/models_/enzyme_model.dart';
+import 'package:enzitech_app/src/shared/ui/themes/themes.dart';
+import 'package:enzitech_app/src/shared/utilities/util/util.dart';
+import 'package:enzitech_app/src/shared/ui/widgets/ezt_marquee_on_demand.dart';
 
 // 📦 Package imports:
 

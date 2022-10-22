@@ -1,8 +1,8 @@
 // 🐦 Flutter imports:
 
 import 'package:enzitech_app/src/features/create_experiment/widgets/ezt_create_experiment_step_indicator.dart';
-import 'package:enzitech_app/src/shared/widgets/ezt_stepper.dart';
-import 'package:enzitech_app/src/shared/widgets/ezt_textfield.dart';
+import 'package:enzitech_app/src/shared/ui/widgets/ezt_stepper.dart';
+import 'package:enzitech_app/src/shared/ui/widgets/ezt_textfield.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -12,9 +12,9 @@ import 'package:provider/provider.dart';
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/experiment_insert_data/experiment_insert_data_controller.dart';
 import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_controller.dart';
-import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
-import 'package:enzitech_app/src/shared/util/util.dart';
-import 'package:enzitech_app/src/shared/widgets/ezt_button.dart';
+import 'package:enzitech_app/src/shared/ui/themes/themes.dart';
+import 'package:enzitech_app/src/shared/utilities/util/util.dart';
+import 'package:enzitech_app/src/shared/ui/widgets/ezt_button.dart';
 
 class ExperimentFillFieldsPage extends StatefulWidget {
   const ExperimentFillFieldsPage({

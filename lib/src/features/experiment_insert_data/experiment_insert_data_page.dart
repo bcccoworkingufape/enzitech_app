@@ -10,9 +10,9 @@ import 'package:enzitech_app/src/features/experiment_insert_data/experiment_inse
 import 'package:enzitech_app/src/features/experiment_insert_data/fragments/experiment_choose_enzyme_and_treatment_page.dart';
 import 'package:enzitech_app/src/features/experiment_insert_data/fragments/experiment_fill_fields_page.dart';
 import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_controller.dart';
-import 'package:enzitech_app/src/shared/failures/failures.dart';
-import 'package:enzitech_app/src/shared/models/experiment_model.dart';
-import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
+import 'package:enzitech_app/src/shared/utilities/failures/failures.dart';
+import 'package:enzitech_app/src/shared/models_/experiment_model.dart';
+import 'package:enzitech_app/src/shared/ui/widgets/ezt_snack_bar.dart';
 
 class ExperimentInsertDataPage extends StatefulWidget {
   final ExperimentModel experiment;

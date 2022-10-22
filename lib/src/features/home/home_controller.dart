@@ -6,7 +6,7 @@ import 'package:enzitech_app/src/features/home/fragments/account/account_control
 import 'package:enzitech_app/src/features/home/fragments/enzymes/enzymes_controller.dart';
 import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_controller.dart';
 import 'package:enzitech_app/src/features/home/fragments/treatments/treatments_controller.dart';
-import 'package:enzitech_app/src/shared/failures/failures.dart';
+import 'package:enzitech_app/src/shared/utilities/failures/failures.dart';
 
 enum HomeState { idle, success, error, loading }
 
@@ -46,44 +46,44 @@ class HomeController extends ChangeNotifier {
   Future<void> getContent() async {
     state = HomeState.loading;
     notifyListeners();
-    try {
-      await experimentsController.loadExperiments(1);
-      await treatmentsController.loadTreatments();
-      await enzymesController.loadEnzymes();
-      await accountController.loadAccountFragment();
+    // try {
+    await experimentsController.loadExperiments(1);
+    await treatmentsController.loadTreatments();
+    await enzymesController.loadEnzymes();
+    await accountController.loadAccountFragment();
 
-      notifyListeners();
+    notifyListeners();
 
-      if (experimentsController.state == ExperimentsState.error) {
-        _setFailure(experimentsController.failure!);
-        state = HomeState.error;
-      } else if (treatmentsController.state == ExperimentsState.error) {
-        _setFailure(treatmentsController.failure!);
+    if (experimentsController.state == ExperimentsState.error) {
+      _setFailure(experimentsController.failure!);
+      state = HomeState.error;
+    } else if (treatmentsController.state == ExperimentsState.error) {
+      _setFailure(treatmentsController.failure!);
 
-        state = HomeState.error;
-      } else if (enzymesController.state == EnzymesState.error) {
-        _setFailure(enzymesController.failure!);
+      state = HomeState.error;
+    } else if (enzymesController.state == EnzymesState.error) {
+      _setFailure(enzymesController.failure!);
 
-        state = HomeState.error;
-      } else if (accountController.state == AccountState.error) {
-        _setFailure(accountController.failure!);
+      state = HomeState.error;
+    } else if (accountController.state == AccountState.error) {
+      _setFailure(accountController.failure!);
 
-        state = HomeState.success;
-      } /*  else if (experimentsController.state == ExperimentsState.success &&
+      state = HomeState.success;
+    } /*  else if (experimentsController.state == ExperimentsState.success &&
           treatmentsController.state == ExperimentsState.success &&
           enzymesController.state == EnzymesState.success &&
           accountController.state == AccountState.success) {
         state = HomeState.success;
       } */
-      else {
-        state = HomeState.success;
-      }
-
-      notifyListeners();
-    } catch (e) {
-      _setFailure(e as Failure);
-      state = HomeState.error;
-      notifyListeners();
+    else {
+      state = HomeState.success;
     }
+
+    notifyListeners();
+    // } catch (e) {
+    //   _setFailure(e as Failure);
+    //   state = HomeState.error;
+    //   notifyListeners();
+    // }
   }
 }

@@ -9,11 +9,11 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // 🌎 Project imports:
-import 'package:enzitech_app/src/shared/failures/failures.dart';
-import 'package:enzitech_app/src/shared/models/app_info_model.dart';
-import 'package:enzitech_app/src/shared/models/user_model.dart';
-import 'package:enzitech_app/src/shared/services/user_prefs_service.dart';
-import 'package:enzitech_app/src/shared/util/util.dart';
+import 'package:enzitech_app/src/shared/utilities/failures/failures.dart';
+import 'package:enzitech_app/src/shared/models_/app_info_model.dart';
+import 'package:enzitech_app/src/shared/business/infra/models/user_model.dart';
+import 'package:enzitech_app/src/shared/services_/user_prefs_service.dart';
+import 'package:enzitech_app/src/shared/utilities/util/util.dart';
 
 enum AccountState { idle, success, error, loading }
 
@@ -118,22 +118,22 @@ class AccountController extends ChangeNotifier {
   Future<void> loadAccount() async {
     state = AccountState.loading;
     notifyListeners();
-    try {
-      String? user = await userPrefsServices.getFullUser();
+    // try {
+    String? user = await userPrefsServices.getFullUser();
 
-      _setUser(
-        UserModel.fromJson(
-          jsonDecode(user!),
-        ),
-      );
+    _setUser(
+      UserModel.fromJson(
+        jsonDecode(user!),
+      ),
+    );
 
-      state = AccountState.success;
-      notifyListeners();
-    } catch (e) {
-      _setFailure(e as Failure);
-      state = AccountState.error;
-      notifyListeners();
-    }
+    state = AccountState.success;
+    notifyListeners();
+    // } catch (e) {
+    //   _setFailure(e as Failure);
+    //   state = AccountState.error;
+    //   notifyListeners();
+    // }
   }
 
   Future<void> openUrl() async {

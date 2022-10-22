@@ -12,15 +12,15 @@ import 'package:enzitech_app/src/features/home/fragments/experiments/components/
 import 'package:enzitech_app/src/features/home/fragments/experiments/components/experiment_filter_dialog.dart';
 import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_controller.dart';
 import 'package:enzitech_app/src/features/home/home_controller.dart';
-import 'package:enzitech_app/src/shared/failures/failures.dart';
-import 'package:enzitech_app/src/shared/routes/route_generator.dart';
-import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
-import 'package:enzitech_app/src/shared/widgets/ezt_error.dart';
-import 'package:enzitech_app/src/shared/widgets/ezt_forced_center.dart';
-import 'package:enzitech_app/src/shared/widgets/ezt_not_found.dart';
-import 'package:enzitech_app/src/shared/widgets/ezt_progress_indicator.dart';
-import 'package:enzitech_app/src/shared/widgets/ezt_pull_to_refresh.dart';
-import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
+import 'package:enzitech_app/src/shared/utilities/failures/failures.dart';
+import 'package:enzitech_app/src/shared/utilities/routes/route_generator.dart';
+import 'package:enzitech_app/src/shared/ui/themes/themes.dart';
+import 'package:enzitech_app/src/shared/ui/widgets/ezt_error.dart';
+import 'package:enzitech_app/src/shared/ui/widgets/ezt_forced_center.dart';
+import 'package:enzitech_app/src/shared/ui/widgets/ezt_not_found.dart';
+import 'package:enzitech_app/src/shared/ui/widgets/ezt_progress_indicator.dart';
+import 'package:enzitech_app/src/shared/ui/widgets/ezt_pull_to_refresh.dart';
+import 'package:enzitech_app/src/shared/ui/widgets/ezt_snack_bar.dart';
 
 class ExperimentsPage extends StatefulWidget {
   const ExperimentsPage({

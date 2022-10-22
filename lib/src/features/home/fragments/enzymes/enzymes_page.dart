@@ -1,4 +1,5 @@
 // 🐦 Flutter imports:
+import 'package:enzitech_app/src/shared/business/domain/enums/user_type_enum.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -11,16 +12,16 @@ import 'package:enzitech_app/src/features/home/fragments/enzymes/components/enzy
 import 'package:enzitech_app/src/features/home/fragments/enzymes/components/enzymes_summary.dart';
 import 'package:enzitech_app/src/features/home/fragments/enzymes/enzymes_controller.dart';
 import 'package:enzitech_app/src/features/home/home_controller.dart';
-import 'package:enzitech_app/src/shared/failures/failures.dart';
-import 'package:enzitech_app/src/shared/models/enzyme_model.dart';
-import 'package:enzitech_app/src/shared/models/user_model.dart';
-import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
-import 'package:enzitech_app/src/shared/widgets/ezt_error.dart';
-import 'package:enzitech_app/src/shared/widgets/ezt_forced_center.dart';
-import 'package:enzitech_app/src/shared/widgets/ezt_not_found.dart';
-import 'package:enzitech_app/src/shared/widgets/ezt_progress_indicator.dart';
-import 'package:enzitech_app/src/shared/widgets/ezt_pull_to_refresh.dart';
-import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
+import 'package:enzitech_app/src/shared/utilities/failures/failures.dart';
+import 'package:enzitech_app/src/shared/models_/enzyme_model.dart';
+import 'package:enzitech_app/src/shared/business/infra/models/user_model.dart';
+import 'package:enzitech_app/src/shared/ui/themes/themes.dart';
+import 'package:enzitech_app/src/shared/ui/widgets/ezt_error.dart';
+import 'package:enzitech_app/src/shared/ui/widgets/ezt_forced_center.dart';
+import 'package:enzitech_app/src/shared/ui/widgets/ezt_not_found.dart';
+import 'package:enzitech_app/src/shared/ui/widgets/ezt_progress_indicator.dart';
+import 'package:enzitech_app/src/shared/ui/widgets/ezt_pull_to_refresh.dart';
+import 'package:enzitech_app/src/shared/ui/widgets/ezt_snack_bar.dart';
 
 class EnzymesPage extends StatefulWidget {
   const EnzymesPage({

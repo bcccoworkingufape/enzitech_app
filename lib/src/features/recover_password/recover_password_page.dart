@@ -8,13 +8,13 @@ import 'package:provider/provider.dart';
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/auth/auth_controller.dart';
 import 'package:enzitech_app/src/features/recover_password/recover_password_controller.dart';
-import 'package:enzitech_app/src/shared/failures/failures.dart';
-import 'package:enzitech_app/src/shared/routes/route_generator.dart';
-import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
-import 'package:enzitech_app/src/shared/validator/validator.dart';
-import 'package:enzitech_app/src/shared/widgets/ezt_button.dart';
-import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
-import 'package:enzitech_app/src/shared/widgets/ezt_textfield.dart';
+import 'package:enzitech_app/src/shared/utilities/failures/failures.dart';
+import 'package:enzitech_app/src/shared/utilities/routes/route_generator.dart';
+import 'package:enzitech_app/src/shared/ui/themes/themes.dart';
+import 'package:enzitech_app/src/shared/utilities/validator/validator.dart';
+import 'package:enzitech_app/src/shared/ui/widgets/ezt_button.dart';
+import 'package:enzitech_app/src/shared/ui/widgets/ezt_snack_bar.dart';
+import 'package:enzitech_app/src/shared/ui/widgets/ezt_textfield.dart';
 
 class RecoverPasswordPage extends StatefulWidget {
   const RecoverPasswordPage({Key? key}) : super(key: key);

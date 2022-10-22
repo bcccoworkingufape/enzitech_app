@@ -1,4 +1,8 @@
 // 🐦 Flutter imports:
+import 'package:enzitech_app/src/features/auth/viewmodel/auth_viewmodel.dart';
+import 'package:enzitech_app/src/shared/business/domain/controllers/auth_controller.dart';
+import 'package:enzitech_app/src/shared/business/infra/implementations/repositories/auth_repo.dart';
+import 'package:enzitech_app/src/shared/utilities/routes/route_generator.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -7,7 +11,6 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
-import 'package:enzitech_app/src/features/auth/auth_controller.dart';
 import 'package:enzitech_app/src/features/create_account/create_account_controller.dart';
 import 'package:enzitech_app/src/features/create_enzyme/create_enzyme_controller.dart';
 import 'package:enzitech_app/src/features/create_experiment/create_experiment_controller.dart';
@@ -21,13 +24,14 @@ import 'package:enzitech_app/src/features/home/fragments/treatments/treatments_c
 import 'package:enzitech_app/src/features/home/home_controller.dart';
 import 'package:enzitech_app/src/features/recover_password/recover_password_controller.dart';
 import 'package:enzitech_app/src/shared/external/http_driver/dio_client.dart';
-import 'package:enzitech_app/src/shared/routes/route_generator.dart';
-import 'package:enzitech_app/src/shared/services/auth_service.dart';
-import 'package:enzitech_app/src/shared/services/enzymes_service.dart';
-import 'package:enzitech_app/src/shared/services/experiments_service.dart';
-import 'package:enzitech_app/src/shared/services/treatments_service.dart';
-import 'package:enzitech_app/src/shared/services/user_prefs_service.dart';
-import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
+import 'package:enzitech_app/src/shared/services_/auth_service.dart';
+import 'package:enzitech_app/src/shared/services_/enzymes_service.dart';
+import 'package:enzitech_app/src/shared/services_/experiments_service.dart';
+import 'package:enzitech_app/src/shared/services_/treatments_service.dart';
+import 'package:enzitech_app/src/shared/services_/user_prefs_service.dart';
+import 'package:enzitech_app/src/shared/ui/themes/themes.dart';
+
+import 'shared/business/infra/implementations/repositories/user_repo.dart';
 
 class AppWidget extends StatelessWidget {
   final HttpDriverOptions httpDriverOptions;
@@ -40,14 +44,33 @@ class AppWidget extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider(
-          create: (_) => DioClient(httpDriverOptions),
+          create: (context) => DioClient(httpDriverOptions),
         ),
+        Provider(
+          create: (context) => AuthRepo(context.read()),
+          lazy: true,
+        ),
+        Provider(
+          create: (context) => UserRepo(context.read()),
+          lazy: true,
+        ),
+
         ChangeNotifierProvider(
-          create: (context) => AuthController(
-            context.read(),
-            AuthService(context.read()),
+          create: (context) => AuthViewmodel(
+            authController: AuthController(
+              authRepo: context.read(),
+            ),
           ),
+          lazy: true,
         ),
+
+        // OLD
+        // ChangeNotifierProvider(
+        //   create: (context) => AuthController(
+        //     context.read(),
+        //     AuthService(context.read()),
+        //   ),
+        // ),
         ChangeNotifierProvider(
           create: (context) => CreateAccountController(
             context.read(),

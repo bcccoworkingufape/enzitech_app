@@ -8,11 +8,11 @@ import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/create_account/create_account_controller.dart';
-import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
-import 'package:enzitech_app/src/shared/util/util.dart';
-import 'package:enzitech_app/src/shared/validator/validator.dart';
-import 'package:enzitech_app/src/shared/widgets/ezt_button.dart';
-import 'package:enzitech_app/src/shared/widgets/ezt_textfield.dart';
+import 'package:enzitech_app/src/shared/ui/themes/themes.dart';
+import 'package:enzitech_app/src/shared/utilities/util/util.dart';
+import 'package:enzitech_app/src/shared/utilities/validator/validator.dart';
+import 'package:enzitech_app/src/shared/ui/widgets/ezt_button.dart';
+import 'package:enzitech_app/src/shared/ui/widgets/ezt_textfield.dart';
 
 class CreateAccountFirstStep extends StatefulWidget {
   const CreateAccountFirstStep({

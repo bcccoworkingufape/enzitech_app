@@ -11,10 +11,10 @@ import 'package:enzitech_app/src/features/create_experiment/fragments/create_exp
 import 'package:enzitech_app/src/features/create_experiment/fragments/create_experiment_second_step.dart';
 import 'package:enzitech_app/src/features/create_experiment/fragments/create_experiment_third_step.dart';
 import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_controller.dart';
-import 'package:enzitech_app/src/shared/failures/failures.dart';
-import 'package:enzitech_app/src/shared/models/experiment_request_model.dart';
-import 'package:enzitech_app/src/shared/routes/route_generator.dart';
-import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
+import 'package:enzitech_app/src/shared/utilities/failures/failures.dart';
+import 'package:enzitech_app/src/shared/models_/experiment_request_model.dart';
+import 'package:enzitech_app/src/shared/utilities/routes/route_generator.dart';
+import 'package:enzitech_app/src/shared/ui/widgets/ezt_snack_bar.dart';
 
 class CreateExperimentPage extends StatefulWidget {
   const CreateExperimentPage({Key? key}) : super(key: key);

@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/shared/external/http_driver/dio_client.dart';
-import 'package:enzitech_app/src/shared/failures/failures.dart';
-import 'package:enzitech_app/src/shared/models/auth_request_model.dart';
-import 'package:enzitech_app/src/shared/services/auth_service.dart';
-import 'package:enzitech_app/src/shared/services/user_prefs_service.dart';
+import 'package:enzitech_app/src/shared/utilities/failures/failures.dart';
+import 'package:enzitech_app/src/shared/business/infra/models/auth_request_model.dart';
+import 'package:enzitech_app/src/shared/services_/auth_service.dart';
+import 'package:enzitech_app/src/shared/services_/user_prefs_service.dart';
 
 enum AuthState { idle, success, error, loading }
 
@@ -21,7 +21,7 @@ class AuthController extends ChangeNotifier {
 
   var state = AuthState.idle;
 
-  var authRequest = AuthRequestModel('', '');
+  var authRequest = AuthRequestModel(email: '', password: '');
 
   String? _loggedName;
   String? get loggedName => _loggedName;
@@ -63,7 +63,7 @@ class AuthController extends ChangeNotifier {
       await userPrefsServices.saveFullUser(jsonEncode(response));
       await userPrefsServices.saveToken(response.token);
       await userPrefsServices.initConfirmationsEnabled();
-      await client.setConfig(enableGetToken: true);
+      await client.setConfig(token: response.token);
 
       state = AuthState.success;
     } catch (e) {
