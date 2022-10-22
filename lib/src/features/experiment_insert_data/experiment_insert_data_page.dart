@@ -32,7 +32,6 @@ class _ExperimentInsertDataPageState extends State<ExperimentInsertDataPage> {
   late final ExperimentsController experimentsController;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final _formKey = GlobalKey<FormBuilderState>();
 
   bool autoValidate = true;
   bool readOnly = false;
@@ -78,28 +77,35 @@ class _ExperimentInsertDataPageState extends State<ExperimentInsertDataPage> {
   @override
   Widget build(BuildContext context) {
     context.watch<ExperimentInsertDataController>();
-    return Scaffold(
-      key: _scaffoldKey,
-      /* appBar: AppBar(
-        backgroundColor: AppColors.primary,
-        title: Text(
-          "Inserir dados no experimento",
-          style: TextStyles.titleBoldBackground,
-        ),
-      ), */
-      body: SafeArea(
-        child: PageView(
-          controller: controller.pageController,
-          physics: const NeverScrollableScrollPhysics(),
-          children: [
-            ExperimentChooseEnzymeAndTreatmentPage(
-              formKey: _formKey,
-              callback: onBack,
-            ),
-            ExperimentFillFieldsPage(
-              formKey: _formKey,
-            ),
-          ],
+    return WillPopScope(
+      onWillPop: () async {
+        onBack();
+        return true;
+      },
+      child: Scaffold(
+        key: _scaffoldKey,
+        /* appBar: AppBar(
+          backgroundColor: AppColors.primary,
+          title: Text(
+            "Inserir dados no experimento",
+            style: TextStyles.titleBoldBackground,
+          ),
+        ), */
+        body: SafeArea(
+          child: PageView(
+            controller: controller.pageController,
+            physics: const NeverScrollableScrollPhysics(),
+            children: [
+              ExperimentChooseEnzymeAndTreatmentPage(
+                // formKey: _formKey,
+                callback: onBack,
+              ),
+              ExperimentFillFieldsPage(
+                // formKey: _formKey,
+                callback: onBack,
+              ),
+            ],
+          ),
         ),
       ),
     );

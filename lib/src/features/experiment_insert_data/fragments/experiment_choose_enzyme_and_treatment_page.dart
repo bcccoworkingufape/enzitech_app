@@ -1,6 +1,3 @@
-// 🎯 Dart imports:
-import 'dart:io';
-
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -14,7 +11,6 @@ import 'package:provider/provider.dart';
 import 'package:enzitech_app/src/features/create_experiment/widgets/ezt_create_experiment_step_indicator.dart';
 import 'package:enzitech_app/src/features/experiment_insert_data/experiment_insert_data_controller.dart';
 import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_controller.dart';
-import 'package:enzitech_app/src/shared/failures/failures.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:enzitech_app/src/shared/util/util.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_button.dart';
@@ -24,11 +20,11 @@ import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
 class ExperimentChooseEnzymeAndTreatmentPage extends StatefulWidget {
   const ExperimentChooseEnzymeAndTreatmentPage({
     Key? key,
-    required this.formKey,
+    // required this.formKey,
     required this.callback,
   }) : super(key: key);
   final void Function() callback;
-  final GlobalKey<FormBuilderState> formKey;
+  // final GlobalKey<FormBuilderState> formKey;
 
   @override
   State<ExperimentChooseEnzymeAndTreatmentPage> createState() =>
@@ -40,6 +36,7 @@ class _ExperimentChooseEnzymeAndTreatmentPageState
   late final ExperimentInsertDataController controller;
   late final ExperimentsController experimentsController;
   bool? enableNextButton;
+  final formKey = GlobalKey<FormBuilderState>();
 
   @override
   void initState() {
@@ -69,7 +66,7 @@ class _ExperimentChooseEnzymeAndTreatmentPageState
         children: [
           const EZTCreateExperimentStepIndicator(
             title: "Inserir dados no experimento",
-            message: "Etapa 1 de 3 - Identificação",
+            message: "Etapa 1 de 2 - Identificação",
           ),
           const SizedBox(
             height: 64,
@@ -105,26 +102,23 @@ class _ExperimentChooseEnzymeAndTreatmentPageState
                     child: Column(
                       children: <Widget>[
                         FormBuilder(
-                          key: widget.formKey,
+                          key: formKey,
                           // enabled: false,
                           onChanged: () {
-                            widget.formKey.currentState!.save();
+                            formKey.currentState!.save();
                             setState(() {
-                              if (widget.formKey.currentState?.value.values
+                              if (formKey.currentState?.value.values
                                       .every((element) => element != null) ??
                                   false) {
                                 enableNextButton =
-                                    widget.formKey.currentState?.validate();
+                                    formKey.currentState?.validate();
                                 controller.setChoosedEnzymeAndTreatment(
-                                  widget.formKey.currentState!.value,
+                                  formKey.currentState!.value,
                                 );
                               } else {
                                 enableNextButton = false;
                               }
                             });
-
-                            debugPrint(
-                                widget.formKey.currentState!.value.toString());
                           },
                           initialValue: controller.choosedEnzymeAndTreatment,
                           autovalidateMode: AutovalidateMode.disabled,
@@ -212,10 +206,10 @@ class _ExperimentChooseEnzymeAndTreatmentPageState
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      if (widget.formKey.currentState?.saveAndValidate() ??
+                      if (formKey.currentState?.saveAndValidate() ??
                           false) {
                         debugPrint(
-                            widget.formKey.currentState?.value.toString());
+                            formKey.currentState?.value.toString());
                         controller.pageController.animateTo(
                           MediaQuery.of(context).size.width,
                           duration: const Duration(milliseconds: 150),
@@ -223,7 +217,7 @@ class _ExperimentChooseEnzymeAndTreatmentPageState
                         );
                       } else {
                         debugPrint(
-                            widget.formKey.currentState?.value.toString());
+                            formKey.currentState?.value.toString());
                         debugPrint('validation failed');
                       }
                     },
@@ -237,7 +231,7 @@ class _ExperimentChooseEnzymeAndTreatmentPageState
                 Expanded(
                   child: OutlinedButton(
                     onPressed: () {
-                      widget.formKey.currentState?.reset();
+                      formKey.currentState?.reset();
                     },
                     // color: Theme.of(context).colorScheme.secondary,
                     child: Text(
@@ -267,24 +261,27 @@ class _ExperimentChooseEnzymeAndTreatmentPageState
       children: [
         EZTButton(
           enabled: enableNextButton ??
-              (widget.formKey.currentState?.validate() ??
+              (formKey.currentState?.validate() ??
                   (controller.choosedEnzymeAndTreatment['process'] != null &&
                       controller.choosedEnzymeAndTreatment['enzyme'] != null)),
           text: 'Próximo',
-          onPressed: () {
+          loading: controller.state == ExperimentInsertDataState.loading
+              ? true
+              : false,
+          onPressed: () async {
             EZTSnackBar.clear(context);
-            if (widget.formKey.currentState?.saveAndValidate() ?? false) {
+            if (formKey.currentState?.saveAndValidate() ?? false) {
               controller.setChoosedEnzymeAndTreatment(
-                widget.formKey.currentState!.value,
+                formKey.currentState!.value,
               );
 
-              controller.generateTextFields(context);
-
-              controller.pageController.animateTo(
-                MediaQuery.of(context).size.width,
-                duration: const Duration(milliseconds: 150),
-                curve: Curves.easeIn,
-              );
+              await controller.generateTextFields(context).whenComplete(() {
+                controller.pageController.animateTo(
+                  MediaQuery.of(context).size.width,
+                  duration: const Duration(milliseconds: 150),
+                  curve: Curves.easeIn,
+                );
+              });
             }
           },
         ),
@@ -304,23 +301,25 @@ class _ExperimentChooseEnzymeAndTreatmentPageState
   @override
   Widget build(BuildContext context) {
     context.watch<ExperimentInsertDataController>();
-    return Column(
-      children: [
-        Expanded(
-          flex: 11,
-          child: Center(child: _body),
-        ),
-        SizedBox(
-          height: 128,
-          child: SingleChildScrollView(
-            physics: const NeverScrollableScrollPhysics(),
-            child: Padding(
-              padding: Constants.padding16all,
-              child: _buttons,
+    return SafeArea(
+      child: Column(
+        children: [
+          Expanded(
+            flex: 11,
+            child: Center(child: _body),
+          ),
+          SizedBox(
+            height: 128,
+            child: SingleChildScrollView(
+              physics: const NeverScrollableScrollPhysics(),
+              child: Padding(
+                padding: Constants.padding16all,
+                child: _buttons,
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

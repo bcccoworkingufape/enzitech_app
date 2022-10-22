@@ -1,5 +1,4 @@
 // 🐦 Flutter imports:
-import 'dart:developer';
 
 import 'package:enzitech_app/src/shared/util/util.dart';
 import 'package:enzitech_app/src/shared/validator/validator.dart';
@@ -20,7 +19,12 @@ class ExperimentInsertDataController extends ChangeNotifier {
     this.experimentsService,
   );
 
-  var state = ExperimentInsertDataState.idle;
+  ExperimentInsertDataState _state = ExperimentInsertDataState.idle;
+  ExperimentInsertDataState get state => _state;
+  void _setState(ExperimentInsertDataState state) {
+    _state = state;
+    notifyListeners();
+  }
 
   Failure? _failure;
   Failure? get failure => _failure;
@@ -68,6 +72,13 @@ class ExperimentInsertDataController extends ChangeNotifier {
     if (notify) notifyListeners();
   }
 
+  /* bool _isLoading = false;
+  bool get isLoading => _isLoading;
+  void setIsLoading(bool isLoading, {bool notify = true}) {
+    _isLoading = isLoading;
+    if (notify) notifyListeners();
+  } */
+
   int _stepPage = 0;
   int get stepPage => _stepPage;
   void setStepPage(int stepPage, {bool notify = true}) {
@@ -92,24 +103,24 @@ class ExperimentInsertDataController extends ChangeNotifier {
   }
 
   Future<void> insertExperimentData() async {
-    state = ExperimentInsertDataState.loading;
-    // notifyListeners();
+    _setState(ExperimentInsertDataState.loading);
     try {
       _createCalculateJson();
       var a = await experimentsService
           .calculateExperiment(choosedEnzymeAndTreatment);
-      // _setExperimentModel(experiment);
-      state = ExperimentInsertDataState.success;
-      notifyListeners();
+      _setState(ExperimentInsertDataState.success);
     } catch (e) {
       _setFailure(e as Failure);
-      state = ExperimentInsertDataState.error;
-      notifyListeners();
+      _setState(ExperimentInsertDataState.error);
     }
   }
 
-  void generateTextFields(BuildContext context) {
-    state = ExperimentInsertDataState.idle;
+  Future<void> generateTextFields(BuildContext context) async {
+    // state = ExperimentInsertDataState.idle;
+    // setIsLoading(true);
+    _setState(ExperimentInsertDataState.loading);
+
+    // await Future.delayed(Duration.zero);
 
     setTextEditingControllers({});
 
@@ -176,7 +187,7 @@ class ExperimentInsertDataController extends ChangeNotifier {
         'whiteSample-${i.toDouble()}',
         () => EZTTextField(
           eztTextFieldType: EZTTextFieldType.underline,
-          labelText: "Peso do solo",
+          labelText: "Amostra branca",
           usePrimaryColorOnFocusedBorder: true,
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
           controller: whiteSampleFieldController,
@@ -189,6 +200,8 @@ class ExperimentInsertDataController extends ChangeNotifier {
         ),
       );
     }
+    _setState(ExperimentInsertDataState.idle);
+    // setIsLoading(false);
 
     // notifyListeners();
   }

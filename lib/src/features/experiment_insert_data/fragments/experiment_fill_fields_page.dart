@@ -1,31 +1,29 @@
 // 🐦 Flutter imports:
-import 'dart:developer';
 
-import 'package:enzitech_app/src/shared/validator/validator.dart';
+import 'package:enzitech_app/src/features/create_experiment/widgets/ezt_create_experiment_step_indicator.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_stepper.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_textfield.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/experiment_insert_data/experiment_insert_data_controller.dart';
 import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_controller.dart';
-import 'package:enzitech_app/src/shared/failures/failures.dart';
 import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
 import 'package:enzitech_app/src/shared/util/util.dart';
 import 'package:enzitech_app/src/shared/widgets/ezt_button.dart';
-import 'package:enzitech_app/src/shared/widgets/ezt_snack_bar.dart';
 
 class ExperimentFillFieldsPage extends StatefulWidget {
   const ExperimentFillFieldsPage({
     Key? key,
-    required this.formKey,
+    // required this.formKey,
+    required this.callback,
   }) : super(key: key);
-  final GlobalKey<FormBuilderState> formKey;
+  // final GlobalKey<FormBuilderState> formKey;
+  final void Function() callback;
 
   @override
   State<ExperimentFillFieldsPage> createState() =>
@@ -35,6 +33,7 @@ class ExperimentFillFieldsPage extends StatefulWidget {
 class _ExperimentFillFieldsPageState extends State<ExperimentFillFieldsPage> {
   late final ExperimentInsertDataController controller;
   late final ExperimentsController experimentsController;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -80,13 +79,13 @@ class _ExperimentFillFieldsPageState extends State<ExperimentFillFieldsPage> {
     Map<String, EZTTextField> filteredMap = Map.from(controller.textFields)
       ..removeWhere((k, v) => !k.toString().contains(mapId));
 
-    var listOfAllTextsOfEnzymes = [];
+    var listOfAllTextsOfData = [];
     filteredMap.forEach((k, v) {
-      listOfAllTextsOfEnzymes.add(v.controller!.text);
+      listOfAllTextsOfData.add(v.controller!.text);
     });
 
-    if (listOfAllTextsOfEnzymes.isNotEmpty &&
-        listOfAllTextsOfEnzymes.sublist(2).any((element) => element.isEmpty)) {
+    if (listOfAllTextsOfData.isNotEmpty &&
+        listOfAllTextsOfData.any((element) => element.isEmpty)) {
       return true;
     }
 
@@ -99,23 +98,21 @@ class _ExperimentFillFieldsPageState extends State<ExperimentFillFieldsPage> {
 
     var listOfBools = [];
     var listOfBoolsIfAllIsEmpty = [];
-    var listOfAllTextsOfEnzymes = [];
+    var listOfAllTextsOfData = [];
 
     filteredMap.forEach((k, v) {
       listOfBools.add(_checkIfTextIsGTZAndNumeric(v.controller!.text));
       listOfBoolsIfAllIsEmpty.add(v.controller!.text.isEmpty);
-      listOfAllTextsOfEnzymes.add(v.controller!.text);
+      listOfAllTextsOfData.add(v.controller!.text);
     });
 
-    if (listOfAllTextsOfEnzymes.isNotEmpty &&
-        listOfAllTextsOfEnzymes.sublist(2).any((element) => element.isEmpty)) {
+    if (listOfAllTextsOfData.isNotEmpty &&
+        listOfAllTextsOfData.any((element) => element.isEmpty)) {
       return true;
     }
 
     if (listOfBoolsIfAllIsEmpty.isNotEmpty &&
-        listOfBoolsIfAllIsEmpty
-            .sublist(2)
-            .every((element) => element == true)) {
+        listOfBoolsIfAllIsEmpty.every((element) => element == true)) {
       return true;
     }
 
@@ -139,91 +136,94 @@ class _ExperimentFillFieldsPageState extends State<ExperimentFillFieldsPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            Expanded(
-                child: controller.textFields["sample-${map["_id"]}"] ??
-                    Container()),
-            const SizedBox(width: 10),
-            Expanded(
-                child: controller.textFields["whiteSample-${map["_id"]}"] ??
-                    Container()),
-          ],
-        ),
+        controller.textFields["sample-${map["_id"]}"] ?? Container(),
+        const SizedBox(width: 10),
+        controller.textFields["whiteSample-${map["_id"]}"] ?? Container(),
       ],
     );
   }
 
   Widget get _body {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: EZTStepper(
-        physics: const ClampingScrollPhysics(),
-        currentStep: controller.stepPage,
-        controlsBuilder: (BuildContext context, EZTControlsDetails details) {
-          return Row(
-            children: <Widget>[
-              /* if (controller.stepPage <
-                  Provider.of<CreateExperimentController>(context,
-                              listen: false)
-                          .experimentRequestModel
-                          .experimentsEnzymes
-                          .length -
-                      1)
-                TextButton(
-                  onPressed: () {
-                    if (controller.stepPage <
-                        Provider.of<CreateExperimentController>(context,
-                                    listen: false)
-                                .experimentRequestModel
-                                .experimentsEnzymes
-                                .length -
-                            1) {
-                      controller.setStepPage(controller.stepPage + 1);
-                    }
+    return Form(
+      key: _formKey,
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          children: [
+            const EZTCreateExperimentStepIndicator(
+              title: "Inserir dados no experimento",
+              message: "Etapa 2 de 2 - Inserção de dados",
+            ),
+            const SizedBox(
+              height: 64,
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                child: EZTStepper(
+                  physics: const ClampingScrollPhysics(),
+                  currentStep: controller.stepPage,
+                  controlsBuilder:
+                      (BuildContext context, EZTControlsDetails details) {
+                    return Row(
+                      children: <Widget>[
+                        if (controller.stepPage <
+                            controller.experiment.repetitions - 1)
+                          TextButton(
+                            onPressed: () {
+                              if (controller.stepPage <
+                                  controller.experiment.repetitions) {
+                                controller.setStepPage(controller.stepPage + 1);
+                              }
+                            },
+                            child: const Text('Próximo'),
+                          ),
+                        if (controller.stepPage > 0)
+                          TextButton(
+                            onPressed: () {
+                              if (controller.stepPage > 0) {
+                                controller.setStepPage(controller.stepPage - 1);
+                              }
+                            },
+                            child: const Text('Voltar'),
+                          ),
+                      ],
+                    );
                   },
-                  child: const Text('Próximo'),
+                  onStepTapped: (int index) {
+                    controller.setStepPage(index);
+                  },
+                  type: EZTStepperType.vertical,
+                  steps: controller.listOfExperimentData.map(
+                    (map) {
+                      return EZTStep(
+                        state: _leadWithStepState(map!),
+                        title: _isMapCorrectlyFilled(map["_id"].toString())
+                            ? Text(
+                                "Dados da ${map["_id"]!.toInt() + 1}ª repetição")
+                            : Text(
+                                "⚠  Dados da ${map["_id"]!.toInt() + 1}ª repetição",
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.danger,
+                                ),
+                              ),
+                        content: Container(
+                          alignment: Alignment.centerLeft,
+                          child: Visibility(
+                              visible: controller
+                                      .textFields["sample-${map["_id"]}"] !=
+                                  null,
+                              child: _textFields(map)),
+                        ),
+                      );
+                    },
+                  ).toList(),
+                  // key: ValueKey(widget.listOfEnzymes.hashCode),
                 ),
-              if (controller.stepPage > 0)
-                TextButton(
-                  onPressed: () {
-                    if (controller.stepPage > 0) {
-                      controller.setStepPage(controller.stepPage - 1);
-                    }
-                  },
-                  child: const Text('Voltar'),
-                ), */
-            ],
-          );
-        },
-        onStepTapped: (int index) {
-          controller.setStepPage(index);
-        },
-        type: EZTStepperType.vertical,
-        steps: controller.listOfExperimentData.map(
-          (map) {
-            return EZTStep(
-              state: _leadWithStepState(map!),
-              title: _isMapCorrectlyFilled(map["_id"].toString())
-                  ? Text("Dados da ${map["_id"]!.toInt() + 1}ª repetição")
-                  : Text(
-                      "⚠  Dados da ${map["_id"]!.toInt() + 1}ª repetição",
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.danger,
-                      ),
-                    ),
-              content: Container(
-                alignment: Alignment.centerLeft,
-                child: Visibility(
-                    visible:
-                        controller.textFields["sample-${map["_id"]}"] != null,
-                    child: _textFields(map)),
               ),
-            );
-          },
-        ).toList(),
-        // key: ValueKey(widget.listOfEnzymes.hashCode),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -234,16 +234,28 @@ class _ExperimentFillFieldsPageState extends State<ExperimentFillFieldsPage> {
         EZTButton(
           enabled: controller.enableNextButton ?? false,
           text: 'Próximo',
-          onPressed: () {
-            // widget.formKey.currentState!.save();
-            controller.insertExperimentData();
-            print(controller.choosedEnzymeAndTreatment);
+          loading: controller.state == ExperimentInsertDataState.loading
+              ? true
+              : false,
+          onPressed: () async {
+            if (_formKey.currentState != null) {
+              _formKey.currentState!.save();
 
-            controller.pageController.animateTo(
-              MediaQuery.of(context).size.width,
-              duration: const Duration(milliseconds: 150),
-              curve: Curves.easeIn,
-            );
+              if (_formKey.currentState!.validate()) {
+                if (mounted) {
+                  // widget.formKey.currentState!.save();
+                  await controller.insertExperimentData();
+
+                  controller.pageController.animateTo(
+                    MediaQuery.of(context).size.width,
+                    duration: const Duration(milliseconds: 150),
+                    curve: Curves.easeIn,
+                  );
+                }
+
+                return;
+              }
+            }
           },
         ),
         const SizedBox(height: 16),
@@ -251,13 +263,15 @@ class _ExperimentFillFieldsPageState extends State<ExperimentFillFieldsPage> {
           text: 'Voltar',
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
-            controller.setStepPage(0, notify: false);
-
             controller.pageController.animateTo(
               0,
               duration: const Duration(milliseconds: 150),
               curve: Curves.easeIn,
             );
+            _formKey.currentState?.reset();
+            controller.setStepPage(0, notify: false);
+            controller.setEnableNextButton(null);
+            // controller.setIsLoading(false);
           },
         ),
       ],
@@ -274,8 +288,8 @@ class _ExperimentFillFieldsPageState extends State<ExperimentFillFieldsPage> {
             flex: 11,
             child: Center(child: _body),
           ),
-          Expanded(
-            flex: 4,
+          SizedBox(
+            height: 128,
             child: SingleChildScrollView(
               physics: const NeverScrollableScrollPhysics(),
               child: Padding(
