@@ -64,13 +64,34 @@ class _ExperimentInsertDataPageState extends State<ExperimentInsertDataPage> {
     }
   }
 
-  void onBack() {
+  void onBack({int? page}) {
     if (mounted) {
-      controller.setChoosedEnzymeAndTreatment({
-        "process": null,
-        "enzyme": null,
-        "experimentData": [],
-      });
+      if (page != null) {
+        controller.pageController.animateToPage(
+          page,
+          duration: const Duration(milliseconds: 150),
+          curve: Curves.easeIn,
+        );
+      } else {
+        {
+          if (controller.pageController.page! > 0) {
+            controller.pageController.animateToPage(
+              controller.pageController.page!.toInt() - 1,
+              duration: const Duration(milliseconds: 150),
+              curve: Curves.easeIn,
+            );
+          } else {
+            controller.setChoosedEnzymeAndTreatment(
+              {
+                "enzyme": null,
+                "process": null,
+                "experimentData": [],
+              },
+            );
+            Navigator.pop(context);
+          }
+        }
+      }
     }
   }
 
@@ -80,7 +101,7 @@ class _ExperimentInsertDataPageState extends State<ExperimentInsertDataPage> {
     return WillPopScope(
       onWillPop: () async {
         onBack();
-        return true;
+        return controller.pageController.page! > 0 ? false : true;
       },
       child: Scaffold(
         key: _scaffoldKey,

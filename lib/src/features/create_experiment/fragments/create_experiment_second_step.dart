@@ -25,9 +25,10 @@ import 'package:enzitech_app/src/shared/utilities/validator/field_validator.dart
 class CreateExperimentSecondStepPage extends StatefulWidget {
   const CreateExperimentSecondStepPage({
     Key? key,
+    required this.callback,
     required this.formKey,
   }) : super(key: key);
-
+  final void Function({int page}) callback;
   final GlobalKey<FormState> formKey;
 
   @override
@@ -232,11 +233,7 @@ class _CreateExperimentSecondStepPageState
           text: 'Voltar',
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
-            controller.pageController.animateTo(
-              0,
-              duration: const Duration(milliseconds: 150),
-              curve: Curves.easeIn,
-            );
+            widget.callback(page: 0);
           },
         ),
       ],

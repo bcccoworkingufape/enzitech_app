@@ -23,7 +23,7 @@ class ExperimentChooseEnzymeAndTreatmentPage extends StatefulWidget {
     // required this.formKey,
     required this.callback,
   }) : super(key: key);
-  final void Function() callback;
+  final void Function({int page}) callback;
   // final GlobalKey<FormBuilderState> formKey;
 
   @override
@@ -88,10 +88,12 @@ class _ExperimentChooseEnzymeAndTreatmentPageState
                       color: AppColors.greySweet,
                     ),
                     const SizedBox(width: 4),
-                    Text(
-                      'Escolha o tratamento e a enzima para inserir os dados',
-                      style: TextStyles.detailBold,
-                      textAlign: TextAlign.center,
+                    Expanded(
+                      child: Text(
+                        'Escolha o tratamento e a enzima para inserir os dados',
+                        style: TextStyles.detailBold,
+                        textAlign: TextAlign.left,
+                      ),
                     ),
                   ],
                 ),
@@ -276,8 +278,8 @@ class _ExperimentChooseEnzymeAndTreatmentPageState
               );
 
               await controller.generateTextFields(context).whenComplete(() {
-                controller.pageController.animateTo(
-                  MediaQuery.of(context).size.width,
+                controller.pageController.animateToPage(
+                  1,
                   duration: const Duration(milliseconds: 150),
                   curve: Curves.easeIn,
                 );
@@ -291,7 +293,6 @@ class _ExperimentChooseEnzymeAndTreatmentPageState
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
             widget.callback();
-            Navigator.pop(context);
           },
         ),
       ],
@@ -309,7 +310,7 @@ class _ExperimentChooseEnzymeAndTreatmentPageState
             child: Center(child: _body),
           ),
           SizedBox(
-            height: 128,
+            height: 144,
             child: SingleChildScrollView(
               physics: const NeverScrollableScrollPhysics(),
               child: Padding(

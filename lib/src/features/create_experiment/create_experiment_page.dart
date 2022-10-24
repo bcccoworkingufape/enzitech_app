@@ -85,7 +85,7 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
     }
   }
 
-  void onBack() {
+  void onBack2() {
     if (mounted) {
       controller.experimentCreated = false;
       controller.setExperimentRequestModel(
@@ -97,6 +97,39 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
           experimentsEnzymes: [],
         ),
       );
+    }
+  }
+
+  void onBack({int? page}) {
+    if (mounted) {
+      if (page != null) {
+        controller.pageController.animateToPage(
+          page,
+          duration: const Duration(milliseconds: 150),
+          curve: Curves.easeIn,
+        );
+      } else {
+        {
+          if (controller.pageController.page! > 0) {
+            controller.pageController.animateToPage(
+              controller.pageController.page!.toInt() - 1,
+              duration: const Duration(milliseconds: 150),
+              curve: Curves.easeIn,
+            );
+          } else {
+            controller.setExperimentRequestModel(
+              ExperimentRequestModel(
+                name: "",
+                description: "",
+                repetitions: 0,
+                processes: [],
+                experimentsEnzymes: [],
+              ),
+            );
+            Navigator.pop(context);
+          }
+        }
+      }
     }
   }
 
@@ -113,7 +146,7 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
     return WillPopScope(
       onWillPop: () async {
         onBack();
-        return true;
+        return controller.pageController.page! > 0 ? false : true;
       },
       child: Scaffold(
         key: _scaffoldKey,
@@ -128,12 +161,15 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
                 formKey: _formKey,
               ),
               CreateExperimentSecondStepPage(
+                callback: onBack,
                 formKey: _formKey,
               ),
               CreateExperimentThirdStepPage(
+                callback: onBack,
                 formKey: _formKey,
               ),
               CreateExperimentFourthStepPage(
+                callback: onBack,
                 formKey: _formKey,
                 listOfEnzymes:
                     controller.experimentRequestModel.experimentsEnzymes,

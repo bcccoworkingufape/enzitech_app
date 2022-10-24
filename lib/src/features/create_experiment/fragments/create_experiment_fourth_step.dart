@@ -21,10 +21,12 @@ import 'package:enzitech_app/src/shared/utilities/validator/field_validator.dart
 class CreateExperimentFourthStepPage extends StatefulWidget {
   const CreateExperimentFourthStepPage({
     Key? key,
+    required this.callback,
     required this.formKey,
     required this.listOfEnzymes,
   }) : super(key: key);
 
+  final void Function({int page}) callback;
   final GlobalKey<FormState> formKey;
   final List<EnzymeModel> listOfEnzymes;
 
@@ -499,11 +501,7 @@ class _CreateExperimentFourthStepPageState
           text: 'Voltar',
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
-            controller.pageController.animateTo(
-              MediaQuery.of(context).size.width * 2,
-              duration: const Duration(milliseconds: 150),
-              curve: Curves.easeIn,
-            );
+            widget.callback(page: 2);
             controller.setStepPage(0);
           },
         ),

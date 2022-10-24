@@ -24,9 +24,11 @@ import 'package:enzitech_app/src/shared/utilities/util/util.dart';
 class CreateExperimentThirdStepPage extends StatefulWidget {
   const CreateExperimentThirdStepPage({
     Key? key,
+    required this.callback,
     required this.formKey,
   }) : super(key: key);
 
+  final void Function({int page}) callback;
   final GlobalKey<FormState> formKey;
 
   @override
@@ -187,11 +189,7 @@ class _CreateExperimentThirdStepPageState
           text: 'Voltar',
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
-            controller.pageController.animateTo(
-              MediaQuery.of(context).size.width,
-              duration: const Duration(milliseconds: 150),
-              curve: Curves.easeIn,
-            );
+            widget.callback(page: 1);
           },
         ),
       ],

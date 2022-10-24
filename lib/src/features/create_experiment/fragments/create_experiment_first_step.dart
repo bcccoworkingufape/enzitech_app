@@ -20,7 +20,7 @@ class CreateExperimentFirstStepPage extends StatefulWidget {
     required this.callback,
     required this.formKey,
   }) : super(key: key);
-  final void Function() callback;
+  final void Function({int page}) callback;
   final GlobalKey<FormState> formKey;
 
   @override
@@ -181,7 +181,6 @@ class _CreateExperimentFirstStepPageState
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
             widget.callback();
-            Navigator.pop(context);
           },
         ),
       ],

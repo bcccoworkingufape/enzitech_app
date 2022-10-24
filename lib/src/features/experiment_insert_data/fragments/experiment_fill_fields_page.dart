@@ -24,7 +24,7 @@ class ExperimentFillFieldsPage extends StatefulWidget {
     required this.callback,
   }) : super(key: key);
   // final GlobalKey<FormBuilderState> formKey;
-  final void Function() callback;
+  final void Function({int page}) callback;
 
   @override
   State<ExperimentFillFieldsPage> createState() =>
@@ -264,15 +264,10 @@ class _ExperimentFillFieldsPageState extends State<ExperimentFillFieldsPage> {
           text: 'Voltar',
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
-            controller.pageController.animateTo(
-              0,
-              duration: const Duration(milliseconds: 150),
-              curve: Curves.easeIn,
-            );
+            widget.callback(page: 0);
             _formKey.currentState?.reset();
             controller.setStepPage(0, notify: false);
             controller.setEnableNextButton(null);
-            // controller.setIsLoading(false);
           },
         ),
       ],
@@ -290,7 +285,7 @@ class _ExperimentFillFieldsPageState extends State<ExperimentFillFieldsPage> {
             child: Center(child: _body),
           ),
           SizedBox(
-            height: 128,
+            height: 144,
             child: SingleChildScrollView(
               physics: const NeverScrollableScrollPhysics(),
               child: Padding(
