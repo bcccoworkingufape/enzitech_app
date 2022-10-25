@@ -6,7 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
-import 'package:enzitech_app/src/features/recover_password/recover_password_controller.dart';
+import 'package:enzitech_app/src/features/recover_password/viewmodel/recover_password_viewmodel.dart';
 import 'package:enzitech_app/src/shared/business/domain/enums/state_enum.dart';
 import 'package:enzitech_app/src/shared/ui/themes/themes.dart';
 import 'package:enzitech_app/src/shared/ui/widgets/ezt_button.dart';
@@ -24,7 +24,7 @@ class RecoverPasswordPage extends StatefulWidget {
 }
 
 class RecoverPasswordPageState extends State<RecoverPasswordPage> {
-  late final RecoverPasswordController controller;
+  late final RecoverPasswordViewmodel viewmodel;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _emailFieldController = TextEditingController(text: '');
   var buttonEnabled = false;
@@ -33,23 +33,33 @@ class RecoverPasswordPageState extends State<RecoverPasswordPage> {
   @override
   void initState() {
     super.initState();
-    controller = context.read<RecoverPasswordController>();
+    viewmodel = context.read<RecoverPasswordViewmodel>();
 
     if (_formKey.currentState != null) {
       buttonEnabled = _formKey.currentState!.validate();
     }
 
     if (mounted) {
-      controller.addListener(
-        () {
-          if (controller.state == RecoverPasswordState.error) {
+      viewmodel.addListener(
+        () async {
+          if (viewmodel.state == StateEnum.error) {
             EZTSnackBar.show(
               context,
-              HandleFailure.of(controller.failure!),
+              HandleFailure.of(viewmodel.failure!),
               eztSnackBarType: EZTSnackBarType.error,
             );
-          } else if (controller.state == StateEnum.success) {
-            Navigator.pushReplacementNamed(context, RouteGenerator.home);
+          } else if (viewmodel.state == StateEnum.success) {
+            EZTSnackBar.show(
+              context,
+              "Solicitação de alteração de senha enviada com sucesso! Confira seu email.",
+              eztSnackBarType: EZTSnackBarType.success,
+            );
+
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              RouteGenerator.auth,
+              (Route<dynamic> route) => false,
+            );
           }
         },
       );
@@ -76,7 +86,7 @@ class RecoverPasswordPageState extends State<RecoverPasswordPage> {
       controller: _emailFieldController,
       enabled: enableTextField,
       onChanged: (value) async {
-        controller.setEmail(value);
+        viewmodel.setEmail(value);
         buttonEnabled = _formKey.currentState!.validate();
 
         await Future.delayed(const Duration(milliseconds: 10));
@@ -92,7 +102,7 @@ class RecoverPasswordPageState extends State<RecoverPasswordPage> {
         EZTButton(
           text: 'Solicitar alteração',
           onPressed: () {
-            controller.recoverPassword().whenComplete(() async {
+            viewmodel.recoverPassword().whenComplete(() async {
               setState(
                 () {
                   buttonEnabled = false;

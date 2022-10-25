@@ -23,4 +23,11 @@ class UserController implements IUserController {
       password: password,
     );
   }
+
+  @override
+  Future<void> recoverPassword({required String email}) async {
+    return userRepo.recoverPassword(
+      email: email,
+    );
+  }
 }

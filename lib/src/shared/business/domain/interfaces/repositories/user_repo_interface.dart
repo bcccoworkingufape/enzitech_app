@@ -5,4 +5,6 @@ abstract class IUserRepo {
     required String email,
     required String password,
   });
+
+  Future<void> recoverPassword({required String email});
 }

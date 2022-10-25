@@ -28,4 +28,18 @@ class UserRepo implements IUserRepo {
       rethrow;
     }
   }
+
+  @override
+  Future<void> recoverPassword({required String email}) async {
+    try {
+      await client.post(
+        "/auth/send-recover-email",
+        data: {
+          "email": email,
+        },
+      );
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

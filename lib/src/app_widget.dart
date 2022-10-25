@@ -19,19 +19,18 @@ import 'package:enzitech_app/src/features/home/fragments/enzymes/enzymes_control
 import 'package:enzitech_app/src/features/home/fragments/experiments/experiments_controller.dart';
 import 'package:enzitech_app/src/features/home/fragments/treatments/treatments_controller.dart';
 import 'package:enzitech_app/src/features/home/home_controller.dart';
-import 'package:enzitech_app/src/features/recover_password/recover_password_controller.dart';
+import 'package:enzitech_app/src/features/recover_password/viewmodel/recover_password_viewmodel.dart';
 import 'package:enzitech_app/src/shared/business/domain/controllers/auth_controller.dart';
 import 'package:enzitech_app/src/shared/business/domain/controllers/user_controller.dart';
 import 'package:enzitech_app/src/shared/business/infra/implementations/repositories/auth_repo.dart';
+import 'package:enzitech_app/src/shared/business/infra/implementations/repositories/user_repo.dart';
 import 'package:enzitech_app/src/shared/external/http_driver/dio_client.dart';
-import 'package:enzitech_app/src/shared/services_/auth_service.dart';
 import 'package:enzitech_app/src/shared/services_/enzymes_service.dart';
 import 'package:enzitech_app/src/shared/services_/experiments_service.dart';
 import 'package:enzitech_app/src/shared/services_/treatments_service.dart';
 import 'package:enzitech_app/src/shared/services_/user_prefs_service.dart';
 import 'package:enzitech_app/src/shared/ui/themes/themes.dart';
 import 'package:enzitech_app/src/shared/utilities/routes/route_generator.dart';
-import 'package:enzitech_app/src/shared/business/infra/implementations/repositories/user_repo.dart';
 
 class AppWidget extends StatelessWidget {
   final HttpDriverOptions httpDriverOptions;
@@ -43,9 +42,12 @@ class AppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        //* INIT DIO CLIENT
         Provider(
           create: (context) => DioClient(httpDriverOptions),
         ),
+
+        //* INIT REPOSITORIES
         Provider(
           create: (context) => AuthRepo(context.read()),
           lazy: true,
@@ -55,6 +57,7 @@ class AppWidget extends StatelessWidget {
           lazy: true,
         ),
 
+        //* INIT VIEWMODELS
         ChangeNotifierProvider(
           create: (context) => AuthViewmodel(
             authController: AuthController(
@@ -71,18 +74,16 @@ class AppWidget extends StatelessWidget {
           ),
           lazy: true,
         ),
+        ChangeNotifierProvider(
+          create: (context) => RecoverPasswordViewmodel(
+            userController: UserController(
+              userRepo: context.read(),
+            ),
+          ),
+          lazy: true,
+        ),
 
         // OLD
-        // ChangeNotifierProvider(
-        //   create: (context) => AuthController(
-        //     context.read(),
-        //     AuthService(context.read()),
-        //   ),
-        // ),
-
-        ChangeNotifierProvider(
-          create: (context) => RecoverPasswordController(context.read()),
-        ),
         ChangeNotifierProvider(
           create: (context) => AccountController(
             UserPrefsServices(),

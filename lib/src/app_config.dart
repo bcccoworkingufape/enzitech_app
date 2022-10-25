@@ -34,5 +34,3 @@ Future<void> initApp() async {
     ),
   );
 }
-
-class AppConfig {}
