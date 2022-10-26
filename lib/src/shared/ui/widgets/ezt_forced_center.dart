@@ -10,7 +10,9 @@ class EZTForcedCenter extends StatelessWidget {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         return SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(
+            parent: BouncingScrollPhysics(),
+          ),
           child: Container(
             constraints: BoxConstraints(
               minHeight: constraints.maxHeight -

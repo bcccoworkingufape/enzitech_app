@@ -339,7 +339,9 @@ class _CreateExperimentFourthStepPageState
         ),
         Expanded(
           child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
+            physics: const AlwaysScrollableScrollPhysics(
+              parent: BouncingScrollPhysics(),
+            ),
             child: EZTStepper(
               physics: const ClampingScrollPhysics(),
               currentStep: controller.stepPage,

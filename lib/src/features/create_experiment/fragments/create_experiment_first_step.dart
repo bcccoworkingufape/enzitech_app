@@ -82,7 +82,9 @@ class _CreateExperimentFirstStepPageState
 
   Widget get _body {
     return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
+      physics: const AlwaysScrollableScrollPhysics(
+        parent: BouncingScrollPhysics(),
+      ),
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
       child: Column(
         children: [

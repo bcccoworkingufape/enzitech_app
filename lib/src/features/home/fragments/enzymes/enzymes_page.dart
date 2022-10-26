@@ -99,7 +99,9 @@ class _EnzymesPageState extends State<EnzymesPage> {
     return ListView.builder(
       controller: controller.scrollController,
       shrinkWrap: true,
-      physics: const AlwaysScrollableScrollPhysics(),
+      physics: const AlwaysScrollableScrollPhysics(
+        parent: BouncingScrollPhysics(),
+      ),
       itemCount: controller.enzymes.length,
       itemBuilder: (context, index) {
         var enzyme = controller.enzymes[index];

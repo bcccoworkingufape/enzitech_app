@@ -153,7 +153,9 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
       key: PageStorageKey(widget.homeController.fragmentIndex),
       controller: controller.scrollController,
       shrinkWrap: true,
-      physics: const AlwaysScrollableScrollPhysics(),
+      physics: const AlwaysScrollableScrollPhysics(
+        parent: BouncingScrollPhysics(),
+      ),
       itemCount: controller.experiments.length + 1,
       itemBuilder: (context, index) {
         if (index < controller.experiments.length) {

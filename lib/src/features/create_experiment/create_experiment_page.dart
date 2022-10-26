@@ -150,7 +150,6 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
       },
       child: Scaffold(
         key: _scaffoldKey,
-        resizeToAvoidBottomInset: false,
         body: Form(
           key: _formKey,
           child: PageView(

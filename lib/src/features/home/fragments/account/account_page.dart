@@ -1,10 +1,6 @@
 // 🐦 Flutter imports:
-
-// 🎯 Dart imports:
-import 'dart:io' show Platform;
-
-// 🐦 Flutter imports:
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -109,13 +105,13 @@ class _AccountPageState extends State<AccountPage> {
                           leading: const Icon(
                             PhosphorIcons.user,
                           ),
-                          title: Platform.isIOS
+                          title: defaultTargetPlatform == TargetPlatform.iOS
                               ? Flex(
                                   direction: Axis.horizontal,
                                   children: const [Text('Nome')],
                                 )
                               : const Text('Nome'),
-                          value: Platform.isIOS
+                          value: defaultTargetPlatform == TargetPlatform.iOS
                               ? Flexible(
                                   flex: 4,
                                   child: Align(
@@ -137,13 +133,13 @@ class _AccountPageState extends State<AccountPage> {
                           leading: const Icon(
                             PhosphorIcons.at,
                           ),
-                          title: Platform.isIOS
+                          title: defaultTargetPlatform == TargetPlatform.iOS
                               ? Flex(
                                   direction: Axis.horizontal,
                                   children: const [Text('Email')],
                                 )
                               : const Text('Email'),
-                          value: Platform.isIOS
+                          value: defaultTargetPlatform == TargetPlatform.iOS
                               ? Flexible(
                                   flex: 4,
                                   child: Align(
@@ -165,7 +161,7 @@ class _AccountPageState extends State<AccountPage> {
                           leading: const Icon(
                             PhosphorIcons.identificationBadge,
                           ),
-                          title: Platform.isIOS
+                          title: defaultTargetPlatform == TargetPlatform.iOS
                               ? Flex(
                                   direction: Axis.horizontal,
                                   children: const [
@@ -173,7 +169,7 @@ class _AccountPageState extends State<AccountPage> {
                                   ],
                                 )
                               : const Text('Tipo de usuário'),
-                          value: Platform.isIOS
+                          value: defaultTargetPlatform == TargetPlatform.iOS
                               ? Flexible(
                                   flex: 1,
                                   child: Align(
@@ -222,7 +218,7 @@ class _AccountPageState extends State<AccountPage> {
                           leading: const Icon(
                             PhosphorIcons.gitBranch,
                           ),
-                          title: Platform.isIOS
+                          title: defaultTargetPlatform == TargetPlatform.iOS
                               ? Flex(
                                   direction: Axis.horizontal,
                                   children: const [
@@ -230,7 +226,7 @@ class _AccountPageState extends State<AccountPage> {
                                   ],
                                 )
                               : const Text('Versão'),
-                          value: Platform.isIOS
+                          value: defaultTargetPlatform == TargetPlatform.iOS
                               ? Flexible(
                                   flex: 1,
                                   child: Align(
@@ -253,7 +249,7 @@ class _AccountPageState extends State<AccountPage> {
                             PhosphorIcons.signOut,
                             color: AppColors.danger,
                           ),
-                          trailing: Platform.isIOS
+                          trailing: defaultTargetPlatform == TargetPlatform.iOS
                               ? Icon(
                                   CupertinoIcons.chevron_forward,
                                   size: 18 * scaleFactor,

@@ -81,7 +81,9 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
     return ListView.builder(
       controller: controller.scrollController,
       shrinkWrap: true,
-      physics: const AlwaysScrollableScrollPhysics(),
+      physics: const AlwaysScrollableScrollPhysics(
+        parent: BouncingScrollPhysics(),
+      ),
       itemCount: controller.treatments.length,
       itemBuilder: (context, index) {
         var treatment = controller.treatments[index];

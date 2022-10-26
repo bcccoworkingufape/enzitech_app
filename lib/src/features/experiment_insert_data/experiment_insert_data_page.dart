@@ -105,8 +105,6 @@ class _ExperimentInsertDataPageState extends State<ExperimentInsertDataPage> {
       },
       child: Scaffold(
         key: _scaffoldKey,
-        resizeToAvoidBottomInset: false,
-
         /* appBar: AppBar(
           backgroundColor: AppColors.primary,
           title: Text(
