@@ -1,5 +1,4 @@
 // 🐦 Flutter imports:
-import 'package:enzitech_app/src/shared/business/domain/entities/experiment_entity.dart';
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
@@ -13,7 +12,7 @@ import 'package:enzitech_app/src/features/experiment_insert_data/ui/experiment_i
 import 'package:enzitech_app/src/features/home/ui/home_page.dart';
 import 'package:enzitech_app/src/features/recover_password/ui/recover_password_page.dart';
 import 'package:enzitech_app/src/features/splash/splash_page.dart';
-import 'package:enzitech_app/src/shared/business/infra/models/experiment_model.dart';
+import 'package:enzitech_app/src/shared/business/domain/entities/experiment_entity.dart';
 import 'package:enzitech_app/src/shared/ui/widgets/ezt_error.dart';
 
 class RouteGenerator {

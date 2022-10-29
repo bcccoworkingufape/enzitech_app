@@ -1,9 +1,4 @@
 // 🐦 Flutter imports:
-import 'package:enzitech_app/src/features/create_enzyme/viewmodel/create_enzyme_viewmodel.dart';
-import 'package:enzitech_app/src/features/create_experiment/viewmodel/create_experiment_viewmodel.dart';
-import 'package:enzitech_app/src/features/create_treatment/viewmodel/create_treatment_viewmodel.dart';
-import 'package:enzitech_app/src/features/experiment_detailed/viewmodel/experiment_detailed_viewmodel.dart';
-import 'package:enzitech_app/src/features/experiment_insert_data/viewmodel/experiment_insert_data_viewmodel.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -13,6 +8,11 @@ import 'package:provider/single_child_widget.dart';
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/auth/viewmodel/auth_viewmodel.dart';
 import 'package:enzitech_app/src/features/create_account/viewmodel/create_account_viewmodel.dart';
+import 'package:enzitech_app/src/features/create_enzyme/viewmodel/create_enzyme_viewmodel.dart';
+import 'package:enzitech_app/src/features/create_experiment/viewmodel/create_experiment_viewmodel.dart';
+import 'package:enzitech_app/src/features/create_treatment/viewmodel/create_treatment_viewmodel.dart';
+import 'package:enzitech_app/src/features/experiment_detailed/viewmodel/experiment_detailed_viewmodel.dart';
+import 'package:enzitech_app/src/features/experiment_insert_data/viewmodel/experiment_insert_data_viewmodel.dart';
 import 'package:enzitech_app/src/features/home/ui/fragments/account/viewmodel/account_viewmodel.dart';
 import 'package:enzitech_app/src/features/home/ui/fragments/enzymes/viewmodel/enzymes_viewmodel.dart';
 import 'package:enzitech_app/src/features/home/ui/fragments/experiments/viewmodel/experiments_viewmodel.dart';

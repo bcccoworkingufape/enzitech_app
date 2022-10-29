@@ -1,8 +1,6 @@
-// 🐦 Flutter imports:
 // ignore_for_file: avoid_function_literals_in_foreach_calls
 
 // 🐦 Flutter imports:
-import 'package:enzitech_app/src/features/create_experiment/viewmodel/create_experiment_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -13,15 +11,12 @@ import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/create_experiment/ui/widgets/ezt_create_experiment_step_indicator.dart';
+import 'package:enzitech_app/src/features/create_experiment/viewmodel/create_experiment_viewmodel.dart';
 import 'package:enzitech_app/src/features/home/ui/fragments/treatments/viewmodel/treatments_viewmodel.dart';
 import 'package:enzitech_app/src/shared/business/domain/entities/treatment_entity.dart';
-import 'package:enzitech_app/src/shared/business/domain/enums/state_enum.dart';
-import 'package:enzitech_app/src/shared/ui/themes/themes.dart';
-import 'package:enzitech_app/src/shared/ui/widgets/ezt_button.dart';
-import 'package:enzitech_app/src/shared/ui/widgets/ezt_checkbox_tile.dart';
-import 'package:enzitech_app/src/shared/ui/widgets/ezt_textfield.dart';
-import 'package:enzitech_app/src/shared/utilities/util/constants.dart';
-import 'package:enzitech_app/src/shared/utilities/validator/field_validator.dart';
+import 'package:enzitech_app/src/shared/business/domain/enums/enums.dart';
+import 'package:enzitech_app/src/shared/ui/ui.dart';
+import 'package:enzitech_app/src/shared/utilities/utilities.dart';
 
 class CreateExperimentSecondStepPage extends StatefulWidget {
   const CreateExperimentSecondStepPage({

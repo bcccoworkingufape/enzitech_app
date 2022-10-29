@@ -1,12 +1,10 @@
 // 🐦 Flutter imports:
-
-// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/app_widget.dart';
-import 'package:enzitech_app/src/shared/external/http_driver/dio_client.dart';
-import 'package:enzitech_app/src/shared/business/infra/implementations/services/user_prefs_service.dart';
+import 'package:enzitech_app/src/shared/business/infra/implementations/implementations.dart';
+import 'package:enzitech_app/src/shared/external/external.dart';
 
 Future<String?> getToken() async {
   UserPrefsServices userPrefsServices = UserPrefsServices();

@@ -1,6 +1,4 @@
 // 🐦 Flutter imports:
-
-// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -14,16 +12,9 @@ import 'package:enzitech_app/src/features/home/ui/fragments/enzymes/ui/component
 import 'package:enzitech_app/src/features/home/ui/fragments/enzymes/viewmodel/enzymes_viewmodel.dart';
 import 'package:enzitech_app/src/features/home/viewmodel/home_viewmodel.dart';
 import 'package:enzitech_app/src/shared/business/domain/entities/enzyme_entity.dart';
-import 'package:enzitech_app/src/shared/business/domain/enums/state_enum.dart';
-import 'package:enzitech_app/src/shared/business/domain/enums/user_type_enum.dart';
-import 'package:enzitech_app/src/shared/ui/themes/themes.dart';
-import 'package:enzitech_app/src/shared/ui/widgets/ezt_error.dart';
-import 'package:enzitech_app/src/shared/ui/widgets/ezt_forced_center.dart';
-import 'package:enzitech_app/src/shared/ui/widgets/ezt_not_found.dart';
-import 'package:enzitech_app/src/shared/ui/widgets/ezt_progress_indicator.dart';
-import 'package:enzitech_app/src/shared/ui/widgets/ezt_pull_to_refresh.dart';
-import 'package:enzitech_app/src/shared/ui/widgets/ezt_snack_bar.dart';
-import 'package:enzitech_app/src/shared/utilities/failures/failures.dart';
+import 'package:enzitech_app/src/shared/business/domain/enums/enums.dart';
+import 'package:enzitech_app/src/shared/ui/ui.dart';
+import 'package:enzitech_app/src/shared/utilities/utilities.dart';
 
 class EnzymesPage extends StatefulWidget {
   const EnzymesPage({

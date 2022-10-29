@@ -7,8 +7,8 @@ import 'package:provider/provider.dart';
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/auth/viewmodel/auth_viewmodel.dart';
 import 'package:enzitech_app/src/features/home/viewmodel/home_viewmodel.dart';
-import 'package:enzitech_app/src/shared/business/domain/enums/state_enum.dart';
-import 'package:enzitech_app/src/shared/ui/widgets/ezt_button.dart';
+import 'package:enzitech_app/src/shared/business/domain/enums/enums.dart';
+import 'package:enzitech_app/src/shared/ui/ui.dart';
 
 class AuthButton extends StatelessWidget {
   final GlobalKey<FormState> formKey;

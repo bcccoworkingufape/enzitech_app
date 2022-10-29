@@ -6,8 +6,8 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
 // 🌎 Project imports:
-import 'package:enzitech_app/src/shared/external/http_driver/dio_client.dart';
 import 'package:enzitech_app/src/shared/business/infra/implementations/services/user_prefs_service.dart';
+import 'package:enzitech_app/src/shared/external/http_driver/dio_client.dart';
 
 class ConfigProviders {
   static List<SingleChildWidget> init(

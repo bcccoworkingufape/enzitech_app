@@ -16,12 +16,9 @@ import 'package:enzitech_app/src/features/home/ui/fragments/enzymes/ui/enzymes_p
 import 'package:enzitech_app/src/features/home/ui/fragments/experiments/ui/experiments_page.dart';
 import 'package:enzitech_app/src/features/home/ui/fragments/treatments/ui/treatments_page.dart';
 import 'package:enzitech_app/src/features/home/viewmodel/home_viewmodel.dart';
-import 'package:enzitech_app/src/shared/business/domain/enums/state_enum.dart';
-import 'package:enzitech_app/src/shared/business/domain/enums/user_type_enum.dart';
-import 'package:enzitech_app/src/shared/ui/themes/themes.dart';
-import 'package:enzitech_app/src/shared/ui/widgets/ezt_snack_bar.dart';
-import 'package:enzitech_app/src/shared/utilities/failures/failures.dart';
-import 'package:enzitech_app/src/shared/utilities/routes/route_generator.dart';
+import 'package:enzitech_app/src/shared/business/domain/enums/enums.dart';
+import 'package:enzitech_app/src/shared/ui/ui.dart';
+import 'package:enzitech_app/src/shared/utilities/utilities.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

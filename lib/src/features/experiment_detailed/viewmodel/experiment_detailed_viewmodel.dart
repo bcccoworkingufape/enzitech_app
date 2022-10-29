@@ -1,7 +1,7 @@
 // 🌎 Project imports:
 import 'package:enzitech_app/src/shared/business/domain/controllers/experiments_controller.dart';
 import 'package:enzitech_app/src/shared/business/domain/entities/experiment_entity.dart';
-import 'package:enzitech_app/src/shared/business/domain/enums/state_enum.dart';
+import 'package:enzitech_app/src/shared/business/domain/enums/enums.dart';
 import 'package:enzitech_app/src/shared/business/domain/interfaces/providers/disposable_provider_interface.dart';
 import 'package:enzitech_app/src/shared/utilities/utilities.dart';
 
