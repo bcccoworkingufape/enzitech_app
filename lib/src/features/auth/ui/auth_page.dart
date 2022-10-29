@@ -1,6 +1,4 @@
 // 🐦 Flutter imports:
-
-// 🐦 Flutter imports:
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -12,13 +10,9 @@ import 'package:provider/provider.dart';
 import 'package:enzitech_app/src/features/auth/ui/components/auth_button.dart';
 import 'package:enzitech_app/src/features/auth/viewmodel/auth_viewmodel.dart';
 import 'package:enzitech_app/src/features/home/viewmodel/home_viewmodel.dart';
-import 'package:enzitech_app/src/shared/business/domain/enums/state_enum.dart';
-import 'package:enzitech_app/src/shared/ui/themes/themes.dart';
-import 'package:enzitech_app/src/shared/ui/widgets/ezt_snack_bar.dart';
-import 'package:enzitech_app/src/shared/ui/widgets/ezt_textfield.dart';
-import 'package:enzitech_app/src/shared/utilities/failures/failures.dart';
-import 'package:enzitech_app/src/shared/utilities/routes/route_generator.dart';
-import 'package:enzitech_app/src/shared/utilities/validator/validator.dart';
+import 'package:enzitech_app/src/shared/business/domain/enums/enums.dart';
+import 'package:enzitech_app/src/shared/ui/ui.dart';
+import 'package:enzitech_app/src/shared/utilities/utilities.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({Key? key}) : super(key: key);

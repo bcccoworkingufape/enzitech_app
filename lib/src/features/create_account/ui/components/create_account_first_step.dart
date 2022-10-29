@@ -6,11 +6,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 // 🌎 Project imports:
-import 'package:enzitech_app/src/shared/ui/themes/themes.dart';
-import 'package:enzitech_app/src/shared/ui/widgets/ezt_button.dart';
-import 'package:enzitech_app/src/shared/ui/widgets/ezt_textfield.dart';
-import 'package:enzitech_app/src/shared/utilities/util/util.dart';
-import 'package:enzitech_app/src/shared/utilities/validator/validator.dart';
+import 'package:enzitech_app/src/shared/ui/ui.dart';
+import 'package:enzitech_app/src/shared/utilities/utilities.dart';
 
 class CreateAccountFirstStep extends StatefulWidget {
   const CreateAccountFirstStep({

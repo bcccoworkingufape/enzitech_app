@@ -1,13 +1,10 @@
 // 🐦 Flutter imports:
-
-// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/shared/business/domain/entities/enzyme_entity.dart';
-import 'package:enzitech_app/src/shared/ui/themes/themes.dart';
-import 'package:enzitech_app/src/shared/ui/widgets/ezt_marquee_on_demand.dart';
-import 'package:enzitech_app/src/shared/utilities/util/util.dart';
+import 'package:enzitech_app/src/shared/ui/ui.dart';
+import 'package:enzitech_app/src/shared/utilities/utilities.dart';
 
 // 📦 Package imports:
 

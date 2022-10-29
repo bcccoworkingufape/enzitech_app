@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 // 🌎 Project imports:
 import 'package:enzitech_app/src/shared/business/domain/controllers/enzymes_controller.dart';
 import 'package:enzitech_app/src/shared/business/domain/entities/enzyme_entity.dart';
-import 'package:enzitech_app/src/shared/business/domain/enums/state_enum.dart';
+import 'package:enzitech_app/src/shared/business/domain/enums/enums.dart';
 import 'package:enzitech_app/src/shared/business/domain/interfaces/providers/disposable_provider_interface.dart';
-import 'package:enzitech_app/src/shared/utilities/failures/failures.dart';
+import 'package:enzitech_app/src/shared/utilities/utilities.dart';
 
 class EnzymesViewmodel extends IDisposableProvider {
   final EnzymesController enzymesController;

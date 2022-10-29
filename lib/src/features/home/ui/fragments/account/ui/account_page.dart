@@ -1,6 +1,4 @@
 // 🐦 Flutter imports:
-
-// 🐦 Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -14,13 +12,10 @@ import 'package:settings_ui/settings_ui.dart';
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/home/ui/fragments/account/viewmodel/account_viewmodel.dart';
 import 'package:enzitech_app/src/features/home/viewmodel/home_viewmodel.dart';
-import 'package:enzitech_app/src/shared/business/domain/enums/state_enum.dart';
-import 'package:enzitech_app/src/shared/business/domain/enums/user_type_enum.dart';
+import 'package:enzitech_app/src/shared/business/domain/enums/enums.dart';
 import 'package:enzitech_app/src/shared/business/infra/implementations/providers/app_providers.dart';
-import 'package:enzitech_app/src/shared/ui/themes/themes.dart';
-import 'package:enzitech_app/src/shared/ui/widgets/ezt_snack_bar.dart';
-import 'package:enzitech_app/src/shared/utilities/failures/failures.dart';
-import 'package:enzitech_app/src/shared/utilities/routes/route_generator.dart';
+import 'package:enzitech_app/src/shared/ui/ui.dart';
+import 'package:enzitech_app/src/shared/utilities/utilities.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({

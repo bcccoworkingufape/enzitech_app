@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 // 🌎 Project imports:
-import 'package:enzitech_app/src/shared/ui/themes/themes.dart';
+import 'package:enzitech_app/src/shared/ui/ui.dart';
 
 class EZTCreateExperimentStepIndicator extends StatelessWidget {
   final String title;

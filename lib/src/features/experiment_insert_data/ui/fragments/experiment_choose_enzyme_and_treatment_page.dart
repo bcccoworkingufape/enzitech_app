@@ -1,7 +1,4 @@
 // 🐦 Flutter imports:
-import 'package:enzitech_app/src/features/experiment_insert_data/viewmodel/experiment_insert_data_viewmodel.dart';
-import 'package:enzitech_app/src/features/home/ui/fragments/experiments/viewmodel/experiments_viewmodel.dart';
-import 'package:enzitech_app/src/shared/business/domain/enums/state_enum.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -12,11 +9,11 @@ import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/create_experiment/ui/widgets/ezt_create_experiment_step_indicator.dart';
-import 'package:enzitech_app/src/shared/ui/themes/themes.dart';
-import 'package:enzitech_app/src/shared/ui/widgets/ezt_button.dart';
-import 'package:enzitech_app/src/shared/ui/widgets/ezt_not_found.dart';
-import 'package:enzitech_app/src/shared/ui/widgets/ezt_snack_bar.dart';
-import 'package:enzitech_app/src/shared/utilities/util/util.dart';
+import 'package:enzitech_app/src/features/experiment_insert_data/viewmodel/experiment_insert_data_viewmodel.dart';
+import 'package:enzitech_app/src/features/home/ui/fragments/experiments/viewmodel/experiments_viewmodel.dart';
+import 'package:enzitech_app/src/shared/business/domain/enums/enums.dart';
+import 'package:enzitech_app/src/shared/ui/ui.dart';
+import 'package:enzitech_app/src/shared/utilities/utilities.dart';
 
 class ExperimentChooseEnzymeAndTreatmentPage extends StatefulWidget {
   const ExperimentChooseEnzymeAndTreatmentPage({

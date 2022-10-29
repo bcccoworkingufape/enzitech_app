@@ -1,13 +1,15 @@
+// 🐦 Flutter imports:
+import 'package:flutter/material.dart';
+
 // 🌎 Project imports:
 import 'package:enzitech_app/src/shared/business/domain/controllers/experiments_controller.dart';
 import 'package:enzitech_app/src/shared/business/domain/entities/enzyme_entity.dart';
 import 'package:enzitech_app/src/shared/business/domain/entities/experiment_entity.dart';
-import 'package:enzitech_app/src/shared/business/domain/enums/state_enum.dart';
+import 'package:enzitech_app/src/shared/business/domain/enums/enums.dart';
 import 'package:enzitech_app/src/shared/business/domain/interfaces/providers/disposable_provider_interface.dart';
 import 'package:enzitech_app/src/shared/business/infra/models/experiment_request_model.dart';
-import 'package:enzitech_app/src/shared/ui/widgets/widgets.dart';
+import 'package:enzitech_app/src/shared/ui/ui.dart';
 import 'package:enzitech_app/src/shared/utilities/utilities.dart';
-import 'package:flutter/material.dart';
 
 class CreateExperimentViewmodel extends IDisposableProvider {
   final ExperimentsController experimentsController;

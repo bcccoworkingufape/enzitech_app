@@ -1,12 +1,12 @@
 // 🐦 Flutter imports:
-import 'package:enzitech_app/src/features/home/ui/fragments/experiments/viewmodel/experiments_viewmodel.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
-import 'package:enzitech_app/src/shared/ui/themes/themes.dart';
+import 'package:enzitech_app/src/features/home/ui/fragments/experiments/viewmodel/experiments_viewmodel.dart';
+import 'package:enzitech_app/src/shared/ui/ui.dart';
 
 class ExperimentFilterDialog extends StatefulWidget {
   const ExperimentFilterDialog({super.key});

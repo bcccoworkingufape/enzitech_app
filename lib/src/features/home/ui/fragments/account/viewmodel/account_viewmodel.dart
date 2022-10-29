@@ -7,11 +7,11 @@ import 'package:url_launcher/url_launcher.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/shared/business/domain/entities/user_entity.dart';
-import 'package:enzitech_app/src/shared/business/domain/enums/state_enum.dart';
+import 'package:enzitech_app/src/shared/business/domain/enums/enums.dart';
 import 'package:enzitech_app/src/shared/business/domain/interfaces/providers/disposable_provider_interface.dart';
+import 'package:enzitech_app/src/shared/business/infra/implementations/services/user_prefs_service.dart';
 import 'package:enzitech_app/src/shared/business/infra/models/app_info_model.dart';
 import 'package:enzitech_app/src/shared/business/infra/models/user_model.dart';
-import 'package:enzitech_app/src/shared/business/infra/implementations/services/user_prefs_service.dart';
 import 'package:enzitech_app/src/shared/utilities/utilities.dart';
 
 class AccountViewmodel extends IDisposableProvider {

@@ -8,10 +8,9 @@ import 'package:provider/provider.dart';
 import 'package:enzitech_app/src/features/create_account/ui/components/create_account_first_step.dart';
 import 'package:enzitech_app/src/features/create_account/ui/components/create_account_second_step.dart';
 import 'package:enzitech_app/src/features/create_account/viewmodel/create_account_viewmodel.dart';
-import 'package:enzitech_app/src/shared/business/domain/enums/state_enum.dart';
-import 'package:enzitech_app/src/shared/ui/widgets/ezt_snack_bar.dart';
-import 'package:enzitech_app/src/shared/utilities/failures/failures.dart';
-import 'package:enzitech_app/src/shared/utilities/routes/route_generator.dart';
+import 'package:enzitech_app/src/shared/business/domain/enums/enums.dart';
+import 'package:enzitech_app/src/shared/ui/ui.dart';
+import 'package:enzitech_app/src/shared/utilities/utilities.dart';
 
 class CreateAccountPage extends StatefulWidget {
   const CreateAccountPage({Key? key}) : super(key: key);

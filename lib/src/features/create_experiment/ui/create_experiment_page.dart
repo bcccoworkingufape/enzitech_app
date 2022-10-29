@@ -1,7 +1,4 @@
 // 🐦 Flutter imports:
-import 'package:enzitech_app/src/features/create_experiment/viewmodel/create_experiment_viewmodel.dart';
-import 'package:enzitech_app/src/features/home/ui/fragments/experiments/viewmodel/experiments_viewmodel.dart';
-import 'package:enzitech_app/src/shared/business/domain/enums/state_enum.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -12,10 +9,12 @@ import 'package:enzitech_app/src/features/create_experiment/ui/fragments/create_
 import 'package:enzitech_app/src/features/create_experiment/ui/fragments/create_experiment_fourth_step.dart';
 import 'package:enzitech_app/src/features/create_experiment/ui/fragments/create_experiment_second_step.dart';
 import 'package:enzitech_app/src/features/create_experiment/ui/fragments/create_experiment_third_step.dart';
+import 'package:enzitech_app/src/features/create_experiment/viewmodel/create_experiment_viewmodel.dart';
+import 'package:enzitech_app/src/features/home/ui/fragments/experiments/viewmodel/experiments_viewmodel.dart';
+import 'package:enzitech_app/src/shared/business/domain/enums/enums.dart';
 import 'package:enzitech_app/src/shared/business/infra/models/experiment_request_model.dart';
-import 'package:enzitech_app/src/shared/ui/widgets/ezt_snack_bar.dart';
-import 'package:enzitech_app/src/shared/utilities/failures/failures.dart';
-import 'package:enzitech_app/src/shared/utilities/routes/route_generator.dart';
+import 'package:enzitech_app/src/shared/ui/ui.dart';
+import 'package:enzitech_app/src/shared/utilities/utilities.dart';
 
 class CreateExperimentPage extends StatefulWidget {
   const CreateExperimentPage({Key? key}) : super(key: key);
