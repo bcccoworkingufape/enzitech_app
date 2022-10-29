@@ -1,9 +1,9 @@
 // 📦 Package imports:
+import 'package:curl_logger_dio_interceptor/curl_logger_dio_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 // 🌎 Project imports:
-import 'package:enzitech_app/src/app_config.dart';
 import 'package:enzitech_app/src/shared/utilities/failures/failures.dart';
 
 class HttpDriverResponse {
@@ -64,6 +64,7 @@ class DioClient {
       },
     );
     dio.interceptors.addAll([
+      CurlLoggerDioInterceptor(printOnSuccess: true),
       PrettyDioLogger(
         requestHeader: true,
         requestBody: true,

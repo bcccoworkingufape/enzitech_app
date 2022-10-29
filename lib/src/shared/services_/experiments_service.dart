@@ -1,11 +1,9 @@
-// 🎯 Dart imports:
-import 'dart:convert';
-
 // 🌎 Project imports:
+import 'package:enzitech_app/src/shared/business/domain/entities/enzyme_entity.dart';
+import 'package:enzitech_app/src/shared/business/infra/models/enzyme_model.dart';
+import 'package:enzitech_app/src/shared/business/infra/models/experiment_model.dart';
+import 'package:enzitech_app/src/shared/business/infra/models/experiment_pagination_model.dart';
 import 'package:enzitech_app/src/shared/external/http_driver/dio_client.dart';
-import 'package:enzitech_app/src/shared/models_/enzyme_model.dart';
-import 'package:enzitech_app/src/shared/models_/experiment_model.dart';
-import 'package:enzitech_app/src/shared/models_/experiment_pagination_model.dart';
 import 'package:enzitech_app/src/shared/ui/widgets/ezt_textfield.dart';
 
 class ExperimentsService {
@@ -58,13 +56,13 @@ class ExperimentsService {
     String description,
     int repetitions,
     List<String> processes,
-    List<EnzymeModel> experimentsEnzymes,
+    List<EnzymeEntity> experimentsEnzymes,
     Map<String, EZTTextField> textFieldsOfEnzymes,
   ) async {
     try {
       var enzymes = experimentsEnzymes
           .map(
-            (enzyme) => enzyme.toMapCreateExperiment(
+            (enzyme) => EnzymeModel.fromEntity(enzyme).toMapCreateExperiment(
               int.parse(textFieldsOfEnzymes['duration-${enzyme.id}']!
                   .controller!
                   .text),

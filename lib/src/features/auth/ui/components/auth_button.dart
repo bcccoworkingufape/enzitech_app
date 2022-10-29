@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/auth/viewmodel/auth_viewmodel.dart';
-import 'package:enzitech_app/src/features/home/home_controller.dart';
+import 'package:enzitech_app/src/features/home/viewmodel/home_viewmodel.dart';
 import 'package:enzitech_app/src/shared/business/domain/enums/state_enum.dart';
 import 'package:enzitech_app/src/shared/ui/widgets/ezt_button.dart';
 
@@ -22,8 +22,8 @@ class AuthButton extends StatelessWidget {
       text: 'Entrar',
       eztButtonType: EZTButtonType.checkout,
       loading: viewmodel.state == StateEnum.loading ||
-          Provider.of<HomeController>(context, listen: false).state ==
-              HomeState.loading,
+          Provider.of<HomeViewmodel>(context, listen: false).state ==
+              StateEnum.loading,
       onPressed: viewmodel.state == StateEnum.loading
           ? null
           : () {

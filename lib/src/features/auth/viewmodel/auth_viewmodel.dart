@@ -7,7 +7,7 @@ import 'package:enzitech_app/src/shared/business/domain/enums/state_enum.dart';
 import 'package:enzitech_app/src/shared/business/domain/interfaces/providers/disposable_provider_interface.dart';
 import 'package:enzitech_app/src/shared/business/infra/models/auth_request_model.dart';
 import 'package:enzitech_app/src/shared/business/infra/models/user_model.dart';
-import 'package:enzitech_app/src/shared/services_/user_prefs_service.dart';
+import 'package:enzitech_app/src/shared/business/infra/implementations/services/user_prefs_service.dart';
 import 'package:enzitech_app/src/shared/utilities/utilities.dart';
 
 class AuthViewmodel extends IDisposableProvider {

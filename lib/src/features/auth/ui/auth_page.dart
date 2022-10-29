@@ -1,4 +1,6 @@
 // 🐦 Flutter imports:
+
+// 🐦 Flutter imports:
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +11,7 @@ import 'package:provider/provider.dart';
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/auth/ui/components/auth_button.dart';
 import 'package:enzitech_app/src/features/auth/viewmodel/auth_viewmodel.dart';
-import 'package:enzitech_app/src/features/home/home_controller.dart';
+import 'package:enzitech_app/src/features/home/viewmodel/home_viewmodel.dart';
 import 'package:enzitech_app/src/shared/business/domain/enums/state_enum.dart';
 import 'package:enzitech_app/src/shared/ui/themes/themes.dart';
 import 'package:enzitech_app/src/shared/ui/widgets/ezt_snack_bar.dart';
@@ -50,7 +52,7 @@ class AuthPageState extends State<AuthPage> {
             eztSnackBarType: EZTSnackBarType.error,
           );
         } else if (viewmodel.state == StateEnum.success && mounted) {
-          Provider.of<HomeController>(context, listen: false)
+          Provider.of<HomeViewmodel>(context, listen: false)
               .getContent()
               .then((value) {
             EZTSnackBar.show(
