@@ -1,0 +1,50 @@
+// 🌎 Project imports:
+import 'package:enzitech_app/src/shared/business/domain/controllers/treatments_controller.dart';
+import 'package:enzitech_app/src/shared/business/domain/enums/state_enum.dart';
+import 'package:enzitech_app/src/shared/business/domain/interfaces/providers/disposable_provider_interface.dart';
+import 'package:enzitech_app/src/shared/utilities/utilities.dart';
+
+class CreateTreatmentViewmodel extends IDisposableProvider {
+  final TreatmentsController treatmentsController;
+
+  CreateTreatmentViewmodel({
+    required this.treatmentsController,
+  });
+
+  StateEnum _state = StateEnum.idle;
+  StateEnum get state => _state;
+  void setStateEnum(StateEnum state) {
+    _state = state;
+    notifyListeners();
+  }
+
+  Failure? _failure;
+  Failure? get failure => _failure;
+  void _setFailure(Failure? failure) {
+    _failure = failure;
+  }
+
+  Future<void> createTreatment(
+    String name,
+    String description,
+  ) async {
+    setStateEnum(StateEnum.loading);
+    try {
+      await treatmentsController.createTreatment(
+        name: name,
+        description: description,
+      );
+
+      setStateEnum(StateEnum.success);
+    } catch (e) {
+      _setFailure(e as Failure);
+      setStateEnum(StateEnum.error);
+    }
+  }
+
+  @override
+  void disposeValues() {
+    setStateEnum(StateEnum.idle);
+    _setFailure(null);
+  }
+}

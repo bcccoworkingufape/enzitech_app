@@ -1,10 +1,10 @@
 // 📦 Package imports:
+import 'package:curl_logger_dio_interceptor/curl_logger_dio_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 // 🌎 Project imports:
-import 'package:enzitech_app/src/app_config.dart';
-import 'package:enzitech_app/src/shared/failures/failures.dart';
+import 'package:enzitech_app/src/shared/utilities/failures/failures.dart';
 
 class HttpDriverResponse {
   final dynamic data;
@@ -49,10 +49,10 @@ class DioClient {
     setConfig();
   }
 
-  setConfig({bool enableGetToken = false}) async {
+  setConfig({String? token}) async {
     String gettedToken = httpDriverOptions.accessToken();
-    if (enableGetToken) {
-      gettedToken = await getToken() ?? '';
+    if (token != null) {
+      gettedToken = token;
     }
     dio.options.baseUrl = httpDriverOptions.baseUrl();
     dio.options.headers.addAll(
@@ -64,6 +64,7 @@ class DioClient {
       },
     );
     dio.interceptors.addAll([
+      CurlLoggerDioInterceptor(printOnSuccess: true),
       PrettyDioLogger(
         requestHeader: true,
         requestBody: true,

@@ -7,9 +7,14 @@ import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/app_config.dart';
-import 'package:enzitech_app/src/features/home/home_controller.dart';
-import 'package:enzitech_app/src/shared/routes/route_generator.dart';
-import 'package:enzitech_app/src/shared/themes/app_complete_theme.dart';
+import 'package:enzitech_app/src/features/home/ui/fragments/account/viewmodel/account_viewmodel.dart';
+import 'package:enzitech_app/src/features/home/viewmodel/home_viewmodel.dart';
+import 'package:enzitech_app/src/shared/business/domain/enums/state_enum.dart';
+import 'package:enzitech_app/src/shared/ui/themes/themes.dart';
+import 'package:enzitech_app/src/shared/ui/widgets/ezt_snack_bar.dart';
+import 'package:enzitech_app/src/shared/utilities/failures/handle_failure.dart';
+import 'package:enzitech_app/src/shared/utilities/failures/utils_failures.dart';
+import 'package:enzitech_app/src/shared/utilities/routes/route_generator.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -19,10 +24,45 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+  late final HomeViewmodel controller;
+
   @override
   void initState() {
     super.initState();
+    controller = context.read<HomeViewmodel>();
 
+    if (mounted) {
+      controller.addListener(
+        () async {
+          if (controller.state == StateEnum.error && mounted) {
+            EZTSnackBar.clear(context);
+            EZTSnackBar.show(
+              context,
+              HandleFailure.of(controller.failure!),
+              eztSnackBarType: EZTSnackBarType.error,
+            );
+            var accountController = context.read<AccountViewmodel>();
+            if (controller.failure is ExpiredTokenOrWrongUserFailure ||
+                controller.failure is UserNotFoundOrWrongTokenFailure ||
+                controller.failure is SessionNotFoundFailure) {
+              accountController.logout();
+
+              if (accountController.state == StateEnum.success && mounted) {
+                EZTSnackBar.show(
+                  context,
+                  "Faça seu login novamente.",
+                );
+                await Future.delayed(const Duration(milliseconds: 500));
+                if (mounted) {
+                  Navigator.pushReplacementNamed(context, RouteGenerator.auth);
+                  controller.setFragmentIndex(0);
+                }
+              }
+            }
+          }
+        },
+      );
+    }
     _checkAuth();
   }
 
@@ -36,7 +76,7 @@ class _SplashPageState extends State<SplashPage> {
       if (token.isEmpty) {
         Navigator.pushReplacementNamed(context, RouteGenerator.auth);
       } else {
-        await Provider.of<HomeController>(context, listen: false)
+        await Provider.of<HomeViewmodel>(context, listen: false)
             .getContent()
             .then((value) =>
                 Navigator.pushReplacementNamed(context, RouteGenerator.home));

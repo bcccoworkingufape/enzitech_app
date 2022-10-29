@@ -29,17 +29,18 @@ environment:
 dependencies:
   auto_size_text: ^3.0.0
   cupertino_icons: ^1.0.4
+  curl_logger_dio_interceptor: ^0.0.3
   dio: ^4.0.6
   flutter:
     sdk: flutter
+  flutter_form_builder: ^7.7.0
   flutter_localizations:
     sdk: flutter
-  flutter_native_splash: ^2.2.0+1
   flutter_svg: ^1.0.3
   flutter_svg_provider: ^1.0.3
+  form_builder_validators: ^8.3.0
   google_fonts: ^2.3.2
   group_button: ^5.0.1
-  import_sorter: ^4.6.0
   intl: ^0.17.0
   package_info_plus: ^1.4.3+1
   percent_indicator: ^4.0.1
@@ -75,10 +76,12 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.1
+  flutter_native_splash: ^2.2.0+1
   flutter_test:
     sdk: flutter
   icons_launcher: ^1.1.8
   import_path_converter: ^1.0.1
+  import_sorter: ^4.6.0
 
 flutter_icons:
   image_path: "assets/launcher/icon.png"
