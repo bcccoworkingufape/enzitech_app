@@ -13,6 +13,19 @@ class AppProviders {
       BuildContext context) {
     return [
       Provider.of<AuthViewmodel>(context, listen: false),
+      // TODO: Implement create_account
+      // TODO: Implement create_enzyme
+      // TODO: Implement create_experiment
+      // TODO: Implement create_treatment
+      // TODO: Implement experiment_detailed
+      // TODO: Implement experiment_insert_data
+      // TODO: Implement home
+      // TODO: Implement account
+      // TODO: Implement enzymes
+      // TODO: Implement experiments
+      // TODO: Implement treatments
+      // TODO: Implement recover_password
+      // TODO: Implement splash
     ];
   }
 

@@ -75,7 +75,7 @@ class ViewmodelProviders {
         ),
         lazy: true,
       ),
-      //* TREATMENTS VIEWMODEL
+      //* EXPERIMENTS VIEWMODEL
       ChangeNotifierProvider(
         create: (context) => ExperimentsViewmodel(
           experimentsController: ExperimentsController(

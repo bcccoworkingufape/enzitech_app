@@ -6,11 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
 // 🌎 Project imports:
-import 'package:enzitech_app/src/shared/business/infra/implementations/repositories/auth_repo.dart';
-import 'package:enzitech_app/src/shared/business/infra/implementations/repositories/enzymes_repo.dart';
-import 'package:enzitech_app/src/shared/business/infra/implementations/repositories/experiments_repo.dart';
-import 'package:enzitech_app/src/shared/business/infra/implementations/repositories/treatments_repo.dart';
-import 'package:enzitech_app/src/shared/business/infra/implementations/repositories/user_repo.dart';
+import 'package:enzitech_app/src/shared/business/infra/implementations/implementations.dart';
 
 class RepoProviders {
   static List<SingleChildWidget> init(BuildContext context) {
