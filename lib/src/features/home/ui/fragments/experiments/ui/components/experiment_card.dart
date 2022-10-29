@@ -9,7 +9,6 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 
 // 🌎 Project imports:
-import 'package:enzitech_app/src/features/home/ui/fragments/experiments/experiments_controller.dart';
 import 'package:enzitech_app/src/shared/business/domain/entities/experiment_entity.dart';
 import 'package:enzitech_app/src/shared/ui/themes/themes.dart';
 import 'package:enzitech_app/src/shared/utilities/routes/route_generator.dart';

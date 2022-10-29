@@ -8,7 +8,6 @@ import 'package:toggle_switch/toggle_switch.dart';
 
 // 🌎 Project imports:
 import 'package:enzitech_app/src/features/home/ui/fragments/account/viewmodel/account_viewmodel.dart';
-import 'package:enzitech_app/src/features/home/ui/fragments/experiments/experiments_controller.dart';
 import 'package:enzitech_app/src/features/home/ui/fragments/experiments/ui/components/experiment_card.dart';
 import 'package:enzitech_app/src/features/home/ui/fragments/experiments/ui/components/experiment_filter_dialog.dart';
 import 'package:enzitech_app/src/features/home/ui/fragments/experiments/viewmodel/experiments_viewmodel.dart';
