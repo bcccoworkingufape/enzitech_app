@@ -1,0 +1,15 @@
+export 'change_password_failure.dart';
+export 'email_already_in_use_failure.dart';
+export 'fields_mismatch_failure.dart';
+export 'inactive_user_failure.dart';
+export 'invalid_cnpj_failure.dart';
+export 'invalid_email_failure.dart';
+export 'invalid_google_id_failure.dart';
+export 'invalid_input_failure.dart';
+export 'invalid_password_range_failure.dart';
+export 'invalid_pin_failure.dart';
+export 'invalid_verification_code_failure.dart';
+export 'new_email_equals_current_email_failure.dart';
+export 'no_location_near_failure.dart';
+export 'session_not_found_failure.dart';
+export 'user_not_found_or_wrong_token_failure.dart';
