@@ -1,5 +1,5 @@
+// 🌎 Project imports:
 import '../../../../shared/extensions/extensions.dart';
-
 import '../../domain/entities/enzyme_entity.dart';
 
 extension EnzymeDto on EnzymeEntity {

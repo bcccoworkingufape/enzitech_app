@@ -1,3 +1,4 @@
+// 🌎 Project imports:
 import '../../../../core/enums/enums.dart';
 
 class UserEntity {

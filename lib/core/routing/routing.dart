@@ -1,6 +1,7 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
+// 🌎 Project imports:
 import '../../features/authentication/presentation/ui/pages/login/login_page.dart';
 import '../../features/main/presentation/ui/pages/splash/splash_page.dart';
 import '../../shared/ui/ui.dart';

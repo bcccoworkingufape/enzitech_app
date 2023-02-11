@@ -1,16 +1,17 @@
 // 🐦 Flutter imports:
-import '../../../../../../core/domain/service/user_preferences/user_preferences_service.dart';
-import '../../../../../../core/routing/routing.dart';
-import '../../../viewmodel/splash_viewmodel.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 
+// 🌎 Project imports:
+import '../../../../../../core/domain/service/user_preferences/user_preferences_service.dart';
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
+import '../../../../../../core/routing/routing.dart';
 import '../../../../../../shared/ui/ui.dart';
+import '../../../viewmodel/splash_viewmodel.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);

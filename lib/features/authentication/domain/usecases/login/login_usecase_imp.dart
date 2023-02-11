@@ -1,9 +1,11 @@
+// 📦 Package imports:
 import 'package:dartz/dartz.dart';
-import '../../entities/user_entity.dart';
 
+// 🌎 Project imports:
+import '../../../../../core/failures/failure.dart';
+import '../../entities/user_entity.dart';
 import '../../repositories/login_repository.dart';
 import 'login_usecase.dart';
-import '../../../../../core/failures/failure.dart';
 
 class LoginUseCaseImp implements LoginUseCase {
   final LoginRepository _loginRepository;

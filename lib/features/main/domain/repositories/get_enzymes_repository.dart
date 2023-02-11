@@ -1,6 +1,8 @@
+// 📦 Package imports:
 import 'package:dartz/dartz.dart';
-import '../../../../core/failures/failure.dart';
 
+// 🌎 Project imports:
+import '../../../../core/failures/failure.dart';
 import '../entities/enzyme_entity.dart';
 
 abstract class GetEnzymesRepository {

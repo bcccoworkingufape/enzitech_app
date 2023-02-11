@@ -53,22 +53,6 @@ dependencies:
   toggle_switch: ^2.0.1
   url_launcher: ^6.1.9
 
-import_sorter:
-  emojis: true
-  comments: true
-
-flutter_native_splash:
-  color: "#06BC67"
-  color_dark: "#06BC67"
-  image: assets/launcher/native_splash.png
-  image_dark: assets/launcher/native_splash.png
-  android: true
-  ios: true
-
-  android_12:
-    image: assets/launcher/foreground_icon.png
-    icon_background_color: "#06BC67"
-
 dev_dependencies:
 
   # The "flutter_lints" package below contains a set of recommended lints to
@@ -84,6 +68,18 @@ dev_dependencies:
   import_path_converter: ^1.0.1
   import_sorter: ^4.6.0
 
+flutter_native_splash:
+  color: "#06BC67"
+  color_dark: "#06BC67"
+  image: assets/launcher/native_splash.png
+  image_dark: assets/launcher/native_splash.png
+  android: true
+  ios: true
+
+  android_12:
+    image: assets/launcher/foreground_icon.png
+    icon_background_color: "#06BC67"
+
 icons_launcher:
   image_path: "assets/launcher/icon.png"
   platforms:
@@ -98,6 +94,11 @@ import_path_converter:
   relative: true
   ignored_files:
     - /lib/shared/ui/widgets/full_widgets_override/*
+    - /test/*
+
+import_sorter:
+  emojis: true
+  comments: true
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

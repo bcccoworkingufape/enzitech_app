@@ -1,11 +1,13 @@
+// 📦 Package imports:
 import 'package:curl_logger_dio_interceptor/curl_logger_dio_interceptor.dart';
 import 'package:dio/dio.dart';
-import '../../../failures/failures.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
+// 🌎 Project imports:
 import '../../../domain/entities/http_driver_options.dart';
 import '../../../domain/entities/http_driver_response.dart';
 import '../../../domain/service/http/http_service.dart';
+import '../../../failures/failures.dart';
 
 class DioHttpServiceImp implements HttpService {
   /* late Dio _dio;

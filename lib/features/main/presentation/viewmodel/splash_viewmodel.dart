@@ -1,10 +1,13 @@
 // import 'package:enzitech_app/features/home/data/datasources/get_enzymes_datasource.dart';
-import '../../domain/entities/enzyme_entity.dart';
-import '../../domain/usecases/get_enzymes/get_enzymes_usecase.dart';
+
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
+// 🌎 Project imports:
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
+import '../../domain/entities/enzyme_entity.dart';
+import '../../domain/usecases/get_enzymes/get_enzymes_usecase.dart';
 
 class SplashViewmodel extends ChangeNotifier {
   final GetEnzymesUseCase _getEnzymesUseCase;

@@ -1,9 +1,11 @@
+// 📦 Package imports:
 import 'package:dartz/dartz.dart';
-import '../../domain/entities/user_entity.dart';
 
+// 🌎 Project imports:
+import '../../../../core/failures/failure.dart';
+import '../../domain/entities/user_entity.dart';
 import '../../domain/repositories/login_repository.dart';
 import '../datasources/login_datasource.dart';
-import '../../../../core/failures/failure.dart';
 
 class LoginRepositoryImp implements LoginRepository {
   final LoginDataSource _loginDataSource;

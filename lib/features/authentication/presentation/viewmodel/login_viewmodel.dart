@@ -2,9 +2,13 @@
 import 'dart:convert';
 import 'dart:developer';
 
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
+// 🌎 Project imports:
 import '../../../../core/domain/service/http/http_service.dart';
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';

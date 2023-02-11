@@ -1,5 +1,8 @@
-import 'package:enzitech_app/features/main/domain/entities/enzyme_entity.dart';
+// 📦 Package imports:
 import 'package:flutter_test/flutter_test.dart';
+
+// 🌎 Project imports:
+import 'package:enzitech_app/features/main/domain/entities/enzyme_entity.dart';
 
 main() {
   test(

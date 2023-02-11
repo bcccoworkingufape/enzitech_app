@@ -1,9 +1,12 @@
+// 🎯 Dart imports:
 import 'dart:developer';
 
+// 📦 Package imports:
 import 'package:dartz/dartz.dart';
-import '../../../../../core/failures/failure.dart';
 
+// 🌎 Project imports:
 import '../../../../../core/domain/service/http/http_service.dart';
+import '../../../../../core/failures/failure.dart';
 import '../../../../../shared/utils/api.dart';
 import '../../../domain/entities/enzyme_entity.dart';
 import '../../dto/enzyme_dto.dart';

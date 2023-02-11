@@ -1,6 +1,9 @@
+// 📦 Package imports:
+import 'package:shared_preferences/shared_preferences.dart';
+
+// 🌎 Project imports:
 import '../../../domain/service/key_value/key_value_service.dart';
 import '../../../failures/failures.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefsServiceImp implements KeyValueService {
   @override

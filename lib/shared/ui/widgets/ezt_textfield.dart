@@ -6,9 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 // 🌎 Project imports:
-import '../themes/themes.dart';
-
 import '../../validator/validator.dart';
+import '../themes/themes.dart';
 
 enum EZTTextFieldType {
   none,

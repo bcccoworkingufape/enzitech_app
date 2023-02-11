@@ -1,3 +1,4 @@
+// 🌎 Project imports:
 import '../failure.dart';
 
 class SessionNotFoundFailure extends Failure {

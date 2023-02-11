@@ -1,11 +1,13 @@
-import 'core/data/service/user_preferences/user_preferences_service_imp.dart';
-import 'features/main/presentation/ui/pages/splash/splash_page.dart';
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
+// 🌎 Project imports:
 import 'core/data/service/key_value/key_value_service_imp.dart';
+import 'core/data/service/user_preferences/user_preferences_service_imp.dart';
 import 'core/domain/entities/http_driver_options.dart';
 import 'core/inject/inject.dart';
 import 'core/routing/routing.dart';
+import 'features/main/presentation/ui/pages/splash/splash_page.dart';
 import 'features/main/presentation/viewmodel/splash_viewmodel.dart';
 import 'shared/ui/ui.dart';
 import 'shared/utils/utils.dart';
