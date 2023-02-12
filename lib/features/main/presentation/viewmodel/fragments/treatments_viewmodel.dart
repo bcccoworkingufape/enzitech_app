@@ -4,9 +4,9 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
-import '../../../domain/entities/treatment_entity.dart';
 import '../../../../../core/enums/enums.dart';
 import '../../../../../core/failures/failures.dart';
+import '../../../domain/entities/treatment_entity.dart';
 import '../../../domain/usecases/get_treatments/get_treatments_usecase.dart';
 
 class TreatmentsViewmodel extends ChangeNotifier {

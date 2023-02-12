@@ -3,14 +3,12 @@ import 'dart:convert';
 
 // 📦 Package imports:
 import 'package:dartz/dartz.dart';
-import 'package:enzitech_app/features/main/data/dto/experiment_pagination_dto.dart';
 
 // 🌎 Project imports:
-import '../../../../data/dto/experiment_dto.dart';
 import '../../../../../../core/domain/service/key_value/key_value_service.dart';
 import '../../../../../../core/failures/failures.dart';
-import '../../../../domain/entities/experiment_entity.dart';
 import '../../../../domain/entities/experiment_pagination_entity.dart';
+import '../../../dto/experiment_pagination_dto.dart';
 import '../../get_experiments_datasource.dart';
 import 'get_experiments_local_datasource_decorator.dart';
 

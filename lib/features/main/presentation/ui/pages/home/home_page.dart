@@ -2,11 +2,6 @@
 import 'dart:math' as math;
 
 // 🐦 Flutter imports:
-import 'package:enzitech_app/features/main/presentation/ui/pages/home/fragments/treatments_page.dart';
-import 'package:enzitech_app/features/main/presentation/viewmodel/fragments/account_viewmodel.dart';
-import 'package:enzitech_app/features/main/presentation/viewmodel/fragments/enzymes_viewmodel.dart';
-import 'package:enzitech_app/features/main/presentation/viewmodel/fragments/experiments_viewmodel.dart';
-import 'package:enzitech_app/features/main/presentation/viewmodel/fragments/treatments_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -15,14 +10,20 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
+// 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../core/routing/routing.dart';
 import '../../../../../../shared/ui/ui.dart';
+import '../../../viewmodel/fragments/account_viewmodel.dart';
+import '../../../viewmodel/fragments/enzymes_viewmodel.dart';
+import '../../../viewmodel/fragments/experiments_viewmodel.dart';
+import '../../../viewmodel/fragments/treatments_viewmodel.dart';
 import '../../../viewmodel/home_viewmodel.dart';
 import 'fragments/account_page.dart';
 import 'fragments/enzymes_page.dart';
 import 'fragments/experiments_page.dart';
+import 'fragments/treatments_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

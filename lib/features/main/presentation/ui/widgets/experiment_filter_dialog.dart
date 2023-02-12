@@ -1,7 +1,10 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
+// 🌎 Project imports:
 import '../../../../../shared/ui/ui.dart';
 import '../../viewmodel/fragments/experiments_viewmodel.dart';
 

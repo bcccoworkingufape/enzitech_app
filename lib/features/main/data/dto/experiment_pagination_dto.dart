@@ -1,7 +1,7 @@
 // 🌎 Project imports:
 import '../../data/dto/experiment_dto.dart';
-import '../../domain/entities/experiment_pagination_entity.dart';
 import '../../domain/entities/experiment_entity.dart';
+import '../../domain/entities/experiment_pagination_entity.dart';
 
 extension ExperimentPaginationDto on ExperimentPaginationEntity {
   static ExperimentPaginationEntity fromJson(Map json) {

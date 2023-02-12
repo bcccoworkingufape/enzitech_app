@@ -1,11 +1,12 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 
 // 📦 Package imports:
+import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
+// 🌎 Project imports:
 import '../../../../../../../core/enums/enums.dart';
 import '../../../../../../../core/failures/failures.dart';
 import '../../../../../../../core/routing/routing.dart';

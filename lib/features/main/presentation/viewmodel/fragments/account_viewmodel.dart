@@ -1,17 +1,20 @@
 // 🎯 Dart imports:
 import 'dart:convert';
 
-// 📦 Package imports:
-import 'package:enzitech_app/core/domain/service/user_preferences/user_preferences_service.dart';
-import 'package:enzitech_app/features/main/domain/entities/app_info_entity.dart';
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+// 🌎 Project imports:
+import '../../../../../core/domain/service/user_preferences/user_preferences_service.dart';
 import '../../../../../core/enums/enums.dart';
 import '../../../../../core/failures/failures.dart';
 import '../../../../../shared/utils/utils.dart';
 import '../../../../authentication/domain/entities/user_entity.dart';
+import '../../../domain/entities/app_info_entity.dart';
 
 // 🌎 Project imports:
 

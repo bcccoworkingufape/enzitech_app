@@ -1,13 +1,11 @@
-// import 'package:enzitech_app/features/home/data/datasources/get_enzymes_datasource.dart';
-
 // 🐦 Flutter imports:
-import 'package:enzitech_app/features/main/domain/entities/treatment_entity.dart';
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
 import '../../domain/entities/enzyme_entity.dart';
+import '../../domain/entities/treatment_entity.dart';
 import '../../domain/usecases/get_enzymes/get_enzymes_usecase.dart';
 import '../../domain/usecases/get_experiments/get_experiments_usecase.dart';
 import '../../domain/usecases/get_treatments/get_treatments_usecase.dart';

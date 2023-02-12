@@ -1,9 +1,9 @@
 // 🌎 Project imports:
-import '../dto/enzyme_dto.dart';
-import '../dto/treatment_dto.dart';
 import '../../domain/entities/enzyme_entity.dart';
 import '../../domain/entities/experiment_entity.dart';
 import '../../domain/entities/treatment_entity.dart';
+import '../dto/enzyme_dto.dart';
+import '../dto/treatment_dto.dart';
 
 extension ExperimentDto on ExperimentEntity {
   static ExperimentEntity fromJson(Map json) {

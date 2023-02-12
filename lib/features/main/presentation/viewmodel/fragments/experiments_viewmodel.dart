@@ -1,13 +1,13 @@
 // import 'package:enzitech_app/features/home/data/datasources/get_enzymes_datasource.dart';
 
 // 🐦 Flutter imports:
-import 'package:enzitech_app/features/main/domain/repositories/store_experiments_in_cache_repository.dart';
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
-import '../../../domain/entities/experiment_entity.dart';
 import '../../../../../core/enums/enums.dart';
 import '../../../../../core/failures/failures.dart';
+import '../../../domain/entities/experiment_entity.dart';
+import '../../../domain/repositories/store_experiments_in_cache_repository.dart';
 import '../../../domain/usecases/get_experiments/get_experiments_usecase.dart';
 
 class ExperimentsViewmodel extends ChangeNotifier {

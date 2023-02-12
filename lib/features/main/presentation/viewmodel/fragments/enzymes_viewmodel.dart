@@ -4,10 +4,10 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
-import '../../../domain/entities/enzyme_entity.dart';
-import '../../../domain/entities/experiment_entity.dart';
 import '../../../../../core/enums/enums.dart';
 import '../../../../../core/failures/failures.dart';
+import '../../../domain/entities/enzyme_entity.dart';
+import '../../../domain/entities/experiment_entity.dart';
 import '../../../domain/usecases/get_enzymes/get_enzymes_usecase.dart';
 
 class EnzymesViewmodel extends ChangeNotifier {

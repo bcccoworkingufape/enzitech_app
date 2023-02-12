@@ -1,12 +1,4 @@
 // 📦 Package imports:
-import 'package:enzitech_app/features/main/data/datasources/get_experiments_datasource.dart';
-import 'package:enzitech_app/features/main/data/datasources/get_treatments_datasource.dart';
-import 'package:enzitech_app/features/main/domain/repositories/store_experiments_in_cache_repository.dart';
-import 'package:enzitech_app/features/main/domain/usecases/store_experiments_in_cache/store_experiments_in_cache_usecase.dart';
-import 'package:enzitech_app/features/main/presentation/viewmodel/fragments/account_viewmodel.dart';
-import 'package:enzitech_app/features/main/presentation/viewmodel/fragments/enzymes_viewmodel.dart';
-import 'package:enzitech_app/features/main/presentation/viewmodel/fragments/experiments_viewmodel.dart';
-import 'package:enzitech_app/features/main/presentation/viewmodel/fragments/treatments_viewmodel.dart';
 import 'package:get_it/get_it.dart';
 
 // 🌎 Project imports:
@@ -18,6 +10,8 @@ import '../../features/authentication/domain/usecases/login/login_usecase.dart';
 import '../../features/authentication/domain/usecases/login/login_usecase_imp.dart';
 import '../../features/authentication/presentation/viewmodel/login_viewmodel.dart';
 import '../../features/main/data/datasources/get_enzymes_datasource.dart';
+import '../../features/main/data/datasources/get_experiments_datasource.dart';
+import '../../features/main/data/datasources/get_treatments_datasource.dart';
 import '../../features/main/data/datasources/local/get_enzymes/get_enzymes_local_datasource_decorator_imp.dart';
 import '../../features/main/data/datasources/local/get_experiments/get_experiments_local_datasource_decorator_imp.dart';
 import '../../features/main/data/datasources/local/get_treatments/get_treatments_local_datasource_decorator_imp.dart';
@@ -31,13 +25,19 @@ import '../../features/main/data/repositories/store_experiments_in_cache_reposit
 import '../../features/main/domain/repositories/get_enzymes_repository.dart';
 import '../../features/main/domain/repositories/get_experiments_repository.dart';
 import '../../features/main/domain/repositories/get_treatments_repository.dart';
+import '../../features/main/domain/repositories/store_experiments_in_cache_repository.dart';
 import '../../features/main/domain/usecases/get_enzymes/get_enzymes_usecase.dart';
 import '../../features/main/domain/usecases/get_enzymes/get_enzymes_usecase_imp.dart';
 import '../../features/main/domain/usecases/get_experiments/get_experiments_usecase.dart';
 import '../../features/main/domain/usecases/get_experiments/get_experiments_usecase_imp.dart';
 import '../../features/main/domain/usecases/get_treatments/get_treatments_usecase.dart';
 import '../../features/main/domain/usecases/get_treatments/get_treatments_usecase_imp.dart';
+import '../../features/main/domain/usecases/store_experiments_in_cache/store_experiments_in_cache_usecase.dart';
 import '../../features/main/domain/usecases/store_experiments_in_cache/store_experiments_in_cache_usecase_imp.dart';
+import '../../features/main/presentation/viewmodel/fragments/account_viewmodel.dart';
+import '../../features/main/presentation/viewmodel/fragments/enzymes_viewmodel.dart';
+import '../../features/main/presentation/viewmodel/fragments/experiments_viewmodel.dart';
+import '../../features/main/presentation/viewmodel/fragments/treatments_viewmodel.dart';
 import '../../features/main/presentation/viewmodel/home_viewmodel.dart';
 import '../../features/main/presentation/viewmodel/splash_viewmodel.dart';
 import '../data/service/http/http_service_imp.dart';

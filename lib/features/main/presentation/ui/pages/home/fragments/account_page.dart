@@ -9,11 +9,12 @@ import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:settings_ui/settings_ui.dart';
 
-import '../../../../../presentation/viewmodel/home_viewmodel.dart';
+// 🌎 Project imports:
 import '../../../../../../../core/enums/enums.dart';
 import '../../../../../../../core/failures/failures.dart';
 import '../../../../../../../core/routing/routing.dart';
 import '../../../../../../../shared/ui/ui.dart';
+import '../../../../../presentation/viewmodel/home_viewmodel.dart';
 import '../../../../viewmodel/fragments/account_viewmodel.dart';
 
 // 🌎 Project imports:
