@@ -1,13 +1,16 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
+// 📦 Package imports:
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
+
 // 🌎 Project imports:
 import 'core/data/service/key_value/key_value_service_imp.dart';
 import 'core/data/service/user_preferences/user_preferences_service_imp.dart';
 import 'core/domain/entities/http_driver_options.dart';
 import 'core/inject/inject.dart';
 import 'core/routing/routing.dart';
-import 'features/main/presentation/ui/pages/splash/splash_page.dart';
 import 'features/main/presentation/viewmodel/splash_viewmodel.dart';
 import 'shared/ui/ui.dart';
 import 'shared/utils/utils.dart';
@@ -71,10 +74,15 @@ class _MyAppState extends State<MyApp> {
         ),
         initialRoute: Routing.initial,
         onGenerateRoute: Routing.generateRoute,
-        home: /* Scaffold(
-          body: Center(child: Text(DateTime.now().toString())),
-        ) */
-            const SplashPage(),
+        localizationsDelegates: const [
+          GlobalCupertinoLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          FormBuilderLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          ...FormBuilderLocalizations.supportedLocales,
+        ],
       ),
     );
   }

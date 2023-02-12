@@ -16,4 +16,7 @@ abstract class UserPreferencesServices {
   Future<void> saveExcludeConfirmation(bool value);
 
   Future<bool> getExcludeConfirmation();
+
+  // GENERAL
+  Future<void> clearAll();
 }

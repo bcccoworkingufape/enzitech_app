@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
 import '../../features/authentication/presentation/ui/pages/login/login_page.dart';
+import '../../features/main/presentation/ui/pages/home/home_page.dart';
 import '../../features/main/presentation/ui/pages/splash/splash_page.dart';
 import '../../shared/ui/ui.dart';
 
@@ -54,9 +55,9 @@ class Routing {
           );
         } else {
           return _errorRoute();
-        }
+        }*/
       case home:
-        return MaterialPageRoute(builder: (_) => const HomePage()); */
+        return MaterialPageRoute(builder: (_) => const HomePage());
       case initial:
         return MaterialPageRoute(builder: (_) => const SplashPage());
       /* case recoverPassword:

@@ -77,7 +77,8 @@ class _SplashPageState extends State<SplashPage> {
         // GetIt.I.get<KeyValueService>().clear();
 
         print('VAI PRA HOME');
-        /* await Provider.of<HomeViewmodel>(context, listen: false)
+        Navigator.pushReplacementNamed(context, Routing.home);
+        /* await Provider.of<Home>(context, listen: false)
             .getContent()
             .then((value) =>
                 Navigator.pushReplacementNamed(context, Routing.home)); */

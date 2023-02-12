@@ -7,13 +7,9 @@ import 'package:flutter/material.dart';
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
 import '../../domain/entities/enzyme_entity.dart';
-import '../../domain/usecases/get_enzymes/get_enzymes_usecase.dart';
 
 class SplashViewmodel extends ChangeNotifier {
-  final GetEnzymesUseCase _getEnzymesUseCase;
-  SplashViewmodel(this._getEnzymesUseCase) {
-    fetch();
-  }
+  SplashViewmodel();
 
   StateEnum _state = StateEnum.idle;
   StateEnum get state => _state;
@@ -48,7 +44,7 @@ class SplashViewmodel extends ChangeNotifier {
 
   fetch() async {
     // try {
-    var result = await _getEnzymesUseCase();
+    /* var result = await _getEnzymesUseCase();
 
     result.fold(
       (error) {
@@ -61,7 +57,7 @@ class SplashViewmodel extends ChangeNotifier {
         setEnzymes(success);
         setStateEnum(StateEnum.success);
       },
-    );
+    ); */
 
     // } catch (e) {
     //   print('-> SETOU FORA');

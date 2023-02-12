@@ -1,7 +1,3 @@
-// 🎯 Dart imports:
-import 'dart:convert';
-import 'dart:developer';
-
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -61,7 +57,7 @@ class LoginViewmodel extends ChangeNotifier {
 
     result.fold(
       (error) {
-        _setFailure(error as Failure);
+        _setFailure(error);
         setStateEnum(StateEnum.error);
       },
       (success) {

@@ -52,4 +52,10 @@ class UserPreferencesServicesImp implements UserPreferencesServices {
   Future<bool> getExcludeConfirmation() async {
     return await _keyValueService.getBool(_excludeConfirmationKey) ?? false;
   }
+
+  // GENERAL
+  @override
+  Future<void> clearAll() async {
+    await _keyValueService.clear();
+  }
 }

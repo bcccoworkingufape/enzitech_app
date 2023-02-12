@@ -14,6 +14,10 @@ extension EnzymeDto on EnzymeEntity {
           ? double.parse(json['variableB']).toPrecision(3)
           : json['variableB'],
       type: json['type'],
+      createdAt:
+          json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
+      updatedAt:
+          json['updatedAt'] != null ? DateTime.parse(json['updatedAt']) : null,
     );
   }
 
@@ -24,6 +28,8 @@ extension EnzymeDto on EnzymeEntity {
       'variableA': variableA,
       'variableB': variableB,
       'type': type,
+      'updatedAt': updatedAt?.toString(),
+      'createdAt': createdAt?.toString(),
     };
   }
 }
