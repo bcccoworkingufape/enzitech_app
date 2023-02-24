@@ -24,7 +24,9 @@ class GetEnzymesDataSourceDecoratorImp extends GetEnzymesDataSourceDecorator {
   Future<Either<Failure, List<EnzymeEntity>>> call() async {
     print('-> entrou dso Decorator');
     return (await super()).fold(
-      (error) async => await _getInCache(),
+      (error) async => error is ExpiredTokenOrWrongUserFailure
+          ? Left(error)
+          : await _getInCache(),
       (result) {
         _saveInCache(result);
         return Right(result);

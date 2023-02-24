@@ -1,29 +1,39 @@
 // 🎯 Dart imports:
-import 'dart:convert';
-
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-
 // 📦 Package imports:
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-// 🌎 Project imports:
-import '../../../../../core/domain/service/user_preferences/user_preferences_service.dart';
 import '../../../../../core/enums/enums.dart';
 import '../../../../../core/failures/failures.dart';
 import '../../../../../shared/utils/utils.dart';
 import '../../../../authentication/domain/entities/user_entity.dart';
 import '../../../domain/entities/app_info_entity.dart';
+import '../../../domain/usecases/clear_user/clear_user_usecase.dart';
+import '../../../domain/usecases/get_exclude_confirmation/get_exclude_confirmation_usecase.dart';
+import '../../../domain/usecases/get_user/get_user_usecase.dart';
+import '../../../domain/usecases/save_exclude_confirmation/save_exclude_confirmation_usecase.dart';
 
 // 🌎 Project imports:
 
 class AccountViewmodel extends ChangeNotifier {
-  final UserPreferencesServices _userPreferencesServices;
+  final GetUserUseCase _getUserUseCase;
+  final GetExcludeConfirmationUseCase _getExcludeConfirmationUseCase;
+  final SaveExcludeConfirmationUseCase _saveExcludeConfirmationUseCase;
+  final ClearUserUseCase _clearUserUseCase;
+
+  // final UserPreferencesServices _userPreferencesServices;
 
   AccountViewmodel(
-    this._userPreferencesServices,
-  );
+    this._getUserUseCase,
+    this._getExcludeConfirmationUseCase,
+    this._saveExcludeConfirmationUseCase,
+    this._clearUserUseCase,
+    // this._userPreferencesServices,
+  ) {
+    fetch();
+  }
 
   StateEnum _state = StateEnum.idle;
   StateEnum get state => _state;
@@ -56,15 +66,14 @@ class AccountViewmodel extends ChangeNotifier {
   bool? get enableExcludeConfirmation => _enableExcludeConfirmation;
   void setEnableExcludeConfirmation(bool enableExcludeExperimentConfirmation) {
     _enableExcludeConfirmation = enableExcludeExperimentConfirmation;
-    _userPreferencesServices
-        .saveExcludeConfirmation(enableExcludeExperimentConfirmation);
+    _saveExcludeConfirmationUseCase(enableExcludeExperimentConfirmation);
     notifyListeners();
   }
 
   Future<void> logout() async {
     setStateEnum(StateEnum.loading);
     try {
-      _userPreferencesServices.clearAll();
+      _clearUserUseCase();
 
       setStateEnum(StateEnum.success);
 
@@ -76,7 +85,7 @@ class AccountViewmodel extends ChangeNotifier {
     }
   }
 
-  Future<void> loadAccountFragment() async {
+  Future<void> fetch() async {
     setStateEnum(StateEnum.loading);
 
     await loadAccount();
@@ -87,9 +96,19 @@ class AccountViewmodel extends ChangeNotifier {
   }
 
   Future<void> loadPreferences() async {
-    bool enable = await _userPreferencesServices.getExcludeConfirmation();
-    setEnableExcludeConfirmation(enable);
-    notifyListeners();
+    // setStateEnum(StateEnum.loading);
+
+    var result = await _getExcludeConfirmationUseCase();
+    result.fold(
+      (error) {
+        _setFailure(error);
+        setStateEnum(StateEnum.error);
+      },
+      (success) async {
+        setEnableExcludeConfirmation(success);
+        notifyListeners();
+      },
+    );
   }
 
   Future<void> loadAppInfo() async {
@@ -115,17 +134,19 @@ class AccountViewmodel extends ChangeNotifier {
 
   Future<void> loadAccount() async {
     setStateEnum(StateEnum.loading);
-    try {
-      String? user = await _userPreferencesServices.getFullUser();
-      // var userEntity = UserEntity.fromJson(jsonEncode(user));
 
-      // _setUser(userEntity);
+    var result = await _getUserUseCase();
 
-      setStateEnum(StateEnum.success);
-    } catch (e) {
-      _setFailure(e as Failure);
-      setStateEnum(StateEnum.error);
-    }
+    result.fold(
+      (error) {
+        _setFailure(error);
+        setStateEnum(StateEnum.error);
+      },
+      (success) async {
+        _setUser(success);
+        setStateEnum(StateEnum.success);
+      },
+    );
   }
 
   Future<void> openUrl() async {

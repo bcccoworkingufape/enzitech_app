@@ -23,7 +23,9 @@ class GetTreatmentsDataSourceDecoratorImp
   @override
   Future<Either<Failure, List<TreatmentEntity>>> call() async {
     return (await super()).fold(
-      (error) async => await _getInCache(),
+      (error) async => error is ExpiredTokenOrWrongUserFailure
+          ? Left(error)
+          : await _getInCache(),
       (result) {
         _saveInCache(result);
         return Right(result);

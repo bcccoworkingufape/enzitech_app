@@ -1,6 +1,5 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-
 // 📦 Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
@@ -8,8 +7,10 @@ import 'package:get_it/get_it.dart';
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
+import '../../../../../../core/routing/routing.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../../../../shared/validator/validator.dart';
+import '../../../../../main/presentation/viewmodel/home_viewmodel.dart';
 import '../../../viewmodel/login_viewmodel.dart';
 import '../../widgets/login_button.dart';
 
@@ -47,9 +48,7 @@ class LoginPageState extends State<LoginPage> {
           );
         } else if (_loginViewmodel.state == StateEnum.success && mounted) {
           print('VAI PRA HOME SAINDO DO LOGIN');
-          /* Provider.of<HomeViewmodel>(context, listen: false)
-              .getContent()
-              .then((value) {
+          GetIt.I.get<HomeViewmodel>().fetch().then((value) {
             EZTSnackBar.show(
               context,
               "Bem vindo(a) ${_loginViewmodel.loggedName}!",
@@ -57,9 +56,9 @@ class LoginPageState extends State<LoginPage> {
             );
 
             if (mounted) {
-              Navigator.pushReplacementNamed(context, RouteGenerator.home);
+              Navigator.pushReplacementNamed(context, Routing.home);
             }
-          }); */
+          });
         }
       });
     }
@@ -166,7 +165,10 @@ class LoginPageState extends State<LoginPage> {
                   //   ),
                   // ),
                   const SizedBox(height: 64),
-                  LoginButton(formKey: _formKey),
+                  LoginButton(
+                    formKey: _formKey,
+                    loginViewmodel: _loginViewmodel,
+                  ),
                   const SizedBox(height: 32),
                   Center(
                     child: RichText(

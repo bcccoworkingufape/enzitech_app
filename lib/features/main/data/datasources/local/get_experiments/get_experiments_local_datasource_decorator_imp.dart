@@ -36,7 +36,9 @@ class GetExperimentsDataSourceDecoratorImp
       finished: finished,
     ))
         .fold(
-      (error) async => await _getInCache(),
+      (error) async => error is ExpiredTokenOrWrongUserFailure
+          ? Left(error)
+          : await _getInCache(),
       (result) {
         // _saveInCache(result);
         return Right(result);

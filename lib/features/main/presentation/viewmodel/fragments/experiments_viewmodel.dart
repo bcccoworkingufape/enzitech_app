@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import '../../../../../core/enums/enums.dart';
 import '../../../../../core/failures/failures.dart';
 import '../../../domain/entities/experiment_entity.dart';
+import '../../../domain/entities/experiment_pagination_entity.dart';
 import '../../../domain/repositories/store_experiments_in_cache_repository.dart';
 import '../../../domain/usecases/get_experiments/get_experiments_usecase.dart';
 
@@ -17,9 +18,9 @@ class ExperimentsViewmodel extends ChangeNotifier {
   ExperimentsViewmodel(
     this._getExperimentsUseCase,
     this._storeExperimentsInCacheRepository,
-  ) {
+  ); /*  {
     fetch();
-  }
+  } */
 
   StateEnum _state = StateEnum.idle;
   StateEnum get state => _state;
@@ -145,7 +146,12 @@ class ExperimentsViewmodel extends ChangeNotifier {
           _setPage(page + 1);
         }
 
-        await _storeExperimentsInCacheRepository(success);
+        await _storeExperimentsInCacheRepository(
+          ExperimentPaginationEntity(
+            total: _totalOfExperiments,
+            experiments: experiments,
+          ),
+        );
 
         _setIsLoadingMoreRunning(false);
         setStateEnum(StateEnum.success);

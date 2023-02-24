@@ -1,27 +1,28 @@
 // 🐦 Flutter imports:
+import 'package:enzitech_app/features/main/presentation/viewmodel/fragments/enzymes_viewmodel.dart';
+import 'package:enzitech_app/features/main/presentation/viewmodel/fragments/experiments_viewmodel.dart';
+import 'package:enzitech_app/features/main/presentation/viewmodel/fragments/treatments_viewmodel.dart';
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
-import '../../domain/entities/enzyme_entity.dart';
-import '../../domain/entities/treatment_entity.dart';
-import '../../domain/usecases/get_enzymes/get_enzymes_usecase.dart';
-import '../../domain/usecases/get_experiments/get_experiments_usecase.dart';
-import '../../domain/usecases/get_treatments/get_treatments_usecase.dart';
+import 'fragments/account_viewmodel.dart';
 
 class HomeViewmodel extends ChangeNotifier {
-  final GetEnzymesUseCase _getEnzymesUseCase;
-  final GetExperimentsUseCase _getExperimentsUseCase;
-  final GetTreatmentsUseCase _getTreatmentsUseCase;
   // final GetEnzymesUseCase _getEnzymesUseCase;
-  // final GetEnzymesUseCase _getEnzymesUseCase;
-  // final GetEnzymesUseCase _getEnzymesUseCase;
+  // final GetExperimentsUseCase _getExperimentsUseCase;
+  // final GetTreatmentsUseCase _getTreatmentsUseCase;
+  final ExperimentsViewmodel experimentsViewmodel;
+  final EnzymesViewmodel enzymesViewmodel;
+  final TreatmentsViewmodel treatmentsViewmodel;
+  final AccountViewmodel accountViewmodel;
 
   HomeViewmodel(
-    this._getEnzymesUseCase,
-    this._getExperimentsUseCase,
-    this._getTreatmentsUseCase,
+    this.experimentsViewmodel,
+    this.enzymesViewmodel,
+    this.treatmentsViewmodel,
+    this.accountViewmodel,
   ) {
     fetch();
   }
@@ -46,21 +47,21 @@ class HomeViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<EnzymeEntity>? _enzymes;
+  /* List<EnzymeEntity>? _enzymes;
   List<EnzymeEntity>? get enzymes => _enzymes;
   void setEnzymes(List<EnzymeEntity>? enzymes) {
     _enzymes = enzymes;
     notifyListeners();
   }
-
+ */
   // List<EnzymeEntity>? _cachedEnzymes;
 
-  List<TreatmentEntity>? _treatments;
+  /* List<TreatmentEntity>? _treatments;
   List<TreatmentEntity>? get treatments => _treatments;
   void setTreatments(List<TreatmentEntity>? treatments) {
     _treatments = treatments;
     notifyListeners();
-  }
+  } */
 
   /* onChanged(String value) {
     List<MovieDetailsEntity> list = _cachedMovies!.listMovies
@@ -72,7 +73,40 @@ class HomeViewmodel extends ChangeNotifier {
   } */
 
   fetch() async {
-    var resultEnzymes = await _getEnzymesUseCase();
+    setStateEnum(StateEnum.loading);
+    await experimentsViewmodel.fetch();
+    await enzymesViewmodel.fetch();
+    await treatmentsViewmodel.fetch();
+    await accountViewmodel.fetch();
+
+    if (experimentsViewmodel.state == StateEnum.error) {
+      _setFailure(experimentsViewmodel.failure);
+      setStateEnum(StateEnum.error);
+    } else if (enzymesViewmodel.state == StateEnum.error) {
+      _setFailure(enzymesViewmodel.failure);
+      setStateEnum(StateEnum.error);
+    } else if (treatmentsViewmodel.state == StateEnum.error) {
+      _setFailure(treatmentsViewmodel.failure);
+      setStateEnum(StateEnum.error);
+    } else if (accountViewmodel.state == StateEnum.error) {
+      _setFailure(accountViewmodel.failure);
+      setStateEnum(StateEnum.error);
+    }
+
+    setStateEnum(StateEnum.success);
+
+    /* resultExperiments.fold(
+      (error) {
+        _setFailure(error);
+        setStateEnum(StateEnum.error);
+      },
+      (success) {
+        setExperiments(success);
+        setStateEnum(StateEnum.success);
+      },
+    ); */
+
+    /* var resultEnzymes = await _getEnzymesUseCase();
 
     resultEnzymes.fold(
       (error) {
@@ -96,6 +130,6 @@ class HomeViewmodel extends ChangeNotifier {
         setTreatments(success);
         setStateEnum(StateEnum.success);
       },
-    );
+    ); */
   }
 }

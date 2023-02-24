@@ -71,7 +71,26 @@ class _HomePageState extends State<HomePage>
               context,
               HandleFailure.of(_homeViewmodel.failure!),
               eztSnackBarType: EZTSnackBarType.error,
-            );
+            ).whenComplete(() async {
+              if (_homeViewmodel.failure is ExpiredTokenOrWrongUserFailure ||
+                  _homeViewmodel.failure is UserNotFoundOrWrongTokenFailure ||
+                  _homeViewmodel.failure is SessionNotFoundFailure) {
+                debugPrint("SAIR :)");
+                _accountViewmodel.logout();
+
+                if (_accountViewmodel.state == StateEnum.success && mounted) {
+                  EZTSnackBar.show(
+                    context,
+                    "Faça seu login novamente.",
+                  );
+                  await Future.delayed(const Duration(milliseconds: 500));
+                  if (mounted) {
+                    Navigator.pushReplacementNamed(context, Routing.login);
+                    _homeViewmodel.setFragmentIndex(0);
+                  }
+                }
+              }
+            });
           }
         },
       );
@@ -137,6 +156,12 @@ class _HomePageState extends State<HomePage>
         }
       });
     }
+  }
+
+  @override
+  dispose() {
+    animationController.dispose();
+    super.dispose();
   }
 
   setAllButtonsVisible() {
