@@ -1,6 +1,5 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
@@ -61,6 +60,7 @@ class LoginViewmodel extends ChangeNotifier {
         setStateEnum(StateEnum.error);
       },
       (success) {
+        setLoggedName(success.name);
         GetIt.I.get<HttpService>().setConfig(token: success.token);
         setStateEnum(StateEnum.success);
       },

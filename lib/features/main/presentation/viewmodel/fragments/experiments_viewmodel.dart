@@ -118,7 +118,7 @@ class ExperimentsViewmodel extends ChangeNotifier {
   fetch({int pagination = 1}) async {
     setStateEnum(StateEnum.loading);
 
-    if (page == 1) {
+    if (pagination == 1) {
       _setPage(1);
       _setExperiments([]);
     } else {

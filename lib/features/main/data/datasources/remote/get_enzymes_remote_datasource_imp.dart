@@ -20,7 +20,6 @@ class GetEnzymesRemoteDataSourceImp implements GetEnzymesDataSource {
   Future<Either<Failure, List<EnzymeEntity>>> call() async {
     print('-> entrou dso imp');
     try {
-      // await Future.delayed(const Duration(seconds: 3)); // TODO: remove
       var response = await _httpService.get(API.REQUEST_ENZYMES);
       var result = (response.data as List)
           .map(

@@ -4,7 +4,6 @@ import 'dart:math' as math;
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-
 // 📦 Package imports:
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
@@ -34,6 +33,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
+  final GlobalKey _scaffold = GlobalKey();
   late final HomeViewmodel _homeViewmodel;
   late final AccountViewmodel _accountViewmodel;
   late final EnzymesViewmodel _enzymesViewmodel;
@@ -255,6 +255,7 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffold,
       appBar: AppBar(
         title: SvgPicture.asset(
           AppSvgs.logo,
