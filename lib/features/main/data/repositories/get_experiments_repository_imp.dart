@@ -3,11 +3,9 @@ import 'package:dartz/dartz.dart';
 
 // 🌎 Project imports:
 import '../../../../core/failures/failure.dart';
-import '../../domain/entities/experiment_entity.dart';
 import '../../domain/entities/experiment_pagination_entity.dart';
 import '../../domain/repositories/get_experiments_repository.dart';
 import '../datasources/get_experiments_datasource.dart';
-import '../datasources/get_treatments_datasource.dart';
 
 class GetExperimentsRepositoryImp implements GetExperimentsRepository {
   final GetExperimentsDataSource _getExperimentsDataSource;

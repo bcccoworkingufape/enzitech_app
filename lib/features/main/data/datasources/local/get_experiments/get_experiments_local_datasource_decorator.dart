@@ -3,7 +3,6 @@ import 'package:dartz/dartz.dart';
 
 // 🌎 Project imports:
 import '../../../../../../core/failures/failures.dart';
-import '../../../../domain/entities/experiment_entity.dart';
 import '../../../../domain/entities/experiment_pagination_entity.dart';
 import '../../get_experiments_datasource.dart';
 

@@ -1,5 +1,4 @@
 // 🌎 Project imports:
-import '../../../../core/failures/failure.dart';
 import '../../domain/entities/experiment_pagination_entity.dart';
 import '../../domain/repositories/store_experiments_in_cache_repository.dart';
 import '../datasources/get_experiments_datasource.dart';
