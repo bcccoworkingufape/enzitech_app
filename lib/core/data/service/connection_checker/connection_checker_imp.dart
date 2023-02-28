@@ -19,7 +19,7 @@ class ConnectionCheckerImp implements ConnectionChecker {
   //This tracks the current connection status
   bool hasConnection = false;
   //This is how we'll allow subscribing to connection changes
-  StreamController connectionChangeController = StreamController();
+  StreamController connectionChangeController = StreamController.broadcast();
   //flutter_connectivity
   final Connectivity _connectivity = Connectivity();
 

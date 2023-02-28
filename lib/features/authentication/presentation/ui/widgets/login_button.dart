@@ -1,9 +1,11 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 // 🌎 Project imports:
 import '../../../../../core/enums/enums.dart';
 import '../../../../../shared/ui/ui.dart';
+import '../../../../main/presentation/viewmodel/home_viewmodel.dart';
 import '../../viewmodel/login_viewmodel.dart';
 
 // 🌎 Project imports:
@@ -23,7 +25,8 @@ class LoginButton extends StatelessWidget {
         return EZTButton(
           text: 'Entrar',
           eztButtonType: EZTButtonType.checkout,
-          loading: loginViewmodel.state == StateEnum.loading,
+          loading: loginViewmodel.state == StateEnum.loading ||
+              GetIt.I.get<HomeViewmodel>().state == StateEnum.loading,
           onPressed: loginViewmodel.state == StateEnum.loading
               ? null
               : () {

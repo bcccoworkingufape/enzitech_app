@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
+import '../../../../core/domain/service/user_preferences/user_preferences_service.dart';
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
 import '../../domain/entities/enzyme_entity.dart';
@@ -17,13 +18,15 @@ class SplashViewmodel extends ChangeNotifier {
   final EnzymesViewmodel enzymesViewmodel;
   final TreatmentsViewmodel treatmentsViewmodel;
   final AccountViewmodel accountViewmodel;
-  
+  final UserPreferencesServices userPreferencesServices;
+
   SplashViewmodel(
     this.experimentsViewmodel,
     this.enzymesViewmodel,
     this.treatmentsViewmodel,
     this.accountViewmodel,
-  ){
+    this.userPreferencesServices,
+  ) {
     fetch();
   }
 
@@ -47,64 +50,32 @@ class SplashViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  fetch() async {
+  Future<void> fetch() async {
     setStateEnum(StateEnum.loading);
-    await experimentsViewmodel.fetch();
-    await enzymesViewmodel.fetch();
-    await treatmentsViewmodel.fetch();
-    await accountViewmodel.fetch();
 
-    if (experimentsViewmodel.state == StateEnum.error) {
-      _setFailure(experimentsViewmodel.failure);
-      setStateEnum(StateEnum.error);
-    } else if (enzymesViewmodel.state == StateEnum.error) {
-      _setFailure(enzymesViewmodel.failure);
-      setStateEnum(StateEnum.error);
-    } else if (treatmentsViewmodel.state == StateEnum.error) {
-      _setFailure(treatmentsViewmodel.failure);
-      setStateEnum(StateEnum.error);
-    } else if (accountViewmodel.state == StateEnum.error) {
-      _setFailure(accountViewmodel.failure);
-      setStateEnum(StateEnum.error);
+    String token = await userPreferencesServices.getToken() ?? '';
+
+    if (token.isNotEmpty) {
+      await experimentsViewmodel.fetch();
+      await enzymesViewmodel.fetch();
+      await treatmentsViewmodel.fetch();
+      await accountViewmodel.fetch();
+
+      if (experimentsViewmodel.state == StateEnum.error) {
+        _setFailure(experimentsViewmodel.failure);
+        setStateEnum(StateEnum.error);
+      } else if (enzymesViewmodel.state == StateEnum.error) {
+        _setFailure(enzymesViewmodel.failure);
+        setStateEnum(StateEnum.error);
+      } else if (treatmentsViewmodel.state == StateEnum.error) {
+        _setFailure(treatmentsViewmodel.failure);
+        setStateEnum(StateEnum.error);
+      } else if (accountViewmodel.state == StateEnum.error) {
+        _setFailure(accountViewmodel.failure);
+        setStateEnum(StateEnum.error);
+      }
     }
 
     setStateEnum(StateEnum.success);
-
-    /* resultExperiments.fold(
-      (error) {
-        _setFailure(error);
-        setStateEnum(StateEnum.error);
-      },
-      (success) {
-        setExperiments(success);
-        setStateEnum(StateEnum.success);
-      },
-    ); */
-
-    /* var resultEnzymes = await _getEnzymesUseCase();
-
-    resultEnzymes.fold(
-      (error) {
-        _setFailure(error);
-        setStateEnum(StateEnum.error);
-      },
-      (success) {
-        setEnzymes(success);
-        setStateEnum(StateEnum.success);
-      },
-    );
-
-    var resultTreatments = await _getTreatmentsUseCase();
-
-    resultTreatments.fold(
-      (error) {
-        _setFailure(error);
-        setStateEnum(StateEnum.error);
-      },
-      (success) {
-        setTreatments(success);
-        setStateEnum(StateEnum.success);
-      },
-    ); */
   }
 }

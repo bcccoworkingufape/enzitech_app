@@ -5,7 +5,7 @@ import 'dart:math' as math;
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-
+import 'package:flutter/scheduler.dart';
 // 📦 Package imports:
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
@@ -192,7 +192,12 @@ class _HomePageState extends State<HomePage>
   @override
   dispose() {
     _connectivitySubscription.cancel();
-    animationControllerLogo.dispose();
+
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        animationControllerLogo.dispose();
+      }
+    });
     super.dispose();
   }
 

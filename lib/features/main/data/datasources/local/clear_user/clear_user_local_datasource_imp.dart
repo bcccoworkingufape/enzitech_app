@@ -8,7 +8,7 @@ class ClearUserLocalDataSourceImp extends ClearUserDataSource {
   ClearUserLocalDataSourceImp(this._userPreferencesServices);
 
   @override
-  Future<void> call() async {
+  void call() async {
     await _userPreferencesServices.clearAll();
   }
 }

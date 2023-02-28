@@ -1,6 +1,5 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-
 // 📦 Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
@@ -40,6 +39,7 @@ class _SplashPageState extends State<SplashPage> {
               HandleFailure.of(_splashViewmodel.failure!),
               eztSnackBarType: EZTSnackBarType.error,
             );
+
             var accountViewmodel = GetIt.I.get<AccountViewmodel>();
             if (_splashViewmodel.failure is ExpiredTokenOrWrongUserFailure ||
                 _splashViewmodel.failure is UserNotFoundOrWrongTokenFailure ||
@@ -67,8 +67,7 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   _checkAuth() async {
-    await Future.delayed(const Duration(seconds: 1));
-    Future.delayed(Duration.zero).then(
+    await Future.delayed(const Duration(seconds: 1)).then(
       (_) async {
         String token =
             await GetIt.I.get<UserPreferencesServices>().getToken() ?? '';
@@ -78,9 +77,7 @@ class _SplashPageState extends State<SplashPage> {
         if (token.isEmpty) {
           Navigator.pushReplacementNamed(context, Routing.login);
         } else {
-          if (_splashViewmodel.state == StateEnum.success) {
-            Navigator.pushReplacementNamed(context, Routing.home);
-          }
+          Navigator.pushReplacementNamed(context, Routing.home);
         }
       },
     );

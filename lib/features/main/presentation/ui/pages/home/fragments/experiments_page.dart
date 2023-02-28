@@ -1,6 +1,5 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -354,7 +353,8 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                               return;
                             }
 
-                            if (_experimentsViewmodel.finishedFilter) return;
+                            if (_experimentsViewmodel.finishedFilter ||
+                                !_homeViewmodel.hasInternetConnection) return;
 
                             _experimentsViewmodel.setFinishedFilter(true);
                             _experimentsViewmodel.fetch();

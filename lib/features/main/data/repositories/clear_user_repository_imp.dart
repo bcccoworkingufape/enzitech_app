@@ -8,7 +8,7 @@ class ClearUserRepositoryImp implements ClearUserRepository {
   ClearUserRepositoryImp(this._clearUserDataSource);
 
   @override
-  Future<void> call() async {
-    return await _clearUserDataSource();
+  void call() async {
+    return _clearUserDataSource();
   }
 }

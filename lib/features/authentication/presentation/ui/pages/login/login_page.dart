@@ -1,6 +1,6 @@
 // 🐦 Flutter imports:
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
 // 📦 Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
@@ -49,13 +49,13 @@ class LoginPageState extends State<LoginPage> {
           );
         } else if (_loginViewmodel.state == StateEnum.success && mounted) {
           GetIt.I.get<HomeViewmodel>().fetch().then((value) {
-            EZTSnackBar.show(
-              context,
-              "Bem vindo(a) ${_loginViewmodel.loggedName}!",
-              eztSnackBarType: EZTSnackBarType.success,
-            );
-
-            if (mounted) {
+            if (GetIt.I.get<HomeViewmodel>().state == StateEnum.success &&
+                mounted) {
+              EZTSnackBar.show(
+                context,
+                "Bem vindo(a) ${_loginViewmodel.loggedName}!",
+                eztSnackBarType: EZTSnackBarType.success,
+              );
               Navigator.pushReplacementNamed(context, Routing.home);
             }
           });
@@ -179,15 +179,13 @@ class LoginPageState extends State<LoginPage> {
                           TextSpan(
                             text: ' Crie uma',
                             style: TextStyles.link,
-                            recognizer:
-                                null /* TapGestureRecognizer()
+                            recognizer: TapGestureRecognizer()
                               ..onTap = () {
                                 Navigator.pushNamed(
                                   context,
-                                  RouteGenerator.createAccount,
+                                  Routing.createAccount,
                                 );
-                              } */
-                            ,
+                              },
                           ),
                         ],
                       ),

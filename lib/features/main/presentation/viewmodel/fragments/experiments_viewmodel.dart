@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
+import '../../../../../core/domain/service/connection_checker/connection_checker.dart';
 import '../../../../../core/enums/enums.dart';
 import '../../../../../core/failures/failures.dart';
 import '../../../domain/entities/experiment_entity.dart';
@@ -14,10 +15,12 @@ import '../../../domain/usecases/get_experiments/get_experiments_usecase.dart';
 class ExperimentsViewmodel extends ChangeNotifier {
   final GetExperimentsUseCase _getExperimentsUseCase;
   final StoreExperimentsInCacheRepository _storeExperimentsInCacheRepository;
+  final ConnectionChecker connectionChecker;
 
   ExperimentsViewmodel(
     this._getExperimentsUseCase,
     this._storeExperimentsInCacheRepository,
+    this.connectionChecker,
   ); /*  {
     fetch();
   } */
@@ -142,16 +145,23 @@ class ExperimentsViewmodel extends ChangeNotifier {
         _addToExperiments(success.experiments);
         _setTotalOfExperiments(success.total);
 
-        if (hasNextPage && success.experiments.isNotEmpty) {
+        bool hasInternetConnection =
+            await connectionChecker.hasInternetInternetConnection();
+
+        if (hasNextPage &&
+            success.experiments.isNotEmpty &&
+            hasInternetConnection) {
           _setPage(page + 1);
         }
 
-        await _storeExperimentsInCacheRepository(
-          ExperimentPaginationEntity(
-            total: _totalOfExperiments,
-            experiments: experiments,
-          ),
-        );
+        if (success.experiments.isNotEmpty) {
+          await _storeExperimentsInCacheRepository(
+            ExperimentPaginationEntity(
+              total: _totalOfExperiments,
+              experiments: experiments,
+            ),
+          );
+        }
 
         _setIsLoadingMoreRunning(false);
         setStateEnum(StateEnum.success);

@@ -2,7 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter/scheduler.dart';
 // 📦 Package imports:
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
@@ -55,8 +55,10 @@ class _AccountPageState extends State<AccountPage> {
           EZTSnackBar.show(context, "Até logo...");
           await Future.delayed(const Duration(milliseconds: 250));
           if (mounted) {
-            Navigator.pushReplacementNamed(context, Routing.login);
-            _homeViewmodel.setFragmentIndex(0);
+            SchedulerBinding.instance.addPostFrameCallback((_) {
+              Navigator.pushReplacementNamed(context, Routing.login);
+              _homeViewmodel.setFragmentIndex(0);
+            });
           }
         }
       });

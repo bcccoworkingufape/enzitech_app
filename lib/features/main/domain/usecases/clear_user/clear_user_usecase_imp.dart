@@ -8,7 +8,7 @@ class ClearUserUseCaseImp implements ClearUserUseCase {
   ClearUserUseCaseImp(this._clearUserRepository);
 
   @override
-  Future<void> call() async {
-    return await _clearUserRepository();
+  void call() async {
+    return _clearUserRepository();
   }
 }

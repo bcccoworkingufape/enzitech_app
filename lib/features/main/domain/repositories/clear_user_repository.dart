@@ -1,3 +1,3 @@
 abstract class ClearUserRepository {
-  Future<void> call();
+  void call();
 }

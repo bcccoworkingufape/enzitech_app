@@ -2,12 +2,19 @@
 import 'package:get_it/get_it.dart';
 
 // 🌎 Project imports:
+import '../../features/authentication/data/datasources/create_account_datasource.dart';
 import '../../features/authentication/data/datasources/login_datasource.dart';
+import '../../features/authentication/data/datasources/remote/create_account_remote_datasource_imp.dart';
 import '../../features/authentication/data/datasources/remote/login_remote_datasource_imp.dart';
+import '../../features/authentication/data/repositories/create_account_repository_imp.dart';
 import '../../features/authentication/data/repositories/login_repository_imp.dart';
+import '../../features/authentication/domain/repositories/create_account_repository.dart';
 import '../../features/authentication/domain/repositories/login_repository.dart';
+import '../../features/authentication/domain/usecases/create_account/create_account_usecase.dart';
+import '../../features/authentication/domain/usecases/create_account/create_account_usecase_imp.dart';
 import '../../features/authentication/domain/usecases/login/login_usecase.dart';
 import '../../features/authentication/domain/usecases/login/login_usecase_imp.dart';
+import '../../features/authentication/presentation/viewmodel/create_account_viewmodel.dart';
 import '../../features/authentication/presentation/viewmodel/login_viewmodel.dart';
 import '../../features/main/data/datasources/clear_user_datasource.dart';
 import '../../features/main/data/datasources/get_enzymes_datasource.dart';
@@ -79,7 +86,7 @@ GetIt getIt = GetIt.instance;
 class Inject {
   //-> HttpDriverOptions is required to reset Dio's token options
   static initialize(HttpDriverOptions httpDriverOptions) {
-    //* Core
+    //-> Core
     getIt.registerLazySingleton<HttpService>(
       () => DioHttpServiceImp(httpDriverOptions),
     );
@@ -93,7 +100,10 @@ class Inject {
       () => ConnectionCheckerImp(),
     );
 
-    //* DataSources
+    //-> DataSources
+    getIt.registerLazySingleton<CreateAccountDataSource>(
+      () => CreateAccountRemoteDataSourceImp(getIt()),
+    );
     getIt.registerLazySingleton<LoginDataSource>(
       () => LoginRemoteDataSourceImp(getIt(), getIt()),
     );
@@ -132,7 +142,10 @@ class Inject {
       () => SaveExcludeConfirmationLocalDataSourceImp(getIt()),
     );
 
-    //* Repositories
+    //-> Repositories
+    getIt.registerLazySingleton<CreateAccountRepository>(
+      () => CreateAccountRepositoryImp(getIt()),
+    );
     getIt.registerLazySingleton<LoginRepository>(
       () => LoginRepositoryImp(getIt()),
     );
@@ -162,7 +175,10 @@ class Inject {
       () => StoreExperimentsInCacheRepositoryImp(getIt()),
     );
 
-    //* UseCases
+    //-> UseCases
+    getIt.registerLazySingleton<CreateAccountUseCase>(
+      () => CreateAccountUseCaseImp(getIt()),
+    );
     getIt.registerLazySingleton<LoginUseCase>(
       () => LoginUseCaseImp(getIt()),
     );
@@ -191,18 +207,21 @@ class Inject {
       () => StoreExperimentsInCacheUseCaseImp(getIt()),
     );
 
-    //* Viewmodels
-    getIt.registerFactory<LoginViewmodel>(
+    //-> Viewmodels
+    getIt.registerLazySingleton<CreateAccountViewmodel>(
+      () => CreateAccountViewmodel(getIt()),
+    );
+    getIt.registerLazySingleton<LoginViewmodel>(
       () => LoginViewmodel(getIt()),
     );
     getIt.registerFactory<SplashViewmodel>(
-      () => SplashViewmodel(getIt(), getIt(), getIt(), getIt()),
+      () => SplashViewmodel(getIt(), getIt(), getIt(), getIt(), getIt()),
     );
     getIt.registerLazySingleton<HomeViewmodel>(
       () => HomeViewmodel(getIt(), getIt(), getIt(), getIt()),
     );
     getIt.registerLazySingleton<ExperimentsViewmodel>(
-      () => ExperimentsViewmodel(getIt(), getIt()),
+      () => ExperimentsViewmodel(getIt(), getIt(), getIt()),
     );
     getIt.registerLazySingleton<TreatmentsViewmodel>(
       () => TreatmentsViewmodel(getIt()),
