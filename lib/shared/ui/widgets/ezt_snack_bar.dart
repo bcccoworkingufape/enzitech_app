@@ -22,6 +22,7 @@ class EZTSnackBar {
     TextStyle? textStyle,
     bool centerTitle,
     SnackBarAction? action,
+    Duration? duration,
   ) {
     return SnackBar(
       // elevation: 0.0,
@@ -36,7 +37,7 @@ class EZTSnackBar {
               ),
             )
           : Text(message, style: textStyle),
-      // duration: new Duration(seconds: 5000000),
+      duration: duration ?? const Duration(seconds: 4),
       // shape: RoundedRectangleBorder(
       //   borderRadius: BorderRadius.only(
       //       topLeft: Radius.circular(16.0), topRight: Radius.circular(16.0)),
@@ -54,12 +55,25 @@ class EZTSnackBar {
   _buildSuccessSnackBar(
     BuildContext context,
     String message,
+    TextStyle? textStyle,
+    bool centerTitle,
     SnackBarAction? action,
+    Duration? duration,
   ) {
     return SnackBar(
       // elevation: 0.0,
       //behavior: SnackBarBehavior.floating,
-      content: Text(message),
+      content: centerTitle
+          ? SizedBox(
+              height: 19,
+              width: MediaQuery.of(context).size.width,
+              child: Center(
+                child: Text(message, style: textStyle),
+              ),
+            )
+          : Text(message, style: textStyle),
+      duration: duration ?? const Duration(seconds: 4),
+
       // duration: new Duration(seconds: 5000000),
       // shape: RoundedRectangleBorder(
       //   borderRadius: BorderRadius.only(
@@ -77,12 +91,16 @@ class EZTSnackBar {
   _buildErrorSnackBar(
     BuildContext context,
     String message,
+    TextStyle? textStyle,
+    bool centerTitle,
     SnackBarAction? action,
+    Duration? duration,
   ) {
     return SnackBar(
       // elevation: 0.0,
       //behavior: SnackBarBehavior.floating,
-      content: Text(message),
+      content: Text(message), duration: duration ?? const Duration(seconds: 4),
+
       // duration: new Duration(seconds: 5000000),
       // shape: RoundedRectangleBorder(
       //   borderRadius: BorderRadius.only(
@@ -105,16 +123,26 @@ class EZTSnackBar {
     TextStyle? textStyle,
     bool centerTitle,
     SnackBarAction? action,
+    Duration? duration,
   ) {
     switch (eztSnackBarType) {
       case EZTSnackBarType.success:
-        return _buildSuccessSnackBar(context, message, action);
+        return _buildSuccessSnackBar(
+            context, message, textStyle, centerTitle, action, duration);
       case EZTSnackBarType.error:
-        return _buildErrorSnackBar(context, message, action);
+        return _buildErrorSnackBar(
+            context, message, textStyle, centerTitle, action, duration);
       case EZTSnackBarType.regular:
       default:
         return _buildSnackBar(
-            context, message, snackBarColor, textStyle, centerTitle, action);
+          context,
+          message,
+          snackBarColor,
+          textStyle,
+          centerTitle,
+          action,
+          duration,
+        );
     }
   }
 
@@ -127,6 +155,7 @@ class EZTSnackBar {
     bool centerTitle = false,
     SnackBarAction? action,
     void Function()? onDismissFunction,
+    Duration? duration,
   }) async {
     const instance = EZTSnackBar();
 
@@ -140,6 +169,7 @@ class EZTSnackBar {
             textStyle,
             centerTitle,
             action,
+            duration,
           ),
         )
         .closed

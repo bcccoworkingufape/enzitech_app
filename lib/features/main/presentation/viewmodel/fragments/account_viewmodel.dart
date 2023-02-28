@@ -32,7 +32,7 @@ class AccountViewmodel extends ChangeNotifier {
     this._clearUserUseCase,
     // this._userPreferencesServices,
   ) {
-    fetch();
+    // fetch();
   }
 
   StateEnum _state = StateEnum.idle;

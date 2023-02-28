@@ -15,7 +15,7 @@ class TreatmentsViewmodel extends ChangeNotifier {
   TreatmentsViewmodel(
     this._getTreatmentsUseCase,
   ) {
-    fetch();
+    // fetch();
   }
 
   StateEnum _state = StateEnum.idle;

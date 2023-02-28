@@ -7,9 +7,25 @@ import 'package:flutter/material.dart';
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
 import '../../domain/entities/enzyme_entity.dart';
+import 'fragments/account_viewmodel.dart';
+import 'fragments/enzymes_viewmodel.dart';
+import 'fragments/experiments_viewmodel.dart';
+import 'fragments/treatments_viewmodel.dart';
 
 class SplashViewmodel extends ChangeNotifier {
-  SplashViewmodel();
+  final ExperimentsViewmodel experimentsViewmodel;
+  final EnzymesViewmodel enzymesViewmodel;
+  final TreatmentsViewmodel treatmentsViewmodel;
+  final AccountViewmodel accountViewmodel;
+  
+  SplashViewmodel(
+    this.experimentsViewmodel,
+    this.enzymesViewmodel,
+    this.treatmentsViewmodel,
+    this.accountViewmodel,
+  ){
+    fetch();
+  }
 
   StateEnum _state = StateEnum.idle;
   StateEnum get state => _state;
@@ -31,50 +47,64 @@ class SplashViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<EnzymeEntity>? _cachedEnzymes;
-
-  /* onChanged(String value) {
-    List<MovieDetailsEntity> list = _cachedMovies!.listMovies
-        .where(
-          (e) => e.toString().toLowerCase().contains((value.toLowerCase())),
-        )
-        .toList();
-    movies.value = movies.value!.copyWith(listMovies: list);
-  } */
-
   fetch() async {
-    // try {
-    /* var result = await _getEnzymesUseCase();
+    setStateEnum(StateEnum.loading);
+    await experimentsViewmodel.fetch();
+    await enzymesViewmodel.fetch();
+    await treatmentsViewmodel.fetch();
+    await accountViewmodel.fetch();
 
-    result.fold(
+    if (experimentsViewmodel.state == StateEnum.error) {
+      _setFailure(experimentsViewmodel.failure);
+      setStateEnum(StateEnum.error);
+    } else if (enzymesViewmodel.state == StateEnum.error) {
+      _setFailure(enzymesViewmodel.failure);
+      setStateEnum(StateEnum.error);
+    } else if (treatmentsViewmodel.state == StateEnum.error) {
+      _setFailure(treatmentsViewmodel.failure);
+      setStateEnum(StateEnum.error);
+    } else if (accountViewmodel.state == StateEnum.error) {
+      _setFailure(accountViewmodel.failure);
+      setStateEnum(StateEnum.error);
+    }
+
+    setStateEnum(StateEnum.success);
+
+    /* resultExperiments.fold(
       (error) {
-        print('-> SETOU DENTRO');
         _setFailure(error);
         setStateEnum(StateEnum.error);
-        // throw error;
+      },
+      (success) {
+        setExperiments(success);
+        setStateEnum(StateEnum.success);
+      },
+    ); */
+
+    /* var resultEnzymes = await _getEnzymesUseCase();
+
+    resultEnzymes.fold(
+      (error) {
+        _setFailure(error);
+        setStateEnum(StateEnum.error);
       },
       (success) {
         setEnzymes(success);
         setStateEnum(StateEnum.success);
       },
+    );
+
+    var resultTreatments = await _getTreatmentsUseCase();
+
+    resultTreatments.fold(
+      (error) {
+        _setFailure(error);
+        setStateEnum(StateEnum.error);
+      },
+      (success) {
+        setTreatments(success);
+        setStateEnum(StateEnum.success);
+      },
     ); */
-
-    // } catch (e) {
-    //   print('-> SETOU FORA');
-
-    //   _setFailure(e as Failure);
-    //   setStateEnum(StateEnum.error);
-    // }
-
-    // print('chamou');
-    // var result = await _getEnzymesUseCase();
-    // print('result > $result');
-
-    // result.fold(
-    //   (error) => debugPrint(error.toString()),
-    //   (success) => setEnzymes(success),
-    // );
-
-    // _cachedEnzymes = enzymes;
   }
 }

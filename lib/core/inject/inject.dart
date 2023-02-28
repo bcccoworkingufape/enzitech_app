@@ -64,10 +64,12 @@ import '../../features/main/presentation/viewmodel/fragments/experiments_viewmod
 import '../../features/main/presentation/viewmodel/fragments/treatments_viewmodel.dart';
 import '../../features/main/presentation/viewmodel/home_viewmodel.dart';
 import '../../features/main/presentation/viewmodel/splash_viewmodel.dart';
+import '../data/service/connection_checker/connection_checker_imp.dart';
 import '../data/service/http/http_service_imp.dart';
 import '../data/service/key_value/key_value_service_imp.dart';
 import '../data/service/user_preferences/user_preferences_service_imp.dart';
 import '../domain/entities/http_driver_options.dart';
+import '../domain/service/connection_checker/connection_checker.dart';
 import '../domain/service/http/http_service.dart';
 import '../domain/service/key_value/key_value_service.dart';
 import '../domain/service/user_preferences/user_preferences_service.dart';
@@ -86,6 +88,9 @@ class Inject {
     );
     getIt.registerLazySingleton<UserPreferencesServices>(
       () => UserPreferencesServicesImp(getIt()),
+    );
+    getIt.registerLazySingleton<ConnectionChecker>(
+      () => ConnectionCheckerImp(),
     );
 
     //* DataSources
@@ -191,7 +196,7 @@ class Inject {
       () => LoginViewmodel(getIt()),
     );
     getIt.registerFactory<SplashViewmodel>(
-      () => SplashViewmodel(),
+      () => SplashViewmodel(getIt(), getIt(), getIt(), getIt()),
     );
     getIt.registerLazySingleton<HomeViewmodel>(
       () => HomeViewmodel(getIt(), getIt(), getIt(), getIt()),

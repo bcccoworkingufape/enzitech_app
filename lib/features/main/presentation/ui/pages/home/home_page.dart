@@ -1,7 +1,7 @@
 // 🎯 Dart imports:
+import 'dart:async';
 import 'dart:math' as math;
 
-// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 // 📦 Package imports:
@@ -10,10 +10,12 @@ import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 // 🌎 Project imports:
+import '../../../../../../core/domain/service/connection_checker/connection_checker.dart';
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../core/routing/routing.dart';
 import '../../../../../../shared/ui/ui.dart';
+import '../../../../../../shared/ui/widgets/ezt_blink.dart';
 import '../../../viewmodel/fragments/account_viewmodel.dart';
 import '../../../viewmodel/fragments/enzymes_viewmodel.dart';
 import '../../../viewmodel/fragments/experiments_viewmodel.dart';
@@ -39,8 +41,9 @@ class _HomePageState extends State<HomePage>
   late final EnzymesViewmodel _enzymesViewmodel;
   late final ExperimentsViewmodel _experimentsViewmodel;
   late final TreatmentsViewmodel _treatmentsViewmodel;
+  late final ConnectionChecker _connectionChecker;
 
-  late final AnimationController animationController = AnimationController(
+  late final AnimationController animationControllerLogo = AnimationController(
     vsync: this,
     duration: const Duration(seconds: 2),
   )..repeat();
@@ -51,6 +54,8 @@ class _HomePageState extends State<HomePage>
   var _isVisibleTreatmentButton; // ignore: prefer_typing_uninitialized_variables
   var _isVisibleEnzymeButton; // ignore: prefer_typing_uninitialized_variables
 
+  late StreamSubscription _connectivitySubscription;
+
   @override
   void initState() {
     super.initState();
@@ -59,6 +64,30 @@ class _HomePageState extends State<HomePage>
     _enzymesViewmodel = GetIt.I.get<EnzymesViewmodel>();
     _experimentsViewmodel = GetIt.I.get<ExperimentsViewmodel>();
     _treatmentsViewmodel = GetIt.I.get<TreatmentsViewmodel>();
+    _connectionChecker = GetIt.I.get<ConnectionChecker>();
+
+    _connectionChecker.initialize();
+
+    //Listen for connection change
+    _connectivitySubscription =
+        _connectionChecker.connectionChange.listen((event) {
+      _homeViewmodel.setHasInternetConnection(event);
+
+      if (!_homeViewmodel.hasInternetConnection) {
+        EZTSnackBar.clear(context);
+        noInternet(context);
+      } else {
+        if (_homeViewmodel.notifyInternetConnection) {
+          EZTSnackBar.clear(context);
+          EZTSnackBar.show(
+            context,
+            "✓ Conexão reestabelecida",
+            centerTitle: true,
+            eztSnackBarType: EZTSnackBarType.success,
+          );
+        }
+      }
+    });
 
     if (mounted) {
       setAllButtonsVisible();
@@ -160,7 +189,8 @@ class _HomePageState extends State<HomePage>
 
   @override
   dispose() {
-    animationController.dispose();
+    _connectivitySubscription.cancel();
+    animationControllerLogo.dispose();
     super.dispose();
   }
 
@@ -182,6 +212,30 @@ class _HomePageState extends State<HomePage>
       AccountPage(),
     ];
   }
+
+  // Widget errmsg(String text, bool show) {
+  //   //error message widget.
+  //   if (show == true) {
+  //     //if error is true then show error message box
+  //     return Container(
+  //       padding: EdgeInsets.all(10.00),
+  //       margin: EdgeInsets.only(bottom: 10.00),
+  //       color: Colors.red,
+  //       child: Row(children: [
+  //         Container(
+  //           margin: EdgeInsets.only(right: 6.00),
+  //           child: Icon(Icons.info, color: Colors.white),
+  //         ), // icon for error message
+
+  //         Text(text, style: TextStyle(color: Colors.white)),
+  //         //show error message text
+  //       ]),
+  //     );
+  //   } else {
+  //     return Container();
+  //     //if error is false, return empty container.
+  //   }
+  // }
 
   Widget? get dealWithFloatingActionButton {
     if (_homeViewmodel.fragmentIndex == 0 && _isVisibleExperimentButton) {
@@ -252,105 +306,152 @@ class _HomePageState extends State<HomePage>
     return null;
   }
 
+  static noInternet(context) {
+    return EZTSnackBar.show(
+      context,
+      "⚠ Sem conexão com a internet: Você está visualizando informações previamente carregadas e sem atualizações!\n\nPara atualizar, conecte-se a uma rede com conexão à internet.",
+      eztSnackBarType: EZTSnackBarType.error,
+      duration: const Duration(seconds: 10),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffold,
-      appBar: AppBar(
-        title: SvgPicture.asset(
-          AppSvgs.logo,
-          fit: BoxFit.contain,
-          alignment: Alignment.center,
-        ),
-      ),
-      body: AnimatedBuilder(
-        animation: _homeViewmodel,
-        builder: (context, child) {
-          if (_homeViewmodel.state == StateEnum.loading) {
-            return Center(
-              child: AnimatedBuilder(
-                animation: animationController,
-                builder: (_, child) {
-                  return Transform.rotate(
-                    angle: animationController.value * 2 * math.pi,
-                    child: child,
-                  );
-                },
-                child: SvgPicture.asset(
-                  AppSvgs.iconLogo,
-                  alignment: Alignment.center,
-                  width: 75,
-                ),
-              ),
-            );
-          }
+    return AnimatedBuilder(
+      animation: _homeViewmodel,
+      builder: (context, child) {
+        return Scaffold(
+          key: _scaffold,
+          appBar: AppBar(
+            title: SvgPicture.asset(
+              AppSvgs.logo,
+              fit: BoxFit.contain,
+              alignment: Alignment.center,
+            ),
+            actions: [
+              !_homeViewmodel.hasInternetConnection
+                  ? Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: GestureDetector(
+                        onTap: () => noInternet(context),
+                        child: const EZTBlink(
+                          interval: 750,
+                          children: <Widget>[
+                            Icon(
+                              PhosphorIcons.wifiSlash,
+                              color: Colors.white,
+                            ),
+                            // Icon(
+                            //   PhosphorIcons.wifiSlash,
+                            //   color: Colors.red[200],
+                            // ),
+                            Icon(
+                              PhosphorIcons.wifiSlashBold,
+                              color: Colors.red,
+                            ),
+                            // Icon(
+                            //   PhosphorIcons.wifiSlash,
+                            //   color: Colors.red[900],
+                            // ),
+                          ],
+                        ),
+                      ),
+                    )
+                  : Container(),
+            ],
+          ),
+          body: AnimatedBuilder(
+            animation: _homeViewmodel,
+            builder: (context, child) {
+              if (_homeViewmodel.state == StateEnum.loading) {
+                return Center(
+                  child: AnimatedBuilder(
+                    animation: animationControllerLogo,
+                    builder: (_, child) {
+                      return Transform.rotate(
+                        angle: animationControllerLogo.value * 2 * math.pi,
+                        child: child,
+                      );
+                    },
+                    child: SvgPicture.asset(
+                      AppSvgs.iconLogo,
+                      alignment: Alignment.center,
+                      width: 75,
+                    ),
+                  ),
+                );
+              }
 
-          return _fragments[_homeViewmodel.fragmentIndex];
-        },
-      ),
-      floatingActionButton: dealWithFloatingActionButton,
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.shifting,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(PhosphorIcons.flask),
-            label: 'Experimentos',
-            backgroundColor: AppColors.primary,
+              return _fragments[_homeViewmodel.fragmentIndex];
+            },
           ),
-          BottomNavigationBarItem(
-            icon: Icon(PhosphorIcons.testTube),
-            label: 'Tratamentos',
+          floatingActionButton: dealWithFloatingActionButton,
+          bottomNavigationBar: BottomNavigationBar(
+            type: BottomNavigationBarType.shifting,
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(PhosphorIcons.flask),
+                label: 'Experimentos',
+                backgroundColor: AppColors.primary,
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(PhosphorIcons.testTube),
+                label: 'Tratamentos',
+                backgroundColor: AppColors.primary,
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(PhosphorIcons.atom),
+                label: 'Enzimas',
+                backgroundColor: AppColors.primary,
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(PhosphorIcons.userCircleGear),
+                label: 'Conta',
+                backgroundColor: AppColors.primary,
+              ),
+            ],
+            currentIndex: _homeViewmodel.fragmentIndex,
+            selectedItemColor: AppColors.white,
+            unselectedItemColor: Colors.white70,
             backgroundColor: AppColors.primary,
+            onTap: (index) {
+              setAllButtonsVisible();
+              int beforeSet = _homeViewmodel.fragmentIndex;
+              _homeViewmodel.setFragmentIndex(index);
+              if (index == 0 &&
+                  beforeSet == 0 &&
+                  _experimentsViewmodel.scrollController.hasClients) {
+                _experimentsViewmodel.scrollController.animateTo(
+                  _experimentsViewmodel
+                          .scrollController.position.minScrollExtent +
+                      (kBottomNavigationBarHeight / 10000),
+                  duration: const Duration(milliseconds: 1500),
+                  curve: Curves.fastOutSlowIn,
+                );
+              } else if (index == 1 &&
+                  beforeSet == 1 &&
+                  _treatmentsViewmodel.scrollController.hasClients) {
+                _treatmentsViewmodel.scrollController.animateTo(
+                  _treatmentsViewmodel
+                          .scrollController.position.minScrollExtent +
+                      (kBottomNavigationBarHeight / 10000),
+                  duration: const Duration(milliseconds: 1500),
+                  curve: Curves.fastOutSlowIn,
+                );
+              } else if (index == 2 &&
+                  beforeSet == 2 &&
+                  _enzymesViewmodel.scrollController.hasClients) {
+                _enzymesViewmodel.scrollController.animateTo(
+                  _enzymesViewmodel.scrollController.position.minScrollExtent +
+                      (kBottomNavigationBarHeight / 10000),
+                  duration: const Duration(milliseconds: 1500),
+                  curve: Curves.fastOutSlowIn,
+                );
+              }
+            },
           ),
-          BottomNavigationBarItem(
-            icon: Icon(PhosphorIcons.atom),
-            label: 'Enzimas',
-            backgroundColor: AppColors.primary,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(PhosphorIcons.userCircleGear),
-            label: 'Conta',
-            backgroundColor: AppColors.primary,
-          ),
-        ],
-        currentIndex: _homeViewmodel.fragmentIndex,
-        selectedItemColor: AppColors.white,
-        unselectedItemColor: Colors.white70,
-        backgroundColor: AppColors.primary,
-        onTap: (index) {
-          setAllButtonsVisible();
-          int beforeSet = _homeViewmodel.fragmentIndex;
-          _homeViewmodel.setFragmentIndex(index);
-          if (index == 0 &&
-              beforeSet == 0 &&
-              _experimentsViewmodel.scrollController.hasClients) {
-            _experimentsViewmodel.scrollController.animateTo(
-              _experimentsViewmodel.scrollController.position.minScrollExtent +
-                  (kBottomNavigationBarHeight / 10000),
-              duration: const Duration(milliseconds: 1500),
-              curve: Curves.fastOutSlowIn,
-            );
-          } else if (index == 1 &&
-              beforeSet == 1 &&
-              _treatmentsViewmodel.scrollController.hasClients) {
-            _treatmentsViewmodel.scrollController.animateTo(
-              _treatmentsViewmodel.scrollController.position.minScrollExtent +
-                  (kBottomNavigationBarHeight / 10000),
-              duration: const Duration(milliseconds: 1500),
-              curve: Curves.fastOutSlowIn,
-            );
-          } else if (index == 2 &&
-              beforeSet == 2 &&
-              _enzymesViewmodel.scrollController.hasClients) {
-            _enzymesViewmodel.scrollController.animateTo(
-              _enzymesViewmodel.scrollController.position.minScrollExtent +
-                  (kBottomNavigationBarHeight / 10000),
-              duration: const Duration(milliseconds: 1500),
-              curve: Curves.fastOutSlowIn,
-            );
-          }
-        },
-      ),
+        );
+      },
     );
   }
 }

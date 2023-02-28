@@ -1,6 +1,5 @@
 // 🎯 Dart imports:
 import 'dart:convert';
-import 'dart:developer';
 
 // 📦 Package imports:
 import 'package:dartz/dartz.dart';
@@ -22,7 +21,6 @@ class GetEnzymesDataSourceDecoratorImp extends GetEnzymesDataSourceDecorator {
 
   @override
   Future<Either<Failure, List<EnzymeEntity>>> call() async {
-    print('-> entrou dso Decorator');
     return (await super()).fold(
       (error) async => error is ExpiredTokenOrWrongUserFailure
           ? Left(error)
@@ -40,25 +38,19 @@ class GetEnzymesDataSourceDecoratorImp extends GetEnzymesDataSourceDecorator {
     ).toString();
 
     _keyValueService.setString('enzymes_cache', json);
-    log('-> Enzymes saved on cache');
   }
 
   Future<Either<Failure, List<EnzymeEntity>>> _getInCache() async {
     try {
-      log('-> Enzymes get on cache');
-
       var enzymesJsonString = await _keyValueService.getString('enzymes_cache');
 
       if (enzymesJsonString == null) {
-        log('-> Enzymes recover exception');
-
         throw NoResultQueryFailure(message: "a listagem de enzimas");
       }
 
       var json = jsonDecode(enzymesJsonString);
       var enzymes = (json as List).map((e) => EnzymeDto.fromJson(e)).toList();
 
-      log('-> Enzymes recovered from cache: ${enzymes.toString()}');
       return Right(enzymes);
     } catch (e) {
       return Left(e as Failure);

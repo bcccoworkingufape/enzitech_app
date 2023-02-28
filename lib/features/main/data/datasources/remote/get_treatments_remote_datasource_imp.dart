@@ -1,6 +1,4 @@
 // 🎯 Dart imports:
-import 'dart:developer';
-
 // 📦 Package imports:
 import 'package:dartz/dartz.dart';
 
@@ -25,7 +23,6 @@ class GetTreatmentsRemoteDataSourceImp implements GetTreatmentsDataSource {
             (e) => TreatmentDto.fromJson(e),
           )
           .toList();
-      log(result.toString());
       return Right(result);
     } catch (e) {
       return Left(e as Failure);

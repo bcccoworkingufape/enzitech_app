@@ -1,6 +1,5 @@
 // 🎯 Dart imports:
 import 'dart:convert';
-import 'dart:developer';
 
 // 📦 Package imports:
 import 'package:dartz/dartz.dart';
@@ -24,7 +23,6 @@ class GetUserLocalDataSourceImp extends GetUserDataSource {
         throw NoResultQueryFailure(message: "os dados do usuário");
       } else {
         var result = UserDto.fromJson(jsonDecode(response));
-        log(result.toString());
         return Right(result);
       }
     } catch (e) {

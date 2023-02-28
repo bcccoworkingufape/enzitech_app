@@ -47,7 +47,6 @@ class LoginPageState extends State<LoginPage> {
             eztSnackBarType: EZTSnackBarType.error,
           );
         } else if (_loginViewmodel.state == StateEnum.success && mounted) {
-          print('VAI PRA HOME SAINDO DO LOGIN');
           GetIt.I.get<HomeViewmodel>().fetch().then((value) {
             EZTSnackBar.show(
               context,

@@ -1,6 +1,4 @@
 // 🎯 Dart imports:
-import 'dart:developer';
-
 // 📦 Package imports:
 import 'package:dartz/dartz.dart';
 
@@ -18,7 +16,6 @@ class GetEnzymesRemoteDataSourceImp implements GetEnzymesDataSource {
 
   @override
   Future<Either<Failure, List<EnzymeEntity>>> call() async {
-    print('-> entrou dso imp');
     try {
       var response = await _httpService.get(API.REQUEST_ENZYMES);
       var result = (response.data as List)
@@ -26,7 +23,6 @@ class GetEnzymesRemoteDataSourceImp implements GetEnzymesDataSource {
             (e) => EnzymeDto.fromJson(e),
           )
           .toList();
-      log(result.toString());
       return Right(result);
     } catch (e) {
       return Left(e as Failure);

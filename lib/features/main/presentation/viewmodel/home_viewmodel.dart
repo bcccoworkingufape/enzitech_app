@@ -24,7 +24,7 @@ class HomeViewmodel extends ChangeNotifier {
     this.treatmentsViewmodel,
     this.accountViewmodel,
   ) {
-    fetch();
+    // fetch();
   }
 
   StateEnum _state = StateEnum.idle;
@@ -47,30 +47,17 @@ class HomeViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  /* List<EnzymeEntity>? _enzymes;
-  List<EnzymeEntity>? get enzymes => _enzymes;
-  void setEnzymes(List<EnzymeEntity>? enzymes) {
-    _enzymes = enzymes;
+  bool _hasInternetConnection = true;
+  bool get hasInternetConnection => _hasInternetConnection;
+  bool previousHasInternetConnection = true;
+  bool get notifyInternetConnection =>
+      previousHasInternetConnection != _hasInternetConnection;
+
+  void setHasInternetConnection(bool flag) {
+    previousHasInternetConnection = _hasInternetConnection;
+    _hasInternetConnection = flag;
     notifyListeners();
   }
- */
-  // List<EnzymeEntity>? _cachedEnzymes;
-
-  /* List<TreatmentEntity>? _treatments;
-  List<TreatmentEntity>? get treatments => _treatments;
-  void setTreatments(List<TreatmentEntity>? treatments) {
-    _treatments = treatments;
-    notifyListeners();
-  } */
-
-  /* onChanged(String value) {
-    List<MovieDetailsEntity> list = _cachedMovies!.listMovies
-        .where(
-          (e) => e.toString().toLowerCase().contains((value.toLowerCase())),
-        )
-        .toList();
-    movies.value = movies.value!.copyWith(listMovies: list);
-  } */
 
   fetch() async {
     setStateEnum(StateEnum.loading);

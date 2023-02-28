@@ -1,6 +1,5 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-
 // 📦 Package imports:
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -11,7 +10,6 @@ import 'core/data/service/user_preferences/user_preferences_service_imp.dart';
 import 'core/domain/entities/http_driver_options.dart';
 import 'core/inject/inject.dart';
 import 'core/routing/routing.dart';
-import 'features/main/presentation/viewmodel/splash_viewmodel.dart';
 import 'shared/ui/ui.dart';
 import 'shared/utils/utils.dart';
 
@@ -43,12 +41,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late final SplashViewmodel _splashViewmodel;
+  // late final SplashViewmodel _splashViewmodel;
 
   @override
   void initState() {
     super.initState();
-    _splashViewmodel = getIt.get<SplashViewmodel>();
+    // _splashViewmodel = getIt.get<SplashViewmodel>();
     // _splashViewmodel.fetch();
   }
 
@@ -63,7 +61,7 @@ class _MyAppState extends State<MyApp> {
       },
       child: MaterialApp(
         title: 'Enzitech',
-        // theme: ThemeData.dark(),
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           appBarTheme: const AppBarTheme(
             iconTheme: IconThemeData(

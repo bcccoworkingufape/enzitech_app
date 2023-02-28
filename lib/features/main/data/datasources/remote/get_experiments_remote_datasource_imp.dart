@@ -1,6 +1,4 @@
 // 🎯 Dart imports:
-import 'dart:developer';
-
 // 📦 Package imports:
 import 'package:dartz/dartz.dart';
 
@@ -8,9 +6,7 @@ import 'package:dartz/dartz.dart';
 import '../../../../../core/domain/service/http/http_service.dart';
 import '../../../../../core/failures/failure.dart';
 import '../../../../../shared/utils/api.dart';
-import '../../../domain/entities/experiment_entity.dart';
 import '../../../domain/entities/experiment_pagination_entity.dart';
-import '../../dto/experiment_dto.dart';
 import '../../dto/experiment_pagination_dto.dart';
 import '../get_experiments_datasource.dart';
 
@@ -36,12 +32,7 @@ class GetExperimentsRemoteDataSourceImp implements GetExperimentsDataSource {
           '${API.REQUEST_EXPERIMENTS}?page=$page$addOrderBy$addOrdering$addLimit$addFinished');
 
       var result = ExperimentPaginationDto.fromJson(response.data);
-      /* var result = (response.data as List)
-        .map(
-          (e) => ExperimentDto.fromJson(e),
-        )
-        .toList(); */
-      log(result.toString());
+
       return Right(result);
     } catch (e) {
       return Left(e as Failure);

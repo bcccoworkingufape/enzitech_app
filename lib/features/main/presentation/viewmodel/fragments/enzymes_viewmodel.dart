@@ -15,7 +15,7 @@ class EnzymesViewmodel extends ChangeNotifier {
   EnzymesViewmodel(
     this._getEnzymesUseCase,
   ) {
-    fetch();
+    // fetch();
   }
 
   StateEnum _state = StateEnum.idle;
@@ -41,7 +41,7 @@ class EnzymesViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetch({int pagination = 1}) async {
+  Future<void> fetch() async {
     setStateEnum(StateEnum.loading);
 
     var result = await _getEnzymesUseCase();
