@@ -1,6 +1,7 @@
 // 📦 Package imports:
 import 'package:dartz/dartz.dart';
 
+// 🌎 Project imports:
 import '../../../../../core/failures/failure.dart';
 import '../../../../authentication/domain/entities/user_entity.dart';
 import '../../repositories/get_user_repository.dart';

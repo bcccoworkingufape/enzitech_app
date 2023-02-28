@@ -1,4 +1,4 @@
-// 📦 Package imports:
+// 🌎 Project imports:
 import '../../repositories/clear_user_repository.dart';
 import 'clear_user_usecase.dart';
 

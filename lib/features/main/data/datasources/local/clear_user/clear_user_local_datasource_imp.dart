@@ -1,4 +1,4 @@
-// 🎯 Dart imports:
+// 🌎 Project imports:
 import '../../../../../../core/domain/service/user_preferences/user_preferences_service.dart';
 import '../../clear_user_datasource.dart';
 

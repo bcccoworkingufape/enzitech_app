@@ -1,8 +1,11 @@
+// 🎯 Dart imports:
 import 'dart:async';
 
+// 📦 Package imports:
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
+// 🌎 Project imports:
 import '../../../domain/service/connection_checker/connection_checker.dart';
 
 class ConnectionCheckerImp implements ConnectionChecker {

@@ -1,18 +1,15 @@
 // 🐦 Flutter imports:
-import 'package:enzitech_app/features/main/presentation/viewmodel/fragments/enzymes_viewmodel.dart';
-import 'package:enzitech_app/features/main/presentation/viewmodel/fragments/experiments_viewmodel.dart';
-import 'package:enzitech_app/features/main/presentation/viewmodel/fragments/treatments_viewmodel.dart';
 import 'package:flutter/material.dart';
 
-// 🌎 Project imports:
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
 import 'fragments/account_viewmodel.dart';
+// 🌎 Project imports:
+import 'fragments/enzymes_viewmodel.dart';
+import 'fragments/experiments_viewmodel.dart';
+import 'fragments/treatments_viewmodel.dart';
 
 class HomeViewmodel extends ChangeNotifier {
-  // final GetEnzymesUseCase _getEnzymesUseCase;
-  // final GetExperimentsUseCase _getExperimentsUseCase;
-  // final GetTreatmentsUseCase _getTreatmentsUseCase;
   final ExperimentsViewmodel experimentsViewmodel;
   final EnzymesViewmodel enzymesViewmodel;
   final TreatmentsViewmodel treatmentsViewmodel;
@@ -81,42 +78,5 @@ class HomeViewmodel extends ChangeNotifier {
     }
 
     setStateEnum(StateEnum.success);
-
-    /* resultExperiments.fold(
-      (error) {
-        _setFailure(error);
-        setStateEnum(StateEnum.error);
-      },
-      (success) {
-        setExperiments(success);
-        setStateEnum(StateEnum.success);
-      },
-    ); */
-
-    /* var resultEnzymes = await _getEnzymesUseCase();
-
-    resultEnzymes.fold(
-      (error) {
-        _setFailure(error);
-        setStateEnum(StateEnum.error);
-      },
-      (success) {
-        setEnzymes(success);
-        setStateEnum(StateEnum.success);
-      },
-    );
-
-    var resultTreatments = await _getTreatmentsUseCase();
-
-    resultTreatments.fold(
-      (error) {
-        _setFailure(error);
-        setStateEnum(StateEnum.error);
-      },
-      (success) {
-        setTreatments(success);
-        setStateEnum(StateEnum.success);
-      },
-    ); */
   }
 }
