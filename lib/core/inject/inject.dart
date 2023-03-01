@@ -17,6 +17,7 @@ import '../../features/authentication/domain/usecases/login/login_usecase_imp.da
 import '../../features/authentication/presentation/viewmodel/create_account_viewmodel.dart';
 import '../../features/authentication/presentation/viewmodel/login_viewmodel.dart';
 import '../../features/main/data/datasources/clear_user_datasource.dart';
+import '../../features/main/data/datasources/delete_enzyme_datasource.dart';
 import '../../features/main/data/datasources/delete_experiment_datasource.dart';
 import '../../features/main/data/datasources/delete_treatment_datasource.dart';
 import '../../features/main/data/datasources/get_enzymes_datasource.dart';
@@ -31,6 +32,7 @@ import '../../features/main/data/datasources/local/get_experiments/get_experimen
 import '../../features/main/data/datasources/local/get_treatments/get_treatments_local_datasource_decorator_imp.dart';
 import '../../features/main/data/datasources/local/get_user/get_user_local_datasource_imp.dart';
 import '../../features/main/data/datasources/local/save_exclude_confirmation/save_exclude_confirmation_local_datasource_imp.dart';
+import '../../features/main/data/datasources/remote/delete_enzyme_remote_datasource_imp.dart';
 import '../../features/main/data/datasources/remote/delete_experiment_remote_datasource_imp.dart';
 import '../../features/main/data/datasources/remote/delete_treatment_remote_datasource_imp.dart';
 import '../../features/main/data/datasources/remote/get_enzymes_remote_datasource_imp.dart';
@@ -38,6 +40,7 @@ import '../../features/main/data/datasources/remote/get_experiments_remote_datas
 import '../../features/main/data/datasources/remote/get_treatments_remote_datasource_imp.dart';
 import '../../features/main/data/datasources/save_exclude_confirmation_datasource.dart';
 import '../../features/main/data/repositories/clear_user_repository_imp.dart';
+import '../../features/main/data/repositories/delete_enzyme_repository_imp.dart';
 import '../../features/main/data/repositories/delete_experiment_repository_imp.dart';
 import '../../features/main/data/repositories/delete_treatment_repository_imp.dart';
 import '../../features/main/data/repositories/get_enzymes_repository_imp.dart';
@@ -48,6 +51,7 @@ import '../../features/main/data/repositories/get_user_repository_imp.dart';
 import '../../features/main/data/repositories/save_exclude_confirmation_repository_imp.dart';
 import '../../features/main/data/repositories/store_experiments_in_cache_repository_imp.dart';
 import '../../features/main/domain/repositories/clear_user_repository.dart';
+import '../../features/main/domain/repositories/delete_enzyme_repository.dart';
 import '../../features/main/domain/repositories/delete_experiment_repository.dart';
 import '../../features/main/domain/repositories/delete_treatment_repository.dart';
 import '../../features/main/domain/repositories/get_enzymes_repository.dart';
@@ -59,10 +63,12 @@ import '../../features/main/domain/repositories/save_exclude_confirmation_reposi
 import '../../features/main/domain/repositories/store_experiments_in_cache_repository.dart';
 import '../../features/main/domain/usecases/clear_user/clear_user_usecase.dart';
 import '../../features/main/domain/usecases/clear_user/clear_user_usecase_imp.dart';
-import '../../features/main/domain/usecases/delete_experiment copy/delete_treatment_usecase.dart';
-import '../../features/main/domain/usecases/delete_experiment copy/delete_treatment_usecase_imp.dart';
+import '../../features/main/domain/usecases/delete_enzyme/delete_enzyme_usecase.dart';
+import '../../features/main/domain/usecases/delete_enzyme/delete_enzyme_usecase_imp.dart';
 import '../../features/main/domain/usecases/delete_experiment/delete_experiment_usecase.dart';
 import '../../features/main/domain/usecases/delete_experiment/delete_experiment_usecase_imp.dart';
+import '../../features/main/domain/usecases/delete_treatment/delete_treatment_usecase.dart';
+import '../../features/main/domain/usecases/delete_treatment/delete_treatment_usecase_imp.dart';
 import '../../features/main/domain/usecases/get_enzymes/get_enzymes_usecase.dart';
 import '../../features/main/domain/usecases/get_enzymes/get_enzymes_usecase_imp.dart';
 import '../../features/main/domain/usecases/get_exclude_confirmation/get_exclude_confirmation_usecase.dart';
@@ -113,6 +119,9 @@ class Inject {
     );
 
     //-> DataSources
+    getIt.registerLazySingleton<DeleteEnzymeDataSource>(
+      () => DeleteEnzymeRemoteDataSourceImp(getIt()),
+    );
     getIt.registerLazySingleton<DeleteTreatmentDataSource>(
       () => DeleteTreatmentRemoteDataSourceImp(getIt()),
     );
@@ -161,6 +170,9 @@ class Inject {
     );
 
     //-> Repositories
+    getIt.registerLazySingleton<DeleteEnzymeRepository>(
+      () => DeleteEnzymeRepositoryImp(getIt()),
+    );
     getIt.registerLazySingleton<DeleteTreatmentRepository>(
       () => DeleteTreatmentRepositoryImp(getIt()),
     );
@@ -200,6 +212,9 @@ class Inject {
     );
 
     //-> UseCases
+    getIt.registerLazySingleton<DeleteEnzymeUseCase>(
+      () => DeleteEnzymeUseCaseImp(getIt()),
+    );
     getIt.registerLazySingleton<DeleteTreatmentUseCase>(
       () => DeleteTreatmentUseCaseImp(getIt()),
     );
@@ -257,7 +272,7 @@ class Inject {
       () => TreatmentsViewmodel(getIt(), getIt()),
     );
     getIt.registerLazySingleton<EnzymesViewmodel>(
-      () => EnzymesViewmodel(getIt()),
+      () => EnzymesViewmodel(getIt(), getIt()),
     );
     getIt.registerLazySingleton<AccountViewmodel>(
       () => AccountViewmodel(getIt(), getIt(), getIt(), getIt()),

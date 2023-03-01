@@ -12,7 +12,7 @@ class CreateAccountUseCaseImp implements CreateAccountUseCase {
   CreateAccountUseCaseImp(this._createAccountRepository);
 
   @override
-  Future<Either<Failure, bool>> call({
+  Future<Either<Failure, Unit>> call({
     required String name,
     required String email,
     required String password,

@@ -7,16 +7,17 @@ import 'package:flutter/material.dart';
 import '../../../../../core/enums/enums.dart';
 import '../../../../../core/failures/failures.dart';
 import '../../../domain/entities/enzyme_entity.dart';
+import '../../../domain/usecases/delete_enzyme/delete_enzyme_usecase.dart';
 import '../../../domain/usecases/get_enzymes/get_enzymes_usecase.dart';
 
 class EnzymesViewmodel extends ChangeNotifier {
   final GetEnzymesUseCase _getEnzymesUseCase;
+  final DeleteEnzymeUseCase _deleteEnzymeUseCase;
 
   EnzymesViewmodel(
     this._getEnzymesUseCase,
-  ) {
-    // fetch();
-  }
+    this._deleteEnzymeUseCase,
+  );
 
   StateEnum _state = StateEnum.idle;
   StateEnum get state => _state;
@@ -59,14 +60,14 @@ class EnzymesViewmodel extends ChangeNotifier {
   }
 
   Future<void> deleteEnzyme(String id) async {
-    setStateEnum(StateEnum.loading);
+    var result = await _deleteEnzymeUseCase(id);
 
-    try {
-      // await enzymesController.deleteEnzyme(id);
-      setStateEnum(StateEnum.success);
-    } catch (e) {
-      _setFailure(e as Failure);
-      setStateEnum(StateEnum.error);
-    }
+    result.fold(
+      (error) {
+        _setFailure(error);
+        setStateEnum(StateEnum.error);
+      },
+      (success) async {},
+    );
   }
 }

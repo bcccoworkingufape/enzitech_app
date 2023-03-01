@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import '../../../../../core/enums/enums.dart';
 import '../../../../../core/failures/failures.dart';
 import '../../../domain/entities/treatment_entity.dart';
-import '../../../domain/usecases/delete_experiment copy/delete_treatment_usecase.dart';
+import '../../../domain/usecases/delete_treatment/delete_treatment_usecase.dart';
 import '../../../domain/usecases/get_treatments/get_treatments_usecase.dart';
 
 class TreatmentsViewmodel extends ChangeNotifier {

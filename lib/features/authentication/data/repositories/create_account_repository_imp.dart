@@ -12,7 +12,7 @@ class CreateAccountRepositoryImp implements CreateAccountRepository {
   CreateAccountRepositoryImp(this._createAccountDataSource);
 
   @override
-  Future<Either<Failure, bool>> call({
+  Future<Either<Failure, Unit>> call({
     required String name,
     required String email,
     required String password,

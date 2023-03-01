@@ -275,10 +275,9 @@ class _AccountPageState extends State<AccountPage> {
                                   style: TextStyle(color: AppColors.danger),
                                 ),
                                 onPressed: (_) {
+                                  _homeViewmodel.experimentsViewmodel
+                                      .clearFilters();
                                   _accountViewmodel.logout();
-                                  GetIt.I
-                                      .get<HomeViewmodel>()
-                                      .setFragmentIndex(0);
                                 },
                               ),
                             ],
