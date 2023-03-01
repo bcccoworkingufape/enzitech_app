@@ -7,11 +7,11 @@ import 'package:flutter/material.dart';
 import '../../../../core/domain/service/user_preferences/user_preferences_service.dart';
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
-import '../../domain/entities/enzyme_entity.dart';
-import 'fragments/account_viewmodel.dart';
-import 'fragments/enzymes_viewmodel.dart';
-import 'fragments/experiments_viewmodel.dart';
-import 'fragments/treatments_viewmodel.dart';
+import '../../../enzyme/domain/entities/enzyme_entity.dart';
+import 'account_viewmodel.dart';
+import '../../../enzyme/presentation/viewmodel/enzymes_viewmodel.dart';
+import '../../../experiment/presentation/viewmodel/experiments_viewmodel.dart';
+import '../../../treatment/presentation/viewmodel/treatments_viewmodel.dart';
 
 class SplashViewmodel extends ChangeNotifier {
   final ExperimentsViewmodel experimentsViewmodel;

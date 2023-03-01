@@ -2,7 +2,7 @@
 import 'package:flutter_test/flutter_test.dart';
 
 // 🌎 Project imports:
-import 'package:enzitech_app/features/main/domain/entities/enzyme_entity.dart';
+import 'package:enzitech_app/features/enzyme/domain/entities/enzyme_entity.dart';
 
 main() {
   test(

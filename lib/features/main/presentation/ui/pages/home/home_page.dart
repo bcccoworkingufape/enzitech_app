@@ -19,15 +19,15 @@ import '../../../../../../core/failures/failures.dart';
 import '../../../../../../core/routing/routing.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../../../../shared/ui/widgets/ezt_blink.dart';
-import '../../../viewmodel/fragments/account_viewmodel.dart';
-import '../../../viewmodel/fragments/enzymes_viewmodel.dart';
-import '../../../viewmodel/fragments/experiments_viewmodel.dart';
-import '../../../viewmodel/fragments/treatments_viewmodel.dart';
+import '../../../viewmodel/account_viewmodel.dart';
+import '../../../../../enzyme/presentation/viewmodel/enzymes_viewmodel.dart';
+import '../../../../../experiment/presentation/viewmodel/experiments_viewmodel.dart';
+import '../../../../../treatment/presentation/viewmodel/treatments_viewmodel.dart';
 import '../../../viewmodel/home_viewmodel.dart';
-import 'fragments/account_page.dart';
-import 'fragments/enzymes_page.dart';
-import 'fragments/experiments_page.dart';
-import 'fragments/treatments_page.dart';
+import '../account_fragment/account_page.dart';
+import '../../../../../enzyme/presentation/ui/pages/enzymes_fragment/enzymes_page.dart';
+import '../../../../../experiment/presentation/ui/pages/experiments_fragment/experiments_page.dart';
+import '../../../../../treatment/presentation/ui/pages/treatments_fragment/treatments_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
