@@ -1,5 +1,7 @@
+// 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
+// 🌎 Project imports:
 import '../domain/entities/http_driver_options.dart';
 import 'injections/core_injections.dart';
 import 'injections/datasources_injections.dart';

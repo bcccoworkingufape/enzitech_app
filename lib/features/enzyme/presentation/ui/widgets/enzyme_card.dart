@@ -6,10 +6,6 @@ import '../../../../../shared/ui/ui.dart';
 import '../../../../../shared/utils/utils.dart';
 import '../../../../enzyme/domain/entities/enzyme_entity.dart';
 
-// 🌎 Project imports:
-
-// 📦 Package imports:
-
 class EnzymeCard extends StatefulWidget {
   const EnzymeCard({
     Key? key,

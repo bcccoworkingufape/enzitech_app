@@ -1,5 +1,6 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -10,8 +11,6 @@ import '../../../../../../core/failures/failures.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../viewmodel/treatments_viewmodel.dart';
 import '../../widgets/treatment_card.dart';
-
-// 🌎 Project imports:
 
 class TreatmentsPage extends StatefulWidget {
   const TreatmentsPage({

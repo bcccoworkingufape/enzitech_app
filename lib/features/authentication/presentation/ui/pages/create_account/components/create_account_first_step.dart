@@ -10,9 +10,6 @@ import '../../../../../../../shared/ui/ui.dart';
 import '../../../../../../../shared/utils/utils.dart';
 import '../../../../../../../shared/validator/validator.dart';
 
-// 🌎 Project imports:
-
-
 class CreateAccountFirstStep extends StatefulWidget {
   const CreateAccountFirstStep({
     Key? key,

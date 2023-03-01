@@ -1,5 +1,7 @@
+// 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
+// 🌎 Project imports:
 import '../../../features/authentication/data/datasources/create_account_datasource.dart';
 import '../../../features/authentication/data/datasources/login_datasource.dart';
 import '../../../features/authentication/data/datasources/remote/create_account_remote_datasource_imp.dart';

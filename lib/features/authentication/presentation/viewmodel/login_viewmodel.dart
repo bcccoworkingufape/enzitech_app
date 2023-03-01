@@ -10,8 +10,6 @@ import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
 import '../../domain/usecases/login/login_usecase.dart';
 
-// 🌎 Project imports:
-
 class LoginViewmodel extends ChangeNotifier {
   final LoginUseCase _loginUseCase;
 

@@ -15,8 +15,6 @@ import '../../domain/usecases/get_exclude_confirmation/get_exclude_confirmation_
 import '../../domain/usecases/get_user/get_user_usecase.dart';
 import '../../domain/usecases/save_exclude_confirmation/save_exclude_confirmation_usecase.dart';
 
-// 🌎 Project imports:
-
 class AccountViewmodel extends ChangeNotifier {
   final GetUserUseCase _getUserUseCase;
   final GetExcludeConfirmationUseCase _getExcludeConfirmationUseCase;

@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import '../utils/utils.dart';
 import 'validator.dart';
 
-// 🌎 Project imports:
-
 enum ValidateTypes {
   required,
   alfanumeric,

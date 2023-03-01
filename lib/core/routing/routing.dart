@@ -8,8 +8,6 @@ import '../../features/main/presentation/ui/pages/home/home_page.dart';
 import '../../features/main/presentation/ui/pages/splash/splash_page.dart';
 import '../../shared/ui/ui.dart';
 
-// 🌎 Project imports:
-
 class Routing {
   static const createAccount = "/createAccount";
   static const createEnzyme = "/createEnzyme";

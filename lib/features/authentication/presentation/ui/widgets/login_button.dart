@@ -10,8 +10,6 @@ import '../../../../../shared/ui/ui.dart';
 import '../../../../main/presentation/viewmodel/home_viewmodel.dart';
 import '../../viewmodel/login_viewmodel.dart';
 
-// 🌎 Project imports:
-
 class LoginButton extends StatelessWidget {
   final GlobalKey<FormState> formKey;
   final LoginViewmodel loginViewmodel;

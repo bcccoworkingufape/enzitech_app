@@ -1,5 +1,6 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
@@ -7,10 +8,6 @@ import 'package:get_it/get_it.dart';
 import '../../../../../shared/ui/ui.dart';
 import '../../../../../shared/utils/utils.dart';
 import '../../viewmodel/enzymes_viewmodel.dart';
-
-// 📦 Package imports:
-
-// 🌎 Project imports:
 
 class EnzymesSummary extends StatefulWidget {
   const EnzymesSummary({

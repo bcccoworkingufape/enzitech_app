@@ -16,8 +16,6 @@ import '../../../../../main/presentation/viewmodel/home_viewmodel.dart';
 import '../../../viewmodel/login_viewmodel.dart';
 import '../../widgets/login_button.dart';
 
-// 🌎 Project imports:
-
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 

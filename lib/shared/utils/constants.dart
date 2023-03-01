@@ -6,8 +6,6 @@ import 'package:flutter/services.dart';
 import '../input_formatters/input_formatters.dart';
 import '../ui/ui.dart';
 
-// 🌎 Project imports:
-
 class Constants {
   static const padding16all = EdgeInsets.symmetric(
     horizontal: 16.0,

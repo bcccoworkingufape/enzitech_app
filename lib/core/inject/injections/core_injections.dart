@@ -1,5 +1,7 @@
+// 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
+// 🌎 Project imports:
 import '../../data/service/connection_checker/connection_checker_imp.dart';
 import '../../data/service/http/http_service_imp.dart';
 import '../../data/service/key_value/key_value_service_imp.dart';

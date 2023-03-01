@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import '../../../../../shared/ui/ui.dart';
 import '../../../../../shared/utils/utils.dart';
 
-// 🌎 Project imports:
-
 class TreatmentCard extends StatefulWidget {
   const TreatmentCard({
     Key? key,

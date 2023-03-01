@@ -1,5 +1,7 @@
+// 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
+// 🌎 Project imports:
 import '../../../features/authentication/data/repositories/create_account_repository_imp.dart';
 import '../../../features/authentication/data/repositories/login_repository_imp.dart';
 import '../../../features/authentication/domain/repositories/create_account_repository.dart';

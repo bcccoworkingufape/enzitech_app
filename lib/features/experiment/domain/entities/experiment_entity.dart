@@ -1,5 +1,4 @@
 // 🌎 Project imports:
-
 import '../../../enzyme/domain/entities/enzyme_entity.dart';
 import '../../../treatment/domain/entities/treatment_entity.dart';
 

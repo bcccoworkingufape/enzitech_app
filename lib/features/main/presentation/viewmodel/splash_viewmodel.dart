@@ -8,10 +8,10 @@ import '../../../../core/domain/service/user_preferences/user_preferences_servic
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
 import '../../../enzyme/domain/entities/enzyme_entity.dart';
-import 'account_viewmodel.dart';
 import '../../../enzyme/presentation/viewmodel/enzymes_viewmodel.dart';
 import '../../../experiment/presentation/viewmodel/experiments_viewmodel.dart';
 import '../../../treatment/presentation/viewmodel/treatments_viewmodel.dart';
+import 'account_viewmodel.dart';
 
 class SplashViewmodel extends ChangeNotifier {
   final ExperimentsViewmodel experimentsViewmodel;

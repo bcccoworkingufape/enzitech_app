@@ -1,5 +1,7 @@
+// 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
+// 🌎 Project imports:
 import '../../../features/authentication/domain/usecases/create_account/create_account_usecase.dart';
 import '../../../features/authentication/domain/usecases/create_account/create_account_usecase_imp.dart';
 import '../../../features/authentication/domain/usecases/login/login_usecase.dart';

@@ -1,5 +1,7 @@
+// 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
+// 🌎 Project imports:
 import '../../../features/authentication/presentation/viewmodel/create_account_viewmodel.dart';
 import '../../../features/authentication/presentation/viewmodel/login_viewmodel.dart';
 import '../../../features/enzyme/presentation/viewmodel/enzymes_viewmodel.dart';

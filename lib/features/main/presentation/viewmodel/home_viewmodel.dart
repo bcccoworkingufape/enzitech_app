@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 // 🌎 Project imports:
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
-import 'account_viewmodel.dart';
 import '../../../enzyme/presentation/viewmodel/enzymes_viewmodel.dart';
 import '../../../experiment/presentation/viewmodel/experiments_viewmodel.dart';
 import '../../../treatment/presentation/viewmodel/treatments_viewmodel.dart';
+import 'account_viewmodel.dart';
 
 class HomeViewmodel extends ChangeNotifier {
   final ExperimentsViewmodel experimentsViewmodel;

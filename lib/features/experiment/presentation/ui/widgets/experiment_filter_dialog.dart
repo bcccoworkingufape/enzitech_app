@@ -8,8 +8,6 @@ import 'package:get_it/get_it.dart';
 import '../../../../../shared/ui/ui.dart';
 import '../../../../experiment/presentation/viewmodel/experiments_viewmodel.dart';
 
-// 🌎 Project imports:
-
 class ExperimentFilterDialog extends StatefulWidget {
   const ExperimentFilterDialog({super.key});
 

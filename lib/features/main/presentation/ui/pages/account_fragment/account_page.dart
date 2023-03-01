@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+
 // 📦 Package imports:
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
@@ -16,8 +17,6 @@ import '../../../../../../core/routing/routing.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../viewmodel/account_viewmodel.dart';
 import '../../../viewmodel/home_viewmodel.dart';
-
-// 🌎 Project imports:
 
 class AccountPage extends StatefulWidget {
   const AccountPage({
