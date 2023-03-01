@@ -1,10 +1,10 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
+// 🌎 Project imports:
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
 import 'fragments/account_viewmodel.dart';
-// 🌎 Project imports:
 import 'fragments/enzymes_viewmodel.dart';
 import 'fragments/experiments_viewmodel.dart';
 import 'fragments/treatments_viewmodel.dart';
