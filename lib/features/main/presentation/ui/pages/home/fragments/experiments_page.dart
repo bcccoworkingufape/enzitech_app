@@ -299,110 +299,111 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
     var widthMQ = MediaQuery.of(context).size.width;
     var heightMQ = MediaQuery.of(context).size.height;
 
-    return AbsorbPointer(
-      absorbing: _experimentsViewmodel.scrollController.hasClients
-          ? _experimentsViewmodel.state == StateEnum.loading &&
-              _experimentsViewmodel.scrollController.position.maxScrollExtent ==
-                  _experimentsViewmodel.scrollController.offset
-          : _experimentsViewmodel.state == StateEnum.loading,
-      child: EZTPullToRefresh(
-        key: _refreshIndicatorKey,
-        onRefresh: () {
-          // _experimentsViewmodel.setFinishedFilter(false);
-          return _experimentsViewmodel.fetch();
-        },
-        child: AnimatedBuilder(
-          animation: _experimentsViewmodel,
-          builder: (context, child) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Column(
-                children: [
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  //   child: _searchTermInput,
-                  // ),
-                  // const SizedBox(
-                  //   height: 16,
-                  // ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Row(
-                      children: [
-                        ToggleSwitch(
-                          initialLabelIndex:
-                              _experimentsViewmodel.finishedFilter ? 1 : 0,
-                          minWidth: (widthMQ * 0.4),
-                          totalSwitches: 2,
-                          labels: const ['Em andamento', 'Concluído'],
-                          activeFgColor: AppColors.white,
-                          inactiveFgColor: AppColors.primary,
-                          activeBgColor: const [AppColors.primary],
-                          inactiveBgColor: AppColors.white,
-                          borderColor: const [AppColors.primary],
-                          borderWidth: 1.5,
-                          onToggle: (index) {
-                            if (index == 0) {
-                              if (_experimentsViewmodel.finishedFilter !=
-                                  false) {
-                                _experimentsViewmodel.setFinishedFilter(false);
-                                _experimentsViewmodel.fetch();
+    return AnimatedBuilder(
+        animation: _experimentsViewmodel,
+        builder: (context, child) {
+          return AbsorbPointer(
+            absorbing: _experimentsViewmodel.scrollController.hasClients
+                ? _experimentsViewmodel.state == StateEnum.loading &&
+                    _experimentsViewmodel
+                            .scrollController.position.maxScrollExtent ==
+                        _experimentsViewmodel.scrollController.offset
+                : _experimentsViewmodel.state == StateEnum.loading,
+            child: EZTPullToRefresh(
+              key: _refreshIndicatorKey,
+              onRefresh: () {
+                // _experimentsViewmodel.setFinishedFilter(false);
+                return _experimentsViewmodel.fetch();
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: Column(
+                  children: [
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    //   child: _searchTermInput,
+                    // ),
+                    // const SizedBox(
+                    //   height: 16,
+                    // ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Row(
+                        children: [
+                          ToggleSwitch(
+                            initialLabelIndex:
+                                _experimentsViewmodel.finishedFilter ? 1 : 0,
+                            minWidth: (widthMQ * 0.4),
+                            totalSwitches: 2,
+                            labels: const ['Em andamento', 'Concluído'],
+                            activeFgColor: AppColors.white,
+                            inactiveFgColor: AppColors.primary,
+                            activeBgColor: const [AppColors.primary],
+                            inactiveBgColor: AppColors.white,
+                            borderColor: const [AppColors.primary],
+                            borderWidth: 1.5,
+                            onToggle: (index) {
+                              if (index == 0) {
+                                if (_experimentsViewmodel.finishedFilter !=
+                                    false) {
+                                  _experimentsViewmodel
+                                      .setFinishedFilter(false);
+                                  _experimentsViewmodel.fetch();
+                                  return;
+                                }
+
                                 return;
                               }
 
-                              return;
-                            }
+                              if (_experimentsViewmodel.finishedFilter ||
+                                  !_homeViewmodel.hasInternetConnection) return;
 
-                            if (_experimentsViewmodel.finishedFilter ||
-                                !_homeViewmodel.hasInternetConnection) return;
-
-                            _experimentsViewmodel.setFinishedFilter(true);
-                            _experimentsViewmodel.fetch();
-                          },
-                        ),
-                        const SizedBox(
-                          width: 4,
-                        ),
-                        Expanded(
-                          child: InkWell(
-                            customBorder: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            onTap: _showFiltersDialog,
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Icon(
-                                _experimentsViewmodel.anyFilterIsEnabled()
-                                    ? PhosphorIcons.funnelFill
-                                    : PhosphorIcons.funnel,
-                                color: AppColors.primary,
+                              _experimentsViewmodel.setFinishedFilter(true);
+                              _experimentsViewmodel.fetch();
+                            },
+                          ),
+                          const SizedBox(
+                            width: 4,
+                          ),
+                          Expanded(
+                            child: InkWell(
+                              customBorder: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              onTap: _showFiltersDialog,
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Icon(
+                                  _experimentsViewmodel.anyFilterIsEnabled()
+                                      ? PhosphorIcons.funnelFill
+                                      : PhosphorIcons.funnel,
+                                  color: AppColors.primary,
+                                ),
                               ),
                             ),
-                          ),
-                        )
-                      ],
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  // const SizedBox(
-                  //   height: 16,
-                  // ),
-                  if (_experimentsViewmodel.experiments.isNotEmpty)
-                    Text(
-                      "🔬 ${_experimentsViewmodel.totalOfExperiments} experimento${_experimentsViewmodel.experiments.length > 1 ? 's ' : ' '}encontrado${_experimentsViewmodel.experiments.length > 1 ? 's ' : ' '}",
-                      style: TextStyles.link.copyWith(fontSize: 16),
+                    // const SizedBox(
+                    //   height: 16,
+                    // ),
+                    if (_experimentsViewmodel.experiments.isNotEmpty)
+                      Text(
+                        "🔬 ${_experimentsViewmodel.totalOfExperiments} experimento${_experimentsViewmodel.experiments.length > 1 ? 's ' : ' '}encontrado${_experimentsViewmodel.experiments.length > 1 ? 's ' : ' '}",
+                        style: TextStyles.link.copyWith(fontSize: 16),
+                      ),
+                    const SizedBox(
+                      height: 16,
                     ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Expanded(
-                    child: _buildExperimentsList(heightMQ),
-                  ),
-                ],
+                    Expanded(
+                      child: _buildExperimentsList(heightMQ),
+                    ),
+                  ],
+                ),
               ),
-            );
-          },
-        ),
-      ),
-    );
+            ),
+          );
+        });
   }
 }

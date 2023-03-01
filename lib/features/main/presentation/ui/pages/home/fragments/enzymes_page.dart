@@ -1,6 +1,5 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -202,39 +201,44 @@ class _EnzymesPageState extends State<EnzymesPage> {
   Widget build(BuildContext context) {
     var heightMQ = MediaQuery.of(context).size.height;
 
-    return EZTPullToRefresh(
-      key: _refreshIndicatorKey,
-      onRefresh: _enzymesViewmodel.fetch,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: Column(
-          children: [
-            if (_enzymesViewmodel.enzymes.isNotEmpty &&
-                _enzymesViewmodel.state != StateEnum.loading)
-              Column(
-                children: [
-                  const SizedBox(
-                    height: 8,
+    return AnimatedBuilder(
+        animation: _enzymesViewmodel,
+        builder: (context, child) {
+          return EZTPullToRefresh(
+          key: _refreshIndicatorKey,
+          onRefresh: _enzymesViewmodel.fetch,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Column(
+              children: [
+                if (_enzymesViewmodel.enzymes.isNotEmpty &&
+                    _enzymesViewmodel.state != StateEnum.loading)
+                  Column(
+                    children: [
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Text(
+                        "🧬 ${_enzymesViewmodel.enzymes.length} enzima${_enzymesViewmodel.enzymes.length > 1 ? 's ' : ' '}encontrada${_enzymesViewmodel.enzymes.length > 1 ? 's ' : ' '}",
+                        style: TextStyles.link.copyWith(fontSize: 16),
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      const EnzymesSummary(),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                    ],
                   ),
-                  Text(
-                    "🧬 ${_enzymesViewmodel.enzymes.length} enzima${_enzymesViewmodel.enzymes.length > 1 ? 's ' : ' '}encontrada${_enzymesViewmodel.enzymes.length > 1 ? 's ' : ' '}",
-                    style: TextStyles.link.copyWith(fontSize: 16),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  const EnzymesSummary(),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                ],
-              ),
-            Expanded(
-              child: _buildEnzymesList(heightMQ),
+                Expanded(
+                  child: _buildEnzymesList(heightMQ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      }
     );
   }
 }

@@ -1,6 +1,5 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -190,35 +189,39 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
   Widget build(BuildContext context) {
     var heightMQ = MediaQuery.of(context).size.height;
 
-    return EZTPullToRefresh(
-      key: _refreshIndicatorKey,
-      onRefresh: _treatmentsViewmodel.fetch,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: Column(
-          children: [
-            if (_treatmentsViewmodel.treatments.isNotEmpty &&
-                _treatmentsViewmodel.state != StateEnum.loading)
-              Column(
+    return AnimatedBuilder(
+        animation: _treatmentsViewmodel,
+        builder: (context, child) {
+          return EZTPullToRefresh(
+            key: _refreshIndicatorKey,
+            onRefresh: _treatmentsViewmodel.fetch,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Column(
                 children: [
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Text(
-                    "🧪 ${_treatmentsViewmodel.treatments.length} tratamento${_treatmentsViewmodel.treatments.length > 1 ? 's ' : ' '}encontrado${_treatmentsViewmodel.treatments.length > 1 ? 's ' : ' '}",
-                    style: TextStyles.link.copyWith(fontSize: 16),
-                  ),
-                  const SizedBox(
-                    height: 8,
+                  if (_treatmentsViewmodel.treatments.isNotEmpty &&
+                      _treatmentsViewmodel.state != StateEnum.loading)
+                    Column(
+                      children: [
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Text(
+                          "🧪 ${_treatmentsViewmodel.treatments.length} tratamento${_treatmentsViewmodel.treatments.length > 1 ? 's ' : ' '}encontrado${_treatmentsViewmodel.treatments.length > 1 ? 's ' : ' '}",
+                          style: TextStyles.link.copyWith(fontSize: 16),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                      ],
+                    ),
+                  Expanded(
+                    child: _buildTreatmentsList(heightMQ),
                   ),
                 ],
               ),
-            Expanded(
-              child: _buildTreatmentsList(heightMQ),
             ),
-          ],
-        ),
-      ),
-    );
+          );
+        });
   }
 }
