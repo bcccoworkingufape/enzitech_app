@@ -10,20 +10,22 @@ import '../../../../../core/failures/failures.dart';
 import '../../../domain/entities/experiment_entity.dart';
 import '../../../domain/entities/experiment_pagination_entity.dart';
 import '../../../domain/repositories/store_experiments_in_cache_repository.dart';
+import '../../../domain/usecases/delete_experiment/delete_experiment_usecase.dart';
 import '../../../domain/usecases/get_experiments/get_experiments_usecase.dart';
 
 class ExperimentsViewmodel extends ChangeNotifier {
   final GetExperimentsUseCase _getExperimentsUseCase;
+  final DeleteExperimentUseCase _deleteExperimentUseCase;
+
   final StoreExperimentsInCacheRepository _storeExperimentsInCacheRepository;
   final ConnectionChecker connectionChecker;
 
   ExperimentsViewmodel(
     this._getExperimentsUseCase,
+    this._deleteExperimentUseCase,
     this._storeExperimentsInCacheRepository,
     this.connectionChecker,
-  ); /*  {
-    fetch();
-  } */
+  );
 
   StateEnum _state = StateEnum.idle;
   StateEnum get state => _state;
@@ -187,17 +189,16 @@ class ExperimentsViewmodel extends ChangeNotifier {
   }
 
   Future<void> deleteExperiment(String id) async {
-    //? Apagar para não notificar essa alteração
-    setStateEnum(StateEnum.loading);
-    try {
-      // await experimentsController.deleteExperiment(id);
-      _setTotalOfExperiments(_totalOfExperiments - 1);
+    var result = await _deleteExperimentUseCase(id);
 
-      //? Apagar para não notificar essa alteração
-      setStateEnum(StateEnum.success);
-    } catch (e) {
-      _setFailure(e as Failure);
-      setStateEnum(StateEnum.error);
-    }
+    result.fold(
+      (error) {
+        _setFailure(error);
+        setStateEnum(StateEnum.error);
+      },
+      (success) async {
+        _setTotalOfExperiments(_totalOfExperiments - 1);
+      },
+    );
   }
 }

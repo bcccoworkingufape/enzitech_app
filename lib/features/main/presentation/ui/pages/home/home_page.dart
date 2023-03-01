@@ -316,7 +316,7 @@ class _HomePageState extends State<HomePage>
   static noInternet(context) {
     return EZTSnackBar.show(
       context,
-      "⚠ Sem conexão com a internet: Você está visualizando informações previamente carregadas e sem atualizações!\n\nPara atualizar, conecte-se a uma rede com conexão à internet.",
+      "⚠ Sem conexão com a internet: Você está visualizando informações previamente carregadas e sem atualizações, quaisquer mudanças offline não serão mantidas!\n\nPara atualizar, conecte-se a uma rede com conexão à internet.",
       eztSnackBarType: EZTSnackBarType.error,
       duration: const Duration(seconds: 10),
     );
