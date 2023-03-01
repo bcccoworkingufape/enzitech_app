@@ -7,16 +7,17 @@ import 'package:flutter/material.dart';
 import '../../../../../core/enums/enums.dart';
 import '../../../../../core/failures/failures.dart';
 import '../../../domain/entities/treatment_entity.dart';
+import '../../../domain/usecases/delete_experiment copy/delete_treatment_usecase.dart';
 import '../../../domain/usecases/get_treatments/get_treatments_usecase.dart';
 
 class TreatmentsViewmodel extends ChangeNotifier {
   final GetTreatmentsUseCase _getTreatmentsUseCase;
+  final DeleteTreatmentUseCase _deleteTreatmentUseCase;
 
   TreatmentsViewmodel(
     this._getTreatmentsUseCase,
-  ) {
-    // fetch();
-  }
+    this._deleteTreatmentUseCase,
+  );
 
   StateEnum _state = StateEnum.idle;
   StateEnum get state => _state;
@@ -59,14 +60,14 @@ class TreatmentsViewmodel extends ChangeNotifier {
   }
 
   Future<void> deleteTreatment(String id) async {
-    setStateEnum(StateEnum.loading);
+    var result = await _deleteTreatmentUseCase(id);
 
-    try {
-      // await treatmentsController.deleteTreatment(id);
-      setStateEnum(StateEnum.success);
-    } catch (e) {
-      _setFailure(e as Failure);
-      setStateEnum(StateEnum.error);
-    }
+    result.fold(
+      (error) {
+        _setFailure(error);
+        setStateEnum(StateEnum.error);
+      },
+      (success) async {},
+    );
   }
 }
