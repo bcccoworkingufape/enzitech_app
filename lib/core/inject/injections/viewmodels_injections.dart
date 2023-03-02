@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 // 🌎 Project imports:
 import '../../../features/authentication/presentation/viewmodel/create_account_viewmodel.dart';
 import '../../../features/authentication/presentation/viewmodel/login_viewmodel.dart';
+import '../../../features/enzyme/presentation/viewmodel/create_enzyme_viewmodel.dart';
 import '../../../features/enzyme/presentation/viewmodel/enzymes_viewmodel.dart';
 import '../../../features/experiment/presentation/viewmodel/experiments_viewmodel.dart';
 import '../../../features/main/presentation/viewmodel/account_viewmodel.dart';
@@ -17,6 +18,9 @@ class ViewmodelsInjections {
   ViewmodelsInjections(this.getIt) {
     getIt.registerLazySingleton<CreateAccountViewmodel>(
       () => CreateAccountViewmodel(getIt()),
+    );
+    getIt.registerLazySingleton<CreateEnzymeViewmodel>(
+      () => CreateEnzymeViewmodel(getIt()),
     );
     getIt.registerLazySingleton<LoginViewmodel>(
       () => LoginViewmodel(getIt()),

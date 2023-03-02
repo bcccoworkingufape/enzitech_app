@@ -5,26 +5,27 @@ import 'package:dartz/dartz.dart';
 import '../../../../../core/domain/service/http/http_service.dart';
 import '../../../../../core/failures/failure.dart';
 import '../../../../../shared/utils/api.dart';
-import '../create_account_datasource.dart';
+import '../create_enzyme_datasource.dart';
 
-class CreateAccountRemoteDataSourceImp implements CreateAccountDataSource {
+class CreateEnzymeRemoteDataSourceImp implements CreateEnzymeDataSource {
   final HttpService _httpService;
-
-  CreateAccountRemoteDataSourceImp(this._httpService);
+  CreateEnzymeRemoteDataSourceImp(this._httpService);
 
   @override
   Future<Either<Failure, Unit>> call({
     required String name,
-    required String email,
-    required String password,
+    required double variableA,
+    required double variableB,
+    required String type,
   }) async {
     try {
       await _httpService.post(
-        API.REQUEST_USERS,
+        API.REQUEST_ENZYMES,
         data: {
-          'name': name,
-          'email': email,
-          'password': password,
+          "name": name,
+          "variableA": variableA,
+          "variableB": variableB,
+          "type": type
         },
       );
 

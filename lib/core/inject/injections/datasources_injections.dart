@@ -6,9 +6,11 @@ import '../../../features/authentication/data/datasources/create_account_datasou
 import '../../../features/authentication/data/datasources/login_datasource.dart';
 import '../../../features/authentication/data/datasources/remote/create_account_remote_datasource_imp.dart';
 import '../../../features/authentication/data/datasources/remote/login_remote_datasource_imp.dart';
+import '../../../features/enzyme/data/datasources/create_enzyme_datasource.dart';
 import '../../../features/enzyme/data/datasources/delete_enzyme_datasource.dart';
 import '../../../features/enzyme/data/datasources/get_enzymes_datasource.dart';
 import '../../../features/enzyme/data/datasources/local/get_enzymes/get_enzymes_local_datasource_decorator_imp.dart';
+import '../../../features/enzyme/data/datasources/remote/create_enzyme_remote_datasource_imp.dart';
 import '../../../features/enzyme/data/datasources/remote/delete_enzyme_remote_datasource_imp.dart';
 import '../../../features/enzyme/data/datasources/remote/get_enzymes_remote_datasource_imp.dart';
 import '../../../features/experiment/data/datasources/delete_experiment_datasource.dart';
@@ -45,6 +47,9 @@ class DataSourcesInjections {
     );
     getIt.registerLazySingleton<CreateAccountDataSource>(
       () => CreateAccountRemoteDataSourceImp(getIt()),
+    );
+    getIt.registerLazySingleton<CreateEnzymeDataSource>(
+      () => CreateEnzymeRemoteDataSourceImp(getIt()),
     );
     getIt.registerLazySingleton<LoginDataSource>(
       () => LoginRemoteDataSourceImp(getIt(), getIt()),

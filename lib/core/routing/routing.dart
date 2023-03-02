@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // 🌎 Project imports:
 import '../../features/authentication/presentation/ui/pages/create_account/create_account_page.dart';
 import '../../features/authentication/presentation/ui/pages/login/login_page.dart';
+import '../../features/enzyme/presentation/ui/pages/create_enzyme/create_enzyme_page.dart';
 import '../../features/main/presentation/ui/pages/home/home_page.dart';
 import '../../features/main/presentation/ui/pages/splash/splash_page.dart';
 import '../../shared/ui/ui.dart';
@@ -29,9 +30,9 @@ class Routing {
         return MaterialPageRoute(builder: (_) => const LoginPage());
       case createAccount:
         return MaterialPageRoute(builder: (_) => const CreateAccountPage());
-      /* case createEnzyme:
+      case createEnzyme:
         return MaterialPageRoute(builder: (_) => const CreateEnzymePage());
-      case createExperiment:
+      /* case createExperiment:
         return MaterialPageRoute(builder: (_) => const CreateExperimentPage());
       case createTreatment:
         return MaterialPageRoute(builder: (_) => const CreateTreatmentPage());

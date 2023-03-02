@@ -6,8 +6,10 @@ import '../../../features/authentication/data/repositories/create_account_reposi
 import '../../../features/authentication/data/repositories/login_repository_imp.dart';
 import '../../../features/authentication/domain/repositories/create_account_repository.dart';
 import '../../../features/authentication/domain/repositories/login_repository.dart';
+import '../../../features/enzyme/data/repositories/create_enzyme_repository_imp.dart';
 import '../../../features/enzyme/data/repositories/delete_enzyme_repository_imp.dart';
 import '../../../features/enzyme/data/repositories/get_enzymes_repository_imp.dart';
+import '../../../features/enzyme/domain/repositories/create_enzyme_repository.dart';
 import '../../../features/enzyme/domain/repositories/delete_enzyme_repository.dart';
 import '../../../features/enzyme/domain/repositories/get_enzymes_repository.dart';
 import '../../../features/experiment/data/repositories/delete_experiment_repository_imp.dart';
@@ -31,7 +33,7 @@ import '../../../features/treatment/domain/repositories/get_treatments_repositor
 
 class RepositoriesInjections {
   final GetIt getIt;
-  
+
   RepositoriesInjections(this.getIt) {
     getIt.registerLazySingleton<DeleteEnzymeRepository>(
       () => DeleteEnzymeRepositoryImp(getIt()),
@@ -44,6 +46,9 @@ class RepositoriesInjections {
     );
     getIt.registerLazySingleton<CreateAccountRepository>(
       () => CreateAccountRepositoryImp(getIt()),
+    );
+    getIt.registerLazySingleton<CreateEnzymeRepository>(
+      () => CreateEnzymeRepositoryImp(getIt()),
     );
     getIt.registerLazySingleton<LoginRepository>(
       () => LoginRepositoryImp(getIt()),
