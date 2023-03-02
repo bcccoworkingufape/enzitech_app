@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
-import '../../domain/usecases/create_enzyme/create_enzyme_usecase.dart';
+import '../../domain/usecases/create_treatment/create_treatment_usecase.dart';
 
-class CreateEnzymeViewmodel extends ChangeNotifier {
-  final CreateEnzymeUseCase _createEnzymeUseCase;
+class CreateTreatmentViewmodel extends ChangeNotifier {
+  final CreateTreatmentUseCase _createTreatmentUseCase;
 
-  CreateEnzymeViewmodel(
-    this._createEnzymeUseCase,
+  CreateTreatmentViewmodel(
+    this._createTreatmentUseCase,
   );
 
   StateEnum _state = StateEnum.idle;
@@ -24,19 +24,15 @@ class CreateEnzymeViewmodel extends ChangeNotifier {
     _failure = failure;
   }
 
-  Future<void> createEnzyme(
+  Future<void> createTreatment(
     String name,
-    double variableA,
-    double variableB,
-    String type,
+    String description,
   ) async {
     setStateEnum(StateEnum.loading);
 
-    var result = await _createEnzymeUseCase(
+    var result = await _createTreatmentUseCase(
       name: name,
-      variableA: variableA,
-      variableB: variableB,
-      type: type,
+      description: description,
     );
 
     result.fold(

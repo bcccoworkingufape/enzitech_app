@@ -6,7 +6,6 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
-
 // 📦 Package imports:
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
@@ -220,30 +219,6 @@ class _HomePageState extends State<HomePage>
       AccountPage(),
     ];
   }
-
-  // Widget errmsg(String text, bool show) {
-  //   //error message widget.
-  //   if (show == true) {
-  //     //if error is true then show error message box
-  //     return Container(
-  //       padding: EdgeInsets.all(10.00),
-  //       margin: EdgeInsets.only(bottom: 10.00),
-  //       color: Colors.red,
-  //       child: Row(children: [
-  //         Container(
-  //           margin: EdgeInsets.only(right: 6.00),
-  //           child: Icon(Icons.info, color: Colors.white),
-  //         ), // icon for error message
-
-  //         Text(text, style: TextStyle(color: Colors.white)),
-  //         //show error message text
-  //       ]),
-  //     );
-  //   } else {
-  //     return Container();
-  //     //if error is false, return empty container.
-  //   }
-  // }
 
   Widget? get dealWithFloatingActionButton {
     if (_homeViewmodel.fragmentIndex == 0 && _isVisibleExperimentButton) {

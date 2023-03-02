@@ -26,6 +26,8 @@ import '../../../features/main/domain/usecases/get_user/get_user_usecase.dart';
 import '../../../features/main/domain/usecases/get_user/get_user_usecase_imp.dart';
 import '../../../features/main/domain/usecases/save_exclude_confirmation/save_exclude_confirmation_usecase.dart';
 import '../../../features/main/domain/usecases/save_exclude_confirmation/save_exclude_confirmation_usecase_imp.dart';
+import '../../../features/treatment/domain/usecases/create_treatment/create_treatment_usecase.dart';
+import '../../../features/treatment/domain/usecases/create_treatment/create_treatment_usecase_imp.dart';
 import '../../../features/treatment/domain/usecases/delete_treatment/delete_treatment_usecase.dart';
 import '../../../features/treatment/domain/usecases/delete_treatment/delete_treatment_usecase_imp.dart';
 import '../../../features/treatment/domain/usecases/get_treatments/get_treatments_usecase.dart';
@@ -49,6 +51,9 @@ class UseCasesInjections {
     );
     getIt.registerLazySingleton<CreateEnzymeUseCase>(
       () => CreateEnzymeUseCaseImp(getIt()),
+    );
+    getIt.registerLazySingleton<CreateTreatmentUseCase>(
+      () => CreateTreatmentUseCaseImp(getIt()),
     );
     getIt.registerLazySingleton<LoginUseCase>(
       () => LoginUseCaseImp(getIt()),

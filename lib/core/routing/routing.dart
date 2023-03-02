@@ -7,6 +7,7 @@ import '../../features/authentication/presentation/ui/pages/login/login_page.dar
 import '../../features/enzyme/presentation/ui/pages/create_enzyme/create_enzyme_page.dart';
 import '../../features/main/presentation/ui/pages/home/home_page.dart';
 import '../../features/main/presentation/ui/pages/splash/splash_page.dart';
+import '../../features/treatment/presentation/ui/pages/create_treatment/create_treatment_page.dart';
 import '../../shared/ui/ui.dart';
 
 class Routing {
@@ -32,10 +33,11 @@ class Routing {
         return MaterialPageRoute(builder: (_) => const CreateAccountPage());
       case createEnzyme:
         return MaterialPageRoute(builder: (_) => const CreateEnzymePage());
-      /* case createExperiment:
-        return MaterialPageRoute(builder: (_) => const CreateExperimentPage());
       case createTreatment:
         return MaterialPageRoute(builder: (_) => const CreateTreatmentPage());
+      /* case createExperiment:
+        return MaterialPageRoute(builder: (_) => const CreateExperimentPage());
+      
       case experimentDetailed:
         if (args is ExperimentEntity) {
           return MaterialPageRoute(

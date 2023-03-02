@@ -26,9 +26,11 @@ import '../../../features/main/data/datasources/local/clear_user/get_user_local_
 import '../../../features/main/data/datasources/local/get_exclude_confirmation/get_exclude_confirmation_local_datasource_imp.dart';
 import '../../../features/main/data/datasources/local/save_exclude_confirmation/save_exclude_confirmation_local_datasource_imp.dart';
 import '../../../features/main/data/datasources/save_exclude_confirmation_datasource.dart';
+import '../../../features/treatment/data/datasources/create_treatment_datasource.dart';
 import '../../../features/treatment/data/datasources/delete_treatment_datasource.dart';
 import '../../../features/treatment/data/datasources/get_treatments_datasource.dart';
 import '../../../features/treatment/data/datasources/local/get_treatments/get_treatments_local_datasource_decorator_imp.dart';
+import '../../../features/treatment/data/datasources/remote/create_treatment_remote_datasource_imp.dart';
 import '../../../features/treatment/data/datasources/remote/delete_treatment_remote_datasource_imp.dart';
 import '../../../features/treatment/data/datasources/remote/get_treatments_remote_datasource_imp.dart';
 
@@ -50,6 +52,9 @@ class DataSourcesInjections {
     );
     getIt.registerLazySingleton<CreateEnzymeDataSource>(
       () => CreateEnzymeRemoteDataSourceImp(getIt()),
+    );
+    getIt.registerLazySingleton<CreateTreatmentDataSource>(
+      () => CreateTreatmentRemoteDataSourceImp(getIt()),
     );
     getIt.registerLazySingleton<LoginDataSource>(
       () => LoginRemoteDataSourceImp(getIt(), getIt()),

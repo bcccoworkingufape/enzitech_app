@@ -26,8 +26,10 @@ import '../../../features/main/domain/repositories/clear_user_repository.dart';
 import '../../../features/main/domain/repositories/get_exclude_confirmation_repository.dart';
 import '../../../features/main/domain/repositories/get_user_repository.dart';
 import '../../../features/main/domain/repositories/save_exclude_confirmation_repository.dart';
+import '../../../features/treatment/data/repositories/create_treatment_repository_imp.dart';
 import '../../../features/treatment/data/repositories/delete_treatment_repository_imp.dart';
 import '../../../features/treatment/data/repositories/get_treatments_repository_imp.dart';
+import '../../../features/treatment/domain/repositories/create_treatment_repository.dart';
 import '../../../features/treatment/domain/repositories/delete_treatment_repository.dart';
 import '../../../features/treatment/domain/repositories/get_treatments_repository.dart';
 
@@ -49,6 +51,9 @@ class RepositoriesInjections {
     );
     getIt.registerLazySingleton<CreateEnzymeRepository>(
       () => CreateEnzymeRepositoryImp(getIt()),
+    );
+    getIt.registerLazySingleton<CreateTreatmentRepository>(
+      () => CreateTreatmentRepositoryImp(getIt()),
     );
     getIt.registerLazySingleton<LoginRepository>(
       () => LoginRepositoryImp(getIt()),
