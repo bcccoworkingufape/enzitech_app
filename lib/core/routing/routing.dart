@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import '../../features/authentication/presentation/ui/pages/create_account/create_account_page.dart';
 import '../../features/authentication/presentation/ui/pages/login/login_page.dart';
 import '../../features/enzyme/presentation/ui/pages/create_enzyme/create_enzyme_page.dart';
+import '../../features/experiment/domain/entities/experiment_entity.dart';
+import '../../features/experiment/presentation/ui/pages/experiment_details/experiment_details_page.dart';
 import '../../features/main/presentation/ui/pages/home/home_page.dart';
 import '../../features/main/presentation/ui/pages/splash/splash_page.dart';
 import '../../features/treatment/presentation/ui/pages/create_treatment/create_treatment_page.dart';
@@ -35,19 +37,20 @@ class Routing {
         return MaterialPageRoute(builder: (_) => const CreateEnzymePage());
       case createTreatment:
         return MaterialPageRoute(builder: (_) => const CreateTreatmentPage());
-      /* case createExperiment:
-        return MaterialPageRoute(builder: (_) => const CreateExperimentPage());
-      
       case experimentDetailed:
         if (args is ExperimentEntity) {
           return MaterialPageRoute(
-            builder: (_) => ExperimentDetailedPage(
+            builder: (_) => ExperimentDetailsPage(
               resumedExperiment: args,
             ),
           );
         } else {
           return _errorRoute();
         }
+      /* case createExperiment:
+        return MaterialPageRoute(builder: (_) => const CreateExperimentPage());
+      
+      
       case experimentInsertData:
         if (args is ExperimentEntity) {
           return MaterialPageRoute(

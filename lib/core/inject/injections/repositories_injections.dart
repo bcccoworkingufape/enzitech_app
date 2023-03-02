@@ -13,9 +13,11 @@ import '../../../features/enzyme/domain/repositories/create_enzyme_repository.da
 import '../../../features/enzyme/domain/repositories/delete_enzyme_repository.dart';
 import '../../../features/enzyme/domain/repositories/get_enzymes_repository.dart';
 import '../../../features/experiment/data/repositories/delete_experiment_repository_imp.dart';
+import '../../../features/experiment/data/repositories/get_experiment_by_id_repository_imp.dart';
 import '../../../features/experiment/data/repositories/get_experiments_repository_imp.dart';
 import '../../../features/experiment/data/repositories/store_experiments_in_cache_repository_imp.dart';
 import '../../../features/experiment/domain/repositories/delete_experiment_repository.dart';
+import '../../../features/experiment/domain/repositories/get_experiment_by_id_repository.dart';
 import '../../../features/experiment/domain/repositories/get_experiments_repository.dart';
 import '../../../features/experiment/domain/repositories/store_experiments_in_cache_repository.dart';
 import '../../../features/main/data/repositories/clear_user_repository_imp.dart';
@@ -37,14 +39,8 @@ class RepositoriesInjections {
   final GetIt getIt;
 
   RepositoriesInjections(this.getIt) {
-    getIt.registerLazySingleton<DeleteEnzymeRepository>(
-      () => DeleteEnzymeRepositoryImp(getIt()),
-    );
-    getIt.registerLazySingleton<DeleteTreatmentRepository>(
-      () => DeleteTreatmentRepositoryImp(getIt()),
-    );
-    getIt.registerLazySingleton<DeleteExperimentRepository>(
-      () => DeleteExperimentRepositoryImp(getIt()),
+    getIt.registerLazySingleton<ClearUserRepository>(
+      () => ClearUserRepositoryImp(getIt()),
     );
     getIt.registerLazySingleton<CreateAccountRepository>(
       () => CreateAccountRepositoryImp(getIt()),
@@ -55,18 +51,23 @@ class RepositoriesInjections {
     getIt.registerLazySingleton<CreateTreatmentRepository>(
       () => CreateTreatmentRepositoryImp(getIt()),
     );
-    getIt.registerLazySingleton<LoginRepository>(
-      () => LoginRepositoryImp(getIt()),
+    getIt.registerLazySingleton<DeleteEnzymeRepository>(
+      () => DeleteEnzymeRepositoryImp(getIt()),
     );
-    getIt.registerLazySingleton<ClearUserRepository>(
-      () => ClearUserRepositoryImp(getIt()),
+    getIt.registerLazySingleton<DeleteTreatmentRepository>(
+      () => DeleteTreatmentRepositoryImp(getIt()),
+    );
+    getIt.registerLazySingleton<DeleteExperimentRepository>(
+      () => DeleteExperimentRepositoryImp(getIt()),
     );
     getIt.registerLazySingleton<GetEnzymesRepository>(
       () => GetEnzymesRepositoryImp(getIt()),
     );
-
     getIt.registerLazySingleton<GetExcludeConfirmationRepository>(
       () => GetExcludeConfirmationRepositoryImp(getIt()),
+    );
+    getIt.registerLazySingleton<GetExperimentByIdRepository>(
+      () => GetExperimentByIdRepositoryImp(getIt()),
     );
     getIt.registerLazySingleton<GetExperimentsRepository>(
       () => GetExperimentsRepositoryImp(getIt()),
@@ -76,6 +77,9 @@ class RepositoriesInjections {
     );
     getIt.registerLazySingleton<GetUserRepository>(
       () => GetUserRepositoryImp(getIt()),
+    );
+    getIt.registerLazySingleton<LoginRepository>(
+      () => LoginRepositoryImp(getIt()),
     );
     getIt.registerLazySingleton<SaveExcludeConfirmationRepository>(
       () => SaveExcludeConfirmationRepositoryImp(getIt()),

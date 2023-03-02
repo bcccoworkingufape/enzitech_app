@@ -6,6 +6,10 @@ class EnzymeEntity {
   String type;
   DateTime? createdAt;
   DateTime? updatedAt;
+  int? duration;
+  double? weightSample;
+  double? weightGround;
+  double? size;
 
   EnzymeEntity({
     required this.id,
@@ -15,10 +19,14 @@ class EnzymeEntity {
     required this.type,
     this.createdAt,
     this.updatedAt,
+    this.duration,
+    this.weightSample,
+    this.weightGround,
+    this.size,
   });
 
   @override
   String toString() {
-    return "{id: $id, name: $name, variableA: $variableA, variableB: $variableB, type: $type, createdAt: $createdAt, updatedAt$updatedAt}";
+    return "{id: $id, name: $name, variableA: $variableA, variableB: $variableB, type: $type, createdAt: $createdAt, updatedAt $updatedAt}";
   }
 }

@@ -14,9 +14,11 @@ import '../../../features/enzyme/data/datasources/remote/create_enzyme_remote_da
 import '../../../features/enzyme/data/datasources/remote/delete_enzyme_remote_datasource_imp.dart';
 import '../../../features/enzyme/data/datasources/remote/get_enzymes_remote_datasource_imp.dart';
 import '../../../features/experiment/data/datasources/delete_experiment_datasource.dart';
+import '../../../features/experiment/data/datasources/get_experiment_by_id_datasource.dart';
 import '../../../features/experiment/data/datasources/get_experiments_datasource.dart';
 import '../../../features/experiment/data/datasources/local/get_experiments/get_experiments_local_datasource_decorator_imp.dart';
 import '../../../features/experiment/data/datasources/remote/delete_experiment_remote_datasource_imp.dart';
+import '../../../features/experiment/data/datasources/remote/get_experiment_by_id_remote_datasource_imp.dart';
 import '../../../features/experiment/data/datasources/remote/get_experiments_remote_datasource_imp.dart';
 import '../../../features/main/data/datasources/clear_user_datasource.dart';
 import '../../../features/main/data/datasources/get_exclude_confirmation_datasource.dart';
@@ -38,14 +40,10 @@ class DataSourcesInjections {
   final GetIt getIt;
 
   DataSourcesInjections(this.getIt) {
-    getIt.registerLazySingleton<DeleteEnzymeDataSource>(
-      () => DeleteEnzymeRemoteDataSourceImp(getIt()),
-    );
-    getIt.registerLazySingleton<DeleteTreatmentDataSource>(
-      () => DeleteTreatmentRemoteDataSourceImp(getIt()),
-    );
-    getIt.registerLazySingleton<DeleteExperimentDataSource>(
-      () => DeleteExperimentRemoteDataSourceImp(getIt()),
+    getIt.registerLazySingleton<ClearUserDataSource>(
+      () => ClearUserLocalDataSourceImp(
+        getIt(),
+      ),
     );
     getIt.registerLazySingleton<CreateAccountDataSource>(
       () => CreateAccountRemoteDataSourceImp(getIt()),
@@ -56,13 +54,14 @@ class DataSourcesInjections {
     getIt.registerLazySingleton<CreateTreatmentDataSource>(
       () => CreateTreatmentRemoteDataSourceImp(getIt()),
     );
-    getIt.registerLazySingleton<LoginDataSource>(
-      () => LoginRemoteDataSourceImp(getIt(), getIt()),
+    getIt.registerLazySingleton<DeleteEnzymeDataSource>(
+      () => DeleteEnzymeRemoteDataSourceImp(getIt()),
     );
-    getIt.registerLazySingleton<ClearUserDataSource>(
-      () => ClearUserLocalDataSourceImp(
-        getIt(),
-      ),
+    getIt.registerLazySingleton<DeleteTreatmentDataSource>(
+      () => DeleteTreatmentRemoteDataSourceImp(getIt()),
+    );
+    getIt.registerLazySingleton<DeleteExperimentDataSource>(
+      () => DeleteExperimentRemoteDataSourceImp(getIt()),
     );
     getIt.registerLazySingleton<GetEnzymesDataSource>(
       () => GetEnzymesDataSourceDecoratorImp(
@@ -74,6 +73,9 @@ class DataSourcesInjections {
       () => GetExcludeConfirmationLocalDataSourceImp(
         getIt(),
       ),
+    );
+    getIt.registerLazySingleton<GetExperimentByIdDataSource>(
+      () => GetExperimentByIdRemoteDataSourceImp(getIt()),
     );
     getIt.registerLazySingleton<GetExperimentsDataSource>(
       () => GetExperimentsDataSourceDecoratorImp(
@@ -89,6 +91,9 @@ class DataSourcesInjections {
     );
     getIt.registerLazySingleton<GetUserDataSource>(
       () => GetUserLocalDataSourceImp(getIt()),
+    );
+    getIt.registerLazySingleton<LoginDataSource>(
+      () => LoginRemoteDataSourceImp(getIt(), getIt()),
     );
     getIt.registerLazySingleton<SaveExcludeConfirmationDataSource>(
       () => SaveExcludeConfirmationLocalDataSourceImp(getIt()),

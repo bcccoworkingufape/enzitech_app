@@ -1,6 +1,5 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -14,6 +13,7 @@ import '../../../../../../shared/ui/ui.dart';
 import '../../../../../main/presentation/viewmodel/home_viewmodel.dart';
 import '../../../viewmodel/experiments_viewmodel.dart';
 import '../../widgets/experiment_card.dart';
+import '../../widgets/experiment_exclusion_dialog.dart';
 import '../../widgets/experiment_filter_dialog.dart';
 
 class ExperimentsPage extends StatefulWidget {
@@ -226,22 +226,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                               return await showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: const Text('Excluir o experimento?'),
-                                    content: const Text(
-                                        'Você tem certeza que deseja excluir este experimento?'),
-                                    actions: [
-                                      TextButton(
-                                          onPressed: () =>
-                                              Navigator.of(context).pop(true),
-                                          child: const Text("EXCLUIR")),
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.of(context).pop(false),
-                                        child: const Text("CANCELAR"),
-                                      ),
-                                    ],
-                                  );
+                                  return const ExperimentExclusionDialog();
                                 },
                               );
                             }
@@ -295,116 +280,116 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
     );
   }
 
+  String get isPlural =>
+      _experimentsViewmodel.totalOfExperiments > 1 ? 's ' : ' ';
+
   @override
   Widget build(BuildContext context) {
     var widthMQ = MediaQuery.of(context).size.width;
     var heightMQ = MediaQuery.of(context).size.height;
 
     return AnimatedBuilder(
-        animation: _experimentsViewmodel,
-        builder: (context, child) {
-          return AbsorbPointer(
-            absorbing: _experimentsViewmodel.scrollController.hasClients
-                ? _experimentsViewmodel.state == StateEnum.loading &&
-                    _experimentsViewmodel
-                            .scrollController.position.maxScrollExtent ==
-                        _experimentsViewmodel.scrollController.offset
-                : _experimentsViewmodel.state == StateEnum.loading,
-            child: EZTPullToRefresh(
-              key: _refreshIndicatorKey,
-              onRefresh: () {
-                // _experimentsViewmodel.setFinishedFilter(false);
-                return _experimentsViewmodel.fetch();
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Column(
-                  children: [
-                    // Padding(
-                    //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    //   child: _searchTermInput,
-                    // ),
-                    // const SizedBox(
-                    //   height: 16,
-                    // ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Row(
-                        children: [
-                          ToggleSwitch(
-                            initialLabelIndex:
-                                _experimentsViewmodel.finishedFilter ? 1 : 0,
-                            minWidth: (widthMQ * 0.4),
-                            totalSwitches: 2,
-                            labels: const ['Em andamento', 'Concluído'],
-                            activeFgColor: AppColors.white,
-                            inactiveFgColor: AppColors.primary,
-                            activeBgColor: const [AppColors.primary],
-                            inactiveBgColor: AppColors.white,
-                            borderColor: const [AppColors.primary],
-                            borderWidth: 1.5,
-                            onToggle: (index) {
-                              if (index == 0) {
-                                if (_experimentsViewmodel.finishedFilter !=
-                                    false) {
-                                  _experimentsViewmodel
-                                      .setFinishedFilter(false);
-                                  _experimentsViewmodel.fetch();
-                                  return;
-                                }
-
+      animation: _experimentsViewmodel,
+      builder: (context, child) {
+        return AbsorbPointer(
+          absorbing: _experimentsViewmodel.scrollController.hasClients
+              ? _experimentsViewmodel.state == StateEnum.loading &&
+                  _experimentsViewmodel
+                          .scrollController.position.maxScrollExtent ==
+                      _experimentsViewmodel.scrollController.offset
+              : _experimentsViewmodel.state == StateEnum.loading,
+          child: EZTPullToRefresh(
+            key: _refreshIndicatorKey,
+            onRefresh: () {
+              // _experimentsViewmodel.setFinishedFilter(false);
+              return _experimentsViewmodel.fetch();
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Column(
+                children: [
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  //   child: _searchTermInput,
+                  // ),
+                  // const SizedBox(
+                  //   height: 16,
+                  // ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Row(
+                      children: [
+                        ToggleSwitch(
+                          initialLabelIndex:
+                              _experimentsViewmodel.finishedFilter ? 1 : 0,
+                          minWidth: (widthMQ * 0.4),
+                          totalSwitches: 2,
+                          labels: const ['Em andamento', 'Concluído'],
+                          activeFgColor: AppColors.white,
+                          inactiveFgColor: AppColors.primary,
+                          activeBgColor: const [AppColors.primary],
+                          inactiveBgColor: AppColors.white,
+                          borderColor: const [AppColors.primary],
+                          borderWidth: 1.5,
+                          onToggle: (index) {
+                            if (index == 0) {
+                              if (_experimentsViewmodel.finishedFilter !=
+                                  false) {
+                                _experimentsViewmodel.setFinishedFilter(false);
+                                _experimentsViewmodel.fetch();
                                 return;
                               }
 
-                              if (_experimentsViewmodel.finishedFilter ||
-                                  !_homeViewmodel.hasInternetConnection) return;
+                              return;
+                            }
 
-                              _experimentsViewmodel.setFinishedFilter(true);
-                              _experimentsViewmodel.fetch();
-                            },
-                          ),
-                          const SizedBox(
-                            width: 4,
-                          ),
-                          Expanded(
-                            child: InkWell(
-                              customBorder: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              onTap: _showFiltersDialog,
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Icon(
-                                  _experimentsViewmodel.anyFilterIsEnabled()
-                                      ? PhosphorIcons.funnelFill
-                                      : PhosphorIcons.funnel,
-                                  color: AppColors.primary,
-                                ),
+                            if (_experimentsViewmodel.finishedFilter ||
+                                !_homeViewmodel.hasInternetConnection) return;
+
+                            _experimentsViewmodel.setFinishedFilter(true);
+                            _experimentsViewmodel.fetch();
+                          },
+                        ),
+                        const SizedBox(
+                          width: 4,
+                        ),
+                        Expanded(
+                          child: InkWell(
+                            customBorder: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            onTap: _showFiltersDialog,
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Icon(
+                                _experimentsViewmodel.anyFilterIsEnabled()
+                                    ? PhosphorIcons.funnelFill
+                                    : PhosphorIcons.funnel,
+                                color: AppColors.primary,
                               ),
                             ),
-                          )
-                        ],
-                      ),
+                          ),
+                        )
+                      ],
                     ),
-                    // const SizedBox(
-                    //   height: 16,
-                    // ),
-                    if (_experimentsViewmodel.experiments.isNotEmpty)
-                      Text(
-                        "🔬 ${_experimentsViewmodel.totalOfExperiments} experimento${_experimentsViewmodel.experiments.length > 1 ? 's ' : ' '}encontrado${_experimentsViewmodel.experiments.length > 1 ? 's ' : ' '}",
-                        style: TextStyles.link.copyWith(fontSize: 16),
-                      ),
-                    const SizedBox(
-                      height: 16,
+                  ),
+                  if (_experimentsViewmodel.experiments.isNotEmpty)
+                    Text(
+                      "🔬 ${_experimentsViewmodel.totalOfExperiments} experimento${isPlural}encontrado$isPlural",
+                      style: TextStyles.link.copyWith(fontSize: 16),
                     ),
-                    Expanded(
-                      child: _buildExperimentsList(heightMQ),
-                    ),
-                  ],
-                ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Expanded(
+                    child: _buildExperimentsList(heightMQ),
+                  ),
+                ],
               ),
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 }
