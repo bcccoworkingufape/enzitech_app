@@ -1,6 +1,5 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-
 // 📦 Package imports:
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -27,7 +26,6 @@ Future<void> main() async {
       return token;
     },
     baseUrl: () => API.BASE_URL,
-    apiKey: 'ezt_bcc_coworking',
   );
 
   Inject.initialize(httpDriverOptions);

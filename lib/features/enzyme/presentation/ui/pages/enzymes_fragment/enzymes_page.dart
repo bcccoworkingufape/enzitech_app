@@ -8,6 +8,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../shared/ui/ui.dart';
+import '../../../../../main/presentation/viewmodel/account_viewmodel.dart';
 import '../../../../domain/entities/enzyme_entity.dart';
 import '../../../viewmodel/enzymes_viewmodel.dart';
 import '../../widgets/enzyme_card.dart';
@@ -23,7 +24,7 @@ class EnzymesPage extends StatefulWidget {
 }
 
 class _EnzymesPageState extends State<EnzymesPage> {
-  // late final AccountViewmodel accountViewmodel;
+  late final AccountViewmodel _accountViewmodel;
   late final EnzymesViewmodel _enzymesViewmodel;
 
   final Key _refreshIndicatorKey = GlobalKey();
@@ -40,7 +41,7 @@ class _EnzymesPageState extends State<EnzymesPage> {
   @override
   void initState() {
     super.initState();
-    // accountViewmodel = context.read<AccountViewmodel>();
+    _accountViewmodel = GetIt.I.get<AccountViewmodel>();
     _enzymesViewmodel = GetIt.I.get<EnzymesViewmodel>();
 
     if (mounted) {
@@ -75,10 +76,11 @@ class _EnzymesPageState extends State<EnzymesPage> {
 
     if (_enzymesViewmodel.state == StateEnum.success &&
         _enzymesViewmodel.enzymes.isEmpty) {
-      return const EZTForcedCenter(
+      return EZTForcedCenter(
         child: EZTNotFound(
-          message:
-              "Nenhuma enzima cadastrada, entre em contato com o seu Administrador para solucionar este problema.",
+          message: _accountViewmodel.user!.userType == UserTypeEnum.admin
+              ? "Nenhuma enzima cadastrada."
+              : "Nenhuma enzima cadastrada, entre em contato com o seu Administrador para solucionar este problema.",
         ),
       );
     }
@@ -95,8 +97,7 @@ class _EnzymesPageState extends State<EnzymesPage> {
         return Column(
           children: [
             Visibility(
-              visible:
-                  false /* accountViewmodel.user!.userType == UserTypeEnum.user */,
+              visible: _accountViewmodel.user!.userType == UserTypeEnum.user,
               replacement: Dismissible(
                 key: Key(enzyme.id),
                 onDismissed: (direction) {
@@ -152,32 +153,31 @@ class _EnzymesPageState extends State<EnzymesPage> {
                   ),
                 ),
                 direction: DismissDirection.endToStart,
-                /* confirmDismiss:
-                    context.read<AccountViewmodel>().enableExcludeConfirmation!
-                        ? (DismissDirection direction) async {
-                            return await showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: const Text('Excluir a enzima?'),
-                                  content: const Text(
-                                      'Você tem certeza que deseja excluir esta enzima?'),
-                                  actions: [
-                                    TextButton(
-                                        onPressed: () =>
-                                            Navigator.of(context).pop(true),
-                                        child: const Text("EXCLUIR")),
-                                    TextButton(
-                                      onPressed: () =>
-                                          Navigator.of(context).pop(false),
-                                      child: const Text("CANCELAR"),
-                                    ),
-                                  ],
-                                );
-                              },
+                confirmDismiss: _accountViewmodel.enableExcludeConfirmation!
+                    ? (DismissDirection direction) async {
+                        return await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('Excluir a enzima?'),
+                              content: const Text(
+                                  'Você tem certeza que deseja excluir esta enzima?'),
+                              actions: [
+                                TextButton(
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(true),
+                                    child: const Text("EXCLUIR")),
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.of(context).pop(false),
+                                  child: const Text("CANCELAR"),
+                                ),
+                              ],
                             );
-                          }
-                        : null, */
+                          },
+                        );
+                      }
+                    : null,
                 child: getEnzymeCard(enzyme),
               ),
               child: Padding(

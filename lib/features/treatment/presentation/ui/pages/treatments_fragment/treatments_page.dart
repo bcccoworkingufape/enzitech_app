@@ -1,6 +1,5 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -9,6 +8,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../shared/ui/ui.dart';
+import '../../../../../main/presentation/viewmodel/account_viewmodel.dart';
 import '../../../viewmodel/treatments_viewmodel.dart';
 import '../../widgets/treatment_card.dart';
 
@@ -138,8 +138,8 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
                   ),
                 ),
                 direction: DismissDirection.endToStart,
-                /* confirmDismiss:
-                    context.read<AccountViewmodel>().enableExcludeConfirmation!
+                confirmDismiss:
+                    GetIt.I.get<AccountViewmodel>().enableExcludeConfirmation!
                         ? (DismissDirection direction) async {
                             return await showDialog(
                               context: context,
@@ -163,7 +163,7 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
                               },
                             );
                           }
-                        : null, */
+                        : null,
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: TreatmentCard(

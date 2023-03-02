@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names, non_constant_identifier_names
 
 class API {
+  //-> SETUP
   static const BASE_URL = 'http://3.86.26.20:8080';
 
   //-> AUTHENTICATION
