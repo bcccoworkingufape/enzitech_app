@@ -29,6 +29,28 @@ extension EnzymeDto on EnzymeEntity {
     );
   }
 
+  static EnzymeEntity toExperimetEnzyme(
+    EnzymeEntity initialEnzyme, {
+    required int duration,
+    required double weightSample,
+    required double weightGround,
+    required double size,
+  }) {
+    return EnzymeEntity(
+      id: initialEnzyme.id,
+      name: initialEnzyme.name,
+      variableA: initialEnzyme.variableA,
+      variableB: initialEnzyme.variableB,
+      type: initialEnzyme.type,
+      createdAt: initialEnzyme.createdAt,
+      updatedAt: initialEnzyme.updatedAt,
+      duration: duration,
+      weightSample: weightSample,
+      weightGround: weightGround,
+      size: size,
+    );
+  }
+
   Map toJson() {
     return {
       'id': id,
@@ -45,7 +67,7 @@ extension EnzymeDto on EnzymeEntity {
     };
   }
 
-  Map toJsonAsExperimentEnzymes() {
+  Map toJsonAsExperimentEnzyme() {
     return {
       'enzyme': id,
       'variableA': variableA,

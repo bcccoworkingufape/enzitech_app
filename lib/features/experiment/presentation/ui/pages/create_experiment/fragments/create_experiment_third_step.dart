@@ -67,8 +67,8 @@ class _CreateExperimentThirdStepPageState
   get _validateFields {
     if (_choosedCheckboxList.isNotEmpty) {
       setState(() {
-        _createExperimentViewmodel.setEnableNextButtonOnThirdStep(
-            _createExperimentViewmodel.formKey.currentState!.validate());
+        // print(_createExperimentViewmodel.formKey.currentState!.validate());
+        _createExperimentViewmodel.setEnableNextButtonOnThirdStep(true);
       });
     } else {
       setState(() {
@@ -89,7 +89,7 @@ class _CreateExperimentThirdStepPageState
             if (_createExperimentViewmodel.formKey.currentState!.validate()) {
               var temporary = _createExperimentViewmodel.temporaryExperiment;
 
-              _createExperimentViewmodel.setCreateExperimentDTO(
+              _createExperimentViewmodel.setTemporaryExperiment(
                 CreateExperimentDTO(
                   name: temporary.name,
                   description: temporary.description,

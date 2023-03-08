@@ -121,7 +121,7 @@ class _CreateExperimentFirstStepPageState
             if (_createExperimentViewmodel.formKey.currentState!.validate()) {
               var temporary = _createExperimentViewmodel.temporaryExperiment;
 
-              _createExperimentViewmodel.setCreateExperimentDTO(
+              _createExperimentViewmodel.setTemporaryExperiment(
                 CreateExperimentDTO(
                   name: _nameFieldController.text,
                   description: _descriptionFieldController.text,

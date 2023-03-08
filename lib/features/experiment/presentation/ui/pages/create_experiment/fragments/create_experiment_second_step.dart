@@ -137,7 +137,7 @@ class _CreateExperimentSecondStepPageState
             if (_createExperimentViewmodel.formKey.currentState!.validate()) {
               var temporary = _createExperimentViewmodel.temporaryExperiment;
 
-              _createExperimentViewmodel.setCreateExperimentDTO(
+              _createExperimentViewmodel.setTemporaryExperiment(
                 CreateExperimentDTO(
                   name: temporary.name,
                   description: temporary.description,

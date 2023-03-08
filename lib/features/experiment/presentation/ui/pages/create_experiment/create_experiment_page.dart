@@ -3,8 +3,11 @@ import 'package:get_it/get_it.dart';
 
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
+import '../../../../../../core/routing/routing.dart';
 import '../../../../../../shared/ui/ui.dart';
+import '../../../dto/create_experiment_dto.dart';
 import '../../../viewmodel/create_experiment_viewmodel.dart';
+import '../../../viewmodel/experiments_viewmodel.dart';
 import 'fragments/create_experiment_first_step.dart';
 import 'fragments/create_experiment_fourth_step.dart';
 import 'fragments/create_experiment_second_step.dart';
@@ -21,6 +24,7 @@ class CreateExperimentPage extends StatefulWidget {
 
 class _CreateExperimentPageState extends State<CreateExperimentPage> {
   late final CreateExperimentViewmodel _createExperimentViewmodel;
+  late final ExperimentsViewmodel _experimentsViewmodel;
 
   // bool _expandToSeeMoreVisible = true;
 
@@ -28,6 +32,7 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
   void initState() {
     super.initState();
     _createExperimentViewmodel = GetIt.I.get<CreateExperimentViewmodel>();
+    _experimentsViewmodel = GetIt.I.get<ExperimentsViewmodel>();
 
     if (mounted) {
       _createExperimentViewmodel.addListener(
@@ -38,6 +43,31 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
               HandleFailure.of(_createExperimentViewmodel.failure!),
               eztSnackBarType: EZTSnackBarType.error,
             );
+          } else if (_createExperimentViewmodel.state == StateEnum.success &&
+              _createExperimentViewmodel.experiment != null) {
+            if (mounted) {
+              // reload the experiments list
+              // TODO: Verify this (maybe not loading recent created experiment if > 10)
+              _experimentsViewmodel.fetch();
+
+              EZTSnackBar.show(
+                context,
+                "Experimento criado com sucesso!",
+                eztSnackBarType: EZTSnackBarType.success,
+              );
+
+              if (!mounted) return;
+              Navigator.popAndPushNamed(
+                context,
+                Routing.experimentDetailed,
+                arguments: _createExperimentViewmodel.experiment,
+              ).whenComplete(() {
+                _createExperimentViewmodel.setExperiment(null);
+                _createExperimentViewmodel.setTemporaryExperiment(
+                  CreateExperimentDTO(),
+                );
+              });
+            }
           }
         },
       );

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
+import '../../../../shared/ui/ui.dart';
+import '../../../enzyme/data/dto/enzyme_dto.dart';
+import '../../domain/entities/experiment_entity.dart';
 import '../../domain/usecases/create_experiment/create_experiment_usecase.dart';
 import '../dto/create_experiment_dto.dart';
 
@@ -21,6 +24,13 @@ class CreateExperimentViewmodel extends ChangeNotifier {
   Failure? get failure => _failure;
   void _setFailure(Failure? failure) {
     _failure = failure;
+  }
+
+  ExperimentEntity? _experiment;
+  ExperimentEntity? get experiment => _experiment;
+  void setExperiment(ExperimentEntity? experiment) {
+    _experiment = experiment;
+    notifyListeners();
   }
 
   // var experimentCreated = false; //? Remover isso
@@ -70,8 +80,15 @@ class CreateExperimentViewmodel extends ChangeNotifier {
 
   CreateExperimentDTO _temporaryExperiment = CreateExperimentDTO();
   CreateExperimentDTO get temporaryExperiment => _temporaryExperiment;
-  void setCreateExperimentDTO(CreateExperimentDTO temporaryExperiment) {
+  void setTemporaryExperiment(CreateExperimentDTO temporaryExperiment) {
     _temporaryExperiment = temporaryExperiment;
+    notifyListeners();
+  }
+
+  Map<String, EZTTextField> _textFields = {};
+  Map<String, EZTTextField> get textFields => _textFields;
+  void setTextFields(Map<String, EZTTextField> textFields) {
+    _textFields = textFields;
     notifyListeners();
   }
 
@@ -92,7 +109,7 @@ class CreateExperimentViewmodel extends ChangeNotifier {
               curve: Curves.easeIn,
             );
           } else {
-            setCreateExperimentDTO(CreateExperimentDTO());
+            setTemporaryExperiment(CreateExperimentDTO());
             Navigator.pop(context);
           }
         }
@@ -115,6 +132,32 @@ class CreateExperimentViewmodel extends ChangeNotifier {
   Future<void> createExperiment() async {
     setStateEnum(StateEnum.loading);
 
+    var enzymes = temporaryExperiment.enzymes!
+        .map(
+          (enzyme) => EnzymeDto.toExperimetEnzyme(
+            enzyme,
+            duration: int.parse(
+                textFields['duration-${enzyme.id}']!.controller!.text),
+            weightSample: double.parse(
+                textFields['weightSample-${enzyme.id}']!.controller!.text),
+            weightGround: double.parse(
+                textFields['weightGround-${enzyme.id}']!.controller!.text),
+            size:
+                double.parse(textFields['size-${enzyme.id}']!.controller!.text),
+          ),
+        )
+        .toList();
+
+    setTemporaryExperiment(
+      CreateExperimentDTO(
+        name: temporaryExperiment.name,
+        description: temporaryExperiment.description,
+        enzymes: enzymes,
+        repetitions: temporaryExperiment.repetitions,
+        treatmentsIDs: temporaryExperiment.treatmentsIDs,
+      ),
+    );
+
     var result = await _createExperimentUseCase(
       name: _temporaryExperiment.name!,
       description: _temporaryExperiment.description!,
@@ -129,7 +172,7 @@ class CreateExperimentViewmodel extends ChangeNotifier {
         setStateEnum(StateEnum.error);
       },
       (success) async {
-        // _setExperiment(success);
+        setExperiment(success);
         setStateEnum(StateEnum.success);
       },
     );

@@ -26,7 +26,7 @@ class CreateExperimentRemoteDataSourceImp
   }) async {
     try {
       List<Map> experimentsEnzymes =
-          enzymes.map((enzyme) => enzyme.toJsonAsExperimentEnzymes()).toList();
+          enzymes.map((enzyme) => enzyme.toJsonAsExperimentEnzyme()).toList();
 
       var response = await _httpService.post(
         API.REQUEST_EXPERIMENTS,

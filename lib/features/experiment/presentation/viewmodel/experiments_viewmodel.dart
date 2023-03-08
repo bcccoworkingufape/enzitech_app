@@ -87,7 +87,7 @@ class ExperimentsViewmodel extends ChangeNotifier {
 
   bool get hasNextPage => _experiments.isEmpty || _totalOfExperiments == 0
       ? false
-      : (_totalOfExperiments % _experiments.length) > 0;
+      : (_totalOfExperiments - _experiments.length) > 0;
 
   bool _isLoadingMoreRunning = false;
   bool get isLoadingMoreRunning => _isLoadingMoreRunning;
