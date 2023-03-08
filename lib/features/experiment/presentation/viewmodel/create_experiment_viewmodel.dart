@@ -106,8 +106,7 @@ class CreateExperimentViewmodel extends ChangeNotifier {
       currentFocus.focusedChild?.unfocus();
     }
 
-    pageController.animateTo(
-      MediaQuery.of(context).size.width,
+    pageController.nextPage(
       duration: const Duration(milliseconds: 150),
       curve: Curves.easeIn,
     );

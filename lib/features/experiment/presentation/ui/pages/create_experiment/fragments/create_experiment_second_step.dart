@@ -145,6 +145,7 @@ class _CreateExperimentSecondStepPageState
                   treatmentsIDs: choosedCheckboxList
                       .map((processes) => processes.id)
                       .toList(),
+                  enzymes: temporary.enzymes,
                 ),
               );
 
@@ -176,6 +177,9 @@ class _CreateExperimentSecondStepPageState
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           children: [
+            const SizedBox(
+              height: 17,
+            ),
             Row(
               children: [
                 const Icon(
