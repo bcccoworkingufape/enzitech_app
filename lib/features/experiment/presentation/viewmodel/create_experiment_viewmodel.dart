@@ -132,31 +132,37 @@ class CreateExperimentViewmodel extends ChangeNotifier {
   Future<void> createExperiment() async {
     setStateEnum(StateEnum.loading);
 
-    var enzymes = temporaryExperiment.enzymes!
-        .map(
-          (enzyme) => EnzymeDto.toExperimetEnzyme(
-            enzyme,
-            duration: int.parse(
-                textFields['duration-${enzyme.id}']!.controller!.text),
-            weightSample: double.parse(
-                textFields['weightSample-${enzyme.id}']!.controller!.text),
-            weightGround: double.parse(
-                textFields['weightGround-${enzyme.id}']!.controller!.text),
-            size:
-                double.parse(textFields['size-${enzyme.id}']!.controller!.text),
-          ),
-        )
-        .toList();
+    try {
+      var enzymes = temporaryExperiment.enzymes!
+          .map(
+            (enzyme) => EnzymeDto.toExperimetEnzyme(
+              enzyme,
+              duration: int.parse(
+                  textFields['duration-${enzyme.id}']!.controller!.text),
+              weightSample: double.parse(
+                  textFields['weightSample-${enzyme.id}']!.controller!.text),
+              weightGround: double.parse(
+                  textFields['weightGround-${enzyme.id}']!.controller!.text),
+              size: double.parse(
+                  textFields['size-${enzyme.id}']!.controller!.text),
+            ),
+          )
+          .toList();
 
-    setTemporaryExperiment(
-      CreateExperimentDTO(
-        name: temporaryExperiment.name,
-        description: temporaryExperiment.description,
-        enzymes: enzymes,
-        repetitions: temporaryExperiment.repetitions,
-        treatmentsIDs: temporaryExperiment.treatmentsIDs,
-      ),
-    );
+      setTemporaryExperiment(
+        CreateExperimentDTO(
+          name: temporaryExperiment.name,
+          description: temporaryExperiment.description,
+          enzymes: enzymes,
+          repetitions: temporaryExperiment.repetitions,
+          treatmentsIDs: temporaryExperiment.treatmentsIDs,
+        ),
+      );
+    } on Exception catch (e) {
+      _setFailure(e as Failure);
+      setStateEnum(StateEnum.error);
+      return;
+    }
 
     var result = await _createExperimentUseCase(
       name: _temporaryExperiment.name!,

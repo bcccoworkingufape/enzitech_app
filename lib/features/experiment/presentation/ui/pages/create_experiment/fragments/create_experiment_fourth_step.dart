@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../../../../../core/enums/state_enum.dart';
@@ -47,6 +48,12 @@ class _CreateExperimentFourthStepPageState
         _createExperimentViewmodel.setStepPage(0, notify: false);
 
         final fieldValidator = FieldValidator(validations, context);
+        final durationFieldValidator = FieldValidator([
+          ...validations,
+          ValidateRule(
+            ValidateTypes.isInteger,
+          )
+        ], context);
 
         setState(() {
           textEditingControllers.clear();
@@ -117,11 +124,11 @@ class _CreateExperimentFourthStepPageState
                 labelText: "Duração",
                 usePrimaryColorOnFocusedBorder: true,
                 keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
+                    const TextInputType.numberWithOptions(decimal: false),
                 controller: durationFieldController,
                 onChanged: (value) => _validateFields,
-                fieldValidator: fieldValidator,
-                inputFormatters: Constants.enzymeDecimalInputFormatters,
+                fieldValidator: durationFieldValidator,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 // disableSuffixIcon: true,
               ),
             );
