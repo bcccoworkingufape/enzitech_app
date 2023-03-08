@@ -12,6 +12,8 @@ import '../../../features/enzyme/domain/usecases/delete_enzyme/delete_enzyme_use
 import '../../../features/enzyme/domain/usecases/delete_enzyme/delete_enzyme_usecase_imp.dart';
 import '../../../features/enzyme/domain/usecases/get_enzymes/get_enzymes_usecase.dart';
 import '../../../features/enzyme/domain/usecases/get_enzymes/get_enzymes_usecase_imp.dart';
+import '../../../features/experiment/domain/usecases/create_experiment/create_experiment_usecase.dart';
+import '../../../features/experiment/domain/usecases/create_experiment/create_experiment_usecase_imp.dart';
 import '../../../features/experiment/domain/usecases/delete_experiment/delete_experiment_usecase.dart';
 import '../../../features/experiment/domain/usecases/delete_experiment/delete_experiment_usecase_imp.dart';
 import '../../../features/experiment/domain/usecases/get_experiment_by_id/get_experiment_by_id_usecase.dart';
@@ -47,6 +49,9 @@ class UseCasesInjections {
     );
     getIt.registerLazySingleton<CreateEnzymeUseCase>(
       () => CreateEnzymeUseCaseImp(getIt()),
+    );
+    getIt.registerLazySingleton<CreateExperimentUseCase>(
+      () => CreateExperimentUseCaseImp(getIt()),
     );
     getIt.registerLazySingleton<CreateTreatmentUseCase>(
       () => CreateTreatmentUseCaseImp(getIt()),

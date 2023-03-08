@@ -6,6 +6,7 @@ import '../../../features/authentication/presentation/viewmodel/create_account_v
 import '../../../features/authentication/presentation/viewmodel/login_viewmodel.dart';
 import '../../../features/enzyme/presentation/viewmodel/create_enzyme_viewmodel.dart';
 import '../../../features/enzyme/presentation/viewmodel/enzymes_viewmodel.dart';
+import '../../../features/experiment/presentation/viewmodel/create_experiment_viewmodel.dart';
 import '../../../features/experiment/presentation/viewmodel/experiment_details_viewmodel.dart';
 import '../../../features/experiment/presentation/viewmodel/experiments_viewmodel.dart';
 import '../../../features/main/presentation/viewmodel/account_viewmodel.dart';
@@ -26,6 +27,9 @@ class ViewmodelsInjections {
     );
     getIt.registerLazySingleton<CreateEnzymeViewmodel>(
       () => CreateEnzymeViewmodel(getIt()),
+    );
+    getIt.registerLazySingleton<CreateExperimentViewmodel>(
+      () => CreateExperimentViewmodel(getIt()),
     );
     getIt.registerLazySingleton<CreateTreatmentViewmodel>(
       () => CreateTreatmentViewmodel(getIt()),
