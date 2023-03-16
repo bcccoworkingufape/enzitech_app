@@ -9,6 +9,6 @@ abstract class CalculateExperimentUseCase {
   Future<Either<Failure, ExperimentCalculationEntity>> call({
     required String enzymeId,
     required String treatmentID,
-    required Map<String, dynamic> experimentData,
+    required List<Map<String, dynamic>> listOfExperimentData,
   });
 }

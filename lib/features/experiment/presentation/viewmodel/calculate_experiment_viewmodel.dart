@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
+import '../../../../shared/ui/ui.dart';
+import '../../../../shared/utils/utils.dart';
+import '../../../../shared/validator/validator.dart';
 import '../../domain/entities/experiment_calculation_entity.dart';
 import '../../domain/entities/experiment_entity.dart';
 import '../../domain/usecases/calculate_experiment/calculate_experiment_usecase.dart';
@@ -50,12 +53,12 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // int _stepPage = 0;
-  // int get stepPage => _stepPage;
-  // void setStepPage(int stepPage, {bool notify = true}) {
-  //   _stepPage = stepPage;
-  //   if (notify) notifyListeners();
-  // }
+  int _stepPage = 0;
+  int get stepPage => _stepPage;
+  void setStepPage(int stepPage, {bool notify = true}) {
+    _stepPage = stepPage;
+    if (notify) notifyListeners();
+  }
 
   bool _enableNextButtonOnFirstStep = false;
   bool get enableNextButtonOnFirstStep => _enableNextButtonOnFirstStep;
@@ -96,12 +99,19 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Map<String, EZTTextField> _textFields = {};
-  // Map<String, EZTTextField> get textFields => _textFields;
-  // void setTextFields(Map<String, EZTTextField> textFields) {
-  //   _textFields = textFields;
-  //   notifyListeners();
-  // }
+  List<Map<String, double?>> _listOfExperimentData = [];
+  List<Map<String, double?>> get listOfExperimentData => _listOfExperimentData;
+  void setListOfExperimentData(
+      List<Map<String, double?>> listOfExperimentData) {
+    _listOfExperimentData = listOfExperimentData;
+  }
+
+  Map<String, EZTTextField> _textFields = {};
+  Map<String, EZTTextField> get textFields => _textFields;
+  void setTextFields(Map<String, EZTTextField> textFields) {
+    _textFields = textFields;
+    notifyListeners();
+  }
 
   void onBack(bool mounted, BuildContext context, {int? page}) {
     if (mounted) {
@@ -137,51 +147,140 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
       currentFocus.focusedChild?.unfocus();
     }
 
+    EZTSnackBar.clear(context);
+
     pageController.nextPage(
       duration: const Duration(milliseconds: 150),
       curve: Curves.easeIn,
     );
   }
 
+  Map<String, TextEditingController> _textEditingControllers = {};
+  Map<String, TextEditingController> get textEditingControllers =>
+      _textEditingControllers;
+  void setTextEditingControllers(
+      Map<String, TextEditingController> textEditingControllers) {
+    _textEditingControllers = textEditingControllers;
+    notifyListeners();
+  }
+
+  void _validateFields(String value, double id, String type) {
+    var isAllFilled = <bool>[];
+    textEditingControllers.forEach((key, value) {
+      isAllFilled.add(value.text.isNotEmpty);
+    });
+    var b = listOfExperimentData.firstWhere((element) => element["_id"] == id);
+    if (value != "") {
+      b[type] = double.parse(value);
+    }
+    if (/* mounted && */ isAllFilled.every((boolean) => boolean == true)) {
+      // log(textEditingControllers.toString());
+      setEnableNextButtonOnSecondStep(true);
+    } else {
+      setEnableNextButtonOnSecondStep(false);
+    }
+  }
+
+  Future<void> generateTextFields(BuildContext context) async {
+    // state = ExperimentInsertDataState.idle;
+    // setIsLoading(true);
+    setStateEnum(StateEnum.loading);
+
+    // await Future.delayed(Duration.zero);
+
+    setTextEditingControllers({});
+
+    final validations = <ValidateRule>[
+      ValidateRule(
+        ValidateTypes.required,
+      ),
+      ValidateRule(
+        ValidateTypes.numeric,
+      ),
+      ValidateRule(
+        ValidateTypes.greaterThanZeroDecimal,
+      ),
+    ];
+
+    final fieldValidator = FieldValidator(validations, context);
+
+    List<Map<String, double?>> tempList = [];
+
+    for (var i = 0; i < experiment.repetitions; i++) {
+      tempList.add({
+        "sample": null,
+        "whiteSample": null,
+        "_id": i.toDouble(),
+      });
+    }
+
+    setListOfExperimentData(tempList);
+
+    textEditingControllers.clear();
+    textFields.clear();
+
+    for (var i = 0; i < listOfExperimentData.length; i++) {
+      TextEditingController sampleFieldController =
+          TextEditingController(text: '');
+      textEditingControllers.putIfAbsent(
+        'sample-${i.toDouble()}',
+        () => sampleFieldController,
+      );
+      textFields.putIfAbsent(
+        'sample-${i.toDouble()}',
+        () => EZTTextField(
+          eztTextFieldType: EZTTextFieldType.underline,
+          labelText: "Amostra",
+          usePrimaryColorOnFocusedBorder: true,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          controller: sampleFieldController,
+          onChanged: (value) {
+            _validateFields(value, i.toDouble(), "sample");
+            print(value);
+          },
+          fieldValidator: fieldValidator,
+          inputFormatters: Constants.enzymeDecimalInputFormatters,
+          // disableSuffixIcon: true,
+        ),
+      );
+
+      TextEditingController whiteSampleFieldController =
+          TextEditingController(text: '');
+      textEditingControllers.putIfAbsent(
+        'whiteSample-${i.toDouble()}',
+        () => whiteSampleFieldController,
+      );
+      textFields.putIfAbsent(
+        'whiteSample-${i.toDouble()}',
+        () => EZTTextField(
+          eztTextFieldType: EZTTextFieldType.underline,
+          labelText: "Amostra branca",
+          usePrimaryColorOnFocusedBorder: true,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          controller: whiteSampleFieldController,
+          onChanged: (value) {
+            _validateFields(value, i.toDouble(), "whiteSample");
+            print(value);
+          },
+          fieldValidator: fieldValidator,
+          inputFormatters: Constants.enzymeDecimalInputFormatters,
+          // disableSuffixIcon: true,
+        ),
+      );
+    }
+    setStateEnum(StateEnum.idle);
+    // setIsLoading(false);
+
+    // notifyListeners();
+  }
+
   Future<void> calculateExperiment() async {
     setStateEnum(StateEnum.loading);
 
-    /* try {
-      var enzymes = temporaryExperiment.enzymes!
-          .map(
-            (enzyme) => EnzymeDto.toExperimetEnzyme(
-              enzyme,
-              duration: int.parse(
-                  textFields['duration-${enzyme.id}']!.controller!.text),
-              weightSample: double.parse(
-                  textFields['weightSample-${enzyme.id}']!.controller!.text),
-              weightGround: double.parse(
-                  textFields['weightGround-${enzyme.id}']!.controller!.text),
-              size: double.parse(
-                  textFields['size-${enzyme.id}']!.controller!.text),
-            ),
-          )
-          .toList();
-
-      setTemporaryExperiment(
-        CreateExperimentDTO(
-          name: temporaryExperiment.name,
-          description: temporaryExperiment.description,
-          enzymes: enzymes,
-          repetitions: temporaryExperiment.repetitions,
-          treatmentsIDs: temporaryExperiment.treatmentsIDs,
-        ),
-      );
-    } on Exception catch (e) {
-      _setFailure(e as Failure);
-      setStateEnum(StateEnum.error);
-      return;
-    } */
-
     var result = await _calculateExperimentUseCase(
-      enzymeId: '',
-      treatmentID: '',
-      experimentData: {},
+      enzymeId: temporaryChoosedExperimentCombination.enzymeId!,
+      treatmentID: temporaryChoosedExperimentCombination.treatmentId!,
+      listOfExperimentData: listOfExperimentData,
     );
 
     result.fold(

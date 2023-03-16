@@ -58,13 +58,11 @@ class _CalculateExperimentFirstStepPageState
   }
 
   _validateFields() {
-    setState(() {
-      if (choosedEnzyme != null && choosedTreatment != null) {
-        _calculateExperimentViewmodel.setEnableNextButtonOnFirstStep(true);
-      } else {
-        _calculateExperimentViewmodel.setEnableNextButtonOnFirstStep(false);
-      }
-    });
+    if (choosedEnzyme != null && choosedTreatment != null) {
+      _calculateExperimentViewmodel.setEnableNextButtonOnFirstStep(true);
+    } else {
+      _calculateExperimentViewmodel.setEnableNextButtonOnFirstStep(false);
+    }
   }
 
   get _treatmentChoiceChip {
@@ -172,7 +170,16 @@ class _CalculateExperimentFirstStepPageState
                   treatmentId: choosedTreatment,
                 ),
               );
-              _calculateExperimentViewmodel.onNext(context);
+
+              await _calculateExperimentViewmodel
+                  .generateTextFields(context)
+                  .whenComplete(
+                    () => Future.delayed(Duration.zero, () {
+                      _calculateExperimentViewmodel.setStepPage(0);
+
+                      _calculateExperimentViewmodel.onNext(context);
+                    }),
+                  );
             }
 
             /* EZTSnackBar.clear(context);
@@ -208,78 +215,84 @@ class _CalculateExperimentFirstStepPageState
 
   @override
   Widget build(BuildContext context) {
-    return CalculateExperimentFragmentTemplate(
-      titleOfStepIndicator: "Inserir dados no experimento",
-      messageOfStepIndicator: "Etapa 1 de 2 - Identificação",
-      body: SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(
-          parent: BouncingScrollPhysics(),
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 32,
-            ),
-            Visibility(
-              visible: _calculateExperimentViewmodel
-                      .experiment.treatments!.isNotEmpty &&
-                  _calculateExperimentViewmodel.experiment.enzymes!.isNotEmpty,
-              replacement: const EZTNotFound(
-                title: "Experimento inválido!",
-                message:
-                    "Não é possível prosseguir sem dados de tratamento(s) e/ou enzima(s)",
+    return AnimatedBuilder(
+        animation: _calculateExperimentViewmodel,
+        builder: (context, child) {
+          return CalculateExperimentFragmentTemplate(
+            titleOfStepIndicator: "Inserir dados no experimento",
+            messageOfStepIndicator: "Etapa 1 de 2 - Identificação",
+            body: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(
+                parent: BouncingScrollPhysics(),
               ),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      const Icon(
-                        PhosphorIcons.flask,
-                        color: AppColors.greySweet,
-                      ),
-                      const SizedBox(width: 4),
-                      Expanded(
-                        child: Text(
-                          'Escolha o tratamento e a enzima para inserir os dados',
-                          style: TextStyles.detailBold,
-                          textAlign: TextAlign.left,
-                        ),
-                      ),
-                    ],
+                  const SizedBox(
+                    height: 32,
                   ),
-                  const SizedBox(height: 32),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: <Widget>[
-                          FormBuilder(
-                            key: _calculateExperimentViewmodel.firstStepFormKey,
-                            autovalidateMode: AutovalidateMode.disabled,
-                            skipDisabled: true,
+                  Visibility(
+                    visible: _calculateExperimentViewmodel
+                            .experiment.treatments!.isNotEmpty &&
+                        _calculateExperimentViewmodel
+                            .experiment.enzymes!.isNotEmpty,
+                    replacement: const EZTNotFound(
+                      title: "Experimento inválido!",
+                      message:
+                          "Não é possível prosseguir sem dados de tratamento(s) e/ou enzima(s)",
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            const Icon(
+                              PhosphorIcons.flask,
+                              color: AppColors.greySweet,
+                            ),
+                            const SizedBox(width: 4),
+                            Expanded(
+                              child: Text(
+                                'Escolha o tratamento e a enzima para inserir os dados',
+                                style: TextStyles.detailBold,
+                                textAlign: TextAlign.left,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 32),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: SingleChildScrollView(
                             child: Column(
                               children: <Widget>[
-                                _treatmentChoiceChip,
-                                const SizedBox(height: 16),
-                                _enzymeChoiceChip,
+                                FormBuilder(
+                                  key: _calculateExperimentViewmodel
+                                      .firstStepFormKey,
+                                  autovalidateMode: AutovalidateMode.disabled,
+                                  skipDisabled: true,
+                                  child: Column(
+                                    children: <Widget>[
+                                      _treatmentChoiceChip,
+                                      const SizedBox(height: 16),
+                                      _enzymeChoiceChip,
+                                    ],
+                                  ),
+                                ),
                               ],
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
+                  const SizedBox(
+                    height: 64,
+                  ),
+                  _buttons,
                 ],
               ),
             ),
-            const SizedBox(
-              height: 64,
-            ),
-            _buttons,
-          ],
-        ),
-      ),
-    );
+          );
+        });
   }
 }
