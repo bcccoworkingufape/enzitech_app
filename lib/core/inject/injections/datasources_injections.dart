@@ -13,11 +13,13 @@ import '../../../features/enzyme/data/datasources/local/get_enzymes/get_enzymes_
 import '../../../features/enzyme/data/datasources/remote/create_enzyme_remote_datasource_imp.dart';
 import '../../../features/enzyme/data/datasources/remote/delete_enzyme_remote_datasource_imp.dart';
 import '../../../features/enzyme/data/datasources/remote/get_enzymes_remote_datasource_imp.dart';
+import '../../../features/experiment/data/datasources/calculate_experiment_datasource.dart';
 import '../../../features/experiment/data/datasources/create_experiment_datasource.dart';
 import '../../../features/experiment/data/datasources/delete_experiment_datasource.dart';
 import '../../../features/experiment/data/datasources/get_experiment_by_id_datasource.dart';
 import '../../../features/experiment/data/datasources/get_experiments_datasource.dart';
 import '../../../features/experiment/data/datasources/local/get_experiments/get_experiments_local_datasource_decorator_imp.dart';
+import '../../../features/experiment/data/datasources/remote/calculate_experiment_remote_datasource_imp.dart';
 import '../../../features/experiment/data/datasources/remote/create_experiment_remote_datasource_imp.dart';
 import '../../../features/experiment/data/datasources/remote/delete_experiment_remote_datasource_imp.dart';
 import '../../../features/experiment/data/datasources/remote/get_experiment_by_id_remote_datasource_imp.dart';
@@ -42,10 +44,11 @@ class DataSourcesInjections {
   final GetIt getIt;
 
   DataSourcesInjections(this.getIt) {
+    getIt.registerLazySingleton<CalculateExperimentDataSource>(
+      () => CalculateExperimentRemoteDataSourceImp(getIt()),
+    );
     getIt.registerLazySingleton<ClearUserDataSource>(
-      () => ClearUserLocalDataSourceImp(
-        getIt(),
-      ),
+      () => ClearUserLocalDataSourceImp(getIt()),
     );
     getIt.registerLazySingleton<CreateAccountDataSource>(
       () => CreateAccountRemoteDataSourceImp(getIt()),
@@ -75,9 +78,7 @@ class DataSourcesInjections {
       ),
     );
     getIt.registerLazySingleton<GetExcludeConfirmationDataSource>(
-      () => GetExcludeConfirmationLocalDataSourceImp(
-        getIt(),
-      ),
+      () => GetExcludeConfirmationLocalDataSourceImp(getIt()),
     );
     getIt.registerLazySingleton<GetExperimentByIdDataSource>(
       () => GetExperimentByIdRemoteDataSourceImp(getIt()),

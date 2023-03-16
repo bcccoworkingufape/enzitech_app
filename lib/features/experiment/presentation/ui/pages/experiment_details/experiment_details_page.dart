@@ -251,7 +251,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
               color: AppColors.white, size: 30),
           onPressed: () => Navigator.pushNamed(
             context,
-            Routing.experimentInsertData,
+            Routing.calculateExperiment,
             arguments: _experimentDetailsViewmodel.experiment!,
           ),
         ),

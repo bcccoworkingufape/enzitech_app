@@ -12,11 +12,13 @@ import '../../../features/enzyme/data/repositories/get_enzymes_repository_imp.da
 import '../../../features/enzyme/domain/repositories/create_enzyme_repository.dart';
 import '../../../features/enzyme/domain/repositories/delete_enzyme_repository.dart';
 import '../../../features/enzyme/domain/repositories/get_enzymes_repository.dart';
+import '../../../features/experiment/data/repositories/calculate_experiment_repository_imp.dart';
 import '../../../features/experiment/data/repositories/create_experiment_repository_imp.dart';
 import '../../../features/experiment/data/repositories/delete_experiment_repository_imp.dart';
 import '../../../features/experiment/data/repositories/get_experiment_by_id_repository_imp.dart';
 import '../../../features/experiment/data/repositories/get_experiments_repository_imp.dart';
 import '../../../features/experiment/data/repositories/store_experiments_in_cache_repository_imp.dart';
+import '../../../features/experiment/domain/repositories/calculate_experiment_repository.dart';
 import '../../../features/experiment/domain/repositories/create_experiment_repository.dart';
 import '../../../features/experiment/domain/repositories/delete_experiment_repository.dart';
 import '../../../features/experiment/domain/repositories/get_experiment_by_id_repository.dart';
@@ -41,6 +43,9 @@ class RepositoriesInjections {
   final GetIt getIt;
 
   RepositoriesInjections(this.getIt) {
+    getIt.registerLazySingleton<CalculateExperimentRepository>(
+      () => CalculateExperimentRepositoryImp(getIt()),
+    );
     getIt.registerLazySingleton<ClearUserRepository>(
       () => ClearUserRepositoryImp(getIt()),
     );

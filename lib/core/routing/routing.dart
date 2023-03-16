@@ -6,6 +6,7 @@ import '../../features/authentication/presentation/ui/pages/create_account/creat
 import '../../features/authentication/presentation/ui/pages/login/login_page.dart';
 import '../../features/enzyme/presentation/ui/pages/create_enzyme/create_enzyme_page.dart';
 import '../../features/experiment/domain/entities/experiment_entity.dart';
+import '../../features/experiment/presentation/ui/pages/calculate_experiment/calculate_experiment_page.dart';
 import '../../features/experiment/presentation/ui/pages/create_experiment/create_experiment_page.dart';
 import '../../features/experiment/presentation/ui/pages/experiment_details/experiment_details_page.dart';
 import '../../features/main/presentation/ui/pages/home/home_page.dart';
@@ -19,7 +20,7 @@ class Routing {
   static const createExperiment = "/createExperiment";
   static const createTreatment = "/createTreatment";
   static const experimentDetailed = "/experimentDetailed";
-  static const experimentInsertData = "/experimentInsertData";
+  static const calculateExperiment = "/experimentInsertData";
   static const home = "/home";
   static const initial = "/";
   static const login = "/login";
@@ -50,17 +51,17 @@ class Routing {
         } else {
           return _errorRoute();
         }
-      /*
-      case experimentInsertData:
+
+      case calculateExperiment:
         if (args is ExperimentEntity) {
           return MaterialPageRoute(
-            builder: (_) => ExperimentInsertDataPage(
+            builder: (_) => CalculateExperimentPage(
               experiment: args,
             ),
           );
         } else {
           return _errorRoute();
-        }*/
+        }
       case home:
         return MaterialPageRoute(builder: (_) => const HomePage());
       case initial:
