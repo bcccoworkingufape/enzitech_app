@@ -28,7 +28,9 @@ class _CalculateExperimentFirstStepPageState
   late final ExperimentsViewmodel _experimentsViewmodel;
   bool? enableNextButton;
   String? choosedEnzyme;
+  String? choosedEnzymeName;
   String? choosedTreatment;
+  String? choosedTreatmentName;
 
   @override
   void initState() {
@@ -38,8 +40,12 @@ class _CalculateExperimentFirstStepPageState
 
     choosedEnzyme = _calculateExperimentViewmodel
         .temporaryChoosedExperimentCombination.enzymeId;
+    choosedEnzymeName = _calculateExperimentViewmodel
+        .temporaryChoosedExperimentCombination.enzymeName;
     choosedTreatment = _calculateExperimentViewmodel
         .temporaryChoosedExperimentCombination.treatmentId;
+    choosedTreatmentName = _calculateExperimentViewmodel
+        .temporaryChoosedExperimentCombination.treatmentName;
     _validateFields();
 
     /* if (mounted) {
@@ -78,6 +84,10 @@ class _CalculateExperimentFirstStepPageState
       name: 'treatment',
       onChanged: (value) {
         choosedTreatment = value;
+        choosedTreatmentName = _calculateExperimentViewmodel
+            .experiment.treatments!
+            .firstWhere((x) => x.id == value)
+            .name;
         _validateFields();
       },
       options: _calculateExperimentViewmodel.experiment.treatments!
@@ -125,6 +135,9 @@ class _CalculateExperimentFirstStepPageState
         }
 
         choosedEnzyme = value;
+        choosedEnzymeName = _calculateExperimentViewmodel.experiment.enzymes!
+            .firstWhere((x) => x.id == value)
+            .name;
         _validateFields();
       },
       options: _calculateExperimentViewmodel.experiment.enzymes!
@@ -167,7 +180,9 @@ class _CalculateExperimentFirstStepPageState
                   .setTemporaryChoosedExperimentCombination(
                 ChoosedExperimentCombinationDTO(
                   enzymeId: choosedEnzyme,
+                  enzymeName: choosedEnzymeName,
                   treatmentId: choosedTreatment,
+                  treatmentName: choosedTreatmentName,
                 ),
               );
 
@@ -220,7 +235,7 @@ class _CalculateExperimentFirstStepPageState
         builder: (context, child) {
           return CalculateExperimentFragmentTemplate(
             titleOfStepIndicator: "Inserir dados no experimento",
-            messageOfStepIndicator: "Etapa 1 de 2 - Identificação",
+            messageOfStepIndicator: "Etapa 1 de 3 - Identificação",
             body: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(
                 parent: BouncingScrollPhysics(),

@@ -118,7 +118,7 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
               ),
               const SizedBox(width: 4),
               Text(
-                'Identidicação da enzima',
+                'Identificação da enzima',
                 style: TextStyles.detailBold,
               ),
             ],

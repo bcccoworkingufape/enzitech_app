@@ -44,6 +44,9 @@ class Routing {
       case experimentDetailed:
         if (args is ExperimentEntity) {
           return MaterialPageRoute(
+            settings: const RouteSettings(
+              name: experimentDetailed,
+            ),
             builder: (_) => ExperimentDetailsPage(
               resumedExperiment: args,
             ),

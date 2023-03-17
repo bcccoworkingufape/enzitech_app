@@ -274,6 +274,15 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
     // notifyListeners();
   }
 
+  clearTemporaryInfos() {
+    setEnableNextButtonOnFirstStep(false);
+    setEnableNextButtonOnSecondStep(false);
+    setTemporaryChoosedExperimentCombination(ChoosedExperimentCombinationDTO());
+    setExperimentCalculation(null);
+    setStateEnum(StateEnum.idle);
+    setListOfExperimentData([]);
+  }
+
   Future<void> calculateExperiment() async {
     setStateEnum(StateEnum.loading);
 

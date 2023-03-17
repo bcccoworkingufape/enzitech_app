@@ -11,6 +11,7 @@ import '../../../../../../shared/ui/ui.dart';
 import '../../../../../../shared/utils/utils.dart';
 import '../../../../../main/presentation/viewmodel/home_viewmodel.dart';
 import '../../../../domain/entities/experiment_entity.dart';
+import '../../../viewmodel/calculate_experiment_viewmodel.dart';
 import '../../../viewmodel/experiment_details_viewmodel.dart';
 import '../../../viewmodel/experiments_viewmodel.dart';
 import '../../widgets/experiment_exclusion_dialog.dart';
@@ -249,11 +250,16 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
           eztButtonType: EZTButtonType.checkout,
           icon: const Icon(PhosphorIcons.pencilLine,
               color: AppColors.white, size: 30),
-          onPressed: () => Navigator.pushNamed(
-            context,
-            Routing.calculateExperiment,
-            arguments: _experimentDetailsViewmodel.experiment!,
-          ),
+          onPressed: () {
+            GetIt.I.get<CalculateExperimentViewmodel>
+                .call()
+                .clearTemporaryInfos();
+            Navigator.pushNamed(
+              context,
+              Routing.calculateExperiment,
+              arguments: _experimentDetailsViewmodel.experiment!,
+            );
+          },
         ),
         const SizedBox(
           height: 20,

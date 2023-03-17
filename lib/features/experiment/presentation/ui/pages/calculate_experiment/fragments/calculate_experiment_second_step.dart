@@ -221,10 +221,17 @@ class _CalculateExperimentSecondStepPageState
                 if (mounted) {
                   // widget.formKey.currentState!.save();
                   // await _calculateExperimentViewmodel.insertExperimentData();
-                  _calculateExperimentViewmodel
+                  await _calculateExperimentViewmodel
                       .calculateExperiment()
-                      .whenComplete(
-                          () => _calculateExperimentViewmodel.onNext(context));
+                      .whenComplete(() => (_calculateExperimentViewmodel
+                                      .experimentCalculationEntity !=
+                                  null ||
+                              _calculateExperimentViewmodel
+                                      .experimentCalculationEntity?.average !=
+                                  0)
+                          ? _calculateExperimentViewmodel.onNext(context)
+                          : print('err'));
+                  //TODO: Corrgiri enzimas bugadas (sem calculo -> retorno 0)
                 }
 
                 return;
@@ -238,11 +245,6 @@ class _CalculateExperimentSecondStepPageState
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
             _calculateExperimentViewmodel.onBack(mounted, context);
-
-            // widget.callback(page: 0);
-            // _formKey.currentState?.reset();
-            // _calculateExperimentViewmodel.setStepPage(0, notify: false);
-            // _calculateExperimentViewmodel.setEnableNextButton(null);
           },
         ),
       ],
@@ -256,7 +258,7 @@ class _CalculateExperimentSecondStepPageState
         builder: (context, child) {
           return CalculateExperimentFragmentTemplate(
             titleOfStepIndicator: "Inserir dados no experimento",
-            messageOfStepIndicator: "Etapa 2 de 2 - Inserção de dados",
+            messageOfStepIndicator: "Etapa 2 de 3 - Preenchimento e cálculo",
             body: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(
                 parent: BouncingScrollPhysics(),

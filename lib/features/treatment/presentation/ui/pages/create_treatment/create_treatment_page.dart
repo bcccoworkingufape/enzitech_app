@@ -108,7 +108,7 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
               ),
               const SizedBox(width: 4),
               Text(
-                'Identidicação do tratamento',
+                'Identificação do tratamento',
                 style: TextStyles.detailBold,
               ),
             ],

@@ -169,7 +169,7 @@ class _CreateExperimentFirstStepPageState
                 ),
                 const SizedBox(width: 4),
                 Text(
-                  'Identidicação do experimento',
+                  'Identificação do experimento',
                   style: TextStyles.detailBold,
                 ),
               ],
