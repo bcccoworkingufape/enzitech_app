@@ -278,6 +278,7 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
     setStateEnum(StateEnum.loading);
 
     var result = await _calculateExperimentUseCase(
+      experimentId: experiment.id,
       enzymeId: temporaryChoosedExperimentCombination.enzymeId!,
       treatmentID: temporaryChoosedExperimentCombination.treatmentId!,
       listOfExperimentData: listOfExperimentData,

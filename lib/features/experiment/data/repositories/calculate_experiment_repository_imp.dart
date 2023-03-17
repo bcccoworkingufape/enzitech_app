@@ -15,11 +15,13 @@ class CalculateExperimentRepositoryImp
 
   @override
   Future<Either<Failure, ExperimentCalculationEntity>> call({
+    required String experimentId,
     required String enzymeId,
     required String treatmentID,
     required List<Map<String, dynamic>> listOfExperimentData,
   }) async {
     return await _calculateExperimentDataSource(
+      experimentId: experimentId,
       enzymeId: enzymeId,
       treatmentID: treatmentID,
       listOfExperimentData: listOfExperimentData,

@@ -16,11 +16,13 @@ class CalculateExperimentUseCaseImp implements CalculateExperimentUseCase {
 
   @override
   Future<Either<Failure, ExperimentCalculationEntity>> call({
+    required String experimentId,
     required String enzymeId,
     required String treatmentID,
     required List<Map<String, dynamic>> listOfExperimentData,
   }) async {
     return await _calculateExperimentRepository.call(
+      experimentId: experimentId,
       enzymeId: enzymeId,
       treatmentID: treatmentID,
       listOfExperimentData: listOfExperimentData,

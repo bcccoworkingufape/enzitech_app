@@ -18,6 +18,7 @@ class CalculateExperimentRemoteDataSourceImp
 
   @override
   Future<Either<Failure, ExperimentCalculationEntity>> call({
+    required String experimentId,
     required String enzymeId,
     required String treatmentID,
     required List<Map<String, dynamic>> listOfExperimentData,
@@ -40,7 +41,7 @@ class CalculateExperimentRemoteDataSourceImp
       }
 
       var response = await _httpService.post(
-        API.REQUEST_EXPERIMENTS,
+        API.REQUEST_CALCULATE_EXPERIMENTS(experimentId),
         data: {
           "enzyme": enzymeId,
           "process": treatmentID,
