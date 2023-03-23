@@ -1,5 +1,7 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
+// 🌎 Project imports:
 import '../../widgets/ezt_create_experiment_step_indicator.dart';
 
 class CalculateExperimentFragmentTemplate extends StatefulWidget {

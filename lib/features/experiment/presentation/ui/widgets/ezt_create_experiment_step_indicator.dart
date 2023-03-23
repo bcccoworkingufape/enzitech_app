@@ -1,6 +1,10 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
 import 'package:flutter_svg/svg.dart';
 
+// 🌎 Project imports:
 import '../../../../../../../shared/ui/ui.dart';
 
 class EZTCreateExperimentStepIndicator extends StatelessWidget {

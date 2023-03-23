@@ -1,6 +1,10 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
+// 🌎 Project imports:
 import '../../../../domain/entities/experiment_entity.dart';
 import '../../../viewmodel/calculate_experiment_viewmodel.dart';
 import 'fragments/calculate_experiment_first_step.dart';

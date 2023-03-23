@@ -1,9 +1,13 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+// 📦 Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:group_button/group_button.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
+// 🌎 Project imports:
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../../../../../shared/validator/validator.dart';
 import '../../../../../../treatment/domain/entities/treatment_entity.dart';
