@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
+import '../../../../../shared/extensions/double_extensions.dart';
 import '../../../../../shared/ui/ui.dart';
 import '../../../../../shared/utils/utils.dart';
 import '../../../../enzyme/domain/entities/enzyme_entity.dart';
@@ -37,12 +38,6 @@ class _EnzymeCardState extends State<EnzymeCard> {
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Text(
-                      //   widget.enzyme.name,
-                      //   maxLines: 2,
-                      //   overflow: TextOverflow.ellipsis,
-                      //   style: TextStyles.titleBoldHeading,
-                      // ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 4.0),
                         child: EZTMarqueeOnDemand(
@@ -72,13 +67,6 @@ class _EnzymeCardState extends State<EnzymeCard> {
                 ),
               ],
             ),
-            // const SizedBox(
-            //   height: 2,
-            // ),
-            // Text(
-            //   'Criado em ${Toolkit.formatBrDate(widget.enzyme.createdAt!)}',
-            //   style: TextStyles.bodyMinRegular,
-            // ),
             const SizedBox(
               height: 2,
             ),
@@ -110,7 +98,7 @@ class _EnzymeCardState extends State<EnzymeCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.enzyme.variableA.toString(),
+                          widget.enzyme.variableA.formmatedNumber,
                           maxLines: 4,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.justify,
@@ -123,21 +111,25 @@ class _EnzymeCardState extends State<EnzymeCard> {
                 ),
                 Row(
                   children: [
-                    Text(
-                      "Variável B: ",
-                      style: TextStyles.bodyRegular.copyWith(
-                        color: AppColors.heading,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Text(
-                      widget.enzyme.variableB.toString(),
-                      maxLines: 4,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.justify,
-                      style: TextStyles.bodyRegular
-                          .copyWith(color: AppColors.heading, fontSize: 16),
+                    Wrap(
+                      children: [
+                        Text(
+                          "Variável B: ",
+                          style: TextStyles.bodyRegular.copyWith(
+                            color: AppColors.heading,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        Text(
+                          widget.enzyme.variableB.formmatedNumber,
+                          maxLines: 4,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.justify,
+                          style: TextStyles.bodyRegular
+                              .copyWith(color: AppColors.heading, fontSize: 16),
+                        ),
+                      ],
                     ),
                   ],
                 ),

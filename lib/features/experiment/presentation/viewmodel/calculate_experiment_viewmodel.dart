@@ -9,6 +9,7 @@ import '../../domain/entities/experiment_calculation_entity.dart';
 import '../../domain/entities/experiment_entity.dart';
 import '../../domain/usecases/calculate_experiment/calculate_experiment_usecase.dart';
 import '../dto/choosed_experiment_combination_dto.dart';
+import '../dto/number_differences_dto.dart';
 
 class CalculateExperimentViewmodel extends ChangeNotifier {
   CalculateExperimentUseCase _calculateExperimentUseCase;
@@ -62,31 +63,23 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
 
   bool _enableNextButtonOnFirstStep = false;
   bool get enableNextButtonOnFirstStep => _enableNextButtonOnFirstStep;
-  void setEnableNextButtonOnFirstStep(bool enableNextButtonOnFirstStep) {
+  void setEnableNextButtonOnFirstStep(
+    bool enableNextButtonOnFirstStep, {
+    bool notify = true,
+  }) {
     _enableNextButtonOnFirstStep = enableNextButtonOnFirstStep;
-    notifyListeners();
+    if (notify) notifyListeners();
   }
 
   bool _enableNextButtonOnSecondStep = false;
   bool get enableNextButtonOnSecondStep => _enableNextButtonOnSecondStep;
-  void setEnableNextButtonOnSecondStep(bool enableNextButtonOnSecondStep) {
+  void setEnableNextButtonOnSecondStep(
+    bool enableNextButtonOnSecondStep, {
+    bool notify = true,
+  }) {
     _enableNextButtonOnSecondStep = enableNextButtonOnSecondStep;
-    notifyListeners();
+    if (notify) notifyListeners();
   }
-
-  // bool _enableNextButtonOnThirdStep = false;
-  // bool get enableNextButtonOnThirdStep => _enableNextButtonOnThirdStep;
-  // void setEnableNextButtonOnThirdStep(bool enableNextButtonOnThirdStep) {
-  //   _enableNextButtonOnThirdStep = enableNextButtonOnThirdStep;
-  //   notifyListeners();
-  // }
-
-  // bool _enableNextButtonOnFourthStep = false;
-  // bool get enableNextButtonOnFourthStep => _enableNextButtonOnFourthStep;
-  // void setEnableNextButtonOnFourthStep(bool enableNextButtonOnFourthStep) {
-  //   _enableNextButtonOnFourthStep = enableNextButtonOnFourthStep;
-  //   notifyListeners();
-  // }
 
   ChoosedExperimentCombinationDTO _temporaryChoosedExperimentCombination =
       ChoosedExperimentCombinationDTO();
@@ -130,8 +123,8 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
               curve: Curves.easeIn,
             );
           } else {
-            setEnableNextButtonOnFirstStep(false);
-            setEnableNextButtonOnSecondStep(false);
+            setEnableNextButtonOnFirstStep(false, notify: false);
+            setEnableNextButtonOnSecondStep(false, notify: false);
             setTemporaryChoosedExperimentCombination(
                 ChoosedExperimentCombinationDTO());
             Navigator.pop(context);
@@ -173,8 +166,7 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
     if (value != "") {
       b[type] = double.parse(value);
     }
-    if (/* mounted && */ isAllFilled.every((boolean) => boolean == true)) {
-      // log(textEditingControllers.toString());
+    if (isAllFilled.every((boolean) => boolean == true)) {
       setEnableNextButtonOnSecondStep(true);
     } else {
       setEnableNextButtonOnSecondStep(false);
@@ -182,11 +174,7 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
   }
 
   Future<void> generateTextFields(BuildContext context) async {
-    // state = ExperimentInsertDataState.idle;
-    // setIsLoading(true);
     setStateEnum(StateEnum.loading);
-
-    // await Future.delayed(Duration.zero);
 
     setTextEditingControllers({});
 
@@ -240,7 +228,6 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
           },
           fieldValidator: fieldValidator,
           inputFormatters: Constants.enzymeDecimalInputFormatters,
-          // disableSuffixIcon: true,
         ),
       );
 
@@ -264,19 +251,51 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
           },
           fieldValidator: fieldValidator,
           inputFormatters: Constants.enzymeDecimalInputFormatters,
-          // disableSuffixIcon: true,
         ),
       );
     }
     setStateEnum(StateEnum.idle);
-    // setIsLoading(false);
+  }
 
-    // notifyListeners();
+  NumberDifferencesDTO? _numberDifferencesDTO;
+  NumberDifferencesDTO? get numberDifferencesDTO => _numberDifferencesDTO;
+  void setNumberDifferencesDTO(NumberDifferencesDTO? numberDifferencesDTO) {
+    _numberDifferencesDTO = numberDifferencesDTO;
+  }
+
+  double _percentOfDifference(num num1, num num2) =>
+      (((num2 - num1) / num1) * 100).abs();
+
+  getAbsNumberFartherFromAverage() {
+
+    final average = experimentCalculationEntity!.average;
+
+    final results = experimentCalculationEntity!.results;
+
+    double differenceOfFartherNumber =
+        _percentOfDifference(average, results.first);
+
+    double fartherNumber = experimentCalculationEntity!.results.first;
+
+    for (var number in results) {
+      var diff = _percentOfDifference(average, number);
+      if (diff > differenceOfFartherNumber) {
+        differenceOfFartherNumber = diff;
+        fartherNumber = number;
+      }
+    }
+
+    setNumberDifferencesDTO(
+      NumberDifferencesDTO(
+        differenceOfFartherNumber: differenceOfFartherNumber,
+        fartherNumber: fartherNumber,
+      ),
+    );
   }
 
   clearTemporaryInfos() {
-    setEnableNextButtonOnFirstStep(false);
-    setEnableNextButtonOnSecondStep(false);
+    setEnableNextButtonOnFirstStep(false, notify: false);
+    setEnableNextButtonOnSecondStep(false, notify: false);
     setTemporaryChoosedExperimentCombination(ChoosedExperimentCombinationDTO());
     setExperimentCalculation(null);
     setStateEnum(StateEnum.idle);

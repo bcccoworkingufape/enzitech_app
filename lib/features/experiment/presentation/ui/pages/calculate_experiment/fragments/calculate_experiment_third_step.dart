@@ -1,22 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:intl/intl.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../../../../../../core/enums/enums.dart';
 import '../../../../../../../core/routing/routing.dart';
+import '../../../../../../../shared/extensions/double_extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../../viewmodel/calculate_experiment_viewmodel.dart';
 import '../calculate_experiment_fragment_template.dart';
-
-class NumberDifferences {
-  final double differenceOfFartherNumber;
-  final double fartherNumber;
-
-  NumberDifferences({
-    required this.differenceOfFartherNumber,
-    required this.fartherNumber,
-  });
-}
 
 class CalculateExperimentThirdStepPage extends StatefulWidget {
   const CalculateExperimentThirdStepPage({
@@ -31,20 +22,19 @@ class CalculateExperimentThirdStepPage extends StatefulWidget {
 class _CalculateExperimentThirdStepPageState
     extends State<CalculateExperimentThirdStepPage> {
   late final CalculateExperimentViewmodel _calculateExperimentViewmodel;
-  late NumberDifferences numberDifferences;
-
+  // late NumberDifferencesDTO numberDifferences;
+  bool loadingAbsNumberFartherFromAverage = false;
   @override
   void initState() {
     super.initState();
     _calculateExperimentViewmodel = GetIt.I.get<CalculateExperimentViewmodel>();
-
-    _getAbsNumberFartherFromAverage();
+    _calculateExperimentViewmodel.getAbsNumberFartherFromAverage();
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _getAbsNumberFartherFromAverage();
+    _calculateExperimentViewmodel.getAbsNumberFartherFromAverage();
   }
 
   Widget get _buttons {
@@ -73,108 +63,114 @@ class _CalculateExperimentThirdStepPageState
     );
   }
 
-  _getAbsNumberFartherFromAverage() {
-    /* double differenceOfFartherNumber = (_calculateExperimentViewmodel
-                .experimentCalculationEntity!.results.first -
-            _calculateExperimentViewmodel.experimentCalculationEntity!.average)
-        .abs();
+  TableRow _buildTableRow(double result, int iteration) {
+    return TableRow(
+      decoration: UnderlineTabIndicator(
+          borderSide: BorderSide(
+        color: AppColors.greyLight.withOpacity(0.25),
+      )),
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4.0),
+          child: Text(
+            "Repetição ${iteration + 1}:",
+            style: TextStyles.bodyBold,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4.0),
+          child: Text(
+            result.formmatedNumber,
+            style: TextStyles.bodyBold,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4.0),
+          child: Visibility(
+            visible: _calculateExperimentViewmodel
+                    .numberDifferencesDTO!.fartherNumber ==
+                result,
+            replacement: GestureDetector(
+              onTap: () {
+                EZTSnackBar.clear(context);
+                EZTSnackBar.show(
+                  context,
+                  "Esta repetição está discrepante!\n\nO valor dela difere acima de 25% da média de todos os valores.",
+                  textStyle: TextStyles.titleMinBoldBackground,
+                  centerTitle: true,
+                  eztSnackBarType: EZTSnackBarType.error,
+                );
+              },
+              child: const Icon(
+                PhosphorIcons.warningCircleBold,
+                color: AppColors.danger,
+              ),
+            ),
+            child: const Icon(
+              PhosphorIcons.thumbsUp,
+              color: AppColors.grenDark,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 
-    double fartherNumber = _calculateExperimentViewmodel
-        .experimentCalculationEntity!.results.first; */
-    final average =
-        _calculateExperimentViewmodel.experimentCalculationEntity!.average;
-
-    final results =
-        _calculateExperimentViewmodel.experimentCalculationEntity!.results;
-
-    double differenceOfFartherNumber =
-        percentOfDifference(average, results.first);
-
-    double fartherNumber = _calculateExperimentViewmodel
-        .experimentCalculationEntity!.results.first;
-
-    for (var number in results) {
-      var diff = percentOfDifference(average, number);
-      if (diff > differenceOfFartherNumber) {
-        differenceOfFartherNumber = diff;
-        fartherNumber = number;
-      }
+  List<TableRow> _buildListOfRows(List<double> results) {
+    List<TableRow> listOfTableRows = [];
+    for (var i = 0; i < results.length; i++) {
+      listOfTableRows.add(_buildTableRow(results[i], i));
     }
 
-    setState(() {
-      numberDifferences = NumberDifferences(
-          differenceOfFartherNumber: differenceOfFartherNumber,
-          fartherNumber: fartherNumber);
-    });
-
-    // return fartherNumber;
+    return listOfTableRows;
   }
 
-  double percentOfDifference(num num1, num num2) =>
-      (((num2 - num1) / num1) * 100).abs();
-
-  Widget _buildResult(double result, int iteration) {
-    TextStyle textStyleOk = TextStyles.bodyBold.copyWith(
-      fontSize: 24,
-    );
-
-    TextStyle textStyleError = textStyleOk.copyWith(
-      color: AppColors.danger,
-    );
-
-    NumberFormat numberFormat = NumberFormat.decimalPattern('pt_BR');
-
-    return Center(
-      child: Visibility(
-        visible: numberDifferences.fartherNumber == result,
-        replacement: Text(
-          'Repetição $iteration: ${numberFormat.format(result)}',
-          style: textStyleOk,
+  List<TableRow> _buildAverageRow(double number) {
+    return [
+      const TableRow(children: [
+        SizedBox(height: 16),
+        SizedBox(height: 16),
+        SizedBox(height: 16),
+      ]),
+      TableRow(children: [
+        Text(
+          "Média:",
+          style: TextStyles.bodyBold.copyWith(color: AppColors.grenDark),
         ),
-        child: Text(
-          'Repetição $iteration: ${numberFormat.format(result)}',
-          style: numberDifferences.differenceOfFartherNumber > 25
-              ? textStyleError
-              : textStyleOk,
+        Text(
+          number.formmatedNumber,
+          style: TextStyles.bodyBold.copyWith(color: AppColors.grenDark),
         ),
-      ),
-    );
-  }
-
-  Widget _buildAverage(double average) {
-    NumberFormat numberFormat = NumberFormat.decimalPattern('pt_BR');
-
-    return Center(
-      child: Text(
-        'Média: ${numberFormat.format(average)}',
-        style: TextStyles.bodyBold.copyWith(fontSize: 24),
-      ),
-    );
+        Container(),
+      ]),
+    ];
   }
 
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-        animation: _calculateExperimentViewmodel,
-        builder: (context, child) {
-          return CalculateExperimentFragmentTemplate(
-            titleOfStepIndicator: "Inserir dados no experimento",
-            messageOfStepIndicator: "Etapa 3 de 3 - Resultados",
-            body: SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(
-                parent: BouncingScrollPhysics(),
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: FutureBuilder(builder:
-                  (BuildContext context, AsyncSnapshot<String> snapshot) {
+      animation: _calculateExperimentViewmodel,
+      builder: (context, child) {
+        return CalculateExperimentFragmentTemplate(
+          titleOfStepIndicator: "Inserir dados no experimento",
+          messageOfStepIndicator: "Etapa 3 de 3 - Resultados",
+          body: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(
+              parent: BouncingScrollPhysics(),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: FutureBuilder(builder:
+                (BuildContext context, AsyncSnapshot<String> snapshot) {
+              if (_calculateExperimentViewmodel.numberDifferencesDTO == null) {
+                return const Center(
+                  child: EZTProgressIndicator(),
+                );
+              } else {
                 return Column(
                   children: [
                     const SizedBox(
-                      height: 32,
+                      height: 16,
                     ),
-                    /* SingleChildScrollView(
-                        child: ,
-                      ), */
                     Text(
                       _calculateExperimentViewmodel
                           .temporaryChoosedExperimentCombination.treatmentName!,
@@ -217,30 +213,32 @@ class _CalculateExperimentThirdStepPageState
                     const SizedBox(
                       height: 8,
                     ),
-                    ListView.builder(
-                      itemCount: _calculateExperimentViewmodel
-                          .experimentCalculationEntity!.results.length,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          title: _buildResult(
-                              _calculateExperimentViewmodel
-                                  .experimentCalculationEntity!.results[index],
-                              index + 1),
-                        );
+                    Table(
+                      columnWidths: const <int, TableColumnWidth>{
+                        0: IntrinsicColumnWidth(flex: 2),
+                        1: IntrinsicColumnWidth(flex: 3),
+                        2: IntrinsicColumnWidth(flex: 1),
                       },
+                      defaultVerticalAlignment:
+                          TableCellVerticalAlignment.middle,
+                      children: [
+                        ..._buildListOfRows(_calculateExperimentViewmodel
+                            .experimentCalculationEntity!.results),
+                        ..._buildAverageRow(_calculateExperimentViewmodel
+                            .experimentCalculationEntity!.average)
+                      ],
                     ),
-                    _buildAverage(_calculateExperimentViewmodel
-                        .experimentCalculationEntity!.average),
                     const SizedBox(
-                      height: 64,
+                      height: 32,
                     ),
                     _buttons,
                   ],
                 );
-              }),
-            ),
-          );
-        });
+              }
+            }),
+          ),
+        );
+      },
+    );
   }
 }

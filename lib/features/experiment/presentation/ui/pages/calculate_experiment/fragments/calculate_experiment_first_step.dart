@@ -9,7 +9,6 @@ import '../../../../../../../shared/ui/ui.dart';
 import '../../../../../../../shared/utils/utils.dart';
 import '../../../../dto/choosed_experiment_combination_dto.dart';
 import '../../../../viewmodel/calculate_experiment_viewmodel.dart';
-import '../../../../viewmodel/experiments_viewmodel.dart';
 import '../calculate_experiment_fragment_template.dart';
 
 class CalculateExperimentFirstStepPage extends StatefulWidget {
@@ -25,7 +24,6 @@ class CalculateExperimentFirstStepPage extends StatefulWidget {
 class _CalculateExperimentFirstStepPageState
     extends State<CalculateExperimentFirstStepPage> {
   late final CalculateExperimentViewmodel _calculateExperimentViewmodel;
-  late final ExperimentsViewmodel _experimentsViewmodel;
   bool? enableNextButton;
   String? choosedEnzyme;
   String? choosedEnzymeName;
@@ -36,7 +34,6 @@ class _CalculateExperimentFirstStepPageState
   void initState() {
     super.initState();
     _calculateExperimentViewmodel = GetIt.I.get<CalculateExperimentViewmodel>();
-    _experimentsViewmodel = GetIt.I.get<ExperimentsViewmodel>();
 
     choosedEnzyme = _calculateExperimentViewmodel
         .temporaryChoosedExperimentCombination.enzymeId;
@@ -46,21 +43,7 @@ class _CalculateExperimentFirstStepPageState
         .temporaryChoosedExperimentCombination.treatmentId;
     choosedTreatmentName = _calculateExperimentViewmodel
         .temporaryChoosedExperimentCombination.treatmentName;
-    _validateFields();
-
-    /* if (mounted) {
-      controller.addListener(
-        () {
-          if (mounted && controller.state == ExperimentInsertDataState.error) {
-            EZTSnackBar.show(
-              context,
-              HandleFailure.of(controller.failure!),
-              eztSnackBarType: EZTSnackBarType.error,
-            );
-          }
-        },
-      );
-    } */
+    WidgetsBinding.instance.addPostFrameCallback((_) => _validateFields());
   }
 
   _validateFields() {
@@ -95,7 +78,6 @@ class _CalculateExperimentFirstStepPageState
             (e) => FormBuilderChipOption(
               value: e.id,
               child: Text(e.name),
-              // avatar: CircleAvatar(child: Text(e.name[0])),
             ),
           )
           .toList(),
@@ -196,23 +178,6 @@ class _CalculateExperimentFirstStepPageState
                     }),
                   );
             }
-
-            /* EZTSnackBar.clear(context);
-            if (formKey.currentState?.saveAndValidate() ?? false) {
-              _calculateExperimentViewmodel.setChoosedEnzymeAndTreatment(
-                formKey.currentState!.value,
-              );
-
-              await _calculateExperimentViewmodel
-                  .generateTextFields(context)
-                  .whenComplete(() {
-                _calculateExperimentViewmodel.pageController.animateToPage(
-                  1,
-                  duration: const Duration(milliseconds: 150),
-                  curve: Curves.easeIn,
-                );
-              });
-            } */
           },
         ),
         const SizedBox(height: 16),
@@ -231,83 +196,84 @@ class _CalculateExperimentFirstStepPageState
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-        animation: _calculateExperimentViewmodel,
-        builder: (context, child) {
-          return CalculateExperimentFragmentTemplate(
-            titleOfStepIndicator: "Inserir dados no experimento",
-            messageOfStepIndicator: "Etapa 1 de 3 - Identificação",
-            body: SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(
-                parent: BouncingScrollPhysics(),
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 32,
+      animation: _calculateExperimentViewmodel,
+      builder: (context, child) {
+        return CalculateExperimentFragmentTemplate(
+          titleOfStepIndicator: "Inserir dados no experimento",
+          messageOfStepIndicator: "Etapa 1 de 3 - Identificação",
+          body: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(
+              parent: BouncingScrollPhysics(),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 32,
+                ),
+                Visibility(
+                  visible: _calculateExperimentViewmodel
+                          .experiment.treatments!.isNotEmpty &&
+                      _calculateExperimentViewmodel
+                          .experiment.enzymes!.isNotEmpty,
+                  replacement: const EZTNotFound(
+                    title: "Experimento inválido!",
+                    message:
+                        "Não é possível prosseguir sem dados de tratamento(s) e/ou enzima(s)",
                   ),
-                  Visibility(
-                    visible: _calculateExperimentViewmodel
-                            .experiment.treatments!.isNotEmpty &&
-                        _calculateExperimentViewmodel
-                            .experiment.enzymes!.isNotEmpty,
-                    replacement: const EZTNotFound(
-                      title: "Experimento inválido!",
-                      message:
-                          "Não é possível prosseguir sem dados de tratamento(s) e/ou enzima(s)",
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            const Icon(
-                              PhosphorIcons.flask,
-                              color: AppColors.greySweet,
-                            ),
-                            const SizedBox(width: 4),
-                            Expanded(
-                              child: Text(
-                                'Escolha o tratamento e a enzima para inserir os dados',
-                                style: TextStyles.detailBold,
-                                textAlign: TextAlign.left,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 32),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: <Widget>[
-                                FormBuilder(
-                                  key: _calculateExperimentViewmodel
-                                      .firstStepFormKey,
-                                  autovalidateMode: AutovalidateMode.disabled,
-                                  skipDisabled: true,
-                                  child: Column(
-                                    children: <Widget>[
-                                      _treatmentChoiceChip,
-                                      const SizedBox(height: 16),
-                                      _enzymeChoiceChip,
-                                    ],
-                                  ),
-                                ),
-                              ],
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          const Icon(
+                            PhosphorIcons.flask,
+                            color: AppColors.greySweet,
+                          ),
+                          const SizedBox(width: 4),
+                          Expanded(
+                            child: Text(
+                              'Escolha o tratamento e a enzima para inserir os dados',
+                              style: TextStyles.detailBold,
+                              textAlign: TextAlign.left,
                             ),
                           ),
+                        ],
+                      ),
+                      const SizedBox(height: 32),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: <Widget>[
+                              FormBuilder(
+                                key: _calculateExperimentViewmodel
+                                    .firstStepFormKey,
+                                autovalidateMode: AutovalidateMode.disabled,
+                                skipDisabled: true,
+                                child: Column(
+                                  children: <Widget>[
+                                    _treatmentChoiceChip,
+                                    const SizedBox(height: 16),
+                                    _enzymeChoiceChip,
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(
-                    height: 64,
-                  ),
-                  _buttons,
-                ],
-              ),
+                ),
+                const SizedBox(
+                  height: 64,
+                ),
+                _buttons,
+              ],
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 }
