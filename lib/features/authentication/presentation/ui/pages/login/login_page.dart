@@ -1,7 +1,6 @@
 // 🐦 Flutter imports:
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
 // 📦 Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
@@ -43,6 +42,7 @@ class LoginPageState extends State<LoginPage> {
             context,
             HandleFailure.of(
               _loginViewmodel.failure!,
+              isLogin: true,
             ),
             eztSnackBarType: EZTSnackBarType.error,
           );

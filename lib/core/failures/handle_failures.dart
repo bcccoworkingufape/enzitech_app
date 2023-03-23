@@ -6,6 +6,7 @@ class HandleFailure {
     Failure failure, {
     bool enableStatusCode = false,
     bool overrideDefaultMessage = false,
+    bool isLogin = false,
   }) {
     // EZT custom error when API is down
     if (failure.runtimeType is ServerFailure) {
@@ -28,7 +29,11 @@ class HandleFailure {
       case 403:
         return "⚠ Acesso negado: Você não tem permissão para executar esta ação.";
       case 404:
-        return "⚠ Não encontrado: Talvez essa informação não exista mais.";
+        if (isLogin) {
+          return "⚠ Usuário não encontrado.";
+        } else {
+          return "⚠ Não encontrado: Talvez essa informação não exista mais.";
+        }
       case 422:
         return "⚠ Entidade não processável: Não foi possível processar as instruções presentes.";
       case 426:
