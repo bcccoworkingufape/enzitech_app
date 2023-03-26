@@ -2,7 +2,10 @@
 
 class API {
   //-> SETUP
+  //! This must be removed from here
   static const BASE_URL = 'http://3.86.26.20:8080';
+  static const BASE_URL_RELEASE = 'http://200.133.6.201:30001/';
+  static const BASE_URL_PRIVATE = 'http://d2a6-128-201-207-165.ngrok.io';
 
   //-> AUTHENTICATION
   /// Route to '/auth'

@@ -4,6 +4,7 @@ class EnzymeEntity {
   double variableA;
   double variableB;
   String type;
+  String formula;
   DateTime? createdAt;
   DateTime? updatedAt;
   int? duration;
@@ -17,6 +18,7 @@ class EnzymeEntity {
     required this.variableA,
     required this.variableB,
     required this.type,
+    required this.formula,
     this.createdAt,
     this.updatedAt,
     this.duration,

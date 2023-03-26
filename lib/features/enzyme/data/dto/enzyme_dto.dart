@@ -14,6 +14,7 @@ extension EnzymeDto on EnzymeEntity {
           ? double.parse(json['variableB']).toPrecision(5)
           : json['variableB'],
       type: json['type'],
+      formula: json['formula'],
       createdAt:
           json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
       updatedAt:
@@ -44,6 +45,7 @@ extension EnzymeDto on EnzymeEntity {
       variableA: initialEnzyme.variableA,
       variableB: initialEnzyme.variableB,
       type: initialEnzyme.type,
+      formula: initialEnzyme.formula,
       createdAt: initialEnzyme.createdAt,
       updatedAt: initialEnzyme.updatedAt,
       duration: duration,
@@ -60,6 +62,7 @@ extension EnzymeDto on EnzymeEntity {
       'variableA': variableA,
       'variableB': variableB,
       'type': type,
+      'formula': formula,
       'updatedAt': updatedAt?.toString(),
       'createdAt': createdAt?.toString(),
       'duration': duration,
