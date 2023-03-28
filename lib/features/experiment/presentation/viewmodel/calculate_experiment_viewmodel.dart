@@ -1,5 +1,6 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 // 🌎 Project imports:
 import '../../../../core/enums/enums.dart';
@@ -7,16 +8,27 @@ import '../../../../core/failures/failures.dart';
 import '../../../../shared/ui/ui.dart';
 import '../../../../shared/utils/utils.dart';
 import '../../../../shared/validator/validator.dart';
+import '../../../enzyme/domain/entities/enzyme_entity.dart';
 import '../../domain/entities/experiment_calculation_entity.dart';
 import '../../domain/entities/experiment_entity.dart';
 import '../../domain/usecases/calculate_experiment/calculate_experiment_usecase.dart';
+import '../../domain/usecases/get_enzymes_remaining_in_experiment/get_enzymes_remaining_in_experiment_usecase.dart';
+import '../../domain/usecases/save_result/save_result_usecase.dart';
 import '../dto/choosed_experiment_combination_dto.dart';
 import '../dto/number_differences_dto.dart';
+import 'experiment_details_viewmodel.dart';
 
 class CalculateExperimentViewmodel extends ChangeNotifier {
-  CalculateExperimentUseCase _calculateExperimentUseCase;
+  final CalculateExperimentUseCase _calculateExperimentUseCase;
+  final SaveResultUseCase _saveResultUseCase;
+  final GetEnzymesRemainingInExperimentUseCase
+      _getEnzymesRemainingInExperimentUseCase;
 
-  CalculateExperimentViewmodel(this._calculateExperimentUseCase);
+  CalculateExperimentViewmodel(
+    this._calculateExperimentUseCase,
+    this._saveResultUseCase,
+    this._getEnzymesRemainingInExperimentUseCase,
+  );
 
   StateEnum _state = StateEnum.idle;
   StateEnum get state => _state;
@@ -35,6 +47,12 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
   ExperimentEntity get experiment => _experiment;
   void setExperiment(ExperimentEntity experiment) {
     _experiment = experiment;
+  }
+
+  List<EnzymeEntity> _enzymesRemaining = [];
+  List<EnzymeEntity> get enzymesRemaining => _enzymesRemaining;
+  void setEnzymesRemaining(List<EnzymeEntity> enzymesRemaining) {
+    _enzymesRemaining = enzymesRemaining;
   }
 
   ExperimentCalculationEntity? _experimentCalculationEntity;
@@ -108,6 +126,21 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Map<String, TextEditingController> _textEditingControllers = {};
+  Map<String, TextEditingController> get textEditingControllers =>
+      _textEditingControllers;
+  void setTextEditingControllers(
+      Map<String, TextEditingController> textEditingControllers) {
+    _textEditingControllers = textEditingControllers;
+    notifyListeners();
+  }
+
+  NumberDifferencesDTO? _numberDifferencesDTO;
+  NumberDifferencesDTO? get numberDifferencesDTO => _numberDifferencesDTO;
+  void setNumberDifferencesDTO(NumberDifferencesDTO? numberDifferencesDTO) {
+    _numberDifferencesDTO = numberDifferencesDTO;
+  }
+
   void onBack(bool mounted, BuildContext context, {int? page}) {
     if (mounted) {
       if (page != null) {
@@ -148,15 +181,6 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
       duration: const Duration(milliseconds: 150),
       curve: Curves.easeIn,
     );
-  }
-
-  Map<String, TextEditingController> _textEditingControllers = {};
-  Map<String, TextEditingController> get textEditingControllers =>
-      _textEditingControllers;
-  void setTextEditingControllers(
-      Map<String, TextEditingController> textEditingControllers) {
-    _textEditingControllers = textEditingControllers;
-    notifyListeners();
   }
 
   void _validateFields(String value, double id, String type) {
@@ -259,17 +283,10 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
     setStateEnum(StateEnum.idle);
   }
 
-  NumberDifferencesDTO? _numberDifferencesDTO;
-  NumberDifferencesDTO? get numberDifferencesDTO => _numberDifferencesDTO;
-  void setNumberDifferencesDTO(NumberDifferencesDTO? numberDifferencesDTO) {
-    _numberDifferencesDTO = numberDifferencesDTO;
-  }
-
   double _percentOfDifference(num num1, num num2) =>
       (((num2 - num1) / num1) * 100).abs();
 
   getAbsNumberFartherFromAverage() {
-
     final average = experimentCalculationEntity!.average;
 
     final results = experimentCalculationEntity!.results;
@@ -302,6 +319,27 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
     setExperimentCalculation(null);
     setStateEnum(StateEnum.idle);
     setListOfExperimentData([]);
+    setEnzymesRemaining([]);
+  }
+
+  Future<void> getEnzymesRemainingInExperiment(String treatmentId) async {
+    setStateEnum(StateEnum.loading);
+
+    var result = await _getEnzymesRemainingInExperimentUseCase(
+      experimentId: experiment.id,
+      treatmentId: treatmentId,
+    );
+
+    result.fold(
+      (error) {
+        _setFailure(error);
+        setStateEnum(StateEnum.error);
+      },
+      (success) async {
+        setEnzymesRemaining(success);
+        setStateEnum(StateEnum.success);
+      },
+    );
   }
 
   Future<void> calculateExperiment() async {
@@ -321,6 +359,31 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
       },
       (success) async {
         setExperimentCalculation(success);
+        setStateEnum(StateEnum.success);
+      },
+    );
+  }
+
+  Future<void> saveResult() async {
+    setStateEnum(StateEnum.loading);
+
+    var result = await _saveResultUseCase(
+      experimentId: experiment.id,
+      enzymeId: temporaryChoosedExperimentCombination.enzymeId!,
+      treatmentID: temporaryChoosedExperimentCombination.treatmentId!,
+      results: experimentCalculationEntity!.results,
+      average: experimentCalculationEntity!.average,
+    );
+
+    result.fold(
+      (error) {
+        _setFailure(error);
+        setStateEnum(StateEnum.error);
+      },
+      (success) async {
+        print(success);
+        GetIt.I.get<ExperimentDetailsViewmodel>().setExperiment(success);
+        // setExperimentCalculation(success);
         setStateEnum(StateEnum.success);
       },
     );

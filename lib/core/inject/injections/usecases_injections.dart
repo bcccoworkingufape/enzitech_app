@@ -18,10 +18,14 @@ import '../../../features/experiment/domain/usecases/create_experiment/create_ex
 import '../../../features/experiment/domain/usecases/create_experiment/create_experiment_usecase_imp.dart';
 import '../../../features/experiment/domain/usecases/delete_experiment/delete_experiment_usecase.dart';
 import '../../../features/experiment/domain/usecases/delete_experiment/delete_experiment_usecase_imp.dart';
+import '../../../features/experiment/domain/usecases/get_enzymes_remaining_in_experiment/get_enzymes_remaining_in_experiment_usecase.dart';
+import '../../../features/experiment/domain/usecases/get_enzymes_remaining_in_experiment/get_enzymes_remaining_in_experiment_usecase_imp.dart';
 import '../../../features/experiment/domain/usecases/get_experiment_by_id/get_experiment_by_id_usecase.dart';
 import '../../../features/experiment/domain/usecases/get_experiment_by_id/get_experiment_by_id_usecase_imp.dart';
 import '../../../features/experiment/domain/usecases/get_experiments/get_experiments_usecase.dart';
 import '../../../features/experiment/domain/usecases/get_experiments/get_experiments_usecase_imp.dart';
+import '../../../features/experiment/domain/usecases/save_result/save_result_usecase.dart';
+import '../../../features/experiment/domain/usecases/save_result/save_result_usecase_imp.dart';
 import '../../../features/experiment/domain/usecases/store_experiments_in_cache/store_experiments_in_cache_usecase.dart';
 import '../../../features/experiment/domain/usecases/store_experiments_in_cache/store_experiments_in_cache_usecase_imp.dart';
 import '../../../features/main/domain/usecases/clear_user/clear_user_usecase.dart';
@@ -73,6 +77,9 @@ class UseCasesInjections {
     getIt.registerLazySingleton<GetEnzymesUseCase>(
       () => GetEnzymesUseCaseImp(getIt()),
     );
+    getIt.registerLazySingleton<GetEnzymesRemainingInExperimentUseCase>(
+      () => GetEnzymesRemainingInExperimentUseCaseImp(getIt()),
+    );
     getIt.registerLazySingleton<GetExcludeConfirmationUseCase>(
       () => GetExcludeConfirmationUseCaseImp(getIt()),
     );
@@ -93,6 +100,9 @@ class UseCasesInjections {
     );
     getIt.registerLazySingleton<SaveExcludeConfirmationUseCase>(
       () => SaveExcludeConfirmationUseCaseImp(getIt()),
+    );
+    getIt.registerLazySingleton<SaveResultUseCase>(
+      () => SaveResultUseCaseImp(getIt()),
     );
     getIt.registerLazySingleton<StoreExperimentsInCacheUseCase>(
       () => StoreExperimentsInCacheUseCaseImp(getIt()),

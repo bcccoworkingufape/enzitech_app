@@ -5,7 +5,8 @@ class API {
   //! This must be removed from here
   static const BASE_URL = 'http://3.86.26.20:8080';
   static const BASE_URL_RELEASE = 'http://200.133.6.201:30001/';
-  static const BASE_URL_PRIVATE = 'http://d2a6-128-201-207-165.ngrok.io';
+  static const BASE_URL_PRIVATE = 'http://191.101.78.251:3010/';
+  static const BASE_URL_WEVERTON = 'http://8db2-128-201-207-165.ngrok.io';
 
   //-> AUTHENTICATION
   /// Route to '/auth'
@@ -58,4 +59,12 @@ class API {
   /// Route to '/experiments/save-result/$experiment'
   static String REQUEST_SAVE_RESULT_EXPERIMENTS(String experiment) =>
       '$REQUEST_EXPERIMENTS/save-result/$experiment';
+
+  /// Route to '/experiments/get-total-result/$experiment'
+  static String REQUEST_TOTAL_RESULTS_OF_EXPERIMENT(String experiment) =>
+      '$REQUEST_EXPERIMENTS/get-total-result/$experiment';
+
+  /// Route to '/experiments/get-enzymes/$experiment'
+  static String REQUEST_ENZYMES_REMAINING_IN_EXPERIMENT(String experiment) =>
+      '$REQUEST_EXPERIMENTS/get-enzymes/$experiment';
 }

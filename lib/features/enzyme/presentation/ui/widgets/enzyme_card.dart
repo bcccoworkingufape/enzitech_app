@@ -75,6 +75,34 @@ class _EnzymeCardState extends State<EnzymeCard> {
               height: 2,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Fórmula: ",
+                  style: TextStyles.bodyRegular.copyWith(
+                    color: AppColors.heading,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  widget.enzyme.formula,
+                  maxLines: 4,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.justify,
+                  style: TextStyles.bodyRegular
+                      .copyWith(color: AppColors.heading, fontSize: 16),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 2,
+            ),
+            const Divider(),
+            const SizedBox(
+              height: 8,
+            ),
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(

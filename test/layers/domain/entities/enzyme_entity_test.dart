@@ -12,6 +12,7 @@ main() {
         id: "1",
         name: "Enzima",
         type: "Tipo",
+        formula: "a+b=c",
         variableA: 0.52,
         variableB: 0.32,
       );

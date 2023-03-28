@@ -1,12 +1,14 @@
 class ChoosedExperimentCombinationDTO {
   String? enzymeId;
   String? enzymeName;
+  String? enzymeFormula;
   String? treatmentId;
   String? treatmentName;
 
   ChoosedExperimentCombinationDTO({
     this.enzymeId,
     this.enzymeName,
+    this.enzymeFormula,
     this.treatmentId,
     this.treatmentName,
   });

@@ -1,6 +1,5 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -49,10 +48,13 @@ class _CalculateExperimentThirdStepPageState
           text: 'Salvar e sair',
           loading: _calculateExperimentViewmodel.state == StateEnum.loading,
           onPressed: () async {
-            Navigator.popUntil(
-              context,
-              ModalRoute.withName(Routing.experimentDetailed),
-            );
+            await _calculateExperimentViewmodel
+                .saveResult()
+                .whenComplete(() => Navigator.popUntil(
+                      context,
+                      ModalRoute.withName(Routing.experimentDetailed),
+                      
+                    ));
           },
         ),
         const SizedBox(height: 16),
@@ -204,7 +206,9 @@ class _CalculateExperimentThirdStepPageState
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          'p-ntrof.(mg PNP g-1 de solo h1)',
+                          _calculateExperimentViewmodel
+                              .temporaryChoosedExperimentCombination
+                              .enzymeFormula!,
                           textAlign: TextAlign.center,
                           style: TextStyles.titleBoldBackground.copyWith(
                             color: AppColors.white,

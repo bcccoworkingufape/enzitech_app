@@ -27,7 +27,7 @@ class ExperimentDetailsViewmodel extends ChangeNotifier {
 
   ExperimentEntity? _experiment;
   ExperimentEntity? get experiment => _experiment;
-  void _setExperiment(ExperimentEntity experiment) {
+  void setExperiment(ExperimentEntity experiment) {
     _experiment = experiment;
     notifyListeners();
   }
@@ -45,7 +45,7 @@ class ExperimentDetailsViewmodel extends ChangeNotifier {
         setStateEnum(StateEnum.error);
       },
       (success) async {
-        _setExperiment(success);
+        setExperiment(success);
         setStateEnum(StateEnum.success);
       },
     );

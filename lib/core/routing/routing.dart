@@ -48,7 +48,7 @@ class Routing {
               name: experimentDetailed,
             ),
             builder: (_) => ExperimentDetailsPage(
-              resumedExperiment: args,
+              // resumedExperiment: args,
             ),
           );
         } else {

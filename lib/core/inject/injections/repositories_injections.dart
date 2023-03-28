@@ -15,14 +15,18 @@ import '../../../features/enzyme/domain/repositories/get_enzymes_repository.dart
 import '../../../features/experiment/data/repositories/calculate_experiment_repository_imp.dart';
 import '../../../features/experiment/data/repositories/create_experiment_repository_imp.dart';
 import '../../../features/experiment/data/repositories/delete_experiment_repository_imp.dart';
+import '../../../features/experiment/data/repositories/get_enzymes_remaining_in_experiment_repository_imp.dart';
 import '../../../features/experiment/data/repositories/get_experiment_by_id_repository_imp.dart';
 import '../../../features/experiment/data/repositories/get_experiments_repository_imp.dart';
+import '../../../features/experiment/data/repositories/save_result_repository_imp.dart';
 import '../../../features/experiment/data/repositories/store_experiments_in_cache_repository_imp.dart';
 import '../../../features/experiment/domain/repositories/calculate_experiment_repository.dart';
 import '../../../features/experiment/domain/repositories/create_experiment_repository.dart';
 import '../../../features/experiment/domain/repositories/delete_experiment_repository.dart';
+import '../../../features/experiment/domain/repositories/get_enzymes_remaining_in_experiment_repository.dart';
 import '../../../features/experiment/domain/repositories/get_experiment_by_id_repository.dart';
 import '../../../features/experiment/domain/repositories/get_experiments_repository.dart';
+import '../../../features/experiment/domain/repositories/save_result_repository.dart';
 import '../../../features/experiment/domain/repositories/store_experiments_in_cache_repository.dart';
 import '../../../features/main/data/repositories/clear_user_repository_imp.dart';
 import '../../../features/main/data/repositories/get_exclude_confirmation_repository_imp.dart';
@@ -73,6 +77,9 @@ class RepositoriesInjections {
     getIt.registerLazySingleton<GetEnzymesRepository>(
       () => GetEnzymesRepositoryImp(getIt()),
     );
+    getIt.registerLazySingleton<GetEnzymesRemainingInExperimentRepository>(
+      () => GetEnzymesRemainingInExperimentRepositoryImp(getIt()),
+    );
     getIt.registerLazySingleton<GetExcludeConfirmationRepository>(
       () => GetExcludeConfirmationRepositoryImp(getIt()),
     );
@@ -93,6 +100,9 @@ class RepositoriesInjections {
     );
     getIt.registerLazySingleton<SaveExcludeConfirmationRepository>(
       () => SaveExcludeConfirmationRepositoryImp(getIt()),
+    );
+    getIt.registerLazySingleton<SaveResultRepository>(
+      () => SaveResultRepositoryImp(getIt()),
     );
     getIt.registerLazySingleton<StoreExperimentsInCacheRepository>(
       () => StoreExperimentsInCacheRepositoryImp(getIt()),

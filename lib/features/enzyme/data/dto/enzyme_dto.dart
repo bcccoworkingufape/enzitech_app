@@ -14,7 +14,7 @@ extension EnzymeDto on EnzymeEntity {
           ? double.parse(json['variableB']).toPrecision(5)
           : json['variableB'],
       type: json['type'],
-      formula: json['formula'],
+      formula: json['formula'] ?? 'Fórmula não informada',
       createdAt:
           json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
       updatedAt:

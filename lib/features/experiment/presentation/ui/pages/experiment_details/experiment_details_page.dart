@@ -1,7 +1,6 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -14,7 +13,6 @@ import '../../../../../../core/routing/routing.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../../../../shared/utils/utils.dart';
 import '../../../../../main/presentation/viewmodel/home_viewmodel.dart';
-import '../../../../domain/entities/experiment_entity.dart';
 import '../../../viewmodel/calculate_experiment_viewmodel.dart';
 import '../../../viewmodel/experiment_details_viewmodel.dart';
 import '../../../viewmodel/experiments_viewmodel.dart';
@@ -23,10 +21,10 @@ import '../../widgets/experiment_exclusion_dialog.dart';
 class ExperimentDetailsPage extends StatefulWidget {
   const ExperimentDetailsPage({
     Key? key,
-    required this.resumedExperiment,
+    // required this.resumedExperiment,
   }) : super(key: key);
 
-  final ExperimentEntity resumedExperiment;
+  // final ExperimentEntity resumedExperiment;
 
   @override
   State<ExperimentDetailsPage> createState() => _ExperimentDetailsPageState();
@@ -45,6 +43,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
     _experimentDetailsViewmodel = GetIt.I.get<ExperimentDetailsViewmodel>();
     _experimentsViewmodel = GetIt.I.get<ExperimentsViewmodel>();
     _homeViewmodel = GetIt.I.get<HomeViewmodel>();
+    // _progress = widget.resumedExperiment.progress;
 
     if (mounted) {
       _experimentDetailsViewmodel.addListener(
@@ -60,8 +59,10 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
       );
     }
 
-    _experimentDetailsViewmodel
-        .getExperimentDetails(widget.resumedExperiment.id);
+    // _experimentDetailsViewmodel
+    //     .getExperimentDetails(widget.resumedExperiment.id)
+    //     .whenComplete(
+    //         () => _progress = _experimentDetailsViewmodel.experiment!.progress);
   }
 
   get leadWithEnzymes {
@@ -90,7 +91,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
     if (_experimentDetailsViewmodel.state == StateEnum.error) {
       return EZTError(
         message:
-            'Erro ao carregar o experimento "${widget.resumedExperiment.name}"',
+            'Erro ao carregar o experimento "${_experimentDetailsViewmodel.experiment!.name}"',
       );
     }
 
@@ -100,6 +101,8 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
       );
     }
 
+
+
     return Column(
       children: [
         const SizedBox(
@@ -108,9 +111,9 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
         CircularPercentIndicator(
           radius: 60,
           lineWidth: 10.0,
-          percent: widget.resumedExperiment.progress,
+          percent: _experimentDetailsViewmodel.experiment!.progress,
           center: Text(
-            Toolkit.doubleToPercentual(widget.resumedExperiment.progress * 100),
+            Toolkit.doubleToPercentual(_experimentDetailsViewmodel.experiment!.progress),
             style: TextStyles.titleBoldHeading,
           ),
           progressColor: AppColors.primary,
@@ -120,7 +123,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
           height: 30,
         ),
         Text(
-          widget.resumedExperiment.description,
+          _experimentDetailsViewmodel.experiment!.description,
           style: TextStyles.detailRegular,
         ),
         const SizedBox(

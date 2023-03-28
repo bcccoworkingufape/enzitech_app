@@ -1,6 +1,5 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-
 // 📦 Package imports:
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -69,12 +68,17 @@ class _CalculateExperimentFirstStepPageState
       initialValue: _calculateExperimentViewmodel
           .temporaryChoosedExperimentCombination.treatmentId,
       name: 'treatment',
-      onChanged: (value) {
+      onChanged: (value) async {
+        choosedEnzyme = null;
+        choosedEnzymeName = null;
+
         choosedTreatment = value;
         choosedTreatmentName = _calculateExperimentViewmodel
             .experiment.treatments!
             .firstWhere((x) => x.id == value)
             .name;
+        await _calculateExperimentViewmodel
+            .getEnzymesRemainingInExperiment(value);
         _validateFields();
       },
       options: _calculateExperimentViewmodel.experiment.treatments!
@@ -94,55 +98,60 @@ class _CalculateExperimentFirstStepPageState
   }
 
   get _enzymeChoiceChip {
-    return FormBuilderChoiceChip<dynamic>(
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      decoration: const InputDecoration(
-        labelText: 'Selecione a enzima:',
-        border: InputBorder.none,
-        contentPadding: EdgeInsets.all(0),
-      ),
-      initialValue: _calculateExperimentViewmodel
-          .temporaryChoosedExperimentCombination.enzymeId,
-      name: 'enzyme',
-      onChanged: (value) {
-        if (value != null) {
-          EZTSnackBar.clear(context);
-          EZTSnackBar.show(
-            context,
-            "Tipo da enzima selecionada: ${Constants.typesOfEnzymesListFormmated[Constants.typesOfEnzymesList.indexOf(_calculateExperimentViewmodel.experiment.enzymes!.firstWhere((x) => x.id == value).type)]}",
-            color: Constants.dealWithEnzymeChipColor(
-              _calculateExperimentViewmodel.experiment.enzymes!
-                  .firstWhere((x) => x.id == value)
-                  .type,
-            ),
-            textStyle: TextStyles.titleMinBoldBackground,
-            centerTitle: true,
-          );
-        }
-
-        choosedEnzyme = value;
-        choosedEnzymeName = _calculateExperimentViewmodel.experiment.enzymes!
-            .firstWhere((x) => x.id == value)
-            .name;
-        _validateFields();
-      },
-      options: _calculateExperimentViewmodel.experiment.enzymes!
-          .map(
-            (e) => FormBuilderChipOption(
-              value: e.id,
-              avatar: CircleAvatar(
-                backgroundColor: Constants.dealWithEnzymeChipColor(e.type),
+    if (choosedTreatment != null) {
+      return FormBuilderChoiceChip<dynamic>(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        decoration: const InputDecoration(
+          labelText: 'Selecione a enzima:',
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.all(0),
+        ),
+        initialValue: _calculateExperimentViewmodel
+            .temporaryChoosedExperimentCombination.enzymeId,
+        name: 'enzyme',
+        onChanged: (value) {
+          if (value != null) {
+            EZTSnackBar.clear(context);
+            EZTSnackBar.show(
+              context,
+              "Tipo da enzima selecionada: ${Constants.typesOfEnzymesListFormmated[Constants.typesOfEnzymesList.indexOf(_calculateExperimentViewmodel.experiment.enzymes!.firstWhere((x) => x.id == value).type)]}",
+              color: Constants.dealWithEnzymeChipColor(
+                _calculateExperimentViewmodel.enzymesRemaining
+                    .firstWhere((x) => x.id == value)
+                    .type,
               ),
-              child: Text(e.name),
-            ),
-          )
-          .toList(),
-      selectedColor: AppColors.primary,
-      spacing: 4,
-      validator: FormBuilderValidators.compose(
-        [FormBuilderValidators.required()],
-      ),
-    );
+              textStyle: TextStyles.titleMinBoldBackground,
+              centerTitle: true,
+            );
+          }
+
+          choosedEnzyme = value;
+          choosedEnzymeName = _calculateExperimentViewmodel.experiment.enzymes!
+              .firstWhere((x) => x.id == value)
+              .name;
+          _validateFields();
+        },
+        // options: _calculateExperimentViewmodel.experiment.enzymes!
+        options: _calculateExperimentViewmodel.enzymesRemaining
+            .map(
+              (e) => FormBuilderChipOption(
+                value: e.id,
+                avatar: CircleAvatar(
+                  backgroundColor: Constants.dealWithEnzymeChipColor(e.type),
+                ),
+                child: Text(e.name),
+              ),
+            )
+            .toList(),
+        selectedColor: AppColors.primary,
+        spacing: 4,
+        validator: FormBuilderValidators.compose(
+          [FormBuilderValidators.required()],
+        ),
+      );
+    }
+
+    return Container();
   }
 
   Widget get _buttons {
@@ -167,6 +176,7 @@ class _CalculateExperimentFirstStepPageState
                 ChoosedExperimentCombinationDTO(
                   enzymeId: choosedEnzyme,
                   enzymeName: choosedEnzymeName,
+                  enzymeFormula: 'MUDAR: p-ntrof.(mg PNP g-1 de solo h1)',
                   treatmentId: choosedTreatment,
                   treatmentName: choosedTreatmentName,
                 ),
