@@ -189,7 +189,9 @@ class _CalculateExperimentThirdStepPageState
                     const Divider(),
                     Text(
                       _calculateExperimentViewmodel
-                          .temporaryChoosedExperimentCombination.treatmentName!,
+                          .temporaryChoosedExperimentCombination
+                          .treatment!
+                          .name,
                       textAlign: TextAlign.center,
                       style: TextStyles.titleBoldBackground.copyWith(
                         color: AppColors.greySweet,

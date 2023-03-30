@@ -11,6 +11,7 @@ import '../../../../../../../core/enums/enums.dart';
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../../../../../shared/utils/utils.dart';
 import '../../../../../../enzyme/domain/entities/enzyme_entity.dart';
+import '../../../../../../treatment/domain/entities/treatment_entity.dart';
 import '../../../../dto/choosed_experiment_combination_dto.dart';
 import '../../../../viewmodel/calculate_experiment_viewmodel.dart';
 import '../calculate_experiment_fragment_template.dart';
@@ -31,8 +32,8 @@ class _CalculateExperimentFirstStepPageState
   bool? enableNextButton;
   EnzymeEntity? choosedEnzyme;
   // String? choosedEnzymeName;
-  String? choosedTreatment;
-  String? choosedTreatmentName;
+  TreatmentEntity? choosedTreatment;
+  // String? choosedTreatmentName;
 
   @override
   void initState() {
@@ -44,9 +45,9 @@ class _CalculateExperimentFirstStepPageState
     // choosedEnzymeName = _calculateExperimentViewmodel
     //     .temporaryChoosedExperimentCombination.enzyme?.name;
     choosedTreatment = _calculateExperimentViewmodel
-        .temporaryChoosedExperimentCombination.treatmentId;
-    choosedTreatmentName = _calculateExperimentViewmodel
-        .temporaryChoosedExperimentCombination.treatmentName;
+        .temporaryChoosedExperimentCombination.treatment;
+    // choosedTreatmentName = _calculateExperimentViewmodel
+    //     .temporaryChoosedExperimentCombination.treatmentName;
     WidgetsBinding.instance.addPostFrameCallback((_) => _validateFields());
   }
 
@@ -59,7 +60,7 @@ class _CalculateExperimentFirstStepPageState
   }
 
   get _treatmentChoiceChip {
-    return FormBuilderChoiceChip<dynamic>(
+    return FormBuilderChoiceChip<TreatmentEntity>(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: const InputDecoration(
         labelText: 'Selecione o tratamento:',
@@ -67,25 +68,21 @@ class _CalculateExperimentFirstStepPageState
         contentPadding: EdgeInsets.all(0),
       ),
       initialValue: _calculateExperimentViewmodel
-          .temporaryChoosedExperimentCombination.treatmentId,
+          .temporaryChoosedExperimentCombination.treatment,
       name: 'treatment',
       onChanged: (value) async {
         choosedEnzyme = null;
         // choosedEnzymeName = null;
 
         choosedTreatment = value;
-        choosedTreatmentName = _calculateExperimentViewmodel
-            .experiment.treatments!
-            .firstWhere((x) => x.id == value)
-            .name;
         await _calculateExperimentViewmodel
-            .getEnzymesRemainingInExperiment(value);
+            .getEnzymesRemainingInExperiment(value!.id);
         _validateFields();
       },
       options: _calculateExperimentViewmodel.experiment.treatments!
           .map(
-            (e) => FormBuilderChipOption(
-              value: e.id,
+            (e) => FormBuilderChipOption<TreatmentEntity>(
+              value: e,
               child: Text(e.name),
             ),
           )
@@ -100,6 +97,15 @@ class _CalculateExperimentFirstStepPageState
 
   get _enzymeChoiceChip {
     if (choosedTreatment != null) {
+      if (_calculateExperimentViewmodel.enzymesRemaining.isEmpty) {
+        if (_calculateExperimentViewmodel.state == StateEnum.loading) {
+          return const Text('Carregando enzimas disponíveis...');
+        }
+
+        return const Text(
+            'Todas as enzimas para este tratamento já foram calculadas!');
+      }
+
       return FormBuilderChoiceChip<EnzymeEntity>(
         autovalidateMode: AutovalidateMode.onUserInteraction,
         decoration: const InputDecoration(
@@ -169,19 +175,14 @@ class _CalculateExperimentFirstStepPageState
 
             if (_calculateExperimentViewmodel.formKey.currentState!
                 .validate()) {
-              var temporary = _calculateExperimentViewmodel
-                  .temporaryChoosedExperimentCombination;
+              // var temporary = _calculateExperimentViewmodel
+              //     .temporaryChoosedExperimentCombination;
 
               _calculateExperimentViewmodel
                   .setTemporaryChoosedExperimentCombination(
                 ChoosedExperimentCombinationDTO(
-                  // enzymeId: choosedEnzyme,
-                  // enzymeName: choosedEnzymeName,
-                  // enzymeFormula: 'MUDAR: p-ntrof.(mg PNP g-1 de solo h1)',
-                  enzyme: _calculateExperimentViewmodel.enzymesRemaining
-                      .firstWhere((x) => x.id == choosedEnzyme!.id),
-                  treatmentId: choosedTreatment,
-                  treatmentName: choosedTreatmentName,
+                  enzyme: choosedEnzyme,
+                  treatment: choosedTreatment,
                 ),
               );
 

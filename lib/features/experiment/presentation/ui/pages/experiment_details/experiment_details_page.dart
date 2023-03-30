@@ -101,8 +101,6 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
       );
     }
 
-
-
     return Column(
       children: [
         const SizedBox(
@@ -113,7 +111,8 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
           lineWidth: 10.0,
           percent: _experimentDetailsViewmodel.experiment!.progress,
           center: Text(
-            Toolkit.doubleToPercentual(_experimentDetailsViewmodel.experiment!.progress),
+            Toolkit.doubleToPercentual(
+                _experimentDetailsViewmodel.experiment!.progress),
             style: TextStyles.titleBoldHeading,
           ),
           progressColor: AppColors.primary,
@@ -253,9 +252,10 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
           height: 20,
         ),
         EZTButton(
-          text: 'Inserir Dados',
+          text: 'Cálculo enzimático',
           eztButtonType: EZTButtonType.checkout,
-          icon: const Icon(PhosphorIcons.pencilLine,
+          enabled: _experimentDetailsViewmodel.experiment!.progress != 1,
+          icon: const Icon(PhosphorIcons.function,
               color: AppColors.white, size: 30),
           onPressed: () {
             GetIt.I.get<CalculateExperimentViewmodel>
