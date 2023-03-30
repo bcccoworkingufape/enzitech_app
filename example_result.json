@@ -1,0 +1,146 @@
+{
+	"result": [
+        {
+            "enzymeName": "enzima1",
+            "processes": [
+                {
+                    "processName": "tratamento1",
+                    "results": [
+                        {
+                            "repetitionId": 1,
+                            "sample": 0.732,
+                            "whiteSample": 0.155,
+                            "differenceBetweenSamples": 0.577,
+                            "variableA": 0.0139,
+                            "variableB": 0.0088,
+                            "curve": 40.87769784,
+                            "correctionFactor": 0.98,
+                            "time": 1,
+                            "volume": 5,
+                            "weightSample": 0.5,
+                            "result": 417.1194
+                        },
+                        {
+                            "repetitionId": 2,
+                            "sample": 0.732,
+                            "whiteSample": 0.155,
+                            "differenceBetweenSamples": 0.577,
+                            "variableA": 0.0139,
+                            "variableB": 0.0088,
+                            "curve": 40.87769784,
+                            "correctionFactor": 0.98,
+                            "time": 1,
+                            "volume": 5,
+                            "weightSample": 0.5,
+                            "result": 417.1194
+                        }
+                    ]
+                },
+                {
+                    "processName": "tratamento2",
+                    "results": [
+                        {
+                            "repetitionId": 3,
+                            "sample": 0.732,
+                            "whiteSample": 0.155,
+                            "differenceBetweenSamples": 0.577,
+                            "variableA": 0.0139,
+                            "variableB": 0.0088,
+                            "curve": 40.87769784,
+                            "correctionFactor": 0.98,
+                            "time": 1,
+                            "volume": 5,
+                            "weightSample": 0.5,
+                            "result": 417.1194
+                        },
+                        {
+                            "repetitionId": 4,
+                            "sample": 0.732,
+                            "whiteSample": 0.155,
+                            "differenceBetweenSamples": 0.577,
+                            "variableA": 0.0139,
+                            "variableB": 0.0088,
+                            "curve": 40.87769784,
+                            "correctionFactor": 0.98,
+                            "time": 1,
+                            "volume": 5,
+                            "weightSample": 0.5,
+                            "result": 417.1194
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "enzymeName": "enzima2",
+            "processes": [
+                {
+                    "processName": "tratamento1",
+                    "results": [
+                        {
+                            "repetitionId": 1,
+                            "sample": 0.732,
+                            "whiteSample": 0.155,
+                            "differenceBetweenSamples": 0.577,
+                            "variableA": 0.0139,
+                            "variableB": 0.0088,
+                            "curve": 40.87769784,
+                            "correctionFactor": 0.98,
+                            "time": 1,
+                            "volume": 5,
+                            "weightSample": 0.5,
+                            "result": 417.1194
+                        },
+                        {
+                            "repetitionId": 2,
+                            "sample": 0.732,
+                            "whiteSample": 0.155,
+                            "differenceBetweenSamples": 0.577,
+                            "variableA": 0.0139,
+                            "variableB": 0.0088,
+                            "curve": 40.87769784,
+                            "correctionFactor": 0.98,
+                            "time": 1,
+                            "volume": 5,
+                            "weightSample": 0.5,
+                            "result": 417.1194
+                        }
+                    ]
+                },
+                {
+                    "processName": "tratamento2",
+                    "results": [
+                        {
+                            "repetitionId": 3,
+                            "sample": 0.732,
+                            "whiteSample": 0.155,
+                            "differenceBetweenSamples": 0.577,
+                            "variableA": 0.0139,
+                            "variableB": 0.0088,
+                            "curve": 40.87769784,
+                            "correctionFactor": 0.98,
+                            "time": 1,
+                            "volume": 5,
+                            "weightSample": 0.5,
+                            "result": 417.1194
+                        },
+                        {
+                            "repetitionId": 4,
+                            "sample": 0.732,
+                            "whiteSample": 0.155,
+                            "differenceBetweenSamples": 0.577,
+                            "variableA": 0.0139,
+                            "variableB": 0.0088,
+                            "curve": 40.87769784,
+                            "correctionFactor": 0.98,
+                            "time": 1,
+                            "volume": 5,
+                            "weightSample": 0.5,
+                            "result": 417.1194
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

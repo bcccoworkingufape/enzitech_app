@@ -42,18 +42,12 @@ class Routing {
       case createTreatment:
         return MaterialPageRoute(builder: (_) => const CreateTreatmentPage());
       case experimentDetailed:
-        if (args is ExperimentEntity) {
-          return MaterialPageRoute(
-            settings: const RouteSettings(
-              name: experimentDetailed,
-            ),
-            builder: (_) => ExperimentDetailsPage(
-              // resumedExperiment: args,
-            ),
-          );
-        } else {
-          return _errorRoute();
-        }
+        return MaterialPageRoute(
+          settings: const RouteSettings(
+            name: experimentDetailed,
+          ),
+          builder: (_) => const ExperimentDetailsPage(),
+        );
 
       case calculateExperiment:
         if (args is ExperimentEntity) {

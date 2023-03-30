@@ -25,7 +25,7 @@ Future<void> main() async {
     accessToken: () {
       return token;
     },
-    baseUrl: () => API.BASE_URL_WEVERTON,
+    baseUrl: () => API.BASE_URL_PRIVATE,
   );
 
   Inject.initialize(httpDriverOptions);

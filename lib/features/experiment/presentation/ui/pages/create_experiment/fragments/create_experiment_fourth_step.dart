@@ -1,7 +1,6 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
@@ -12,6 +11,7 @@ import '../../../../../../../shared/utils/utils.dart';
 import '../../../../../../../shared/validator/validator.dart';
 import '../../../../../../enzyme/domain/entities/enzyme_entity.dart';
 import '../../../../viewmodel/create_experiment_viewmodel.dart';
+import '../../../../viewmodel/experiment_details_viewmodel.dart';
 import '../create_experiment_fragment_template.dart';
 
 class CreateExperimentFourthStepPage extends StatefulWidget {
@@ -379,6 +379,11 @@ class _CreateExperimentFourthStepPageState
               if (_createExperimentViewmodel.formKey.currentState!.validate()) {
                 if (mounted) {
                   await _createExperimentViewmodel.createExperiment();
+
+                  GetIt.I
+                      .get<ExperimentDetailsViewmodel>()
+                      .getExperimentDetails(
+                          _createExperimentViewmodel.experiment!.id);
                 }
 
                 return;
