@@ -347,7 +347,7 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
 
     var result = await _calculateExperimentUseCase(
       experimentId: experiment.id,
-      enzymeId: temporaryChoosedExperimentCombination.enzymeId!,
+      enzymeId: temporaryChoosedExperimentCombination.enzyme!.id,
       treatmentID: temporaryChoosedExperimentCombination.treatmentId!,
       listOfExperimentData: listOfExperimentData,
     );
@@ -369,7 +369,7 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
 
     var result = await _saveResultUseCase(
       experimentId: experiment.id,
-      enzymeId: temporaryChoosedExperimentCombination.enzymeId!,
+      enzymeId: temporaryChoosedExperimentCombination.enzyme!.id,
       treatmentID: temporaryChoosedExperimentCombination.treatmentId!,
       results: experimentCalculationEntity!.results,
       average: experimentCalculationEntity!.average,

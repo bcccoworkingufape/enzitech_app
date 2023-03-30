@@ -10,6 +10,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../../../../../../../core/enums/enums.dart';
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../../../../../shared/utils/utils.dart';
+import '../../../../../../enzyme/domain/entities/enzyme_entity.dart';
 import '../../../../dto/choosed_experiment_combination_dto.dart';
 import '../../../../viewmodel/calculate_experiment_viewmodel.dart';
 import '../calculate_experiment_fragment_template.dart';
@@ -28,8 +29,8 @@ class _CalculateExperimentFirstStepPageState
     extends State<CalculateExperimentFirstStepPage> {
   late final CalculateExperimentViewmodel _calculateExperimentViewmodel;
   bool? enableNextButton;
-  String? choosedEnzyme;
-  String? choosedEnzymeName;
+  EnzymeEntity? choosedEnzyme;
+  // String? choosedEnzymeName;
   String? choosedTreatment;
   String? choosedTreatmentName;
 
@@ -39,9 +40,9 @@ class _CalculateExperimentFirstStepPageState
     _calculateExperimentViewmodel = GetIt.I.get<CalculateExperimentViewmodel>();
 
     choosedEnzyme = _calculateExperimentViewmodel
-        .temporaryChoosedExperimentCombination.enzymeId;
-    choosedEnzymeName = _calculateExperimentViewmodel
-        .temporaryChoosedExperimentCombination.enzymeName;
+        .temporaryChoosedExperimentCombination.enzyme;
+    // choosedEnzymeName = _calculateExperimentViewmodel
+    //     .temporaryChoosedExperimentCombination.enzyme?.name;
     choosedTreatment = _calculateExperimentViewmodel
         .temporaryChoosedExperimentCombination.treatmentId;
     choosedTreatmentName = _calculateExperimentViewmodel
@@ -70,7 +71,7 @@ class _CalculateExperimentFirstStepPageState
       name: 'treatment',
       onChanged: (value) async {
         choosedEnzyme = null;
-        choosedEnzymeName = null;
+        // choosedEnzymeName = null;
 
         choosedTreatment = value;
         choosedTreatmentName = _calculateExperimentViewmodel
@@ -99,7 +100,7 @@ class _CalculateExperimentFirstStepPageState
 
   get _enzymeChoiceChip {
     if (choosedTreatment != null) {
-      return FormBuilderChoiceChip<dynamic>(
+      return FormBuilderChoiceChip<EnzymeEntity>(
         autovalidateMode: AutovalidateMode.onUserInteraction,
         decoration: const InputDecoration(
           labelText: 'Selecione a enzima:',
@@ -107,18 +108,18 @@ class _CalculateExperimentFirstStepPageState
           contentPadding: EdgeInsets.all(0),
         ),
         initialValue: _calculateExperimentViewmodel
-            .temporaryChoosedExperimentCombination.enzymeId,
+                .temporaryChoosedExperimentCombination.enzyme ??
+            choosedEnzyme,
+
         name: 'enzyme',
         onChanged: (value) {
           if (value != null) {
             EZTSnackBar.clear(context);
             EZTSnackBar.show(
               context,
-              "Tipo da enzima selecionada: ${Constants.typesOfEnzymesListFormmated[Constants.typesOfEnzymesList.indexOf(_calculateExperimentViewmodel.experiment.enzymes!.firstWhere((x) => x.id == value).type)]}",
+              "Tipo da enzima selecionada: ${Constants.typesOfEnzymesListFormmated[Constants.typesOfEnzymesList.indexOf(value.type)]}",
               color: Constants.dealWithEnzymeChipColor(
-                _calculateExperimentViewmodel.enzymesRemaining
-                    .firstWhere((x) => x.id == value)
-                    .type,
+                value.type,
               ),
               textStyle: TextStyles.titleMinBoldBackground,
               centerTitle: true,
@@ -126,16 +127,16 @@ class _CalculateExperimentFirstStepPageState
           }
 
           choosedEnzyme = value;
-          choosedEnzymeName = _calculateExperimentViewmodel.experiment.enzymes!
-              .firstWhere((x) => x.id == value)
-              .name;
+          // choosedEnzymeName = _calculateExperimentViewmodel.experiment.enzymes!
+          //     .firstWhere((x) => x.id == value)
+          //     .name;
           _validateFields();
         },
         // options: _calculateExperimentViewmodel.experiment.enzymes!
         options: _calculateExperimentViewmodel.enzymesRemaining
             .map(
-              (e) => FormBuilderChipOption(
-                value: e.id,
+              (e) => FormBuilderChipOption<EnzymeEntity>(
+                value: e,
                 avatar: CircleAvatar(
                   backgroundColor: Constants.dealWithEnzymeChipColor(e.type),
                 ),
@@ -174,9 +175,11 @@ class _CalculateExperimentFirstStepPageState
               _calculateExperimentViewmodel
                   .setTemporaryChoosedExperimentCombination(
                 ChoosedExperimentCombinationDTO(
-                  enzymeId: choosedEnzyme,
-                  enzymeName: choosedEnzymeName,
-                  enzymeFormula: 'MUDAR: p-ntrof.(mg PNP g-1 de solo h1)',
+                  // enzymeId: choosedEnzyme,
+                  // enzymeName: choosedEnzymeName,
+                  // enzymeFormula: 'MUDAR: p-ntrof.(mg PNP g-1 de solo h1)',
+                  enzyme: _calculateExperimentViewmodel.enzymesRemaining
+                      .firstWhere((x) => x.id == choosedEnzyme!.id),
                   treatmentId: choosedTreatment,
                   treatmentName: choosedTreatmentName,
                 ),

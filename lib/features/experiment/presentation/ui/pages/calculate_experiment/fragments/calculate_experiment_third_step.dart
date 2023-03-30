@@ -53,7 +53,6 @@ class _CalculateExperimentThirdStepPageState
                 .whenComplete(() => Navigator.popUntil(
                       context,
                       ModalRoute.withName(Routing.experimentDetailed),
-                      
                     ));
           },
         ),
@@ -179,7 +178,7 @@ class _CalculateExperimentThirdStepPageState
                     ),
                     Text(
                       _calculateExperimentViewmodel
-                          .temporaryChoosedExperimentCombination.treatmentName!,
+                          .temporaryChoosedExperimentCombination.enzyme!.name,
                       textAlign: TextAlign.center,
                       style: TextStyles.titleBoldBackground.copyWith(
                         color: AppColors.greySweet,
@@ -190,7 +189,7 @@ class _CalculateExperimentThirdStepPageState
                     const Divider(),
                     Text(
                       _calculateExperimentViewmodel
-                          .temporaryChoosedExperimentCombination.enzymeName!,
+                          .temporaryChoosedExperimentCombination.treatmentName!,
                       textAlign: TextAlign.center,
                       style: TextStyles.titleBoldBackground.copyWith(
                         color: AppColors.greySweet,
@@ -208,7 +207,8 @@ class _CalculateExperimentThirdStepPageState
                         child: Text(
                           _calculateExperimentViewmodel
                               .temporaryChoosedExperimentCombination
-                              .enzymeFormula!,
+                              .enzyme!
+                              .formula,
                           textAlign: TextAlign.center,
                           style: TextStyles.titleBoldBackground.copyWith(
                             color: AppColors.white,

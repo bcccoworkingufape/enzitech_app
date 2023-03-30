@@ -1,20 +1,18 @@
+import '../../../enzyme/domain/entities/enzyme_entity.dart';
+
 class ChoosedExperimentCombinationDTO {
-  String? enzymeId;
-  String? enzymeName;
-  String? enzymeFormula;
+  EnzymeEntity? enzyme;
   String? treatmentId;
   String? treatmentName;
 
   ChoosedExperimentCombinationDTO({
-    this.enzymeId,
-    this.enzymeName,
-    this.enzymeFormula,
+    this.enzyme,
     this.treatmentId,
     this.treatmentName,
   });
 
   @override
   String toString() {
-    return "{enzymeId: $enzymeId, enzymeName: $enzymeName, treatmentId: $treatmentId}, treatmentName: $treatmentName}";
+    return "{enzyme: $enzyme, treatmentId: $treatmentId}, treatmentName: $treatmentName}";
   }
 }
