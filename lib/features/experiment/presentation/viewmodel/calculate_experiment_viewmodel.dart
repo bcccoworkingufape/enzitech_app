@@ -141,6 +141,14 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
     _numberDifferencesDTO = numberDifferencesDTO;
   }
 
+  List<NumberDifferencesDTO?> _listOfNumberDifferencesDTO = [];
+  List<NumberDifferencesDTO?> get listOfNumberDifferencesDTO =>
+      _listOfNumberDifferencesDTO;
+  void setListOfNumberDifferencesDTO(
+      List<NumberDifferencesDTO?> listOfNumberDifferencesDTO) {
+    _listOfNumberDifferencesDTO = listOfNumberDifferencesDTO;
+  }
+
   void onBack(bool mounted, BuildContext context, {int? page}) {
     if (mounted) {
       if (page != null) {
@@ -310,6 +318,36 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
         fartherNumber: fartherNumber,
       ),
     );
+  }
+
+  calculateListOfNumbersFartherFromAverage() {
+    final average = experimentCalculationEntity!.average;
+
+    final results = experimentCalculationEntity!.results;
+
+    var list = <NumberDifferencesDTO>[];
+
+    // double differenceOfFartherNumber =
+    //     _percentOfDifference(average, results.first);
+
+    for (var number in results) {
+      var diff = _percentOfDifference(average, number);
+      var numberWithDifference = NumberDifferencesDTO(
+        number: number,
+        isFarther: diff > 25,
+        differenceOfFartherNumber: diff,
+        fartherNumber: 0,
+      );
+      list.add(numberWithDifference);
+      // if (diff > differenceOfFartherNumber) {
+      //   differenceOfFartherNumber = diff;
+      //   fartherNumber = number;
+      // }
+    }
+
+    print(list);
+
+    setListOfNumberDifferencesDTO(list);
   }
 
   clearTemporaryInfos() {

@@ -32,12 +32,14 @@ class _CalculateExperimentThirdStepPageState
     super.initState();
     _calculateExperimentViewmodel = GetIt.I.get<CalculateExperimentViewmodel>();
     _calculateExperimentViewmodel.getAbsNumberFartherFromAverage();
+    _calculateExperimentViewmodel.calculateListOfNumbersFartherFromAverage();
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _calculateExperimentViewmodel.getAbsNumberFartherFromAverage();
+    _calculateExperimentViewmodel.calculateListOfNumbersFartherFromAverage();
   }
 
   Widget get _buttons {
@@ -93,9 +95,12 @@ class _CalculateExperimentThirdStepPageState
           padding: const EdgeInsets.symmetric(vertical: 4.0),
           child: Visibility(
             visible: _calculateExperimentViewmodel
-                    .numberDifferencesDTO!.fartherNumber ==
-                result,
-            replacement: GestureDetector(
+                .listOfNumberDifferencesDTO[iteration]!.isFarther!,
+            replacement: const Icon(
+              PhosphorIcons.thumbsUp,
+              color: AppColors.grenDark,
+            ),
+            child: GestureDetector(
               onTap: () {
                 EZTSnackBar.clear(context);
                 EZTSnackBar.show(
@@ -110,10 +115,6 @@ class _CalculateExperimentThirdStepPageState
                 PhosphorIcons.warningCircleBold,
                 color: AppColors.danger,
               ),
-            ),
-            child: const Icon(
-              PhosphorIcons.thumbsUp,
-              color: AppColors.grenDark,
             ),
           ),
         ),
@@ -147,6 +148,30 @@ class _CalculateExperimentThirdStepPageState
           style: TextStyles.bodyBold.copyWith(color: AppColors.grenDark),
         ),
         Container(),
+      ]),
+    ];
+  }
+
+  List<TableRow> _buildTitleRow() {
+    return [
+      TableRow(children: [
+        Text(
+          "REPETIÇÃO",
+          style: TextStyles.bodyBold.copyWith(color: AppColors.greySweet),
+        ),
+        Text(
+          "RESULTADO",
+          style: TextStyles.bodyBold.copyWith(color: AppColors.greySweet),
+        ),
+        Text(
+          "STATUS",
+          style: TextStyles.bodyBold.copyWith(color: AppColors.greySweet),
+        ),
+      ]),
+      const TableRow(children: [
+        SizedBox(height: 8),
+        SizedBox(height: 8),
+        SizedBox(height: 8),
       ]),
     ];
   }
@@ -232,6 +257,7 @@ class _CalculateExperimentThirdStepPageState
                       defaultVerticalAlignment:
                           TableCellVerticalAlignment.middle,
                       children: [
+                        ..._buildTitleRow(),
                         ..._buildListOfRows(_calculateExperimentViewmodel
                             .experimentCalculationEntity!.results),
                         ..._buildAverageRow(_calculateExperimentViewmodel
