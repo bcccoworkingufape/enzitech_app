@@ -409,6 +409,7 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
       experimentId: experiment.id,
       enzymeId: temporaryChoosedExperimentCombination.enzyme!.id,
       treatmentID: temporaryChoosedExperimentCombination.treatment!.id,
+      listOfExperimentData: listOfExperimentData,
       results: experimentCalculationEntity!.results,
       average: experimentCalculationEntity!.average,
     );

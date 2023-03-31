@@ -101,184 +101,187 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
       );
     }
 
-    return Column(
-      children: [
-        const SizedBox(
-          height: 20,
-        ),
-        CircularPercentIndicator(
-          radius: 60,
-          lineWidth: 10.0,
-          percent: _experimentDetailsViewmodel.experiment!.progress,
-          center: Text(
-            Toolkit.doubleToPercentual(
-                _experimentDetailsViewmodel.experiment!.progress),
-            style: TextStyles.titleBoldHeading,
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 20,
           ),
-          progressColor: AppColors.primary,
-          backgroundColor: AppColors.primary.withOpacity(0.4),
-        ),
-        const SizedBox(
-          height: 30,
-        ),
-        Text(
-          _experimentDetailsViewmodel.experiment!.description,
-          style: TextStyles.detailRegular,
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        const Divider(color: AppColors.grey),
-        const SizedBox(
-          height: 20,
-        ),
-        Theme(
-          data: ThemeData().copyWith(dividerColor: Colors.transparent),
-          child: EZTExpansionTile(
-            // trailing: Text("test"),
-            disableTrailing: true,
-            onExpansionChanged: (_) {
-              setState(() {
-                _expandToSeeMoreVisible = !_expandToSeeMoreVisible;
-              });
-            },
-            title: Center(
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        children: [
-                          Text(
-                            _experimentDetailsViewmodel
-                                .experiment!.treatments!.length
-                                .toString(),
-                            style: TextStyles.titleHome,
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            "Tratamentos",
-                            style: TextStyles.detailRegular,
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        width: 50,
-                      ),
-                      Column(
-                        children: [
-                          Text(
-                            _experimentDetailsViewmodel.experiment!.repetitions
-                                .toString(),
-                            style: TextStyles.titleHome,
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            "Repetições",
-                            style: TextStyles.detailRegular,
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        width: 50,
-                      ),
-                      Column(
-                        children: [
-                          Text(
-                            _experimentDetailsViewmodel
-                                .experiment!.enzymes!.length
-                                .toString(),
-                            style: TextStyles.titleHome,
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            "Enzimas",
-                            style: TextStyles.detailRegular,
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                  if (_expandToSeeMoreVisible) ...[
-                    const SizedBox(
-                      height: 32,
-                    ),
-                    const Text(
-                      "Toque para mais informações",
-                      style: TextStyle(
-                        fontStyle: FontStyle.italic,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ]
-                ],
-              ),
+          CircularPercentIndicator(
+            radius: 60,
+            lineWidth: 10.0,
+            percent: _experimentDetailsViewmodel.experiment!.progress,
+            center: Text(
+              Toolkit.doubleToPercentual(
+                  _experimentDetailsViewmodel.experiment!.progress),
+              style: TextStyles.titleBoldHeading,
             ),
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Center(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: leadWithTreatments,
+            progressColor: AppColors.primary,
+            backgroundColor: AppColors.primary.withOpacity(0.4),
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          Text(
+            _experimentDetailsViewmodel.experiment!.description,
+            style: TextStyles.detailRegular,
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          const Divider(color: AppColors.grey),
+          const SizedBox(
+            height: 20,
+          ),
+          Theme(
+            data: ThemeData().copyWith(dividerColor: Colors.transparent),
+            child: EZTExpansionTile(
+              // trailing: Text("test"),
+              disableTrailing: true,
+              onExpansionChanged: (_) {
+                setState(() {
+                  _expandToSeeMoreVisible = !_expandToSeeMoreVisible;
+                });
+              },
+              title: Center(
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          children: [
+                            Text(
+                              _experimentDetailsViewmodel
+                                  .experiment!.treatments!.length
+                                  .toString(),
+                              style: TextStyles.titleHome,
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "Tratamentos",
+                              style: TextStyles.detailRegular,
+                            )
+                          ],
+                        ),
+                        const SizedBox(
+                          width: 50,
+                        ),
+                        Column(
+                          children: [
+                            Text(
+                              _experimentDetailsViewmodel
+                                  .experiment!.repetitions
+                                  .toString(),
+                              style: TextStyles.titleHome,
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "Repetições",
+                              style: TextStyles.detailRegular,
+                            )
+                          ],
+                        ),
+                        const SizedBox(
+                          width: 50,
+                        ),
+                        Column(
+                          children: [
+                            Text(
+                              _experimentDetailsViewmodel
+                                  .experiment!.enzymes!.length
+                                  .toString(),
+                              style: TextStyles.titleHome,
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "Enzimas",
+                              style: TextStyles.detailRegular,
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                    if (_expandToSeeMoreVisible) ...[
+                      const SizedBox(
+                        height: 32,
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: leadWithEnzymes,
+                      const Text(
+                        "Toque para mais informações",
+                        style: TextStyle(
+                          fontStyle: FontStyle.italic,
+                          fontSize: 12,
+                        ),
                       ),
-                    ],
-                  ),
+                    ]
+                  ],
                 ),
               ),
-            ],
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Center(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: leadWithTreatments,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: leadWithEnzymes,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        const Divider(color: AppColors.grey),
-        const SizedBox(
-          height: 20,
-        ),
-        EZTButton(
-          text: 'Cálculo enzimático',
-          eztButtonType: EZTButtonType.checkout,
-          enabled: _experimentDetailsViewmodel.experiment!.progress != 1,
-          icon: const Icon(PhosphorIcons.function,
-              color: AppColors.white, size: 30),
-          onPressed: () {
-            GetIt.I.get<CalculateExperimentViewmodel>
-                .call()
-                .clearTemporaryInfos();
-            Navigator.pushNamed(
-              context,
-              Routing.calculateExperiment,
-              arguments: _experimentDetailsViewmodel.experiment!,
-            );
-          },
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        EZTButton(
-          text: 'Resultados',
-          eztButtonType: EZTButtonType.checkout,
-          icon: const Icon(PhosphorIcons.fileText,
-              color: AppColors.white, size: 30),
-          onPressed: () => print(""),
-        ),
-      ],
+          const SizedBox(
+            height: 20,
+          ),
+          const Divider(color: AppColors.grey),
+          const SizedBox(
+            height: 20,
+          ),
+          EZTButton(
+            text: 'Cálculo enzimático',
+            eztButtonType: EZTButtonType.checkout,
+            enabled: _experimentDetailsViewmodel.experiment!.progress != 1,
+            icon: const Icon(PhosphorIcons.function,
+                color: AppColors.white, size: 30),
+            onPressed: () {
+              GetIt.I.get<CalculateExperimentViewmodel>
+                  .call()
+                  .clearTemporaryInfos();
+              Navigator.pushNamed(
+                context,
+                Routing.calculateExperiment,
+                arguments: _experimentDetailsViewmodel.experiment!,
+              );
+            },
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          EZTButton(
+            text: 'Resultados',
+            eztButtonType: EZTButtonType.checkout,
+            icon: const Icon(PhosphorIcons.fileText,
+                color: AppColors.white, size: 30),
+            onPressed: () => print(""),
+          ),
+        ],
+      ),
     );
   }
 

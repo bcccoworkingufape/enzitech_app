@@ -19,6 +19,7 @@ class SaveResultUseCaseImp implements SaveResultUseCase {
     required String experimentId,
     required String enzymeId,
     required String treatmentID,
+    required List<Map<String, dynamic>> listOfExperimentData,
     required List<double> results,
     required double average,
   }) async {
@@ -26,6 +27,7 @@ class SaveResultUseCaseImp implements SaveResultUseCase {
       experimentId: experimentId,
       enzymeId: enzymeId,
       treatmentID: treatmentID,
+      listOfExperimentData: listOfExperimentData,
       results: results,
       average: average,
     );

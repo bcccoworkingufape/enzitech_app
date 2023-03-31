@@ -1,10 +1,12 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
 // 🌎 Project imports:
+import '../../../../../../core/enums/enums.dart';
+import '../../../../../../core/failures/failures.dart';
+import '../../../../../../shared/ui/ui.dart';
 import '../../../../domain/entities/experiment_entity.dart';
 import '../../../viewmodel/calculate_experiment_viewmodel.dart';
 import 'fragments/calculate_experiment_first_step.dart';
@@ -35,6 +37,21 @@ class _CalculateExperimentPageState extends State<CalculateExperimentPage> {
     _calculateExperimentViewmodel = GetIt.I.get<CalculateExperimentViewmodel>();
 
     _calculateExperimentViewmodel.setExperiment(widget.experiment);
+
+    if (mounted) {
+      _calculateExperimentViewmodel.addListener(
+        () {
+          if (mounted &&
+              _calculateExperimentViewmodel.state == StateEnum.error) {
+            EZTSnackBar.show(
+              context,
+              HandleFailure.of(_calculateExperimentViewmodel.failure!),
+              eztSnackBarType: EZTSnackBarType.error,
+            );
+          }
+        },
+      );
+    }
   }
 
   @override

@@ -1,4 +1,6 @@
 // 📦 Package imports:
+import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
 
 // 🌎 Project imports:
@@ -18,15 +20,33 @@ class SaveResultRemoteDataSourceImp implements SaveResultDataSource {
     required String experimentId,
     required String enzymeId,
     required String treatmentID,
+    required List<Map<String, dynamic>> listOfExperimentData,
     required List<double> results,
     required double average,
   }) async {
     try {
+      var list = jsonDecode(jsonEncode(listOfExperimentData));
+      List<Map<String, double>> listWithoutIds = [];
+      for (var i in list) {
+        // print(i);
+        // print(i.runtimeType);
+        i.remove('_id');
+
+        listWithoutIds.add({
+          'sample':
+              i['sample'] is String ? double.parse(i['sample']) : i['sample'],
+          'whiteSample': i['whiteSample'] is String
+              ? double.parse(i['whiteSample'])
+              : i['whiteSample']
+        });
+      }
+      
       var response = await _httpService.post(
         API.REQUEST_SAVE_RESULT_EXPERIMENTS(experimentId),
         data: {
           "enzyme": enzymeId,
           "process": treatmentID,
+          "experimentData": listWithoutIds,
           "results": results,
           "average": average
         },

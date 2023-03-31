@@ -10,6 +10,7 @@ abstract class SaveResultRepository {
     required String experimentId,
     required String enzymeId,
     required String treatmentID,
+    required List<Map<String, dynamic>> listOfExperimentData,
     required List<double> results,
     required double average,
   });
