@@ -18,6 +18,7 @@ import '../../../features/experiment/data/repositories/delete_experiment_reposit
 import '../../../features/experiment/data/repositories/get_enzymes_remaining_in_experiment_repository_imp.dart';
 import '../../../features/experiment/data/repositories/get_experiment_by_id_repository_imp.dart';
 import '../../../features/experiment/data/repositories/get_experiments_repository_imp.dart';
+import '../../../features/experiment/data/repositories/get_result_repository_imp.dart';
 import '../../../features/experiment/data/repositories/save_result_repository_imp.dart';
 import '../../../features/experiment/data/repositories/store_experiments_in_cache_repository_imp.dart';
 import '../../../features/experiment/domain/repositories/calculate_experiment_repository.dart';
@@ -26,6 +27,7 @@ import '../../../features/experiment/domain/repositories/delete_experiment_repos
 import '../../../features/experiment/domain/repositories/get_enzymes_remaining_in_experiment_repository.dart';
 import '../../../features/experiment/domain/repositories/get_experiment_by_id_repository.dart';
 import '../../../features/experiment/domain/repositories/get_experiments_repository.dart';
+import '../../../features/experiment/domain/repositories/get_result_repository.dart';
 import '../../../features/experiment/domain/repositories/save_result_repository.dart';
 import '../../../features/experiment/domain/repositories/store_experiments_in_cache_repository.dart';
 import '../../../features/main/data/repositories/clear_user_repository_imp.dart';
@@ -88,6 +90,9 @@ class RepositoriesInjections {
     );
     getIt.registerLazySingleton<GetExperimentsRepository>(
       () => GetExperimentsRepositoryImp(getIt()),
+    );
+    getIt.registerLazySingleton<GetResultRepository>(
+      () => GetResultRepositoryImp(getIt()),
     );
     getIt.registerLazySingleton<GetTreatmentsRepository>(
       () => GetTreatmentsRepositoryImp(getIt()),

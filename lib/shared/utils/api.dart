@@ -61,6 +61,10 @@ class API {
   static String REQUEST_SAVE_RESULT_EXPERIMENTS(String experiment) =>
       '$REQUEST_EXPERIMENTS/save-result/$experiment';
 
+  /// Route to '/experiments/save-result/$experiment'
+  static String REQUEST_GET_RESULT_EXPERIMENTS(String experiment) =>
+      '$REQUEST_EXPERIMENTS/get-total-result/$experiment';
+
   /// Route to '/experiments/get-total-result/$experiment'
   static String REQUEST_TOTAL_RESULTS_OF_EXPERIMENT(String experiment) =>
       '$REQUEST_EXPERIMENTS/get-total-result/$experiment';

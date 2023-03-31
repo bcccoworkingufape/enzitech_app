@@ -278,7 +278,10 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
             eztButtonType: EZTButtonType.checkout,
             icon: const Icon(PhosphorIcons.fileText,
                 color: AppColors.white, size: 30),
-            onPressed: () => print(""),
+            onPressed: () => Navigator.pushNamed(
+              context,
+              Routing.experimentResults,
+            ),
           ),
         ],
       ),

@@ -9,6 +9,7 @@ import '../../features/experiment/domain/entities/experiment_entity.dart';
 import '../../features/experiment/presentation/ui/pages/calculate_experiment/calculate_experiment_page.dart';
 import '../../features/experiment/presentation/ui/pages/create_experiment/create_experiment_page.dart';
 import '../../features/experiment/presentation/ui/pages/experiment_details/experiment_details_page.dart';
+import '../../features/experiment/presentation/ui/pages/experiment_results/experiment_results_page.dart';
 import '../../features/main/presentation/ui/pages/home/home_page.dart';
 import '../../features/main/presentation/ui/pages/splash/splash_page.dart';
 import '../../features/treatment/presentation/ui/pages/create_treatment/create_treatment_page.dart';
@@ -20,6 +21,7 @@ class Routing {
   static const createExperiment = "/createExperiment";
   static const createTreatment = "/createTreatment";
   static const experimentDetailed = "/experimentDetailed";
+  static const experimentResults = "/experimentResults";
   static const calculateExperiment = "/experimentInsertData";
   static const home = "/home";
   static const initial = "/";
@@ -48,7 +50,8 @@ class Routing {
           ),
           builder: (_) => const ExperimentDetailsPage(),
         );
-
+      case experimentResults:
+        return MaterialPageRoute(builder: (_) => const ExperimentResultsPage());
       case calculateExperiment:
         if (args is ExperimentEntity) {
           return MaterialPageRoute(

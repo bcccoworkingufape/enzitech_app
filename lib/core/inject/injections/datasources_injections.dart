@@ -19,6 +19,7 @@ import '../../../features/experiment/data/datasources/delete_experiment_datasour
 import '../../../features/experiment/data/datasources/get_enzymes_remaining_in_experiment_datasource.dart';
 import '../../../features/experiment/data/datasources/get_experiment_by_id_datasource.dart';
 import '../../../features/experiment/data/datasources/get_experiments_datasource.dart';
+import '../../../features/experiment/data/datasources/get_result_datasource.dart';
 import '../../../features/experiment/data/datasources/local/get_experiments/get_experiments_local_datasource_decorator_imp.dart';
 import '../../../features/experiment/data/datasources/remote/calculate_experiment_remote_datasource_imp.dart';
 import '../../../features/experiment/data/datasources/remote/create_experiment_remote_datasource_imp.dart';
@@ -26,6 +27,7 @@ import '../../../features/experiment/data/datasources/remote/delete_experiment_r
 import '../../../features/experiment/data/datasources/remote/get_enzymes_remaining_in_experiment_remote_datasource_imp.dart';
 import '../../../features/experiment/data/datasources/remote/get_experiment_by_id_remote_datasource_imp.dart';
 import '../../../features/experiment/data/datasources/remote/get_experiments_remote_datasource_imp.dart';
+import '../../../features/experiment/data/datasources/remote/get_result_remote_datasource_imp.dart';
 import '../../../features/experiment/data/datasources/remote/save_result_remote_datasource_imp.dart';
 import '../../../features/experiment/data/datasources/save_result_datasource.dart';
 import '../../../features/main/data/datasources/clear_user_datasource.dart';
@@ -97,6 +99,9 @@ class DataSourcesInjections {
         GetExperimentsRemoteDataSourceImp(getIt()),
         getIt(),
       ),
+    );
+    getIt.registerLazySingleton<GetResultDataSource>(
+      () => GetResultRemoteDataSourceImp(getIt()),
     );
     getIt.registerLazySingleton<GetTreatmentsDataSource>(
       () => GetTreatmentsDataSourceDecoratorImp(

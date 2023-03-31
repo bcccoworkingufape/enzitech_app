@@ -24,6 +24,8 @@ import '../../../features/experiment/domain/usecases/get_experiment_by_id/get_ex
 import '../../../features/experiment/domain/usecases/get_experiment_by_id/get_experiment_by_id_usecase_imp.dart';
 import '../../../features/experiment/domain/usecases/get_experiments/get_experiments_usecase.dart';
 import '../../../features/experiment/domain/usecases/get_experiments/get_experiments_usecase_imp.dart';
+import '../../../features/experiment/domain/usecases/get_result/get_result_usecase.dart';
+import '../../../features/experiment/domain/usecases/get_result/get_result_usecase_imp.dart';
 import '../../../features/experiment/domain/usecases/save_result/save_result_usecase.dart';
 import '../../../features/experiment/domain/usecases/save_result/save_result_usecase_imp.dart';
 import '../../../features/experiment/domain/usecases/store_experiments_in_cache/store_experiments_in_cache_usecase.dart';
@@ -88,6 +90,9 @@ class UseCasesInjections {
     );
     getIt.registerLazySingleton<GetExperimentsUseCase>(
       () => GetExperimentsUseCaseImp(getIt()),
+    );
+    getIt.registerLazySingleton<GetResultUseCase>(
+      () => GetResultUseCaseImp(getIt()),
     );
     getIt.registerLazySingleton<GetTreatmentsUseCase>(
       () => GetTreatmentsUseCaseImp(getIt()),
