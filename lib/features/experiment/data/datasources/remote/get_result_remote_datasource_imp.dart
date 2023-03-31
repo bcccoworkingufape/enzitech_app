@@ -30,10 +30,10 @@ class GetResultRemoteDataSourceImp implements GetResultDataSource {
 {
 	"result": [
         {
-            "enzymeName": "enzima1",
+            "enzymeName": "Urease",
             "processes": [
                 {
-                    "processName": "tratamento1",
+                    "processName": "Tratamento com braquiária",
                     "results": [
                         {
                             "repetitionId": 1,
@@ -66,7 +66,7 @@ class GetResultRemoteDataSourceImp implements GetResultDataSource {
                     ]
                 },
                 {
-                    "processName": "tratamento2",
+                    "processName": "Soja em monocultivo",
                     "results": [
                         {
                             "repetitionId": 3,
@@ -101,10 +101,10 @@ class GetResultRemoteDataSourceImp implements GetResultDataSource {
             ]
         },
         {
-            "enzymeName": "enzima2",
+            "enzymeName": "Aryl",
             "processes": [
                 {
-                    "processName": "tratamento1",
+                    "processName": "Tratamento com braquiária",
                     "results": [
                         {
                             "repetitionId": 1,
@@ -137,7 +137,7 @@ class GetResultRemoteDataSourceImp implements GetResultDataSource {
                     ]
                 },
                 {
-                    "processName": "tratamento2",
+                    "processName": "Soja em monocultivo",
                     "results": [
                         {
                             "repetitionId": 3,

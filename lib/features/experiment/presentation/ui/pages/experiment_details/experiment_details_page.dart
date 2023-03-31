@@ -275,6 +275,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
           ),
           EZTButton(
             text: 'Resultados',
+            enabled: _experimentDetailsViewmodel.experiment!.progress != 0,
             eztButtonType: EZTButtonType.checkout,
             icon: const Icon(PhosphorIcons.fileText,
                 color: AppColors.white, size: 30),
