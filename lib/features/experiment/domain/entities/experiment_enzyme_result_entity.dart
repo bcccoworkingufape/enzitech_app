@@ -1,11 +1,12 @@
+import '../../../enzyme/domain/entities/enzyme_entity.dart';
 import 'experiment_treatment_result_entity.dart';
 
 class ExperimentEnzymeResultEntity {
-    ExperimentEnzymeResultEntity({
-        required this.enzymeName,
-        required this.treatments,
-    });
+  ExperimentEnzymeResultEntity({
+    required this.enzyme,
+    required this.treatments,
+  });
 
-    final String enzymeName;
-    final List<ExperimentTreatmentResultEntity> treatments;
+  final EnzymeEntity enzyme;
+  final List<ExperimentTreatmentResultEntity> treatments;
 }

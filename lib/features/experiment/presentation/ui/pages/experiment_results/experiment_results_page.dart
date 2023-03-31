@@ -146,7 +146,7 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
       return const EZTProgressIndicator(message: "Carregando resultados...");
     }
 
-    final results = _experimentResultsViewmodel.experimentResultEntity;
+    final results = _experimentResultsViewmodel.experimentResult;
 
     return SafeArea(
       child: CustomScrollView(
@@ -185,7 +185,7 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                results.enzymes[indexOfEnzymes].enzymeName,
+                                results.enzymes[indexOfEnzymes].enzyme.name,
                                 style:
                                     TextStyles.informationExperimentStepTitle,
                               ),
@@ -206,7 +206,7 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          treatment.treatmentName,
+                                          treatment.treatment.name,
                                           style: TextStyles
                                               .informationExperimentStepTitle
                                               .copyWith(
@@ -223,9 +223,9 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                                       LayoutBuilder(builder:
                                           (BuildContext context,
                                               BoxConstraints constraints) {
-                                        print(constraints);
-                                        print(constraints.minHeight);
-                                        print(constraints.maxHeight);
+                                        // print(constraints);
+                                        // print(constraints.minHeight);
+                                        // print(constraints.maxHeight);
                                         // print(constraints.biggest.);
                                         return ConstrainedBox(
                                           constraints: BoxConstraints.tightFor(
@@ -375,7 +375,21 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
           //   ),
           // ),
           floatingActionButton: FloatingActionButton(
-            onPressed: () {},
+            onPressed: () {
+              _experimentResultsViewmodel.exportToExcel().then(
+                    (flag) => flag
+                        ? EZTSnackBar.show(
+                            context,
+                            'Arquivo salvo com sucesso!',
+                            eztSnackBarType: EZTSnackBarType.success,
+                          )
+                        : EZTSnackBar.show(
+                            context,
+                            'Não foi possível salvar o arquivo, tente novamente.',
+                            eztSnackBarType: EZTSnackBarType.error,
+                          ),
+                  );
+            },
             // label: Text(
             //   "Compartilhar",
             //   style: TextStyles.buttonBoldBackground,
