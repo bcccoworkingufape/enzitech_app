@@ -125,7 +125,7 @@ class _CreateExperimentFourthStepPageState
               'duration-${enzyme.id}',
               () => EZTTextField(
                 eztTextFieldType: EZTTextFieldType.underline,
-                labelText: "Duração",
+                labelText: "Tempo (h)",
                 usePrimaryColorOnFocusedBorder: true,
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: false),
@@ -147,7 +147,7 @@ class _CreateExperimentFourthStepPageState
               'size-${enzyme.id}',
               () => EZTTextField(
                 eztTextFieldType: EZTTextFieldType.underline,
-                labelText: "Volume",
+                labelText: "Volume da Solução",
                 usePrimaryColorOnFocusedBorder: true,
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
@@ -169,7 +169,7 @@ class _CreateExperimentFourthStepPageState
               'weightSample-${enzyme.id}',
               () => EZTTextField(
                 eztTextFieldType: EZTTextFieldType.underline,
-                labelText: "Peso da amostra",
+                labelText: "Peso da amostra (g)",
                 usePrimaryColorOnFocusedBorder: true,
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
@@ -191,7 +191,7 @@ class _CreateExperimentFourthStepPageState
               'weightGround-${enzyme.id}',
               () => EZTTextField(
                 eztTextFieldType: EZTTextFieldType.underline,
-                labelText: "Peso do solo",
+                labelText: "Fator de correção",
                 usePrimaryColorOnFocusedBorder: true,
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),

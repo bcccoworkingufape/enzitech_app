@@ -17,6 +17,7 @@ import '../../domain/usecases/save_result/save_result_usecase.dart';
 import '../dto/choosed_experiment_combination_dto.dart';
 import '../dto/number_differences_dto.dart';
 import 'experiment_details_viewmodel.dart';
+import 'experiments_viewmodel.dart';
 
 class CalculateExperimentViewmodel extends ChangeNotifier {
   final CalculateExperimentUseCase _calculateExperimentUseCase;
@@ -420,9 +421,8 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
         setStateEnum(StateEnum.error);
       },
       (success) async {
-        print(success);
         GetIt.I.get<ExperimentDetailsViewmodel>().setExperiment(success);
-        // setExperimentCalculation(success);
+        GetIt.I.get<ExperimentsViewmodel>().fetch();
         setStateEnum(StateEnum.success);
       },
     );
