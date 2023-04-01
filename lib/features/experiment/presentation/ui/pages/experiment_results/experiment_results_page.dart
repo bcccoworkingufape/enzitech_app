@@ -354,6 +354,18 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                     },
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                  child: EZTButton(
+                    text: 'Voltar',
+                    eztButtonType: EZTButtonType.regular,
+                    onPressed: () {
+                      Navigator.pop(
+                        context,
+                      );
+                    },
+                  ),
+                ),
               ],
             ),
           ),
@@ -375,12 +387,17 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
           //     style: TextStyles.titleBoldBackground,
           //   ),
           // ),
-          floatingActionButtonLocation: ExpandableFab.location,
+          // floatingActionButtonLocation: ExpandableFab.location,
           floatingActionButton: ExpandableFab(
+            distance: 80,
+            foregroundColor: AppColors.white,
             children: [
               FloatingActionButton.small(
                 heroTag: null,
-                child: const Icon(PhosphorIcons.shareNetwork),
+                child: const Icon(
+                  PhosphorIcons.shareNetwork,
+                  color: AppColors.white,
+                ),
                 onPressed: () {
                   _experimentResultsViewmodel.shareResult().then(
                         (flag) => flag
@@ -395,7 +412,10 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
               ),
               FloatingActionButton.small(
                 heroTag: null,
-                child: const Icon(PhosphorIcons.download),
+                child: const Icon(
+                  PhosphorIcons.download,
+                  color: AppColors.white,
+                ),
                 onPressed: () {
                   _experimentResultsViewmodel.exportToExcel().then(
                         (flag) => flag
