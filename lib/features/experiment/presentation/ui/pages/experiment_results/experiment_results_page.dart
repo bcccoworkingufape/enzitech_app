@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:flutter_svg/svg.dart';
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
@@ -374,7 +375,46 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
           //     style: TextStyles.titleBoldBackground,
           //   ),
           // ),
-          floatingActionButton: FloatingActionButton(
+          floatingActionButtonLocation: ExpandableFab.location,
+          floatingActionButton: ExpandableFab(
+            children: [
+              FloatingActionButton.small(
+                heroTag: null,
+                child: const Icon(PhosphorIcons.shareNetwork),
+                onPressed: () {
+                  _experimentResultsViewmodel.shareResult().then(
+                        (flag) => flag
+                            ? null
+                            : EZTSnackBar.show(
+                                context,
+                                'Não foi possível compartilhar o arquivo, tente novamente.',
+                                eztSnackBarType: EZTSnackBarType.error,
+                              ),
+                      );
+                },
+              ),
+              FloatingActionButton.small(
+                heroTag: null,
+                child: const Icon(PhosphorIcons.download),
+                onPressed: () {
+                  _experimentResultsViewmodel.exportToExcel().then(
+                        (flag) => flag
+                            ? EZTSnackBar.show(
+                                context,
+                                'Arquivo salvo com sucesso!',
+                                eztSnackBarType: EZTSnackBarType.success,
+                              )
+                            : EZTSnackBar.show(
+                                context,
+                                'Não foi possível salvar o arquivo, tente novamente.',
+                                eztSnackBarType: EZTSnackBarType.error,
+                              ),
+                      );
+                },
+              ),
+            ],
+          ),
+          /* floatingActionButton: FloatingActionButton(
             onPressed: () {
               _experimentResultsViewmodel.exportToExcel().then(
                     (flag) => flag
@@ -400,7 +440,7 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
               size: 35,
               color: AppColors.white,
             ),
-          ),
+          ), */
           body: _buildBody,
         );
       },

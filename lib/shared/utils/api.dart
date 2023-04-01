@@ -7,7 +7,7 @@ class API {
       'https://ec2-54-161-87-5.compute-1.amazonaws.com:8080';
   static const BASE_URL_RELEASE = 'http://200.133.6.201:30001/';
   static const BASE_URL_PRIVATE = 'http://191.101.78.251:3010/';
-  static const BASE_URL_WEVERTON = 'http://8db2-128-201-207-165.ngrok.io';
+  static const BASE_URL_WEVERTON = 'http://08f7-128-201-207-230.ngrok.io/';
 
   //-> AUTHENTICATION
   /// Route to '/auth'

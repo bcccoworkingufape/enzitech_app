@@ -5,6 +5,8 @@ import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:share_plus/share_plus.dart';
 
 // 🌎 Project imports:
 import '../../../../core/enums/enums.dart';
@@ -163,12 +165,83 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
 
       excel.delete('Sheet1');
 
-      final directory = await getExternalStorageDirectory();
-      final filePath =
-          '${directory?.path}/${GetIt.I.get<ExperimentDetailsViewmodel>().experiment!.name.replaceAll(' ', '')}.xlsx';
-      final file = File(filePath);
-      file.writeAsBytesSync(excel.encode()!);
-      return true;
+      // ask for permission
+      await Permission.manageExternalStorage.request();
+      var status = await Permission.manageExternalStorage.status;
+      if (status.isDenied) {
+        // We didn't ask for permission yet or the permission has been denied   before but not permanently.
+        return false;
+      }
+
+      // You can can also directly ask the permission about its status.
+      if (await Permission.storage.isRestricted) {
+        // The OS restricts access, for example because of parental controls.
+        return false;
+      }
+
+      if (await Permission.manageExternalStorage.isPermanentlyDenied) {
+        // The user opted to never again see the permission request dialog for this
+        // app. The only way to change the permission's status now is to let the
+        // user manually enable it in the system settings.
+        openAppSettings();
+      }
+
+      if (status.isGranted) {
+        // here you add the code to store the file
+        final directory = await getExternalStorageDirectory();
+        final filePath =
+            '${directory?.path}/${GetIt.I.get<ExperimentDetailsViewmodel>().experiment!.name.replaceAll(' ', '')}.xlsx';
+        final file = File(filePath);
+        file.writeAsBytesSync(excel.encode()!);
+        return true;
+      }
+      return false;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> shareResult() async {
+    try {
+      // ask for permission
+      await Permission.manageExternalStorage.request();
+      var status = await Permission.manageExternalStorage.status;
+      if (status.isDenied) {
+        // We didn't ask for permission yet or the permission has been denied   before but not permanently.
+        return false;
+      }
+
+      // You can can also directly ask the permission about its status.
+      if (await Permission.storage.isRestricted) {
+        // The OS restricts access, for example because of parental controls.
+        return false;
+      }
+
+      if (await Permission.manageExternalStorage.isPermanentlyDenied) {
+        // The user opted to never again see the permission request dialog for this
+        // app. The only way to change the permission's status now is to let the
+        // user manually enable it in the system settings.
+        openAppSettings();
+      }
+
+      if (status.isGranted) {
+        var exportedWithSuccess = await exportToExcel();
+        if (exportedWithSuccess) {
+          // here you add the code to store the file
+          final directory = await getExternalStorageDirectory();
+          final filePath =
+              '${directory?.path}/${GetIt.I.get<ExperimentDetailsViewmodel>().experiment!.name.replaceAll(' ', '')}.xlsx';
+          Share.shareXFiles([
+            XFile(filePath,
+                name:
+                    'Resultados do experimento "${GetIt.I.get<ExperimentDetailsViewmodel>().experiment!.name}"')
+          ]);
+
+          return true;
+        }
+        return false;
+      }
+      return false;
     } catch (e) {
       return false;
     }

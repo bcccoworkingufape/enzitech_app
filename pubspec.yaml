@@ -37,6 +37,7 @@ dependencies:
   excel: ^2.1.0
   flutter:
     sdk: flutter
+  flutter_expandable_fab: ^1.7.1
   flutter_form_builder: ^7.7.0
   flutter_localizations:
     sdk: flutter
@@ -51,9 +52,11 @@ dependencies:
   package_info_plus: ^3.0.3
   path_provider: ^2.0.14
   percent_indicator: ^4.2.2
+  permission_handler: ^10.2.0
   phosphor_flutter: ^1.4.0
   pretty_dio_logger: ^1.2.0-beta-1
   settings_ui: ^2.0.2
+  share_plus: ^6.3.1
   shared_preferences: ^2.0.17
   toggle_switch: ^2.0.1
   url_launcher: ^6.1.9
