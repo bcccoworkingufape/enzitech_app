@@ -1,6 +1,8 @@
 // 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+import 'dart:io' as io;
 
+import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 // 📦 Package imports:
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -10,6 +12,7 @@ import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
 import '../../../../shared/utils/utils.dart';
 import '../../../authentication/domain/entities/user_entity.dart';
+import '../../../experiment/presentation/viewmodel/experiment_results_viewmodel.dart';
 import '../../domain/entities/app_info_entity.dart';
 import '../../domain/usecases/clear_user/clear_user_usecase.dart';
 import '../../domain/usecases/get_exclude_confirmation/get_exclude_confirmation_usecase.dart';
@@ -59,6 +62,30 @@ class SettingsViewmodel extends ChangeNotifier {
   void _setAppInfo(AppInfoEntity? appInfo) {
     _appInfo = appInfo;
     notifyListeners();
+  }
+
+  int _quantityFiles = 0;
+  int get quantityFiles => _quantityFiles;
+  void _setQuantityFiles(int quantityFiles) {
+    _quantityFiles = quantityFiles;
+    notifyListeners();
+  }
+
+  void fetchQuantityOfFiles() async {
+    var files = io.Directory(
+            "${await GetIt.I.get<ExperimentResultsViewmodel>().getDownloadEnzitechPath()}")
+        .listSync(); //use your folder name insted of resume.
+    _setQuantityFiles(files.length);
+  }
+
+  get dealWithDownloadedFiles {
+    if (quantityFiles == 0) {
+      return 'Você não tem planilhas baixadas';
+    } else if (quantityFiles == 1) {
+      return 'Você tem 1 planilha baixada';
+    } else {
+      return 'Você tem $quantityFiles planilhas baixadas';
+    }
   }
 
   bool? _enableExcludeConfirmation;

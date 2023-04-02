@@ -48,6 +48,10 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
             EZTSnackBar.show(
               context,
               HandleFailure.of(_experimentResultsViewmodel.failure!),
+              duration:
+                  _experimentResultsViewmodel.failure! is UnableToSaveFailure
+                      ? const Duration(seconds: 15)
+                      : null,
               eztSnackBarType: EZTSnackBarType.error,
             );
           }
@@ -461,11 +465,15 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                                       'Arquivo salvo em ${_experimentResultsViewmodel.savedPath}',
                                       eztSnackBarType: EZTSnackBarType.success,
                                     )
-                                  : EZTSnackBar.show(
-                                      context,
-                                      'Não foi possível salvar o arquivo, tente novamente.',
-                                      eztSnackBarType: EZTSnackBarType.error,
-                                    ),
+                                  : _experimentResultsViewmodel.failure
+                                          is! UnableToSaveFailure
+                                      ? EZTSnackBar.show(
+                                          context,
+                                          'Não foi possível salvar o arquivo, tente novamente.',
+                                          eztSnackBarType:
+                                              EZTSnackBarType.error,
+                                        )
+                                      : null,
                             );
                       },
                     ),

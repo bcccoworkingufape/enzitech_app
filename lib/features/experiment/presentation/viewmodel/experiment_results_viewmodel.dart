@@ -197,16 +197,29 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
 
       if (status.isGranted) {
         // here you add the code to store the file
-        final directory = await getExternalStorageDirectory();
+        // final directory = await getExternalStorageDirectory();
         final filePath =
             '${await getDownloadEnzitechPath()}/${GetIt.I.get<ExperimentDetailsViewmodel>().experiment!.name.replaceAll(' ', '-')}.xlsx';
         final file = File(filePath);
-        file.writeAsBytesSync(excel.encode()!);
+        if (file.existsSync()) {
+          //TODO: check solution, this doesnt work when app is removed and reinstalled (API 30+)
+          await file.delete(recursive: true);
+        }
         MediaScanner.loadMedia(path: filePath);
+
+        file.writeAsBytesSync(excel.encode()!, flush: true);
+        setStateEnum(StateEnum.idle);
+        _setFailure(null);
         return true;
       }
       return false;
     } catch (e) {
+      if (e is PathNotFoundException) {
+        _setFailure(UnableToSaveFailure(
+            message:
+                'Não foi possível criar o arquivo, cheque seu diretório "$_savedPath" e limpe todas as planilhas existentes!'));
+        setStateEnum(StateEnum.error);
+      }
       return false;
     }
   }

@@ -1,4 +1,5 @@
 // 🐦 Flutter imports:
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../core/routing/routing.dart';
 import '../../../../../../shared/ui/ui.dart';
+import '../../../../../experiment/presentation/viewmodel/experiment_results_viewmodel.dart';
 import '../../../viewmodel/account_viewmodel.dart';
 import '../../../viewmodel/home_viewmodel.dart';
 
@@ -27,27 +29,29 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  late final SettingsViewmodel _accountViewmodel;
+  late final SettingsViewmodel _settingsViewmodel;
   late final HomeViewmodel _homeViewmodel;
 
   @override
   void initState() {
     super.initState();
-    _accountViewmodel = GetIt.I.get<SettingsViewmodel>();
+
+    _settingsViewmodel = GetIt.I.get<SettingsViewmodel>();
     _homeViewmodel = GetIt.I.get<HomeViewmodel>();
+    _settingsViewmodel.fetchQuantityOfFiles();
 
     if (mounted) {
-      _accountViewmodel.addListener(() async {
-        if (_accountViewmodel.state == StateEnum.error) {
+      _settingsViewmodel.addListener(() async {
+        if (_settingsViewmodel.state == StateEnum.error) {
           EZTSnackBar.show(
             context,
-            HandleFailure.of(_accountViewmodel.failure!),
+            HandleFailure.of(_settingsViewmodel.failure!),
             eztSnackBarType: EZTSnackBarType.error,
           );
         }
 
-        if (_accountViewmodel.state == StateEnum.success &&
-            _accountViewmodel.user == null &&
+        if (_settingsViewmodel.state == StateEnum.success &&
+            _settingsViewmodel.user == null &&
             mounted) {
           EZTSnackBar.clear(context);
           EZTSnackBar.show(context, "Até logo...");
@@ -76,13 +80,13 @@ class _SettingsPageState extends State<SettingsPage> {
     final scaleFactor = MediaQuery.of(context).textScaleFactor;
 
     return AnimatedBuilder(
-        animation: _accountViewmodel,
+        animation: _settingsViewmodel,
         builder: (context, child) {
           return Scaffold(
             backgroundColor: AppColors.background,
             body: Builder(builder: (context) {
-              if (_accountViewmodel.user == null &&
-                  _accountViewmodel.state != StateEnum.error) {
+              if (_settingsViewmodel.user == null &&
+                  _settingsViewmodel.state != StateEnum.error) {
                 return const Center(child: CircularProgressIndicator());
               }
 
@@ -124,14 +128,14 @@ class _SettingsPageState extends State<SettingsPage> {
                                             child: Align(
                                               alignment: Alignment.centerRight,
                                               child: Text(
-                                                _accountViewmodel.user!.name,
+                                                _settingsViewmodel.user!.name,
                                                 overflow: TextOverflow.ellipsis,
                                                 style: descriptionTextStyle,
                                               ),
                                             ),
                                           )
                                         : Text(
-                                            _accountViewmodel.user!.name,
+                                            _settingsViewmodel.user!.name,
                                             overflow: TextOverflow.ellipsis,
                                             style: descriptionTextStyle,
                                           ),
@@ -154,14 +158,14 @@ class _SettingsPageState extends State<SettingsPage> {
                                             child: Align(
                                               alignment: Alignment.centerRight,
                                               child: Text(
-                                                _accountViewmodel.user!.email,
+                                                _settingsViewmodel.user!.email,
                                                 overflow: TextOverflow.ellipsis,
                                                 style: descriptionTextStyle,
                                               ),
                                             ),
                                           )
                                         : Text(
-                                            _accountViewmodel.user!.email,
+                                            _settingsViewmodel.user!.email,
                                             overflow: TextOverflow.ellipsis,
                                             style: descriptionTextStyle,
                                           ),
@@ -186,7 +190,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                         child: Align(
                                           alignment: Alignment.centerRight,
                                           child: Text(
-                                            _accountViewmodel.user!.userType ==
+                                            _settingsViewmodel.user!.userType ==
                                                     UserTypeEnum.admin
                                                 ? 'Administrador'
                                                 : 'Comum',
@@ -196,7 +200,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                         ),
                                       )
                                     : Text(
-                                        _accountViewmodel.user!.userType ==
+                                        _settingsViewmodel.user!.userType ==
                                                 UserTypeEnum.admin
                                             ? 'Administrador'
                                             : 'Comum',
@@ -211,9 +215,9 @@ class _SettingsPageState extends State<SettingsPage> {
                             title: const Text('Preferências'),
                             tiles: [
                               SettingsTile.switchTile(
-                                initialValue:
-                                    _accountViewmodel.enableExcludeConfirmation,
-                                onToggle: (value) => _accountViewmodel
+                                initialValue: _settingsViewmodel
+                                    .enableExcludeConfirmation,
+                                onToggle: (value) => _settingsViewmodel
                                     .setEnableExcludeConfirmation(value),
                                 leading: const Icon(
                                   PhosphorIcons.trash,
@@ -226,6 +230,52 @@ class _SettingsPageState extends State<SettingsPage> {
                           SettingsSection(
                             title: const Text('App'),
                             tiles: [
+                              SettingsTile(
+                                leading: const Icon(
+                                  PhosphorIcons.files,
+                                ),
+                                title:
+                                    defaultTargetPlatform == TargetPlatform.iOS
+                                        ? Flex(
+                                            direction: Axis.horizontal,
+                                            children: [
+                                              Text(_settingsViewmodel.dealWithDownloadedFiles),
+                                            ],
+                                          )
+                                        : Text(_settingsViewmodel.dealWithDownloadedFiles),
+                                value:
+                                    defaultTargetPlatform == TargetPlatform.iOS
+                                        ? Flexible(
+                                            flex: 1,
+                                            child: Align(
+                                              alignment: Alignment.centerRight,
+                                              child: Text(
+                                                GetIt.I
+                                                        .get<
+                                                            ExperimentResultsViewmodel>()
+                                                        .savedPath
+                                                        .isNotEmpty
+                                                    ? 'Localizado em: ${GetIt.I.get<ExperimentResultsViewmodel>().savedPath}'
+                                                    : 'Salve o primeiro resultado para ver o local',
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: descriptionTextStyle,
+                                              ),
+                                            ),
+                                          )
+                                        : Text(
+                                            GetIt.I
+                                                    .get<
+                                                        ExperimentResultsViewmodel>()
+                                                    .savedPath
+                                                    .isNotEmpty
+                                                ? 'Localizado em: ${GetIt.I.get<ExperimentResultsViewmodel>().savedPath}'
+                                                : 'Salve o primeiro resultado para ver o local',
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: descriptionTextStyle,
+                                          ),
+                              ),
                               SettingsTile(
                                 leading: const Icon(
                                   PhosphorIcons.gitBranch,
@@ -246,14 +296,14 @@ class _SettingsPageState extends State<SettingsPage> {
                                             child: Align(
                                               alignment: Alignment.centerRight,
                                               child: Text(
-                                                "${_accountViewmodel.appInfo!.version}+${_accountViewmodel.appInfo!.buildNumber}",
+                                                "${_settingsViewmodel.appInfo!.version}+${_settingsViewmodel.appInfo!.buildNumber}",
                                                 overflow: TextOverflow.ellipsis,
                                                 style: descriptionTextStyle,
                                               ),
                                             ),
                                           )
                                         : Text(
-                                            "${_accountViewmodel.appInfo!.version}+${_accountViewmodel.appInfo!.buildNumber}",
+                                            "${_settingsViewmodel.appInfo!.version}+${_settingsViewmodel.appInfo!.buildNumber}",
                                             overflow: TextOverflow.ellipsis,
                                             style: descriptionTextStyle,
                                           ),
@@ -278,7 +328,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 onPressed: (_) {
                                   _homeViewmodel.experimentsViewmodel
                                       .clearFilters();
-                                  _accountViewmodel.logout();
+                                  _settingsViewmodel.logout();
                                 },
                               ),
                             ],
@@ -287,7 +337,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: _accountViewmodel.openUrl,
+                      onTap: _settingsViewmodel.openUrl,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                         child: Align(

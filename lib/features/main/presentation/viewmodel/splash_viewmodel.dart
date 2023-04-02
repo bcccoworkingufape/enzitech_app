@@ -53,6 +53,7 @@ class SplashViewmodel extends ChangeNotifier {
   Future<void> fetch() async {
     setStateEnum(StateEnum.loading);
 
+    //TODO: check to fix backuped token: https://stackoverflow.com/a/35517411/10023840
     String token = await userPreferencesServices.getToken() ?? '';
 
     if (token.isNotEmpty) {
