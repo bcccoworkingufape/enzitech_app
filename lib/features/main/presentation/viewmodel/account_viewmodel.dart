@@ -16,7 +16,7 @@ import '../../domain/usecases/get_exclude_confirmation/get_exclude_confirmation_
 import '../../domain/usecases/get_user/get_user_usecase.dart';
 import '../../domain/usecases/save_exclude_confirmation/save_exclude_confirmation_usecase.dart';
 
-class AccountViewmodel extends ChangeNotifier {
+class SettingsViewmodel extends ChangeNotifier {
   final GetUserUseCase _getUserUseCase;
   final GetExcludeConfirmationUseCase _getExcludeConfirmationUseCase;
   final SaveExcludeConfirmationUseCase _saveExcludeConfirmationUseCase;
@@ -24,7 +24,7 @@ class AccountViewmodel extends ChangeNotifier {
 
   // final UserPreferencesServices _userPreferencesServices;
 
-  AccountViewmodel(
+  SettingsViewmodel(
     this._getUserUseCase,
     this._getExcludeConfirmationUseCase,
     this._saveExcludeConfirmationUseCase,

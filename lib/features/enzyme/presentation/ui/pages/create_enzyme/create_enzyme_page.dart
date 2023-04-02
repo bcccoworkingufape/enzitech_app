@@ -1,6 +1,5 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-
 // 📦 Package imports:
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
@@ -186,7 +185,7 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
 
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,
-      labelText: "Variável A",
+      labelText: "Variável a - Coeficiente Angular da Curva",
       usePrimaryColorOnFocusedBorder: true,
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
       controller: _variableAFieldController,
@@ -210,7 +209,7 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
 
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,
-      labelText: "Variável B",
+      labelText: "Variável b - Constante da Equação da Curva",
       usePrimaryColorOnFocusedBorder: true,
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
       controller: _variableBFieldController,

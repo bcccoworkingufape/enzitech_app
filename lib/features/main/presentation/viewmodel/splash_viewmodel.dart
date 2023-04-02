@@ -17,7 +17,7 @@ class SplashViewmodel extends ChangeNotifier {
   final ExperimentsViewmodel experimentsViewmodel;
   final EnzymesViewmodel enzymesViewmodel;
   final TreatmentsViewmodel treatmentsViewmodel;
-  final AccountViewmodel accountViewmodel;
+  final SettingsViewmodel accountViewmodel;
   final UserPreferencesServices userPreferencesServices;
 
   SplashViewmodel(

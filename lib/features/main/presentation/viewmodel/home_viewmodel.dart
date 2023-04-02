@@ -13,7 +13,7 @@ class HomeViewmodel extends ChangeNotifier {
   final ExperimentsViewmodel experimentsViewmodel;
   final EnzymesViewmodel enzymesViewmodel;
   final TreatmentsViewmodel treatmentsViewmodel;
-  final AccountViewmodel accountViewmodel;
+  final SettingsViewmodel accountViewmodel;
 
   HomeViewmodel(
     this.experimentsViewmodel,

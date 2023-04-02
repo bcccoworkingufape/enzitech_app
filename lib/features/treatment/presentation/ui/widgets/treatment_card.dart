@@ -55,7 +55,7 @@ class _TreatmentCardState extends State<TreatmentCard> {
             ),
             Text(
               widget.description,
-              maxLines: 4,
+              maxLines: 3,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.justify,
               style: TextStyles.bodyRegular

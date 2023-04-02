@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-
 // 📦 Package imports:
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
@@ -18,23 +17,23 @@ import '../../../../../../shared/ui/ui.dart';
 import '../../../viewmodel/account_viewmodel.dart';
 import '../../../viewmodel/home_viewmodel.dart';
 
-class AccountPage extends StatefulWidget {
-  const AccountPage({
+class SettingsPage extends StatefulWidget {
+  const SettingsPage({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<AccountPage> createState() => _AccountPageState();
+  State<SettingsPage> createState() => _SettingsPageState();
 }
 
-class _AccountPageState extends State<AccountPage> {
-  late final AccountViewmodel _accountViewmodel;
+class _SettingsPageState extends State<SettingsPage> {
+  late final SettingsViewmodel _accountViewmodel;
   late final HomeViewmodel _homeViewmodel;
 
   @override
   void initState() {
     super.initState();
-    _accountViewmodel = GetIt.I.get<AccountViewmodel>();
+    _accountViewmodel = GetIt.I.get<SettingsViewmodel>();
     _homeViewmodel = GetIt.I.get<HomeViewmodel>();
 
     if (mounted) {

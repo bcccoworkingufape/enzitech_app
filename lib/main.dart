@@ -25,7 +25,7 @@ Future<void> main() async {
     accessToken: () {
       return token;
     },
-    baseUrl: () => API.BASE_URL_PRIVATE,
+    baseUrl: () => API.BASE_URL_RELEASE,
   );
 
   Inject.initialize(httpDriverOptions);
@@ -62,6 +62,7 @@ class _MyAppState extends State<MyApp> {
         title: 'Enzitech',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+          // useMaterial3: true,
           appBarTheme: const AppBarTheme(
             iconTheme: IconThemeData(
               color: AppColors.white,

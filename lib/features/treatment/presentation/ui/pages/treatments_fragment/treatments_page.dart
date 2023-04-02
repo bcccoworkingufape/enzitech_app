@@ -140,7 +140,7 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
                 ),
                 direction: DismissDirection.endToStart,
                 confirmDismiss:
-                    GetIt.I.get<AccountViewmodel>().enableExcludeConfirmation!
+                    GetIt.I.get<SettingsViewmodel>().enableExcludeConfirmation!
                         ? (DismissDirection direction) async {
                             return await showDialog(
                               context: context,

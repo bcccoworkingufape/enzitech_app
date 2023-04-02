@@ -105,7 +105,7 @@ class _CalculateExperimentThirdStepPageState
                 EZTSnackBar.clear(context);
                 EZTSnackBar.show(
                   context,
-                  "Esta repetição está discrepante!\n\nO valor dela difere acima de 25% da média de todos os valores.",
+                  'Esta repetição está discrepante!\n\nO valor dela difere acima de 25% da média de todos as repetições.\n\nCaso queira mudar, basta pressionar "Recalcular".',
                   textStyle: TextStyles.titleMinBoldBackground,
                   centerTitle: true,
                   eztSnackBarType: EZTSnackBarType.error,
@@ -227,7 +227,7 @@ class _CalculateExperimentThirdStepPageState
                       height: 8,
                     ),
                     Card(
-                      margin: EdgeInsets.all(16),
+                      margin: const EdgeInsets.all(16),
                       color: AppColors.primary.withAlpha(100),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),

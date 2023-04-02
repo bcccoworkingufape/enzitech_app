@@ -25,7 +25,7 @@ class EnzymesPage extends StatefulWidget {
 }
 
 class _EnzymesPageState extends State<EnzymesPage> {
-  late final AccountViewmodel _accountViewmodel;
+  late final SettingsViewmodel _accountViewmodel;
   late final EnzymesViewmodel _enzymesViewmodel;
 
   final Key _refreshIndicatorKey = GlobalKey();
@@ -42,7 +42,7 @@ class _EnzymesPageState extends State<EnzymesPage> {
   @override
   void initState() {
     super.initState();
-    _accountViewmodel = GetIt.I.get<AccountViewmodel>();
+    _accountViewmodel = GetIt.I.get<SettingsViewmodel>();
     _enzymesViewmodel = GetIt.I.get<EnzymesViewmodel>();
 
     if (mounted) {

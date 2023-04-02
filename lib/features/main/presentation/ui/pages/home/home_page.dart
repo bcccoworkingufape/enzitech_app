@@ -6,7 +6,6 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
-
 // 📦 Package imports:
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
@@ -27,7 +26,7 @@ import '../../../../../treatment/presentation/ui/pages/treatments_fragment/treat
 import '../../../../../treatment/presentation/viewmodel/treatments_viewmodel.dart';
 import '../../../viewmodel/account_viewmodel.dart';
 import '../../../viewmodel/home_viewmodel.dart';
-import '../account_fragment/account_page.dart';
+import '../settings_fragment/settings_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -40,7 +39,7 @@ class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   final GlobalKey _scaffold = GlobalKey();
   late final HomeViewmodel _homeViewmodel;
-  late final AccountViewmodel _accountViewmodel;
+  late final SettingsViewmodel _accountViewmodel;
   late final EnzymesViewmodel _enzymesViewmodel;
   late final ExperimentsViewmodel _experimentsViewmodel;
   late final TreatmentsViewmodel _treatmentsViewmodel;
@@ -63,7 +62,7 @@ class _HomePageState extends State<HomePage>
   void initState() {
     super.initState();
     _homeViewmodel = GetIt.I.get<HomeViewmodel>();
-    _accountViewmodel = GetIt.I.get<AccountViewmodel>();
+    _accountViewmodel = GetIt.I.get<SettingsViewmodel>();
     _enzymesViewmodel = GetIt.I.get<EnzymesViewmodel>();
     _experimentsViewmodel = GetIt.I.get<ExperimentsViewmodel>();
     _treatmentsViewmodel = GetIt.I.get<TreatmentsViewmodel>();
@@ -217,7 +216,7 @@ class _HomePageState extends State<HomePage>
       ExperimentsPage(),
       TreatmentsPage(),
       EnzymesPage(),
-      AccountPage(),
+      SettingsPage(),
     ];
   }
 
@@ -389,8 +388,8 @@ class _HomePageState extends State<HomePage>
                 backgroundColor: AppColors.primary,
               ),
               BottomNavigationBarItem(
-                icon: Icon(PhosphorIcons.userCircleGear),
-                label: 'Conta',
+                icon: Icon(PhosphorIcons.gear),
+                label: 'Configurações',
                 backgroundColor: AppColors.primary,
               ),
             ],

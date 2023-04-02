@@ -29,7 +29,8 @@ class Constants {
     'Aryl',
     'FosfataseAcida',
     'FosfataseAlcalina',
-    'Urease'
+    'Urease',
+    // 'FDA'
   ];
 
   static const List<String> typesOfEnzymesListFormmated = <String>[
@@ -38,6 +39,7 @@ class Constants {
     'Fosfatase Ácida',
     'Fosfatase Alcalina',
     'Urease',
+    // 'FDA',
   ];
 
   static Color dealWithEnzymeChipColor(String type) {

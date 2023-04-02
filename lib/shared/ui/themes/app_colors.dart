@@ -39,6 +39,7 @@ class AppColors {
   static const fosfataseAcida = Color(0xFF2B4162);
   static const fosfataseAlcalina = Color(0xFF88AB75);
   static const urease = Color(0xFF675C38);
+  static const fda = Color(0xFF92437f);
 
   static MaterialColor materialTheme = const MaterialColor(
     0xFF06BC67, //primary

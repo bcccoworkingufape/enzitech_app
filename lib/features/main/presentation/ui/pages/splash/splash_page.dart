@@ -41,7 +41,7 @@ class _SplashPageState extends State<SplashPage> {
               eztSnackBarType: EZTSnackBarType.error,
             );
 
-            var accountViewmodel = GetIt.I.get<AccountViewmodel>();
+            var accountViewmodel = GetIt.I.get<SettingsViewmodel>();
             if (_splashViewmodel.failure is ExpiredTokenOrWrongUserFailure ||
                 _splashViewmodel.failure is UserNotFoundOrWrongTokenFailure ||
                 _splashViewmodel.failure is SessionNotFoundFailure) {
