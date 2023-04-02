@@ -93,6 +93,9 @@ class _SettingsPageState extends State<SettingsPage> {
                   children: [
                     Expanded(
                       child: SettingsList(
+                        physics: const AlwaysScrollableScrollPhysics(
+                          parent: BouncingScrollPhysics(),
+                        ),
                         lightTheme: const SettingsThemeData(
                           settingsListBackground: AppColors.background,
                           titleTextColor: AppColors.grenDark,

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:media_scanner/media_scanner.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:share_plus/share_plus.dart';
@@ -35,6 +36,13 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
     _failure = failure;
   }
 
+  String _savedPath = '';
+  String get savedPath => _savedPath;
+  void setSavedPath(String savedPath) {
+    _savedPath = savedPath;
+    notifyListeners();
+  }
+
   ExperimentResultEntity? _experimentResult;
   ExperimentResultEntity? get experimentResult => _experimentResult;
   void _setExperimentResult(ExperimentResultEntity? experimentResult) {
@@ -42,6 +50,7 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
+  //TODO: Improve this method
   Future<bool> exportToExcel() async {
     try {
       final excel = Excel.createExcel();
@@ -166,8 +175,8 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
       excel.delete('Sheet1');
 
       // ask for permission
-      await Permission.manageExternalStorage.request();
-      var status = await Permission.manageExternalStorage.status;
+      await Permission.storage.request();
+      var status = await Permission.storage.status;
       if (status.isDenied) {
         // We didn't ask for permission yet or the permission has been denied   before but not permanently.
         return false;
@@ -179,7 +188,7 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
         return false;
       }
 
-      if (await Permission.manageExternalStorage.isPermanentlyDenied) {
+      if (await Permission.storage.isPermanentlyDenied) {
         // The user opted to never again see the permission request dialog for this
         // app. The only way to change the permission's status now is to let the
         // user manually enable it in the system settings.
@@ -190,9 +199,10 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
         // here you add the code to store the file
         final directory = await getExternalStorageDirectory();
         final filePath =
-            '${directory?.path}/${GetIt.I.get<ExperimentDetailsViewmodel>().experiment!.name.replaceAll(' ', '')}.xlsx';
+            '${await getDownloadEnzitechPath()}/${GetIt.I.get<ExperimentDetailsViewmodel>().experiment!.name.replaceAll(' ', '-')}.xlsx';
         final file = File(filePath);
         file.writeAsBytesSync(excel.encode()!);
+        MediaScanner.loadMedia(path: filePath);
         return true;
       }
       return false;
@@ -201,11 +211,65 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
     }
   }
 
+  /* Future<String?> getDownloadPath() async {
+    Directory? directory;
+    try {
+      if (Platform.isIOS) {
+        directory = await getApplicationDocumentsDirectory();
+      } else {
+        directory = Directory('/storage/emulated/0/Download');
+        // Put file in global download folder, if for an unknown reason it didn't exist, we fallback
+        // ignore: avoid_slow_async_io
+        if (!await directory.exists()) {
+          directory = await getExternalStorageDirectory();
+        }
+      }
+    } catch (err, stack) {
+      print("Cannot get download folder path");
+    }
+    return directory?.path;
+  } */
+
+  //TODO: Improve this method
+  Future<String?> getDownloadEnzitechPath() async {
+    Directory? directory;
+    try {
+      if (Platform.isIOS) {
+        directory = await getApplicationDocumentsDirectory();
+      } else {
+        directory = Directory('/storage/emulated/0/Download');
+        // Put file in global download folder, if for an unknown reason it didn't exist, we fallback
+        // ignore: avoid_slow_async_io
+        if (!await directory.exists()) {
+          directory = await getExternalStorageDirectory();
+        }
+
+        directory = Directory('${directory!.path}/Enzitech');
+
+        if (!await directory.exists()) {
+          Directory(directory.path)
+              .create()
+              // The created directory is returned as a Future.
+              .then((Directory directory) {
+            print('${directory.path} CRIADO!');
+          });
+        }
+      }
+    } catch (err, stack) {
+      print("Cannot get download folder path");
+    }
+
+    setSavedPath(directory?.path ?? 'seus arquivos');
+
+    return directory?.path;
+  }
+
+  //TODO: Improve this method
   Future<bool> shareResult() async {
     try {
       // ask for permission
-      await Permission.manageExternalStorage.request();
-      var status = await Permission.manageExternalStorage.status;
+      await Permission.storage.request();
+      var status = await Permission.storage.status;
       if (status.isDenied) {
         // We didn't ask for permission yet or the permission has been denied   before but not permanently.
         return false;
@@ -217,7 +281,7 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
         return false;
       }
 
-      if (await Permission.manageExternalStorage.isPermanentlyDenied) {
+      if (await Permission.storage.isPermanentlyDenied) {
         // The user opted to never again see the permission request dialog for this
         // app. The only way to change the permission's status now is to let the
         // user manually enable it in the system settings.
@@ -230,7 +294,7 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
           // here you add the code to store the file
           final directory = await getExternalStorageDirectory();
           final filePath =
-              '${directory?.path}/${GetIt.I.get<ExperimentDetailsViewmodel>().experiment!.name.replaceAll(' ', '')}.xlsx';
+              '${await getDownloadEnzitechPath()}/${GetIt.I.get<ExperimentDetailsViewmodel>().experiment!.name.replaceAll(' ', '-')}.xlsx';
           Share.shareXFiles([
             XFile(filePath,
                 name:

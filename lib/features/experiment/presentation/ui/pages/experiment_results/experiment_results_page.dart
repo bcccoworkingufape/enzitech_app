@@ -458,7 +458,7 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                               (flag) => flag
                                   ? EZTSnackBar.show(
                                       context,
-                                      'Arquivo salvo com sucesso!',
+                                      'Arquivo salvo em ${_experimentResultsViewmodel.savedPath}',
                                       eztSnackBarType: EZTSnackBarType.success,
                                     )
                                   : EZTSnackBar.show(
