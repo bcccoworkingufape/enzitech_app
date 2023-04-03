@@ -11,7 +11,7 @@ import '../../../enzyme/domain/entities/enzyme_entity.dart';
 import '../../../enzyme/presentation/viewmodel/enzymes_viewmodel.dart';
 import '../../../experiment/presentation/viewmodel/experiments_viewmodel.dart';
 import '../../../treatment/presentation/viewmodel/treatments_viewmodel.dart';
-import 'account_viewmodel.dart';
+import 'settings_viewmodel.dart';
 
 class SplashViewmodel extends ChangeNotifier {
   final ExperimentsViewmodel experimentsViewmodel;

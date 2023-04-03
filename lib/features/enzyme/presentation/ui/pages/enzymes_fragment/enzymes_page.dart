@@ -9,7 +9,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../shared/ui/ui.dart';
-import '../../../../../main/presentation/viewmodel/account_viewmodel.dart';
+import '../../../../../main/presentation/viewmodel/settings_viewmodel.dart';
 import '../../../../domain/entities/enzyme_entity.dart';
 import '../../../viewmodel/enzymes_viewmodel.dart';
 import '../../widgets/enzyme_card.dart';

@@ -71,6 +71,17 @@ class SettingsViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
+  get getEnviroment {
+    switch (API.enviroment) {
+      case EnvironmentEnum.dev:
+        return 'Desenvolvimento';
+      case EnvironmentEnum.stage:
+        return 'Teste';
+      case EnvironmentEnum.prod:
+        return 'Produção';
+    }
+  }
+
   void fetchQuantityOfFiles() async {
     var files = io.Directory(
             "${await GetIt.I.get<ExperimentResultsViewmodel>().getDownloadEnzitechPath()}")

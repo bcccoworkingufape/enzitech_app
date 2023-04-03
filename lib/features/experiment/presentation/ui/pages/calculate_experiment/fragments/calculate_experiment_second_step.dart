@@ -1,6 +1,5 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
@@ -229,13 +228,13 @@ class _CalculateExperimentSecondStepPageState
                       .calculateExperiment()
                       .whenComplete(() => (_calculateExperimentViewmodel
                                       .experimentCalculationEntity !=
-                                  null ||
+                                  null &&
                               _calculateExperimentViewmodel
                                       .experimentCalculationEntity?.average !=
                                   0)
                           ? _calculateExperimentViewmodel.onNext(context)
                           : print('err'));
-                  //TODO: Corrgiri enzimas bugadas (sem calculo -> retorno 0)
+                  //TODO: Corrigir enzimas bugadas (sem calculo -> retorno 0)
                 }
 
                 return;

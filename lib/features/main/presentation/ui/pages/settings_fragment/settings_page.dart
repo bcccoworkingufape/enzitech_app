@@ -16,8 +16,10 @@ import '../../../../../../core/failures/failures.dart';
 import '../../../../../../core/routing/routing.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../../../experiment/presentation/viewmodel/experiment_results_viewmodel.dart';
-import '../../../viewmodel/account_viewmodel.dart';
 import '../../../viewmodel/home_viewmodel.dart';
+import '../../../viewmodel/settings_viewmodel.dart';
+import 'fragments/about_app_bs.dart';
+import 'fragments/faq_bs.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({
@@ -106,9 +108,64 @@ class _SettingsPageState extends State<SettingsPage> {
                           leadingIconsColor: AppColors.greyBlack,
                         ),
                         sections: [
+                          SettingsSection(
+                            title: const Text('Informações'),
+                            tiles: [
+                              SettingsTile.navigation(
+                                leading: const Icon(
+                                  PhosphorIcons.info,
+                                ),
+                                title: const Text('Sobre o App'),
+                                onPressed: (_) => showModalBottomSheet(
+                                  isScrollControlled: true,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16.0),
+                                  ),
+                                  context: context,
+                                  builder: (BuildContext context) => Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.75,
+                                    decoration: const BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(25.0),
+                                        topRight: Radius.circular(25.0),
+                                      ),
+                                    ),
+                                    child: const AboutAppBS(),
+                                  ),
+                                ),
+                              ),
+                              SettingsTile.navigation(
+                                leading: const Icon(
+                                  PhosphorIcons.question,
+                                ),
+                                title: const Text('Perguntas frequentes'),
+                                onPressed: (_) => showModalBottomSheet(
+                                  isScrollControlled: true,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16.0),
+                                  ),
+                                  context: context,
+                                  builder: (BuildContext context) => Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.75,
+                                    decoration: const BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(25.0),
+                                        topRight: Radius.circular(25.0),
+                                      ),
+                                    ),
+                                    child: const FAQBS(),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                           // ACCOUNT
                           SettingsSection(
-                            title: const Text('Conta'),
+                            title: const Text('Dados do usuário'),
                             tiles: <SettingsTile>[
                               SettingsTile(
                                 leading: const Icon(
@@ -212,7 +269,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                           // PREFERENCES
                           SettingsSection(
-                            title: const Text('Preferências'),
+                            title: const Text('Configurações'),
                             tiles: [
                               SettingsTile.switchTile(
                                 initialValue: _settingsViewmodel
@@ -239,10 +296,12 @@ class _SettingsPageState extends State<SettingsPage> {
                                         ? Flex(
                                             direction: Axis.horizontal,
                                             children: [
-                                              Text(_settingsViewmodel.dealWithDownloadedFiles),
+                                              Text(_settingsViewmodel
+                                                  .dealWithDownloadedFiles),
                                             ],
                                           )
-                                        : Text(_settingsViewmodel.dealWithDownloadedFiles),
+                                        : Text(_settingsViewmodel
+                                            .dealWithDownloadedFiles),
                                 value:
                                     defaultTargetPlatform == TargetPlatform.iOS
                                         ? Flexible(
@@ -275,6 +334,38 @@ class _SettingsPageState extends State<SettingsPage> {
                                             overflow: TextOverflow.ellipsis,
                                             style: descriptionTextStyle,
                                           ),
+                              ),
+                              SettingsTile(
+                                leading: const Icon(
+                                  PhosphorIcons.computerTower,
+                                ),
+                                title:
+                                    defaultTargetPlatform == TargetPlatform.iOS
+                                        ? Flex(
+                                            direction: Axis.horizontal,
+                                            children: const [
+                                              Text('Ambiente'),
+                                            ],
+                                          )
+                                        : const Text('Ambiente'),
+                                value: defaultTargetPlatform ==
+                                        TargetPlatform.iOS
+                                    ? Flexible(
+                                        flex: 1,
+                                        child: Align(
+                                          alignment: Alignment.centerRight,
+                                          child: Text(
+                                            _settingsViewmodel.getEnviroment,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: descriptionTextStyle,
+                                          ),
+                                        ),
+                                      )
+                                    : Text(
+                                        _settingsViewmodel.getEnviroment,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: descriptionTextStyle,
+                                      ),
                               ),
                               SettingsTile(
                                 leading: const Icon(

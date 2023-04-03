@@ -20,8 +20,8 @@ class SaveResultUseCaseImp implements SaveResultUseCase {
     required String enzymeId,
     required String treatmentID,
     required List<Map<String, dynamic>> listOfExperimentData,
-    required List<double> results,
-    required double average,
+    required List<num> results,
+    required num average,
   }) async {
     return await _saveResultRepository.call(
       experimentId: experimentId,

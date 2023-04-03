@@ -1,7 +1,7 @@
 class NumberDifferencesDTO {
-  final double differenceOfFartherNumber;
-  final double fartherNumber;
-  final double? number;
+  final num differenceOfFartherNumber;
+  final num fartherNumber;
+  final num? number;
   final bool? isFarther;
 
   NumberDifferencesDTO({

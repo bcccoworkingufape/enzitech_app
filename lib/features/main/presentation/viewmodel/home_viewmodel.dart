@@ -7,7 +7,7 @@ import '../../../../core/failures/failures.dart';
 import '../../../enzyme/presentation/viewmodel/enzymes_viewmodel.dart';
 import '../../../experiment/presentation/viewmodel/experiments_viewmodel.dart';
 import '../../../treatment/presentation/viewmodel/treatments_viewmodel.dart';
-import 'account_viewmodel.dart';
+import 'settings_viewmodel.dart';
 
 class HomeViewmodel extends ChangeNotifier {
   final ExperimentsViewmodel experimentsViewmodel;

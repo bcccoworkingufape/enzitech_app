@@ -296,14 +296,14 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
       (((num2 - num1) / num1) * 100).abs();
 
   getAbsNumberFartherFromAverage() {
-    final average = experimentCalculationEntity!.average;
+    final average = experimentCalculationEntity!.average.toDouble();
 
     final results = experimentCalculationEntity!.results;
 
     double differenceOfFartherNumber =
         _percentOfDifference(average, results.first);
 
-    double fartherNumber = experimentCalculationEntity!.results.first;
+    num fartherNumber = experimentCalculationEntity!.results.first;
 
     for (var number in results) {
       var diff = _percentOfDifference(average, number);

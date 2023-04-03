@@ -53,7 +53,9 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                       ? const Duration(seconds: 15)
                       : null,
               eztSnackBarType: EZTSnackBarType.error,
-            );
+            ).then((_) => Future.delayed(const Duration(seconds: 7), () {
+                  _experimentResultsViewmodel.setStateEnum(StateEnum.idle);
+                }));
           }
         },
       );
@@ -424,7 +426,8 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
           // ),
           floatingActionButtonLocation: ExpandableFab.location,
           floatingActionButton: _experimentResultsViewmodel.state ==
-                  StateEnum.loading
+                      StateEnum.loading ||
+                  _experimentResultsViewmodel.state == StateEnum.error
               ? null
               : ExpandableFab(
                   distance: 72,
@@ -440,15 +443,16 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                         color: AppColors.white,
                       ),
                       onPressed: () {
-                        _experimentResultsViewmodel.shareResult().then(
-                              (flag) => flag
-                                  ? null
-                                  : EZTSnackBar.show(
-                                      context,
-                                      'Não foi possível compartilhar o arquivo, tente novamente.',
-                                      eztSnackBarType: EZTSnackBarType.error,
-                                    ),
-                            );
+                        _experimentResultsViewmodel.shareResult().then((flag) {
+                          flag
+                              ? null
+                              : EZTSnackBar.show(
+                                  context,
+                                  'Não foi possível compartilhar o arquivo, tente novamente.',
+                                  eztSnackBarType: EZTSnackBarType.error,
+                                ).whenComplete(() => _experimentResultsViewmodel
+                                  .setStateEnum(StateEnum.idle));
+                        });
                       },
                     ),
                     FloatingActionButton.small(

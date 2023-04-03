@@ -1,6 +1,6 @@
 class ExperimentCalculationEntity {
-  final List<double> results;
-  final double average;
+  final List<num> results;
+  final num average;
 
   ExperimentCalculationEntity({
     required this.results,

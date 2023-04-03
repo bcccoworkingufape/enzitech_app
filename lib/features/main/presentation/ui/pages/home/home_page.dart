@@ -24,8 +24,8 @@ import '../../../../../experiment/presentation/ui/pages/experiments_fragment/exp
 import '../../../../../experiment/presentation/viewmodel/experiments_viewmodel.dart';
 import '../../../../../treatment/presentation/ui/pages/treatments_fragment/treatments_page.dart';
 import '../../../../../treatment/presentation/viewmodel/treatments_viewmodel.dart';
-import '../../../viewmodel/account_viewmodel.dart';
 import '../../../viewmodel/home_viewmodel.dart';
+import '../../../viewmodel/settings_viewmodel.dart';
 import '../settings_fragment/settings_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -292,7 +292,7 @@ class _HomePageState extends State<HomePage>
   static noInternet(context) {
     return EZTSnackBar.show(
       context,
-      "⚠ Sem conexão com a internet: Você está visualizando informações previamente carregadas e sem atualizações, quaisquer mudanças offline não serão mantidas!\n\nPara atualizar, conecte-se a uma rede com conexão à internet.",
+      "⚠ Sem conexão com o servidor: Você está visualizando informações previamente carregadas e sem atualizações, quaisquer mudanças offline não serão mantidas!",
       eztSnackBarType: EZTSnackBarType.error,
       duration: const Duration(seconds: 10),
     );
@@ -321,7 +321,7 @@ class _HomePageState extends State<HomePage>
                           interval: 750,
                           children: <Widget>[
                             Icon(
-                              PhosphorIcons.wifiSlash,
+                              PhosphorIcons.cloudSlash,
                               color: Colors.white,
                             ),
                             // Icon(
@@ -329,7 +329,7 @@ class _HomePageState extends State<HomePage>
                             //   color: Colors.red[200],
                             // ),
                             Icon(
-                              PhosphorIcons.wifiSlashBold,
+                              PhosphorIcons.cloudSlash,
                               color: Colors.red,
                             ),
                             // Icon(

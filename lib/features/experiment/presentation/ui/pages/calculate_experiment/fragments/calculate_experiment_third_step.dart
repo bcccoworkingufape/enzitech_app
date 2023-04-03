@@ -7,7 +7,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 // 🌎 Project imports:
 import '../../../../../../../core/enums/enums.dart';
 import '../../../../../../../core/routing/routing.dart';
-import '../../../../../../../shared/extensions/double_extensions.dart';
+import '../../../../../../../shared/extensions/num_extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../../viewmodel/calculate_experiment_viewmodel.dart';
 import '../calculate_experiment_fragment_template.dart';
@@ -70,7 +70,7 @@ class _CalculateExperimentThirdStepPageState
     );
   }
 
-  TableRow _buildTableRow(double result, int iteration) {
+  TableRow _buildTableRow(num result, int iteration) {
     return TableRow(
       decoration: UnderlineTabIndicator(
           borderSide: BorderSide(
@@ -122,7 +122,7 @@ class _CalculateExperimentThirdStepPageState
     );
   }
 
-  List<TableRow> _buildListOfRows(List<double> results) {
+  List<TableRow> _buildListOfRows(List<num> results) {
     List<TableRow> listOfTableRows = [];
     for (var i = 0; i < results.length; i++) {
       listOfTableRows.add(_buildTableRow(results[i], i));
@@ -131,7 +131,7 @@ class _CalculateExperimentThirdStepPageState
     return listOfTableRows;
   }
 
-  List<TableRow> _buildAverageRow(double number) {
+  List<TableRow> _buildAverageRow(num number) {
     return [
       const TableRow(children: [
         SizedBox(height: 16),

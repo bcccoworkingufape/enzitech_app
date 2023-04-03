@@ -21,8 +21,8 @@ class SaveResultRemoteDataSourceImp implements SaveResultDataSource {
     required String enzymeId,
     required String treatmentID,
     required List<Map<String, dynamic>> listOfExperimentData,
-    required List<double> results,
-    required double average,
+    required List<num> results,
+    required num average,
   }) async {
     try {
       var list = jsonDecode(jsonEncode(listOfExperimentData));

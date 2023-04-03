@@ -8,6 +8,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'core/data/service/key_value/key_value_service_imp.dart';
 import 'core/data/service/user_preferences/user_preferences_service_imp.dart';
 import 'core/domain/entities/http_driver_options.dart';
+import 'core/enums/enums.dart';
 import 'core/inject/inject.dart';
 import 'core/routing/routing.dart';
 import 'shared/ui/ui.dart';
@@ -21,11 +22,13 @@ Future<void> main() async {
 
   String token = await userPreferencesService.getToken() ?? '';
 
+  API.setEnvironment(EnvironmentEnum.dev);
+
   final HttpDriverOptions httpDriverOptions = HttpDriverOptions(
     accessToken: () {
       return token;
     },
-    baseUrl: () => API.BASE_URL_RELEASE,
+    baseUrl: () => API.apiBaseUrl,
   );
 
   Inject.initialize(httpDriverOptions);
