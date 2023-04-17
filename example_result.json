@@ -1,0 +1,196 @@
+{
+    "result":[
+       {
+          "enzyme":{
+             "id":"2e1ccc63-b4c8-4fd6-92d0-af9933aa405b",
+             "name":"Urease",
+             "type":"Urease",
+             "formula":"μg NH4-N g-1 dwt 2h-1",
+             "variableA":"0.2876",
+             "variableB":"0.0075",
+             "duration":"2",
+             "weightSample":"1.25",
+             "weightGround":"0.92",
+             "size":"1.25"
+          },
+          "processes":[
+             {
+                "process":{
+                   "id":"98e539a1-42ac-4168-a61e-b4c085a11cc9",
+                   "name":"Tratamento com adubo",
+                   "description":"Solo adubado",
+                   "createdAt": "2023-03-31T21:55:04.399Z",
+                   "updatedAt": "2023-03-31T21:55:04.399Z",
+                   "deletedAt": null
+                },
+                "results":[
+                   {
+                      "repetitionId":1,
+                      "sample":0.732,
+                      "whiteSample":0.155,
+                      "differenceBetweenSamples":0.577,
+                      "variableA":0.0139,
+                      "variableB":0.0088,
+                      "curve":40.87769784,
+                      "correctionFactor":0.98,
+                      "time":1,
+                      "volume":5.1,
+                      "weightSample":0.5,
+                      "result":417.1194
+                   },
+                   {
+                      "repetitionId":2,
+                      "sample":0.732,
+                      "whiteSample":0.155,
+                      "differenceBetweenSamples":0.577,
+                      "variableA":0.0139,
+                      "variableB":0.0088,
+                      "curve":40.87769784,
+                      "correctionFactor":0.98,
+                      "time":1,
+                      "volume":5.1,
+                      "weightSample":0.5,
+                      "result":417.1194
+                   }
+                ]
+             },
+             {
+                "process":{
+                   "id":"98e539a1-42ac-4168-a61e-b4c085a11cc9",
+                   "name":"Tratamento com braquiária",
+                   "description":"Solo fértil",
+                   "createdAt": "2023-03-31T21:55:04.399Z",
+                   "updatedAt": "2023-03-31T21:55:04.399Z",
+                   "deletedAt": null
+                },
+                "results":[
+                   {
+                      "repetitionId":3,
+                      "sample":0.732,
+                      "whiteSample":0.155,
+                      "differenceBetweenSamples":0.577,
+                      "variableA":0.0139,
+                      "variableB":0.0088,
+                      "curve":40.87769784,
+                      "correctionFactor":0.98,
+                      "time":1,
+                      "volume":5.1,
+                      "weightSample":0.5,
+                      "result":417.1194
+                   },
+                   {
+                      "repetitionId":4,
+                      "sample":0.732,
+                      "whiteSample":0.155,
+                      "differenceBetweenSamples":0.577,
+                      "variableA":0.0139,
+                      "variableB":0.0088,
+                      "curve":40.87769784,
+                      "correctionFactor":0.98,
+                      "time":1,
+                      "volume":5.1,
+                      "weightSample":0.5,
+                      "result":417.1194
+                   }
+                ]
+             }
+          ]
+       },
+       {
+          "enzyme":{
+             "id":"37e2b8d8-85ba-41c5-ab72-0bc6db879169",
+             "name":"Aryl",
+             "type":"Aryl",
+             "formula":"µg PNS g-1 solo h-1",
+             "variableA":"0.0139",
+             "variableB":"0.0088",
+             "duration":"1",
+             "weightSample":"0.5",
+             "weightGround":"0.98",
+             "size":"5.0"
+          },
+          "processes":[
+             {
+                "process":{
+                   "id":"98e539a1-42ac-4168-a61e-b4c085a11cc9",
+                   "name":"Tratamento com adubo",
+                   "description":"Solo adubado",
+                   "createdAt": "2023-03-31T21:55:04.399Z",
+                   "updatedAt": "2023-03-31T21:55:04.399Z",
+                   "deletedAt": null
+                },
+                "results":[
+                   {
+                      "repetitionId":1,
+                      "sample":0.732,
+                      "whiteSample":0.155,
+                      "differenceBetweenSamples":0.577,
+                      "variableA":0.0139,
+                      "variableB":0.0088,
+                      "curve":40.87769784,
+                      "correctionFactor":0.98,
+                      "time":1,
+                      "volume":5.1,
+                      "weightSample":0.5,
+                      "result":417.1194
+                   },
+                   {
+                      "repetitionId":2,
+                      "sample":0.732,
+                      "whiteSample":0.155,
+                      "differenceBetweenSamples":0.577,
+                      "variableA":0.0139,
+                      "variableB":0.0088,
+                      "curve":40.87769784,
+                      "correctionFactor":0.98,
+                      "time":1,
+                      "volume":5.1,
+                      "weightSample":0.5,
+                      "result":417.1194
+                   }
+                ]
+             },
+             {
+                "process":{
+                   "id":"98e539a1-42ac-4168-a61e-b4c085a11cc9",
+                   "name":"Tratamento com braquiária",
+                   "description":"Solo fértil",
+                   "createdAt": "2023-03-31T21:55:04.399Z",
+                   "updatedAt": "2023-03-31T21:55:04.399Z",
+                   "deletedAt": null
+                },
+                "results":[
+                   {
+                      "repetitionId":3,
+                      "sample":0.732,
+                      "whiteSample":0.155,
+                      "differenceBetweenSamples":0.577,
+                      "variableA":0.0139,
+                      "variableB":0.0088,
+                      "curve":40.87769784,
+                      "correctionFactor":0.98,
+                      "time":1,
+                      "volume":5.1,
+                      "weightSample":0.5,
+                      "result":417.1194
+                   },
+                   {
+                      "repetitionId":4,
+                      "sample":0.732,
+                      "whiteSample":0.155,
+                      "differenceBetweenSamples":0.577,
+                      "variableA":0.0139,
+                      "variableB":0.0088,
+                      "curve":40.87769784,
+                      "correctionFactor":0.98,
+                      "time":1,
+                      "volume":5.1,
+                      "weightSample":0.5,
+                      "result":417.1194
+                   }
+                ]
+             }
+          ]
+       }
+    ]
+ }
