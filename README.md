@@ -1,10 +1,11 @@
 # Enzitech App - Sistema de experimentos para cálculo de atividades enzimáticas do solo
 
+[![BCC - Coworking](https://img.shields.io/badge/BCC-Coworking-06BC67?logo=slack)](https://)
 ![last-commit](https://img.shields.io/github/last-commit/bcccoworkingufape/enzitech_app.svg)
-![dart](https://badgen.net/badge/Dart/2.19.5/blue)
-![flutter](https://badgen.net/badge/Flutter/3.7.8/blue)
-![android](https://badgen.net/badge/Android/Ok/green)
-![ios](https://badgen.net/badge/iOS/In%20development/orange)
+![Dart - 2.19.5](https://img.shields.io/badge/Dart-2.19.5-0175C2?logo=dart)
+![Flutter - 3.7.8](https://img.shields.io/badge/Flutter-3.7.8-02569B?logo=flutter)
+![Android - Released](https://img.shields.io/badge/Android-Released-3DDC84?logo=android&logoColor=FFFFFF)
+![iOS - In development](https://img.shields.io/badge/iOS-In_development-000000?logo=apple&logoColor=FFFFFF)
 
 ![Enzitech](https://user-images.githubusercontent.com/30741312/232361196-5d8dc1ca-6b6c-41df-8cc7-131cdba98591.png)
 
