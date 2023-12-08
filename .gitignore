@@ -50,3 +50,7 @@ app.*.map.json
 
 # iOS related
 ios/EZT-Runner*
+
+
+# FVM related
+.fvm/flutter_sdk

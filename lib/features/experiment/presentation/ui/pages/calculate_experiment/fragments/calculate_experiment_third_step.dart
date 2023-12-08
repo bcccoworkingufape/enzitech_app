@@ -189,89 +189,92 @@ class _CalculateExperimentThirdStepPageState
               parent: BouncingScrollPhysics(),
             ),
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: FutureBuilder(builder:
-                (BuildContext context, AsyncSnapshot<String> snapshot) {
-              if (_calculateExperimentViewmodel.numberDifferencesDTO == null) {
-                return const Center(
-                  child: EZTProgressIndicator(),
-                );
-              } else {
-                return Column(
-                  children: [
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    Text(
-                      _calculateExperimentViewmodel
-                          .temporaryChoosedExperimentCombination.enzyme!.name,
-                      textAlign: TextAlign.center,
-                      style: TextStyles.titleBoldBackground.copyWith(
-                        color: AppColors.greySweet,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 28,
+            child: FutureBuilder(
+              builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                if (_calculateExperimentViewmodel.numberDifferencesDTO ==
+                    null) {
+                  return const Center(
+                    child: EZTProgressIndicator(),
+                  );
+                } else {
+                  return Column(
+                    children: [
+                      const SizedBox(
+                        height: 16,
                       ),
-                    ),
-                    const Divider(),
-                    Text(
-                      _calculateExperimentViewmodel
-                          .temporaryChoosedExperimentCombination
-                          .treatment!
-                          .name,
-                      textAlign: TextAlign.center,
-                      style: TextStyles.titleBoldBackground.copyWith(
-                        color: AppColors.greySweet,
-                        fontWeight: FontWeight.w700,
+                      Text(
+                        _calculateExperimentViewmodel
+                            .temporaryChoosedExperimentCombination.enzyme!.name,
+                        textAlign: TextAlign.center,
+                        style: TextStyles.titleBoldBackground.copyWith(
+                          color: AppColors.greySweet,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 28,
+                        ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Card(
-                      margin: const EdgeInsets.all(16),
-                      color: AppColors.primary.withAlpha(100),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          _calculateExperimentViewmodel
-                              .temporaryChoosedExperimentCombination
-                              .enzyme!
-                              .formula,
-                          textAlign: TextAlign.center,
-                          style: TextStyles.titleBoldBackground.copyWith(
-                            color: AppColors.white,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 12,
+                      const Divider(),
+                      Text(
+                        _calculateExperimentViewmodel
+                            .temporaryChoosedExperimentCombination
+                            .treatment!
+                            .name,
+                        textAlign: TextAlign.center,
+                        style: TextStyles.titleBoldBackground.copyWith(
+                          color: AppColors.greySweet,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Card(
+                        margin: const EdgeInsets.all(16),
+                        color: AppColors.primary.withAlpha(100),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            _calculateExperimentViewmodel
+                                .temporaryChoosedExperimentCombination
+                                .enzyme!
+                                .formula,
+                            textAlign: TextAlign.center,
+                            style: TextStyles.titleBoldBackground.copyWith(
+                              color: AppColors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 12,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Table(
-                      columnWidths: const <int, TableColumnWidth>{
-                        0: IntrinsicColumnWidth(flex: 2),
-                        1: IntrinsicColumnWidth(flex: 3),
-                        2: IntrinsicColumnWidth(flex: 1),
-                      },
-                      defaultVerticalAlignment:
-                          TableCellVerticalAlignment.middle,
-                      children: [
-                        ..._buildTitleRow(),
-                        ..._buildListOfRows(_calculateExperimentViewmodel
-                            .experimentCalculationEntity!.results),
-                        ..._buildAverageRow(_calculateExperimentViewmodel
-                            .experimentCalculationEntity!.average)
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 32,
-                    ),
-                    _buttons,
-                  ],
-                );
-              }
-            }),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Table(
+                        columnWidths: const <int, TableColumnWidth>{
+                          0: IntrinsicColumnWidth(flex: 2),
+                          1: IntrinsicColumnWidth(flex: 3),
+                          2: IntrinsicColumnWidth(flex: 1),
+                        },
+                        defaultVerticalAlignment:
+                            TableCellVerticalAlignment.middle,
+                        children: [
+                          ..._buildTitleRow(),
+                          ..._buildListOfRows(_calculateExperimentViewmodel
+                              .experimentCalculationEntity!.results),
+                          ..._buildAverageRow(_calculateExperimentViewmodel
+                              .experimentCalculationEntity!.average)
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 32,
+                      ),
+                      _buttons,
+                    ],
+                  );
+                }
+              },
+              future: null, //TODO: verify this update on FutureBuilder
+            ),
           ),
         );
       },

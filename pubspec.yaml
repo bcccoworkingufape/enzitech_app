@@ -38,17 +38,17 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_expandable_fab: ^1.7.1
-  flutter_form_builder: ^7.7.0
+  flutter_form_builder: ^9.1.1
   flutter_localizations:
     sdk: flutter
   flutter_svg: ^1.1.6
   flutter_svg_provider: ^1.0.3
-  form_builder_validators: ^8.4.0
+  form_builder_validators: ^9.1.0
   get_it: ^7.2.0
   google_fonts: ^4.0.3
   group_button: ^5.2.2
   internet_connection_checker: ^1.0.0+1
-  intl: ^0.17.0
+  intl: ^0.18.1
   media_scanner: ^2.1.0
   package_info_plus: ^3.0.3
   path_provider: ^2.0.14
