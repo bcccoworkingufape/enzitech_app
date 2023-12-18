@@ -1,8 +1,14 @@
 // 🐦 Flutter imports:
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+
 // 📦 Package imports:
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'firebase_options.dart';
 
 // 🌎 Project imports:
 import 'core/data/service/key_value/key_value_service_imp.dart';
@@ -15,24 +21,33 @@ import 'shared/ui/ui.dart';
 import 'shared/utils/utils.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  runZonedGuarded(() async {
+    WidgetsFlutterBinding.ensureInitialized();
 
-  var keyValueService = SharedPrefsServiceImp();
-  var userPreferencesService = UserPreferencesServicesImp(keyValueService);
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
 
-  String token = await userPreferencesService.getToken() ?? '';
+    var keyValueService = SharedPrefsServiceImp();
+    var userPreferencesService = UserPreferencesServicesImp(keyValueService);
 
-  API.setEnvironment(EnvironmentEnum.dev);
+    String token = await userPreferencesService.getToken() ?? '';
 
-  final HttpDriverOptions httpDriverOptions = HttpDriverOptions(
-    accessToken: () {
-      return token;
-    },
-    baseUrl: () => API.apiBaseUrl,
-  );
+    API.setEnvironment(EnvironmentEnum.prod);
 
-  Inject.initialize(httpDriverOptions);
-  runApp(const MyApp());
+    final HttpDriverOptions httpDriverOptions = HttpDriverOptions(
+      accessToken: () {
+        return token;
+      },
+      baseUrl: () => API.apiBaseUrl,
+    );
+
+    Inject.initialize(httpDriverOptions);
+
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+
+    runApp(const MyApp());
+  }, (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack));
 }
 
 class MyApp extends StatefulWidget {
