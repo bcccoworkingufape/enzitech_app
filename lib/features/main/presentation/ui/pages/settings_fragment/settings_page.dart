@@ -1,5 +1,7 @@
 // 🐦 Flutter imports:
 
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -85,7 +87,8 @@ class _SettingsPageState extends State<SettingsPage> {
         animation: _settingsViewmodel,
         builder: (context, child) {
           return Scaffold(
-            backgroundColor: AppColors.background,
+            backgroundColor:
+                Colors.white, // AppColors.background, //TODO: COLOR-FIX
             body: Builder(builder: (context) {
               if (_settingsViewmodel.user == null &&
                   _settingsViewmodel.state != StateEnum.error) {
@@ -103,10 +106,13 @@ class _SettingsPageState extends State<SettingsPage> {
                           parent: BouncingScrollPhysics(),
                         ),
                         lightTheme: const SettingsThemeData(
-                          settingsListBackground: AppColors.background,
-                          titleTextColor: AppColors.grenDark,
-                          leadingIconsColor: AppColors.greyBlack,
-                        ),
+                            // settingsListBackground: Colors
+                            //     .white, //AppColors.background, //TODO: COLOR-FIX
+                            // titleTextColor: Colors
+                            //     .blue, //AppColors.grenDark, //TODO: COLOR-FIX
+                            // leadingIconsColor: Colors
+                            //     .green, //AppColors.greyBlack, //TODO: COLOR-FIX
+                            ),
                         sections: [
                           SettingsSection(
                             title: const Text('Informações'),
@@ -173,9 +179,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ),
                                 title:
                                     defaultTargetPlatform == TargetPlatform.iOS
-                                        ? Flex(
+                                        ? const Flex(
                                             direction: Axis.horizontal,
-                                            children: const [Text('Nome')],
+                                            children: [Text('Nome')],
                                           )
                                         : const Text('Nome'),
                                 value:
@@ -203,9 +209,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ),
                                 title:
                                     defaultTargetPlatform == TargetPlatform.iOS
-                                        ? Flex(
+                                        ? const Flex(
                                             direction: Axis.horizontal,
-                                            children: const [Text('Email')],
+                                            children: [Text('Email')],
                                           )
                                         : const Text('Email'),
                                 value:
@@ -233,9 +239,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ),
                                 title:
                                     defaultTargetPlatform == TargetPlatform.iOS
-                                        ? Flex(
+                                        ? const Flex(
                                             direction: Axis.horizontal,
-                                            children: const [
+                                            children: [
                                               Text('Tipo de usuário'),
                                             ],
                                           )
@@ -280,6 +286,55 @@ class _SettingsPageState extends State<SettingsPage> {
                                   PhosphorIcons.trash,
                                 ),
                                 title: const Text('Confirmação de exclusão'),
+                              ),
+                              SettingsTile(
+                                leading: const Icon(
+                                  PhosphorIcons.paintRoller,
+                                ),
+                                title: const Text(''),
+                                description: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Flexible(
+                                        flex: 1, child: Text('Tema')),
+                                    Flexible(
+                                      flex: 4,
+                                      child: SegmentedButton<ThemeMode>(
+                                        showSelectedIcon: false,
+                                        segments: <ButtonSegment<ThemeMode>>[
+                                          ButtonSegment<ThemeMode>(
+                                              value: ThemeMode.system,
+                                              label: const Text('Sistema'),
+                                              icon: Icon(Platform.isIOS
+                                                  ? PhosphorIcons.appleLogo
+                                                  : PhosphorIcons.androidLogo)),
+                                          const ButtonSegment<ThemeMode>(
+                                              value: ThemeMode.light,
+                                              label: Text('Claro'),
+                                              icon: Icon(PhosphorIcons.sun)),
+                                          const ButtonSegment<ThemeMode>(
+                                              value: ThemeMode.dark,
+                                              label: Text('Escuro'),
+                                              icon: Icon(PhosphorIcons.moon)),
+                                        ],
+                                        selected: <ThemeMode>{
+                                          _settingsViewmodel.themeMode
+                                        },
+                                        onSelectionChanged:
+                                            (Set<ThemeMode> newSelection) {
+                                          _settingsViewmodel
+                                              .setThemeMode(newSelection.first);
+                                          setState(() {
+                                            // By default there is only a single segment that can be
+                                            // selected at one time, so its value is always the first
+                                            // item in the selected set.
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
@@ -341,9 +396,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ),
                                 title:
                                     defaultTargetPlatform == TargetPlatform.iOS
-                                        ? Flex(
+                                        ? const Flex(
                                             direction: Axis.horizontal,
-                                            children: const [
+                                            children: [
                                               Text('Ambiente'),
                                             ],
                                           )
@@ -373,9 +428,9 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ),
                                 title:
                                     defaultTargetPlatform == TargetPlatform.iOS
-                                        ? Flex(
+                                        ? const Flex(
                                             direction: Axis.horizontal,
-                                            children: const [
+                                            children: [
                                               Text('Versão'),
                                             ],
                                           )
@@ -402,19 +457,21 @@ class _SettingsPageState extends State<SettingsPage> {
                               SettingsTile.navigation(
                                 leading: const Icon(
                                   PhosphorIcons.signOut,
-                                  color: AppColors.danger,
+                                  // color: AppColors.danger, //TODO: COLOR-FIX
                                 ),
                                 trailing:
                                     defaultTargetPlatform == TargetPlatform.iOS
                                         ? Icon(
                                             CupertinoIcons.chevron_forward,
                                             size: 18 * scaleFactor,
-                                            color: AppColors.danger,
+                                            // color: AppColors.danger, //TODO: COLOR-FIX
                                           )
                                         : null,
                                 title: const Text(
                                   'Sair',
-                                  style: TextStyle(color: AppColors.danger),
+                                  style: TextStyle(
+                                      // color: AppColors.danger, //TODO: COLOR-FIX
+                                      ),
                                 ),
                                 onPressed: (_) {
                                   _homeViewmodel.experimentsViewmodel

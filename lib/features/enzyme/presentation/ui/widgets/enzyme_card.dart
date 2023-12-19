@@ -80,7 +80,7 @@ class _EnzymeCardState extends State<EnzymeCard> {
                 Text(
                   "Fórmula: ",
                   style: TextStyles.bodyRegular.copyWith(
-                    color: AppColors.heading,
+                    // color: AppColors.heading, //TODO: COLOR-FIX
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                   ),
@@ -90,8 +90,10 @@ class _EnzymeCardState extends State<EnzymeCard> {
                   maxLines: 4,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.justify,
-                  style: TextStyles.bodyRegular
-                      .copyWith(color: AppColors.heading, fontSize: 16),
+                  style: TextStyles.bodyRegular.copyWith(
+                    //color: AppColors.heading//TODO: COLOR-FIX,
+                    fontSize: 16,
+                  ),
                 ),
               ],
             ),
@@ -114,7 +116,7 @@ class _EnzymeCardState extends State<EnzymeCard> {
                         Text(
                           "Variável A: ",
                           style: TextStyles.bodyRegular.copyWith(
-                            color: AppColors.heading,
+                            // color: AppColors.heading, //TODO: COLOR-FIX
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                           ),
@@ -130,8 +132,10 @@ class _EnzymeCardState extends State<EnzymeCard> {
                           maxLines: 4,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.justify,
-                          style: TextStyles.bodyRegular
-                              .copyWith(color: AppColors.heading, fontSize: 16),
+                          style: TextStyles.bodyRegular.copyWith(
+                            // color: AppColors.heading //TODO: COLOR-FIX,
+                            fontSize: 16,
+                          ),
                         ),
                       ],
                     ),
@@ -144,7 +148,7 @@ class _EnzymeCardState extends State<EnzymeCard> {
                         Text(
                           "Variável B: ",
                           style: TextStyles.bodyRegular.copyWith(
-                            color: AppColors.heading,
+                            //color: AppColors.heading, //TODO: COLOR-FIX
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                           ),
@@ -154,8 +158,10 @@ class _EnzymeCardState extends State<EnzymeCard> {
                           maxLines: 4,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.justify,
-                          style: TextStyles.bodyRegular
-                              .copyWith(color: AppColors.heading, fontSize: 16),
+                          style: TextStyles.bodyRegular.copyWith(
+                            // color: AppColors.heading, //TODO: COLOR-FIX
+                            fontSize: 16,
+                          ),
                         ),
                       ],
                     ),

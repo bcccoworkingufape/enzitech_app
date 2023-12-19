@@ -34,6 +34,8 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
   // final _searchTermController = TextEditingController(text: '');
   List<bool> isSelected = [true, false];
 
+  int selectedButtonSegment = 0;
+
   @override
   void initState() {
     super.initState();
@@ -182,7 +184,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                       eztSnackBarType: EZTSnackBarType.error,
                       action: SnackBarAction(
                         label: 'Desfazer',
-                        textColor: AppColors.white,
+                        // textColor: AppColors.white, //TODO: COLOR-FIX
                         onPressed: () {
                           setState(() {
                             _experimentsViewmodel.experiments
@@ -258,15 +260,15 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                   padding: const EdgeInsets.only(bottom: 16.0),
                   child: Card(
                     elevation: 4,
-                    shadowColor: AppColors.white,
-                    color: AppColors.yellow,
+                    // shadowColor: AppColors.white,//TODO: COLOR-FIX
+                    // color: AppColors.yellow, //TODO: COLOR-FIX
                     child: Padding(
                       padding: const EdgeInsets.only(top: 30, bottom: 30),
                       child: Center(
                         child: Text(
                           'Todos os experimentos exibidos!',
                           style: TextStyles.buttonPrimary.copyWith(
-                            color: AppColors.greySweet,
+                            // color: AppColors.greySweet, //TODO: COLOR-FIX
                             fontSize: 20,
                           ),
                         ),
@@ -319,58 +321,106 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        ToggleSwitch(
-                          initialLabelIndex:
-                              _experimentsViewmodel.finishedFilter ? 1 : 0,
-                          minWidth: (widthMQ * 0.4),
-                          totalSwitches: 2,
-                          labels: const ['Em andamento', 'Concluído'],
-                          activeFgColor: AppColors.white,
-                          inactiveFgColor: AppColors.primary,
-                          activeBgColor: const [AppColors.primary],
-                          inactiveBgColor: AppColors.white,
-                          borderColor: const [AppColors.primary],
-                          borderWidth: 1.5,
-                          onToggle: (index) {
-                            if (index == 0) {
-                              if (_experimentsViewmodel.finishedFilter !=
-                                  false) {
-                                _experimentsViewmodel.setFinishedFilter(false);
-                                _experimentsViewmodel.fetch();
+                        SegmentedButton(
+                          emptySelectionAllowed: false,
+                          showSelectedIcon: false,
+                          segments: const <ButtonSegment<int>>[
+                            ButtonSegment<int>(
+                              value: 0,
+                              label: Text('Em andamento'),
+                              icon: Icon(PhosphorIcons.clockClockwise),
+                            ),
+                            ButtonSegment<int>(
+                              value: 1,
+                              label: Text('Concluído'),
+                              icon: Icon(PhosphorIcons.checks),
+                            ),
+                          ],
+                          selected: <int>{selectedButtonSegment},
+                          onSelectionChanged: (Set<int> newSelection) {
+                            setState(() {
+                              selectedButtonSegment = newSelection.first;
+                              if (selectedButtonSegment == 0) {
+                                if (_experimentsViewmodel.finishedFilter !=
+                                    false) {
+                                  _experimentsViewmodel
+                                      .setFinishedFilter(false);
+                                  _experimentsViewmodel.fetch();
+                                  return;
+                                }
+
                                 return;
                               }
 
-                              return;
-                            }
+                              if (_experimentsViewmodel.finishedFilter ||
+                                  !_homeViewmodel.hasInternetConnection) return;
 
-                            if (_experimentsViewmodel.finishedFilter ||
-                                !_homeViewmodel.hasInternetConnection) return;
-
-                            _experimentsViewmodel.setFinishedFilter(true);
-                            _experimentsViewmodel.fetch();
+                              _experimentsViewmodel.setFinishedFilter(true);
+                              _experimentsViewmodel.fetch();
+                            });
                           },
                         ),
-                        const SizedBox(
-                          width: 4,
-                        ),
-                        Expanded(
-                          child: InkWell(
-                            customBorder: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
+                        // ToggleSwitch(
+                        //   initialLabelIndex:
+                        //       _experimentsViewmodel.finishedFilter ? 1 : 0,
+                        //   minWidth: (widthMQ * 0.4),
+                        //   totalSwitches: 2,
+                        //   labels: const ['Em andamento', 'Concluído'],
+                        //   // activeFgColor: AppColors.white, //TODO: COLOR-FIX
+                        //   inactiveFgColor: AppColors.primary,
+                        //   activeBgColor: const [AppColors.primary],
+                        //   // inactiveBgColor: AppColors.white, //TODO: COLOR-FIX
+                        //   borderColor: const [AppColors.primary],
+                        //   borderWidth: 1.5,
+                        //   onToggle: (index) {
+                        //     if (index == 0) {
+                        //       if (_experimentsViewmodel.finishedFilter !=
+                        //           false) {
+                        //         _experimentsViewmodel.setFinishedFilter(false);
+                        //         _experimentsViewmodel.fetch();
+                        //         return;
+                        //       }
+
+                        //       return;
+                        //     }
+
+                        //     if (_experimentsViewmodel.finishedFilter ||
+                        //         !_homeViewmodel.hasInternetConnection) return;
+
+                        //     _experimentsViewmodel.setFinishedFilter(true);
+                        //     _experimentsViewmodel.fetch();
+                        //   },
+                        // ),
+                        // const SizedBox(
+                        //   width: 4,
+                        // ),
+                        IconButton(
+                            icon: Icon(
+                              _experimentsViewmodel.anyFilterIsEnabled()
+                                  ? PhosphorIcons.funnelFill
+                                  : PhosphorIcons.funnel,
+                              // color: AppColors.primary,
                             ),
-                            onTap: _showFiltersDialog,
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Icon(
-                                _experimentsViewmodel.anyFilterIsEnabled()
-                                    ? PhosphorIcons.funnelFill
-                                    : PhosphorIcons.funnel,
-                                color: AppColors.primary,
-                              ),
-                            ),
-                          ),
-                        )
+                            onPressed: _showFiltersDialog),
+                        // Expanded(
+                        //   child: InkWell(
+                        //     customBorder: RoundedRectangleBorder(
+                        //       borderRadius: BorderRadius.circular(8),
+                        //     ),
+                        //     onTap: _showFiltersDialog,
+                        //     child: Padding(
+                        //       padding: const EdgeInsets.all(10.0),
+                        //       child: Icon(
+                        //         _experimentsViewmodel.anyFilterIsEnabled()
+                        //             ? PhosphorIcons.funnelFill
+                        //             : PhosphorIcons.funnel,
+                        //         color: AppColors.primary,
+                        //       ),
+                        //     ),
+                        //   ),
+                        // )
                       ],
                     ),
                   ),

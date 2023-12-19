@@ -108,7 +108,7 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
             children: [
               const Icon(
                 PhosphorIcons.flask,
-                color: AppColors.greySweet,
+                // color: AppColors.greySweet, //TODO: COLOR-FIX
               ),
               const SizedBox(width: 4),
               Text(

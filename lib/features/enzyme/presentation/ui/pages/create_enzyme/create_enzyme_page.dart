@@ -117,7 +117,7 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
             children: [
               const Icon(
                 PhosphorIcons.flask,
-                color: AppColors.greySweet,
+                // color: AppColors.greySweet, //TODO: COLOR-FIX
               ),
               const SizedBox(width: 4),
               Text(
@@ -232,7 +232,7 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
       // style: const TextStyle(color: Colors.deepPurple),
       underline: Container(
         height: 1.1,
-        color: AppColors.line,
+        // color: AppColors.line, //TODO: COLOR-FIX
       ),
       onChanged: (String? value) {
         // This is called when the user selects an item.

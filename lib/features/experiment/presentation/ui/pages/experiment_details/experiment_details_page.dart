@@ -129,7 +129,9 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
           const SizedBox(
             height: 20,
           ),
-          const Divider(color: AppColors.grey),
+          const Divider(
+              // color: AppColors.grey, //TODO: COLOR-FIX
+              ),
           const SizedBox(
             height: 20,
           ),
@@ -249,7 +251,9 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
           const SizedBox(
             height: 20,
           ),
-          const Divider(color: AppColors.grey),
+          const Divider(
+              // color: AppColors.grey, //TODO: COLOR-FIX
+              ),
           const SizedBox(
             height: 20,
           ),
@@ -257,8 +261,11 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
             text: 'Cálculo enzimático',
             eztButtonType: EZTButtonType.checkout,
             enabled: _experimentDetailsViewmodel.experiment!.progress != 1,
-            icon: const Icon(PhosphorIcons.function,
-                color: AppColors.white, size: 30),
+            icon: const Icon(
+              PhosphorIcons.function,
+              // color: AppColors.white, //TODO: COLOR-FIX
+              size: 30,
+            ),
             onPressed: () {
               GetIt.I.get<CalculateExperimentViewmodel>
                   .call()
@@ -277,8 +284,11 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
             text: 'Resultados',
             enabled: _experimentDetailsViewmodel.experiment!.progress != 0,
             eztButtonType: EZTButtonType.checkout,
-            icon: const Icon(PhosphorIcons.fileText,
-                color: AppColors.white, size: 30),
+            icon: const Icon(
+              PhosphorIcons.fileText,
+              // color: AppColors.white, //TODO: COLOR-FIX
+              size: 30,
+            ),
             onPressed: () => Navigator.pushNamed(
               context,
               Routing.experimentResults,
@@ -340,7 +350,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
                     },
                     icon: const Icon(
                       PhosphorIcons.trash,
-                      color: AppColors.white,
+                      // color: AppColors.white, //TODO: COLOR-FIX
                       size: 25,
                     ),
                   ),

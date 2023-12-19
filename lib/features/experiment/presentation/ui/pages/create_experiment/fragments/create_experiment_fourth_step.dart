@@ -475,7 +475,7 @@ class _CreateExperimentFourthStepPageState
                                   "⚠  ${enzyme.name}",
                                   style: const TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    color: AppColors.danger,
+                                    // color: AppColors.danger, //TODO: COLOR-FIX
                                   ),
                                 ),
                           content: Container(

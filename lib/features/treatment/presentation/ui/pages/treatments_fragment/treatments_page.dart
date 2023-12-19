@@ -99,7 +99,7 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
                     eztSnackBarType: EZTSnackBarType.error,
                     action: SnackBarAction(
                       label: 'Desfazer',
-                      textColor: AppColors.white,
+                      // textColor: AppColors.white, //TODO: COLOR-FIX
                       onPressed: () {
                         setState(() {
                           _treatmentsViewmodel.treatments

@@ -79,7 +79,8 @@ class EZTSnackBar {
       //   borderRadius: BorderRadius.only(
       //       topLeft: Radius.circular(16.0), topRight: Radius.circular(16.0)),
       // ),
-      backgroundColor: AppColors.success, // action: SnackBarAction(
+      backgroundColor: Colors.green, //AppColors.success, //TODO: COLOR-FIX
+      // action: SnackBarAction(
       //   textColor: Color(0xFFFAF2FB),
       //   label: 'OK',
       //   onPressed: () {},
@@ -106,7 +107,8 @@ class EZTSnackBar {
       //   borderRadius: BorderRadius.only(
       //       topLeft: Radius.circular(16.0), topRight: Radius.circular(16.0)),
       // ),
-      backgroundColor: AppColors.danger, // action: SnackBarAction(
+      backgroundColor: Colors.red, //AppColors.danger,  //TODO: COLOR-FIX
+      // action: SnackBarAction(
       //   textColor: Color(0xFFFAF2FB),
       //   label: 'OK',
       //   onPressed: () {},

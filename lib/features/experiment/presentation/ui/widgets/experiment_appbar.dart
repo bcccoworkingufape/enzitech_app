@@ -25,7 +25,7 @@ class _ExperimentAppBarState extends State<ExperimentAppBar> {
       // leading: ,
       flexibleSpace: SafeArea(
         child: Container(
-          color: AppColors.white,
+          // color: AppColors.white, //TODO: COLOR-FIX
           child: Column(
             children: const [
               EZTCreateExperimentStepIndicator(

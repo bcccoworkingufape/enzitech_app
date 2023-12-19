@@ -327,7 +327,7 @@ class _CalculateExperimentSecondStepPageState
                                     "⚠  Dados da ${map["_id"]!.toInt() + 1}ª repetição",
                                     style: const TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      color: AppColors.danger,
+                                      // color: AppColors.danger, //TODO: COLOR-FIX
                                     ),
                                   ),
                             content: Container(

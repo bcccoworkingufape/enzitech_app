@@ -1,4 +1,5 @@
 // 🌎 Project imports:
+
 import '../../../domain/service/key_value/key_value_service.dart';
 import '../../../domain/service/user_preferences/user_preferences_service.dart';
 
@@ -6,6 +7,7 @@ class UserPreferencesServicesImp implements UserPreferencesServices {
   static const _tokenKey = "token";
   static const _userKey = "user";
   static const _excludeConfirmationKey = "excludeConfirmationKey";
+  static const _themeModeKey = "themeModeKey";
 
   final KeyValueService _keyValueService;
 
@@ -51,6 +53,21 @@ class UserPreferencesServicesImp implements UserPreferencesServices {
   @override
   Future<bool> getExcludeConfirmation() async {
     return await _keyValueService.getBool(_excludeConfirmationKey) ?? false;
+  }
+
+  @override
+  Future<void> initThemeMode() async {
+    await saveThemeModeAsString('system');
+  }
+
+  @override
+  Future<void> saveThemeModeAsString(String value) async {
+    await _keyValueService.setString(_themeModeKey, value);
+  }
+
+  @override
+  Future<String> getThemeModeAsString() async {
+    return await _keyValueService.getString(_themeModeKey) ?? 'light';
   }
 
   // GENERAL

@@ -58,8 +58,10 @@ class _TreatmentCardState extends State<TreatmentCard> {
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.justify,
-              style: TextStyles.bodyRegular
-                  .copyWith(color: AppColors.greyLight, fontSize: 16),
+              style: TextStyles.bodyRegular.copyWith(
+                // color: AppColors.greyLight, //TODO: COLOR-FIX
+                fontSize: 16,
+              ),
             ),
           ],
         ),

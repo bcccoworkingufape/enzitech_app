@@ -16,13 +16,17 @@ import '../../../experiment/presentation/viewmodel/experiment_results_viewmodel.
 import '../../domain/entities/app_info_entity.dart';
 import '../../domain/usecases/clear_user/clear_user_usecase.dart';
 import '../../domain/usecases/get_exclude_confirmation/get_exclude_confirmation_usecase.dart';
+import '../../domain/usecases/get_theme_mode/get_theme_mode_usecase.dart';
 import '../../domain/usecases/get_user/get_user_usecase.dart';
 import '../../domain/usecases/save_exclude_confirmation/save_exclude_confirmation_usecase.dart';
+import '../../domain/usecases/save_theme_mode/save_theme_mode_usecase.dart';
 
 class SettingsViewmodel extends ChangeNotifier {
   final GetUserUseCase _getUserUseCase;
   final GetExcludeConfirmationUseCase _getExcludeConfirmationUseCase;
   final SaveExcludeConfirmationUseCase _saveExcludeConfirmationUseCase;
+  final GetThemeModeUseCase _getThemeModeUseCase;
+  final SaveThemeModeUseCase _saveThemeModeUseCase;
   final ClearUserUseCase _clearUserUseCase;
 
   // final UserPreferencesServices _userPreferencesServices;
@@ -31,6 +35,8 @@ class SettingsViewmodel extends ChangeNotifier {
     this._getUserUseCase,
     this._getExcludeConfirmationUseCase,
     this._saveExcludeConfirmationUseCase,
+    this._getThemeModeUseCase,
+    this._saveThemeModeUseCase,
     this._clearUserUseCase,
     // this._userPreferencesServices,
   ) {
@@ -107,6 +113,14 @@ class SettingsViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
+  ThemeMode _themeMode = ThemeMode.system;
+  ThemeMode get themeMode => _themeMode;
+  void setThemeMode(ThemeMode newThemeMode) {
+    _themeMode = newThemeMode;
+    _saveThemeModeUseCase(_themeMode);
+    notifyListeners();
+  }
+
   logout() async {
     setStateEnum(StateEnum.loading);
     try {
@@ -135,8 +149,10 @@ class SettingsViewmodel extends ChangeNotifier {
   Future<void> loadPreferences() async {
     // setStateEnum(StateEnum.loading);
 
-    var result = await _getExcludeConfirmationUseCase();
-    result.fold(
+    setThemeMode(await _getThemeModeUseCase());
+
+    var resultConfirmation = await _getExcludeConfirmationUseCase();
+    resultConfirmation.fold(
       (error) {
         _setFailure(error);
         setStateEnum(StateEnum.error);
@@ -146,6 +162,18 @@ class SettingsViewmodel extends ChangeNotifier {
         notifyListeners();
       },
     );
+
+    // var resultTheme = await _getExcludeConfirmationUseCase();
+    // resultTheme.fold(
+    //   (error) {
+    //     _setFailure(error);
+    //     setStateEnum(StateEnum.error);
+    //   },
+    //   (success) async {
+    //     setEnableExcludeConfirmation(success);
+    //     notifyListeners();
+    //   },
+    // );
   }
 
   Future<void> loadAppInfo() async {

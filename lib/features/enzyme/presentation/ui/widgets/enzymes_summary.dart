@@ -38,7 +38,9 @@ class _EnzymesSummaryState extends State<EnzymesSummary> {
           ),
           Text(
             "$name ($quantity)",
-            style: TextStyles.bodyMinBold.copyWith(color: AppColors.greySweet),
+            style: TextStyles.bodyMinBold.copyWith(
+                // color: AppColors.greySweet, //TODO: COLOR-FIX
+                ),
           )
         ],
       ),
@@ -71,8 +73,9 @@ class _EnzymesSummaryState extends State<EnzymesSummary> {
                 child: Center(
                   child: Text(
                     "Sumário de enzimas",
-                    style:
-                        TextStyles.bodyMinBold.copyWith(color: AppColors.white),
+                    style: TextStyles.bodyMinBold.copyWith(
+                        // color: AppColors.white, //TODO: COLOR-FIX
+                        ),
                   ),
                 ),
               ),

@@ -17,7 +17,7 @@ import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../core/routing/routing.dart';
 import '../../../../../../shared/ui/ui.dart';
-import '../../../../../../shared/ui/widgets/ezt_blink.dart';
+import '../../../../../../shared/ui/widgets/ezt_appbar.dart';
 import '../../../../../enzyme/presentation/ui/pages/enzymes_fragment/enzymes_page.dart';
 import '../../../../../enzyme/presentation/viewmodel/enzymes_viewmodel.dart';
 import '../../../../../experiment/presentation/ui/pages/experiments_fragment/experiments_page.dart';
@@ -231,11 +231,11 @@ class _HomePageState extends State<HomePage>
         },
         label: Text(
           "Cadastrar\nexperimento",
-          style: TextStyles.buttonBackground,
+          // style: TextStyles.buttonBackground,
         ),
         icon: const Icon(
           PhosphorIcons.pencilLine,
-          color: AppColors.white,
+          // color: AppColors.white, //TODO: COLOR-FIX
           size: 30,
         ),
       );
@@ -251,11 +251,11 @@ class _HomePageState extends State<HomePage>
         },
         label: Text(
           "Cadastrar\ntratamento",
-          style: TextStyles.buttonBackground,
+          // style: TextStyles.buttonBackground,
         ),
         icon: const Icon(
           PhosphorIcons.pencilLine,
-          color: AppColors.white,
+          // color: AppColors.white, //TODO: COLOR-FIX
           size: 30,
         ),
       );
@@ -274,11 +274,11 @@ class _HomePageState extends State<HomePage>
           },
           label: Text(
             "Cadastrar\nenzima",
-            style: TextStyles.buttonBackground,
+            // style: TextStyles.buttonBackground,
           ),
           icon: const Icon(
             PhosphorIcons.pencilLine,
-            color: AppColors.white,
+            // color: AppColors.white, //TODO: COLOR-FIX
             size: 30,
           ),
         );
@@ -305,44 +305,7 @@ class _HomePageState extends State<HomePage>
       builder: (context, child) {
         return Scaffold(
           key: _scaffold,
-          appBar: AppBar(
-            title: SvgPicture.asset(
-              AppSvgs.logo,
-              fit: BoxFit.contain,
-              alignment: Alignment.center,
-            ),
-            actions: [
-              !_homeViewmodel.hasInternetConnection
-                  ? Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: GestureDetector(
-                        onTap: () => noInternet(context),
-                        child: const EZTBlink(
-                          interval: 750,
-                          children: <Widget>[
-                            Icon(
-                              PhosphorIcons.cloudSlash,
-                              color: Colors.white,
-                            ),
-                            // Icon(
-                            //   PhosphorIcons.wifiSlash,
-                            //   color: Colors.red[200],
-                            // ),
-                            Icon(
-                              PhosphorIcons.cloudSlash,
-                              color: Colors.red,
-                            ),
-                            // Icon(
-                            //   PhosphorIcons.wifiSlash,
-                            //   color: Colors.red[900],
-                            // ),
-                          ],
-                        ),
-                      ),
-                    )
-                  : Container(),
-            ],
-          ),
+          appBar: EZTAppBar(homeViewmodel: _homeViewmodel),
           body: AnimatedBuilder(
             animation: _homeViewmodel,
             builder: (context, child) {
@@ -369,7 +332,63 @@ class _HomePageState extends State<HomePage>
             },
           ),
           floatingActionButton: dealWithFloatingActionButton,
-          bottomNavigationBar: BottomNavigationBar(
+          bottomNavigationBar: NavigationBar(
+            onDestinationSelected: (index) {
+              setAllButtonsVisible();
+              int beforeSet = _homeViewmodel.fragmentIndex;
+              _homeViewmodel.setFragmentIndex(index);
+              if (index == 0 &&
+                  beforeSet == 0 &&
+                  _experimentsViewmodel.scrollController.hasClients) {
+                _experimentsViewmodel.scrollController.animateTo(
+                  _experimentsViewmodel
+                          .scrollController.position.minScrollExtent +
+                      (kBottomNavigationBarHeight / 10000),
+                  duration: const Duration(milliseconds: 1500),
+                  curve: Curves.fastOutSlowIn,
+                );
+              } else if (index == 1 &&
+                  beforeSet == 1 &&
+                  _treatmentsViewmodel.scrollController.hasClients) {
+                _treatmentsViewmodel.scrollController.animateTo(
+                  _treatmentsViewmodel
+                          .scrollController.position.minScrollExtent +
+                      (kBottomNavigationBarHeight / 10000),
+                  duration: const Duration(milliseconds: 1500),
+                  curve: Curves.fastOutSlowIn,
+                );
+              } else if (index == 2 &&
+                  beforeSet == 2 &&
+                  _enzymesViewmodel.scrollController.hasClients) {
+                _enzymesViewmodel.scrollController.animateTo(
+                  _enzymesViewmodel.scrollController.position.minScrollExtent +
+                      (kBottomNavigationBarHeight / 10000),
+                  duration: const Duration(milliseconds: 1500),
+                  curve: Curves.fastOutSlowIn,
+                );
+              }
+            },
+            selectedIndex: _homeViewmodel.fragmentIndex,
+            destinations: const [
+              NavigationDestination(
+                icon: Icon(PhosphorIcons.flask),
+                label: 'Experimentos',
+              ),
+              NavigationDestination(
+                icon: Icon(PhosphorIcons.testTube),
+                label: 'Tratamentos',
+              ),
+              NavigationDestination(
+                icon: Icon(PhosphorIcons.atom),
+                label: 'Enzimas',
+              ),
+              NavigationDestination(
+                icon: Icon(PhosphorIcons.gear),
+                label: 'Configurações',
+              ),
+            ],
+          ),
+          /* bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.shifting,
             items: const [
               BottomNavigationBarItem(
@@ -394,7 +413,8 @@ class _HomePageState extends State<HomePage>
               ),
             ],
             currentIndex: _homeViewmodel.fragmentIndex,
-            selectedItemColor: AppColors.white,
+            selectedItemColor:
+                Colors.white, //AppColors.white,  //TODO: COLOR-FIX
             unselectedItemColor: Colors.white70,
             backgroundColor: AppColors.primary,
             onTap: (index) {
@@ -432,7 +452,7 @@ class _HomePageState extends State<HomePage>
                 );
               }
             },
-          ),
+          ), */
         );
       },
     );

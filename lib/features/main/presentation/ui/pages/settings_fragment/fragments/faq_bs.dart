@@ -32,7 +32,7 @@ class FAQBS extends StatelessWidget {
                   text: 'Pergunta: ',
                   style: TextStyles.trailingRegular.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: AppColors.danger,
+                    // color: AppColors.danger, //TODO: COLOR-FIX
                   ),
                 ),
                 TextSpan(
@@ -56,7 +56,7 @@ class FAQBS extends StatelessWidget {
                   text: 'Resposta: ',
                   style: TextStyles.trailingRegular.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: AppColors.info,
+                    // color: AppColors.info, //TODO: COLOR-FIX
                   ),
                 ),
                 TextSpan(
@@ -79,7 +79,7 @@ class FAQBS extends StatelessWidget {
                   text: 'Pergunta: ',
                   style: TextStyles.trailingRegular.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: AppColors.danger,
+                    // color: AppColors.danger, //TODO: COLOR-FIX
                   ),
                 ),
                 TextSpan(
@@ -104,7 +104,7 @@ class FAQBS extends StatelessWidget {
                   text: 'Resposta: ',
                   style: TextStyles.trailingRegular.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: AppColors.info,
+                    // color: AppColors.info, //TODO: COLOR-FIX
                   ),
                 ),
                 TextSpan(
@@ -125,7 +125,7 @@ class FAQBS extends StatelessWidget {
                             "(Diretório ainda não identificado, tente salvar um experimento para que o app possa detectar o local)",
                         style: TextStyles.trailingRegular.copyWith(
                           fontWeight: FontWeight.bold,
-                          color: AppColors.warning,
+                          // color: AppColors.warning, //TODO: COLOR-FIX
                           fontStyle: FontStyle.italic,
                         ),
                       ),

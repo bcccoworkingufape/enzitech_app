@@ -1,4 +1,5 @@
 export 'address_extensions.dart';
+export 'dark_mode_extensions.dart';
 export 'date_time_extensions.dart';
 export 'double_extensions.dart';
 export 'num_extensions.dart';

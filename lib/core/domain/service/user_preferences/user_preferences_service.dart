@@ -17,6 +17,12 @@ abstract class UserPreferencesServices {
 
   Future<bool> getExcludeConfirmation();
 
+  Future<void> initThemeMode();
+
+  Future<void> saveThemeModeAsString(String value);
+
+  Future<String> getThemeModeAsString();
+
   // GENERAL
   Future<void> clearAll();
 }

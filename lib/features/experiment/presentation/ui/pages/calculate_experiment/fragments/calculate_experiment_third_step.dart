@@ -74,8 +74,8 @@ class _CalculateExperimentThirdStepPageState
     return TableRow(
       decoration: UnderlineTabIndicator(
           borderSide: BorderSide(
-        color: AppColors.greyLight.withOpacity(0.25),
-      )),
+              // color: AppColors.greyLight.withOpacity(0.25), //TODO: COLOR-FIX
+              )),
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 4.0),
@@ -98,7 +98,7 @@ class _CalculateExperimentThirdStepPageState
                 .listOfNumberDifferencesDTO[iteration]!.isFarther!,
             replacement: const Icon(
               PhosphorIcons.thumbsUp,
-              color: AppColors.grenDark,
+              // color: AppColors.grenDark, //TODO: COLOR-FIX
             ),
             child: GestureDetector(
               onTap: () {
@@ -113,7 +113,7 @@ class _CalculateExperimentThirdStepPageState
               },
               child: const Icon(
                 PhosphorIcons.warningCircleBold,
-                color: AppColors.danger,
+                // color: AppColors.danger, //TODO: COLOR-FIX
               ),
             ),
           ),
@@ -141,11 +141,15 @@ class _CalculateExperimentThirdStepPageState
       TableRow(children: [
         Text(
           "Média:",
-          style: TextStyles.bodyBold.copyWith(color: AppColors.grenDark),
+          style: TextStyles.bodyBold.copyWith(
+              // color: AppColors.grenDark, //TODO: COLOR-FIX
+              ),
         ),
         Text(
           number.formmatedNumber,
-          style: TextStyles.bodyBold.copyWith(color: AppColors.grenDark),
+          style: TextStyles.bodyBold.copyWith(
+              // color: AppColors.grenDark, //TODO: COLOR-FIX
+              ),
         ),
         Container(),
       ]),
@@ -157,15 +161,21 @@ class _CalculateExperimentThirdStepPageState
       TableRow(children: [
         Text(
           "REPETIÇÃO",
-          style: TextStyles.bodyBold.copyWith(color: AppColors.greySweet),
+          style: TextStyles.bodyBold.copyWith(
+              // color: AppColors.greySweet, //TODO: COLOR-FIX
+              ),
         ),
         Text(
           "RESULTADO",
-          style: TextStyles.bodyBold.copyWith(color: AppColors.greySweet),
+          style: TextStyles.bodyBold.copyWith(
+              // color: AppColors.greySweet, //TODO: COLOR-FIX
+              ),
         ),
         Text(
           "STATUS",
-          style: TextStyles.bodyBold.copyWith(color: AppColors.greySweet),
+          style: TextStyles.bodyBold.copyWith(
+              // color: AppColors.greySweet, //TODO: COLOR-FIX
+              ),
         ),
       ]),
       const TableRow(children: [
@@ -207,7 +217,7 @@ class _CalculateExperimentThirdStepPageState
                             .temporaryChoosedExperimentCombination.enzyme!.name,
                         textAlign: TextAlign.center,
                         style: TextStyles.titleBoldBackground.copyWith(
-                          color: AppColors.greySweet,
+                          // color: AppColors.greySweet, //TODO: COLOR-FIX
                           fontWeight: FontWeight.w700,
                           fontSize: 28,
                         ),
@@ -220,7 +230,7 @@ class _CalculateExperimentThirdStepPageState
                             .name,
                         textAlign: TextAlign.center,
                         style: TextStyles.titleBoldBackground.copyWith(
-                          color: AppColors.greySweet,
+                          // color: AppColors.greySweet, //TODO: COLOR-FIX
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -239,7 +249,7 @@ class _CalculateExperimentThirdStepPageState
                                 .formula,
                             textAlign: TextAlign.center,
                             style: TextStyles.titleBoldBackground.copyWith(
-                              color: AppColors.white,
+                              // color: AppColors.white, //TODO: COLOR-FIX
                               fontWeight: FontWeight.w600,
                               fontSize: 12,
                             ),

@@ -17,14 +17,14 @@ class SplashViewmodel extends ChangeNotifier {
   final ExperimentsViewmodel experimentsViewmodel;
   final EnzymesViewmodel enzymesViewmodel;
   final TreatmentsViewmodel treatmentsViewmodel;
-  final SettingsViewmodel accountViewmodel;
+  final SettingsViewmodel settingsViewmodel;
   final UserPreferencesServices userPreferencesServices;
 
   SplashViewmodel(
     this.experimentsViewmodel,
     this.enzymesViewmodel,
     this.treatmentsViewmodel,
-    this.accountViewmodel,
+    this.settingsViewmodel,
     this.userPreferencesServices,
   ) {
     fetch();
@@ -60,7 +60,7 @@ class SplashViewmodel extends ChangeNotifier {
       await experimentsViewmodel.fetch();
       await enzymesViewmodel.fetch();
       await treatmentsViewmodel.fetch();
-      await accountViewmodel.fetch();
+      await settingsViewmodel.fetch();
 
       if (experimentsViewmodel.state == StateEnum.error) {
         _setFailure(experimentsViewmodel.failure);
@@ -71,8 +71,8 @@ class SplashViewmodel extends ChangeNotifier {
       } else if (treatmentsViewmodel.state == StateEnum.error) {
         _setFailure(treatmentsViewmodel.failure);
         setStateEnum(StateEnum.error);
-      } else if (accountViewmodel.state == StateEnum.error) {
-        _setFailure(accountViewmodel.failure);
+      } else if (settingsViewmodel.state == StateEnum.error) {
+        _setFailure(settingsViewmodel.failure);
         setStateEnum(StateEnum.error);
       }
     }

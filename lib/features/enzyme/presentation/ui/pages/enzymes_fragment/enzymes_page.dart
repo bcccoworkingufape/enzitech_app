@@ -117,7 +117,7 @@ class _EnzymesPageState extends State<EnzymesPage> {
                     eztSnackBarType: EZTSnackBarType.error,
                     action: SnackBarAction(
                       label: 'Desfazer',
-                      textColor: AppColors.white,
+                      // textColor: AppColors.white, //TODO: COLOR-FIX
                       onPressed: () {
                         setState(() {
                           _enzymesViewmodel.enzymes.insert(index, enzyme);
@@ -135,11 +135,11 @@ class _EnzymesPageState extends State<EnzymesPage> {
                 },
                 background: Container(
                   color: Colors.red,
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
+                  child: const Padding(
+                    padding: EdgeInsets.all(15.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
-                      children: const [
+                      children: [
                         Icon(
                           PhosphorIcons.trashLight,
                           color: Colors.white,

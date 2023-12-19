@@ -43,15 +43,16 @@ class _ExperimentCardState extends State<ExperimentCard> {
             shadowColor: Colors.white,
             borderRadius: BorderRadius.circular(8),
             child: InkWell(
-              onTap: () {GetIt.I
-                  .get<ExperimentDetailsViewmodel>()
-                  .getExperimentDetails(widget.experiment.id);
-                  Navigator.pushNamed(
-                context,
-                Routing.experimentDetailed,
-                arguments: widget.experiment,
-              );
-                  },
+              onTap: () {
+                GetIt.I
+                    .get<ExperimentDetailsViewmodel>()
+                    .getExperimentDetails(widget.experiment.id);
+                Navigator.pushNamed(
+                  context,
+                  Routing.experimentDetailed,
+                  arguments: widget.experiment,
+                );
+              },
               borderRadius: const BorderRadius.all(
                 Radius.circular(8),
               ),
@@ -107,7 +108,9 @@ class _ExperimentCardState extends State<ExperimentCard> {
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyles.bodyRegular.copyWith(
-                              color: AppColors.greyLight, fontSize: 16),
+                            // color: AppColors.greyLight, //TODO: COLOR-FIX
+                            fontSize: 16,
+                          ),
                         ),
                         const SizedBox(
                           height: 16,

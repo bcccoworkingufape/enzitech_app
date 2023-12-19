@@ -169,7 +169,7 @@ class _CreateExperimentFirstStepPageState
               children: [
                 const Icon(
                   PhosphorIcons.flask,
-                  color: AppColors.greySweet,
+                  // color: AppColors.greySweet, //TODO: COLOR-FIX
                 ),
                 const SizedBox(width: 4),
                 Text(

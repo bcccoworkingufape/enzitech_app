@@ -67,7 +67,7 @@ class TextStyles {
   static final detailBold = GoogleFonts.ubuntu(
     fontSize: 14,
     fontWeight: FontWeight.w700,
-    color: AppColors.greySweet,
+    // color: AppColors.greySweet, //TODO: COLOR-FIX
   );
 
   /// `fontSize:` 18,
@@ -79,7 +79,7 @@ class TextStyles {
   /// ![585666](https://www.colorhexa.com/585666.png)
   static final termRegular = GoogleFonts.ubuntu(
     fontSize: 18,
-    color: AppColors.greySweet,
+    // color: AppColors.greySweet, //TODO: COLOR-FIX
   );
 
   //* Revisado
@@ -199,7 +199,7 @@ class TextStyles {
   static final buttonGray = GoogleFonts.ubuntu(
     fontSize: 15,
     fontWeight: FontWeight.w400,
-    color: AppColors.grey,
+    // color: AppColors.grey, //TODO: COLOR-FIX
   );
 
   static final buttonBoldPrimary = GoogleFonts.ubuntu(
@@ -215,7 +215,7 @@ class TextStyles {
   static final buttonBoldGray = GoogleFonts.ubuntu(
     fontSize: 15,
     fontWeight: FontWeight.w700,
-    color: AppColors.grey,
+    // color: AppColors.grey, //TODO: COLOR-FIX
   );
   static final buttonBold = GoogleFonts.ubuntu(
     fontSize: 15,
@@ -234,7 +234,7 @@ class TextStyles {
   static final captionShape = GoogleFonts.ubuntu(
     fontSize: 13,
     fontWeight: FontWeight.w400,
-    color: AppColors.shape,
+    // color: AppColors.shape, //TODO: COLOR-FIX
   );
   static final captionBody = GoogleFonts.ubuntu(
     fontSize: 13,
@@ -249,7 +249,7 @@ class TextStyles {
   static final captionBoldShape = GoogleFonts.ubuntu(
     fontSize: 13,
     fontWeight: FontWeight.w600,
-    color: AppColors.shape,
+    // color: AppColors.shape, //TODO: COLOR-FIX
   );
   static final captionBoldBody = GoogleFonts.ubuntu(
     fontSize: 13,
