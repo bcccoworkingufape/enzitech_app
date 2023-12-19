@@ -89,57 +89,13 @@ class _MyAppState extends State<MyApp> {
               debugShowCheckedModeBanner: false,
               themeMode: _settingsViewmodel.themeMode,
               theme: ThemeData(
-                  useMaterial3: true,
-                  // colorScheme: AppColors.lightColorScheme,
-                  colorScheme: ColorScheme.fromSeed(
-                    brightness: Brightness.light,
-                    seedColor: AppColors.primary,
-                    primary: AppColors.primary,
-                    // onPrimary: Colors.red, // Color inside switchs (like active icon) and other things like this
-                    secondary: AppColors.secondary,
-                    tertiary: AppColors.tertiary,
-                    // onPrimaryContainer: Colors
-                    //     .red, // Color inside floating buttons and other things like this
-                    // onSecondaryContainer: Colors.red, // Color inside bottom bar (like active icon) and other things like this
-                    // onSurfaceVariant: Colors
-                    //     .red, // Color inside bottom bar (like inactive icons) and other things like this
-                  )
-                  // brightness: Brightness.dark,
-                  // appBarTheme: const AppBarTheme(
-                  //   iconTheme: IconThemeData(
-                  //     color: AppColors.white,
-                  //   ),
-                  // ),
-                  // primarySwatch: AppColors.materialTheme,
-                  ),
+                useMaterial3: true,
+                colorScheme: AppColors.lightColorScheme,
+              ),
               darkTheme: ThemeData(
-                  useMaterial3: true,
-                  // colorScheme: AppColors.lightColorScheme,
-                  colorScheme: ColorScheme.fromSeed(
-                    brightness: Brightness.dark,
-                    seedColor: AppColors.primary,
-                    primary: AppColors.primary,
-                    // onPrimary: Colors.red, // Color inside switchs (like active icon) and other things like this
-                    secondary: AppColors.secondary,
-                    onSecondary: Colors.purple,
-                    tertiary: AppColors.tertiary,
-                    onTertiary: Colors.purple,
-                    // onSurface: Colors.red,
-                    onBackground: Colors.purple,
-                    onInverseSurface: Colors.purple,
-                    // onPrimaryContainer: Colors.red,
-                    // onSecondaryContainer: Colors.red,
-                    // onSurfaceVariant: Colors.red,
-                    onTertiaryContainer: Colors.purple,
-                  )
-                  // brightness: Brightness.dark,
-                  // appBarTheme: const AppBarTheme(
-                  //   iconTheme: IconThemeData(
-                  //     color: AppColors.white,
-                  //   ),
-                  // ),
-                  // primarySwatch: AppColors.materialTheme,
-                  ),
+                useMaterial3: true,
+                colorScheme: AppColors.darkColorScheme,
+              ),
               initialRoute: Routing.initial,
               onGenerateRoute: Routing.generateRoute,
               localizationsDelegates: const [
