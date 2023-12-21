@@ -291,8 +291,8 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
     var widthMQ = MediaQuery.of(context).size.width;
     var heightMQ = MediaQuery.of(context).size.height;
 
-    return AnimatedBuilder(
-      animation: _experimentsViewmodel,
+    return ListenableBuilder(
+      listenable: _experimentsViewmodel,
       builder: (context, child) {
         return AbsorbPointer(
           absorbing: _experimentsViewmodel.scrollController.hasClients

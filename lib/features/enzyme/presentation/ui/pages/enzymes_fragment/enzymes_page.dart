@@ -200,8 +200,8 @@ class _EnzymesPageState extends State<EnzymesPage> {
   Widget build(BuildContext context) {
     var heightMQ = MediaQuery.of(context).size.height;
 
-    return AnimatedBuilder(
-        animation: _enzymesViewmodel,
+    return ListenableBuilder(
+        listenable: _enzymesViewmodel,
         builder: (context, child) {
           return EZTPullToRefresh(
             key: _refreshIndicatorKey,

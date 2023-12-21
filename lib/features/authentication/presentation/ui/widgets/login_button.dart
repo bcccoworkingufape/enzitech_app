@@ -19,8 +19,8 @@ class LoginButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: loginViewmodel,
+    return ListenableBuilder(
+      listenable: loginViewmodel,
       builder: (context, child) {
         return EZTButton(
           text: 'Entrar',

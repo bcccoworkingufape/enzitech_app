@@ -302,8 +302,8 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-        animation: _experimentDetailsViewmodel,
+    return ListenableBuilder(
+        listenable: _experimentDetailsViewmodel,
         builder: (context, child) {
           return Scaffold(
             appBar: AppBar(

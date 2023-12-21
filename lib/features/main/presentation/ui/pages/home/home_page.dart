@@ -301,19 +301,19 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _homeViewmodel,
+    return ListenableBuilder(
+      listenable: _homeViewmodel,
       builder: (context, child) {
         return Scaffold(
           key: _scaffold,
           appBar: EZTAppBar(homeViewmodel: _homeViewmodel),
-          body: AnimatedBuilder(
-            animation: _homeViewmodel,
+          body: ListenableBuilder(
+            listenable: _homeViewmodel,
             builder: (context, child) {
               if (_homeViewmodel.state == StateEnum.loading) {
                 return Center(
-                  child: AnimatedBuilder(
-                    animation: animationControllerLogo,
+                  child: ListenableBuilder(
+                    listenable: animationControllerLogo,
                     builder: (_, child) {
                       return Transform.rotate(
                         angle: animationControllerLogo.value * 2 * math.pi,

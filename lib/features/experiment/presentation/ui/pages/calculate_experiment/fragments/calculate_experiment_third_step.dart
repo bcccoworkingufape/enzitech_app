@@ -189,8 +189,8 @@ class _CalculateExperimentThirdStepPageState
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _calculateExperimentViewmodel,
+    return ListenableBuilder(
+      listenable: _calculateExperimentViewmodel,
       builder: (context, child) {
         return CalculateExperimentFragmentTemplate(
           titleOfStepIndicator: "Inserir dados no experimento",

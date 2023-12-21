@@ -82,8 +82,8 @@ class _MyAppState extends State<MyApp> {
           currentFocus.focusedChild?.unfocus();
         }
       },
-      child: AnimatedBuilder(
-        animation: _settingsViewmodel,
+      child: ListenableBuilder(
+        listenable: _settingsViewmodel,
         builder: (context, child) {
           return MaterialApp(
             title: 'Enzitech',

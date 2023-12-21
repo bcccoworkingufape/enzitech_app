@@ -290,8 +290,8 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-        animation: _createEnzymeViewmodel,
+    return ListenableBuilder(
+        listenable: _createEnzymeViewmodel,
         builder: (context, child) {
           return Scaffold(
             body: Form(

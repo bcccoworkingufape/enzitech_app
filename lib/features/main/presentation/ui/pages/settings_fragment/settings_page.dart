@@ -86,8 +86,8 @@ class _SettingsPageState extends State<SettingsPage> {
 
     final scaleFactor = MediaQuery.of(context).textScaleFactor;
 
-    return AnimatedBuilder(
-        animation: _settingsViewmodel,
+    return ListenableBuilder(
+        listenable: _settingsViewmodel,
         builder: (context, child) {
           return Scaffold(
             backgroundColor:

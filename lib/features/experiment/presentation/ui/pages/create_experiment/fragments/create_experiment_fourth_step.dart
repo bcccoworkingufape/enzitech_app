@@ -410,8 +410,8 @@ class _CreateExperimentFourthStepPageState
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-        animation: _createExperimentViewmodel,
+    return ListenableBuilder(
+        listenable: _createExperimentViewmodel,
         builder: (context, child) {
           return CreateExperimentFragmentTemplate(
             titleOfStepIndicator: "Cadastre um novo experimento",

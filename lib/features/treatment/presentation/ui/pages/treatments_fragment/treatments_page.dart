@@ -189,8 +189,8 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
   Widget build(BuildContext context) {
     var heightMQ = MediaQuery.of(context).size.height;
 
-    return AnimatedBuilder(
-        animation: _treatmentsViewmodel,
+    return ListenableBuilder(
+        listenable: _treatmentsViewmodel,
         builder: (context, child) {
           return EZTPullToRefresh(
             key: _refreshIndicatorKey,

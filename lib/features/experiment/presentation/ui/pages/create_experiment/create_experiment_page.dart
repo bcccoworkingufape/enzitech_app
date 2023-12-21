@@ -87,8 +87,8 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
             ? false
             : true;
       },
-      child: AnimatedBuilder(
-        animation: _createExperimentViewmodel,
+      child: ListenableBuilder(
+        listenable: _createExperimentViewmodel,
         builder: (context, child) {
           return Scaffold(
             body: Form(
