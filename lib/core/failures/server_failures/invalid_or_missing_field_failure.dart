@@ -3,6 +3,5 @@ import '../failure.dart';
 
 // SC-400
 class InvalidOrMissingFieldFailure extends Failure {
-  InvalidOrMissingFieldFailure({String message = "", dynamic key = ""})
-      : super(message: message, key: key);
+  InvalidOrMissingFieldFailure({super.message, super.key});
 }

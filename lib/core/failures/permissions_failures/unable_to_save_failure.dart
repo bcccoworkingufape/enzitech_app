@@ -2,6 +2,5 @@
 import '../failures.dart';
 
 class UnableToSaveFailure extends Failure {
-  UnableToSaveFailure({String message = "", dynamic key = ""})
-      : super(message: message, key: key);
+  UnableToSaveFailure({super.message, super.key});
 }

@@ -37,11 +37,8 @@ extension ExperimentDto on ExperimentEntity {
       'progress': progress,
       'createdAt': createdAt.toString(),
       'updatedAt': updatedAt.toString(),
-      'processes': treatments != null
-          ? treatments!.map((x) => x.toJson()).toList()
-          : null,
-      'enzymes':
-          enzymes != null ? enzymes!.map((x) => x.toJson()).toList() : null,
+      'processes': treatments?.map((x) => x.toJson()).toList(),
+      'enzymes': enzymes?.map((x) => x.toJson()).toList(),
     };
   }
 }

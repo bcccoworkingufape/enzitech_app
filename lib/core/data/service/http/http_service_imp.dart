@@ -90,8 +90,8 @@ class DioHttpServiceImp implements HttpService {
       switch (e.runtimeType) {
         case NoNetworkFailure:
           rethrow;
-        case DioError:
-          var dioError = (e as DioError);
+        case DioException:
+          var dioError = (e as DioException);
           var data = dioError.response?.data;
           if (data is Map<String, dynamic> && data.containsKey('data')) {
             var message = "";

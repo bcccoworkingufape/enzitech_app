@@ -16,7 +16,7 @@ import '../../../viewmodel/create_treatment_viewmodel.dart';
 import '../../../viewmodel/treatments_viewmodel.dart';
 
 class CreateTreatmentPage extends StatefulWidget {
-  const CreateTreatmentPage({Key? key}) : super(key: key);
+  const CreateTreatmentPage({super.key});
 
   @override
   State<CreateTreatmentPage> createState() => _CreateTreatmentPageState();

@@ -2,6 +2,5 @@
 import '../failure.dart';
 
 class NoResultQueryFailure extends Failure {
-  NoResultQueryFailure({String message = "", dynamic key = ""})
-      : super(message: message, key: key);
+  NoResultQueryFailure({super.message, super.key});
 }

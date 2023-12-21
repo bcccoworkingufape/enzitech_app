@@ -7,11 +7,11 @@ import '../../../../../shared/utils/utils.dart';
 
 class TreatmentCard extends StatefulWidget {
   const TreatmentCard({
-    Key? key,
+    super.key,
     required this.name,
     required this.createdAt,
     required this.description,
-  }) : super(key: key);
+  });
 
   final String name;
   final DateTime createdAt;

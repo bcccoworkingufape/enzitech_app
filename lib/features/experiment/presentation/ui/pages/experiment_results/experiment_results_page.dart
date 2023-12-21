@@ -22,8 +22,8 @@ import '../../../viewmodel/experiment_results_viewmodel.dart';
 
 class ExperimentResultsPage extends StatefulWidget {
   const ExperimentResultsPage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<ExperimentResultsPage> createState() => _ExperimentResultsPageState();

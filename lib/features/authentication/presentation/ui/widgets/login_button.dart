@@ -14,8 +14,7 @@ class LoginButton extends StatelessWidget {
   final GlobalKey<FormState> formKey;
   final LoginViewmodel loginViewmodel;
   const LoginButton(
-      {Key? key, required this.formKey, required this.loginViewmodel})
-      : super(key: key);
+      {super.key, required this.formKey, required this.loginViewmodel});
 
   @override
   Widget build(BuildContext context) {

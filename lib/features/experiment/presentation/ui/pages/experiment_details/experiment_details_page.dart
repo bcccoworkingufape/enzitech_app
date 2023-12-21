@@ -21,9 +21,9 @@ import '../../widgets/experiment_exclusion_dialog.dart';
 
 class ExperimentDetailsPage extends StatefulWidget {
   const ExperimentDetailsPage({
-    Key? key,
+    super.key,
     // required this.resumedExperiment,
-  }) : super(key: key);
+  });
 
   // final ExperimentEntity resumedExperiment;
 

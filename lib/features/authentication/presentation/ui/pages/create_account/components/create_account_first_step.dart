@@ -12,11 +12,11 @@ import '../../../../../../../shared/validator/validator.dart';
 
 class CreateAccountFirstStep extends StatefulWidget {
   const CreateAccountFirstStep({
-    Key? key,
+    super.key,
     required this.pageController,
     required this.formKey,
     required this.userDataCache,
-  }) : super(key: key);
+  });
 
   final PageController pageController;
   final GlobalKey<FormState> formKey;

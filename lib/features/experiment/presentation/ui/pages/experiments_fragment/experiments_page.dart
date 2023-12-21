@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:toggle_switch/toggle_switch.dart';
 
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
@@ -19,8 +18,8 @@ import '../../widgets/experiment_filter_dialog.dart';
 
 class ExperimentsPage extends StatefulWidget {
   const ExperimentsPage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<ExperimentsPage> createState() => _ExperimentsPageState();
@@ -213,7 +212,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                             PhosphorIcons.trash(PhosphorIconsStyle.light),
                             color: Colors.white,
                           ),
-                          Text(
+                          const Text(
                             'Excluir',
                             style: TextStyle(color: Colors.white),
                             textAlign: TextAlign.right,
@@ -288,7 +287,6 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
 
   @override
   Widget build(BuildContext context) {
-    var widthMQ = MediaQuery.of(context).size.width;
     var heightMQ = MediaQuery.of(context).size.height;
 
     return ListenableBuilder(
@@ -329,12 +327,12 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                           segments: <ButtonSegment<int>>[
                             ButtonSegment<int>(
                               value: 0,
-                              label: Text('Em andamento'),
+                              label: const Text('Em andamento'),
                               icon: Icon(PhosphorIcons.clockClockwise()),
                             ),
                             ButtonSegment<int>(
                               value: 1,
-                              label: Text('Concluído'),
+                              label: const Text('Concluído'),
                               icon: Icon(PhosphorIcons.checks()),
                             ),
                           ],

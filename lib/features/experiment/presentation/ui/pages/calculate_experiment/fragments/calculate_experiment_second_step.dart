@@ -12,8 +12,8 @@ import '../calculate_experiment_fragment_template.dart';
 
 class CalculateExperimentSecondStepPage extends StatefulWidget {
   const CalculateExperimentSecondStepPage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<CalculateExperimentSecondStepPage> createState() =>
@@ -216,7 +216,7 @@ class _CalculateExperimentSecondStepPageState
           text: 'Calcular',
           loading: _calculateExperimentViewmodel.state == StateEnum.loading,
           onPressed: () async {
-            print(_calculateExperimentViewmodel.listOfExperimentData);
+            // print(_calculateExperimentViewmodel.listOfExperimentData);
             if (_calculateExperimentViewmodel.formKey.currentState != null) {
               _calculateExperimentViewmodel.formKey.currentState!.save();
 

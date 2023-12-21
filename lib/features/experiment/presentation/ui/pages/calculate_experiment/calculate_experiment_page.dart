@@ -16,9 +16,9 @@ import 'fragments/calculate_experiment_third_step.dart';
 
 class CalculateExperimentPage extends StatefulWidget {
   const CalculateExperimentPage({
-    Key? key,
+    super.key,
     required this.experiment,
-  }) : super(key: key);
+  });
 
   final ExperimentEntity experiment;
 
@@ -57,13 +57,12 @@ class _CalculateExperimentPageState extends State<CalculateExperimentPage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    // TODO: Verify PopScope Migration
+    return PopScope(
+      canPop:
+          _calculateExperimentViewmodel.pageController.page! > 0 ? false : true,
+      onPopInvoked: (didPop) {
         _calculateExperimentViewmodel.onBack(mounted, context);
-
-        return _calculateExperimentViewmodel.pageController.page! > 0
-            ? false
-            : true;
       },
       child: Scaffold(
         key: _scaffoldKey,

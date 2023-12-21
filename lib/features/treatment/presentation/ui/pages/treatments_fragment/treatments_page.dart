@@ -15,8 +15,8 @@ import '../../widgets/treatment_card.dart';
 
 class TreatmentsPage extends StatefulWidget {
   const TreatmentsPage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<TreatmentsPage> createState() => _TreatmentsPageState();

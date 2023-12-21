@@ -59,7 +59,7 @@ class EZTTextField extends StatefulWidget {
   final bool disableSuffixIcon;
 
   const EZTTextField({
-    Key? key,
+    super.key,
     required this.eztTextFieldType,
     this.wdKey,
     this.fieldValidator,
@@ -97,7 +97,7 @@ class EZTTextField extends StatefulWidget {
     this.showSuffixValidationIcon = false,
     this.readOnly = false,
     this.disableSuffixIcon = false,
-  }) : super(key: key);
+  });
 
   @override
   State<EZTTextField> createState() => _EZTTextFieldState();
@@ -162,7 +162,7 @@ class _EZTTextFieldState extends State<EZTTextField> {
   }
 
   InputDecoration get _underlineInputDecoration {
-    final inputBorder = UnderlineInputBorder(
+    const inputBorder = UnderlineInputBorder(
       borderSide: BorderSide(
           //TODO: COLOR-FIX
           // color: (_validationSuccess ?? false)
@@ -252,7 +252,7 @@ class _EZTTextFieldState extends State<EZTTextField> {
   }
 
   InputDecoration get _outlineInputDecoration {
-    final outlineBorder = OutlineInputBorder(
+    const outlineBorder = OutlineInputBorder(
       borderSide: BorderSide(
           //TODO: COLOR-FIX
           // color: (_validationSuccess ?? false)
@@ -261,7 +261,7 @@ class _EZTTextFieldState extends State<EZTTextField> {
           //         : AppColors.lines
           //     : AppColors.lines,
           ),
-      borderRadius: const BorderRadius.all(
+      borderRadius: BorderRadius.all(
         Radius.circular(4),
       ),
     );

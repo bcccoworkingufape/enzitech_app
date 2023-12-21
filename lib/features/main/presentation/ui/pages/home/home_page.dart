@@ -30,7 +30,7 @@ import '../../../viewmodel/settings_viewmodel.dart';
 import '../settings_fragment/settings_page.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -230,7 +230,7 @@ class _HomePageState extends State<HomePage>
             Routing.createExperiment,
           );
         },
-        label: Text(
+        label: const Text(
           "Cadastrar\nexperimento",
           // style: TextStyles.buttonBackground,
         ),
@@ -250,7 +250,7 @@ class _HomePageState extends State<HomePage>
             Routing.createTreatment,
           );
         },
-        label: Text(
+        label: const Text(
           "Cadastrar\ntratamento",
           // style: TextStyles.buttonBackground,
         ),
@@ -273,7 +273,7 @@ class _HomePageState extends State<HomePage>
               Routing.createEnzyme,
             );
           },
-          label: Text(
+          label: const Text(
             "Cadastrar\nenzima",
             // style: TextStyles.buttonBackground,
           ),

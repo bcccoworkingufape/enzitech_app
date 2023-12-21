@@ -19,8 +19,8 @@ import 'fragments/create_experiment_third_step.dart';
 
 class CreateExperimentPage extends StatefulWidget {
   const CreateExperimentPage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<CreateExperimentPage> createState() => _CreateExperimentPageState();
@@ -80,12 +80,12 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    // TODO: Verify PopScope Migration
+    return PopScope(
+      canPop:
+          _createExperimentViewmodel.pageController.page! > 0 ? false : true,
+      onPopInvoked: (didPop) {
         _createExperimentViewmodel.onBack(mounted, context);
-        return _createExperimentViewmodel.pageController.page! > 0
-            ? false
-            : true;
       },
       child: ListenableBuilder(
         listenable: _createExperimentViewmodel,

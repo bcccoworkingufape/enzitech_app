@@ -16,7 +16,7 @@ import '../../../viewmodel/settings_viewmodel.dart';
 import '../../../viewmodel/splash_viewmodel.dart';
 
 class SplashPage extends StatefulWidget {
-  const SplashPage({Key? key}) : super(key: key);
+  const SplashPage({super.key});
 
   @override
   State<SplashPage> createState() => _SplashPageState();

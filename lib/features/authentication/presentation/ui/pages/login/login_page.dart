@@ -17,7 +17,7 @@ import '../../../viewmodel/login_viewmodel.dart';
 import '../../widgets/login_button.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({super.key});
 
   @override
   LoginPageState createState() => LoginPageState();

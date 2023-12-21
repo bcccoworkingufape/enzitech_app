@@ -1,9 +1,6 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-// 🌎 Project imports:
-import '../themes/themes.dart';
-
 enum EZTSnackBarType {
   regular,
   success,

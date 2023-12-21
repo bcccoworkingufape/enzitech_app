@@ -17,8 +17,8 @@ import '../../widgets/enzymes_summary.dart';
 
 class EnzymesPage extends StatefulWidget {
   const EnzymesPage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<EnzymesPage> createState() => _EnzymesPageState();

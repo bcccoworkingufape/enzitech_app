@@ -2,6 +2,5 @@
 import '../failure.dart';
 
 class InvalidEmailFailure extends Failure {
-  InvalidEmailFailure({String message = "", dynamic key = ""})
-      : super(message: message, key: key);
+  InvalidEmailFailure({super.message, super.key});
 }

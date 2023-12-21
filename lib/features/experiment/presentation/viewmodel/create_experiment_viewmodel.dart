@@ -11,7 +11,7 @@ import '../../domain/usecases/create_experiment/create_experiment_usecase.dart';
 import '../dto/create_experiment_dto.dart';
 
 class CreateExperimentViewmodel extends ChangeNotifier {
-  CreateExperimentUseCase _createExperimentUseCase;
+  final CreateExperimentUseCase _createExperimentUseCase;
 
   CreateExperimentViewmodel(this._createExperimentUseCase);
 

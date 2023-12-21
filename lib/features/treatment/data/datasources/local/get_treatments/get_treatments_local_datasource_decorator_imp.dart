@@ -9,7 +9,6 @@ import '../../../../../../core/domain/service/key_value/key_value_service.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../domain/entities/treatment_entity.dart';
 import '../../../dto/treatment_dto.dart';
-import '../../get_treatments_datasource.dart';
 import 'get_treatments_local_datasource_decorator.dart';
 
 class GetTreatmentsDataSourceDecoratorImp
@@ -17,8 +16,7 @@ class GetTreatmentsDataSourceDecoratorImp
   final KeyValueService _keyValueService;
 
   GetTreatmentsDataSourceDecoratorImp(
-      GetTreatmentsDataSource getTreatmentsDataSource, this._keyValueService)
-      : super(getTreatmentsDataSource);
+      super.getTreatmentsDataSource, this._keyValueService);
 
   @override
   Future<Either<Failure, List<TreatmentEntity>>> call() async {

@@ -5,7 +5,7 @@ class EZTAutoScroll extends StatefulWidget {
   const EZTAutoScroll({
     required this.child,
     required this.scrollDirection,
-    Key? key,
+    super.key,
     this.delay = const Duration(seconds: 1),
     this.duration = const Duration(seconds: 2),
     this.gap = 25,
@@ -13,7 +13,7 @@ class EZTAutoScroll extends StatefulWidget {
     this.duplicateChild = 25,
     this.enableScrollInput = true,
     this.delayAfterScrollInput = const Duration(seconds: 1),
-  }) : super(key: key);
+  });
 
   /// Widget to display in loop
   ///

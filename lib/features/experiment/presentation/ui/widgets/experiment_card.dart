@@ -14,10 +14,10 @@ import '../../viewmodel/experiment_details_viewmodel.dart';
 
 class ExperimentCard extends StatefulWidget {
   const ExperimentCard({
-    Key? key,
+    super.key,
     required this.experiment,
     this.indexOfExperiment,
-  }) : super(key: key);
+  });
 
   final ExperimentEntity experiment;
   final int? indexOfExperiment;

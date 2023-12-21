@@ -25,8 +25,8 @@ class EZTPullToRefresh extends StatefulWidget {
     this.customKey,
     this.showChildOpacityTransition = false,
     this.springAnimationDurationInMilliseconds = 500,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<EZTPullToRefresh> createState() => _EZTPullToRefreshState();

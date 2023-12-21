@@ -11,10 +11,10 @@ import '../../viewmodel/enzymes_viewmodel.dart';
 
 class EnzymesSummary extends StatefulWidget {
   const EnzymesSummary({
-    Key? key,
+    super.key,
     // required this.enzymes,
     // this.indexOfExperiment,
-  }) : super(key: key);
+  });
 
   // final List<EnzymeModel> enzymes;
   // final int? indexOfExperiment;

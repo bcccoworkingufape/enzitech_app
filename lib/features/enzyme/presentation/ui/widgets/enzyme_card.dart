@@ -9,9 +9,9 @@ import '../../../../enzyme/domain/entities/enzyme_entity.dart';
 
 class EnzymeCard extends StatefulWidget {
   const EnzymeCard({
-    Key? key,
+    super.key,
     required this.enzyme,
-  }) : super(key: key);
+  });
 
   final EnzymeEntity enzyme;
 

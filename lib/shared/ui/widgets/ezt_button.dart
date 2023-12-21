@@ -32,7 +32,7 @@ class EZTButton extends StatefulWidget {
   final EdgeInsetsGeometry? padding;
 
   const EZTButton({
-    Key? key,
+    super.key,
     this.eztButtonType = EZTButtonType.regular,
     this.enabled = true,
     this.loading = false,
@@ -49,7 +49,7 @@ class EZTButton extends StatefulWidget {
     this.disabledButtonColor,
     this.textAlign,
     this.padding,
-  }) : super(key: key);
+  });
 
   @override
   State<EZTButton> createState() => _EZTButtonState();

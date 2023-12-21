@@ -15,8 +15,8 @@ import '../calculate_experiment_fragment_template.dart';
 
 class CalculateExperimentThirdStepPage extends StatefulWidget {
   const CalculateExperimentThirdStepPage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<CalculateExperimentThirdStepPage> createState() =>
@@ -73,7 +73,7 @@ class _CalculateExperimentThirdStepPageState
 
   TableRow _buildTableRow(num result, int iteration) {
     return TableRow(
-      decoration: UnderlineTabIndicator(
+      decoration: const UnderlineTabIndicator(
           borderSide: BorderSide(
               // color: AppColors.greyLight.withOpacity(0.25), //TODO: COLOR-FIX
               )),

@@ -14,8 +14,8 @@ import '../create_experiment_fragment_template.dart';
 
 class CreateExperimentFirstStepPage extends StatefulWidget {
   const CreateExperimentFirstStepPage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<CreateExperimentFirstStepPage> createState() =>

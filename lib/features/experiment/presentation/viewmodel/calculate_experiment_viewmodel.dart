@@ -261,7 +261,7 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
           controller: sampleFieldController,
           onChanged: (value) {
             _validateFields(value, i.toDouble(), "sample");
-            print(value);
+            // print(value);
           },
           fieldValidator: fieldValidator,
           inputFormatters: Constants.enzymeDecimalInputFormatters,
@@ -284,7 +284,7 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
           controller: whiteSampleFieldController,
           onChanged: (value) {
             _validateFields(value, i.toDouble(), "whiteSample");
-            print(value);
+            // print(value);
           },
           fieldValidator: fieldValidator,
           inputFormatters: Constants.enzymeDecimalInputFormatters,
@@ -348,7 +348,7 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
       // }
     }
 
-    print(list);
+    // print(list);
 
     setListOfNumberDifferencesDTO(list);
   }

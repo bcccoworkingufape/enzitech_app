@@ -268,12 +268,12 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
               .create()
               // The created directory is returned as a Future.
               .then((Directory directory) {
-            print('${directory.path} CRIADO!');
+            // print('${directory.path} CRIADO!');
           });
         }
       }
     } catch (err, stack) {
-      print("Cannot get download folder path");
+      // print("Cannot get download folder path");
     }
 
     setSavedPath(directory?.path ?? 'seus arquivos');

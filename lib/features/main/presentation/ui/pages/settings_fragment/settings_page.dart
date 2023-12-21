@@ -28,8 +28,8 @@ import 'fragments/faq_bs.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<SettingsPage> createState() => _SettingsPageState();
@@ -84,7 +84,7 @@ class _SettingsPageState extends State<SettingsPage> {
       fontWeight: FontWeight.w400,
     );
 
-    final scaleFactor = MediaQuery.of(context).textScaleFactor;
+    final scaleFactor = MediaQuery.of(context).textScaler;
 
     return ListenableBuilder(
         listenable: _settingsViewmodel,
@@ -467,7 +467,8 @@ class _SettingsPageState extends State<SettingsPage> {
                                     defaultTargetPlatform == TargetPlatform.iOS
                                         ? Icon(
                                             CupertinoIcons.chevron_forward,
-                                            size: 18 * scaleFactor,
+                                            size: scaleFactor.scale(
+                                                18), // TODO: Verify this fix (was a multiplication when textScale wasnt deprecated)
                                             // color: AppColors.danger, //TODO: COLOR-FIX
                                           )
                                         : null,

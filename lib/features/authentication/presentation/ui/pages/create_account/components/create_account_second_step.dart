@@ -14,11 +14,11 @@ import '../../../../viewmodel/create_account_viewmodel.dart';
 
 class CreateAccountSecondStep extends StatefulWidget {
   const CreateAccountSecondStep({
-    Key? key,
+    super.key,
     required this.pageController,
     required this.formKey,
     required this.userDataCache,
-  }) : super(key: key);
+  });
 
   final PageController pageController;
   final GlobalKey<FormState> formKey;

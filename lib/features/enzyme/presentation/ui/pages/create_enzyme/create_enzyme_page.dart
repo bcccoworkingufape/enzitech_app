@@ -16,7 +16,7 @@ import '../../../viewmodel/create_enzyme_viewmodel.dart';
 import '../../../viewmodel/enzymes_viewmodel.dart';
 
 class CreateEnzymePage extends StatefulWidget {
-  const CreateEnzymePage({Key? key}) : super(key: key);
+  const CreateEnzymePage({super.key});
 
   @override
   State<CreateEnzymePage> createState() => _CreateEnzymePageState();

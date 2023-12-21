@@ -9,7 +9,6 @@ import '../../../../../../core/domain/service/key_value/key_value_service.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../domain/entities/experiment_pagination_entity.dart';
 import '../../../dto/experiment_pagination_dto.dart';
-import '../../get_experiments_datasource.dart';
 import 'get_experiments_local_datasource_decorator.dart';
 
 class GetExperimentsDataSourceDecoratorImp
@@ -17,8 +16,7 @@ class GetExperimentsDataSourceDecoratorImp
   final KeyValueService _keyValueService;
 
   GetExperimentsDataSourceDecoratorImp(
-      GetExperimentsDataSource getExperimentsDataSource, this._keyValueService)
-      : super(getExperimentsDataSource);
+      super.getExperimentsDataSource, this._keyValueService);
 
   @override
   Future<Either<Failure, ExperimentPaginationEntity>> call(
