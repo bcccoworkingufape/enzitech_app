@@ -1,7 +1,10 @@
-import 'package:enzitech_app/core/domain/entities/http_driver_response.dart';
-import 'package:enzitech_app/core/domain/service/http/http_service.dart';
+// 📦 Package imports:
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+
+// 🌎 Project imports:
+import 'package:enzitech_app/core/domain/entities/http_driver_response.dart';
+import 'package:enzitech_app/core/domain/service/http/http_service.dart';
 
 class MockDioClient extends Mock implements HttpService {}
 

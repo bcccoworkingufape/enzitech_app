@@ -1,9 +1,11 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
+
 // 📦 Package imports:
+import 'package:get_it/get_it.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
+// 🌎 Project imports:
 import '../../../../../core/routing/routing.dart';
 import '../../../../../shared/ui/ui.dart';
 import '../../../../../shared/utils/utils.dart';

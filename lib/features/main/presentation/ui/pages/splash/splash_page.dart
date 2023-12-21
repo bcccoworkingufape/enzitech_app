@@ -11,8 +11,8 @@ import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../core/routing/routing.dart';
 import '../../../../../../shared/ui/ui.dart';
-import '../../../viewmodel/settings_viewmodel.dart';
 import '../../../viewmodel/home_viewmodel.dart';
+import '../../../viewmodel/settings_viewmodel.dart';
 import '../../../viewmodel/splash_viewmodel.dart';
 
 class SplashPage extends StatefulWidget {

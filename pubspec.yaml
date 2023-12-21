@@ -44,15 +44,15 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_svg: ^2.0.9
-  flutter_svg_provider: ^1.0.3
+  flutter_svg_provider: ^1.0.7
   form_builder_validators: ^9.1.0
   get_it: ^7.2.0
-  google_fonts: ^4.0.3
+  google_fonts: ^6.1.0
   group_button: ^5.2.2
   internet_connection_checker: ^1.0.0+1
   intl: ^0.18.1
   media_scanner: ^2.1.0
-  package_info_plus: ^4.2.0
+  package_info_plus: ^5.0.1
   path_provider: ^2.0.14
   percent_indicator: ^4.2.2
   permission_handler: ^11.1.0
@@ -65,7 +65,7 @@ dependencies:
   url_launcher: ^6.1.9
 
 dev_dependencies:
-  appwrite: ^11.0.1
+  # appwrite: ^11.0.1
   build_runner: ^2.3.3
   flutter_lints: ^3.0.1
   flutter_native_splash: ^2.2.16

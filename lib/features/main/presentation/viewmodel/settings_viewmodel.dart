@@ -1,9 +1,11 @@
-// 🐦 Flutter imports:
+// 🎯 Dart imports:
 import 'dart:io' as io;
 
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
+
 // 📦 Package imports:
+import 'package:get_it/get_it.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 

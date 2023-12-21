@@ -11,8 +11,8 @@ import '../../../features/experiment/presentation/viewmodel/create_experiment_vi
 import '../../../features/experiment/presentation/viewmodel/experiment_details_viewmodel.dart';
 import '../../../features/experiment/presentation/viewmodel/experiment_results_viewmodel.dart';
 import '../../../features/experiment/presentation/viewmodel/experiments_viewmodel.dart';
-import '../../../features/main/presentation/viewmodel/settings_viewmodel.dart';
 import '../../../features/main/presentation/viewmodel/home_viewmodel.dart';
+import '../../../features/main/presentation/viewmodel/settings_viewmodel.dart';
 import '../../../features/main/presentation/viewmodel/splash_viewmodel.dart';
 import '../../../features/treatment/presentation/viewmodel/create_treatment_viewmodel.dart';
 import '../../../features/treatment/presentation/viewmodel/treatments_viewmodel.dart';
