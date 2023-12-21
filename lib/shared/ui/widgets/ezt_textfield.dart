@@ -136,12 +136,12 @@ class _EZTTextFieldState extends State<EZTTextField> {
   Widget get _passwordSuffixIcon {
     final Widget iconToUse;
     if (_passwordVisibile) {
-      iconToUse = const Icon(
-        PhosphorIcons.eye,
+      iconToUse = Icon(
+        PhosphorIcons.eye(),
       );
     } else {
-      iconToUse = const Icon(
-        PhosphorIcons.eyeClosed,
+      iconToUse = Icon(
+        PhosphorIcons.eyeClosed(),
       );
     }
 
@@ -221,9 +221,9 @@ class _EZTTextFieldState extends State<EZTTextField> {
     }
 
     return _validationSuccess!
-        ? const Icon(PhosphorIcons.check)
-        : const Icon(
-            PhosphorIcons.warningCircle,
+        ? Icon(PhosphorIcons.check())
+        : Icon(
+            PhosphorIcons.warningCircle(),
             // color: AppColors.danger, //TODO: COLOR-FIX
           );
   }

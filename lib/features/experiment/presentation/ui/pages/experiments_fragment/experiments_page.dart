@@ -208,9 +208,9 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                       padding: const EdgeInsets.all(15.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
-                        children: const [
+                        children: [
                           Icon(
-                            PhosphorIcons.trashLight,
+                            PhosphorIcons.trash(PhosphorIconsStyle.light),
                             color: Colors.white,
                           ),
                           Text(
@@ -326,16 +326,16 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                         SegmentedButton(
                           emptySelectionAllowed: false,
                           showSelectedIcon: false,
-                          segments: const <ButtonSegment<int>>[
+                          segments: <ButtonSegment<int>>[
                             ButtonSegment<int>(
                               value: 0,
                               label: Text('Em andamento'),
-                              icon: Icon(PhosphorIcons.clockClockwise),
+                              icon: Icon(PhosphorIcons.clockClockwise()),
                             ),
                             ButtonSegment<int>(
                               value: 1,
                               label: Text('Concluído'),
-                              icon: Icon(PhosphorIcons.checks),
+                              icon: Icon(PhosphorIcons.checks()),
                             ),
                           ],
                           selected: <int>{selectedButtonSegment},
@@ -399,8 +399,9 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                         IconButton(
                             icon: Icon(
                               _experimentsViewmodel.anyFilterIsEnabled()
-                                  ? PhosphorIcons.funnelFill
-                                  : PhosphorIcons.funnel,
+                                  ? PhosphorIcons.funnel(
+                                      PhosphorIconsStyle.fill)
+                                  : PhosphorIcons.funnel(),
                               // color: AppColors.primary,
                             ),
                             onPressed: _showFiltersDialog),

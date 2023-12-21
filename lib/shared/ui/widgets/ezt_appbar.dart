@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 // 🌎 Project imports:
 import '../../../features/main/presentation/viewmodel/home_viewmodel.dart';
+import '../../../features/main/presentation/viewmodel/settings_viewmodel.dart';
 import '../../extensions/dark_mode_extensions.dart';
 import '../ui.dart';
 import 'ezt_blink.dart';
@@ -39,44 +41,51 @@ class _EZTAppBarState extends State<EZTAppBar> {
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      title: SvgPicture.asset(
-        AppSvgs.logo,
-        color: context.isDarkMode ? Colors.white : AppColors.primary,
-        fit: BoxFit.contain,
-        alignment: Alignment.center,
-      ),
-      actions: [
-        !widget.homeViewmodel.hasInternetConnection
-            ? Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: GestureDetector(
-                  onTap: () => noInternet(context),
-                  child: const EZTBlink(
-                    interval: 750,
-                    children: <Widget>[
-                      Icon(
-                        PhosphorIcons.cloudSlash,
-                        color: Colors.white,
+    return ListenableBuilder(
+      listenable: GetIt.I.get<SettingsViewmodel>(),
+      builder: (context, _) {
+        return AppBar(
+          title: SvgPicture.asset(
+            AppSvgs.logo,
+            colorFilter: context.isLightModeOrSystemisLightBrightness
+                ? const ColorFilter.mode(AppColors.primary, BlendMode.srcIn)
+                : const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+            fit: BoxFit.contain,
+            alignment: Alignment.center,
+          ),
+          actions: [
+            !widget.homeViewmodel.hasInternetConnection
+                ? Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: GestureDetector(
+                      onTap: () => noInternet(context),
+                      child: EZTBlink(
+                        interval: 750,
+                        children: <Widget>[
+                          Icon(
+                            PhosphorIcons.cloudSlash(),
+                            color: Colors.white,
+                          ),
+                          // Icon(
+                          //   PhosphorIcons.wifiSlash,
+                          //   color: Colors.red[200],
+                          // ),
+                          Icon(
+                            PhosphorIcons.cloudSlash(),
+                            color: Colors.red,
+                          ),
+                          // Icon(
+                          //   PhosphorIcons.wifiSlash,
+                          //   color: Colors.red[900],
+                          // ),
+                        ],
                       ),
-                      // Icon(
-                      //   PhosphorIcons.wifiSlash,
-                      //   color: Colors.red[200],
-                      // ),
-                      Icon(
-                        PhosphorIcons.cloudSlash,
-                        color: Colors.red,
-                      ),
-                      // Icon(
-                      //   PhosphorIcons.wifiSlash,
-                      //   color: Colors.red[900],
-                      // ),
-                    ],
-                  ),
-                ),
-              )
-            : Container(),
-      ],
+                    ),
+                  )
+                : Container(),
+          ],
+        );
+      },
     );
   }
 }

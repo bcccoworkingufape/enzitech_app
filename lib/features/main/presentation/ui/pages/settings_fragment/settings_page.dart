@@ -118,8 +118,8 @@ class _SettingsPageState extends State<SettingsPage> {
                             title: const Text('Informações'),
                             tiles: [
                               SettingsTile.navigation(
-                                leading: const Icon(
-                                  PhosphorIcons.info,
+                                leading: Icon(
+                                  PhosphorIcons.info(),
                                 ),
                                 title: const Text('Sobre o App'),
                                 onPressed: (_) => showModalBottomSheet(
@@ -143,8 +143,8 @@ class _SettingsPageState extends State<SettingsPage> {
                                 ),
                               ),
                               SettingsTile.navigation(
-                                leading: const Icon(
-                                  PhosphorIcons.question,
+                                leading: Icon(
+                                  PhosphorIcons.question(),
                                 ),
                                 title: const Text('Perguntas frequentes'),
                                 onPressed: (_) => showModalBottomSheet(
@@ -174,8 +174,8 @@ class _SettingsPageState extends State<SettingsPage> {
                             title: const Text('Dados do usuário'),
                             tiles: <SettingsTile>[
                               SettingsTile(
-                                leading: const Icon(
-                                  PhosphorIcons.user,
+                                leading: Icon(
+                                  PhosphorIcons.user(),
                                 ),
                                 title:
                                     defaultTargetPlatform == TargetPlatform.iOS
@@ -204,8 +204,8 @@ class _SettingsPageState extends State<SettingsPage> {
                                           ),
                               ),
                               SettingsTile(
-                                leading: const Icon(
-                                  PhosphorIcons.at,
+                                leading: Icon(
+                                  PhosphorIcons.at(),
                                 ),
                                 title:
                                     defaultTargetPlatform == TargetPlatform.iOS
@@ -234,8 +234,8 @@ class _SettingsPageState extends State<SettingsPage> {
                                           ),
                               ),
                               SettingsTile(
-                                leading: const Icon(
-                                  PhosphorIcons.identificationBadge,
+                                leading: Icon(
+                                  PhosphorIcons.identificationBadge(),
                                 ),
                                 title:
                                     defaultTargetPlatform == TargetPlatform.iOS
@@ -282,14 +282,14 @@ class _SettingsPageState extends State<SettingsPage> {
                                     .enableExcludeConfirmation,
                                 onToggle: (value) => _settingsViewmodel
                                     .setEnableExcludeConfirmation(value),
-                                leading: const Icon(
-                                  PhosphorIcons.trash,
+                                leading: Icon(
+                                  PhosphorIcons.trash(),
                                 ),
                                 title: const Text('Confirmação de exclusão'),
                               ),
                               SettingsTile(
-                                leading: const Icon(
-                                  PhosphorIcons.paintRoller,
+                                leading: Icon(
+                                  PhosphorIcons.paintRoller(),
                                 ),
                                 title: const Text(''),
                                 description: Row(
@@ -307,16 +307,17 @@ class _SettingsPageState extends State<SettingsPage> {
                                               value: ThemeMode.system,
                                               label: const Text('Sistema'),
                                               icon: Icon(Platform.isIOS
-                                                  ? PhosphorIcons.appleLogo
-                                                  : PhosphorIcons.androidLogo)),
-                                          const ButtonSegment<ThemeMode>(
+                                                  ? PhosphorIcons.appleLogo()
+                                                  : PhosphorIcons
+                                                      .androidLogo())),
+                                          ButtonSegment<ThemeMode>(
                                               value: ThemeMode.light,
-                                              label: Text('Claro'),
-                                              icon: Icon(PhosphorIcons.sun)),
-                                          const ButtonSegment<ThemeMode>(
+                                              label: const Text('Claro'),
+                                              icon: Icon(PhosphorIcons.sun())),
+                                          ButtonSegment<ThemeMode>(
                                               value: ThemeMode.dark,
-                                              label: Text('Escuro'),
-                                              icon: Icon(PhosphorIcons.moon)),
+                                              label: const Text('Escuro'),
+                                              icon: Icon(PhosphorIcons.moon())),
                                         ],
                                         selected: <ThemeMode>{
                                           _settingsViewmodel.themeMode
@@ -343,8 +344,8 @@ class _SettingsPageState extends State<SettingsPage> {
                             title: const Text('App'),
                             tiles: [
                               SettingsTile(
-                                leading: const Icon(
-                                  PhosphorIcons.files,
+                                leading: Icon(
+                                  PhosphorIcons.files(),
                                 ),
                                 title:
                                     defaultTargetPlatform == TargetPlatform.iOS
@@ -391,8 +392,8 @@ class _SettingsPageState extends State<SettingsPage> {
                                           ),
                               ),
                               SettingsTile(
-                                leading: const Icon(
-                                  PhosphorIcons.computerTower,
+                                leading: Icon(
+                                  PhosphorIcons.computerTower(),
                                 ),
                                 title:
                                     defaultTargetPlatform == TargetPlatform.iOS
@@ -423,8 +424,8 @@ class _SettingsPageState extends State<SettingsPage> {
                                       ),
                               ),
                               SettingsTile(
-                                leading: const Icon(
-                                  PhosphorIcons.gitBranch,
+                                leading: Icon(
+                                  PhosphorIcons.gitBranch(),
                                 ),
                                 title:
                                     defaultTargetPlatform == TargetPlatform.iOS
@@ -455,8 +456,8 @@ class _SettingsPageState extends State<SettingsPage> {
                                           ),
                               ),
                               SettingsTile.navigation(
-                                leading: const Icon(
-                                  PhosphorIcons.signOut,
+                                leading: Icon(
+                                  PhosphorIcons.signOut(),
                                   // color: AppColors.danger, //TODO: COLOR-FIX
                                 ),
                                 trailing:

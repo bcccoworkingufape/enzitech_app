@@ -431,18 +431,12 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
               ? null
               : ExpandableFab(
                   distance: 72,
-                  foregroundColor:
-                      Colors.white, // AppColors.white, //TODO: COLOR-FIX
-                  closeButtonStyle: const ExpandableFabCloseButtonStyle(
-                    foregroundColor:
-                        Colors.white, // AppColors.white, //TODO: COLOR-FIX
-                  ),
                   type: ExpandableFabType.up,
                   children: [
                     FloatingActionButton.small(
                       heroTag: null,
-                      child: const Icon(
-                        PhosphorIcons.shareNetwork,
+                      child: Icon(
+                        PhosphorIcons.shareNetwork(),
                         // color: AppColors.white, //TODO: COLOR-FIX
                       ),
                       onPressed: () {
@@ -460,8 +454,8 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                     ),
                     FloatingActionButton.small(
                       heroTag: null,
-                      child: const Icon(
-                        PhosphorIcons.download,
+                      child: Icon(
+                        PhosphorIcons.download(),
                         // color: AppColors.white, //TODO: COLOR-FIX
                       ),
                       onPressed: () {

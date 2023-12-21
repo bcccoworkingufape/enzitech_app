@@ -261,8 +261,8 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
             text: 'Cálculo enzimático',
             eztButtonType: EZTButtonType.checkout,
             enabled: _experimentDetailsViewmodel.experiment!.progress != 1,
-            icon: const Icon(
-              PhosphorIcons.function,
+            icon: Icon(
+              PhosphorIcons.function(),
               // color: AppColors.white, //TODO: COLOR-FIX
               size: 30,
             ),
@@ -284,8 +284,8 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
             text: 'Resultados',
             enabled: _experimentDetailsViewmodel.experiment!.progress != 0,
             eztButtonType: EZTButtonType.checkout,
-            icon: const Icon(
-              PhosphorIcons.fileText,
+            icon: Icon(
+              PhosphorIcons.fileText(),
               // color: AppColors.white, //TODO: COLOR-FIX
               size: 30,
             ),
@@ -348,8 +348,8 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
                         });
                       }
                     },
-                    icon: const Icon(
-                      PhosphorIcons.trash,
+                    icon: Icon(
+                      PhosphorIcons.trash(),
                       // color: AppColors.white, //TODO: COLOR-FIX
                       size: 25,
                     ),

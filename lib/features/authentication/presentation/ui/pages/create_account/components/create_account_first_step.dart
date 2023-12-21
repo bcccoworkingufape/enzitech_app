@@ -150,8 +150,8 @@ class CreateAccountFirstStepState extends State<CreateAccountFirstStep> {
           const SizedBox(height: 64),
           Row(
             children: [
-              const Icon(
-                PhosphorIcons.identificationCardBold,
+              Icon(
+                PhosphorIcons.identificationCard(),
                 // color: AppColors.greySweet, //TODO: COLOR-FIX
               ),
               const SizedBox(width: 4),

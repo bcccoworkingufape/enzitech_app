@@ -135,16 +135,16 @@ class _EnzymesPageState extends State<EnzymesPage> {
                 },
                 background: Container(
                   color: Colors.red,
-                  child: const Padding(
-                    padding: EdgeInsets.all(15.0),
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Icon(
-                          PhosphorIcons.trashLight,
+                          PhosphorIcons.trash(PhosphorIconsStyle.light),
                           color: Colors.white,
                         ),
-                        Text(
+                        const Text(
                           'Excluir',
                           style: TextStyle(color: Colors.white),
                           textAlign: TextAlign.right,

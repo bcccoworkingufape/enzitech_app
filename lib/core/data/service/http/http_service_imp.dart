@@ -52,8 +52,8 @@ class DioHttpServiceImp implements HttpService {
       gettedToken = token;
     }
     dio.options.baseUrl = httpDriverOptions.baseUrl();
-    dio.options.connectTimeout = 60 * 1000; // 60 seconds
-    dio.options.receiveTimeout = 60 * 1000; // 60 seconds
+    dio.options.connectTimeout = const Duration(seconds: 60);
+    dio.options.receiveTimeout = const Duration(seconds: 60);
 
     dio.options.headers.addAll(
       {
@@ -116,30 +116,32 @@ class DioHttpServiceImp implements HttpService {
           }
           if (message.isEmpty) {
             if (dioError.response == null) {
-              if (dioError.message.contains('Connection failed')) {
-                throw NoNetworkFailure(message: dioError.message);
+              if (dioError.message!.contains('Connection failed')) {
+                throw NoNetworkFailure(
+                    message: dioError.message ?? 'No Network Failure');
               } else {
-                throw dioError.message.contains('Connection timed out')
+                throw dioError.message!.contains('Connection timed out')
                     ? serverFailure
-                    : ServerFailure(message: dioError.message);
+                    : ServerFailure(
+                        message: dioError.message ?? 'Server Failure');
               }
             }
-            if (dioError.message.isNotEmpty) {
-              message = dioError.message;
+            if (dioError.message!.isNotEmpty) {
+              message = dioError.message ?? '';
             } else if (dioError.response!.statusMessage != '') {
               message = dioError.response!.statusMessage ?? message;
             } else if (dioError.response!.data != '') {
               message = dioError.response!.data['message'] ?? message;
             } else {
-              message = dioError.message;
+              message = dioError.message ?? '';
             }
             message = message.isEmpty ? serverFailure.message : message;
           }
 
           //TODO: Verify this
-          if (dioError.type == DioErrorType.connectTimeout) {
+          if (dioError.type == DioExceptionType.connectionTimeout) {
             throw NoNetworkFailure(message: "Connection Timeout Exception");
-          } else if (dioError.type == DioErrorType.receiveTimeout) {
+          } else if (dioError.type == DioExceptionType.receiveTimeout) {
             throw NoNetworkFailure(message: "Receive Timeout Exception");
           }
 

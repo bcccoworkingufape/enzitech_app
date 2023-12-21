@@ -123,12 +123,12 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
                     padding: const EdgeInsets.all(15.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
-                      children: const [
+                      children: [
                         Icon(
-                          PhosphorIcons.trashLight,
+                          PhosphorIcons.trash(),
                           color: Colors.white,
                         ),
-                        Text(
+                        const Text(
                           'Excluir',
                           style: TextStyle(color: Colors.white),
                           textAlign: TextAlign.right,

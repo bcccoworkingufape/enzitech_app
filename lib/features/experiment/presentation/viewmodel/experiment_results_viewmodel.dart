@@ -77,18 +77,18 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
 
         for (var treatment in experimentEnzyme.treatments) {
           sheet.insertRowIterables([
-            'Tratamento:',
-            treatment.treatment.name,
-            '',
-            '',
-            '',
-            '',
-            '',
-            '',
-            '',
-            '',
-            '',
-            ''
+            const TextCellValue('Tratamento:'),
+            TextCellValue(treatment.treatment.name),
+            const TextCellValue(''),
+            const TextCellValue(''),
+            const TextCellValue(''),
+            const TextCellValue(''),
+            const TextCellValue(''),
+            const TextCellValue(''),
+            const TextCellValue(''),
+            const TextCellValue(''),
+            const TextCellValue(''),
+            const TextCellValue(''),
           ], rowIndex);
           for (var i = 0; i < 12; i++) {
             sheet
@@ -102,18 +102,18 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
           rowIndex++;
 
           sheet.insertRowIterables([
-            'Id',
-            'Abso. Amostra',
-            'Abso. Branco',
-            'Diferença A - B',
-            'a - Coeficiente Angular da Curva',
-            'b - Constante da Equação da Curva',
-            'Curva Cálculo',
-            'FC - Fator de Correção',
-            'Tempo (h)',
-            'Volume (Solução do substrato)',
-            'Peso da amostra (g)',
-            'Resultado'
+            const TextCellValue('Id'),
+            const TextCellValue('Abso. Amostra'),
+            const TextCellValue('Abso. Branco'),
+            const TextCellValue('Diferença A - B'),
+            const TextCellValue('a - Coeficiente Angular da Curva'),
+            const TextCellValue('b - Constante da Equação da Curva'),
+            const TextCellValue('Curva Cálculo'),
+            const TextCellValue('FC - Fator de Correção'),
+            const TextCellValue('Tempo (h)'),
+            const TextCellValue('Volume (Solução do substrato)'),
+            const TextCellValue('Peso da amostra (g)'),
+            const TextCellValue('Resultado'),
           ], rowIndex);
 
           for (var i = 0; i < 12; i++) {
@@ -129,18 +129,18 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
 
           for (var repetition in treatment.repetitionResults) {
             sheet.insertRowIterables([
-              repetition.repetitionId,
-              repetition.sample,
-              repetition.whiteSample,
-              repetition.differenceBetweenSamples,
-              repetition.variableA,
-              repetition.variableB,
-              repetition.curve,
-              repetition.correctionFactor,
-              repetition.time,
-              repetition.volume,
-              repetition.weightSample,
-              repetition.result
+              TextCellValue(repetition.repetitionId),
+              TextCellValue(repetition.sample.toString()),
+              TextCellValue(repetition.whiteSample.toString()),
+              TextCellValue(repetition.differenceBetweenSamples.toString()),
+              TextCellValue(repetition.variableA.toString()),
+              TextCellValue(repetition.variableB.toString()),
+              TextCellValue(repetition.curve.toString()),
+              TextCellValue(repetition.correctionFactor.toString()),
+              TextCellValue(repetition.time.toString()),
+              TextCellValue(repetition.volume.toString()),
+              TextCellValue(repetition.weightSample.toString()),
+              TextCellValue(repetition.result.toString()),
             ], rowIndex);
             rowIndex++;
           }
@@ -149,18 +149,19 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
           rowIndex++;
           rowIndex++;
           sheet.insertRowIterables([
-            'Desenvovido por:',
-            'ENZITECH',
-            '',
-            '👨🏻‍💻 SAIBA MAIS:',
-            'http://bcccoworking.ufape.edu.br/show.project?idProject=6',
-            '',
-            '',
-            '',
-            '',
-            '',
-            '',
-            '',
+            const TextCellValue('Desenvovido por:'),
+            const TextCellValue('ENZITECH'),
+            const TextCellValue(''),
+            const TextCellValue('👨🏻‍💻 SAIBA MAIS:'),
+            const TextCellValue(
+                'http://bcccoworking.ufape.edu.br/show.project?idProject=6'),
+            const TextCellValue(''),
+            const TextCellValue(''),
+            const TextCellValue(''),
+            const TextCellValue(''),
+            const TextCellValue(''),
+            const TextCellValue(''),
+            const TextCellValue(''),
           ], rowIndex);
           for (var i = 0; i < 12; i++) {
             sheet

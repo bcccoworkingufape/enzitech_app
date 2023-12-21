@@ -96,8 +96,8 @@ class _CalculateExperimentThirdStepPageState
           child: Visibility(
             visible: _calculateExperimentViewmodel
                 .listOfNumberDifferencesDTO[iteration]!.isFarther!,
-            replacement: const Icon(
-              PhosphorIcons.thumbsUp,
+            replacement: Icon(
+              PhosphorIcons.thumbsUp(),
               // color: AppColors.grenDark, //TODO: COLOR-FIX
             ),
             child: GestureDetector(
@@ -111,8 +111,8 @@ class _CalculateExperimentThirdStepPageState
                   eztSnackBarType: EZTSnackBarType.error,
                 );
               },
-              child: const Icon(
-                PhosphorIcons.warningCircleBold,
+              child: Icon(
+                PhosphorIcons.warningCircle(PhosphorIconsStyle.bold),
                 // color: AppColors.danger, //TODO: COLOR-FIX
               ),
             ),

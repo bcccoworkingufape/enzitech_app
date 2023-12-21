@@ -28,22 +28,22 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   auto_size_text: ^3.0.0
-  connectivity_plus: ^3.0.3
+  connectivity_plus: ^5.0.2
   cupertino_icons: ^1.0.5
-  curl_logger_dio_interceptor: ^0.0.3
+  curl_logger_dio_interceptor: ^1.0.0
   dartz: ^0.10.1
   data_table_2: ^2.4.1
-  dio: ^4.0.6
-  excel: ^2.1.0
+  dio: ^5.4.0
+  excel: ^4.0.0
   firebase_core: ^2.24.2
   firebase_crashlytics: ^3.4.8
   flutter:
     sdk: flutter
-  flutter_expandable_fab: ^1.7.1
+  flutter_expandable_fab: ^2.0.0
   flutter_form_builder: ^9.1.1
   flutter_localizations:
     sdk: flutter
-  flutter_svg: ^1.1.6
+  flutter_svg: ^2.0.9
   flutter_svg_provider: ^1.0.3
   form_builder_validators: ^9.1.0
   get_it: ^7.2.0
@@ -52,22 +52,22 @@ dependencies:
   internet_connection_checker: ^1.0.0+1
   intl: ^0.18.1
   media_scanner: ^2.1.0
-  package_info_plus: ^3.0.3
+  package_info_plus: ^4.2.0
   path_provider: ^2.0.14
   percent_indicator: ^4.2.2
-  permission_handler: ^10.2.0
-  phosphor_flutter: ^1.4.0
+  permission_handler: ^11.1.0
+  phosphor_flutter: ^2.0.1
   pretty_dio_logger: ^1.2.0-beta-1
   settings_ui: ^2.0.2
-  share_plus: ^6.3.1
+  share_plus: ^7.2.1
   shared_preferences: ^2.0.17
   toggle_switch: ^2.0.1
   url_launcher: ^6.1.9
 
 dev_dependencies:
-  appwrite: ^8.3.0
+  appwrite: ^11.0.1
   build_runner: ^2.3.3
-  flutter_lints: ^2.0.1
+  flutter_lints: ^3.0.1
   flutter_native_splash: ^2.2.16
   flutter_test:
     sdk: flutter

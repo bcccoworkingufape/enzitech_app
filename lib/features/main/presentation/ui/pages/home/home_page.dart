@@ -233,8 +233,8 @@ class _HomePageState extends State<HomePage>
           "Cadastrar\nexperimento",
           // style: TextStyles.buttonBackground,
         ),
-        icon: const Icon(
-          PhosphorIcons.pencilLine,
+        icon: Icon(
+          PhosphorIcons.pencilLine(),
           // color: AppColors.white, //TODO: COLOR-FIX
           size: 30,
         ),
@@ -253,8 +253,8 @@ class _HomePageState extends State<HomePage>
           "Cadastrar\ntratamento",
           // style: TextStyles.buttonBackground,
         ),
-        icon: const Icon(
-          PhosphorIcons.pencilLine,
+        icon: Icon(
+          PhosphorIcons.pencilLine(),
           // color: AppColors.white, //TODO: COLOR-FIX
           size: 30,
         ),
@@ -276,8 +276,8 @@ class _HomePageState extends State<HomePage>
             "Cadastrar\nenzima",
             // style: TextStyles.buttonBackground,
           ),
-          icon: const Icon(
-            PhosphorIcons.pencilLine,
+          icon: Icon(
+            PhosphorIcons.pencilLine(),
             // color: AppColors.white, //TODO: COLOR-FIX
             size: 30,
           ),
@@ -369,21 +369,21 @@ class _HomePageState extends State<HomePage>
               }
             },
             selectedIndex: _homeViewmodel.fragmentIndex,
-            destinations: const [
+            destinations: [
               NavigationDestination(
-                icon: Icon(PhosphorIcons.flask),
+                icon: Icon(PhosphorIcons.flask()),
                 label: 'Experimentos',
               ),
               NavigationDestination(
-                icon: Icon(PhosphorIcons.testTube),
+                icon: Icon(PhosphorIcons.testTube()),
                 label: 'Tratamentos',
               ),
               NavigationDestination(
-                icon: Icon(PhosphorIcons.atom),
+                icon: Icon(PhosphorIcons.atom()),
                 label: 'Enzimas',
               ),
               NavigationDestination(
-                icon: Icon(PhosphorIcons.gear),
+                icon: Icon(PhosphorIcons.gear()),
                 label: 'Configurações',
               ),
             ],

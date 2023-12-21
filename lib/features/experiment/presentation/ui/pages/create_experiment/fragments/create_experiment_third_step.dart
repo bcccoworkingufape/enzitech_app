@@ -135,8 +135,8 @@ class _CreateExperimentThirdStepPageState
             ),
             Row(
               children: [
-                const Icon(
-                  PhosphorIcons.flask,
+                Icon(
+                  PhosphorIcons.flask(),
                   // color: AppColors.greySweet, //TODO: COLOR-FIX
                 ),
                 const SizedBox(width: 4),

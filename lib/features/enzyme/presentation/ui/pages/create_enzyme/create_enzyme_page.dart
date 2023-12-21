@@ -115,8 +115,8 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
           const SizedBox(height: 64),
           Row(
             children: [
-              const Icon(
-                PhosphorIcons.flask,
+              Icon(
+                PhosphorIcons.flask(),
                 // color: AppColors.greySweet, //TODO: COLOR-FIX
               ),
               const SizedBox(width: 4),
