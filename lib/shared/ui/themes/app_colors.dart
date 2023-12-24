@@ -27,7 +27,7 @@ class AppColors {
     background: Color(0xFFFBFDF7),
     onBackground: Color(0xFF191C19),
     surface: Color(0xFFFBFDF7),
-    onSurface: Color(0xFF191C19),
+    onSurface: Color(0xFF191C19), // Cor predominante dos textos
     surfaceVariant: Color(0xFFDDE5DB),
     onSurfaceVariant: Color(0xFF414941),
     outline: Color(0xFF717971),
@@ -61,7 +61,7 @@ class AppColors {
     background: Color(0xFF191C19),
     onBackground: Color(0xFFE1E3DE),
     surface: Color(0xFF191C19),
-    onSurface: Color(0xFFE1E3DE),
+    onSurface: Color(0xFFE1E3DE), // Cor predominante dos textos
     surfaceVariant: Color(0xFF414941),
     onSurfaceVariant: Color(0xFFC1C9BF),
     outline: Color(0xFF8B938A),
@@ -101,12 +101,12 @@ class AppColors {
 
   //* Other colors
   // static const delete = Color(0xFFE83F5B);
-  static const heading = Color(0xFF585666);
-  static const body = Color(0xFF706E7A);
+  // static const heading = Color(0xFF585666);
+  // static const body = Color(0xFF706E7A);
   // static const line = Color(0xFFD1D1D1);
   // static const stroke = Color(0xFFE3E3E6);
   // static const shape = Color(0xFFFAFAFC);
-  static const white = Color(0xFFFFFFFF);
+  // static const white = Color(0xFFFFFFFF);
 
   //* Enzymes colors
   static const betaGlucosidase = Color(0xFF721817);

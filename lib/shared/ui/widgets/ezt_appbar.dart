@@ -9,7 +9,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 // 🌎 Project imports:
 import '../../../features/main/presentation/viewmodel/home_viewmodel.dart';
 import '../../../features/main/presentation/viewmodel/settings_viewmodel.dart';
-import '../../extensions/dark_mode_extensions.dart';
+import '../../extensions/context_theme_mode_extensions.dart';
 import '../ui.dart';
 import 'ezt_blink.dart';
 
@@ -47,9 +47,9 @@ class _EZTAppBarState extends State<EZTAppBar> {
         return AppBar(
           title: SvgPicture.asset(
             AppSvgs.logo,
-            colorFilter: context.isLightModeOrSystemisLightBrightness
-                ? const ColorFilter.mode(AppColors.primary, BlendMode.srcIn)
-                : const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+            colorFilter: context.isDarkMode
+                ? const ColorFilter.mode(Colors.white, BlendMode.srcIn)
+                : const ColorFilter.mode(AppColors.primary, BlendMode.srcIn),
             fit: BoxFit.contain,
             alignment: Alignment.center,
           ),

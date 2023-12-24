@@ -276,9 +276,8 @@ class _EZTTextFieldState extends State<EZTTextField> {
     }
 
     return _baseInputDecoration.copyWith(
-      fillColor: widget.enabled
-          ? (widget.fillColor ?? AppColors.white)
-          : AppColors.white,
+      fillColor:
+          widget.enabled ? (widget.fillColor ?? Colors.white) : Colors.white,
       border: outlineBorder,
       hintStyle: widget.hintStyle,
       suffixIcon:

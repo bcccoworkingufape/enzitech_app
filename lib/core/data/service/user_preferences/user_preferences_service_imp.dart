@@ -76,4 +76,11 @@ class UserPreferencesServicesImp implements UserPreferencesServices {
   Future<void> clearAll() async {
     await _keyValueService.clear();
   }
+
+  @override
+  Future<void> clearAllAndKeepTheme() async {
+    String theme = await getThemeModeAsString();
+    await _keyValueService.clear();
+    await saveThemeModeAsString(theme);
+  }
 }

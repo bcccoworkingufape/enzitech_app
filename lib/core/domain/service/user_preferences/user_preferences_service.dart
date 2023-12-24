@@ -25,4 +25,6 @@ abstract class UserPreferencesServices {
 
   // GENERAL
   Future<void> clearAll();
+
+  Future<void> clearAllAndKeepTheme();
 }

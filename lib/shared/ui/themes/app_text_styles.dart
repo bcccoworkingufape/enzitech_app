@@ -5,9 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // 🌎 Project imports:
+import '../../extensions/context_theme_mode_extensions.dart';
 import 'app_colors.dart';
 
 class TextStyles {
+  BuildContext context;
+
+  TextStyles(this.context);
+
   /// `fontSize:` 30,
   ///
   /// `fontWeight:` FontWeight.w600,
@@ -18,7 +23,7 @@ class TextStyles {
   static final titleHome = GoogleFonts.ubuntu(
     fontSize: 30,
     fontWeight: FontWeight.w600,
-    color: AppColors.heading,
+    // // color: AppColors.heading,
   );
 
   /// `fontSize:` 30,
@@ -30,20 +35,22 @@ class TextStyles {
   /// ![585666](https://www.colorhexa.com/585666.png)
   static final titleHomeRegular = GoogleFonts.ubuntu(
     fontSize: 30,
-    color: AppColors.heading,
+    // color: AppColors.heading,
   );
 
   /// `fontSize:` 14,
   ///
   /// `fontWeight:` FontWeight.normal,
   ///
-  /// `color:`
+  /// `color:` "onSurface"
   ///
   /// ![585666](https://www.colorhexa.com/585666.png)
-  static final detailRegular = GoogleFonts.ubuntu(
-    fontSize: 14,
-    color: AppColors.heading,
-  );
+  get detailRegular {
+    return GoogleFonts.ubuntu(
+      fontSize: 14,
+      color: context.getApplyedColorScheme.onSurface,
+    );
+  }
 
   /// `fontSize:` 20,
   ///
@@ -54,7 +61,7 @@ class TextStyles {
   /// ![585666](https://www.colorhexa.com/585666.png)
   static final informationRegular = GoogleFonts.ubuntu(
     fontSize: 20,
-    color: AppColors.heading,
+    // color: AppColors.heading,
   );
 
   /// `fontSize:` 14,
@@ -98,67 +105,67 @@ class TextStyles {
   static final buttonBackground = GoogleFonts.ubuntu(
     fontSize: 16,
     fontWeight: FontWeight.w500,
-    color: AppColors.white,
+    // color: AppColors.white,
   );
 
   static final bodyMinRegular = GoogleFonts.ubuntu(
     fontSize: 12,
     fontWeight: FontWeight.w400,
-    color: AppColors.body,
+    // color: AppColors.body,
   );
   static final bodyMinBold = GoogleFonts.ubuntu(
     fontSize: 13,
     fontWeight: FontWeight.w600,
-    color: AppColors.body,
+    // color: AppColors.body,
   );
   static final bodyRegular = GoogleFonts.ubuntu(
     fontSize: 18,
     fontWeight: FontWeight.w400,
-    color: AppColors.body,
+    // color: AppColors.body,
   );
   static final bodyBold = GoogleFonts.ubuntu(
     fontSize: 18,
     fontWeight: FontWeight.w600,
-    color: AppColors.body,
+    // color: AppColors.body,
   );
 
   static final informationExperimentStepTitle = GoogleFonts.ubuntu(
     fontSize: 20,
     fontWeight: FontWeight.w700,
-    color: AppColors.heading,
+    // color: AppColors.heading,
   );
 
   static final informationExperimentStepMessage = GoogleFonts.ubuntu(
     fontSize: 16,
     fontWeight: FontWeight.w500,
-    color: AppColors.body,
+    // color: AppColors.body,
   );
 
   static final titleMinRegular = GoogleFonts.ubuntu(
     fontSize: 16,
     fontWeight: FontWeight.w400,
-    color: AppColors.white,
+    // color: AppColors.white,
   );
   static final titleMinBoldHeading = GoogleFonts.ubuntu(
     fontSize: 16,
     fontWeight: FontWeight.w600,
-    color: AppColors.heading,
+    // color: AppColors.heading,
   );
   static final titleMinBoldBackground = GoogleFonts.ubuntu(
     fontSize: 16,
     fontWeight: FontWeight.w600,
-    color: AppColors.white,
+    // color: AppColors.white,
   );
 
   static final titleRegular = GoogleFonts.ubuntu(
     fontSize: 20,
     fontWeight: FontWeight.w400,
-    color: AppColors.white,
+    // color: AppColors.white,
   );
   static final titleBoldHeading = GoogleFonts.ubuntu(
     fontSize: 20,
     fontWeight: FontWeight.w600,
-    color: AppColors.heading,
+    // color: AppColors.heading,
   );
 
   /// `fontSize:` 20,
@@ -169,22 +176,22 @@ class TextStyles {
   static final titleBoldBackground = GoogleFonts.ubuntu(
     fontSize: 20,
     fontWeight: FontWeight.w600,
-    color: AppColors.white,
+    // color: AppColors.white,
   );
   static final titleListTile = GoogleFonts.ubuntu(
     fontSize: 17,
     fontWeight: FontWeight.w600,
-    color: AppColors.heading,
+    // color: AppColors.heading,
   );
   static final trailingRegular = GoogleFonts.ubuntu(
     fontSize: 16,
     fontWeight: FontWeight.w400,
-    color: AppColors.heading,
+    // color: AppColors.heading,
   );
   static final trailingBold = GoogleFonts.ubuntu(
     fontSize: 16,
     fontWeight: FontWeight.w600,
-    color: AppColors.heading,
+    // color: AppColors.heading,
   );
   static final xbuttonPrimary = GoogleFonts.ubuntu(
     fontSize: 15,
@@ -194,7 +201,7 @@ class TextStyles {
   static final buttonHeading = GoogleFonts.ubuntu(
     fontSize: 15,
     fontWeight: FontWeight.w400,
-    color: AppColors.heading,
+    // color: AppColors.heading,
   );
   static final buttonGray = GoogleFonts.ubuntu(
     fontSize: 15,
@@ -210,7 +217,7 @@ class TextStyles {
   static final buttonBoldHeading = GoogleFonts.ubuntu(
     fontSize: 15,
     fontWeight: FontWeight.w700,
-    color: AppColors.heading,
+    // color: AppColors.heading,
   );
   static final buttonBoldGray = GoogleFonts.ubuntu(
     fontSize: 15,
@@ -224,12 +231,12 @@ class TextStyles {
   static final buttonBoldBackground = GoogleFonts.ubuntu(
     fontSize: 15,
     fontWeight: FontWeight.w700,
-    color: AppColors.white,
+    // color: AppColors.white,
   );
   static final captionBackground = GoogleFonts.ubuntu(
     fontSize: 13,
     fontWeight: FontWeight.w400,
-    color: AppColors.white,
+    // color: AppColors.white,
   );
   static final captionShape = GoogleFonts.ubuntu(
     fontSize: 13,
@@ -239,12 +246,12 @@ class TextStyles {
   static final captionBody = GoogleFonts.ubuntu(
     fontSize: 13,
     fontWeight: FontWeight.w400,
-    color: AppColors.body,
+    // color: AppColors.body,
   );
   static final captionBoldBackground = GoogleFonts.ubuntu(
     fontSize: 13,
     fontWeight: FontWeight.w600,
-    color: AppColors.white,
+    // color: AppColors.white,
   );
   static final captionBoldShape = GoogleFonts.ubuntu(
     fontSize: 13,
@@ -254,19 +261,19 @@ class TextStyles {
   static final captionBoldBody = GoogleFonts.ubuntu(
     fontSize: 13,
     fontWeight: FontWeight.w600,
-    color: AppColors.body,
+    // color: AppColors.body,
   );
 
   // Card Expandable
   static final titleCardExp = GoogleFonts.ubuntu(
     fontSize: 15,
     fontWeight: FontWeight.w600,
-    color: AppColors.body,
+    // color: AppColors.body,
   );
 
   static final bodyCardExp = GoogleFonts.ubuntu(
     fontSize: 15,
     fontWeight: FontWeight.w400,
-    color: AppColors.body,
+    // color: AppColors.body,
   );
 }

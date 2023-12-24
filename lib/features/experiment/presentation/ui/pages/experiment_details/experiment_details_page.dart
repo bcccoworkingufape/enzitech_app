@@ -125,7 +125,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
           ),
           Text(
             _experimentDetailsViewmodel.experiment!.description,
-            style: TextStyles.detailRegular,
+            style: TextStyles(context).detailRegular,
           ),
           const SizedBox(
             height: 20,
@@ -165,7 +165,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
                             ),
                             Text(
                               "Tratamentos",
-                              style: TextStyles.detailRegular,
+                              style: TextStyles(context).detailRegular,
                             )
                           ],
                         ),
@@ -185,7 +185,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
                             ),
                             Text(
                               "Repetições",
-                              style: TextStyles.detailRegular,
+                              style: TextStyles(context).detailRegular,
                             )
                           ],
                         ),
@@ -205,7 +205,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
                             ),
                             Text(
                               "Enzimas",
-                              style: TextStyles.detailRegular,
+                              style: TextStyles(context).detailRegular,
                             )
                           ],
                         ),

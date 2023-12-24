@@ -6,7 +6,6 @@ import 'package:get_it/get_it.dart';
 
 // 🌎 Project imports:
 import '../../../../../core/enums/enums.dart';
-import '../../../../../shared/ui/ui.dart';
 import '../../../../main/presentation/viewmodel/home_viewmodel.dart';
 import '../../viewmodel/login_viewmodel.dart';
 
@@ -18,21 +17,26 @@ class LoginButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListenableBuilder(
-      listenable: loginViewmodel,
+    return AnimatedBuilder(
+      animation: loginViewmodel,
       builder: (context, child) {
-        return EZTButton(
-          text: 'Entrar',
-          eztButtonType: EZTButtonType.checkout,
-          loading: loginViewmodel.state == StateEnum.loading ||
-              GetIt.I.get<HomeViewmodel>().state == StateEnum.loading,
-          onPressed: loginViewmodel.state == StateEnum.loading
-              ? null
-              : () {
-                  if (formKey.currentState!.validate()) {
-                    loginViewmodel.loginAction();
-                  }
-                },
+        bool loading = loginViewmodel.state == StateEnum.loading ||
+            GetIt.I.get<HomeViewmodel>().state == StateEnum.loading;
+        return SizedBox(
+          width: double.maxFinite,
+          height: 48,
+          child: FilledButton(
+            onPressed: loading
+                ? null
+                : () {
+                    if (formKey.currentState!.validate()) {
+                      loginViewmodel.loginAction();
+                    }
+                  },
+            child: loading
+                ? const CircularProgressIndicator()
+                : const Text('Entrar'),
+          ),
         );
       },
     );

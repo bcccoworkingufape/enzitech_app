@@ -165,16 +165,22 @@ class LoginPageState extends State<LoginPage> {
                   //   ),
                   // ),
                   const SizedBox(height: 64),
-                  LoginButton(
-                    formKey: _formKey,
-                    loginViewmodel: _loginViewmodel,
+                  Align(
+                    alignment: Alignment.center,
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width / 1.75,
+                      child: LoginButton(
+                        formKey: _formKey,
+                        loginViewmodel: _loginViewmodel,
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 32),
                   Center(
                     child: RichText(
                       text: TextSpan(
                         text: 'Não tem uma conta?',
-                        style: TextStyles.detailRegular,
+                        style: TextStyles(context).detailRegular,
                         children: <TextSpan>[
                           TextSpan(
                             text: ' Crie uma',

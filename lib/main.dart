@@ -24,33 +24,36 @@ import 'shared/ui/ui.dart';
 import 'shared/utils/utils.dart';
 
 Future<void> main() async {
-  runZonedGuarded(() async {
-    WidgetsFlutterBinding.ensureInitialized();
+  runZonedGuarded(
+    () async {
+      WidgetsFlutterBinding.ensureInitialized();
 
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
 
-    var keyValueService = SharedPrefsServiceImp();
-    var userPreferencesService = UserPreferencesServicesImp(keyValueService);
+      var keyValueService = SharedPrefsServiceImp();
+      var userPreferencesService = UserPreferencesServicesImp(keyValueService);
 
-    String token = await userPreferencesService.getToken() ?? '';
+      String token = await userPreferencesService.getToken() ?? '';
 
-    API.setEnvironment(EnvironmentEnum.prod);
+      API.setEnvironment(EnvironmentEnum.prod);
 
-    final HttpDriverOptions httpDriverOptions = HttpDriverOptions(
-      accessToken: () {
-        return token;
-      },
-      baseUrl: () => API.apiBaseUrl,
-    );
+      final HttpDriverOptions httpDriverOptions = HttpDriverOptions(
+        accessToken: () {
+          return token;
+        },
+        baseUrl: () => API.apiBaseUrl,
+      );
 
-    Inject.initialize(httpDriverOptions);
+      Inject.initialize(httpDriverOptions);
 
-    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+      FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
-    runApp(const MyApp());
-  }, (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack));
+      runApp(const MyApp());
+    },
+    (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack),
+  );
 }
 
 class MyApp extends StatefulWidget {
