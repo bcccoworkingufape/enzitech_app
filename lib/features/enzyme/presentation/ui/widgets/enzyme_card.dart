@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
+import '../../../../../shared/extensions/context_theme_mode_extensions.dart';
 import '../../../../../shared/extensions/double_extensions.dart';
 import '../../../../../shared/ui/ui.dart';
 import '../../../../../shared/utils/utils.dart';
@@ -23,8 +24,8 @@ class _EnzymeCardState extends State<EnzymeCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 8,
-      shadowColor: Colors.white,
+      elevation: 4,
+      surfaceTintColor: context.getApplyedColorScheme.secondaryContainer,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
         child: Column(
@@ -42,7 +43,8 @@ class _EnzymeCardState extends State<EnzymeCard> {
                         padding: const EdgeInsets.symmetric(vertical: 4.0),
                         child: EZTMarqueeOnDemand(
                           text: widget.enzyme.name,
-                          textStyle: TextStyles.titleBoldHeading,
+                          textStyle:
+                              TextStyles(context).titleMoreBoldHeadingColored,
                         ),
                       ),
                       Text(
@@ -55,15 +57,30 @@ class _EnzymeCardState extends State<EnzymeCard> {
                 const SizedBox(
                   width: 16,
                 ),
-                Chip(
-                  padding: const EdgeInsets.all(0),
-                  backgroundColor:
-                      Constants.dealWithEnzymeChipColor(widget.enzyme.type),
-                  label: Text(
+                Theme(
+                  data: ThemeData(
+                    canvasColor:
+                        Constants.dealWithEnzymeChipColor(widget.enzyme.type),
+                  ),
+                  child: Chip(
+                    padding: const EdgeInsets.all(0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16.0),
+                      side: const BorderSide(
+                        color: Colors.transparent,
+                      ),
+                    ),
+                    backgroundColor:
+                        Constants.dealWithEnzymeChipColor(widget.enzyme.type),
+                    label: Text(
                       Constants.typesOfEnzymesListFormmated[Constants
                           .typesOfEnzymesList
                           .indexOf(widget.enzyme.type)],
-                      style: const TextStyle(color: Colors.white)),
+                      style: const TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -79,21 +96,21 @@ class _EnzymeCardState extends State<EnzymeCard> {
               children: [
                 Text(
                   "Fórmula: ",
-                  style: TextStyles.bodyRegular.copyWith(
-                    // color: AppColors.heading, //TODO: COLOR-FIX
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: TextStyles(context).bodyRegular.copyWith(
+                        // color: AppColors.heading, //TODO: COLOR-FIX
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w600,
+                      ),
                 ),
                 Text(
                   widget.enzyme.formula,
                   maxLines: 4,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.justify,
-                  style: TextStyles.bodyRegular.copyWith(
-                    //color: AppColors.heading//TODO: COLOR-FIX,
-                    fontSize: 16,
-                  ),
+                  style: TextStyles(context).bodyRegular.copyWith(
+                        //color: AppColors.heading//TODO: COLOR-FIX,
+                        fontSize: 16.0,
+                      ),
                 ),
               ],
             ),
@@ -115,11 +132,11 @@ class _EnzymeCardState extends State<EnzymeCard> {
                       children: [
                         Text(
                           "Variável A: ",
-                          style: TextStyles.bodyRegular.copyWith(
-                            // color: AppColors.heading, //TODO: COLOR-FIX
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
+                          style: TextStyles(context).bodyRegular.copyWith(
+                                // color: AppColors.heading, //TODO: COLOR-FIX
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.w600,
+                              ),
                         ),
                       ],
                     ),
@@ -132,10 +149,7 @@ class _EnzymeCardState extends State<EnzymeCard> {
                           maxLines: 4,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.justify,
-                          style: TextStyles.bodyRegular.copyWith(
-                            // color: AppColors.heading //TODO: COLOR-FIX,
-                            fontSize: 16,
-                          ),
+                          style: TextStyles(context).bodyRegular,
                         ),
                       ],
                     ),
@@ -147,21 +161,21 @@ class _EnzymeCardState extends State<EnzymeCard> {
                       children: [
                         Text(
                           "Variável B: ",
-                          style: TextStyles.bodyRegular.copyWith(
-                            //color: AppColors.heading, //TODO: COLOR-FIX
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
+                          style: TextStyles(context).bodyRegular.copyWith(
+                                //color: AppColors.heading, //TODO: COLOR-FIX
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.w600,
+                              ),
                         ),
                         Text(
                           widget.enzyme.variableB.formmatedNumber,
                           maxLines: 4,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.justify,
-                          style: TextStyles.bodyRegular.copyWith(
-                            // color: AppColors.heading, //TODO: COLOR-FIX
-                            fontSize: 16,
-                          ),
+                          style: TextStyles(context).bodyRegular.copyWith(
+                                // color: AppColors.heading, //TODO: COLOR-FIX
+                                fontSize: 16.0,
+                              ),
                         ),
                       ],
                     ),

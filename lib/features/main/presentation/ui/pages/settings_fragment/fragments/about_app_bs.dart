@@ -25,7 +25,7 @@ class AboutAppBS extends StatelessWidget {
           ),
           Text(
             "Idealização",
-            style: TextStyles.titleBoldHeading,
+            style: TextStyles(context).titleBoldHeading,
             textAlign: TextAlign.justify,
           ),
           const SizedBox(
@@ -82,7 +82,7 @@ class AboutAppBS extends StatelessWidget {
           ),
           Text(
             "Equipe de desenvolvimento",
-            style: TextStyles.titleBoldHeading,
+            style: TextStyles(context).titleBoldHeading,
             textAlign: TextAlign.justify,
           ),
           const SizedBox(

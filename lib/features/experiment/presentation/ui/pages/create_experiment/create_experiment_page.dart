@@ -81,32 +81,25 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
   @override
   Widget build(BuildContext context) {
     // TODO: Verify PopScope Migration
-    return PopScope(
-      canPop:
-          _createExperimentViewmodel.pageController.page! > 0 ? false : true,
-      onPopInvoked: (didPop) {
-        _createExperimentViewmodel.onBack(mounted, context);
-      },
-      child: ListenableBuilder(
-        listenable: _createExperimentViewmodel,
-        builder: (context, child) {
-          return Scaffold(
-            body: Form(
-              key: _createExperimentViewmodel.formKey,
-              child: PageView(
-                controller: _createExperimentViewmodel.pageController,
-                physics: const NeverScrollableScrollPhysics(),
-                children: const [
-                  CreateExperimentFirstStepPage(),
-                  CreateExperimentSecondStepPage(),
-                  CreateExperimentThirdStepPage(),
-                  CreateExperimentFourthStepPage(),
-                ],
-              ),
+    return ListenableBuilder(
+      listenable: _createExperimentViewmodel,
+      builder: (context, child) {
+        return Scaffold(
+          body: Form(
+            key: _createExperimentViewmodel.formKey,
+            child: PageView(
+              controller: _createExperimentViewmodel.pageController,
+              physics: const NeverScrollableScrollPhysics(),
+              children: const [
+                CreateExperimentFirstStepPage(),
+                CreateExperimentSecondStepPage(),
+                CreateExperimentThirdStepPage(),
+                CreateExperimentFourthStepPage(),
+              ],
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

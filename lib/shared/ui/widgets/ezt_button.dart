@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
+import '../../extensions/context_theme_mode_extensions.dart';
 import '../themes/themes.dart';
 
 const double _defaultFlutterButtonElevation = 2;
@@ -84,7 +85,10 @@ class _EZTButtonState extends State<EZTButton> {
   Widget _getContent() {
     final text = Text(
       widget.text,
-      style: widget.style ?? TextStyles.buttonBackground,
+      style: widget.style ??
+          (widget.enabled
+              ? TextStyles(context).buttonBackground
+              : TextStyles(context).buttonBackgroundOnLightOrSurface),
       textAlign: widget.textAlign ?? TextAlign.center,
     );
 
@@ -107,7 +111,8 @@ class _EZTButtonState extends State<EZTButton> {
   Widget _getOutlineContent() {
     final text = Text(
       widget.text,
-      style: widget.style ?? TextStyles.buttonPrimary,
+      style:
+          widget.style ?? TextStyles(context).buttonBackgroundOnLightOrSurface,
       textAlign: widget.textAlign ?? TextAlign.center,
     );
 
@@ -130,7 +135,7 @@ class _EZTButtonState extends State<EZTButton> {
   Widget _getContentCenter() {
     final text = Text(
       widget.text,
-      style: widget.style ?? TextStyles.buttonBackground,
+      style: widget.style ?? TextStyles(context).buttonBackground,
       textAlign: widget.textAlign ?? TextAlign.center,
     );
 
@@ -241,10 +246,10 @@ class _EZTButtonState extends State<EZTButton> {
     );
   }
 
-  Color _buildButtonColor(context) {
+  Color _buildButtonColor(BuildContext context) {
     if (!widget.enabled) {
       return widget.disabledButtonColor ??
-          Colors.red; //AppColors.materialTheme.shade50  //TODO: COLOR-FIX
+          context.getApplyedColorScheme.background;
     }
 
     if (widget.color != null) {

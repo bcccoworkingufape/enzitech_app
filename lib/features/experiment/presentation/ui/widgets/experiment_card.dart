@@ -7,6 +7,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 
 // 🌎 Project imports:
 import '../../../../../core/routing/routing.dart';
+import '../../../../../shared/extensions/context_theme_mode_extensions.dart';
 import '../../../../../shared/ui/ui.dart';
 import '../../../../../shared/utils/utils.dart';
 import '../../../domain/entities/experiment_entity.dart';
@@ -33,17 +34,18 @@ class _ExperimentCardState extends State<ExperimentCard> {
       child: Container(
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
-            topRight: Radius.circular(8),
-            bottomRight: Radius.circular(8),
+            topRight: Radius.circular(16),
+            bottomRight: Radius.circular(16),
           ),
         ),
         margin: const EdgeInsets.all(0),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
+          padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
           child: Material(
-            elevation: 8,
-            shadowColor: Colors.white,
-            borderRadius: BorderRadius.circular(8),
+            elevation: 4,
+            // shadowColor: context.getApplyedColorScheme.background,
+            borderRadius: BorderRadius.circular(16),
+            surfaceTintColor: context.getApplyedColorScheme.secondaryContainer,
             child: InkWell(
               onTap: () {
                 GetIt.I
@@ -56,7 +58,7 @@ class _ExperimentCardState extends State<ExperimentCard> {
                 );
               },
               borderRadius: const BorderRadius.all(
-                Radius.circular(8),
+                Radius.circular(16),
               ),
               child: Row(
                 children: [
@@ -65,8 +67,8 @@ class _ExperimentCardState extends State<ExperimentCard> {
                       decoration: const BoxDecoration(
                         color: AppColors.primary,
                         borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(8),
-                          bottomLeft: Radius.circular(8),
+                          topLeft: Radius.circular(16),
+                          bottomLeft: Radius.circular(16),
                         ),
                       ),
                       child: Padding(
@@ -93,7 +95,8 @@ class _ExperimentCardState extends State<ExperimentCard> {
                           widget.experiment.name,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyles.titleBoldHeading,
+                          style:
+                              TextStyles(context).titleMoreBoldHeadingColored,
                         ),
                         const SizedBox(
                           height: 2,
@@ -109,10 +112,10 @@ class _ExperimentCardState extends State<ExperimentCard> {
                           widget.experiment.description,
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyles.bodyRegular.copyWith(
-                            // color: AppColors.greyLight, //TODO: COLOR-FIX
-                            fontSize: 16,
-                          ),
+                          style: TextStyles(context).bodyRegular.copyWith(
+                                // color: AppColors.greyLight, //TODO: COLOR-FIX
+                                fontSize: 16.0,
+                              ),
                         ),
                         const SizedBox(
                           height: 16,

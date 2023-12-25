@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
+import '../../../../../shared/extensions/context_theme_mode_extensions.dart';
 import '../../../../../shared/ui/ui.dart';
 import '../../../../../shared/utils/utils.dart';
 
@@ -22,48 +23,48 @@ class TreatmentCard extends StatefulWidget {
 }
 
 class _TreatmentCardState extends State<TreatmentCard> {
+  bool expanded = false;
+
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 8,
-      shadowColor: Colors.white,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Text(
-            //   widget.name,
-            //   style: TextStyles.titleBoldHeading,
-            // ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4.0),
-              child: EZTMarqueeOnDemand(
+    return GestureDetector(
+      onTap: () => setState(() {
+        expanded = !expanded;
+      }),
+      child: Card(
+        elevation: 4,
+        surfaceTintColor: context.getApplyedColorScheme.secondaryContainer,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              EZTMarqueeOnDemand(
                 text: widget.name,
-                textStyle: TextStyles.titleBoldHeading,
+                textStyle: TextStyles(context).titleMoreBoldHeadingColored,
               ),
-            ),
-            const SizedBox(
-              height: 2,
-            ),
-            Text(
-              'Criado em ${Toolkit.formatBrDate(widget.createdAt)}',
-              style: TextStyles.bodyMinRegular,
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            Text(
-              widget.description,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.justify,
-              style: TextStyles.bodyRegular.copyWith(
-                // color: AppColors.greyLight, //TODO: COLOR-FIX
-                fontSize: 16,
+              const SizedBox(
+                height: 2,
               ),
-            ),
-          ],
+              Text(
+                'Criado em ${Toolkit.formatBrDate(widget.createdAt)}',
+                style: TextStyles.bodyMinRegular,
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              Text(
+                widget.description,
+                maxLines: expanded ? 100 : 2,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.justify,
+                style: TextStyles(context).bodyRegular.copyWith(
+                      // color: AppColors.greyLight, //TODO: COLOR-FIX
+                      fontSize: 16.0,
+                    ),
+              ),
+            ],
+          ),
         ),
       ),
     );

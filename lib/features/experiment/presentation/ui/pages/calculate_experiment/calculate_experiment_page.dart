@@ -58,26 +58,19 @@ class _CalculateExperimentPageState extends State<CalculateExperimentPage> {
   @override
   Widget build(BuildContext context) {
     // TODO: Verify PopScope Migration
-    return PopScope(
-      canPop:
-          _calculateExperimentViewmodel.pageController.page! > 0 ? false : true,
-      onPopInvoked: (didPop) {
-        _calculateExperimentViewmodel.onBack(mounted, context);
-      },
-      child: Scaffold(
-        key: _scaffoldKey,
-        body: SafeArea(
-          child: Form(
-            key: _calculateExperimentViewmodel.formKey,
-            child: PageView(
-              controller: _calculateExperimentViewmodel.pageController,
-              physics: const NeverScrollableScrollPhysics(),
-              children: const [
-                CalculateExperimentFirstStepPage(),
-                CalculateExperimentSecondStepPage(),
-                CalculateExperimentThirdStepPage(),
-              ],
-            ),
+    return Scaffold(
+      key: _scaffoldKey,
+      body: SafeArea(
+        child: Form(
+          key: _calculateExperimentViewmodel.formKey,
+          child: PageView(
+            controller: _calculateExperimentViewmodel.pageController,
+            physics: const NeverScrollableScrollPhysics(),
+            children: const [
+              CalculateExperimentFirstStepPage(),
+              CalculateExperimentSecondStepPage(),
+              CalculateExperimentThirdStepPage(),
+            ],
           ),
         ),
       ),

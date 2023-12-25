@@ -9,6 +9,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 // 🌎 Project imports:
 import '../../../../../../../core/enums/enums.dart';
+import '../../../../../../../shared/extensions/context_theme_mode_extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../../../../../shared/utils/utils.dart';
 import '../../../../../../enzyme/domain/entities/enzyme_entity.dart';
@@ -88,7 +89,7 @@ class _CalculateExperimentFirstStepPageState
             ),
           )
           .toList(),
-      selectedColor: AppColors.primary,
+      selectedColor: context.getApplyedColorScheme.primary.withOpacity(0.5),
       spacing: 4,
       validator: FormBuilderValidators.compose(
         [FormBuilderValidators.required()],
@@ -151,7 +152,7 @@ class _CalculateExperimentFirstStepPageState
               ),
             )
             .toList(),
-        selectedColor: AppColors.primary,
+        selectedColor: context.getApplyedColorScheme.primary.withOpacity(0.5),
         spacing: 4,
         validator: FormBuilderValidators.compose(
           [FormBuilderValidators.required()],

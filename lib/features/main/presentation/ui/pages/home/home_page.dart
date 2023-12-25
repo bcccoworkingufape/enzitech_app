@@ -17,6 +17,7 @@ import '../../../../../../core/domain/service/connection_checker/connection_chec
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../core/routing/routing.dart';
+import '../../../../../../shared/extensions/context_theme_mode_extensions.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../../../../shared/ui/widgets/ezt_appbar.dart';
 import '../../../../../enzyme/presentation/ui/pages/enzymes_fragment/enzymes_page.dart';
@@ -224,6 +225,7 @@ class _HomePageState extends State<HomePage>
   Widget? get dealWithFloatingActionButton {
     if (_homeViewmodel.fragmentIndex == 0 && _isVisibleExperimentButton) {
       return FloatingActionButton.extended(
+        // backgroundColor: context.getApplyedColorScheme.secondaryContainer,
         onPressed: () {
           Navigator.pushNamed(
             context,

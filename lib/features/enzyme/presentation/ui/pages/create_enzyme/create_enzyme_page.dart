@@ -9,6 +9,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
+import '../../../../../../shared/extensions/context_theme_mode_extensions.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../../../../shared/utils/utils.dart';
 import '../../../../../../shared/validator/validator.dart';
@@ -143,7 +144,7 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
         const SizedBox(height: 10),
         _variableBInput,
         const SizedBox(height: 20),
-        _typeInput,
+        _typeInput(context),
       ],
     );
   }
@@ -220,13 +221,14 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
     );
   }
 
-  Widget get _typeInput {
+  Widget _typeInput(BuildContext context) {
     return DropdownButton<String>(
       isExpanded: true,
       value: dropdownValue,
       hint: const Text("Escolha o tipo da enzima"),
       style: TextStyles.termRegular.copyWith(
         fontSize: 16,
+        color: context.getApplyedColorScheme.onPrimaryContainer,
       ),
       icon: null,
       elevation: 16,

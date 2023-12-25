@@ -115,7 +115,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
             center: Text(
               Toolkit.doubleToPercentual(
                   _experimentDetailsViewmodel.experiment!.progress),
-              style: TextStyles.titleBoldHeading,
+              style: TextStyles(context).titleBoldHeading,
             ),
             progressColor: AppColors.primary,
             backgroundColor: AppColors.primary.withOpacity(0.4),

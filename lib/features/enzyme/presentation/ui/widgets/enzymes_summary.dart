@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 // 🌎 Project imports:
+import '../../../../../shared/extensions/context_theme_mode_extensions.dart';
 import '../../../../../shared/ui/ui.dart';
 import '../../../../../shared/utils/utils.dart';
 import '../../viewmodel/enzymes_viewmodel.dart';
@@ -56,7 +57,7 @@ class _EnzymesSummaryState extends State<EnzymesSummary> {
       padding: const EdgeInsets.symmetric(horizontal: 4.0),
       child: Container(
         decoration: const BoxDecoration(
-          color: Colors.white,
+          // color: Colors.white,
           borderRadius: BorderRadius.all(
             Radius.circular(8),
             // bottomRight: Radius.circular(8),
@@ -68,15 +69,20 @@ class _EnzymesSummaryState extends State<EnzymesSummary> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              color: AppColors.primary,
+              decoration: BoxDecoration(
+                color: context.getApplyedColorScheme.primary,
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(8),
+                ),
+              ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4.0),
                 child: Center(
                   child: Text(
                     "Sumário de enzimas",
                     style: TextStyles.bodyMinBold.copyWith(
-                        // color: AppColors.white, //TODO: COLOR-FIX
-                        ),
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),

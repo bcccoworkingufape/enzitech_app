@@ -10,11 +10,11 @@ class AppColors {
     brightness: Brightness.light,
     primary: Color(0xFF006D39),
     onPrimary: Color(0xFFFFFFFF),
-    primaryContainer: Color(0xFF6AFEA0),
+    primaryContainer: Color(0xFFB9EEB9),
     onPrimaryContainer: Color(0xFF00210D),
     secondary: Color(0xFF426916),
     onSecondary: Color(0xFFFFFFFF),
-    secondaryContainer: Color(0xFFCCE9AD),
+    secondaryContainer: Color(0xFFD1E9D0), //
     onSecondaryContainer: Color(0xFF0F2000),
     tertiary: Color(0xFF7F5700),
     onTertiary: Color(0xFFFFFFFF),
@@ -49,7 +49,7 @@ class AppColors {
     secondary: Color(0xFFA6D475),
     onSecondary: Color(0xFF1D3700),
     secondaryContainer: Color(0xFF2C5000),
-    onSecondaryContainer: Color(0xFFCCE9AD),
+    onSecondaryContainer: Color(0xFFCCE9AD), //
     tertiary: Color(0xFFFCBB4A),
     onTertiary: Color(0xFF432C00),
     tertiaryContainer: Color(0xFF604100),

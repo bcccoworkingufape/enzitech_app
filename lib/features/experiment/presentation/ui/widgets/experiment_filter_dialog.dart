@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 // 🌎 Project imports:
+import '../../../../../shared/extensions/context_theme_mode_extensions.dart';
 import '../../../../../shared/ui/ui.dart';
 import '../../../../experiment/presentation/viewmodel/experiments_viewmodel.dart';
 
@@ -64,6 +65,7 @@ class _ExperimentFilterDialogState extends State<ExperimentFilterDialog> {
       hint: const Text("Selecionar"),
       style: TextStyles.termRegular.copyWith(
         fontSize: 16,
+        color: context.getApplyedColorScheme.onPrimaryContainer,
       ),
       icon: null,
       elevation: 16,
@@ -92,6 +94,7 @@ class _ExperimentFilterDialogState extends State<ExperimentFilterDialog> {
       hint: const Text("Selecionar"),
       style: TextStyles.termRegular.copyWith(
         fontSize: 16,
+        color: context.getApplyedColorScheme.onPrimaryContainer,
       ),
       icon: null,
       elevation: 16,
@@ -116,16 +119,17 @@ class _ExperimentFilterDialogState extends State<ExperimentFilterDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Filtros', style: TextStyles.titleBoldHeading),
+      title: Text('Filtros', style: TextStyles(context).titleBoldHeading),
       content: SingleChildScrollView(
         child: ListBody(
           children: <Widget>[
-            Text('Ordenar por: ', style: TextStyles.buttonBoldPrimary),
+            Text('Ordenar por: ', style: TextStyles(context).buttonBoldHeading),
             _orderByDropdown,
             const SizedBox(
               height: 24,
             ),
-            Text('Organizar em ordem: ', style: TextStyles.buttonBoldPrimary),
+            Text('Organizar em ordem: ',
+                style: TextStyles(context).buttonBoldHeading),
             _orderingDropdown,
           ],
         ),
@@ -165,7 +169,7 @@ class _ExperimentFilterDialogState extends State<ExperimentFilterDialog> {
               numberOfFiltersEnabled() > 1
                   ? 'Aplicar filtros'
                   : 'Aplicar filtro',
-              style: TextStyles.buttonBoldBackground),
+              style: TextStyles(context).buttonBoldBackground),
           onPressed: () {
             _experimentsViewmodel.setOrderBy(dropdownOrderByValue);
             _experimentsViewmodel.setOrdering(dropdownOrderingValue);

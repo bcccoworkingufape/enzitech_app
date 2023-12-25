@@ -9,6 +9,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../core/routing/routing.dart';
+import '../../../../../../shared/extensions/context_theme_mode_extensions.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../../../main/presentation/viewmodel/home_viewmodel.dart';
 import '../../../viewmodel/experiments_viewmodel.dart';
@@ -163,80 +164,77 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
 
           return Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: Dismissible(
-                  key: UniqueKey(),
-                  onDismissed: (direction) async {
-                    // Remove the item from the data source.
-                    setState(() {
-                      _experimentsViewmodel.experiments.removeAt(index);
-                    });
+              Dismissible(
+                key: UniqueKey(),
+                onDismissed: (direction) async {
+                  // Remove the item from the data source.
+                  setState(() {
+                    _experimentsViewmodel.experiments.removeAt(index);
+                  });
 
-                    EZTSnackBar.clear(context);
+                  EZTSnackBar.clear(context);
 
-                    bool permanentlyDeleted = true;
+                  bool permanentlyDeleted = true;
 
-                    EZTSnackBar.show(
-                      context,
-                      '${experiment.name} excluído!',
-                      eztSnackBarType: EZTSnackBarType.error,
-                      action: SnackBarAction(
-                        label: 'Desfazer',
-                        // textColor: AppColors.white, //TODO: COLOR-FIX
-                        onPressed: () {
-                          setState(() {
-                            _experimentsViewmodel.experiments
-                                .insert(index, experiment);
-                            permanentlyDeleted = false;
-                          });
-                          // todoRepository.saveTodoList(todos);
-                        },
-                      ),
-                      onDismissFunction: () async {
-                        if (permanentlyDeleted) {
-                          await _experimentsViewmodel
-                              .deleteExperiment(experiment.id);
-                        }
+                  EZTSnackBar.show(
+                    context,
+                    '${experiment.name} excluído!',
+                    eztSnackBarType: EZTSnackBarType.error,
+                    action: SnackBarAction(
+                      label: 'Desfazer',
+                      textColor: Colors.white,
+                      onPressed: () {
+                        setState(() {
+                          _experimentsViewmodel.experiments
+                              .insert(index, experiment);
+                          permanentlyDeleted = false;
+                        });
+                        // todoRepository.saveTodoList(todos);
                       },
-                    );
-                  },
-                  background: Container(
-                    color: Colors.red,
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Icon(
-                            PhosphorIcons.trash(PhosphorIconsStyle.light),
-                            color: Colors.white,
-                          ),
-                          const Text(
-                            'Excluir',
-                            style: TextStyle(color: Colors.white),
-                            textAlign: TextAlign.right,
-                          ),
-                        ],
-                      ),
+                    ),
+                    onDismissFunction: () async {
+                      if (permanentlyDeleted) {
+                        await _experimentsViewmodel
+                            .deleteExperiment(experiment.id);
+                      }
+                    },
+                  );
+                },
+                background: Container(
+                  color: Colors.red,
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Icon(
+                          PhosphorIcons.trash(PhosphorIconsStyle.light),
+                          color: Colors.white,
+                        ),
+                        const Text(
+                          'Excluir',
+                          style: TextStyle(color: Colors.white),
+                          textAlign: TextAlign.right,
+                        ),
+                      ],
                     ),
                   ),
-                  direction: DismissDirection.endToStart,
-                  confirmDismiss:
-                      _homeViewmodel.accountViewmodel.enableExcludeConfirmation!
-                          ? (DismissDirection direction) async {
-                              return await showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return const ExperimentExclusionDialog();
-                                },
-                              );
-                            }
-                          : null,
-                  child: ExperimentCard(
-                    experiment: experiment,
-                    indexOfExperiment: index + 1,
-                  ),
+                ),
+                direction: DismissDirection.endToStart,
+                confirmDismiss:
+                    _homeViewmodel.accountViewmodel.enableExcludeConfirmation!
+                        ? (DismissDirection direction) async {
+                            return await showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return const ExperimentExclusionDialog();
+                              },
+                            );
+                          }
+                        : null,
+                child: ExperimentCard(
+                  experiment: experiment,
+                  indexOfExperiment: index + 1,
                 ),
               ),
               if (_experimentsViewmodel.isLoadingMoreRunning == false &&
@@ -256,18 +254,23 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
               if (_experimentsViewmodel.hasNextPage == false &&
                   _experimentsViewmodel.state == StateEnum.success)
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 16.0),
+                  padding: const EdgeInsets.fromLTRB(4, 0, 4, 16),
                   child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      //set border radius more than 50% of height and width to make circle
+                    ),
                     elevation: 4,
                     // shadowColor: AppColors.white,//TODO: COLOR-FIX
-                    // color: AppColors.yellow, //TODO: COLOR-FIX
+                    color: context.getApplyedColorScheme
+                        .tertiaryContainer, //TODO: COLOR-FIX
                     child: Padding(
                       padding: const EdgeInsets.only(top: 30, bottom: 30),
                       child: Center(
                         child: Text(
                           'Todos os experimentos exibidos!',
                           style: TextStyles.buttonPrimary.copyWith(
-                            // color: AppColors.greySweet, //TODO: COLOR-FIX
+                            color: context.getApplyedColorScheme.tertiary,
                             fontSize: 20,
                           ),
                         ),
@@ -305,137 +308,142 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
               // _experimentsViewmodel.setFinishedFilter(false);
               return _experimentsViewmodel.fetch();
             },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Column(
-                children: [
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  //   child: _searchTermInput,
-                  // ),
-                  // const SizedBox(
-                  //   height: 16,
-                  // ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        SegmentedButton(
-                          emptySelectionAllowed: false,
-                          showSelectedIcon: false,
-                          segments: <ButtonSegment<int>>[
-                            ButtonSegment<int>(
-                              value: 0,
-                              label: const Text('Em andamento'),
-                              icon: Icon(PhosphorIcons.clockClockwise()),
+            child: Column(
+              children: [
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                //   child: _searchTermInput,
+                // ),
+                // const SizedBox(
+                //   height: 16,
+                // ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      SegmentedButton(
+                        emptySelectionAllowed: false,
+                        // style: ElevatedButton.styleFrom(
+                        //   foregroundColor:
+                        //       context.getApplyedColorScheme.secondary,
+                        //   // side: BorderSide(
+                        //   //   color: context.getApplyedColorScheme.secondary,
+                        //   // ),
+                        // ),
+                        showSelectedIcon: false,
+                        segments: <ButtonSegment<int>>[
+                          ButtonSegment<int>(
+                            value: 0,
+                            label: const Text('Em andamento'),
+                            icon: Icon(
+                              PhosphorIcons.clockClockwise(),
                             ),
-                            ButtonSegment<int>(
-                              value: 1,
-                              label: const Text('Concluído'),
-                              icon: Icon(PhosphorIcons.checks()),
-                            ),
-                          ],
-                          selected: <int>{selectedButtonSegment},
-                          onSelectionChanged: (Set<int> newSelection) {
-                            setState(() {
-                              selectedButtonSegment = newSelection.first;
-                              if (selectedButtonSegment == 0) {
-                                if (_experimentsViewmodel.finishedFilter !=
-                                    false) {
-                                  _experimentsViewmodel
-                                      .setFinishedFilter(false);
-                                  _experimentsViewmodel.fetch();
-                                  return;
-                                }
-
+                          ),
+                          ButtonSegment<int>(
+                            value: 1,
+                            label: const Text('Concluído'),
+                            icon: Icon(PhosphorIcons.checks()),
+                          ),
+                        ],
+                        selected: <int>{selectedButtonSegment},
+                        onSelectionChanged: (Set<int> newSelection) {
+                          setState(() {
+                            selectedButtonSegment = newSelection.first;
+                            if (selectedButtonSegment == 0) {
+                              if (_experimentsViewmodel.finishedFilter !=
+                                  false) {
+                                _experimentsViewmodel.setFinishedFilter(false);
+                                _experimentsViewmodel.fetch();
                                 return;
                               }
 
-                              if (_experimentsViewmodel.finishedFilter ||
-                                  !_homeViewmodel.hasInternetConnection) return;
+                              return;
+                            }
 
-                              _experimentsViewmodel.setFinishedFilter(true);
-                              _experimentsViewmodel.fetch();
-                            });
-                          },
+                            if (_experimentsViewmodel.finishedFilter ||
+                                !_homeViewmodel.hasInternetConnection) return;
+
+                            _experimentsViewmodel.setFinishedFilter(true);
+                            _experimentsViewmodel.fetch();
+                          });
+                        },
+                      ),
+                      // ToggleSwitch(
+                      //   initialLabelIndex:
+                      //       _experimentsViewmodel.finishedFilter ? 1 : 0,
+                      //   minWidth: (widthMQ * 0.4),
+                      //   totalSwitches: 2,
+                      //   labels: const ['Em andamento', 'Concluído'],
+                      //   // activeFgColor: AppColors.white, //TODO: COLOR-FIX
+                      //   inactiveFgColor: AppColors.primary,
+                      //   activeBgColor: const [AppColors.primary],
+                      //   // inactiveBgColor: AppColors.white, //TODO: COLOR-FIX
+                      //   borderColor: const [AppColors.primary],
+                      //   borderWidth: 1.5,
+                      //   onToggle: (index) {
+                      //     if (index == 0) {
+                      //       if (_experimentsViewmodel.finishedFilter !=
+                      //           false) {
+                      //         _experimentsViewmodel.setFinishedFilter(false);
+                      //         _experimentsViewmodel.fetch();
+                      //         return;
+                      //       }
+
+                      //       return;
+                      //     }
+
+                      //     if (_experimentsViewmodel.finishedFilter ||
+                      //         !_homeViewmodel.hasInternetConnection) return;
+
+                      //     _experimentsViewmodel.setFinishedFilter(true);
+                      //     _experimentsViewmodel.fetch();
+                      //   },
+                      // ),
+                      // const SizedBox(
+                      //   width: 4,
+                      // ),
+                      IconButton(
+                        icon: Icon(
+                          _experimentsViewmodel.anyFilterIsEnabled()
+                              ? PhosphorIcons.funnel(PhosphorIconsStyle.fill)
+                              : PhosphorIcons.funnel(),
+                          // color: AppColors.primary,
                         ),
-                        // ToggleSwitch(
-                        //   initialLabelIndex:
-                        //       _experimentsViewmodel.finishedFilter ? 1 : 0,
-                        //   minWidth: (widthMQ * 0.4),
-                        //   totalSwitches: 2,
-                        //   labels: const ['Em andamento', 'Concluído'],
-                        //   // activeFgColor: AppColors.white, //TODO: COLOR-FIX
-                        //   inactiveFgColor: AppColors.primary,
-                        //   activeBgColor: const [AppColors.primary],
-                        //   // inactiveBgColor: AppColors.white, //TODO: COLOR-FIX
-                        //   borderColor: const [AppColors.primary],
-                        //   borderWidth: 1.5,
-                        //   onToggle: (index) {
-                        //     if (index == 0) {
-                        //       if (_experimentsViewmodel.finishedFilter !=
-                        //           false) {
-                        //         _experimentsViewmodel.setFinishedFilter(false);
-                        //         _experimentsViewmodel.fetch();
-                        //         return;
-                        //       }
-
-                        //       return;
-                        //     }
-
-                        //     if (_experimentsViewmodel.finishedFilter ||
-                        //         !_homeViewmodel.hasInternetConnection) return;
-
-                        //     _experimentsViewmodel.setFinishedFilter(true);
-                        //     _experimentsViewmodel.fetch();
-                        //   },
-                        // ),
-                        // const SizedBox(
-                        //   width: 4,
-                        // ),
-                        IconButton(
-                            icon: Icon(
-                              _experimentsViewmodel.anyFilterIsEnabled()
-                                  ? PhosphorIcons.funnel(
-                                      PhosphorIconsStyle.fill)
-                                  : PhosphorIcons.funnel(),
-                              // color: AppColors.primary,
-                            ),
-                            onPressed: _showFiltersDialog),
-                        // Expanded(
-                        //   child: InkWell(
-                        //     customBorder: RoundedRectangleBorder(
-                        //       borderRadius: BorderRadius.circular(8),
-                        //     ),
-                        //     onTap: _showFiltersDialog,
-                        //     child: Padding(
-                        //       padding: const EdgeInsets.all(10.0),
-                        //       child: Icon(
-                        //         _experimentsViewmodel.anyFilterIsEnabled()
-                        //             ? PhosphorIcons.funnelFill
-                        //             : PhosphorIcons.funnel,
-                        //         color: AppColors.primary,
-                        //       ),
-                        //     ),
-                        //   ),
-                        // )
-                      ],
-                    ),
+                        onPressed: _showFiltersDialog,
+                      ),
+                      // Expanded(
+                      //   child: InkWell(
+                      //     customBorder: RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.circular(8),
+                      //     ),
+                      //     onTap: _showFiltersDialog,
+                      //     child: Padding(
+                      //       padding: const EdgeInsets.all(10.0),
+                      //       child: Icon(
+                      //         _experimentsViewmodel.anyFilterIsEnabled()
+                      //             ? PhosphorIcons.funnelFill
+                      //             : PhosphorIcons.funnel,
+                      //         color: AppColors.primary,
+                      //       ),
+                      //     ),
+                      //   ),
+                      // )
+                    ],
                   ),
-                  if (_experimentsViewmodel.experiments.isNotEmpty)
-                    Text(
-                      "🔬 ${_experimentsViewmodel.totalOfExperiments} experimento${isPlural}encontrado$isPlural",
-                      style: TextStyles.link.copyWith(fontSize: 16),
-                    ),
-                  const SizedBox(
-                    height: 16,
+                ),
+                if (_experimentsViewmodel.experiments.isNotEmpty)
+                  Text(
+                    "🔬 ${_experimentsViewmodel.totalOfExperiments} experimento${isPlural}encontrado$isPlural",
+                    style: TextStyles.link.copyWith(fontSize: 16),
                   ),
-                  Expanded(
-                    child: _buildExperimentsList(heightMQ),
-                  ),
-                ],
-              ),
+                const SizedBox(
+                  height: 16,
+                ),
+                Expanded(
+                  child: _buildExperimentsList(heightMQ),
+                ),
+              ],
             ),
           ),
         );

@@ -80,99 +80,92 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
         var treatment = _treatmentsViewmodel.treatments[index];
         return Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: Dismissible(
-                key: Key(treatment.id),
-                onDismissed: (direction) {
-                  // Remove the item from the data source.
-                  setState(() {
-                    _treatmentsViewmodel.treatments.removeAt(index);
-                  });
+            Dismissible(
+              key: Key(treatment.id),
+              onDismissed: (direction) {
+                // Remove the item from the data source.
+                setState(() {
+                  _treatmentsViewmodel.treatments.removeAt(index);
+                });
 
-                  EZTSnackBar.clear(context);
+                EZTSnackBar.clear(context);
 
-                  bool permanentlyDeleted = true;
+                bool permanentlyDeleted = true;
 
-                  EZTSnackBar.show(
-                    context,
-                    '${treatment.name} excluído!',
-                    eztSnackBarType: EZTSnackBarType.error,
-                    action: SnackBarAction(
-                      label: 'Desfazer',
-                      // textColor: AppColors.white, //TODO: COLOR-FIX
-                      onPressed: () {
-                        setState(() {
-                          _treatmentsViewmodel.treatments
-                              .insert(index, treatment);
-                          permanentlyDeleted = false;
-                        });
-                        // todoRepository.saveTodoList(todos);
-                      },
-                    ),
-                    onDismissFunction: () async {
-                      if (permanentlyDeleted) {
-                        await _treatmentsViewmodel
-                            .deleteTreatment(treatment.id);
-                      }
+                EZTSnackBar.show(
+                  context,
+                  '${treatment.name} excluído!',
+                  eztSnackBarType: EZTSnackBarType.error,
+                  action: SnackBarAction(
+                    label: 'Desfazer',
+                    textColor: Colors.white,
+                    onPressed: () {
+                      setState(() {
+                        _treatmentsViewmodel.treatments
+                            .insert(index, treatment);
+                        permanentlyDeleted = false;
+                      });
+                      // todoRepository.saveTodoList(todos);
                     },
-                  );
-                },
-                background: Container(
-                  color: Colors.red,
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Icon(
-                          PhosphorIcons.trash(),
-                          color: Colors.white,
-                        ),
-                        const Text(
-                          'Excluir',
-                          style: TextStyle(color: Colors.white),
-                          textAlign: TextAlign.right,
-                        ),
-                      ],
-                    ),
+                  ),
+                  onDismissFunction: () async {
+                    if (permanentlyDeleted) {
+                      await _treatmentsViewmodel.deleteTreatment(treatment.id);
+                    }
+                  },
+                );
+              },
+              background: Container(
+                color: Colors.red,
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Icon(
+                        PhosphorIcons.trash(),
+                        color: Colors.white,
+                      ),
+                      const Text(
+                        'Excluir',
+                        style: TextStyle(color: Colors.white),
+                        textAlign: TextAlign.right,
+                      ),
+                    ],
                   ),
                 ),
-                direction: DismissDirection.endToStart,
-                confirmDismiss:
-                    GetIt.I.get<SettingsViewmodel>().enableExcludeConfirmation!
-                        ? (DismissDirection direction) async {
-                            return await showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: const Text('Excluir o tratamento?'),
-                                  content: const Text(
-                                      'Você tem certeza que deseja excluir este tratamento?'),
-                                  actions: [
-                                    TextButton(
-                                        onPressed: () =>
-                                            Navigator.of(context).pop(true),
-                                        child: const Text("EXCLUIR")),
-                                    TextButton(
+              ),
+              direction: DismissDirection.endToStart,
+              confirmDismiss:
+                  GetIt.I.get<SettingsViewmodel>().enableExcludeConfirmation!
+                      ? (DismissDirection direction) async {
+                          return await showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text('Excluir o tratamento?'),
+                                content: const Text(
+                                    'Você tem certeza que deseja excluir este tratamento?'),
+                                actions: [
+                                  TextButton(
                                       onPressed: () =>
-                                          Navigator.of(context).pop(false),
-                                      child: const Text("CANCELAR"),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          }
-                        : null,
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: TreatmentCard(
-                    name: treatment.name,
-                    createdAt: treatment.createdAt!,
-                    description: treatment.description,
-                  ),
-                ),
+                                          Navigator.of(context).pop(true),
+                                      child: const Text("EXCLUIR")),
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(false),
+                                    child: const Text("CANCELAR"),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
+                      : null,
+              child: TreatmentCard(
+                name: treatment.name,
+                createdAt: treatment.createdAt!,
+                description: treatment.description,
               ),
             ),
             if (index == _treatmentsViewmodel.treatments.length - 1)
@@ -196,7 +189,7 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
             key: _refreshIndicatorKey,
             onRefresh: _treatmentsViewmodel.fetch,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 4),
               child: Column(
                 children: [
                   if (_treatmentsViewmodel.treatments.isNotEmpty &&
