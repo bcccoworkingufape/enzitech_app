@@ -30,20 +30,15 @@ class FAQBS extends StatelessWidget {
           RichText(
             textAlign: TextAlign.justify,
             text: TextSpan(
-              style: TextStyles.trailingRegular,
+              style: TextStyles(context).trailingRegular(),
               children: <TextSpan>[
                 TextSpan(
                   text: 'Pergunta: ',
-                  style: TextStyles.trailingRegular.copyWith(
-                    fontWeight: FontWeight.bold,
-                    // color: AppColors.danger, //TODO: COLOR-FIX
-                  ),
+                  style: TextStyles(context).trailingRegular(isBold: true),
                 ),
                 TextSpan(
                   text: 'Não consigo criar enzimas',
-                  style: TextStyles.trailingRegular.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyles(context).trailingRegular(isBold: true),
                 ),
               ],
             ),
@@ -54,19 +49,16 @@ class FAQBS extends StatelessWidget {
           RichText(
             textAlign: TextAlign.justify,
             text: TextSpan(
-              style: TextStyles.trailingRegular,
+              style: TextStyles(context).trailingRegular(),
               children: <TextSpan>[
                 TextSpan(
                   text: 'Resposta: ',
-                  style: TextStyles.trailingRegular.copyWith(
-                    fontWeight: FontWeight.bold,
-                    // color: AppColors.info, //TODO: COLOR-FIX
-                  ),
+                  style: TextStyles(context).trailingRegular(isBold: true),
                 ),
                 TextSpan(
                   text:
                       'A funcionalidade de criação de enzimas é restrita ao adminstrador do Enzitech, pois atualmente para o cadastro de uma enzima é necessário sua implementação até que a mesma possa estar disponível para uso, caso necessite de algum novo tipo de enzima solicite ao administrador do sistema.',
-                  style: TextStyles.trailingRegular,
+                  style: TextStyles(context).trailingRegular(),
                 ),
               ],
             ),
@@ -77,21 +69,16 @@ class FAQBS extends StatelessWidget {
           RichText(
             textAlign: TextAlign.justify,
             text: TextSpan(
-              style: TextStyles.trailingRegular,
+              style: TextStyles(context).trailingRegular(),
               children: <TextSpan>[
                 TextSpan(
                   text: 'Pergunta: ',
-                  style: TextStyles.trailingRegular.copyWith(
-                    fontWeight: FontWeight.bold,
-                    // color: AppColors.danger, //TODO: COLOR-FIX
-                  ),
+                  style: TextStyles(context).trailingRegular(isBold: true),
                 ),
                 TextSpan(
                   text:
                       'Não consigo baixar a planilha de resultados do experimento',
-                  style: TextStyles.trailingRegular.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyles(context).trailingRegular(isBold: true),
                 ),
               ],
             ),
@@ -102,41 +89,36 @@ class FAQBS extends StatelessWidget {
           RichText(
             textAlign: TextAlign.justify,
             text: TextSpan(
-              style: TextStyles.trailingRegular,
+              style: TextStyles(context).trailingRegular(),
               children: <TextSpan>[
                 TextSpan(
                   text: 'Resposta: ',
-                  style: TextStyles.trailingRegular.copyWith(
-                    fontWeight: FontWeight.bold,
-                    // color: AppColors.info, //TODO: COLOR-FIX
-                  ),
+                  style: TextStyles(context).trailingRegular(isBold: true),
                 ),
                 TextSpan(
                   text:
                       'Utilizando algum gerenciador de arquivos, verifique o diretório localizado em: ',
-                  style: TextStyles.trailingRegular,
+                  style: TextStyles(context).trailingRegular(),
                 ),
                 GetIt.I.get<ExperimentResultsViewmodel>().savedPath.isNotEmpty
                     ? TextSpan(
                         text:
                             GetIt.I.get<ExperimentResultsViewmodel>().savedPath,
-                        style: TextStyles.trailingRegular.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style:
+                            TextStyles(context).trailingRegular(isBold: true),
                       )
                     : TextSpan(
                         text:
                             "(Diretório ainda não identificado, tente salvar um experimento para que o app possa detectar o local)",
-                        style: TextStyles.trailingRegular.copyWith(
-                          fontWeight: FontWeight.bold,
-                          // color: AppColors.warning, //TODO: COLOR-FIX
+                        style: TextStyles(context).trailingRegular(
+                          isBold: true,
                           fontStyle: FontStyle.italic,
                         ),
                       ),
                 TextSpan(
                   text:
                       ' e limpe todas as planilhas existentes! \nApós excluídos ou movidos desta pasta, a função de salvar voltará a funcionar corretamente; isto acontece devido a limitações das novas regras de privacidade do Android, desta forma, este aplicativo não tem autorização de apagar arquivos criados por instalações anteriores ou de outras fontes, causando este erro.',
-                  style: TextStyles.trailingRegular,
+                  style: TextStyles(context).trailingRegular(),
                 ),
               ],
             ),

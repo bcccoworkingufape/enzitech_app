@@ -17,7 +17,6 @@ import '../../../../../../core/domain/service/connection_checker/connection_chec
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../core/routing/routing.dart';
-import '../../../../../../shared/extensions/context_theme_mode_extensions.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../../../../shared/ui/widgets/ezt_appbar.dart';
 import '../../../../../enzyme/presentation/ui/pages/enzymes_fragment/enzymes_page.dart';

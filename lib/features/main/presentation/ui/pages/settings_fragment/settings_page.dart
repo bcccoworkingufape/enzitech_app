@@ -4,6 +4,7 @@ import 'dart:io';
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_svg/svg.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
@@ -17,7 +18,7 @@ import '../../../../../../shared/ui/ui.dart';
 import '../../../../../experiment/presentation/viewmodel/experiment_results_viewmodel.dart';
 import '../../../viewmodel/home_viewmodel.dart';
 import '../../../viewmodel/settings_viewmodel.dart';
-import '../../widgets/user_data_settings_section.dart';
+import '../../widgets/settings_section.dart';
 import 'fragments/about_app_bs.dart';
 import 'fragments/faq_bs.dart';
 
@@ -69,14 +70,6 @@ class _SettingsPageState extends State<SettingsPage> {
     }
   }
 
-  get decorationOfConfigTiles => const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(25.0),
-          topRight: Radius.circular(25.0),
-        ),
-      );
-
   get descriptionTextStyle => const TextStyle(
         color: Color(0xFF97979A),
         fontSize: 17,
@@ -113,9 +106,8 @@ class _SettingsPageState extends State<SettingsPage> {
                               borderRadius: BorderRadius.circular(16.0),
                             ),
                             context: context,
-                            builder: (BuildContext context) => Container(
+                            builder: (BuildContext context) => SizedBox(
                               height: MediaQuery.of(context).size.height * 0.75,
-                              decoration: decorationOfConfigTiles,
                               child: const AboutAppBS(),
                             ),
                           );
@@ -133,9 +125,8 @@ class _SettingsPageState extends State<SettingsPage> {
                               borderRadius: BorderRadius.circular(16.0),
                             ),
                             context: context,
-                            builder: (BuildContext context) => Container(
+                            builder: (BuildContext context) => SizedBox(
                               height: MediaQuery.of(context).size.height * 0.75,
-                              decoration: decorationOfConfigTiles,
                               child: const FAQBS(),
                             ),
                           );
@@ -283,6 +274,20 @@ class _SettingsPageState extends State<SettingsPage> {
                           _homeViewmodel.experimentsViewmodel.clearFilters();
                           _settingsViewmodel.logout();
                         },
+                      ),
+                      GestureDetector(
+                        onTap: _settingsViewmodel.openUrl,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                          child: Align(
+                            alignment: Alignment.bottomCenter,
+                            child: SvgPicture.asset(
+                              AppSvgs.developedBy,
+                              alignment: Alignment.bottomCenter,
+                              width: MediaQuery.of(context).size.width,
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),

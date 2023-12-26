@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../shared/extensions/context_theme_mode_extensions.dart';
+
 class SettingsSection extends StatelessWidget {
   final String title;
   final List<Widget> tiles;
@@ -15,9 +17,10 @@ class SettingsSection extends StatelessWidget {
           padding: const EdgeInsets.only(top: 16, left: 16, bottom: 8),
           child: Text(
             title,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
+              color: context.getApplyedColorScheme.onPrimaryContainer,
             ),
           ),
         ),

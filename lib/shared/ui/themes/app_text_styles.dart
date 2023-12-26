@@ -193,11 +193,13 @@ class TextStyles {
     fontWeight: FontWeight.w600,
     // color: AppColors.heading,
   );
-  static final trailingRegular = GoogleFonts.ubuntu(
-    fontSize: 16,
-    fontWeight: FontWeight.w400,
-    // color: AppColors.heading,
-  );
+  trailingRegular({bool isBold = false, FontStyle? fontStyle}) =>
+      GoogleFonts.ubuntu(
+        fontSize: 16,
+        fontStyle: fontStyle,
+        fontWeight: isBold ? FontWeight.bold : FontWeight.w400,
+        color: context.getApplyedColorScheme.inverseSurface,
+      );
   static final trailingBold = GoogleFonts.ubuntu(
     fontSize: 16,
     fontWeight: FontWeight.w600,

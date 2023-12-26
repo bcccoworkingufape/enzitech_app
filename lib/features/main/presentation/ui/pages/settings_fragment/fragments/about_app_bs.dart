@@ -35,44 +35,40 @@ class AboutAppBS extends StatelessWidget {
             textAlign: TextAlign.justify,
             text: TextSpan(
               text: 'O ',
-              style: TextStyles.trailingRegular,
+              style: TextStyles(context).trailingRegular(),
               children: <TextSpan>[
                 TextSpan(
                   text: 'Enzitech',
-                  style: TextStyles.trailingRegular
-                      .copyWith(fontWeight: FontWeight.bold),
+                  style: TextStyles(context).trailingRegular(isBold: true),
                 ),
                 TextSpan(
                   text:
                       ' foi concebido como uma solução para o estudo e realização de experimentos no campo das atividades enzimáticas do solo, idealizado em conjunto pelo ',
-                  style: TextStyles.trailingRegular,
+                  style: TextStyles(context).trailingRegular(),
                 ),
                 TextSpan(
                   text: 'Laboratório BCC Coworking',
-                  style: TextStyles.trailingRegular
-                      .copyWith(fontWeight: FontWeight.bold),
+                  style: TextStyles(context).trailingRegular(isBold: true),
                 ),
                 TextSpan(
                   text: ' e o ',
-                  style: TextStyles.trailingRegular,
+                  style: TextStyles(context).trailingRegular(),
                 ),
                 TextSpan(
                   text: 'Laboratório de Pesquisa em Solo',
-                  style: TextStyles.trailingRegular
-                      .copyWith(fontWeight: FontWeight.bold),
+                  style: TextStyles(context).trailingRegular(isBold: true),
                 ),
                 TextSpan(
                   text: ', localizados na ',
-                  style: TextStyles.trailingRegular,
+                  style: TextStyles(context).trailingRegular(),
                 ),
                 TextSpan(
                   text: 'Universidade Federal do Agreste de Pernambuco (UFAPE)',
-                  style: TextStyles.trailingRegular
-                      .copyWith(fontWeight: FontWeight.bold),
+                  style: TextStyles(context).trailingRegular(isBold: true),
                 ),
                 TextSpan(
                   text: '.',
-                  style: TextStyles.trailingRegular,
+                  style: TextStyles(context).trailingRegular(),
                 ),
               ],
             ),
@@ -92,12 +88,11 @@ class AboutAppBS extends StatelessWidget {
             textAlign: TextAlign.justify,
             text: TextSpan(
               text: '• Armstrong Lohãns ',
-              style: TextStyles.trailingRegular
-                  .copyWith(fontWeight: FontWeight.bold),
+              style: TextStyles(context).trailingRegular(isBold: true),
               children: <TextSpan>[
                 TextSpan(
                   text: '(Desenvolvedor mobile)',
-                  style: TextStyles.trailingRegular,
+                  style: TextStyles(context).trailingRegular(),
                 ),
               ],
             ),
@@ -109,12 +104,12 @@ class AboutAppBS extends StatelessWidget {
             textAlign: TextAlign.justify,
             text: TextSpan(
               text: '• Matheus Noronha ',
-              style: TextStyles.trailingRegular
-                  .copyWith(fontWeight: FontWeight.bold),
+              style: TextStyles(context).trailingRegular(isBold: true),
               children: <TextSpan>[
                 TextSpan(
-                    text: '(Desenvolvedor back-end)',
-                    style: TextStyles.trailingRegular),
+                  text: '(Desenvolvedor back-end)',
+                  style: TextStyles(context).trailingRegular(),
+                ),
               ],
             ),
           ),
@@ -125,12 +120,11 @@ class AboutAppBS extends StatelessWidget {
             textAlign: TextAlign.justify,
             text: TextSpan(
               text: '• Weverton Cintra ',
-              style: TextStyles.trailingRegular
-                  .copyWith(fontWeight: FontWeight.bold),
+              style: TextStyles(context).trailingRegular(isBold: true),
               children: <TextSpan>[
                 TextSpan(
                   text: '(Desenvolvedor back-end)',
-                  style: TextStyles.trailingRegular,
+                  style: TextStyles(context).trailingRegular(),
                 ),
               ],
             ),
@@ -142,12 +136,11 @@ class AboutAppBS extends StatelessWidget {
             textAlign: TextAlign.justify,
             text: TextSpan(
               text: '• José Vieira ',
-              style: TextStyles.trailingRegular
-                  .copyWith(fontWeight: FontWeight.bold),
+              style: TextStyles(context).trailingRegular(isBold: true),
               children: <TextSpan>[
                 TextSpan(
                   text: '(Desenvolvedor mobile)',
-                  style: TextStyles.trailingRegular,
+                  style: TextStyles(context).trailingRegular(),
                 ),
               ],
             ),
@@ -159,12 +152,11 @@ class AboutAppBS extends StatelessWidget {
             textAlign: TextAlign.justify,
             text: TextSpan(
               text: '• Eduarda Interaminense ',
-              style: TextStyles.trailingRegular
-                  .copyWith(fontWeight: FontWeight.bold),
+              style: TextStyles(context).trailingRegular(isBold: true),
               children: <TextSpan>[
                 TextSpan(
                   text: '(Gestão do Projeto)',
-                  style: TextStyles.trailingRegular,
+                  style: TextStyles(context).trailingRegular(),
                 ),
               ],
             ),
@@ -176,12 +168,11 @@ class AboutAppBS extends StatelessWidget {
             textAlign: TextAlign.justify,
             text: TextSpan(
               text: '• Rodrigo Rocha ',
-              style: TextStyles.trailingRegular
-                  .copyWith(fontWeight: FontWeight.bold),
+              style: TextStyles(context).trailingRegular(isBold: true),
               children: <TextSpan>[
                 TextSpan(
                   text: '(Docente - BCC)',
-                  style: TextStyles.trailingRegular,
+                  style: TextStyles(context).trailingRegular(),
                 ),
               ],
             ),
@@ -193,12 +184,11 @@ class AboutAppBS extends StatelessWidget {
             textAlign: TextAlign.justify,
             text: TextSpan(
               text: '• Jean Teixeira ',
-              style: TextStyles.trailingRegular
-                  .copyWith(fontWeight: FontWeight.bold),
+              style: TextStyles(context).trailingRegular(isBold: true),
               children: <TextSpan>[
                 TextSpan(
                   text: '(Docente - BCC)',
-                  style: TextStyles.trailingRegular,
+                  style: TextStyles(context).trailingRegular(),
                 ),
               ],
             ),
@@ -210,12 +200,11 @@ class AboutAppBS extends StatelessWidget {
             textAlign: TextAlign.justify,
             text: TextSpan(
               text: '• Igor Medeiros ',
-              style: TextStyles.trailingRegular
-                  .copyWith(fontWeight: FontWeight.bold),
+              style: TextStyles(context).trailingRegular(isBold: true),
               children: <TextSpan>[
                 TextSpan(
                   text: '(Docente - BCC)',
-                  style: TextStyles.trailingRegular,
+                  style: TextStyles(context).trailingRegular(),
                 ),
               ],
             ),
@@ -227,12 +216,11 @@ class AboutAppBS extends StatelessWidget {
             textAlign: TextAlign.justify,
             text: TextSpan(
               text: '• Erika Valente ',
-              style: TextStyles.trailingRegular
-                  .copyWith(fontWeight: FontWeight.bold),
+              style: TextStyles(context).trailingRegular(isBold: true),
               children: <TextSpan>[
                 TextSpan(
                   text: '(Docente - Agronomia)',
-                  style: TextStyles.trailingRegular,
+                  style: TextStyles(context).trailingRegular(),
                 ),
               ],
             ),
@@ -244,12 +232,11 @@ class AboutAppBS extends StatelessWidget {
             textAlign: TextAlign.justify,
             text: TextSpan(
               text: '• Jamille Barros ',
-              style: TextStyles.trailingRegular
-                  .copyWith(fontWeight: FontWeight.bold),
+              style: TextStyles(context).trailingRegular(isBold: true),
               children: <TextSpan>[
                 TextSpan(
                   text: '(Docente - Agronomia)',
-                  style: TextStyles.trailingRegular,
+                  style: TextStyles(context).trailingRegular(),
                 ),
               ],
             ),
