@@ -11,6 +11,7 @@ import 'package:media_scanner/media_scanner.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 
 // 🌎 Project imports:
 import '../../../../core/enums/enums.dart';
@@ -178,10 +179,14 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
 
       excel.delete('Sheet1');
 
-      // ask for permission
-      await Permission.storage.request();
-      var status = await Permission.storage.status;
-      if (status.isDenied) {
+      final plugin = DeviceInfoPlugin();
+      final android = await plugin.androidInfo;
+
+      final storageStatus = android.version.sdkInt < 33
+          ? await Permission.storage.request() // ask for permission
+          : PermissionStatus.granted;
+
+      if (storageStatus.isDenied) {
         // We didn't ask for permission yet or the permission has been denied   before but not permanently.
         return false;
       }
@@ -199,7 +204,7 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
         openAppSettings();
       }
 
-      if (status.isGranted) {
+      if (storageStatus.isGranted) {
         // here you add the code to store the file
         // final directory = await getExternalStorageDirectory();
         final filePath =

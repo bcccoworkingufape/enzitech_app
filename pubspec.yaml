@@ -33,6 +33,7 @@ dependencies:
   curl_logger_dio_interceptor: ^1.0.0
   dartz: ^0.10.1
   data_table_2: ^2.4.1
+  device_info_plus: ^9.1.1
   dio: ^5.4.0
   excel: ^4.0.0
   firebase_core: ^2.24.2
