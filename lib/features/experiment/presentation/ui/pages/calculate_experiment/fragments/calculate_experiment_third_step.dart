@@ -217,7 +217,7 @@ class _CalculateExperimentThirdStepPageState
                         _calculateExperimentViewmodel
                             .temporaryChoosedExperimentCombination.enzyme!.name,
                         textAlign: TextAlign.center,
-                        style: TextStyles.titleBoldBackground.copyWith(
+                        style: TextStyles(context).titleBoldBackground(
                           // color: AppColors.greySweet, //TODO: COLOR-FIX
                           fontWeight: FontWeight.w700,
                           fontSize: 28,
@@ -230,7 +230,7 @@ class _CalculateExperimentThirdStepPageState
                             .treatment!
                             .name,
                         textAlign: TextAlign.center,
-                        style: TextStyles.titleBoldBackground.copyWith(
+                        style: TextStyles(context).titleBoldBackground(
                           // color: AppColors.greySweet, //TODO: COLOR-FIX
                           fontWeight: FontWeight.w700,
                         ),
@@ -249,7 +249,7 @@ class _CalculateExperimentThirdStepPageState
                                 .enzyme!
                                 .formula,
                             textAlign: TextAlign.center,
-                            style: TextStyles.titleBoldBackground.copyWith(
+                            style: TextStyles(context).titleBoldBackground(
                               // color: AppColors.white, //TODO: COLOR-FIX
                               fontWeight: FontWeight.w600,
                               fontSize: 12,

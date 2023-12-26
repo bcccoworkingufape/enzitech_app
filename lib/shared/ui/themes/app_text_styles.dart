@@ -183,11 +183,12 @@ class TextStyles {
   /// `fontWeight:` FontWeight.w600,
   ///
   /// `color:` AppColors.background,
-  static final titleBoldBackground = GoogleFonts.ubuntu(
-    fontSize: 20,
-    fontWeight: FontWeight.w600,
-    // color: AppColors.white,
-  );
+  titleBoldBackground({double? fontSize, FontWeight? fontWeight}) =>
+      GoogleFonts.ubuntu(
+        fontSize: fontSize ?? 20,
+        fontWeight: fontWeight ?? FontWeight.w600,
+        color: context.getApplyedColorScheme.onBackground,
+      );
   static final titleListTile = GoogleFonts.ubuntu(
     fontSize: 17,
     fontWeight: FontWeight.w600,
