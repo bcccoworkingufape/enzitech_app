@@ -58,7 +58,6 @@ dependencies:
   permission_handler: ^11.1.0
   phosphor_flutter: ^2.0.1
   pretty_dio_logger: ^1.2.0-beta-1
-  settings_ui: ^2.0.2
   share_plus: ^7.2.1
   shared_preferences: ^2.0.17
   toggle_switch: ^2.0.1
