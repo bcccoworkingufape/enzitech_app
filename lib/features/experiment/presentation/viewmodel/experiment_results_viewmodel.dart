@@ -16,6 +16,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 // 🌎 Project imports:
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
+import '../../../main/presentation/viewmodel/settings_viewmodel.dart';
 import '../../domain/entities/experiment_result_entity.dart';
 import '../../domain/usecases/get_result/get_result_usecase.dart';
 import 'experiment_details_viewmodel.dart';
@@ -38,13 +39,6 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
   Failure? get failure => _failure;
   void _setFailure(Failure? failure) {
     _failure = failure;
-  }
-
-  String _savedPath = '';
-  String get savedPath => _savedPath;
-  void setSavedPath(String savedPath) {
-    _savedPath = savedPath;
-    notifyListeners();
   }
 
   ExperimentResultEntity? _experimentResult;
@@ -208,11 +202,12 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
         // here you add the code to store the file
         // final directory = await getExternalStorageDirectory();
         final filePath =
-            '${await getDownloadEnzitechPath()}/${GetIt.I.get<ExperimentDetailsViewmodel>().experiment!.name.replaceAll(' ', '-')}.xlsx';
+            '${await GetIt.I.get<SettingsViewmodel>().getDownloadEnzitechPath()}/${GetIt.I.get<ExperimentDetailsViewmodel>().experiment!.name.replaceAll(' ', '-')}.xlsx';
         final file = File(filePath);
         if (file.existsSync()) {
           //TODO: check solution, this doesnt work when app is removed and reinstalled (API 30+)
-          await file.delete(recursive: true);
+          await File(filePath).delete();
+          // await file.delete(recursive: true);
         }
         MediaScanner.loadMedia(path: filePath);
 
@@ -226,7 +221,7 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
       if (e is PathNotFoundException) {
         _setFailure(UnableToSaveFailure(
             message:
-                'Não foi possível criar o arquivo, cheque seu diretório "$_savedPath" e limpe todas as planilhas existentes!'));
+                'Não foi possível criar o arquivo, cheque seu diretório "${GetIt.I.get<SettingsViewmodel>().savedPath}" e limpe todas as planilhas existentes!'));
         setStateEnum(StateEnum.error);
       }
       return false;
@@ -253,38 +248,6 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
   } */
 
   //TODO: Improve this method
-  Future<String?> getDownloadEnzitechPath() async {
-    Directory? directory;
-    try {
-      if (Platform.isIOS) {
-        directory = await getApplicationDocumentsDirectory();
-      } else {
-        directory = Directory('/storage/emulated/0/Download');
-        // Put file in global download folder, if for an unknown reason it didn't exist, we fallback
-        // ignore: avoid_slow_async_io
-        if (!await directory.exists()) {
-          directory = await getExternalStorageDirectory();
-        }
-
-        directory = Directory('${directory!.path}/Enzitech');
-
-        if (!await directory.exists()) {
-          Directory(directory.path)
-              .create()
-              // The created directory is returned as a Future.
-              .then((Directory directory) {
-            // print('${directory.path} CRIADO!');
-          });
-        }
-      }
-    } catch (err, stack) {
-      // print("Cannot get download folder path");
-    }
-
-    setSavedPath(directory?.path ?? 'seus arquivos');
-
-    return directory?.path;
-  }
 
   //TODO: Improve this method
   Future<bool> shareResult() async {
@@ -316,7 +279,7 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
           // here you add the code to store the file
           final directory = await getExternalStorageDirectory();
           final filePath =
-              '${await getDownloadEnzitechPath()}/${GetIt.I.get<ExperimentDetailsViewmodel>().experiment!.name.replaceAll(' ', '-')}.xlsx';
+              '${await GetIt.I.get<SettingsViewmodel>().getDownloadEnzitechPath()}/${GetIt.I.get<ExperimentDetailsViewmodel>().experiment!.name.replaceAll(' ', '-')}.xlsx';
           Share.shareXFiles([
             XFile(filePath,
                 name:

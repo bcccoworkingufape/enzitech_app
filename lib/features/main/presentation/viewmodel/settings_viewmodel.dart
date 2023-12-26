@@ -1,12 +1,14 @@
 // 🎯 Dart imports:
 import 'dart:io' as io;
+import 'dart:io';
 
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
-import 'package:get_it/get_it.dart';
+import 'package:open_file_manager/open_file_manager.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // 🌎 Project imports:
@@ -14,7 +16,6 @@ import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
 import '../../../../shared/utils/utils.dart';
 import '../../../authentication/domain/entities/user_entity.dart';
-import '../../../experiment/presentation/viewmodel/experiment_results_viewmodel.dart';
 import '../../domain/entities/app_info_entity.dart';
 import '../../domain/usecases/clear_user/clear_user_usecase.dart';
 import '../../domain/usecases/get_exclude_confirmation/get_exclude_confirmation_usecase.dart';
@@ -91,8 +92,7 @@ class SettingsViewmodel extends ChangeNotifier {
   }
 
   void fetchQuantityOfFiles() async {
-    var files = io.Directory(
-            "${await GetIt.I.get<ExperimentResultsViewmodel>().getDownloadEnzitechPath()}")
+    var files = io.Directory("${await getDownloadEnzitechPath()}")
         .listSync(); //use your folder name insted of resume.
     _setQuantityFiles(files.length);
   }
@@ -121,6 +121,50 @@ class SettingsViewmodel extends ChangeNotifier {
     _themeMode = newThemeMode;
     _saveThemeModeUseCase(_themeMode);
     notifyListeners();
+  }
+
+  String _savedPath = '';
+  String get savedPath => _savedPath;
+  void setSavedPath(String savedPath) {
+    _savedPath = savedPath;
+    notifyListeners();
+  }
+
+  Future<String?> getDownloadEnzitechPath() async {
+    Directory? directory;
+    try {
+      if (Platform.isIOS) {
+        directory = await getApplicationDocumentsDirectory();
+      } else {
+        directory = Directory('/storage/emulated/0/Download');
+        // Put file in global download folder, if for an unknown reason it didn't exist, we fallback
+        // ignore: avoid_slow_async_io
+        if (!await directory.exists()) {
+          directory = await getExternalStorageDirectory();
+        }
+
+        directory = Directory('${directory!.path}/Enzitech');
+
+        if (!await directory.exists()) {
+          Directory(directory.path)
+              .create()
+              // The created directory is returned as a Future.
+              .then((Directory directory) {
+            // print('${directory.path} CRIADO!');
+          });
+        }
+      }
+    } catch (err, stack) {
+      // print("Cannot get download folder path");
+    }
+
+    setSavedPath(directory?.path ?? 'seus arquivos');
+
+    return directory?.path;
+  }
+
+  Future<void> openEnzitechFolder() async {
+    openFileManager();
   }
 
   logout() async {

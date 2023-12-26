@@ -16,6 +16,7 @@ import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../shared/extensions/double_extensions.dart';
 import '../../../../../../shared/ui/ui.dart';
+import '../../../../../main/presentation/viewmodel/settings_viewmodel.dart';
 import '../../../../domain/entities/experiment_entity.dart';
 import '../../../viewmodel/experiment_details_viewmodel.dart';
 import '../../../viewmodel/experiment_results_viewmodel.dart';
@@ -465,7 +466,7 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                               (flag) => flag
                                   ? EZTSnackBar.show(
                                       context,
-                                      'Arquivo salvo em ${_experimentResultsViewmodel.savedPath}',
+                                      'Arquivo salvo em ${GetIt.I.get<SettingsViewmodel>().savedPath}',
                                       eztSnackBarType: EZTSnackBarType.success,
                                     )
                                   : _experimentResultsViewmodel.failure

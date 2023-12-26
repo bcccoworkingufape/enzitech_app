@@ -7,6 +7,7 @@ import 'package:get_it/get_it.dart';
 // 🌎 Project imports:
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../../../../experiment/presentation/viewmodel/experiment_results_viewmodel.dart';
+import '../../../../viewmodel/settings_viewmodel.dart';
 import '../../../widgets/ezt_bottomsheet.dart';
 
 class FAQBS extends StatelessWidget {
@@ -100,10 +101,9 @@ class FAQBS extends StatelessWidget {
                       'Utilizando algum gerenciador de arquivos, verifique o diretório localizado em: ',
                   style: TextStyles(context).trailingRegular(),
                 ),
-                GetIt.I.get<ExperimentResultsViewmodel>().savedPath.isNotEmpty
+                GetIt.I.get<SettingsViewmodel>().savedPath.isNotEmpty
                     ? TextSpan(
-                        text:
-                            GetIt.I.get<ExperimentResultsViewmodel>().savedPath,
+                        text: GetIt.I.get<SettingsViewmodel>().savedPath,
                         style:
                             TextStyles(context).trailingRegular(isBold: true),
                       )

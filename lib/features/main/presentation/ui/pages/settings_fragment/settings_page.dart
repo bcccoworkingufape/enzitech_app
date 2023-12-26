@@ -99,6 +99,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           PhosphorIcons.info(),
                         ),
                         title: const Text('Sobre o App'),
+                        trailing: Icon(PhosphorIcons.caretRight()),
                         onTap: () {
                           showModalBottomSheet(
                             isScrollControlled: true,
@@ -117,6 +118,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         leading: Icon(
                           PhosphorIcons.question(),
                         ),
+                        trailing: Icon(PhosphorIcons.caretRight()),
                         title: const Text('Perguntas frequentes'),
                         onTap: () {
                           showModalBottomSheet(
@@ -228,11 +230,8 @@ class _SettingsPageState extends State<SettingsPage> {
                     tiles: [
                       SettingsTile(
                         subtitle: Text(
-                          GetIt.I
-                                  .get<ExperimentResultsViewmodel>()
-                                  .savedPath
-                                  .isNotEmpty
-                              ? 'Localizado em: ${GetIt.I.get<ExperimentResultsViewmodel>().savedPath}'
+                          GetIt.I.get<SettingsViewmodel>().savedPath.isNotEmpty
+                              ? 'Localizado em: ${GetIt.I.get<SettingsViewmodel>().savedPath}'
                               : 'Salve o primeiro resultado para ver o local',
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
@@ -242,6 +241,8 @@ class _SettingsPageState extends State<SettingsPage> {
                         leading: Icon(
                           PhosphorIcons.files(),
                         ),
+                        trailing: Icon(PhosphorIcons.caretRight()),
+                        onTap: () => _settingsViewmodel.openEnzitechFolder(),
                       ),
                       SettingsTile(
                         leading: Icon(
