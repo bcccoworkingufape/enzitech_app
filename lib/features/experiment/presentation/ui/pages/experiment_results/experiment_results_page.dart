@@ -16,7 +16,6 @@ import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../shared/extensions/double_extensions.dart';
 import '../../../../../../shared/ui/ui.dart';
-import '../../../../../main/presentation/viewmodel/settings_viewmodel.dart';
 import '../../../../domain/entities/experiment_entity.dart';
 import '../../../viewmodel/experiment_details_viewmodel.dart';
 import '../../../viewmodel/experiment_results_viewmodel.dart';
@@ -443,7 +442,7 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                         // color: AppColors.white, //TODO: COLOR-FIX
                       ),
                       onPressed: () {
-                        _experimentResultsViewmodel.shareResult().then((flag) {
+                        _experimentResultsViewmodel.shareFile().then((flag) {
                           flag
                               ? null
                               : EZTSnackBar.show(
@@ -462,18 +461,20 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                         // color: AppColors.white, //TODO: COLOR-FIX
                       ),
                       onPressed: () {
-                        _experimentResultsViewmodel.exportToExcel().then(
+                        _experimentResultsViewmodel
+                            .openDialogToUserSaveFile()
+                            .then(
                               (flag) => flag
                                   ? EZTSnackBar.show(
                                       context,
-                                      'Arquivo salvo em ${GetIt.I.get<SettingsViewmodel>().savedPath}',
+                                      'Planilha salva com sucesso!',
                                       eztSnackBarType: EZTSnackBarType.success,
                                     )
                                   : _experimentResultsViewmodel.failure
                                           is! UnableToSaveFailure
                                       ? EZTSnackBar.show(
                                           context,
-                                          'Não foi possível salvar o arquivo, tente novamente.',
+                                          'Não foi possível salvar a planilha, tente novamente.',
                                           eztSnackBarType:
                                               EZTSnackBarType.error,
                                         )

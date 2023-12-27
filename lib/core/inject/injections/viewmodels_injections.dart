@@ -53,7 +53,7 @@ class ViewmodelsInjections {
       () => ExperimentDetailsViewmodel(getIt()),
     );
     getIt.registerLazySingleton<ExperimentResultsViewmodel>(
-      () => ExperimentResultsViewmodel(getIt()),
+      () => ExperimentResultsViewmodel(getIt(), getIt()),
     );
     getIt.registerLazySingleton<ExperimentsViewmodel>(
       () => ExperimentsViewmodel(getIt(), getIt(), getIt(), getIt()),

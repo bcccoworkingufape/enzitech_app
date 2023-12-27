@@ -15,7 +15,6 @@ import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../core/routing/routing.dart';
 import '../../../../../../shared/ui/ui.dart';
-import '../../../../../experiment/presentation/viewmodel/experiment_results_viewmodel.dart';
 import '../../../viewmodel/home_viewmodel.dart';
 import '../../../viewmodel/settings_viewmodel.dart';
 import '../../widgets/settings_section.dart';
@@ -41,7 +40,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
     _settingsViewmodel = GetIt.I.get<SettingsViewmodel>();
     _homeViewmodel = GetIt.I.get<HomeViewmodel>();
-    _settingsViewmodel.fetchQuantityOfFiles();
+    // _settingsViewmodel.fetchQuantityOfFiles();
 
     if (mounted) {
       _settingsViewmodel.addListener(() async {
@@ -228,7 +227,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   SettingsSection(
                     title: 'Detalhes do Aplicativo',
                     tiles: [
-                      SettingsTile(
+                      /* SettingsTile(
                         subtitle: Text(
                           GetIt.I.get<SettingsViewmodel>().savedPath.isNotEmpty
                               ? 'Localizado em: ${GetIt.I.get<SettingsViewmodel>().savedPath}'
@@ -243,7 +242,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         trailing: Icon(PhosphorIcons.caretRight()),
                         onTap: () => _settingsViewmodel.openEnzitechFolder(),
-                      ),
+                      ), */
                       SettingsTile(
                         leading: Icon(
                           PhosphorIcons.computerTower(),

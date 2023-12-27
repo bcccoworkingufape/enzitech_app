@@ -1,14 +1,8 @@
-// 🎯 Dart imports:
-import 'dart:io' as io;
-import 'dart:io';
-
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
-import 'package:open_file_manager/open_file_manager.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // 🌎 Project imports:
@@ -73,13 +67,6 @@ class SettingsViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  int _quantityFiles = 0;
-  int get quantityFiles => _quantityFiles;
-  void _setQuantityFiles(int quantityFiles) {
-    _quantityFiles = quantityFiles;
-    notifyListeners();
-  }
-
   get getEnviroment {
     switch (API.enviroment) {
       case EnvironmentEnum.dev:
@@ -89,6 +76,14 @@ class SettingsViewmodel extends ChangeNotifier {
       case EnvironmentEnum.prod:
         return 'Produção';
     }
+  }
+
+  /*
+  int _quantityFiles = 0;
+  int get quantityFiles => _quantityFiles;
+  void _setQuantityFiles(int quantityFiles) {
+    _quantityFiles = quantityFiles;
+    notifyListeners();
   }
 
   void fetchQuantityOfFiles() async {
@@ -106,6 +101,7 @@ class SettingsViewmodel extends ChangeNotifier {
       return 'Você tem $quantityFiles planilhas baixadas';
     }
   }
+ */
 
   bool? _enableExcludeConfirmation;
   bool? get enableExcludeConfirmation => _enableExcludeConfirmation;
@@ -130,7 +126,7 @@ class SettingsViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<String?> getDownloadEnzitechPath() async {
+  /* Future<String?> getDownloadEnzitechPath() async {
     Directory? directory;
     try {
       if (Platform.isIOS) {
@@ -165,7 +161,7 @@ class SettingsViewmodel extends ChangeNotifier {
 
   Future<void> openEnzitechFolder() async {
     openFileManager();
-  }
+  } */
 
   logout() async {
     setStateEnum(StateEnum.loading);

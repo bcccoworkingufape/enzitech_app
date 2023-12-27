@@ -33,7 +33,6 @@ dependencies:
   curl_logger_dio_interceptor: ^1.0.0
   dartz: ^0.10.1
   data_table_2: ^2.4.1
-  device_info_plus: ^9.1.1
   dio: ^5.4.0
   excel: ^4.0.0
   firebase_core: ^2.24.2
@@ -41,6 +40,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_expandable_fab: ^2.0.0
+  flutter_file_dialog: ^3.0.2
   flutter_form_builder: ^9.1.1
   flutter_localizations:
     sdk: flutter
@@ -52,12 +52,9 @@ dependencies:
   group_button: ^5.2.2
   internet_connection_checker: ^1.0.0+1
   intl: ^0.18.1
-  media_scanner: ^2.1.0
-  open_file_manager: ^0.0.4
   package_info_plus: ^5.0.1
   path_provider: ^2.0.14
   percent_indicator: ^4.2.2
-  permission_handler: ^11.1.0
   phosphor_flutter: ^2.0.1
   pretty_dio_logger: ^1.2.0-beta-1
   share_plus: ^7.2.1
