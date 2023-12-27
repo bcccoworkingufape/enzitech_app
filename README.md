@@ -21,8 +21,8 @@ Posteriormente este projeto tornou-se um [Trabalho de Conclusão de Curso](https
 - Executar `flutter pub get` para obter as dependencias do projeto
 - Em `local.properties` adicionar as seguintes linhas ao fim do arquivo:
 ```properties
-flutter.minSdkVersion=19
-flutter.targetSdkVersion=30
-flutter.compileSdkVersion=33
+flutter.minSdkVersion=20
+flutter.targetSdkVersion=34
+flutter.compileSdkVersion=34
 ```
 > Arquivo gerado em `enzitech_app\android\local.properties`
