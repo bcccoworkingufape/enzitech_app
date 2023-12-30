@@ -1,9 +1,25 @@
+import 'package:flutter/material.dart';
+
+import '../../extensions/context_theme_mode_extensions.dart';
+
 class AppSvgs {
-  static const error = "assets/svgs/error.svg";
-  static const fullLogo = "assets/svgs/full_logo.svg";
-  static const iconLogo = "assets/svgs/icon_logo.svg";
-  static const developedBy = "assets/svgs/developed_by.svg";
-  static const notFound = "assets/svgs/not_found.svg";
-  static const splash = "assets/svgs/splash.svg";
-  static const logo = "assets/svgs/logo.svg";
+  BuildContext context;
+
+  AppSvgs(this.context);
+
+  String error() => context.isDarkMode
+      ? "assets/svgs/dark/error.svg"
+      : "assets/svgs/light/error.svg";
+  String fullLogo() => context.isDarkMode
+      ? "assets/svgs/dark/full_logo.svg"
+      : "assets/svgs/light/full_logo.svg";
+  String iconLogo() => "assets/svgs/icon_logo.svg";
+  String developedBy() => context.isDarkMode
+      ? "assets/svgs/dark/developed_by.svg"
+      : "assets/svgs/light/developed_by.svg";
+  String notFound() => context.isDarkMode
+      ? "assets/svgs/dark/not_found.svg"
+      : "assets/svgs/light/not_found.svg";
+  String splash() => "assets/svgs/splash.svg";
+  String logo() => "assets/svgs/logo.svg";
 }

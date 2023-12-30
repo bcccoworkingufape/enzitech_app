@@ -101,7 +101,7 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
           Align(
             alignment: Alignment.center,
             child: SvgPicture.asset(
-              AppSvgs.iconLogo,
+              AppSvgs(context).iconLogo(),
               alignment: Alignment.center,
               width: 75,
             ),

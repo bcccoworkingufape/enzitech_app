@@ -299,7 +299,7 @@ class _HomePageState extends State<HomePage>
                       );
                     },
                     child: SvgPicture.asset(
-                      AppSvgs.iconLogo,
+                      AppSvgs(context).iconLogo(),
                       alignment: Alignment.center,
                       width: 75,
                     ),

@@ -134,7 +134,7 @@ class LoginPageState extends State<LoginPage> {
                   Align(
                     alignment: Alignment.center,
                     child: SvgPicture.asset(
-                      AppSvgs.fullLogo,
+                      AppSvgs(context).fullLogo(),
                       alignment: Alignment.center,
                       width: MediaQuery.of(context).size.width,
                     ),

@@ -46,7 +46,7 @@ class _EZTAppBarState extends State<EZTAppBar> {
       builder: (context, _) {
         return AppBar(
           title: SvgPicture.asset(
-            AppSvgs.logo,
+            AppSvgs(context).logo(),
             colorFilter: context.isDarkMode
                 ? const ColorFilter.mode(Colors.white, BlendMode.srcIn)
                 : const ColorFilter.mode(AppColors.primary, BlendMode.srcIn),

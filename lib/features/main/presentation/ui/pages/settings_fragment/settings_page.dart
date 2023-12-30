@@ -282,7 +282,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           child: Align(
                             alignment: Alignment.bottomCenter,
                             child: SvgPicture.asset(
-                              AppSvgs.developedBy,
+                              AppSvgs(context).developedBy(),
                               alignment: Alignment.bottomCenter,
                               width: MediaQuery.of(context).size.width,
                             ),

@@ -89,7 +89,7 @@ class _SplashPageState extends State<SplashPage> {
     return Scaffold(
       backgroundColor: AppColors.primary,
       body: SvgPicture.asset(
-        AppSvgs.splash,
+        AppSvgs(context).splash(),
         fit: BoxFit.contain,
         alignment: Alignment.center,
       ),

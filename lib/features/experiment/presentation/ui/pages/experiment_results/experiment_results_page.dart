@@ -72,7 +72,7 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
         Align(
           alignment: Alignment.center,
           child: SvgPicture.asset(
-            AppSvgs.iconLogo,
+            AppSvgs(context).iconLogo(),
             alignment: Alignment.center,
             width: 75,
           ),

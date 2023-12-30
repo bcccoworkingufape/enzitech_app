@@ -47,7 +47,7 @@ class _EZTProgressIndicatorState extends State<EZTProgressIndicator>
               );
             },
             child: SvgPicture.asset(
-              AppSvgs.iconLogo,
+              AppSvgs(context).iconLogo(),
               alignment: Alignment.center,
               width: 64,
             ),

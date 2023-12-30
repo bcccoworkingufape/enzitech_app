@@ -75,16 +75,18 @@ dev_dependencies:
   test: ^1.22.0
 
 flutter_native_splash:
-  color: "#06BC67"
-  color_dark: "#06BC67"
+  color: "#006D39"
+  color_dark: "#00391B"
   image: assets/launcher/native_splash.png
-  image_dark: assets/launcher/native_splash.png
+  image_dark: assets/launcher/native_splash_dark.png
   android: true
   ios: true
 
   android_12:
     image: assets/launcher/foreground_icon.png
-    icon_background_color: "#06BC67"
+    icon_background_color: "#006D39"
+    image_dark: assets/launcher/foreground_icon_dark.png
+    icon_background_color_dark: "#00391B"
 
 icons_launcher:
   image_path: "assets/launcher/icon.png"
@@ -93,7 +95,7 @@ icons_launcher:
       enable: true
     ios:
       enable: true
-  adaptive_background_color: "#06BC67"
+  adaptive_background_color: "#006D39"
   adaptive_foreground_image: "assets/launcher/foreground_icon.png"
 
 import_path_converter:
@@ -120,6 +122,8 @@ flutter:
   assets:
     - assets/images/
     - assets/svgs/
+    - assets/svgs/light/
+    - assets/svgs/dark/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see
