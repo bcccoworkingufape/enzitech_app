@@ -17,6 +17,7 @@ import '../../../../../../core/domain/service/connection_checker/connection_chec
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../core/routing/routing.dart';
+import '../../../../../../shared/extensions/extensions.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../../../../shared/ui/widgets/ezt_appbar.dart';
 import '../../../../../enzyme/presentation/ui/pages/enzymes_fragment/enzymes_page.dart';
@@ -221,9 +222,7 @@ class _HomePageState extends State<HomePage>
     ];
   }
 
-  Widget? get dealWithFloatingActionButton {
-    if (_homeViewmodel.fragmentIndex == 0 && _isVisibleExperimentButton) {
-      return FloatingActionButton.extended(
+  _floatingActionButton(String text) => FloatingActionButton.extended(
         // backgroundColor: context.getApplyedColorScheme.secondaryContainer,
         onPressed: () {
           Navigator.pushNamed(
@@ -231,35 +230,27 @@ class _HomePageState extends State<HomePage>
             Routing.createExperiment,
           );
         },
-        label: const Text(
+        label: Text(
           "Cadastrar\nexperimento",
-          // style: TextStyles.buttonBackground,
+          style: TextStyles(context).buttonSemiBoldOnPrimaryContainer,
         ),
         icon: Icon(
           PhosphorIcons.pencilLine(),
-          // color: AppColors.white, //TODO: COLOR-FIX
+          color: context.getApplyedColorScheme.onPrimaryContainer,
           size: 30,
         ),
+      );
+
+  Widget? get dealWithFloatingActionButton {
+    if (_homeViewmodel.fragmentIndex == 0 && _isVisibleExperimentButton) {
+      return _floatingActionButton(
+        "Cadastrar\nexperimento",
       );
     }
 
     if (_homeViewmodel.fragmentIndex == 1 && _isVisibleTreatmentButton) {
-      return FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.pushNamed(
-            context,
-            Routing.createTreatment,
-          );
-        },
-        label: const Text(
-          "Cadastrar\ntratamento",
-          // style: TextStyles.buttonBackground,
-        ),
-        icon: Icon(
-          PhosphorIcons.pencilLine(),
-          // color: AppColors.white, //TODO: COLOR-FIX
-          size: 30,
-        ),
+      return _floatingActionButton(
+        "Cadastrar\ntratamento",
       );
     }
 
@@ -267,22 +258,8 @@ class _HomePageState extends State<HomePage>
       if (_homeViewmodel.fragmentIndex == 2 &&
           _accountViewmodel.user!.userType == UserTypeEnum.admin &&
           _isVisibleEnzymeButton) {
-        return FloatingActionButton.extended(
-          onPressed: () {
-            Navigator.pushNamed(
-              context,
-              Routing.createEnzyme,
-            );
-          },
-          label: const Text(
-            "Cadastrar\nenzima",
-            // style: TextStyles.buttonBackground,
-          ),
-          icon: Icon(
-            PhosphorIcons.pencilLine(),
-            // color: AppColors.white, //TODO: COLOR-FIX
-            size: 30,
-          ),
+        return _floatingActionButton(
+          "Cadastrar\nenzima",
         );
       }
 

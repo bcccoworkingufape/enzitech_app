@@ -220,7 +220,7 @@ class _EnzymesPageState extends State<EnzymesPage> {
                         ),
                         Text(
                           "🧬 ${_enzymesViewmodel.enzymes.length} enzima${_enzymesViewmodel.enzymes.length > 1 ? 's ' : ' '}encontrada${_enzymesViewmodel.enzymes.length > 1 ? 's ' : ' '}",
-                          style: TextStyles.link.copyWith(fontSize: 16),
+                          style: TextStyles(context).link(fontSize: 16),
                         ),
                         const SizedBox(
                           height: 8,

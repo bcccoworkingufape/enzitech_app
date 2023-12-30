@@ -184,7 +184,7 @@ class LoginPageState extends State<LoginPage> {
                         children: <TextSpan>[
                           TextSpan(
                             text: ' Crie uma',
-                            style: TextStyles.link,
+                            style: TextStyles(context).link(),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
                                 Navigator.pushNamed(

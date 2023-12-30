@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
+import '../../extensions/context_theme_mode_extensions.dart';
 import '../themes/themes.dart';
 import 'full_widgets_override/liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
@@ -43,6 +44,8 @@ class _EZTPullToRefreshState extends State<EZTPullToRefresh> {
       backgroundImage: const AssetImage(
         AppImages.logoWhite,
       ),
+      backgroundColor: context.isDarkMode ? Colors.white : null,
+      color: context.getApplyedColorScheme.surfaceTint,
       child: widget.child,
     );
   }

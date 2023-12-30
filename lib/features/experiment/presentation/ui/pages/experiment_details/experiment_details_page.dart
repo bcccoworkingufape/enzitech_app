@@ -38,7 +38,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
   late final ExperimentsViewmodel _experimentsViewmodel;
   late final HomeViewmodel _homeViewmodel;
 
-  bool _expandToSeeMoreVisible = true;
+  bool _expandToSeeMoreVisible = false;
 
   @override
   void initState() {
@@ -68,6 +68,24 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
     //         () => _progress = _experimentDetailsViewmodel.experiment!.progress);
   }
 
+  _buildInfoBadge(int quantity, String name) {
+    return Column(
+      children: [
+        Text(
+          quantity.toString(),
+          style: TextStyles.titleHome,
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        Text(
+          name,
+          style: TextStyles(context).detailRegular,
+        )
+      ],
+    );
+  }
+
   get leadWithEnzymes {
     if (_experimentDetailsViewmodel.experiment!.enzymes != null) {
       if (_experimentDetailsViewmodel.experiment!.enzymes!.isNotEmpty) {
@@ -90,20 +108,21 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
     return const [Text("Sem dados!")];
   }
 
-  Widget _buildCard({required Widget child, Color? color}) => Container(
-        decoration: BoxDecoration(
-          color: color ??
-              context.getApplyedColorScheme.secondaryContainer
-                  .withOpacity(0.25),
-          borderRadius: const BorderRadius.all(
-            Radius.circular(32),
-          ),
+  Widget _buildCard({required Widget child, Color? color}) {
+    return Container(
+      decoration: BoxDecoration(
+        color: color ??
+            context.getApplyedColorScheme.secondaryContainer.withOpacity(0.25),
+        borderRadius: const BorderRadius.all(
+          Radius.circular(32),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(32.0),
-          child: child,
-        ),
-      );
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(32.0),
+        child: child,
+      ),
+    );
+  }
 
   Widget _buildBody(double height) {
     if (_experimentDetailsViewmodel.state == StateEnum.error) {
@@ -183,66 +202,24 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
                 color: context.getApplyedColorScheme.tertiaryContainer
                     .withOpacity(0.25),
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Column(
-                          children: [
-                            Text(
-                              _experimentDetailsViewmodel
-                                  .experiment!.treatments!.length
-                                  .toString(),
-                              style: TextStyles.titleHome,
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              "Tratamentos",
-                              style: TextStyles(context).detailRegular,
-                            )
-                          ],
+                        _buildInfoBadge(
+                          _experimentDetailsViewmodel
+                              .experiment!.treatments!.length,
+                          "Tratamentos",
                         ),
-                        const SizedBox(
-                          width: 50,
+                        _buildInfoBadge(
+                          _experimentDetailsViewmodel.experiment!.repetitions,
+                          "Repetições",
                         ),
-                        Column(
-                          children: [
-                            Text(
-                              _experimentDetailsViewmodel
-                                  .experiment!.repetitions
-                                  .toString(),
-                              style: TextStyles.titleHome,
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              "Repetições",
-                              style: TextStyles(context).detailRegular,
-                            )
-                          ],
-                        ),
-                        const SizedBox(
-                          width: 50,
-                        ),
-                        Column(
-                          children: [
-                            Text(
-                              _experimentDetailsViewmodel
-                                  .experiment!.enzymes!.length
-                                  .toString(),
-                              style: TextStyles.titleHome,
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              "Enzimas",
-                              style: TextStyles(context).detailRegular,
-                            )
-                          ],
+                        _buildInfoBadge(
+                          _experimentDetailsViewmodel
+                              .experiment!.enzymes!.length,
+                          "Enzimas",
                         ),
                       ],
                     ),
@@ -327,6 +304,9 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
                 Routing.experimentResults,
               ),
             ),
+            const SizedBox(
+              height: 32,
+            ),
           ],
         ),
       ),
@@ -406,7 +386,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
             ),
           ), */
           body: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: _buildBody(
               MediaQuery.of(context).size.height,
             ),

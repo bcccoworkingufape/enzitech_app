@@ -435,7 +435,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                 if (_experimentsViewmodel.experiments.isNotEmpty)
                   Text(
                     "🔬 ${_experimentsViewmodel.totalOfExperiments} experimento${isPlural}encontrado$isPlural",
-                    style: TextStyles.link.copyWith(fontSize: 16),
+                    style: TextStyles(context).link(fontSize: 16),
                   ),
                 const SizedBox(
                   height: 16,

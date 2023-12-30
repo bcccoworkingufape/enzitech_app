@@ -201,7 +201,7 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
                         ),
                         Text(
                           "🧪 ${_treatmentsViewmodel.treatments.length} tratamento${_treatmentsViewmodel.treatments.length > 1 ? 's ' : ' '}encontrado${_treatmentsViewmodel.treatments.length > 1 ? 's ' : ' '}",
-                          style: TextStyles.link.copyWith(fontSize: 16),
+                          style: TextStyles(context).link(fontSize: 16),
                         ),
                         const SizedBox(
                           height: 8,

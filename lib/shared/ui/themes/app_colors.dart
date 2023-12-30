@@ -75,7 +75,7 @@ class AppColors {
   );
 
   // NEW
-  static const primary = Color(0xFF06BC67);
+  static const primary = Color(0xFF006D39);
   static const secondary = Color(0xFFd9f0bc);
   static const tertiary = Color(0xFFab8c5c);
   static const neutral = Color(0xFF8f918d);

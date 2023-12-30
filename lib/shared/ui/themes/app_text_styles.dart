@@ -88,11 +88,11 @@ class TextStyles {
   );
 
   //* Revisado
-  static final link = GoogleFonts.ubuntu(
-    fontSize: 14,
-    fontWeight: FontWeight.bold,
-    color: AppColors.primary,
-  );
+  link({double? fontSize, Color? color}) => GoogleFonts.ubuntu(
+        fontSize: fontSize ?? 14,
+        fontWeight: FontWeight.bold,
+        color: color ?? context.getApplyedColorScheme.primary,
+      );
 
   static final buttonPrimary = GoogleFonts.ubuntu(
     fontSize: 16,
@@ -245,6 +245,11 @@ class TextStyles {
         fontSize: 15,
         fontWeight: FontWeight.w700,
         color: context.getApplyedColorScheme.onPrimary,
+      );
+  get buttonSemiBoldOnPrimaryContainer => GoogleFonts.ubuntu(
+        fontSize: 15,
+        fontWeight: FontWeight.w600,
+        color: context.getApplyedColorScheme.onPrimaryContainer,
       );
   static final captionBackground = GoogleFonts.ubuntu(
     fontSize: 13,
