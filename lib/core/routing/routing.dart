@@ -63,7 +63,10 @@ class Routing {
           return _errorRoute();
         }
       case home:
-        return MaterialPageRoute(builder: (_) => const HomePage());
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: home),
+          builder: (_) => const HomePage(),
+        );
       case initial:
         return MaterialPageRoute(builder: (_) => const SplashPage());
       /* case recoverPassword:
