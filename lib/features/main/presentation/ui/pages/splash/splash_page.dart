@@ -14,6 +14,7 @@ import '../../../../../../shared/ui/ui.dart';
 import '../../../viewmodel/home_viewmodel.dart';
 import '../../../viewmodel/settings_viewmodel.dart';
 import '../../../viewmodel/splash_viewmodel.dart';
+import '../../../../../../shared/extensions/extensions.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -87,7 +88,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primary,
+      backgroundColor: context.getApplyedColorScheme.primary,
       body: SvgPicture.asset(
         AppSvgs(context).splash(),
         fit: BoxFit.contain,

@@ -20,6 +20,8 @@ class AppSvgs {
   String notFound() => context.isDarkMode
       ? "assets/svgs/dark/not_found.svg"
       : "assets/svgs/light/not_found.svg";
-  String splash() => "assets/svgs/splash.svg";
+  String splash() => context.isDarkMode
+      ? "assets/svgs/dark/splash.svg"
+      : "assets/svgs/light/splash.svg";
   String logo() => "assets/svgs/logo.svg";
 }

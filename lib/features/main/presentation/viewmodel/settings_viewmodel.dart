@@ -119,6 +119,10 @@ class SettingsViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> updateThemeMode() async {
+    setThemeMode(await _getThemeModeUseCase());
+  }
+
   String _savedPath = '';
   String get savedPath => _savedPath;
   void setSavedPath(String savedPath) {

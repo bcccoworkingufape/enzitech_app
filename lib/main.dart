@@ -50,6 +50,8 @@ Future<void> main() async {
 
       FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
+      await GetIt.I.get<SettingsViewmodel>().updateThemeMode();
+
       runApp(const MyApp());
     },
     (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack),
