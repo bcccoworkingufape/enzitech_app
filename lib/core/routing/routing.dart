@@ -29,32 +29,48 @@ class Routing {
   static const recoverPassword = "/recoverPassword";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    // ignore: unused_local_variable
     final args = settings.arguments;
 
     switch (settings.name) {
       case login:
-        return MaterialPageRoute(builder: (_) => const LoginPage());
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: login),
+          builder: (_) => const LoginPage(),
+        );
       case createAccount:
-        return MaterialPageRoute(builder: (_) => const CreateAccountPage());
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: createAccount),
+          builder: (_) => const CreateAccountPage(),
+        );
       case createEnzyme:
-        return MaterialPageRoute(builder: (_) => const CreateEnzymePage());
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: createEnzyme),
+          builder: (_) => const CreateEnzymePage(),
+        );
       case createExperiment:
-        return MaterialPageRoute(builder: (_) => const CreateExperimentPage());
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: createExperiment),
+          builder: (_) => const CreateExperimentPage(),
+        );
       case createTreatment:
-        return MaterialPageRoute(builder: (_) => const CreateTreatmentPage());
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: createTreatment),
+          builder: (_) => const CreateTreatmentPage(),
+        );
       case experimentDetailed:
         return MaterialPageRoute(
-          settings: const RouteSettings(
-            name: experimentDetailed,
-          ),
+          settings: const RouteSettings(name: experimentDetailed),
           builder: (_) => const ExperimentDetailsPage(),
         );
       case experimentResults:
-        return MaterialPageRoute(builder: (_) => const ExperimentResultsPage());
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: experimentResults),
+          builder: (_) => const ExperimentResultsPage(),
+        );
       case calculateExperiment:
         if (args is ExperimentEntity) {
           return MaterialPageRoute(
+            settings: const RouteSettings(name: calculateExperiment),
             builder: (_) => CalculateExperimentPage(
               experiment: args,
             ),
@@ -68,7 +84,10 @@ class Routing {
           builder: (_) => const HomePage(),
         );
       case initial:
-        return MaterialPageRoute(builder: (_) => const SplashPage());
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: initial),
+          builder: (_) => const SplashPage(),
+        );
       /* case recoverPassword:
         return MaterialPageRoute(builder: (_) => const RecoverPasswordPage()); */
       default:
