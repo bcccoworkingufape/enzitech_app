@@ -261,7 +261,7 @@ class _HomePageState extends State<HomePage>
         () {
           Navigator.pushNamed(
             context,
-            Routing.createExperiment,
+            Routing.createTreatment,
           );
         },
       );
@@ -276,7 +276,7 @@ class _HomePageState extends State<HomePage>
           () {
             Navigator.pushNamed(
               context,
-              Routing.createExperiment,
+              Routing.createEnzyme,
             );
           },
         );
