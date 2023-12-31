@@ -8,7 +8,7 @@
 ![iOS - In development](https://img.shields.io/badge/iOS-In_development-000000?logo=apple&logoColor=FFFFFF)
 
 <p align="center">
-<img src="https://cdn.rawgit.com/steverichey/google-play-badge-svg/master/img/pt-br_get.svg" width="75%" href="https://play.google.com/store/apps/details?id=com.lohhans.enzitech&hl=pt">
+<img src="https://cdn.rawgit.com/steverichey/google-play-badge-svg/master/img/pt-br_get.svg" width="75%" onclick="location.href = 'https://play.google.com/store/apps/details?id=com.lohhans.enzitech&hl=pt'">
 </p>
 
 <!-- [![Baixe no Google Play](https://raw.githubusercontent.com/steverichey/google-play-badge-svg/266d2b2df26f10d3c00b8129a0bd9f6da6b19f00/img/pt-br_get.svg)](https://play.google.com/store/apps/details?id=com.lohhans.enzitech&hl=pt) -->
