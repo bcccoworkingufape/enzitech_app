@@ -222,7 +222,8 @@ class _HomePageState extends State<HomePage>
     ];
   }
 
-  _floatingActionButton(String text) => FloatingActionButton.extended(
+  _floatingActionButton(String text, void Function()? onPressed) =>
+      FloatingActionButton.extended(
         // backgroundColor: context.getApplyedColorScheme.secondaryContainer,
         onPressed: () {
           Navigator.pushNamed(
@@ -231,7 +232,7 @@ class _HomePageState extends State<HomePage>
           );
         },
         label: Text(
-          "Cadastrar\nexperimento",
+          text,
           style: TextStyles(context).buttonSemiBoldOnPrimaryContainer,
         ),
         icon: Icon(
@@ -245,12 +246,24 @@ class _HomePageState extends State<HomePage>
     if (_homeViewmodel.fragmentIndex == 0 && _isVisibleExperimentButton) {
       return _floatingActionButton(
         "Cadastrar\nexperimento",
+        () {
+          Navigator.pushNamed(
+            context,
+            Routing.createExperiment,
+          );
+        },
       );
     }
 
     if (_homeViewmodel.fragmentIndex == 1 && _isVisibleTreatmentButton) {
       return _floatingActionButton(
         "Cadastrar\ntratamento",
+        () {
+          Navigator.pushNamed(
+            context,
+            Routing.createExperiment,
+          );
+        },
       );
     }
 
@@ -260,6 +273,12 @@ class _HomePageState extends State<HomePage>
           _isVisibleEnzymeButton) {
         return _floatingActionButton(
           "Cadastrar\nenzima",
+          () {
+            Navigator.pushNamed(
+              context,
+              Routing.createExperiment,
+            );
+          },
         );
       }
 
