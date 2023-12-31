@@ -2,10 +2,16 @@
 
 [![BCC - Coworking](https://img.shields.io/badge/BCC-Coworking-06BC67?logo=slack)](https://)
 ![last-commit](https://img.shields.io/github/last-commit/bcccoworkingufape/enzitech_app.svg)
-![Dart - 2.19.5](https://img.shields.io/badge/Dart-2.19.5-0175C2?logo=dart)
-![Flutter - 3.7.8](https://img.shields.io/badge/Flutter-3.7.8-02569B?logo=flutter)
+![Dart - 3.2.3](https://img.shields.io/badge/Dart-3.2.3-0175C2?logo=dart)
+![Flutter - 3.16.5](https://img.shields.io/badge/Flutter-3.16.5-02569B?logo=flutter)
 ![Android - Released](https://img.shields.io/badge/Android-Released-3DDC84?logo=android&logoColor=FFFFFF)
 ![iOS - In development](https://img.shields.io/badge/iOS-In_development-000000?logo=apple&logoColor=FFFFFF)
+
+<p align="center">
+<img src="https://cdn.rawgit.com/steverichey/google-play-badge-svg/master/img/pt-br_get.svg" width="75%" href="https://play.google.com/store/apps/details?id=com.lohhans.enzitech&hl=pt">
+</p>
+
+<!-- [![Baixe no Google Play](https://raw.githubusercontent.com/steverichey/google-play-badge-svg/266d2b2df26f10d3c00b8129a0bd9f6da6b19f00/img/pt-br_get.svg)](https://play.google.com/store/apps/details?id=com.lohhans.enzitech&hl=pt) -->
 
 ![Enzitech](https://user-images.githubusercontent.com/30741312/232361196-5d8dc1ca-6b6c-41df-8cc7-131cdba98591.png)
 
