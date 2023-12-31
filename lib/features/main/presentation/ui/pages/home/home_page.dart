@@ -225,12 +225,7 @@ class _HomePageState extends State<HomePage>
   _floatingActionButton(String text, void Function()? onPressed) =>
       FloatingActionButton.extended(
         // backgroundColor: context.getApplyedColorScheme.secondaryContainer,
-        onPressed: () {
-          Navigator.pushNamed(
-            context,
-            Routing.createExperiment,
-          );
-        },
+        onPressed: onPressed,
         label: Text(
           text,
           style: TextStyles(context).buttonSemiBoldOnPrimaryContainer,
