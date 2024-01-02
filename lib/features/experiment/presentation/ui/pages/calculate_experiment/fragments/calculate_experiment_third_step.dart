@@ -8,6 +8,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 // 🌎 Project imports:
 import '../../../../../../../core/enums/enums.dart';
 import '../../../../../../../core/routing/routing.dart';
+import '../../../../../../../shared/extensions/context_theme_mode_extensions.dart';
 import '../../../../../../../shared/extensions/num_extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../../viewmodel/calculate_experiment_viewmodel.dart';
@@ -99,7 +100,7 @@ class _CalculateExperimentThirdStepPageState
                 .listOfNumberDifferencesDTO[iteration]!.isFarther!,
             replacement: Icon(
               PhosphorIcons.thumbsUp(),
-              // color: AppColors.grenDark, //TODO: COLOR-FIX
+              color: context.getApplyedColorScheme.surfaceTint,
             ),
             child: GestureDetector(
               onTap: () {
@@ -114,7 +115,7 @@ class _CalculateExperimentThirdStepPageState
               },
               child: Icon(
                 PhosphorIcons.warningCircle(PhosphorIconsStyle.bold),
-                // color: AppColors.danger, //TODO: COLOR-FIX
+                color: context.getApplyedColorScheme.error,
               ),
             ),
           ),
@@ -134,56 +135,54 @@ class _CalculateExperimentThirdStepPageState
 
   List<TableRow> _buildAverageRow(num number) {
     return [
-      const TableRow(children: [
-        SizedBox(height: 16),
-        SizedBox(height: 16),
-        SizedBox(height: 16),
-      ]),
-      TableRow(children: [
-        Text(
-          "Média:",
-          style: TextStyles.bodyBold.copyWith(
-              // color: AppColors.grenDark, //TODO: COLOR-FIX
-              ),
-        ),
-        Text(
-          number.formmatedNumber,
-          style: TextStyles.bodyBold.copyWith(
-              // color: AppColors.grenDark, //TODO: COLOR-FIX
-              ),
-        ),
-        Container(),
-      ]),
+      const TableRow(
+        children: [
+          SizedBox(height: 16),
+          SizedBox(height: 16),
+          SizedBox(height: 16),
+        ],
+      ),
+      TableRow(
+        children: [
+          Text(
+            "Média:",
+            style: TextStyles.bodyBold,
+          ),
+          Text(
+            number.formmatedNumber,
+            style: TextStyles.bodyBold,
+          ),
+          Container(),
+        ],
+      ),
     ];
   }
 
   List<TableRow> _buildTitleRow() {
     return [
-      TableRow(children: [
-        Text(
-          "REPETIÇÃO",
-          style: TextStyles.bodyBold.copyWith(
-              // color: AppColors.greySweet, //TODO: COLOR-FIX
-              ),
-        ),
-        Text(
-          "RESULTADO",
-          style: TextStyles.bodyBold.copyWith(
-              // color: AppColors.greySweet, //TODO: COLOR-FIX
-              ),
-        ),
-        Text(
-          "STATUS",
-          style: TextStyles.bodyBold.copyWith(
-              // color: AppColors.greySweet, //TODO: COLOR-FIX
-              ),
-        ),
-      ]),
-      const TableRow(children: [
-        SizedBox(height: 8),
-        SizedBox(height: 8),
-        SizedBox(height: 8),
-      ]),
+      TableRow(
+        children: [
+          Text(
+            "REPETIÇÃO",
+            style: TextStyles.bodyBold,
+          ),
+          Text(
+            "RESULTADO",
+            style: TextStyles.bodyBold,
+          ),
+          Text(
+            "STATUS",
+            style: TextStyles.bodyBold,
+          ),
+        ],
+      ),
+      const TableRow(
+        children: [
+          SizedBox(height: 8),
+          SizedBox(height: 8),
+          SizedBox(height: 8),
+        ],
+      ),
     ];
   }
 
@@ -240,7 +239,8 @@ class _CalculateExperimentThirdStepPageState
                       ),
                       Card(
                         margin: const EdgeInsets.all(16),
-                        color: AppColors.primary.withAlpha(100),
+                        color: context.getApplyedColorScheme.background,
+                        shadowColor: Colors.transparent,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
@@ -250,9 +250,9 @@ class _CalculateExperimentThirdStepPageState
                                 .formula,
                             textAlign: TextAlign.center,
                             style: TextStyles(context).titleBoldBackground(
-                              // color: AppColors.white, //TODO: COLOR-FIX
                               fontWeight: FontWeight.w600,
                               fontSize: 12,
+                              // color: context.getApplyedColorScheme.onBackground,
                             ),
                           ),
                         ),

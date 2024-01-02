@@ -8,6 +8,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
+import '../../../../../../shared/extensions/context_theme_mode_extensions.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../../../main/presentation/viewmodel/settings_viewmodel.dart';
 import '../../../../domain/entities/enzyme_entity.dart';
@@ -134,7 +135,7 @@ class _EnzymesPageState extends State<EnzymesPage> {
                   );
                 },
                 background: Container(
-                  color: Colors.red,
+                  color: context.getApplyedColorScheme.error,
                   child: Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: Row(

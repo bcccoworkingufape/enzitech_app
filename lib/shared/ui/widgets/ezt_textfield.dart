@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 // 🌎 Project imports:
+import '../../extensions/context_theme_mode_extensions.dart';
 import '../../validator/validator.dart';
 import '../themes/themes.dart';
 
@@ -121,7 +122,9 @@ class _EZTTextFieldState extends State<EZTTextField> {
       prefixIcon: widget.prefixIcon,
       hintText: widget.hintText,
       helperText: widget.helperText,
-      helperStyle: const TextStyle(color: Colors.red),
+      helperStyle: TextStyle(
+        color: context.getApplyedColorScheme.error,
+      ),
       labelText: widget.labelText,
       labelStyle: const TextStyle(
           // color: AppColors.greySweet, //TODO: COLOR-FIX
@@ -224,7 +227,7 @@ class _EZTTextFieldState extends State<EZTTextField> {
         ? Icon(PhosphorIcons.check())
         : Icon(
             PhosphorIcons.warningCircle(),
-            // color: AppColors.danger, //TODO: COLOR-FIX
+            color: context.getApplyedColorScheme.error,
           );
   }
 
@@ -285,9 +288,9 @@ class _EZTTextFieldState extends State<EZTTextField> {
       enabledBorder: outlineBorder,
       focusedBorder: focusedOutlineBorder,
       errorBorder: outlineBorder.copyWith(
-        borderSide: const BorderSide(
-            // color: AppColors.danger, //TODO: COLOR-FIX
-            ),
+        borderSide: BorderSide(
+          color: context.getApplyedColorScheme.error,
+        ),
       ),
     );
   }
@@ -323,9 +326,9 @@ class _EZTTextFieldState extends State<EZTTextField> {
       enabledBorder: outlineBorder,
       focusedBorder: focusedOutlineBorder,
       errorBorder: outlineBorder.copyWith(
-        borderSide: const BorderSide(
-            // color: AppColors.danger, //TODO: COLOR-FIX
-            ),
+        borderSide: BorderSide(
+          color: context.getApplyedColorScheme.error,
+        ),
       ),
     );
   }

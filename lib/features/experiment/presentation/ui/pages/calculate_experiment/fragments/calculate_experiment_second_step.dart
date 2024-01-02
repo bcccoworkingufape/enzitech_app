@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 // 🌎 Project imports:
 import '../../../../../../../core/enums/enums.dart';
+import '../../../../../../../shared/extensions/context_theme_mode_extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../../viewmodel/calculate_experiment_viewmodel.dart';
 import '../calculate_experiment_fragment_template.dart';
@@ -122,91 +124,6 @@ class _CalculateExperimentSecondStepPageState
       ],
     );
   }
-
-  /* Widget get _body {
-    return Form(
-      key: _formKey,
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          children: [
-            const EZTCreateExperimentStepIndicator(
-              title: "Inserir dados no experimento",
-              message: "Etapa 2 de 2 - Inserção de dados",
-            ),
-            const SizedBox(
-              height: 64,
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: EZTStepper(
-                  physics: const ClampingScrollPhysics(),
-                  currentStep: _calculateExperimentViewmodel.stepPage,
-                  controlsBuilder:
-                      (BuildContext context, EZTControlsDetails details) {
-                    return Row(
-                      children: <Widget>[
-                        if (_calculateExperimentViewmodel.stepPage <
-                            _calculateExperimentViewmodel.experiment.repetitions - 1)
-                          TextButton(
-                            onPressed: () {
-                              if (_calculateExperimentViewmodel.stepPage <
-                                  _calculateExperimentViewmodel.experiment.repetitions) {
-                                _calculateExperimentViewmodel.setStepPage(_calculateExperimentViewmodel.stepPage + 1);
-                              }
-                            },
-                            child: const Text('Próximo'),
-                          ),
-                        if (_calculateExperimentViewmodel.stepPage > 0)
-                          TextButton(
-                            onPressed: () {
-                              if (_calculateExperimentViewmodel.stepPage > 0) {
-                                _calculateExperimentViewmodel.setStepPage(_calculateExperimentViewmodel.stepPage - 1);
-                              }
-                            },
-                            child: const Text('Voltar'),
-                          ),
-                      ],
-                    );
-                  },
-                  onStepTapped: (int index) {
-                    _calculateExperimentViewmodel.setStepPage(index);
-                  },
-                  type: EZTStepperType.vertical,
-                  steps: _calculateExperimentViewmodel.listOfExperimentData.map(
-                    (map) {
-                      return EZTStep(
-                        state: _leadWithStepState(map!),
-                        title: _isMapCorrectlyFilled(map["_id"].toString())
-                            ? Text(
-                                "Dados da ${map["_id"]!.toInt() + 1}ª repetição")
-                            : Text(
-                                "⚠  Dados da ${map["_id"]!.toInt() + 1}ª repetição",
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.danger,
-                                ),
-                              ),
-                        content: Container(
-                          alignment: Alignment.centerLeft,
-                          child: Visibility(
-                              visible: _calculateExperimentViewmodel
-                                      .textFields["sample-${map["_id"]}"] !=
-                                  null,
-                              child: _textFields(map)),
-                        ),
-                      );
-                    },
-                  ).toList(),
-                  // key: ValueKey(widget.listOfEnzymes.hashCode),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  } */
 
   Widget get _buttons {
     return Column(
@@ -326,18 +243,16 @@ class _CalculateExperimentSecondStepPageState
                                     "Dados da ${map["_id"]!.toInt() + 1}ª repetição")
                                 : Text(
                                     "⚠  Dados da ${map["_id"]!.toInt() + 1}ª repetição",
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      // color: AppColors.danger, //TODO: COLOR-FIX
+                                      color: context.getApplyedColorScheme.error,
                                     ),
                                   ),
-                            content: Container(
-                              alignment: Alignment.centerLeft,
-                              child: Visibility(
-                                  visible: _calculateExperimentViewmodel
-                                          .textFields["sample-${map["_id"]}"] !=
-                                      null,
-                                  child: _textFields(map)),
+                            content: Visibility(
+                              visible: _calculateExperimentViewmodel
+                                      .textFields["sample-${map["_id"]}"] !=
+                                  null,
+                              child: _textFields(map),
                             ),
                           );
                         },

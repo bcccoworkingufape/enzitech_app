@@ -7,6 +7,7 @@ import 'package:get_it/get_it.dart';
 
 // 🌎 Project imports:
 import '../../../../../../../core/enums/state_enum.dart';
+import '../../../../../../../shared/extensions/context_theme_mode_extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../../../../../shared/utils/utils.dart';
 import '../../../../../../../shared/validator/validator.dart';
@@ -474,9 +475,9 @@ class _CreateExperimentFourthStepPageState
                               ? Text(enzyme.name)
                               : Text(
                                   "⚠  ${enzyme.name}",
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    // color: AppColors.danger, //TODO: COLOR-FIX
+                                    color: context.getApplyedColorScheme.error,
                                   ),
                                 ),
                           content: Container(

@@ -72,7 +72,7 @@ class _EZTAppBarState extends State<EZTAppBar> {
                           // ),
                           Icon(
                             PhosphorIcons.cloudSlash(),
-                            color: Colors.red,
+                            color: context.getApplyedColorScheme.error,
                           ),
                           // Icon(
                           //   PhosphorIcons.wifiSlash,

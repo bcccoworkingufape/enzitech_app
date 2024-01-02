@@ -1,6 +1,8 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
+import '../../extensions/context_theme_mode_extensions.dart';
+
 enum EZTSnackBarType {
   regular,
   success,
@@ -104,7 +106,7 @@ class EZTSnackBar {
       //   borderRadius: BorderRadius.only(
       //       topLeft: Radius.circular(16.0), topRight: Radius.circular(16.0)),
       // ),
-      backgroundColor: Colors.red, //AppColors.danger,  //TODO: COLOR-FIX
+      backgroundColor: context.getApplyedColorScheme.error,
       // action: SnackBarAction(
       //   textColor: Color(0xFFFAF2FB),
       //   label: 'OK',

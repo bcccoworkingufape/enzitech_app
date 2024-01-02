@@ -201,7 +201,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                   );
                 },
                 background: Container(
-                  color: Colors.red,
+                  color: context.getApplyedColorScheme.error,
                   child: Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: Row(

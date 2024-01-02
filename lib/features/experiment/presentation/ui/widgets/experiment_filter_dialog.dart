@@ -139,8 +139,7 @@ class _ExperimentFilterDialogState extends State<ExperimentFilterDialog> {
         TextButton(
           style: ButtonStyle(
             overlayColor: MaterialStateProperty.all<Color>(
-              // AppColors.danger.withOpacity(0.1), //TODO: COLOR-FIX
-              Colors.red,
+              context.getApplyedColorScheme.error,
             ),
           ),
           onPressed: () {
@@ -151,8 +150,8 @@ class _ExperimentFilterDialogState extends State<ExperimentFilterDialog> {
           child: Text(
             numberOfFiltersEnabled() > 1 ? 'Limpar filtros' : 'Limpar filtro',
             style: TextStyles.buttonPrimary.copyWith(
-                color: Colors.red // AppColors.delete, //TODO: COLOR-FIX
-                ),
+              color: context.getApplyedColorScheme.error,
+            ),
           ),
         ),
         TextButton(
@@ -161,8 +160,7 @@ class _ExperimentFilterDialogState extends State<ExperimentFilterDialog> {
               AppColors.primary,
             ),
             overlayColor: MaterialStateProperty.all<Color>(
-              Colors.red,
-              // AppColors.materialTheme.shade600, //TODO: COLOR-FIX
+              context.getApplyedColorScheme.error,
             ),
           ),
           child: Text(

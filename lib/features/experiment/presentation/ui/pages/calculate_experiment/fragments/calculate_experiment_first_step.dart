@@ -89,7 +89,7 @@ class _CalculateExperimentFirstStepPageState
             ),
           )
           .toList(),
-      selectedColor: context.getApplyedColorScheme.primary.withOpacity(0.5),
+      selectedColor: context.getApplyedColorScheme.primaryContainer,
       spacing: 4,
       validator: FormBuilderValidators.compose(
         [FormBuilderValidators.required()],
@@ -152,7 +152,7 @@ class _CalculateExperimentFirstStepPageState
               ),
             )
             .toList(),
-        selectedColor: context.getApplyedColorScheme.primary.withOpacity(0.5),
+        selectedColor: context.getApplyedColorScheme.primaryContainer,
         spacing: 4,
         validator: FormBuilderValidators.compose(
           [FormBuilderValidators.required()],
