@@ -294,17 +294,17 @@ class _CreateExperimentFourthStepPageState
     return listOfBools.every((b) => b == true);
   }
 
-  EZTStepState _leadWithStepState(EnzymeEntity enzyme) {
+  StepState _leadWithStepState(EnzymeEntity enzyme) {
     if (_createExperimentViewmodel.stepPage ==
         _createExperimentViewmodel.temporaryExperiment.enzymes!
             .indexOf(enzyme)) {
-      return EZTStepState.editing;
+      return StepState.editing;
     } else if (_isEnzymeStillEmpty(enzyme.id)) {
-      return EZTStepState.indexed;
+      return StepState.indexed;
     } else if (_isEnzymeCorrectlyFilled(enzyme.id)) {
-      return EZTStepState.complete;
+      return StepState.complete;
     } else {
-      return EZTStepState.error;
+      return StepState.error;
     }
   }
 
@@ -422,11 +422,11 @@ class _CreateExperimentFourthStepPageState
               ),
               child: Column(
                 children: [
-                  EZTStepper(
+                  Stepper(
                     physics: const ClampingScrollPhysics(),
                     currentStep: _createExperimentViewmodel.stepPage,
                     controlsBuilder:
-                        (BuildContext context, EZTControlsDetails details) {
+                        (BuildContext context, ControlsDetails details) {
                       return Row(
                         children: <Widget>[
                           if (_createExperimentViewmodel.stepPage <
@@ -463,12 +463,12 @@ class _CreateExperimentFourthStepPageState
                     onStepTapped: (int index) {
                       _createExperimentViewmodel.setStepPage(index);
                     },
-                    type: EZTStepperType.vertical,
+                    type: StepperType.vertical,
                     steps: _createExperimentViewmodel
                         .temporaryExperiment.enzymes!
                         .map(
                       (enzyme) {
-                        return EZTStep(
+                        return Step(
                           state: _leadWithStepState(enzyme),
                           title: _isEnzymeCorrectlyFilled(enzyme.id)
                               ? Text(enzyme.name)

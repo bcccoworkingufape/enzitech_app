@@ -95,18 +95,18 @@ class _CalculateExperimentSecondStepPageState
     return listOfBools.every((b) => b == true);
   }
 
-  EZTStepState _leadWithStepState(Map<String, double?> map) {
+  StepState _leadWithStepState(Map<String, double?> map) {
     if (_calculateExperimentViewmodel.stepPage ==
         _calculateExperimentViewmodel.listOfExperimentData
             .toList()
             .indexOf(map)) {
-      return EZTStepState.editing;
+      return StepState.editing;
     } else if (_isMapStillEmpty(map["_id"].toString())) {
-      return EZTStepState.indexed;
+      return StepState.indexed;
     } else if (_isMapCorrectlyFilled(map["_id"].toString())) {
-      return EZTStepState.complete;
+      return StepState.complete;
     } else {
-      return EZTStepState.error;
+      return StepState.error;
     }
   }
 
@@ -274,11 +274,11 @@ class _CalculateExperimentSecondStepPageState
                     height: 32,
                   ),
                   SingleChildScrollView(
-                    child: EZTStepper(
+                    child: Stepper(
                       physics: const ClampingScrollPhysics(),
                       currentStep: _calculateExperimentViewmodel.stepPage,
                       controlsBuilder:
-                          (BuildContext context, EZTControlsDetails details) {
+                          (BuildContext context, ControlsDetails details) {
                         return Row(
                           children: <Widget>[
                             if (_calculateExperimentViewmodel.stepPage <
@@ -315,11 +315,11 @@ class _CalculateExperimentSecondStepPageState
                       onStepTapped: (int index) {
                         _calculateExperimentViewmodel.setStepPage(index);
                       },
-                      type: EZTStepperType.vertical,
+                      type: StepperType.vertical,
                       steps: _calculateExperimentViewmodel.listOfExperimentData
                           .map(
                         (map) {
-                          return EZTStep(
+                          return Step(
                             state: _leadWithStepState(map),
                             title: _isMapCorrectlyFilled(map["_id"].toString())
                                 ? Text(
