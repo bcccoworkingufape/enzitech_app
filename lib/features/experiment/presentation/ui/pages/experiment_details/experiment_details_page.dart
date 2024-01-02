@@ -148,16 +148,19 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CircularPercentIndicator(
+                    animation: true,
+                    circularStrokeCap: CircularStrokeCap.round,
                     radius: 60,
-                    lineWidth: 10.0,
+                    lineWidth: 16.0,
                     percent: _experimentDetailsViewmodel.experiment!.progress,
                     center: Text(
                       Toolkit.doubleToPercentual(
                           _experimentDetailsViewmodel.experiment!.progress),
                       style: TextStyles(context).titleBoldHeading,
                     ),
-                    progressColor: AppColors.primary,
-                    backgroundColor: AppColors.primary.withOpacity(0.4),
+                    progressColor: context.getApplyedColorScheme.primary,
+                    backgroundColor:
+                        context.getApplyedColorScheme.primary.withOpacity(0.4),
                   ),
                   const SizedBox(
                     width: 32,

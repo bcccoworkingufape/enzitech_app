@@ -128,14 +128,18 @@ class _ExperimentCardState extends State<ExperimentCard> {
                   ),
                   CircularPercentIndicator(
                     radius: 40,
-                    lineWidth: 10.0,
+                    lineWidth: 12.0,
+                    animation: true,
+                    circularStrokeCap: CircularStrokeCap.round,
+                    
                     percent: widget.experiment.progress,
                     center: Text(
                       Toolkit.doubleToPercentual(widget.experiment.progress),
                       style: TextStyles.buttonPrimary,
                     ),
-                    progressColor: AppColors.primary,
-                    backgroundColor: AppColors.primary.withOpacity(0.4),
+                    progressColor: context.getApplyedColorScheme.primary,
+                    backgroundColor:
+                        context.getApplyedColorScheme.primary.withOpacity(0.4),
                   ),
                   const SizedBox(
                     width: 10,
