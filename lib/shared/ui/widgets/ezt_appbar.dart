@@ -49,7 +49,10 @@ class _EZTAppBarState extends State<EZTAppBar> {
             AppSvgs(context).logo(),
             colorFilter: context.isDarkMode
                 ? const ColorFilter.mode(Colors.white, BlendMode.srcIn)
-                : const ColorFilter.mode(AppColors.primary, BlendMode.srcIn),
+                : ColorFilter.mode(
+                    context.getApplyedColorScheme.primary,
+                    BlendMode.srcIn,
+                  ),
             fit: BoxFit.contain,
             alignment: Alignment.center,
           ),

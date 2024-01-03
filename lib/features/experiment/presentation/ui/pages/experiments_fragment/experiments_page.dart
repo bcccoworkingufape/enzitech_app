@@ -106,9 +106,9 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
       hintText: "Pesquisar experimento",
       usePrimaryColorOnFocusedBorder: true,
       keyboardType: TextInputType.name,
-      suffixIcon: const Icon(
-        PhosphorIcons.magnifyingGlass,
-        color: AppColors.primary,
+      suffixIcon: Icon(
+        PhosphorIcons.magnifyingGlass(),
+        color: context.getApplyedColorScheme.primary,
         size: 35,
       ),
       fieldValidator: fieldValidator,
@@ -269,10 +269,10 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                       child: Center(
                         child: Text(
                           'Todos os experimentos exibidos!',
-                          style: TextStyles.buttonPrimary.copyWith(
-                            color: context.getApplyedColorScheme.tertiary,
-                            fontSize: 20,
-                          ),
+                          style: TextStyles(context).buttonPrimary.copyWith(
+                                color: context.getApplyedColorScheme.tertiary,
+                                fontSize: 20.0,
+                              ),
                         ),
                       ),
                     ),
@@ -369,46 +369,15 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                           });
                         },
                       ),
-                      // ToggleSwitch(
-                      //   initialLabelIndex:
-                      //       _experimentsViewmodel.finishedFilter ? 1 : 0,
-                      //   minWidth: (widthMQ * 0.4),
-                      //   totalSwitches: 2,
-                      //   labels: const ['Em andamento', 'Concluído'],
-                      //   // activeFgColor: AppColors.white, //TODO: COLOR-FIX
-                      //   inactiveFgColor: AppColors.primary,
-                      //   activeBgColor: const [AppColors.primary],
-                      //   // inactiveBgColor: AppColors.white, //TODO: COLOR-FIX
-                      //   borderColor: const [AppColors.primary],
-                      //   borderWidth: 1.5,
-                      //   onToggle: (index) {
-                      //     if (index == 0) {
-                      //       if (_experimentsViewmodel.finishedFilter !=
-                      //           false) {
-                      //         _experimentsViewmodel.setFinishedFilter(false);
-                      //         _experimentsViewmodel.fetch();
-                      //         return;
-                      //       }
 
-                      //       return;
-                      //     }
-
-                      //     if (_experimentsViewmodel.finishedFilter ||
-                      //         !_homeViewmodel.hasInternetConnection) return;
-
-                      //     _experimentsViewmodel.setFinishedFilter(true);
-                      //     _experimentsViewmodel.fetch();
-                      //   },
-                      // ),
-                      // const SizedBox(
-                      //   width: 4,
-                      // ),
                       IconButton(
                         icon: Icon(
                           _experimentsViewmodel.anyFilterIsEnabled()
                               ? PhosphorIcons.funnel(PhosphorIconsStyle.fill)
                               : PhosphorIcons.funnel(),
-                          // color: AppColors.primary,
+                          color: _experimentsViewmodel.anyFilterIsEnabled()
+                              ? context.getApplyedColorScheme.primary
+                              : null,
                         ),
                         onPressed: _showFiltersDialog,
                       ),
@@ -424,7 +393,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                       //         _experimentsViewmodel.anyFilterIsEnabled()
                       //             ? PhosphorIcons.funnelFill
                       //             : PhosphorIcons.funnel,
-                      //         color: AppColors.primary,
+                      //         color: TextStyles(context).titleMinBoldBackground(),
                       //       ),
                       //     ),
                       //   ),

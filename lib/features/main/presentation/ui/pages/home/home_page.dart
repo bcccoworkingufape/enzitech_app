@@ -224,16 +224,16 @@ class _HomePageState extends State<HomePage>
 
   _floatingActionButton(String text, void Function()? onPressed) =>
       FloatingActionButton.extended(
-        // backgroundColor: context.getApplyedColorScheme.secondaryContainer,
+        backgroundColor: context.getApplyedColorScheme.secondaryContainer,
         onPressed: onPressed,
         label: Text(
           text,
-          style: TextStyles(context).buttonSemiBoldOnPrimaryContainer,
+          style: TextStyles(context).captionBody(),
         ),
         icon: Icon(
           PhosphorIcons.pencilLine(),
-          color: context.getApplyedColorScheme.onPrimaryContainer,
-          size: 30,
+          color: context.getApplyedColorScheme.onSecondaryContainer,
+          // size: 30,
         ),
       );
 
@@ -381,71 +381,6 @@ class _HomePageState extends State<HomePage>
               ),
             ],
           ),
-          /* bottomNavigationBar: BottomNavigationBar(
-            type: BottomNavigationBarType.shifting,
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(PhosphorIcons.flask),
-                label: 'Experimentos',
-                backgroundColor: AppColors.primary,
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(PhosphorIcons.testTube),
-                label: 'Tratamentos',
-                backgroundColor: AppColors.primary,
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(PhosphorIcons.atom),
-                label: 'Enzimas',
-                backgroundColor: AppColors.primary,
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(PhosphorIcons.gear),
-                label: 'Configurações',
-                backgroundColor: AppColors.primary,
-              ),
-            ],
-            currentIndex: _homeViewmodel.fragmentIndex,
-            selectedItemColor:
-                Colors.white, //AppColors.white,  //TODO: COLOR-FIX
-            unselectedItemColor: Colors.white70,
-            backgroundColor: AppColors.primary,
-            onTap: (index) {
-              setAllButtonsVisible();
-              int beforeSet = _homeViewmodel.fragmentIndex;
-              _homeViewmodel.setFragmentIndex(index);
-              if (index == 0 &&
-                  beforeSet == 0 &&
-                  _experimentsViewmodel.scrollController.hasClients) {
-                _experimentsViewmodel.scrollController.animateTo(
-                  _experimentsViewmodel
-                          .scrollController.position.minScrollExtent +
-                      (kBottomNavigationBarHeight / 10000),
-                  duration: const Duration(milliseconds: 1500),
-                  curve: Curves.fastOutSlowIn,
-                );
-              } else if (index == 1 &&
-                  beforeSet == 1 &&
-                  _treatmentsViewmodel.scrollController.hasClients) {
-                _treatmentsViewmodel.scrollController.animateTo(
-                  _treatmentsViewmodel
-                          .scrollController.position.minScrollExtent +
-                      (kBottomNavigationBarHeight / 10000),
-                  duration: const Duration(milliseconds: 1500),
-                  curve: Curves.fastOutSlowIn,
-                );
-              } else if (index == 2 &&
-                  beforeSet == 2 &&
-                  _enzymesViewmodel.scrollController.hasClients) {
-                _enzymesViewmodel.scrollController.animateTo(
-                  _enzymesViewmodel.scrollController.position.minScrollExtent +
-                      (kBottomNavigationBarHeight / 10000),
-                  duration: const Duration(milliseconds: 1500),
-                  curve: Curves.fastOutSlowIn,
-                );
-              }
-            },
-          ), */
         );
       },
     );

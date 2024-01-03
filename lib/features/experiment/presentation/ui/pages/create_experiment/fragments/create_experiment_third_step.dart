@@ -188,7 +188,7 @@ class _CreateExperimentThirdStepPageState
                       color: Constants.dealWithEnzymeChipColor(
                         _enzymesViewmodel.enzymes[index].type,
                       ),
-                      textStyle: TextStyles.titleMinBoldBackground,
+                      textStyle: TextStyles(context).titleMinBoldBackground(),
                       centerTitle: true,
                     );
                   },

@@ -181,16 +181,16 @@ class _EZTTextFieldState extends State<EZTTextField> {
       hintStyle: widget.hintStyle ?? TextStyles.termRegular,
       enabledBorder: inputBorder,
       focusedBorder: (widget.usePrimaryColorOnFocusedBorder)
-          ? const UnderlineInputBorder(
+          ? UnderlineInputBorder(
               borderSide: BorderSide(
-                color: AppColors.primary,
+                color: context.getApplyedColorScheme.primary,
               ),
             )
           : inputBorder,
       border: inputBorder,
       labelStyle: (widget.focusNode?.hasFocus ?? false)
-          ? const TextStyle(
-              color: AppColors.primary,
+          ? TextStyle(
+              color: context.getApplyedColorScheme.primary,
             )
           : null,
       errorBorder: inputBorder.copyWith(
@@ -232,9 +232,9 @@ class _EZTTextFieldState extends State<EZTTextField> {
   }
 
   InputDecoration get _underlinedInputDecoration {
-    const inputBorder = UnderlineInputBorder(
+    var inputBorder = UnderlineInputBorder(
       borderSide: BorderSide(
-        color: AppColors.primary,
+        color: context.getApplyedColorScheme.primary,
       ),
     );
 
@@ -272,8 +272,8 @@ class _EZTTextFieldState extends State<EZTTextField> {
 
     if (widget.usePrimaryColorOnFocusedBorder) {
       focusedOutlineBorder = focusedOutlineBorder.copyWith(
-        borderSide: const BorderSide(
-          color: AppColors.primary,
+        borderSide: BorderSide(
+          color: context.getApplyedColorScheme.primary,
         ),
       );
     }
@@ -310,8 +310,8 @@ class _EZTTextFieldState extends State<EZTTextField> {
 
     if (widget.usePrimaryColorOnFocusedBorder) {
       focusedOutlineBorder = focusedOutlineBorder.copyWith(
-        borderSide: const BorderSide(
-          color: AppColors.primary,
+        borderSide: BorderSide(
+          color: context.getApplyedColorScheme.primary,
         ),
       );
     }

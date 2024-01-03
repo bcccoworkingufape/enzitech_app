@@ -326,7 +326,6 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
             iconTheme: IconThemeData(
               color: context.getApplyedColorScheme.onBackground,
             ),
-            // backgroundColor: AppColors.primary,
             title: Text(
               "Detalhes do experimento",
               style: TextStyles(context).titleBoldBackground(),

@@ -108,7 +108,7 @@ class _CalculateExperimentThirdStepPageState
                 EZTSnackBar.show(
                   context,
                   'Esta repetição está discrepante!\n\nO valor dela difere acima de 25% da média de todos as repetições.\n\nCaso queira mudar, basta pressionar "Recalcular".',
-                  textStyle: TextStyles.titleMinBoldBackground,
+                  textStyle: TextStyles(context).titleMinBoldBackground(),
                   centerTitle: true,
                   eztSnackBarType: EZTSnackBarType.error,
                 );

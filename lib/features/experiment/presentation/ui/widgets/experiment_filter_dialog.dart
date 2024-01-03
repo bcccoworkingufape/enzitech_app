@@ -149,25 +149,24 @@ class _ExperimentFilterDialogState extends State<ExperimentFilterDialog> {
           },
           child: Text(
             numberOfFiltersEnabled() > 1 ? 'Limpar filtros' : 'Limpar filtro',
-            style: TextStyles.buttonPrimary.copyWith(
-              color: context.getApplyedColorScheme.error,
-            ),
+            style: TextStyles(context).buttonPrimary.copyWith(
+                  color: context.getApplyedColorScheme.error,
+                ),
           ),
         ),
         TextButton(
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all<Color>(
-              AppColors.primary,
+              context.getApplyedColorScheme.primary,
             ),
             overlayColor: MaterialStateProperty.all<Color>(
               context.getApplyedColorScheme.error,
             ),
           ),
           child: Text(
-              numberOfFiltersEnabled() > 1
-                  ? 'Aplicar filtros'
-                  : 'Aplicar filtro',
-              style: TextStyles(context).buttonBoldBackground),
+            numberOfFiltersEnabled() > 1 ? 'Aplicar filtros' : 'Aplicar filtro',
+            style: TextStyles(context).buttonBoldBackground,
+          ),
           onPressed: () {
             _experimentsViewmodel.setOrderBy(dropdownOrderByValue);
             _experimentsViewmodel.setOrdering(dropdownOrderingValue);

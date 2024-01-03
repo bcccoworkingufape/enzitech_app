@@ -94,11 +94,11 @@ class TextStyles {
         color: color ?? context.getApplyedColorScheme.primary,
       );
 
-  static final buttonPrimary = GoogleFonts.ubuntu(
-    fontSize: 16,
-    fontWeight: FontWeight.w500,
-    color: AppColors.primary,
-  );
+  get buttonPrimary => GoogleFonts.ubuntu(
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+        color: context.getApplyedColorScheme.primary,
+      );
 
   get buttonBackground => GoogleFonts.ubuntu(
         fontSize: 16,
@@ -155,11 +155,11 @@ class TextStyles {
     fontWeight: FontWeight.w600,
     // color: AppColors.heading,
   );
-  static final titleMinBoldBackground = GoogleFonts.ubuntu(
-    fontSize: 16,
-    fontWeight: FontWeight.w600,
-    color: Colors.white,
-  );
+  titleMinBoldBackground({Color? color}) => GoogleFonts.ubuntu(
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+        color: color ?? Colors.white,
+      );
 
   static final titleRegular = GoogleFonts.ubuntu(
     fontSize: 20,
@@ -206,11 +206,7 @@ class TextStyles {
     fontWeight: FontWeight.w600,
     // color: AppColors.heading,
   );
-  static final xbuttonPrimary = GoogleFonts.ubuntu(
-    fontSize: 15,
-    fontWeight: FontWeight.w400,
-    color: AppColors.primary,
-  );
+
   static final buttonHeading = GoogleFonts.ubuntu(
     fontSize: 15,
     fontWeight: FontWeight.w400,
@@ -261,11 +257,11 @@ class TextStyles {
     fontWeight: FontWeight.w400,
     // color: AppColors.shape, //TODO: COLOR-FIX
   );
-  static final captionBody = GoogleFonts.ubuntu(
-    fontSize: 13,
-    fontWeight: FontWeight.w400,
-    // color: AppColors.body,
-  );
+  captionBody({Color? color}) => GoogleFonts.ubuntu(
+        fontSize: 14,
+        fontWeight: FontWeight.w600,
+        color: color ?? context.getApplyedColorScheme.onSecondaryContainer,
+      );
   static final captionBoldBackground = GoogleFonts.ubuntu(
     fontSize: 13,
     fontWeight: FontWeight.w600,

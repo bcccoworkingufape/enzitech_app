@@ -64,9 +64,9 @@ class _ExperimentCardState extends State<ExperimentCard> {
                 children: [
                   if (widget.indexOfExperiment != null)
                     Container(
-                      decoration: const BoxDecoration(
-                        color: AppColors.primary,
-                        borderRadius: BorderRadius.only(
+                      decoration: BoxDecoration(
+                        color: context.getApplyedColorScheme.primary,
+                        borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(16),
                           bottomLeft: Radius.circular(16),
                         ),
@@ -74,10 +74,13 @@ class _ExperimentCardState extends State<ExperimentCard> {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8),
                         child: Center(
-                            child: Text(
-                          widget.indexOfExperiment.toString(),
-                          style: TextStyles.titleMinBoldBackground,
-                        )),
+                          child: Text(
+                            widget.indexOfExperiment.toString(),
+                            style: TextStyles(context).titleMinBoldBackground(
+                              color: context.getApplyedColorScheme.onPrimary,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   if (widget.indexOfExperiment != null)
@@ -131,11 +134,10 @@ class _ExperimentCardState extends State<ExperimentCard> {
                     lineWidth: 12.0,
                     animation: true,
                     circularStrokeCap: CircularStrokeCap.round,
-                    
                     percent: widget.experiment.progress,
                     center: Text(
                       Toolkit.doubleToPercentual(widget.experiment.progress),
-                      style: TextStyles.buttonPrimary,
+                      style: TextStyles(context).buttonPrimary,
                     ),
                     progressColor: context.getApplyedColorScheme.primary,
                     backgroundColor:
