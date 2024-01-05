@@ -14,7 +14,6 @@ import 'package:share_plus/share_plus.dart';
 // 🌎 Project imports:
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
-import '../../../main/presentation/viewmodel/settings_viewmodel.dart';
 import '../../domain/entities/experiment_result_entity.dart';
 import '../../domain/usecases/get_result/get_result_usecase.dart';
 import 'experiment_details_viewmodel.dart';

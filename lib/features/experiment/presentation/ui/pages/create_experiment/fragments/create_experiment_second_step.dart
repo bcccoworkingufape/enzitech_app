@@ -202,7 +202,6 @@ class _CreateExperimentSecondStepPageState
               children: [
                 Icon(
                   PhosphorIcons.flask(),
-                  // color: AppColors.greySweet, //TODO: COLOR-FIX
                 ),
                 const SizedBox(width: 4),
                 Text(

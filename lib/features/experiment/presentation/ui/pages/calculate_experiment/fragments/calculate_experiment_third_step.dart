@@ -76,7 +76,6 @@ class _CalculateExperimentThirdStepPageState
     return TableRow(
       decoration: const UnderlineTabIndicator(
           borderSide: BorderSide(
-              // color: AppColors.greyLight.withOpacity(0.25), //TODO: COLOR-FIX
               )),
       children: [
         Padding(
@@ -217,7 +216,6 @@ class _CalculateExperimentThirdStepPageState
                             .temporaryChoosedExperimentCombination.enzyme!.name,
                         textAlign: TextAlign.center,
                         style: TextStyles(context).titleBoldBackground(
-                          // color: AppColors.greySweet, //TODO: COLOR-FIX
                           fontWeight: FontWeight.w700,
                           fontSize: 28,
                         ),
@@ -230,7 +228,6 @@ class _CalculateExperimentThirdStepPageState
                             .name,
                         textAlign: TextAlign.center,
                         style: TextStyles(context).titleBoldBackground(
-                          // color: AppColors.greySweet, //TODO: COLOR-FIX
                           fontWeight: FontWeight.w700,
                         ),
                       ),

@@ -71,7 +71,6 @@ class _ExperimentFilterDialogState extends State<ExperimentFilterDialog> {
       elevation: 16,
       underline: Container(
         height: 1.1,
-        // color: AppColors.line, //TODO: COLOR-FIX
       ),
       onChanged: (String? value) {
         setState(() {
@@ -100,7 +99,6 @@ class _ExperimentFilterDialogState extends State<ExperimentFilterDialog> {
       elevation: 16,
       underline: Container(
         height: 1.1,
-        // color: AppColors.line, //TODO: COLOR-FIX
       ),
       onChanged: (String? value) {
         setState(() {

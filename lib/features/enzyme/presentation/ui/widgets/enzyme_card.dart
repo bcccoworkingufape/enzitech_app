@@ -97,7 +97,6 @@ class _EnzymeCardState extends State<EnzymeCard> {
                 Text(
                   "Fórmula: ",
                   style: TextStyles(context).bodyRegular.copyWith(
-                        // color: AppColors.heading, //TODO: COLOR-FIX
                         fontSize: 16.0,
                         fontWeight: FontWeight.w600,
                       ),
@@ -108,7 +107,6 @@ class _EnzymeCardState extends State<EnzymeCard> {
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.justify,
                   style: TextStyles(context).bodyRegular.copyWith(
-                        //color: AppColors.heading//TODO: COLOR-FIX,
                         fontSize: 16.0,
                       ),
                 ),
@@ -133,7 +131,6 @@ class _EnzymeCardState extends State<EnzymeCard> {
                         Text(
                           "Variável A: ",
                           style: TextStyles(context).bodyRegular.copyWith(
-                                // color: AppColors.heading, //TODO: COLOR-FIX
                                 fontSize: 16.0,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -162,7 +159,6 @@ class _EnzymeCardState extends State<EnzymeCard> {
                         Text(
                           "Variável B: ",
                           style: TextStyles(context).bodyRegular.copyWith(
-                                //color: AppColors.heading, //TODO: COLOR-FIX
                                 fontSize: 16.0,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -173,7 +169,6 @@ class _EnzymeCardState extends State<EnzymeCard> {
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.justify,
                           style: TextStyles(context).bodyRegular.copyWith(
-                                // color: AppColors.heading, //TODO: COLOR-FIX
                                 fontSize: 16.0,
                               ),
                         ),

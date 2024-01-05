@@ -78,7 +78,7 @@ class EZTSnackBar {
       //   borderRadius: BorderRadius.only(
       //       topLeft: Radius.circular(16.0), topRight: Radius.circular(16.0)),
       // ),
-      backgroundColor: Colors.green, //AppColors.success, //TODO: COLOR-FIX
+      backgroundColor: Colors.green,
       // action: SnackBarAction(
       //   textColor: Color(0xFFFAF2FB),
       //   label: 'OK',

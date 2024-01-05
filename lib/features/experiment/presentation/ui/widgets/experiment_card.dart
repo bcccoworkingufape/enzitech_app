@@ -116,7 +116,6 @@ class _ExperimentCardState extends State<ExperimentCard> {
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyles(context).bodyRegular.copyWith(
-                                // color: AppColors.greyLight, //TODO: COLOR-FIX
                                 fontSize: 16.0,
                               ),
                         ),

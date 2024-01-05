@@ -308,9 +308,7 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                                                       index: index,
                                                       color: index.isEven
                                                           ? MaterialStateProperty
-                                                              .all(Colors.white
-                                                                  // AppColors.white,
-                                                                  )
+                                                              .all(Colors.white)
                                                           : null,
                                                       cells: [
                                                         DataCell(Text(treatment

@@ -247,7 +247,6 @@ class _CalculateExperimentFirstStepPageState
                         children: [
                           Icon(
                             PhosphorIcons.flask(),
-                            // color: AppColors.greySweet, //TODO: COLOR-FIX
                           ),
                           const SizedBox(width: 4),
                           Expanded(

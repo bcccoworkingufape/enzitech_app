@@ -40,9 +40,7 @@ class _EnzymesSummaryState extends State<EnzymesSummary> {
           ),
           Text(
             "$name ($quantity)",
-            style: TextStyles.bodyMinBold.copyWith(
-                // color: AppColors.greySweet, //TODO: COLOR-FIX
-                ),
+            style: TextStyles.bodyMinBold.copyWith(),
           )
         ],
       ),

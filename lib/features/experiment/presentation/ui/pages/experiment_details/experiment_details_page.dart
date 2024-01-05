@@ -375,18 +375,6 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
                 ),
             ],
           ),
-          /* floatingActionButton: FloatingActionButton.extended(
-            onPressed: () {},
-            label: Text(
-              "Editar\nExperimento",
-              style: TextStyles.buttonBoldBackground,
-            ),
-            icon: const Icon(
-              PhosphorIcons.pencilLine,
-              size: 35,
-              color: AppColors.white,
-            ),
-          ), */
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: _buildBody(

@@ -261,9 +261,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                       //set border radius more than 50% of height and width to make circle
                     ),
                     elevation: 4,
-                    // shadowColor: AppColors.white,//TODO: COLOR-FIX
-                    color: context.getApplyedColorScheme
-                        .tertiaryContainer, //TODO: COLOR-FIX
+                    color: context.getApplyedColorScheme.tertiaryContainer,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 30, bottom: 30),
                       child: Center(

@@ -166,7 +166,6 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
             children: [
               Icon(
                 PhosphorIcons.at(PhosphorIconsStyle.bold),
-                // color: AppColors.greySweet, //TODO: COLOR-FIX
               ),
               const SizedBox(width: 4),
               Text(

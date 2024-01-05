@@ -59,7 +59,6 @@ class _TreatmentCardState extends State<TreatmentCard> {
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.justify,
                 style: TextStyles(context).bodyRegular.copyWith(
-                      // color: AppColors.greyLight, //TODO: COLOR-FIX
                       fontSize: 16.0,
                     ),
               ),
