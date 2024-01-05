@@ -152,9 +152,17 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
     _listOfNumberDifferencesDTO = listOfNumberDifferencesDTO;
   }
 
+  bool _alreadyPopped = false;
+  bool get alreadyPopped => _alreadyPopped;
+  void setAlreadyPopped(bool alreadyPopped) {
+    _alreadyPopped = alreadyPopped;
+    notifyListeners();
+  }
+
   void onBack(bool mounted, BuildContext context, {int? page}) {
     if (mounted) {
       if (page != null) {
+        setAlreadyPopped(false);
         pageController.animateToPage(
           page,
           duration: const Duration(milliseconds: 150),
@@ -163,6 +171,7 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
       } else {
         {
           if (pageController.page! > 0) {
+            setAlreadyPopped(false);
             pageController.animateToPage(
               pageController.page!.toInt() - 1,
               duration: const Duration(milliseconds: 150),
@@ -173,6 +182,7 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
             setEnableNextButtonOnSecondStep(false, notify: false);
             setTemporaryChoosedExperimentCombination(
                 ChoosedExperimentCombinationDTO());
+            setAlreadyPopped(true);
             Navigator.pop(context);
           }
         }

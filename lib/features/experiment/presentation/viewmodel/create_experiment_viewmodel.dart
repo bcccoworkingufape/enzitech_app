@@ -94,9 +94,18 @@ class CreateExperimentViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool _alreadyPopped = false;
+  bool get alreadyPopped => _alreadyPopped;
+  void setAlreadyPopped(bool alreadyPopped) {
+    _alreadyPopped = alreadyPopped;
+    notifyListeners();
+  }
+
   void onBack(bool mounted, BuildContext context, {int? page}) {
     if (mounted) {
       if (page != null) {
+        setAlreadyPopped(false);
+
         pageController.animateToPage(
           page,
           duration: const Duration(milliseconds: 150),
@@ -105,6 +114,7 @@ class CreateExperimentViewmodel extends ChangeNotifier {
       } else {
         {
           if (pageController.page! > 0) {
+            setAlreadyPopped(false);
             pageController.animateToPage(
               pageController.page!.toInt() - 1,
               duration: const Duration(milliseconds: 150),
@@ -112,6 +122,7 @@ class CreateExperimentViewmodel extends ChangeNotifier {
             );
           } else {
             setTemporaryExperiment(CreateExperimentDTO());
+            setAlreadyPopped(true);
             Navigator.pop(context);
           }
         }
