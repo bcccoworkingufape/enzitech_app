@@ -143,11 +143,13 @@ class _EnzymesPageState extends State<EnzymesPage> {
                       children: [
                         Icon(
                           PhosphorIcons.trash(PhosphorIconsStyle.light),
-                          color: Colors.white,
+                          color: context.getApplyedColorScheme.onError,
                         ),
-                        const Text(
+                        Text(
                           'Excluir',
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(
+                            color: context.getApplyedColorScheme.onError,
+                          ),
                           textAlign: TextAlign.right,
                         ),
                       ],

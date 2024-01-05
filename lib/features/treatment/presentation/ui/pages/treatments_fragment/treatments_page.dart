@@ -8,6 +8,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
+import '../../../../../../shared/extensions/context_theme_mode_extensions.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../../../main/presentation/viewmodel/settings_viewmodel.dart';
 import '../../../viewmodel/treatments_viewmodel.dart';
@@ -116,7 +117,7 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
                 );
               },
               background: Container(
-                color: Colors.red,
+                color: context.getApplyedColorScheme.error,
                 child: Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: Row(
@@ -124,11 +125,13 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
                     children: [
                       Icon(
                         PhosphorIcons.trash(),
-                        color: Colors.white,
+                        color: context.getApplyedColorScheme.onError,
                       ),
-                      const Text(
+                      Text(
                         'Excluir',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(
+                          color: context.getApplyedColorScheme.onError,
+                        ),
                         textAlign: TextAlign.right,
                       ),
                     ],
