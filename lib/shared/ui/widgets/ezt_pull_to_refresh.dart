@@ -41,10 +41,10 @@ class _EZTPullToRefreshState extends State<EZTPullToRefresh> {
       onRefresh: widget.onRefresh,
       showChildOpacityTransition: widget.showChildOpacityTransition,
       springAnimationDurationInMilliseconds: 500,
-      backgroundImage: const AssetImage(
-        AppImages.logoWhite,
+      backgroundImage: AssetImage(
+        context.isDarkMode ? AppImages.logoGreen : AppImages.logoWhite,
       ),
-      backgroundColor: context.isDarkMode ? Colors.white : null,
+      backgroundColor: context.isDarkMode ? AppColors.primary : null,
       color: context.getApplyedColorScheme.surfaceTint,
       child: widget.child,
     );
