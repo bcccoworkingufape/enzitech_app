@@ -123,84 +123,95 @@ class LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: Form(
         key: _formKey,
-        child: Center(
-          child: SingleChildScrollView(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 64),
+        child: CustomScrollView(
+          scrollDirection: Axis.vertical,
+          slivers: [
+            SliverFillRemaining(
+              hasScrollBody: false,
+              fillOverscroll: true,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Align(
-                    alignment: Alignment.center,
-                    child: SvgPicture.asset(
-                      AppSvgs(context).fullLogo(),
-                      alignment: Alignment.center,
-                      width: MediaQuery.of(context).size.width,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 32,
                     ),
-                  ),
-                  const SizedBox(height: 64),
-                  Text(
-                    "Olá,\nseja bem vindo!",
-                    style: TextStyles.titleHomeRegular,
-                  ),
-                  const SizedBox(height: 16),
-                  _textFields,
-                  // const SizedBox(height: 16),
-                  // Align(
-                  //   alignment: Alignment.centerRight,
-                  //   child: GestureDetector(
-                  //     onTap: () {
-                  //       Navigator.pushNamed(
-                  //         context,
-                  //         RouteGenerator.recoverPassword,
-                  //       );
-                  //     },
-                  //     child: Text(
-                  //       "Esqueci minha senha",
-                  //       style: TextStyles.detailRegular.copyWith(
-                  //         decoration: TextDecoration.underline,
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-                  const SizedBox(height: 64),
-                  Align(
-                    alignment: Alignment.center,
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width / 1.75,
-                      child: LoginButton(
-                        formKey: _formKey,
-                        loginViewmodel: _loginViewmodel,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 32),
-                  Center(
-                    child: RichText(
-                      text: TextSpan(
-                        text: 'Não tem uma conta?',
-                        style: TextStyles(context).detailRegular,
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: ' Crie uma',
-                            style: TextStyles(context).link(),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Align(
+                          alignment: Alignment.center,
+                          child: SvgPicture.asset(
+                            AppSvgs(context).fullLogo(),
+                            alignment: Alignment.center,
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height / 3.33,
+                          ),
+                        ),
+                        Text(
+                          "Olá,\nseja bem vindo(a)!",
+                          style: TextStyles.titleHomeRegular,
+                        ),
+                        _textFields,
+                        /* Padding(
+                          padding: const EdgeInsets.only(top: 16.0),
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: GestureDetector(
+                              onTap: () {
                                 Navigator.pushNamed(
                                   context,
-                                  Routing.createAccount,
+                                  Routing.recoverPassword,
                                 );
                               },
+                              child: Text(
+                                "Esqueci minha senha",
+                                style: TextStyles(context).captionBody(),
+                              ),
+                            ),
                           ),
-                        ],
-                      ),
+                        ), */
+                        const SizedBox(height: 32),
+                        Align(
+                          alignment: Alignment.center,
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width / 1.75,
+                            child: LoginButton(
+                              formKey: _formKey,
+                              loginViewmodel: _loginViewmodel,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 32),
+                        Center(
+                          child: RichText(
+                            text: TextSpan(
+                              text: 'Não possui uma conta?',
+                              style: TextStyles(context).detailRegular,
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: ' Crie uma',
+                                  style: TextStyles(context).link(),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      Navigator.pushNamed(
+                                        context,
+                                        Routing.createAccount,
+                                      );
+                                    },
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
+                  )
                 ],
               ),
             ),
-          ),
+          ],
         ),
       ),
     );
