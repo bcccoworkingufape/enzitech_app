@@ -272,9 +272,9 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
               enabled: _experimentDetailsViewmodel.experiment!.progress != 1,
               icon: Icon(
                 PhosphorIcons.function(),
-                color: _experimentDetailsViewmodel.experiment!.progress != 0
-                    ? context.getApplyedColorScheme.primary
-                    : context.getApplyedColorScheme.onPrimary,
+                color: _experimentDetailsViewmodel.experiment!.progress < 1.0
+                    ? context.getApplyedColorScheme.onPrimary
+                    : context.getApplyedColorScheme.primary,
                 size: 30,
               ),
               onPressed: () {
