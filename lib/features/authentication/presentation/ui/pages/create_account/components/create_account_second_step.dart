@@ -2,11 +2,11 @@
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 // 🌎 Project imports:
+import '../../../../../../../shared/extensions/context_theme_mode_extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../../../../../shared/utils/utils.dart';
 import '../../../../../../../shared/validator/validator.dart';
@@ -142,14 +142,14 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
     );
   }
 
-  Widget get _body {
+  _body(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: [
           Align(
             alignment: Alignment.center,
-            child: SvgPicture.asset(
-              AppSvgs(context).iconLogo(),
+            child: Image.asset(
+              context.isDarkMode ? AppImages.logoWhite : AppImages.logoGreen,
               alignment: Alignment.center,
               width: 75,
             ),
@@ -232,7 +232,7 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
             flex: 11,
             child: Padding(
               padding: Constants.padding16all,
-              child: Center(child: _body),
+              child: Center(child: _body(context)),
             ),
           ),
           Expanded(

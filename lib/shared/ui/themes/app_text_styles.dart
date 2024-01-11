@@ -124,10 +124,12 @@ class TextStyles {
     fontWeight: FontWeight.w600,
   );
 
-  static final informationExperimentStepTitle = GoogleFonts.ubuntu(
-    fontSize: 20,
-    fontWeight: FontWeight.w700,
-  );
+  informationExperimentStepTitle({double? fontSize, Color? color}) =>
+      GoogleFonts.ubuntu(
+        fontSize: fontSize ?? 20,
+        fontWeight: FontWeight.w700,
+        color: color,
+      );
 
   static final informationExperimentStepMessage = GoogleFonts.ubuntu(
     fontSize: 16,

@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 // 📦 Package imports:
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
@@ -66,50 +65,53 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
   }
 
   Widget _buildHeader(String title, String message) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Align(
-          alignment: Alignment.center,
-          child: SvgPicture.asset(
-            AppSvgs(context).iconLogo(),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Align(
             alignment: Alignment.center,
-            width: 75,
+            child: Image.asset(
+              context.isDarkMode ? AppImages.logoWhite : AppImages.logoGreen,
+              alignment: Alignment.center,
+              width: 75,
+            ),
           ),
-        ),
-        const SizedBox(width: 16),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.7,
-              child: Text(
-                title,
-                style: TextStyles.informationExperimentStepTitle
-                    .copyWith(fontSize: 28),
-                textAlign: TextAlign.start,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
+          const SizedBox(width: 16),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.7,
+                child: Text(
+                  title,
+                  style: TextStyles(context)
+                      .informationExperimentStepTitle(fontSize: 28),
+                  textAlign: TextAlign.start,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.7,
-              child: Text(
-                message,
-                style: TextStyles.informationExperimentStepMessage
-                    .copyWith(fontSize: 20),
-                textAlign: TextAlign.start,
+              const SizedBox(
+                height: 8,
               ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 64),
-      ],
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.7,
+                child: Text(
+                  message,
+                  style: TextStyles.informationExperimentStepMessage
+                      .copyWith(fontSize: 20),
+                  textAlign: TextAlign.start,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 64),
+        ],
+      ),
     );
   }
 
@@ -125,15 +127,9 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
         physics: const NeverScrollableScrollPhysics(),
         slivers: [
           SliverToBoxAdapter(
-            child: Column(
-              children: [
-                const SizedBox(height: 32),
-                _buildHeader(
-                  'Resultados',
-                  'Experimento: ${_experiment.name}',
-                ),
-                const SizedBox(height: 16),
-              ],
+            child: _buildHeader(
+              'Resultados',
+              'Experimento: ${_experiment.name}',
             ),
           ),
           ScrollConfiguration(
@@ -163,8 +159,9 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                               children: [
                                 Text(
                                   results.enzymes[indexOfEnzymes].enzyme.name,
-                                  style:
-                                      TextStyles.informationExperimentStepTitle,
+                                  style: TextStyles(context)
+                                      .informationExperimentStepTitle(
+                                          fontSize: 28),
                                 ),
                                 Text(
                                   'Tipo: ${results.enzymes[indexOfEnzymes].enzyme.name} (${results.enzymes[indexOfEnzymes].enzyme.formula})',
@@ -183,12 +180,7 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                                         children: [
                                           Text(
                                             treatment.treatment.name,
-                                            style: TextStyles
-                                                .informationExperimentStepTitle
-                                                .copyWith(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w500,
-                                            ),
+                                            style: TextStyles.bodyBold,
                                           ),
                                           const Text(
                                             'Tratamento',
@@ -220,7 +212,7 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                                                   600, constraints.maxWidth),
                                             ),
                                             child: ScrollConfiguration(
-                                              behavior: const ScrollBehavior(),
+                                              behavior: MyBehavior(),
                                               child: GlowingOverscrollIndicator(
                                                 axisDirection:
                                                     AxisDirection.down,
@@ -308,7 +300,9 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                                                       index: index,
                                                       color: index.isEven
                                                           ? MaterialStateProperty
-                                                              .all(Colors.white)
+                                                              .all(context
+                                                                  .getApplyedColorScheme
+                                                                  .surfaceVariant)
                                                           : null,
                                                       cells: [
                                                         DataCell(Text(treatment

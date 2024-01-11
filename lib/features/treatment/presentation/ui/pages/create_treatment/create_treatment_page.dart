@@ -2,13 +2,13 @@
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
+import '../../../../../../shared/extensions/context_theme_mode_extensions.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../../../../shared/utils/utils.dart';
 import '../../../../../../shared/validator/validator.dart';
@@ -82,15 +82,15 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
     }
   }
 
-  Widget get _body {
+  _body(BuildContext context) {
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
       child: Column(
         children: [
           Align(
             alignment: Alignment.center,
-            child: SvgPicture.asset(
-              AppSvgs(context).iconLogo(),
+            child: Image.asset(
+              context.isDarkMode ? AppImages.logoWhite : AppImages.logoGreen,
               alignment: Alignment.center,
               width: 75,
             ),
@@ -201,7 +201,7 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
             children: [
               Expanded(
                 flex: 11,
-                child: Center(child: _body),
+                child: Center(child: _body(context)),
               ),
               SizedBox(
                 height: 160,

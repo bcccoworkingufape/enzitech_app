@@ -30,7 +30,7 @@ class EZTNotFound extends StatelessWidget {
               width: MediaQuery.of(context).size.width * 0.7,
               child: Text(
                 title!,
-                style: TextStyles.informationExperimentStepTitle,
+                style: TextStyles(context).informationExperimentStepTitle(),
                 textAlign: TextAlign.center,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,

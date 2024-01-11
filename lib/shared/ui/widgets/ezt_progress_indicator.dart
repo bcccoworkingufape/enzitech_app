@@ -5,9 +5,9 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
-import 'package:flutter_svg/svg.dart';
 
 // 🌎 Project imports:
+import '../../extensions/context_theme_mode_extensions.dart';
 import '../themes/themes.dart';
 
 class EZTProgressIndicator extends StatefulWidget {
@@ -46,8 +46,8 @@ class _EZTProgressIndicatorState extends State<EZTProgressIndicator>
                 child: child,
               );
             },
-            child: SvgPicture.asset(
-              AppSvgs(context).iconLogo(),
+            child: Image.asset(
+              context.isDarkMode ? AppImages.logoWhite : AppImages.logoGreen,
               alignment: Alignment.center,
               width: 64,
             ),

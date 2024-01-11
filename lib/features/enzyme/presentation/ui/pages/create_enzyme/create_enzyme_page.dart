@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
-import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
@@ -100,8 +99,8 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
         children: [
           Align(
             alignment: Alignment.center,
-            child: SvgPicture.asset(
-              AppSvgs(context).iconLogo(),
+            child: Image.asset(
+              context.isDarkMode ? AppImages.logoWhite : AppImages.logoGreen,
               alignment: Alignment.center,
               width: 75,
             ),

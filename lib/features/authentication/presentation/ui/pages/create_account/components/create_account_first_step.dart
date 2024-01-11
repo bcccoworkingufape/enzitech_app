@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 // 🌎 Project imports:
+import '../../../../../../../shared/extensions/context_theme_mode_extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../../../../../shared/utils/utils.dart';
 import '../../../../../../../shared/validator/validator.dart';
@@ -127,15 +127,15 @@ class CreateAccountFirstStepState extends State<CreateAccountFirstStep> {
     );
   }
 
-  Widget get _body {
+  _body(BuildContext context) {
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
       child: Column(
         children: [
           Align(
             alignment: Alignment.center,
-            child: SvgPicture.asset(
-              AppSvgs(context).iconLogo(),
+            child: Image.asset(
+              context.isDarkMode ? AppImages.logoWhite : AppImages.logoGreen,
               alignment: Alignment.center,
               width: 75,
             ),
@@ -207,7 +207,7 @@ class CreateAccountFirstStepState extends State<CreateAccountFirstStep> {
       children: [
         Expanded(
           flex: 11,
-          child: Center(child: _body),
+          child: Center(child: _body(context)),
         ),
         Expanded(
           flex: 4,
