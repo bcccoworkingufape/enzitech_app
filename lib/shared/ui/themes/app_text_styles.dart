@@ -70,16 +70,14 @@ class TextStyles {
     fontWeight: FontWeight.w700,
   );
 
-  /// `fontSize:` 18,
-  ///
-  /// `fontWeight:` FontWeight.normal,
-  ///
-  /// `color:`
-  ///
-  /// ![585666](https://www.colorhexa.com/585666.png)
   static final termRegular = GoogleFonts.ubuntu(
     fontSize: 18,
   );
+
+  onPrimaryContainer18() => GoogleFonts.ubuntu(
+        fontSize: 18,
+        color: context.getApplyedColorScheme.onPrimaryContainer,
+      );
 
   //* Revisado
   link({double? fontSize, Color? color}) => GoogleFonts.ubuntu(
@@ -128,7 +126,7 @@ class TextStyles {
       GoogleFonts.ubuntu(
         fontSize: fontSize ?? 20,
         fontWeight: FontWeight.w700,
-        color: color,
+        color: color ?? context.getApplyedColorScheme.primary,
       );
 
   static final informationExperimentStepMessage = GoogleFonts.ubuntu(

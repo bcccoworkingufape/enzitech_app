@@ -47,7 +47,7 @@ class _EZTProgressIndicatorState extends State<EZTProgressIndicator>
               );
             },
             child: Image.asset(
-              context.isDarkMode ? AppImages.logoWhite : AppImages.logoGreen,
+              context.isDarkMode ? AppImages.logoOnDark : AppImages.logoGreen,
               alignment: Alignment.center,
               width: 64,
             ),
@@ -60,7 +60,7 @@ class _EZTProgressIndicatorState extends State<EZTProgressIndicator>
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Text(
                 widget.message!,
-                style: TextStyles.termRegular,
+                style: TextStyles(context).onPrimaryContainer18(),
                 textAlign: TextAlign.center,
               ),
             ),

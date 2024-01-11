@@ -74,7 +74,7 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
           Align(
             alignment: Alignment.center,
             child: Image.asset(
-              context.isDarkMode ? AppImages.logoWhite : AppImages.logoGreen,
+              context.isDarkMode ? AppImages.logoOnDark : AppImages.logoGreen,
               alignment: Alignment.center,
               width: 75,
             ),
