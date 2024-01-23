@@ -79,7 +79,7 @@ class _EnzymesSummaryState extends State<EnzymesSummary> {
                   child: Text(
                     "Sumário de enzimas",
                     style: TextStyles.bodyMinBold.copyWith(
-                      color: Colors.white,
+                      color: context.getApplyedColorScheme.onSecondary,
                     ),
                   ),
                 ),
