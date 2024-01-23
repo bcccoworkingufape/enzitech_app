@@ -118,7 +118,7 @@ class _EnzymesPageState extends State<EnzymesPage> {
                     eztSnackBarType: EZTSnackBarType.error,
                     action: SnackBarAction(
                       label: 'Desfazer',
-                      textColor: Colors.white,
+                      textColor: context.getApplyedColorScheme.onError,
                       onPressed: () {
                         setState(() {
                           _enzymesViewmodel.enzymes.insert(index, enzyme);

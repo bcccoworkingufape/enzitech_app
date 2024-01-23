@@ -182,7 +182,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                     eztSnackBarType: EZTSnackBarType.error,
                     action: SnackBarAction(
                       label: 'Desfazer',
-                      textColor: Colors.white,
+                      textColor: context.getApplyedColorScheme.onError,
                       onPressed: () {
                         setState(() {
                           _experimentsViewmodel.experiments
