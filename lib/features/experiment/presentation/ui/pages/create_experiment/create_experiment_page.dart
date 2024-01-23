@@ -50,12 +50,6 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
           } else if (_createExperimentViewmodel.state == StateEnum.success &&
               _createExperimentViewmodel.experiment != null) {
             if (mounted) {
-              EZTSnackBar.show(
-                context,
-                "Experimento criado com sucesso!",
-                eztSnackBarType: EZTSnackBarType.success,
-              );
-
               if (!mounted) return;
               Navigator.popAndPushNamed(
                 context,
@@ -66,7 +60,11 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
                 _createExperimentViewmodel.setTemporaryExperiment(
                   CreateExperimentDTO(),
                 );
-              });
+              }).then((value) => EZTSnackBar.show(
+                    context,
+                    "Experimento criado com sucesso!",
+                    eztSnackBarType: EZTSnackBarType.success,
+                  ));
             }
           }
         },
