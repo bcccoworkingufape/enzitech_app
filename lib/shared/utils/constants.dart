@@ -13,6 +13,7 @@ class Constants {
   );
 
   static const bccCoworkingLink = 'http://app.uag.ufrpe.br/bcccoworking/home';
+  static const enzitechGithubPage = 'https://github.com/bcccoworkingufape/enzitech_app/#enzitech-app---sistema-de-experimentos-para-c%C3%A1lculo-de-atividades-enzim%C3%A1ticas-do-solo';
 
   static const betaGlucosidase = 'Betaglucosidase';
   static const aryl = 'Aryl';

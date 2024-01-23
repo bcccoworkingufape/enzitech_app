@@ -15,6 +15,7 @@ import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../core/routing/routing.dart';
 import '../../../../../../shared/ui/ui.dart';
+import '../../../../../../shared/utils/utils.dart';
 import '../../../viewmodel/home_viewmodel.dart';
 import '../../../viewmodel/settings_viewmodel.dart';
 import '../../widgets/settings_section.dart';
@@ -258,6 +259,8 @@ class _SettingsPageState extends State<SettingsPage> {
                         leading: Icon(
                           PhosphorIcons.gitBranch(),
                         ),
+                        onTap: () => _settingsViewmodel
+                            .openUrl(Constants.enzitechGithubPage),
                         title: const Text('Versão'),
                         subtitle: Text(
                           "${_settingsViewmodel.appInfo!.version}+${_settingsViewmodel.appInfo!.buildNumber}",
@@ -276,7 +279,8 @@ class _SettingsPageState extends State<SettingsPage> {
                         },
                       ),
                       GestureDetector(
-                        onTap: _settingsViewmodel.openUrl,
+                        onTap: () => _settingsViewmodel
+                            .openUrl(Constants.bccCoworkingLink),
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                           child: Align(

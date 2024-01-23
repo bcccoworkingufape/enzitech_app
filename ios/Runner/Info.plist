@@ -49,5 +49,9 @@
 		<false/>
 		<key>UISupportsDocumentBrowser</key>
 		<true/>
+		<key>LSApplicationQueriesSchemes</key>
+		<array>
+		<string>URL</string>
+		</array>
 	</dict>
 </plist>

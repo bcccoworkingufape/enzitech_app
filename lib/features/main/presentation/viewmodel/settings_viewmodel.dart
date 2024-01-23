@@ -260,16 +260,12 @@ class SettingsViewmodel extends ChangeNotifier {
     );
   }
 
-  Future<void> openUrl() async {
-    try {
-      if (!await launchUrl(Uri.parse(Constants.bccCoworkingLink))) {
-        throw UnableToOpenUrlFailure(
-            message:
-                'Não foi possível acessar ${Uri.parse(Constants.bccCoworkingLink)}');
-      }
-    } on Exception catch (e) {
-      _setFailure(e as Failure);
-      // setStateEnum(StateEnum.error);
+  Future<void> openUrl(String url) async {
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
+    } else {
+      throw UnableToOpenUrlFailure(
+          message: 'Não foi possível acessar ${Uri.parse(url)}');
     }
   }
 }
