@@ -124,7 +124,7 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Icon(
-                        PhosphorIcons.trash(),
+                        PhosphorIcons.trash(PhosphorIconsStyle.light),
                         color: context.getApplyedColorScheme.onError,
                       ),
                       Text(

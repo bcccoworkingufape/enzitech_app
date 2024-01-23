@@ -37,7 +37,7 @@ class _TreatmentCardState extends State<TreatmentCard> {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               EZTMarqueeOnDemand(
                 text: widget.name,
