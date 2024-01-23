@@ -4,16 +4,22 @@ import 'package:flutter/material.dart';
 // 🌎 Project imports:
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
+import '../../../../core/inject/inject.dart';
 import '../../../../shared/ui/ui.dart';
 import '../../../enzyme/data/dto/enzyme_dto.dart';
 import '../../domain/entities/experiment_entity.dart';
 import '../../domain/usecases/create_experiment/create_experiment_usecase.dart';
 import '../dto/create_experiment_dto.dart';
+import 'experiments_viewmodel.dart';
 
 class CreateExperimentViewmodel extends ChangeNotifier {
   final CreateExperimentUseCase _createExperimentUseCase;
+  final ExperimentsViewmodel _experimentsViewmodel;
 
-  CreateExperimentViewmodel(this._createExperimentUseCase);
+  CreateExperimentViewmodel(
+    this._createExperimentUseCase,
+    this._experimentsViewmodel,
+  );
 
   StateEnum _state = StateEnum.idle;
   StateEnum get state => _state;
@@ -192,6 +198,7 @@ class CreateExperimentViewmodel extends ChangeNotifier {
       },
       (success) async {
         setExperiment(success);
+        await _experimentsViewmodel.fetch(); // reload the experiments list
         setStateEnum(StateEnum.success);
       },
     );

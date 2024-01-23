@@ -41,7 +41,7 @@ class ViewmodelsInjections {
       () => CreateEnzymeViewmodel(getIt()),
     );
     getIt.registerLazySingleton<CreateExperimentViewmodel>(
-      () => CreateExperimentViewmodel(getIt()),
+      () => CreateExperimentViewmodel(getIt(), getIt()),
     );
     getIt.registerLazySingleton<CreateTreatmentViewmodel>(
       () => CreateTreatmentViewmodel(getIt()),

@@ -50,10 +50,6 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
           } else if (_createExperimentViewmodel.state == StateEnum.success &&
               _createExperimentViewmodel.experiment != null) {
             if (mounted) {
-              // reload the experiments list
-              // TODO: Verify this (maybe not loading recent created experiment if > 10)
-              _experimentsViewmodel.fetch();
-
               EZTSnackBar.show(
                 context,
                 "Experimento criado com sucesso!",
