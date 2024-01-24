@@ -27,7 +27,6 @@ class CalculateExperimentThirdStepPage extends StatefulWidget {
 class _CalculateExperimentThirdStepPageState
     extends State<CalculateExperimentThirdStepPage> {
   late final CalculateExperimentViewmodel _calculateExperimentViewmodel;
-  // late NumberDifferencesDTO numberDifferences;
   bool loadingAbsNumberFartherFromAverage = false;
   @override
   void initState() {
@@ -74,9 +73,7 @@ class _CalculateExperimentThirdStepPageState
 
   TableRow _buildTableRow(num result, int iteration) {
     return TableRow(
-      decoration: const UnderlineTabIndicator(
-          borderSide: BorderSide(
-              )),
+      decoration: const UnderlineTabIndicator(borderSide: BorderSide()),
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 4.0),
@@ -249,7 +246,6 @@ class _CalculateExperimentThirdStepPageState
                             style: TextStyles(context).titleBoldBackground(
                               fontWeight: FontWeight.w600,
                               fontSize: 12,
-                              // color: context.getApplyedColorScheme.onBackground,
                             ),
                           ),
                         ),
@@ -281,7 +277,8 @@ class _CalculateExperimentThirdStepPageState
                   );
                 }
               },
-              future: null, //TODO: verify this update on FutureBuilder
+              //TODO: verify this update on FutureBuilder
+              future: null,
             ),
           ),
         );

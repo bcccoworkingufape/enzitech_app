@@ -84,7 +84,7 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
             Dismissible(
               key: Key(treatment.id),
               onDismissed: (direction) {
-                // Remove the item from the data source.
+                //! Remove item from data source.
                 setState(() {
                   _treatmentsViewmodel.treatments.removeAt(index);
                 });
@@ -106,7 +106,6 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
                             .insert(index, treatment);
                         permanentlyDeleted = false;
                       });
-                      // todoRepository.saveTodoList(todos);
                     },
                   ),
                   onDismissFunction: () async {

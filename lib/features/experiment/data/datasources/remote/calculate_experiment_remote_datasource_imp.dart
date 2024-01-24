@@ -28,8 +28,6 @@ class CalculateExperimentRemoteDataSourceImp
       var list = jsonDecode(jsonEncode(listOfExperimentData));
       List<Map<String, double>> listWithoutIds = [];
       for (var i in list) {
-        // print(i);
-        // print(i.runtimeType);
         i.remove('_id');
 
         listWithoutIds.add({

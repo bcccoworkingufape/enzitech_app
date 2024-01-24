@@ -1,8 +1,9 @@
+// ignore_for_file: constant_identifier_names, prefer_contains
+
 // 🎯 Dart imports:
 import 'dart:math';
 
 class CPFValidator {
-  // ignore: constant_identifier_names
   static const List<String> BLACKLIST = [
     "00000000000",
     "11111111111",
@@ -17,7 +18,6 @@ class CPFValidator {
     "12345678909"
   ];
 
-  // ignore: constant_identifier_names
   static const STRIP_REGEX = r'[^\d]';
 
   // Compute the Verifier Digit (or "Dígito Verificador (DV)" in PT-BR).
@@ -69,7 +69,6 @@ class CPFValidator {
     }
 
     // CPF can't be blacklisted
-    // ignore: prefer_contains
     if (BLACKLIST.indexOf(cpf) != -1) {
       return false;
     }

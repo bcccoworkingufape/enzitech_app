@@ -26,8 +26,6 @@ class SettingsViewmodel extends ChangeNotifier {
   final SaveThemeModeUseCase _saveThemeModeUseCase;
   final ClearUserUseCase _clearUserUseCase;
 
-  // final UserPreferencesServices _userPreferencesServices;
-
   SettingsViewmodel(
     this._getUserUseCase,
     this._getExcludeConfirmationUseCase,
@@ -35,10 +33,7 @@ class SettingsViewmodel extends ChangeNotifier {
     this._getThemeModeUseCase,
     this._saveThemeModeUseCase,
     this._clearUserUseCase,
-    // this._userPreferencesServices,
-  ) {
-    // fetch();
-  }
+  );
 
   StateEnum _state = StateEnum.idle;
   StateEnum get state => _state;
@@ -78,31 +73,6 @@ class SettingsViewmodel extends ChangeNotifier {
     }
   }
 
-  /*
-  int _quantityFiles = 0;
-  int get quantityFiles => _quantityFiles;
-  void _setQuantityFiles(int quantityFiles) {
-    _quantityFiles = quantityFiles;
-    notifyListeners();
-  }
-
-  void fetchQuantityOfFiles() async {
-    var files = io.Directory("${await getDownloadEnzitechPath()}")
-        .listSync(); //use your folder name insted of resume.
-    _setQuantityFiles(files.length);
-  }
-
-  get dealWithDownloadedFiles {
-    if (quantityFiles == 0) {
-      return 'Você não tem planilhas baixadas';
-    } else if (quantityFiles == 1) {
-      return 'Você tem 1 planilha baixada';
-    } else {
-      return 'Você tem $quantityFiles planilhas baixadas';
-    }
-  }
- */
-
   bool? _enableExcludeConfirmation;
   bool? get enableExcludeConfirmation => _enableExcludeConfirmation;
   void setEnableExcludeConfirmation(bool enableExcludeExperimentConfirmation) {
@@ -130,43 +100,6 @@ class SettingsViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  /* Future<String?> getDownloadEnzitechPath() async {
-    Directory? directory;
-    try {
-      if (Platform.isIOS) {
-        directory = await getApplicationDocumentsDirectory();
-      } else {
-        directory = Directory('/storage/emulated/0/Download');
-        // Put file in global download folder, if for an unknown reason it didn't exist, we fallback
-        // ignore: avoid_slow_async_io
-        if (!await directory.exists()) {
-          directory = await getExternalStorageDirectory();
-        }
-
-        directory = Directory('${directory!.path}/Enzitech');
-
-        if (!await directory.exists()) {
-          Directory(directory.path)
-              .create()
-              // The created directory is returned as a Future.
-              .then((Directory directory) {
-            // print('${directory.path} CRIADO!');
-          });
-        }
-      }
-    } catch (err, stack) {
-      // print("Cannot get download folder path");
-    }
-
-    setSavedPath(directory?.path ?? 'seus arquivos');
-
-    return directory?.path;
-  }
-
-  Future<void> openEnzitechFolder() async {
-    openFileManager();
-  } */
-
   logout() async {
     setStateEnum(StateEnum.loading);
     try {
@@ -193,8 +126,6 @@ class SettingsViewmodel extends ChangeNotifier {
   }
 
   Future<void> loadPreferences() async {
-    // setStateEnum(StateEnum.loading);
-
     setThemeMode(await _getThemeModeUseCase());
 
     var resultConfirmation = await _getExcludeConfirmationUseCase();
@@ -208,18 +139,6 @@ class SettingsViewmodel extends ChangeNotifier {
         notifyListeners();
       },
     );
-
-    // var resultTheme = await _getExcludeConfirmationUseCase();
-    // resultTheme.fold(
-    //   (error) {
-    //     _setFailure(error);
-    //     setStateEnum(StateEnum.error);
-    //   },
-    //   (success) async {
-    //     setEnableExcludeConfirmation(success);
-    //     notifyListeners();
-    //   },
-    // );
   }
 
   Future<void> loadAppInfo() async {

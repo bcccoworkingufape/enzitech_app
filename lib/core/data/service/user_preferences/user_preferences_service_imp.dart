@@ -14,7 +14,7 @@ class UserPreferencesServicesImp implements UserPreferencesServices {
 
   UserPreferencesServicesImp(this._keyValueService);
 
-  // ACCOUNT
+  //* ACCOUNT
   @override
   Future<void> saveFullUser(String jsonEncoded) async {
     await _keyValueService.setString(_userKey, jsonEncoded);
@@ -40,7 +40,7 @@ class UserPreferencesServicesImp implements UserPreferencesServices {
     await _keyValueService.remove(_tokenKey);
   }
 
-  // PREFERENCES
+  //* PREFERENCES
   @override
   Future<void> initConfirmationsEnabled() async {
     await saveExcludeConfirmation(true);
@@ -71,7 +71,7 @@ class UserPreferencesServicesImp implements UserPreferencesServices {
     return await _keyValueService.getString(_themeModeKey) ?? 'light';
   }
 
-  // GENERAL
+  //* GENERAL
   @override
   Future<void> clearAll() async {
     await _keyValueService.clear();

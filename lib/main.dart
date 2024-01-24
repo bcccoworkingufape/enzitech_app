@@ -66,16 +66,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // late final SplashViewmodel _splashViewmodel;
   late final SettingsViewmodel _settingsViewmodel;
 
   @override
   void initState() {
     super.initState();
     _settingsViewmodel = GetIt.I.get<SettingsViewmodel>();
-
-    // _splashViewmodel = getIt.get<SplashViewmodel>();
-    // _splashViewmodel.fetch();
   }
 
   @override

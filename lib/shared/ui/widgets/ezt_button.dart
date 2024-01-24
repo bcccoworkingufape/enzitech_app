@@ -71,7 +71,7 @@ class _EZTButtonState extends State<EZTButton> {
     }
   }
 
-  //! TODO: Checar comportamento de alguns botoes, cores e estilos
+  // TODO: Checar comportamento de alguns botoes, cores e estilos
 
   @override
   Widget build(BuildContext context) {

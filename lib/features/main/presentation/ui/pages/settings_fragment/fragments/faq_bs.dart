@@ -1,12 +1,12 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-// 📦 Package imports:
-
 // 🌎 Project imports:
 import '../../../../../../../shared/extensions/context_theme_mode_extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../widgets/ezt_bottomsheet.dart';
+
+// 📦 Package imports:
 
 class FAQBS extends StatelessWidget {
   const FAQBS({super.key});
@@ -65,65 +65,6 @@ class FAQBS extends StatelessWidget {
               ],
             ),
           ),
-          // const SizedBox(
-          //   height: 32,
-          // ),
-          // RichText(
-          //   textAlign: TextAlign.justify,
-          //   text: TextSpan(
-          //     style: TextStyles(context).trailingRegular(),
-          //     children: <TextSpan>[
-          //       TextSpan(
-          //         text: 'Pergunta: ',
-          //         style: TextStyles(context).trailingRegular(isBold: true),
-          //       ),
-          //       TextSpan(
-          //         text:
-          //             'Não consigo baixar a planilha de resultados do experimento',
-          //         style: TextStyles(context).trailingRegular(isBold: true),
-          //       ),
-          //     ],
-          //   ),
-          // ),
-          // const SizedBox(
-          //   height: 8,
-          // ),
-          // RichText(
-          //   textAlign: TextAlign.justify,
-          //   text: TextSpan(
-          //     style: TextStyles(context).trailingRegular(),
-          //     children: <TextSpan>[
-          //       TextSpan(
-          //         text: 'Resposta: ',
-          //         style: TextStyles(context).trailingRegular(isBold: true),
-          //       ),
-          //       TextSpan(
-          //         text:
-          //             'Utilizando algum gerenciador de arquivos, verifique o diretório localizado em: ',
-          //         style: TextStyles(context).trailingRegular(),
-          //       ),
-          //       GetIt.I.get<SettingsViewmodel>().savedPath.isNotEmpty
-          //           ? TextSpan(
-          //               text: GetIt.I.get<SettingsViewmodel>().savedPath,
-          //               style:
-          //                   TextStyles(context).trailingRegular(isBold: true),
-          //             )
-          //           : TextSpan(
-          //               text:
-          //                   "(Diretório ainda não identificado, tente salvar um experimento para que o app possa detectar o local)",
-          //               style: TextStyles(context).trailingRegular(
-          //                 isBold: true,
-          //                 fontStyle: FontStyle.italic,
-          //               ),
-          //             ),
-          //       TextSpan(
-          //         text:
-          //             ' e limpe todas as planilhas existentes! \nApós excluídos ou movidos desta pasta, a função de salvar voltará a funcionar corretamente; isto acontece devido a limitações das novas regras de privacidade do Android, desta forma, este aplicativo não tem autorização de apagar arquivos criados por instalações anteriores ou de outras fontes, causando este erro.',
-          //         style: TextStyles(context).trailingRegular(),
-          //       ),
-          //     ],
-          //   ),
-          // ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 32.0),
             child: EZTButton(

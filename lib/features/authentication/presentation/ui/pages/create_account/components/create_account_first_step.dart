@@ -27,7 +27,6 @@ class CreateAccountFirstStep extends StatefulWidget {
 }
 
 class CreateAccountFirstStepState extends State<CreateAccountFirstStep> {
-  // late final CreateAccountController controller;
   final _nameFieldController = TextEditingController(text: '');
   final _institutionFieldController = TextEditingController(text: '');
 
@@ -36,7 +35,6 @@ class CreateAccountFirstStepState extends State<CreateAccountFirstStep> {
   @override
   void initState() {
     super.initState();
-    // controller = context.read<CreateAccountController>();
     initFieldControllerTexts();
   }
 
@@ -89,7 +87,6 @@ class CreateAccountFirstStepState extends State<CreateAccountFirstStep> {
       controller: _nameFieldController,
       onChanged: (value) => _validateFields,
       fieldValidator: fieldValidator,
-      // disableSuffixIcon: true,
     );
   }
 
@@ -113,7 +110,6 @@ class CreateAccountFirstStepState extends State<CreateAccountFirstStep> {
       controller: _institutionFieldController,
       onChanged: (value) => _validateFields,
       fieldValidator: fieldValidator,
-      // disableSuffixIcon: true,
     );
   }
 

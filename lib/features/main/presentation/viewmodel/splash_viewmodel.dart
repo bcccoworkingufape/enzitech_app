@@ -1,5 +1,3 @@
-// import 'package:enzitech_app/features/home/data/datasources/get_enzymes_datasource.dart';
-
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -53,7 +51,7 @@ class SplashViewmodel extends ChangeNotifier {
   Future<void> fetch() async {
     setStateEnum(StateEnum.loading);
 
-    //TODO: check to fix backuped token: https://stackoverflow.com/a/35517411/10023840
+    // TODO: check to fix backuped token: https://stackoverflow.com/a/35517411/10023840
     String token = await userPreferencesServices.getToken() ?? '';
 
     if (token.isNotEmpty) {

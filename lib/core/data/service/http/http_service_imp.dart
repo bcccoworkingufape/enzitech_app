@@ -10,31 +10,6 @@ import '../../../domain/service/http/http_service.dart';
 import '../../../failures/failures.dart';
 
 class DioHttpServiceImp implements HttpService {
-  /* late Dio _dio;
-  DioHttpServiceImp() {
-    _dio = Dio(
-      BaseOptions(
-        baseUrl: 'https://api.themoviedb.org/4/',
-        headers: {
-          'content-type': 'application/json;charset=utf-8',
-          'authorization':
-              'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkODVhZjhlZDA0NTZhNWQyNzVmZmQxODI4YmJkYzY4NSIsInN1YiI6IjU5ODA1NjQ0YzNhMzY4MTA1NTAwZDRiNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.MJcPKVkaqXdI_Oblbk-VjBM8pWtTmKltfxZqyuLIU_U',
-        },
-      ),
-    );
-  }
-
-  @override
-  Future<Response<T>> get<T>(
-    String path, {
-    Map<String, dynamic>? queryParameters,
-  }) {
-    return _dio.get<T>(
-      path,
-      queryParameters: queryParameters,
-    );
-  } */
-
   Dio dio = Dio();
 
   final HttpDriverOptions httpDriverOptions;
@@ -58,8 +33,6 @@ class DioHttpServiceImp implements HttpService {
     dio.options.headers.addAll(
       {
         'content-type': "application/json; charset=utf-8",
-        // 'x-api-key':
-        //     '${httpDriverOptions.accessTokenType} ${httpDriverOptions.apiKey}',
         'Authorization': '${httpDriverOptions.accessTokenType} $gettedToken',
       },
     );
@@ -232,9 +205,6 @@ class DioHttpServiceImp implements HttpService {
       ),
     );
   }
-
-  // @override
-  // Map<String, String>? get getHeaders => throw UnimplementedError();
 
   @override
   Future<HttpDriverResponse> patch(

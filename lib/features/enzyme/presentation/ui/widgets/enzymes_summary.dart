@@ -13,12 +13,7 @@ import '../../viewmodel/enzymes_viewmodel.dart';
 class EnzymesSummary extends StatefulWidget {
   const EnzymesSummary({
     super.key,
-    // required this.enzymes,
-    // this.indexOfExperiment,
   });
-
-  // final List<EnzymeModel> enzymes;
-  // final int? indexOfExperiment;
 
   @override
   State<EnzymesSummary> createState() => _EnzymesSummaryState();
@@ -55,10 +50,8 @@ class _EnzymesSummaryState extends State<EnzymesSummary> {
       padding: const EdgeInsets.symmetric(horizontal: 4.0),
       child: Container(
         decoration: const BoxDecoration(
-          // color: Colors.white,
           borderRadius: BorderRadius.all(
             Radius.circular(8),
-            // bottomRight: Radius.circular(8),
           ),
         ),
         margin: const EdgeInsets.all(0),

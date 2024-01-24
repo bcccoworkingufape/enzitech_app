@@ -57,7 +57,6 @@ class _CalculateExperimentPageState extends State<CalculateExperimentPage> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Verify PopScope Migration
     return  PopScope(
       canPop: false,
       onPopInvoked: (didPop) async {

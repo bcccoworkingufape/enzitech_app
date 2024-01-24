@@ -71,7 +71,6 @@ class _CreateExperimentThirdStepPageState
   get _validateFields {
     if (_choosedCheckboxList.isNotEmpty) {
       setState(() {
-        // print(_createExperimentViewmodel.formKey.currentState!.validate());
         _createExperimentViewmodel.setEnableNextButtonOnThirdStep(true);
       });
     } else {

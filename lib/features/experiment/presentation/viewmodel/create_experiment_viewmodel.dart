@@ -40,7 +40,6 @@ class CreateExperimentViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // var experimentCreated = false; //? Remover isso
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   PageController _pageController = PageController(initialPage: 0);
@@ -197,7 +196,8 @@ class CreateExperimentViewmodel extends ChangeNotifier {
       },
       (success) async {
         setExperiment(success);
-        await _experimentsViewmodel.fetch(); // reload the experiments list
+        //! Reload experiments list
+        await _experimentsViewmodel.fetch();
         setStateEnum(StateEnum.success);
       },
     );

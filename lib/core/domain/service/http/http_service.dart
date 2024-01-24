@@ -24,8 +24,6 @@ abstract class HttpService {
     HttpDriverOptions? options,
   });
 
-  // Map<String, String>? get getHeaders => throw UnimplementedError();
-
   Future<HttpDriverResponse> patch(
     String path, {
     dynamic data,

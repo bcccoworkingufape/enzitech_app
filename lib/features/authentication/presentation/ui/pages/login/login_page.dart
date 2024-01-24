@@ -24,7 +24,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> {
-  // late final AuthController controller;
   late final LoginViewmodel _loginViewmodel;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();

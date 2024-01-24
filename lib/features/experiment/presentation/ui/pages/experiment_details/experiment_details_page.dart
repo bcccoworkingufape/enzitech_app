@@ -1,14 +1,15 @@
 // 🐦 Flutter imports:
 // ignore_for_file: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
 
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
 // 📦 Package imports:
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:get_it/get_it.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
@@ -26,10 +27,7 @@ import '../../widgets/experiment_exclusion_dialog.dart';
 class ExperimentDetailsPage extends StatefulWidget {
   const ExperimentDetailsPage({
     super.key,
-    // required this.resumedExperiment,
   });
-
-  // final ExperimentEntity resumedExperiment;
 
   @override
   State<ExperimentDetailsPage> createState() => _ExperimentDetailsPageState();
@@ -48,7 +46,6 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
     _experimentDetailsViewmodel = GetIt.I.get<ExperimentDetailsViewmodel>();
     _experimentsViewmodel = GetIt.I.get<ExperimentsViewmodel>();
     _homeViewmodel = GetIt.I.get<HomeViewmodel>();
-    // _progress = widget.resumedExperiment.progress;
 
     if (mounted) {
       _experimentDetailsViewmodel.addListener(
@@ -63,11 +60,6 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
         },
       );
     }
-
-    // _experimentDetailsViewmodel
-    //     .getExperimentDetails(widget.resumedExperiment.id)
-    //     .whenComplete(
-    //         () => _progress = _experimentDetailsViewmodel.experiment!.progress);
   }
 
   _buildInfoBadge(int quantity, String name) {
@@ -270,7 +262,6 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
             ),
             EZTButton(
               text: 'Cálculo enzimático',
-              // eztButtonType: EZTButtonType.checkout,
               enabled: _experimentDetailsViewmodel.experiment!.progress != 1,
               icon: Icon(
                 PhosphorIcons.function(),
@@ -296,7 +287,6 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
             EZTButton(
               text: 'Resultados',
               enabled: _experimentDetailsViewmodel.experiment!.progress != 0,
-              // eztButtonType: EZTButtonType.checkout,
               icon: Icon(
                 PhosphorIcons.fileText(),
                 color: _experimentDetailsViewmodel.experiment!.progress != 0

@@ -52,7 +52,7 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
             eztSnackBarType: EZTSnackBarType.error,
           );
         } else if (_createEnzymeViewmodel.state == StateEnum.success) {
-          // reload the experiments list
+          //! Reload experiments list
           _enzymesViewmodel.fetch();
 
           EZTSnackBar.show(
@@ -167,7 +167,6 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
       controller: _nameFieldController,
       onChanged: (value) => _validateFields,
       fieldValidator: fieldValidator,
-      // disableSuffixIcon: true,
     );
   }
 
@@ -230,12 +229,10 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
       ),
       icon: null,
       elevation: 16,
-      // style: const TextStyle(color: Colors.deepPurple),
       underline: Container(
         height: 1.1,
       ),
       onChanged: (String? value) {
-        // This is called when the user selects an item.
         setState(() {
           dropdownValue = value!;
         });

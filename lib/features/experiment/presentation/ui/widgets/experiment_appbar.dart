@@ -9,7 +9,7 @@ class ExperimentAppBar extends StatefulWidget implements PreferredSizeWidget {
       : preferredSize = const Size.fromHeight(kToolbarHeight * 3);
 
   @override
-  final Size preferredSize; // default is 56.0
+  final Size preferredSize; //* Default is 56.0
 
   @override
   State<ExperimentAppBar> createState() => _ExperimentAppBarState();
@@ -19,8 +19,7 @@ class _ExperimentAppBarState extends State<ExperimentAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      toolbarHeight: 120, // Set this height
-      // leading: ,
+      toolbarHeight: 120,
       flexibleSpace: const SafeArea(
         child: Column(
           children: [

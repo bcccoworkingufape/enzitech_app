@@ -11,7 +11,7 @@ class AppColors {
     onPrimaryContainer: Color(0xFF00210D),
     secondary: Color(0xFF426916),
     onSecondary: Color(0xFFFFFFFF),
-    secondaryContainer: Color(0xFFD1E9D0), //
+    secondaryContainer: Color(0xFFD1E9D0),
     onSecondaryContainer: Color(0xFF0F2000),
     tertiary: Color(0xFF7F5700),
     onTertiary: Color(0xFFFFFFFF),
@@ -24,7 +24,7 @@ class AppColors {
     background: Color(0xFFFBFDF7),
     onBackground: Color(0xFF191C19),
     surface: Color(0xFFFBFDF7),
-    onSurface: Color(0xFF191C19), // Predominant color of texts
+    onSurface: Color(0xFF191C19),
     surfaceVariant: Color(0xFFDDE5DB),
     onSurfaceVariant: Color(0xFF414941),
     outline: Color(0xFF717971),
@@ -58,7 +58,7 @@ class AppColors {
     background: Color(0xFF191C19),
     onBackground: Color(0xFFE1E3DE),
     surface: Color(0xFF191C19),
-    onSurface: Color(0xFFE1E3DE), // Predominant color of texts
+    onSurface: Color(0xFFE1E3DE),
     surfaceVariant: Color(0xFF414941),
     onSurfaceVariant: Color(0xFFC1C9BF),
     outline: Color(0xFF8B938A),

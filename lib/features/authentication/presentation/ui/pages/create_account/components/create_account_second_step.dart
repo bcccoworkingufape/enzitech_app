@@ -99,7 +99,6 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
       obscureText: true,
       onChanged: (value) => _validateFields,
       fieldValidator: fieldValidator,
-      // disableSuffixIcon: true,
     );
   }
 
@@ -125,8 +124,6 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
       fieldValidator: fieldValidator,
       obscureText: true,
       valueMatcher: () => _passwordFieldController.text,
-
-      // disableSuffixIcon: true,
     );
   }
 

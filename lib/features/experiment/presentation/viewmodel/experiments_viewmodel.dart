@@ -39,7 +39,7 @@ class ExperimentsViewmodel extends ChangeNotifier {
     _failure = failure;
   }
 
-  // FILTER - FINISHED
+  //* FILTER - FINISHED
   bool _finishedFilter = false;
   bool get finishedFilter => _finishedFilter;
   void setFinishedFilter(bool finishedFilter) {
@@ -47,7 +47,7 @@ class ExperimentsViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // FILTER - ORDER BY
+  //* FILTER - ORDER BY
   String? _orderBy;
   String? get orderBy => _orderBy;
   void setOrderBy(String? orderBy) {
@@ -55,7 +55,7 @@ class ExperimentsViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // FILTER - ORDERING
+  //* FILTER - ORDERING
   String? _ordering;
   String? get ordering => _ordering;
   void setOrdering(String? ordering) {
@@ -63,7 +63,7 @@ class ExperimentsViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // FILTER - LIMIT
+  //* FILTER - LIMIT
   String? _limit;
   String? get limit => _limit;
   void setLimit(String? limit) {
@@ -133,7 +133,7 @@ class ExperimentsViewmodel extends ChangeNotifier {
       pagination,
       orderBy: orderBy,
       ordering: ordering,
-      limit: null, // disabled for now
+      limit: null, //! Disabled for now
       finished: finishedFilter,
     );
 
@@ -178,7 +178,7 @@ class ExperimentsViewmodel extends ChangeNotifier {
       setOrderBy(null);
       setOrdering(null);
       setFinishedFilter(false);
-      await fetch(); //? Mudar isso
+      await fetch();
 
       setStateEnum(StateEnum.success);
     } catch (e) {

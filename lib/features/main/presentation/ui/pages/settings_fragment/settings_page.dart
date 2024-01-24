@@ -4,9 +4,9 @@ import 'dart:io';
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_svg/svg.dart';
 
 // 📦 Package imports:
+import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
@@ -41,7 +41,6 @@ class _SettingsPageState extends State<SettingsPage> {
 
     _settingsViewmodel = GetIt.I.get<SettingsViewmodel>();
     _homeViewmodel = GetIt.I.get<HomeViewmodel>();
-    // _settingsViewmodel.fetchQuantityOfFiles();
 
     if (mounted) {
       _settingsViewmodel.addListener(() async {
@@ -201,17 +200,14 @@ class _SettingsPageState extends State<SettingsPage> {
                           segments: <ButtonSegment<ThemeMode>>[
                             ButtonSegment<ThemeMode>(
                                 value: ThemeMode.system,
-                                // label: const Text('Sistema'),
                                 icon: Icon(Platform.isIOS
                                     ? PhosphorIcons.appleLogo()
                                     : PhosphorIcons.androidLogo())),
                             ButtonSegment<ThemeMode>(
                                 value: ThemeMode.light,
-                                // label: const Text('Claro'),
                                 icon: Icon(PhosphorIcons.sun())),
                             ButtonSegment<ThemeMode>(
                                 value: ThemeMode.dark,
-                                // label: const Text('Escuro'),
                                 icon: Icon(PhosphorIcons.moon())),
                           ],
                           selected: <ThemeMode>{_settingsViewmodel.themeMode},

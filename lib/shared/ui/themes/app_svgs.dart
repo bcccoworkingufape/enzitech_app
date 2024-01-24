@@ -1,5 +1,7 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
+// 🌎 Project imports:
 import '../../extensions/context_theme_mode_extensions.dart';
 
 class AppSvgs {

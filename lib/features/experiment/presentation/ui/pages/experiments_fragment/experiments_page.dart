@@ -31,7 +31,6 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
   late final HomeViewmodel _homeViewmodel;
   final Key _refreshIndicatorKey = GlobalKey();
 
-  // final _searchTermController = TextEditingController(text: '');
   List<bool> isSelected = [true, false];
 
   int selectedButtonSegment = 0;
@@ -63,7 +62,6 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
               HandleFailure.of(_experimentsViewmodel.failure!),
               eztSnackBarType: EZTSnackBarType.error,
             );
-            // var accountViewmodel = context.read<AccountViewmodel>();
             if (_experimentsViewmodel.failure
                     is ExpiredTokenOrWrongUserFailure ||
                 _experimentsViewmodel.failure
@@ -167,7 +165,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
               Dismissible(
                 key: UniqueKey(),
                 onDismissed: (direction) async {
-                  // Remove the item from the data source.
+                  //! Remove item from data source.
                   setState(() {
                     _experimentsViewmodel.experiments.removeAt(index);
                   });
@@ -189,7 +187,6 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                               .insert(index, experiment);
                           permanentlyDeleted = false;
                         });
-                        // todoRepository.saveTodoList(todos);
                       },
                     ),
                     onDismissFunction: () async {
@@ -260,7 +257,6 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                   child: Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
-                      //set border radius more than 50% of height and width to make circle
                     ),
                     elevation: 4,
                     color: context.getApplyedColorScheme.tertiaryContainer,
@@ -305,18 +301,10 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
           child: EZTPullToRefresh(
             key: _refreshIndicatorKey,
             onRefresh: () {
-              // _experimentsViewmodel.setFinishedFilter(false);
               return _experimentsViewmodel.fetch();
             },
             child: Column(
               children: [
-                // Padding(
-                //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                //   child: _searchTermInput,
-                // ),
-                // const SizedBox(
-                //   height: 16,
-                // ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Row(
@@ -324,13 +312,6 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                     children: [
                       SegmentedButton(
                         emptySelectionAllowed: false,
-                        // style: ElevatedButton.styleFrom(
-                        //   foregroundColor:
-                        //       context.getApplyedColorScheme.secondary,
-                        //   // side: BorderSide(
-                        //   //   color: context.getApplyedColorScheme.secondary,
-                        //   // ),
-                        // ),
                         showSelectedIcon: false,
                         segments: <ButtonSegment<int>>[
                           ButtonSegment<int>(
@@ -369,7 +350,6 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                           });
                         },
                       ),
-
                       IconButton(
                         icon: Icon(
                           _experimentsViewmodel.anyFilterIsEnabled()
@@ -381,23 +361,6 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                         ),
                         onPressed: _showFiltersDialog,
                       ),
-                      // Expanded(
-                      //   child: InkWell(
-                      //     customBorder: RoundedRectangleBorder(
-                      //       borderRadius: BorderRadius.circular(8),
-                      //     ),
-                      //     onTap: _showFiltersDialog,
-                      //     child: Padding(
-                      //       padding: const EdgeInsets.all(10.0),
-                      //       child: Icon(
-                      //         _experimentsViewmodel.anyFilterIsEnabled()
-                      //             ? PhosphorIcons.funnelFill
-                      //             : PhosphorIcons.funnel,
-                      //         color: TextStyles(context).titleMinBoldBackground(),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // )
                     ],
                   ),
                 ),

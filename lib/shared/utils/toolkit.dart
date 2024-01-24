@@ -33,10 +33,6 @@ class Toolkit {
     return phone.replaceAll(RegExp('[^0-9]'), '');
   }
 
-  // static String clearString(String text) {
-  //   return removeDiacritics(text);
-  // }
-
   static String capitalizeFirst(String text) {
     return "${text[0].toUpperCase()}${text.substring(1)}";
   }

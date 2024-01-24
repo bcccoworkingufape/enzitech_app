@@ -53,7 +53,7 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
             eztSnackBarType: EZTSnackBarType.error,
           );
         } else if (_createTreatmentViewmodel.state == StateEnum.success) {
-          // reload the experiments list
+          //! Reload experiments list
           _treatmentsViewmodel.fetch();
 
           EZTSnackBar.show(
@@ -144,7 +144,6 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
       controller: _nameFieldController,
       onChanged: (value) => _validateFields,
       fieldValidator: fieldValidator,
-      // disableSuffixIcon: true,
     );
   }
 
@@ -159,7 +158,6 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
       controller: _descriptionFieldController,
       onChanged: (value) => _validateFields,
       fieldValidator: fieldValidator,
-      // disableSuffixIcon: true,
     );
   }
 

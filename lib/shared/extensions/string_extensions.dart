@@ -31,7 +31,6 @@ extension StringExtension on String {
     try {
       output = json.decode(this);
       return output;
-      // ignore: avoid_catches_without_on_clauses
     } catch (e) {
       if (kDebugMode) {
         print(

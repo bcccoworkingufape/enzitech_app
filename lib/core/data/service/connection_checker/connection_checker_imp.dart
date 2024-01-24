@@ -28,9 +28,7 @@ class ConnectionCheckerImp implements ConnectionChecker {
     _connectivity.onConnectivityChanged.listen(_connectionChange);
   }
 
-  ConnectionCheckerImp() {
-    // initialize();
-  }
+  ConnectionCheckerImp();
 
   //flutter_connectivity's listener
   void _connectionChange(ConnectivityResult result) {

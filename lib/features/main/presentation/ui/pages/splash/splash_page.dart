@@ -10,11 +10,11 @@ import '../../../../../../core/domain/service/user_preferences/user_preferences_
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../core/routing/routing.dart';
+import '../../../../../../shared/extensions/extensions.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../viewmodel/home_viewmodel.dart';
 import '../../../viewmodel/settings_viewmodel.dart';
 import '../../../viewmodel/splash_viewmodel.dart';
-import '../../../../../../shared/extensions/extensions.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});

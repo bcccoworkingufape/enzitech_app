@@ -103,7 +103,7 @@ class _EnzymesPageState extends State<EnzymesPage> {
               replacement: Dismissible(
                 key: Key(enzyme.id),
                 onDismissed: (direction) {
-                  // Remove the item from the data source.
+                  //! Remove the item from the data source.
                   setState(() {
                     _enzymesViewmodel.enzymes.removeAt(index);
                   });
@@ -124,7 +124,6 @@ class _EnzymesPageState extends State<EnzymesPage> {
                           _enzymesViewmodel.enzymes.insert(index, enzyme);
                           permanentlyDeleted = false;
                         });
-                        // todoRepository.saveTodoList(todos);
                       },
                     ),
                     onDismissFunction: () async {

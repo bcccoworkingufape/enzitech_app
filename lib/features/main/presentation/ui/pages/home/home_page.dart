@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 // 🎯 Dart imports:
 import 'dart:async';
 import 'dart:math' as math;
@@ -54,9 +56,9 @@ class _HomePageState extends State<HomePage>
 
   late List<Widget> _fragments;
 
-  var _isVisibleExperimentButton; // ignore: prefer_typing_uninitialized_variables
-  var _isVisibleTreatmentButton; // ignore: prefer_typing_uninitialized_variables
-  var _isVisibleEnzymeButton; // ignore: prefer_typing_uninitialized_variables
+  var _isVisibleExperimentButton;
+  var _isVisibleTreatmentButton;
+  var _isVisibleEnzymeButton;
 
   late StreamSubscription _connectivitySubscription;
 
@@ -72,7 +74,7 @@ class _HomePageState extends State<HomePage>
 
     _connectionChecker.initialize();
 
-    //Listen for connection change
+    //! Listen for connection change
     _connectivitySubscription =
         _connectionChecker.connectionChange.listen((event) {
       _homeViewmodel.setHasInternetConnection(event);
@@ -233,7 +235,6 @@ class _HomePageState extends State<HomePage>
         icon: Icon(
           PhosphorIcons.pencilLine(),
           color: context.getApplyedColorScheme.onSecondaryContainer,
-          // size: 30,
         ),
       );
 

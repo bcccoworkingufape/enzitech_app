@@ -271,7 +271,6 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
           controller: sampleFieldController,
           onChanged: (value) {
             _validateFields(value, i.toDouble(), "sample");
-            // print(value);
           },
           fieldValidator: fieldValidator,
           inputFormatters: Constants.enzymeDecimalInputFormatters,
@@ -294,7 +293,6 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
           controller: whiteSampleFieldController,
           onChanged: (value) {
             _validateFields(value, i.toDouble(), "whiteSample");
-            // print(value);
           },
           fieldValidator: fieldValidator,
           inputFormatters: Constants.enzymeDecimalInputFormatters,
@@ -340,9 +338,6 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
 
     var list = <NumberDifferencesDTO>[];
 
-    // double differenceOfFartherNumber =
-    //     _percentOfDifference(average, results.first);
-
     for (var number in results) {
       var diff = _percentOfDifference(average, number);
       var numberWithDifference = NumberDifferencesDTO(
@@ -352,13 +347,7 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
         fartherNumber: 0,
       );
       list.add(numberWithDifference);
-      // if (diff > differenceOfFartherNumber) {
-      //   differenceOfFartherNumber = diff;
-      //   fartherNumber = number;
-      // }
     }
-
-    // print(list);
 
     setListOfNumberDifferencesDTO(list);
   }

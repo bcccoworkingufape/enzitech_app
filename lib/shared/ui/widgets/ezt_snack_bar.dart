@@ -1,6 +1,7 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
+// 🌎 Project imports:
 import '../../extensions/context_theme_mode_extensions.dart';
 
 enum EZTSnackBarType {
@@ -24,9 +25,6 @@ class EZTSnackBar {
     Duration? duration,
   ) {
     return SnackBar(
-      // elevation: 0.0,
-      //behavior: SnackBarBehavior.floating,
-      // content: Text(message, style: textStyle),
       content: centerTitle
           ? SizedBox(
               height: 19,
@@ -37,16 +35,7 @@ class EZTSnackBar {
             )
           : Text(message, style: textStyle),
       duration: duration ?? const Duration(seconds: 4),
-      // shape: RoundedRectangleBorder(
-      //   borderRadius: BorderRadius.only(
-      //       topLeft: Radius.circular(16.0), topRight: Radius.circular(16.0)),
-      // ),
       backgroundColor: snackBarColor,
-      // action: SnackBarAction(
-      //   textColor: Color(0xFFFAF2FB),
-      //   label: 'OK',
-      //   onPressed: () {},
-      // ),
       action: action,
     );
   }
@@ -60,8 +49,6 @@ class EZTSnackBar {
     Duration? duration,
   ) {
     return SnackBar(
-      // elevation: 0.0,
-      //behavior: SnackBarBehavior.floating,
       content: centerTitle
           ? SizedBox(
               height: 19,
@@ -72,18 +59,7 @@ class EZTSnackBar {
             )
           : Text(message, style: textStyle),
       duration: duration ?? const Duration(seconds: 4),
-
-      // duration: new Duration(seconds: 5000000),
-      // shape: RoundedRectangleBorder(
-      //   borderRadius: BorderRadius.only(
-      //       topLeft: Radius.circular(16.0), topRight: Radius.circular(16.0)),
-      // ),
       backgroundColor: Colors.green,
-      // action: SnackBarAction(
-      //   textColor: Color(0xFFFAF2FB),
-      //   label: 'OK',
-      //   onPressed: () {},
-      // ),
       action: action,
     );
   }
@@ -97,21 +73,9 @@ class EZTSnackBar {
     Duration? duration,
   ) {
     return SnackBar(
-      // elevation: 0.0,
-      //behavior: SnackBarBehavior.floating,
-      content: Text(message), duration: duration ?? const Duration(seconds: 4),
-
-      // duration: new Duration(seconds: 5000000),
-      // shape: RoundedRectangleBorder(
-      //   borderRadius: BorderRadius.only(
-      //       topLeft: Radius.circular(16.0), topRight: Radius.circular(16.0)),
-      // ),
+      content: Text(message),
+      duration: duration ?? const Duration(seconds: 4),
       backgroundColor: context.getApplyedColorScheme.error,
-      // action: SnackBarAction(
-      //   textColor: Color(0xFFFAF2FB),
-      //   label: 'OK',
-      //   onPressed: () {},
-      // ),
       action: action,
     );
   }

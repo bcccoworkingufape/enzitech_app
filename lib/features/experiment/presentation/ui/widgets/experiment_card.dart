@@ -43,7 +43,6 @@ class _ExperimentCardState extends State<ExperimentCard> {
           padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
           child: Material(
             elevation: 4,
-            // shadowColor: context.getApplyedColorScheme.background,
             borderRadius: BorderRadius.circular(16),
             surfaceTintColor: context.getApplyedColorScheme.secondaryContainer,
             child: InkWell(

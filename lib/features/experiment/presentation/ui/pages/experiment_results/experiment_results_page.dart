@@ -191,13 +191,6 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                                         LayoutBuilder(builder:
                                             (BuildContext context,
                                                 BoxConstraints constraints) {
-                                          // var borderSideOfTable = BorderSide(
-                                          //   width: 0.5,
-                                          //   strokeAlign: 0,
-                                          //   color: context
-                                          //       .getApplyedColorScheme.primary,
-                                          // );
-
                                           double rowHeight = (49.1 *
                                                   (treatment.repetitionResults
                                                           .length +
@@ -222,28 +215,15 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                                                     .withOpacity(0.3),
                                                 child: DataTable2(
                                                   columnSpacing: 12,
-                                                  // horizontalMargin: 12,
                                                   minWidth: 1200,
-                                                  // border: TableBorder(
-                                                  //   verticalInside:
-                                                  //       borderSideOfTable,
-                                                  //   // top: borderSideOfTable,
-                                                  //   // bottom: borderSideOfTable,
-                                                  //   // left: borderSideOfTable,
-                                                  //   // right: borderSideOfTable,
-                                                  //   // horizontalInside:
-                                                  //   //     borderSideOfTable,
-                                                  // ),
                                                   columns: const [
                                                     DataColumn(
                                                       label: Text('ID'),
                                                       numeric: true,
-                                                      // size: ColumnSize.L,
                                                     ),
                                                     DataColumn(
                                                       label: Text('Amostra'),
                                                       numeric: true,
-                                                      // size: ColumnSize.L,
                                                     ),
                                                     DataColumn(
                                                       label: Text('Am. Branca'),
@@ -428,7 +408,6 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                   _experimentResultsViewmodel.state == StateEnum.error
               ? null
               : ExpandableFab(
-                  // distance: 72,
                   type: ExpandableFabType.up,
                   openButtonBuilder: _rotateFloatingActionButtonBuilder,
                   closeButtonBuilder: _rotateFloatingActionButtonBuilder,

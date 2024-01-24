@@ -4,11 +4,12 @@ import 'dart:math' as math;
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-// 📦 Package imports:
-
 // 🌎 Project imports:
 import '../../extensions/context_theme_mode_extensions.dart';
 import '../themes/themes.dart';
+
+// 📦 Package imports:
+
 
 class EZTProgressIndicator extends StatefulWidget {
   final String? message;

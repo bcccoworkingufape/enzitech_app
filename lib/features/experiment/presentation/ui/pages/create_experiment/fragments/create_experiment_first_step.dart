@@ -84,7 +84,6 @@ class _CreateExperimentFirstStepPageState
       controller: _nameFieldController,
       onChanged: (value) => _validateFields,
       fieldValidator: fieldValidator,
-      // disableSuffixIcon: true,
     );
   }
 
@@ -99,7 +98,6 @@ class _CreateExperimentFirstStepPageState
       controller: _descriptionFieldController,
       onChanged: (value) => _validateFields,
       fieldValidator: fieldValidator,
-      // disableSuffixIcon: true,
     );
   }
 
