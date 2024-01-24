@@ -84,7 +84,6 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
             Dismissible(
               key: Key(treatment.id),
               onDismissed: (direction) {
-                //! Remove item from data source.
                 setState(() {
                   _treatmentsViewmodel.treatments.removeAt(index);
                 });

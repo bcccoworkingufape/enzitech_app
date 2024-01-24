@@ -142,15 +142,6 @@ class _EnzymesSummaryState extends State<EnzymesSummary> {
                                 : 0)
                         .reduce((value, element) => value + element),
                     AppColors.urease),
-                /* enzymeTag(
-                    Constants.typesOfEnzymesListFormmated[5],
-                    viewmodel.enzymes
-                        .map((element) =>
-                            element.type == Constants.typesOfEnzymesList[5]
-                                ? 1
-                                : 0)
-                        .reduce((value, element) => value + element),
-                    AppColors.fda), */
               ],
             ),
             const SizedBox(

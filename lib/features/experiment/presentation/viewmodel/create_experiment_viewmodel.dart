@@ -196,7 +196,6 @@ class CreateExperimentViewmodel extends ChangeNotifier {
       },
       (success) async {
         setExperiment(success);
-        //! Reload experiments list
         await _experimentsViewmodel.fetch();
         setStateEnum(StateEnum.success);
       },

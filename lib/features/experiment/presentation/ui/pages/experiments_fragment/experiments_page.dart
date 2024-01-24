@@ -88,31 +88,6 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
     }
   }
 
-  /* Widget get _searchTermInput {
-    final validations = <ValidateRule>[
-      ValidateRule(
-        ValidateTypes.name,
-      ),
-    ];
-
-    final fieldValidator = FieldValidator(validations, context);
-
-    return EZTTextField(
-      viewmodel: _searchTermController,
-      lineHeight: 1.8,
-      eztTextFieldType: EZTTextFieldType.underline,
-      hintText: "Pesquisar experimento",
-      usePrimaryColorOnFocusedBorder: true,
-      keyboardType: TextInputType.name,
-      suffixIcon: Icon(
-        PhosphorIcons.magnifyingGlass(),
-        color: context.getApplyedColorScheme.primary,
-        size: 35,
-      ),
-      fieldValidator: fieldValidator,
-    );
-  } */
-
   Future<void> _showFiltersDialog() async {
     return showDialog<void>(
       context: context,
@@ -165,7 +140,6 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
               Dismissible(
                 key: UniqueKey(),
                 onDismissed: (direction) async {
-                  //! Remove item from data source.
                   setState(() {
                     _experimentsViewmodel.experiments.removeAt(index);
                   });

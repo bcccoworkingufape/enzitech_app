@@ -16,7 +16,7 @@ class API {
         enviroment = EnvironmentEnum.dev;
         break;
       case EnvironmentEnum.stage:
-        _config = stageConstants;
+        _config = devConstants; //? NO STAGE API YET
         enviroment = EnvironmentEnum.stage;
         break;
       case EnvironmentEnum.prod:
@@ -30,25 +30,14 @@ class API {
     return _config[_baseUrl];
   }
 
+  //-> SETUP
   static Map<String, dynamic> devConstants = {
     _baseUrl: "http://191.101.78.251:3010/",
-  };
-
-  static Map<String, dynamic> stageConstants = {
-    _baseUrl: "https://ec2-54-161-87-5.compute-1.amazonaws.com:8080",
   };
 
   static Map<String, dynamic> prodConstants = {
     _baseUrl: "http://200.133.6.201:30001/",
   };
-
-  //-> SETUP
-  //! This must be removed from here
-  static const BASE_URL_WEVERTON = 'http://08f7-128-201-207-230.ngrok.io/';
-  static const BASE_URL_AMAZON =
-      'https://ec2-54-161-87-5.compute-1.amazonaws.com:8080';
-  static const BASE_URL_PROD = 'http://200.133.6.201:30001/';
-  static const BASE_URL_DEV = 'http://191.101.78.251:3010/';
 
   //-> AUTHENTICATION
   /// Route to '/auth'

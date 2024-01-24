@@ -224,22 +224,6 @@ class _SettingsPageState extends State<SettingsPage> {
                   SettingsSection(
                     title: 'Detalhes do Aplicativo',
                     tiles: [
-                      /* SettingsTile(
-                        subtitle: Text(
-                          GetIt.I.get<SettingsViewmodel>().savedPath.isNotEmpty
-                              ? 'Localizado em: ${GetIt.I.get<SettingsViewmodel>().savedPath}'
-                              : 'Salve o primeiro resultado para ver o local',
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: descriptionTextStyle,
-                        ),
-                        title: Text(_settingsViewmodel.dealWithDownloadedFiles),
-                        leading: Icon(
-                          PhosphorIcons.files(),
-                        ),
-                        trailing: Icon(PhosphorIcons.caretRight()),
-                        onTap: () => _settingsViewmodel.openEnzitechFolder(),
-                      ), */
                       SettingsTile(
                         leading: Icon(
                           PhosphorIcons.computerTower(),

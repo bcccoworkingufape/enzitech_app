@@ -88,8 +88,6 @@ class Routing {
           settings: const RouteSettings(name: initial),
           builder: (_) => const SplashPage(),
         );
-      /* case recoverPassword:
-        return MaterialPageRoute(builder: (_) => const RecoverPasswordPage()); */
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

@@ -3,11 +3,6 @@ import '../../entities/http_driver_options.dart';
 import '../../entities/http_driver_response.dart';
 
 abstract class HttpService {
-  /* Future<Response<T>> get<T>(
-    String path, {
-    Map<String, dynamic>? queryParameters,
-  }); */
-
   setConfig({String? token});
 
   Future<HttpDriverResponse> get(

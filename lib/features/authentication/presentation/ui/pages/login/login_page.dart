@@ -153,24 +153,28 @@ class LoginPageState extends State<LoginPage> {
                           style: TextStyles.titleHomeRegular,
                         ),
                         _textFields,
-                        /* Padding(
-                          padding: const EdgeInsets.only(top: 16.0),
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.pushNamed(
-                                  context,
-                                  Routing.recoverPassword,
-                                );
-                              },
-                              child: Text(
-                                "Esqueci minha senha",
-                                style: TextStyles(context).captionBody(),
+                        Visibility(
+                          visible:
+                              false, // TODO: Implementar e remover Visibility
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 16.0),
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    Routing.recoverPassword,
+                                  );
+                                },
+                                child: Text(
+                                  "Esqueci minha senha",
+                                  style: TextStyles(context).captionBody(),
+                                ),
                               ),
                             ),
                           ),
-                        ), */
+                        ),
                         const SizedBox(height: 32),
                         Align(
                           alignment: Alignment.center,

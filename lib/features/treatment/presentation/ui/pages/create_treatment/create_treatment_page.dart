@@ -53,7 +53,6 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
             eztSnackBarType: EZTSnackBarType.error,
           );
         } else if (_createTreatmentViewmodel.state == StateEnum.success) {
-          //! Reload experiments list
           _treatmentsViewmodel.fetch();
 
           EZTSnackBar.show(

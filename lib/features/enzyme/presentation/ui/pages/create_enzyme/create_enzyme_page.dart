@@ -52,7 +52,6 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
             eztSnackBarType: EZTSnackBarType.error,
           );
         } else if (_createEnzymeViewmodel.state == StateEnum.success) {
-          //! Reload experiments list
           _enzymesViewmodel.fetch();
 
           EZTSnackBar.show(

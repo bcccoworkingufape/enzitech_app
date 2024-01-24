@@ -103,7 +103,6 @@ class _EnzymesPageState extends State<EnzymesPage> {
               replacement: Dismissible(
                 key: Key(enzyme.id),
                 onDismissed: (direction) {
-                  //! Remove the item from the data source.
                   setState(() {
                     _enzymesViewmodel.enzymes.removeAt(index);
                   });
