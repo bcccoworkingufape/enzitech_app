@@ -1,5 +1,6 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
@@ -46,20 +47,22 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
               _createExperimentViewmodel.experiment != null) {
             if (mounted) {
               if (!mounted) return;
-              Navigator.popAndPushNamed(
-                context,
-                Routing.experimentDetailed,
-                arguments: _createExperimentViewmodel.experiment,
-              ).whenComplete(() {
-                _createExperimentViewmodel.setExperiment(null);
-                _createExperimentViewmodel.setTemporaryExperiment(
-                  CreateExperimentDTO(),
-                );
-              }).then((value) => EZTSnackBar.show(
-                    context,
-                    "Experimento criado com sucesso!",
-                    eztSnackBarType: EZTSnackBarType.success,
-                  ));
+              SchedulerBinding.instance.addPostFrameCallback((_) {
+                Navigator.popAndPushNamed(
+                  context,
+                  Routing.experimentDetailed,
+                  arguments: _createExperimentViewmodel.experiment,
+                ).whenComplete(() {
+                  _createExperimentViewmodel.setExperiment(null);
+                  _createExperimentViewmodel.setTemporaryExperiment(
+                    CreateExperimentDTO(),
+                  );
+                }).then((value) => EZTSnackBar.show(
+                      context,
+                      "Experimento criado com sucesso!",
+                      eztSnackBarType: EZTSnackBarType.success,
+                    ));
+              });
             }
           }
         },
