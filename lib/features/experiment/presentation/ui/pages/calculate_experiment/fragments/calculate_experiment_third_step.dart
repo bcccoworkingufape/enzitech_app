@@ -1,5 +1,6 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -7,6 +8,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 // 🌎 Project imports:
 import '../../../../../../../core/enums/enums.dart';
 import '../../../../../../../core/routing/routing.dart';
+import '../../../../../../../shared/extensions/context_theme_mode_extensions.dart';
 import '../../../../../../../shared/extensions/num_extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../../viewmodel/calculate_experiment_viewmodel.dart';
@@ -14,8 +16,8 @@ import '../calculate_experiment_fragment_template.dart';
 
 class CalculateExperimentThirdStepPage extends StatefulWidget {
   const CalculateExperimentThirdStepPage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<CalculateExperimentThirdStepPage> createState() =>
@@ -25,7 +27,6 @@ class CalculateExperimentThirdStepPage extends StatefulWidget {
 class _CalculateExperimentThirdStepPageState
     extends State<CalculateExperimentThirdStepPage> {
   late final CalculateExperimentViewmodel _calculateExperimentViewmodel;
-  // late NumberDifferencesDTO numberDifferences;
   bool loadingAbsNumberFartherFromAverage = false;
   @override
   void initState() {
@@ -72,10 +73,7 @@ class _CalculateExperimentThirdStepPageState
 
   TableRow _buildTableRow(num result, int iteration) {
     return TableRow(
-      decoration: UnderlineTabIndicator(
-          borderSide: BorderSide(
-        color: AppColors.greyLight.withOpacity(0.25),
-      )),
+      decoration: const UnderlineTabIndicator(borderSide: BorderSide()),
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 4.0),
@@ -96,9 +94,9 @@ class _CalculateExperimentThirdStepPageState
           child: Visibility(
             visible: _calculateExperimentViewmodel
                 .listOfNumberDifferencesDTO[iteration]!.isFarther!,
-            replacement: const Icon(
-              PhosphorIcons.thumbsUp,
-              color: AppColors.grenDark,
+            replacement: Icon(
+              PhosphorIcons.thumbsUp(),
+              color: context.getApplyedColorScheme.surfaceTint,
             ),
             child: GestureDetector(
               onTap: () {
@@ -106,14 +104,14 @@ class _CalculateExperimentThirdStepPageState
                 EZTSnackBar.show(
                   context,
                   'Esta repetição está discrepante!\n\nO valor dela difere acima de 25% da média de todos as repetições.\n\nCaso queira mudar, basta pressionar "Recalcular".',
-                  textStyle: TextStyles.titleMinBoldBackground,
+                  textStyle: TextStyles(context).titleMinBoldBackground(),
                   centerTitle: true,
                   eztSnackBarType: EZTSnackBarType.error,
                 );
               },
-              child: const Icon(
-                PhosphorIcons.warningCircleBold,
-                color: AppColors.danger,
+              child: Icon(
+                PhosphorIcons.warningCircle(PhosphorIconsStyle.bold),
+                color: context.getApplyedColorScheme.error,
               ),
             ),
           ),
@@ -133,53 +131,61 @@ class _CalculateExperimentThirdStepPageState
 
   List<TableRow> _buildAverageRow(num number) {
     return [
-      const TableRow(children: [
-        SizedBox(height: 16),
-        SizedBox(height: 16),
-        SizedBox(height: 16),
-      ]),
-      TableRow(children: [
-        Text(
-          "Média:",
-          style: TextStyles.bodyBold.copyWith(color: AppColors.grenDark),
-        ),
-        Text(
-          number.formmatedNumber,
-          style: TextStyles.bodyBold.copyWith(color: AppColors.grenDark),
-        ),
-        Container(),
-      ]),
+      const TableRow(
+        children: [
+          SizedBox(height: 16),
+          SizedBox(height: 16),
+          SizedBox(height: 16),
+        ],
+      ),
+      TableRow(
+        children: [
+          Text(
+            "Média:",
+            style: TextStyles.bodyBold,
+          ),
+          Text(
+            number.formmatedNumber,
+            style: TextStyles.bodyBold,
+          ),
+          Container(),
+        ],
+      ),
     ];
   }
 
   List<TableRow> _buildTitleRow() {
     return [
-      TableRow(children: [
-        Text(
-          "REPETIÇÃO",
-          style: TextStyles.bodyBold.copyWith(color: AppColors.greySweet),
-        ),
-        Text(
-          "RESULTADO",
-          style: TextStyles.bodyBold.copyWith(color: AppColors.greySweet),
-        ),
-        Text(
-          "STATUS",
-          style: TextStyles.bodyBold.copyWith(color: AppColors.greySweet),
-        ),
-      ]),
-      const TableRow(children: [
-        SizedBox(height: 8),
-        SizedBox(height: 8),
-        SizedBox(height: 8),
-      ]),
+      TableRow(
+        children: [
+          Text(
+            "REPETIÇÃO",
+            style: TextStyles.bodyBold,
+          ),
+          Text(
+            "RESULTADO",
+            style: TextStyles.bodyBold,
+          ),
+          Text(
+            "STATUS",
+            style: TextStyles.bodyBold,
+          ),
+        ],
+      ),
+      const TableRow(
+        children: [
+          SizedBox(height: 8),
+          SizedBox(height: 8),
+          SizedBox(height: 8),
+        ],
+      ),
     ];
   }
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _calculateExperimentViewmodel,
+    return ListenableBuilder(
+      listenable: _calculateExperimentViewmodel,
       builder: (context, child) {
         return CalculateExperimentFragmentTemplate(
           titleOfStepIndicator: "Inserir dados no experimento",
@@ -206,8 +212,7 @@ class _CalculateExperimentThirdStepPageState
                         _calculateExperimentViewmodel
                             .temporaryChoosedExperimentCombination.enzyme!.name,
                         textAlign: TextAlign.center,
-                        style: TextStyles.titleBoldBackground.copyWith(
-                          color: AppColors.greySweet,
+                        style: TextStyles(context).titleBoldBackground(
                           fontWeight: FontWeight.w700,
                           fontSize: 28,
                         ),
@@ -219,8 +224,7 @@ class _CalculateExperimentThirdStepPageState
                             .treatment!
                             .name,
                         textAlign: TextAlign.center,
-                        style: TextStyles.titleBoldBackground.copyWith(
-                          color: AppColors.greySweet,
+                        style: TextStyles(context).titleBoldBackground(
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -229,7 +233,8 @@ class _CalculateExperimentThirdStepPageState
                       ),
                       Card(
                         margin: const EdgeInsets.all(16),
-                        color: AppColors.primary.withAlpha(100),
+                        color: context.getApplyedColorScheme.background,
+                        shadowColor: Colors.transparent,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
@@ -238,8 +243,7 @@ class _CalculateExperimentThirdStepPageState
                                 .enzyme!
                                 .formula,
                             textAlign: TextAlign.center,
-                            style: TextStyles.titleBoldBackground.copyWith(
-                              color: AppColors.white,
+                            style: TextStyles(context).titleBoldBackground(
                               fontWeight: FontWeight.w600,
                               fontSize: 12,
                             ),
@@ -273,7 +277,8 @@ class _CalculateExperimentThirdStepPageState
                   );
                 }
               },
-              future: null, //TODO: verify this update on FutureBuilder
+              //TODO: verify this update on FutureBuilder
+              future: null,
             ),
           ),
         );

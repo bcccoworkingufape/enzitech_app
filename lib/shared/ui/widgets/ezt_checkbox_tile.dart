@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 
 class EZTCheckBoxTile extends StatelessWidget {
   const EZTCheckBoxTile({
-    Key? key,
+    super.key,
     required this.selected,
     required this.onTap,
     this.onTapTrailing,
     required this.title,
     this.color,
-  }) : super(key: key);
+  });
 
   final String title;
   final bool selected;

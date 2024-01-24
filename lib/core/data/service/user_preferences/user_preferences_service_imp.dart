@@ -1,4 +1,6 @@
 // 🌎 Project imports:
+
+// 🌎 Project imports:
 import '../../../domain/service/key_value/key_value_service.dart';
 import '../../../domain/service/user_preferences/user_preferences_service.dart';
 
@@ -6,12 +8,13 @@ class UserPreferencesServicesImp implements UserPreferencesServices {
   static const _tokenKey = "token";
   static const _userKey = "user";
   static const _excludeConfirmationKey = "excludeConfirmationKey";
+  static const _themeModeKey = "themeModeKey";
 
   final KeyValueService _keyValueService;
 
   UserPreferencesServicesImp(this._keyValueService);
 
-  // ACCOUNT
+  //* ACCOUNT
   @override
   Future<void> saveFullUser(String jsonEncoded) async {
     await _keyValueService.setString(_userKey, jsonEncoded);
@@ -37,7 +40,7 @@ class UserPreferencesServicesImp implements UserPreferencesServices {
     await _keyValueService.remove(_tokenKey);
   }
 
-  // PREFERENCES
+  //* PREFERENCES
   @override
   Future<void> initConfirmationsEnabled() async {
     await saveExcludeConfirmation(true);
@@ -53,9 +56,31 @@ class UserPreferencesServicesImp implements UserPreferencesServices {
     return await _keyValueService.getBool(_excludeConfirmationKey) ?? false;
   }
 
-  // GENERAL
+  @override
+  Future<void> initThemeMode() async {
+    await saveThemeModeAsString('system');
+  }
+
+  @override
+  Future<void> saveThemeModeAsString(String value) async {
+    await _keyValueService.setString(_themeModeKey, value);
+  }
+
+  @override
+  Future<String> getThemeModeAsString() async {
+    return await _keyValueService.getString(_themeModeKey) ?? 'light';
+  }
+
+  //* GENERAL
   @override
   Future<void> clearAll() async {
     await _keyValueService.clear();
+  }
+
+  @override
+  Future<void> clearAllAndKeepTheme() async {
+    String theme = await getThemeModeAsString();
+    await _keyValueService.clear();
+    await saveThemeModeAsString(theme);
   }
 }

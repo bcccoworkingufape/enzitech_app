@@ -1,8 +1,9 @@
+// ignore_for_file: constant_identifier_names, prefer_contains, avoid_function_literals_in_foreach_calls
+
 // 🎯 Dart imports:
 import 'dart:math';
 
 class CNPJValidator {
-  // ignore: constant_identifier_names
   static const List<String> BLACKLIST = [
     "00000000000000",
     "11111111111111",
@@ -16,7 +17,6 @@ class CNPJValidator {
     "99999999999999"
   ];
 
-  // ignore: constant_identifier_names
   static const STRIP_REGEX = r'[^\d]';
 
   // Compute the Verifier Digit (or "Dígito Verificador (DV)" in PT-BR).
@@ -28,7 +28,6 @@ class CNPJValidator {
 
     var sum = 0;
 
-    // ignore: avoid_function_literals_in_foreach_calls
     reverse.forEach((number) {
       sum += number * index;
       index = (index == 9 ? 2 : index + 1);
@@ -68,7 +67,6 @@ class CNPJValidator {
     }
 
     // cnpj can't be blacklisted
-    // ignore: prefer_contains
     if (BLACKLIST.indexOf(cnpj) != -1) {
       return false;
     }

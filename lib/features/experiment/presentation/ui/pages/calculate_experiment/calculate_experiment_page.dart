@@ -1,5 +1,6 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
@@ -15,9 +16,9 @@ import 'fragments/calculate_experiment_third_step.dart';
 
 class CalculateExperimentPage extends StatefulWidget {
   const CalculateExperimentPage({
-    Key? key,
+    super.key,
     required this.experiment,
-  }) : super(key: key);
+  });
 
   final ExperimentEntity experiment;
 
@@ -56,15 +57,17 @@ class _CalculateExperimentPageState extends State<CalculateExperimentPage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    return  PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) async {
+        if (_calculateExperimentViewmodel.alreadyPopped) {
+          _calculateExperimentViewmodel.setAlreadyPopped(false);
+          return;
+        }
         _calculateExperimentViewmodel.onBack(mounted, context);
-
-        return _calculateExperimentViewmodel.pageController.page! > 0
-            ? false
-            : true;
+        return;
       },
-      child: Scaffold(
+      child:Scaffold(
         key: _scaffoldKey,
         body: SafeArea(
           child: Form(

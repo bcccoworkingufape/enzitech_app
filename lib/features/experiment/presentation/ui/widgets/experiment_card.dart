@@ -1,10 +1,13 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
+
 // 📦 Package imports:
+import 'package:get_it/get_it.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
+// 🌎 Project imports:
 import '../../../../../core/routing/routing.dart';
+import '../../../../../shared/extensions/context_theme_mode_extensions.dart';
 import '../../../../../shared/ui/ui.dart';
 import '../../../../../shared/utils/utils.dart';
 import '../../../domain/entities/experiment_entity.dart';
@@ -12,10 +15,10 @@ import '../../viewmodel/experiment_details_viewmodel.dart';
 
 class ExperimentCard extends StatefulWidget {
   const ExperimentCard({
-    Key? key,
+    super.key,
     required this.experiment,
     this.indexOfExperiment,
-  }) : super(key: key);
+  });
 
   final ExperimentEntity experiment;
   final int? indexOfExperiment;
@@ -31,48 +34,52 @@ class _ExperimentCardState extends State<ExperimentCard> {
       child: Container(
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
-            topRight: Radius.circular(8),
-            bottomRight: Radius.circular(8),
+            topRight: Radius.circular(16),
+            bottomRight: Radius.circular(16),
           ),
         ),
         margin: const EdgeInsets.all(0),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
+          padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
           child: Material(
-            elevation: 8,
-            shadowColor: Colors.white,
-            borderRadius: BorderRadius.circular(8),
+            elevation: 4,
+            borderRadius: BorderRadius.circular(16),
+            surfaceTintColor: context.getApplyedColorScheme.secondaryContainer,
             child: InkWell(
-              onTap: () {GetIt.I
-                  .get<ExperimentDetailsViewmodel>()
-                  .getExperimentDetails(widget.experiment.id);
-                  Navigator.pushNamed(
-                context,
-                Routing.experimentDetailed,
-                arguments: widget.experiment,
-              );
-                  },
+              onTap: () {
+                GetIt.I
+                    .get<ExperimentDetailsViewmodel>()
+                    .getExperimentDetails(widget.experiment.id);
+                Navigator.pushNamed(
+                  context,
+                  Routing.experimentDetailed,
+                  arguments: widget.experiment,
+                );
+              },
               borderRadius: const BorderRadius.all(
-                Radius.circular(8),
+                Radius.circular(16),
               ),
               child: Row(
                 children: [
                   if (widget.indexOfExperiment != null)
                     Container(
-                      decoration: const BoxDecoration(
-                        color: AppColors.primary,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(8),
-                          bottomLeft: Radius.circular(8),
+                      decoration: BoxDecoration(
+                        color: context.getApplyedColorScheme.primary,
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(16),
+                          bottomLeft: Radius.circular(16),
                         ),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8),
                         child: Center(
-                            child: Text(
-                          widget.indexOfExperiment.toString(),
-                          style: TextStyles.titleMinBoldBackground,
-                        )),
+                          child: Text(
+                            widget.indexOfExperiment.toString(),
+                            style: TextStyles(context).titleMinBoldBackground(
+                              color: context.getApplyedColorScheme.onPrimary,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   if (widget.indexOfExperiment != null)
@@ -90,7 +97,8 @@ class _ExperimentCardState extends State<ExperimentCard> {
                           widget.experiment.name,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyles.titleBoldHeading,
+                          style:
+                              TextStyles(context).titleMoreBoldHeadingColored,
                         ),
                         const SizedBox(
                           height: 2,
@@ -106,8 +114,9 @@ class _ExperimentCardState extends State<ExperimentCard> {
                           widget.experiment.description,
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyles.bodyRegular.copyWith(
-                              color: AppColors.greyLight, fontSize: 16),
+                          style: TextStyles(context).bodyRegular.copyWith(
+                                fontSize: 16.0,
+                              ),
                         ),
                         const SizedBox(
                           height: 16,
@@ -120,14 +129,17 @@ class _ExperimentCardState extends State<ExperimentCard> {
                   ),
                   CircularPercentIndicator(
                     radius: 40,
-                    lineWidth: 10.0,
+                    lineWidth: 12.0,
+                    animation: true,
+                    circularStrokeCap: CircularStrokeCap.round,
                     percent: widget.experiment.progress,
                     center: Text(
                       Toolkit.doubleToPercentual(widget.experiment.progress),
-                      style: TextStyles.buttonPrimary,
+                      style: TextStyles(context).buttonPrimary,
                     ),
-                    progressColor: AppColors.primary,
-                    backgroundColor: AppColors.primary.withOpacity(0.4),
+                    progressColor: context.getApplyedColorScheme.primary,
+                    backgroundColor:
+                        context.getApplyedColorScheme.primary.withOpacity(0.4),
                   ),
                   const SizedBox(
                     width: 10,

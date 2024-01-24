@@ -11,8 +11,8 @@ import '../../../features/experiment/presentation/viewmodel/create_experiment_vi
 import '../../../features/experiment/presentation/viewmodel/experiment_details_viewmodel.dart';
 import '../../../features/experiment/presentation/viewmodel/experiment_results_viewmodel.dart';
 import '../../../features/experiment/presentation/viewmodel/experiments_viewmodel.dart';
-import '../../../features/main/presentation/viewmodel/settings_viewmodel.dart';
 import '../../../features/main/presentation/viewmodel/home_viewmodel.dart';
+import '../../../features/main/presentation/viewmodel/settings_viewmodel.dart';
 import '../../../features/main/presentation/viewmodel/splash_viewmodel.dart';
 import '../../../features/treatment/presentation/viewmodel/create_treatment_viewmodel.dart';
 import '../../../features/treatment/presentation/viewmodel/treatments_viewmodel.dart';
@@ -22,7 +22,14 @@ class ViewmodelsInjections {
 
   ViewmodelsInjections(this.getIt) {
     getIt.registerLazySingleton<SettingsViewmodel>(
-      () => SettingsViewmodel(getIt(), getIt(), getIt(), getIt()),
+      () => SettingsViewmodel(
+        getIt(),
+        getIt(),
+        getIt(),
+        getIt(),
+        getIt(),
+        getIt(),
+      ),
     );
     getIt.registerLazySingleton<CalculateExperimentViewmodel>(
       () => CalculateExperimentViewmodel(getIt(), getIt(), getIt()),
@@ -34,7 +41,7 @@ class ViewmodelsInjections {
       () => CreateEnzymeViewmodel(getIt()),
     );
     getIt.registerLazySingleton<CreateExperimentViewmodel>(
-      () => CreateExperimentViewmodel(getIt()),
+      () => CreateExperimentViewmodel(getIt(), getIt()),
     );
     getIt.registerLazySingleton<CreateTreatmentViewmodel>(
       () => CreateTreatmentViewmodel(getIt()),
@@ -46,7 +53,7 @@ class ViewmodelsInjections {
       () => ExperimentDetailsViewmodel(getIt()),
     );
     getIt.registerLazySingleton<ExperimentResultsViewmodel>(
-      () => ExperimentResultsViewmodel(getIt()),
+      () => ExperimentResultsViewmodel(getIt(), getIt()),
     );
     getIt.registerLazySingleton<ExperimentsViewmodel>(
       () => ExperimentsViewmodel(getIt(), getIt(), getIt(), getIt()),

@@ -10,31 +10,6 @@ import '../../../domain/service/http/http_service.dart';
 import '../../../failures/failures.dart';
 
 class DioHttpServiceImp implements HttpService {
-  /* late Dio _dio;
-  DioHttpServiceImp() {
-    _dio = Dio(
-      BaseOptions(
-        baseUrl: 'https://api.themoviedb.org/4/',
-        headers: {
-          'content-type': 'application/json;charset=utf-8',
-          'authorization':
-              'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkODVhZjhlZDA0NTZhNWQyNzVmZmQxODI4YmJkYzY4NSIsInN1YiI6IjU5ODA1NjQ0YzNhMzY4MTA1NTAwZDRiNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.MJcPKVkaqXdI_Oblbk-VjBM8pWtTmKltfxZqyuLIU_U',
-        },
-      ),
-    );
-  }
-
-  @override
-  Future<Response<T>> get<T>(
-    String path, {
-    Map<String, dynamic>? queryParameters,
-  }) {
-    return _dio.get<T>(
-      path,
-      queryParameters: queryParameters,
-    );
-  } */
-
   Dio dio = Dio();
 
   final HttpDriverOptions httpDriverOptions;
@@ -52,14 +27,12 @@ class DioHttpServiceImp implements HttpService {
       gettedToken = token;
     }
     dio.options.baseUrl = httpDriverOptions.baseUrl();
-    dio.options.connectTimeout = 60 * 1000; // 60 seconds
-    dio.options.receiveTimeout = 60 * 1000; // 60 seconds
+    dio.options.connectTimeout = const Duration(seconds: 60);
+    dio.options.receiveTimeout = const Duration(seconds: 60);
 
     dio.options.headers.addAll(
       {
         'content-type': "application/json; charset=utf-8",
-        // 'x-api-key':
-        //     '${httpDriverOptions.accessTokenType} ${httpDriverOptions.apiKey}',
         'Authorization': '${httpDriverOptions.accessTokenType} $gettedToken',
       },
     );
@@ -90,8 +63,8 @@ class DioHttpServiceImp implements HttpService {
       switch (e.runtimeType) {
         case NoNetworkFailure:
           rethrow;
-        case DioError:
-          var dioError = (e as DioError);
+        case DioException:
+          var dioError = (e as DioException);
           var data = dioError.response?.data;
           if (data is Map<String, dynamic> && data.containsKey('data')) {
             var message = "";
@@ -116,30 +89,32 @@ class DioHttpServiceImp implements HttpService {
           }
           if (message.isEmpty) {
             if (dioError.response == null) {
-              if (dioError.message.contains('Connection failed')) {
-                throw NoNetworkFailure(message: dioError.message);
+              if (dioError.message!.contains('Connection failed')) {
+                throw NoNetworkFailure(
+                    message: dioError.message ?? 'No Network Failure');
               } else {
-                throw dioError.message.contains('Connection timed out')
+                throw dioError.message!.contains('Connection timed out')
                     ? serverFailure
-                    : ServerFailure(message: dioError.message);
+                    : ServerFailure(
+                        message: dioError.message ?? 'Server Failure');
               }
             }
-            if (dioError.message.isNotEmpty) {
-              message = dioError.message;
+            if (dioError.message!.isNotEmpty) {
+              message = dioError.message ?? '';
             } else if (dioError.response!.statusMessage != '') {
               message = dioError.response!.statusMessage ?? message;
             } else if (dioError.response!.data != '') {
               message = dioError.response!.data['message'] ?? message;
             } else {
-              message = dioError.message;
+              message = dioError.message ?? '';
             }
             message = message.isEmpty ? serverFailure.message : message;
           }
 
           //TODO: Verify this
-          if (dioError.type == DioErrorType.connectTimeout) {
+          if (dioError.type == DioExceptionType.connectionTimeout) {
             throw NoNetworkFailure(message: "Connection Timeout Exception");
-          } else if (dioError.type == DioErrorType.receiveTimeout) {
+          } else if (dioError.type == DioExceptionType.receiveTimeout) {
             throw NoNetworkFailure(message: "Receive Timeout Exception");
           }
 
@@ -230,9 +205,6 @@ class DioHttpServiceImp implements HttpService {
       ),
     );
   }
-
-  // @override
-  // Map<String, String>? get getHeaders => throw UnimplementedError();
 
   @override
   Future<HttpDriverResponse> patch(

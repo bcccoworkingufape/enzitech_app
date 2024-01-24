@@ -1,18 +1,20 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
 // 🌎 Project imports:
 import '../../../../../../../core/enums/enums.dart';
+import '../../../../../../../shared/extensions/context_theme_mode_extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../../viewmodel/calculate_experiment_viewmodel.dart';
 import '../calculate_experiment_fragment_template.dart';
 
 class CalculateExperimentSecondStepPage extends StatefulWidget {
   const CalculateExperimentSecondStepPage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<CalculateExperimentSecondStepPage> createState() =>
@@ -30,7 +32,7 @@ class _CalculateExperimentSecondStepPageState
   }
 
   bool _checkIfTextIsGTZAndNumeric(text) {
-    // Numeric
+    //* Numeric
     if (text == null) {
       return false;
     }
@@ -39,7 +41,7 @@ class _CalculateExperimentSecondStepPageState
       return false;
     }
 
-    // GTZ
+    //* GTZ
     var number = double.parse(text);
     if (number <= 0) {
       return false;
@@ -94,18 +96,18 @@ class _CalculateExperimentSecondStepPageState
     return listOfBools.every((b) => b == true);
   }
 
-  EZTStepState _leadWithStepState(Map<String, double?> map) {
+  StepState _leadWithStepState(Map<String, double?> map) {
     if (_calculateExperimentViewmodel.stepPage ==
         _calculateExperimentViewmodel.listOfExperimentData
             .toList()
             .indexOf(map)) {
-      return EZTStepState.editing;
+      return StepState.editing;
     } else if (_isMapStillEmpty(map["_id"].toString())) {
-      return EZTStepState.indexed;
+      return StepState.indexed;
     } else if (_isMapCorrectlyFilled(map["_id"].toString())) {
-      return EZTStepState.complete;
+      return StepState.complete;
     } else {
-      return EZTStepState.error;
+      return StepState.error;
     }
   }
 
@@ -122,91 +124,6 @@ class _CalculateExperimentSecondStepPageState
     );
   }
 
-  /* Widget get _body {
-    return Form(
-      key: _formKey,
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          children: [
-            const EZTCreateExperimentStepIndicator(
-              title: "Inserir dados no experimento",
-              message: "Etapa 2 de 2 - Inserção de dados",
-            ),
-            const SizedBox(
-              height: 64,
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: EZTStepper(
-                  physics: const ClampingScrollPhysics(),
-                  currentStep: _calculateExperimentViewmodel.stepPage,
-                  controlsBuilder:
-                      (BuildContext context, EZTControlsDetails details) {
-                    return Row(
-                      children: <Widget>[
-                        if (_calculateExperimentViewmodel.stepPage <
-                            _calculateExperimentViewmodel.experiment.repetitions - 1)
-                          TextButton(
-                            onPressed: () {
-                              if (_calculateExperimentViewmodel.stepPage <
-                                  _calculateExperimentViewmodel.experiment.repetitions) {
-                                _calculateExperimentViewmodel.setStepPage(_calculateExperimentViewmodel.stepPage + 1);
-                              }
-                            },
-                            child: const Text('Próximo'),
-                          ),
-                        if (_calculateExperimentViewmodel.stepPage > 0)
-                          TextButton(
-                            onPressed: () {
-                              if (_calculateExperimentViewmodel.stepPage > 0) {
-                                _calculateExperimentViewmodel.setStepPage(_calculateExperimentViewmodel.stepPage - 1);
-                              }
-                            },
-                            child: const Text('Voltar'),
-                          ),
-                      ],
-                    );
-                  },
-                  onStepTapped: (int index) {
-                    _calculateExperimentViewmodel.setStepPage(index);
-                  },
-                  type: EZTStepperType.vertical,
-                  steps: _calculateExperimentViewmodel.listOfExperimentData.map(
-                    (map) {
-                      return EZTStep(
-                        state: _leadWithStepState(map!),
-                        title: _isMapCorrectlyFilled(map["_id"].toString())
-                            ? Text(
-                                "Dados da ${map["_id"]!.toInt() + 1}ª repetição")
-                            : Text(
-                                "⚠  Dados da ${map["_id"]!.toInt() + 1}ª repetição",
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.danger,
-                                ),
-                              ),
-                        content: Container(
-                          alignment: Alignment.centerLeft,
-                          child: Visibility(
-                              visible: _calculateExperimentViewmodel
-                                      .textFields["sample-${map["_id"]}"] !=
-                                  null,
-                              child: _textFields(map)),
-                        ),
-                      );
-                    },
-                  ).toList(),
-                  // key: ValueKey(widget.listOfEnzymes.hashCode),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  } */
-
   Widget get _buttons {
     return Column(
       children: [
@@ -215,15 +132,12 @@ class _CalculateExperimentSecondStepPageState
           text: 'Calcular',
           loading: _calculateExperimentViewmodel.state == StateEnum.loading,
           onPressed: () async {
-            print(_calculateExperimentViewmodel.listOfExperimentData);
             if (_calculateExperimentViewmodel.formKey.currentState != null) {
               _calculateExperimentViewmodel.formKey.currentState!.save();
 
               if (_calculateExperimentViewmodel.formKey.currentState!
                   .validate()) {
                 if (mounted) {
-                  // widget.formKey.currentState!.save();
-                  // await _calculateExperimentViewmodel.insertExperimentData();
                   await _calculateExperimentViewmodel
                       .calculateExperiment()
                       .whenComplete(() => (_calculateExperimentViewmodel
@@ -233,7 +147,7 @@ class _CalculateExperimentSecondStepPageState
                                       .experimentCalculationEntity?.average !=
                                   0)
                           ? _calculateExperimentViewmodel.onNext(context)
-                          : print('err'));
+                          : debugPrint('Error on calculate'));
                   //TODO: Corrigir enzimas bugadas (sem calculo -> retorno 0)
                 }
 
@@ -256,102 +170,100 @@ class _CalculateExperimentSecondStepPageState
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-        animation: _calculateExperimentViewmodel,
-        builder: (context, child) {
-          return CalculateExperimentFragmentTemplate(
-            titleOfStepIndicator: "Inserir dados no experimento",
-            messageOfStepIndicator: "Etapa 2 de 3 - Preenchimento e cálculo",
-            body: SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(
-                parent: BouncingScrollPhysics(),
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 32,
-                  ),
-                  SingleChildScrollView(
-                    child: EZTStepper(
-                      physics: const ClampingScrollPhysics(),
-                      currentStep: _calculateExperimentViewmodel.stepPage,
-                      controlsBuilder:
-                          (BuildContext context, EZTControlsDetails details) {
-                        return Row(
-                          children: <Widget>[
-                            if (_calculateExperimentViewmodel.stepPage <
-                                _calculateExperimentViewmodel
-                                        .experiment.repetitions -
-                                    1)
-                              TextButton(
-                                onPressed: () {
-                                  if (_calculateExperimentViewmodel.stepPage <
-                                      _calculateExperimentViewmodel
-                                          .experiment.repetitions) {
-                                    _calculateExperimentViewmodel.setStepPage(
-                                        _calculateExperimentViewmodel.stepPage +
-                                            1);
-                                  }
-                                },
-                                child: const Text('Próximo'),
-                              ),
-                            if (_calculateExperimentViewmodel.stepPage > 0)
-                              TextButton(
-                                onPressed: () {
-                                  if (_calculateExperimentViewmodel.stepPage >
-                                      0) {
-                                    _calculateExperimentViewmodel.setStepPage(
-                                        _calculateExperimentViewmodel.stepPage -
-                                            1);
-                                  }
-                                },
-                                child: const Text('Voltar'),
-                              ),
-                          ],
+    return ListenableBuilder(
+      listenable: _calculateExperimentViewmodel,
+      builder: (context, child) {
+        return CalculateExperimentFragmentTemplate(
+          titleOfStepIndicator: "Inserir dados no experimento",
+          messageOfStepIndicator: "Etapa 2 de 3 - Preenchimento e cálculo",
+          body: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(
+              parent: BouncingScrollPhysics(),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 32,
+                ),
+                SingleChildScrollView(
+                  child: Stepper(
+                    physics: const ClampingScrollPhysics(),
+                    currentStep: _calculateExperimentViewmodel.stepPage,
+                    controlsBuilder:
+                        (BuildContext context, ControlsDetails details) {
+                      return Row(
+                        children: <Widget>[
+                          if (_calculateExperimentViewmodel.stepPage <
+                              _calculateExperimentViewmodel
+                                      .experiment.repetitions -
+                                  1)
+                            TextButton(
+                              onPressed: () {
+                                if (_calculateExperimentViewmodel.stepPage <
+                                    _calculateExperimentViewmodel
+                                        .experiment.repetitions) {
+                                  _calculateExperimentViewmodel.setStepPage(
+                                      _calculateExperimentViewmodel.stepPage +
+                                          1);
+                                }
+                              },
+                              child: const Text('Próximo'),
+                            ),
+                          if (_calculateExperimentViewmodel.stepPage > 0)
+                            TextButton(
+                              onPressed: () {
+                                if (_calculateExperimentViewmodel.stepPage >
+                                    0) {
+                                  _calculateExperimentViewmodel.setStepPage(
+                                      _calculateExperimentViewmodel.stepPage -
+                                          1);
+                                }
+                              },
+                              child: const Text('Voltar'),
+                            ),
+                        ],
+                      );
+                    },
+                    onStepTapped: (int index) {
+                      _calculateExperimentViewmodel.setStepPage(index);
+                    },
+                    type: StepperType.vertical,
+                    steps:
+                        _calculateExperimentViewmodel.listOfExperimentData.map(
+                      (map) {
+                        return Step(
+                          state: _leadWithStepState(map),
+                          title: _isMapCorrectlyFilled(map["_id"].toString())
+                              ? Text(
+                                  "Dados da ${map["_id"]!.toInt() + 1}ª repetição")
+                              : Text(
+                                  "⚠  Dados da ${map["_id"]!.toInt() + 1}ª repetição",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: context.getApplyedColorScheme.error,
+                                  ),
+                                ),
+                          content: Visibility(
+                            visible: _calculateExperimentViewmodel
+                                    .textFields["sample-${map["_id"]}"] !=
+                                null,
+                            child: _textFields(map),
+                          ),
                         );
                       },
-                      onStepTapped: (int index) {
-                        _calculateExperimentViewmodel.setStepPage(index);
-                      },
-                      type: EZTStepperType.vertical,
-                      steps: _calculateExperimentViewmodel.listOfExperimentData
-                          .map(
-                        (map) {
-                          return EZTStep(
-                            state: _leadWithStepState(map),
-                            title: _isMapCorrectlyFilled(map["_id"].toString())
-                                ? Text(
-                                    "Dados da ${map["_id"]!.toInt() + 1}ª repetição")
-                                : Text(
-                                    "⚠  Dados da ${map["_id"]!.toInt() + 1}ª repetição",
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: AppColors.danger,
-                                    ),
-                                  ),
-                            content: Container(
-                              alignment: Alignment.centerLeft,
-                              child: Visibility(
-                                  visible: _calculateExperimentViewmodel
-                                          .textFields["sample-${map["_id"]}"] !=
-                                      null,
-                                  child: _textFields(map)),
-                            ),
-                          );
-                        },
-                      ).toList(),
-                      // key: ValueKey(widget.listOfEnzymes.hashCode),
-                    ),
+                    ).toList(),
                   ),
-                  const SizedBox(
-                    height: 64,
-                  ),
-                  _buttons,
-                ],
-              ),
+                ),
+                const SizedBox(
+                  height: 64,
+                ),
+                _buttons,
+              ],
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 }

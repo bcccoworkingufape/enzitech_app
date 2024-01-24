@@ -4,11 +4,12 @@ import 'dart:math' as math;
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-// 📦 Package imports:
-import 'package:flutter_svg/svg.dart';
-
 // 🌎 Project imports:
+import '../../extensions/context_theme_mode_extensions.dart';
 import '../themes/themes.dart';
+
+// 📦 Package imports:
+
 
 class EZTProgressIndicator extends StatefulWidget {
   final String? message;
@@ -46,8 +47,8 @@ class _EZTProgressIndicatorState extends State<EZTProgressIndicator>
                 child: child,
               );
             },
-            child: SvgPicture.asset(
-              AppSvgs.iconLogo,
+            child: Image.asset(
+              context.isDarkMode ? AppImages.logoOnDark : AppImages.logoGreen,
               alignment: Alignment.center,
               width: 64,
             ),
@@ -60,7 +61,7 @@ class _EZTProgressIndicatorState extends State<EZTProgressIndicator>
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Text(
                 widget.message!,
-                style: TextStyles.termRegular,
+                style: TextStyles(context).onPrimaryContainer18(),
                 textAlign: TextAlign.center,
               ),
             ),

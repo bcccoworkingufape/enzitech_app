@@ -9,9 +9,12 @@ class EZTMarqueeOnDemand extends StatelessWidget {
   final TextStyle textStyle;
   final double? switchWidth;
 
-  const EZTMarqueeOnDemand(
-      {Key? key, required this.text, required this.textStyle, this.switchWidth})
-      : super(key: key);
+  const EZTMarqueeOnDemand({
+    super.key,
+    required this.text,
+    required this.textStyle,
+    this.switchWidth,
+  });
 
   Size _textSize(String text, TextStyle style) {
     final TextPainter textPainter = TextPainter(

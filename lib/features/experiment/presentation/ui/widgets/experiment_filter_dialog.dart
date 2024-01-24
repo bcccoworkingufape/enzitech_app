@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 // 🌎 Project imports:
+import '../../../../../shared/extensions/context_theme_mode_extensions.dart';
 import '../../../../../shared/ui/ui.dart';
 import '../../../../experiment/presentation/viewmodel/experiments_viewmodel.dart';
 
@@ -64,12 +65,12 @@ class _ExperimentFilterDialogState extends State<ExperimentFilterDialog> {
       hint: const Text("Selecionar"),
       style: TextStyles.termRegular.copyWith(
         fontSize: 16,
+        color: context.getApplyedColorScheme.onPrimaryContainer,
       ),
       icon: null,
       elevation: 16,
       underline: Container(
         height: 1.1,
-        color: AppColors.line,
       ),
       onChanged: (String? value) {
         setState(() {
@@ -92,12 +93,12 @@ class _ExperimentFilterDialogState extends State<ExperimentFilterDialog> {
       hint: const Text("Selecionar"),
       style: TextStyles.termRegular.copyWith(
         fontSize: 16,
+        color: context.getApplyedColorScheme.onPrimaryContainer,
       ),
       icon: null,
       elevation: 16,
       underline: Container(
         height: 1.1,
-        color: AppColors.line,
       ),
       onChanged: (String? value) {
         setState(() {
@@ -116,16 +117,17 @@ class _ExperimentFilterDialogState extends State<ExperimentFilterDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Filtros', style: TextStyles.titleBoldHeading),
+      title: Text('Filtros', style: TextStyles(context).titleBoldHeading),
       content: SingleChildScrollView(
         child: ListBody(
           children: <Widget>[
-            Text('Ordenar por: ', style: TextStyles.buttonBoldPrimary),
+            Text('Ordenar por: ', style: TextStyles(context).buttonBoldHeading),
             _orderByDropdown,
             const SizedBox(
               height: 24,
             ),
-            Text('Organizar em ordem: ', style: TextStyles.buttonBoldPrimary),
+            Text('Organizar em ordem: ',
+                style: TextStyles(context).buttonBoldHeading),
             _orderingDropdown,
           ],
         ),
@@ -135,7 +137,8 @@ class _ExperimentFilterDialogState extends State<ExperimentFilterDialog> {
         TextButton(
           style: ButtonStyle(
             overlayColor: MaterialStateProperty.all<Color>(
-                AppColors.danger.withOpacity(0.1)),
+              context.getApplyedColorScheme.error,
+            ),
           ),
           onPressed: () {
             _experimentsViewmodel.clearFilters();
@@ -144,25 +147,24 @@ class _ExperimentFilterDialogState extends State<ExperimentFilterDialog> {
           },
           child: Text(
             numberOfFiltersEnabled() > 1 ? 'Limpar filtros' : 'Limpar filtro',
-            style: TextStyles.buttonPrimary.copyWith(
-              color: AppColors.delete,
-            ),
+            style: TextStyles(context).buttonPrimary.copyWith(
+                  color: context.getApplyedColorScheme.error,
+                ),
           ),
         ),
         TextButton(
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all<Color>(
-              AppColors.primary,
+              context.getApplyedColorScheme.primary,
             ),
             overlayColor: MaterialStateProperty.all<Color>(
-              AppColors.materialTheme.shade600,
+              context.getApplyedColorScheme.error,
             ),
           ),
           child: Text(
-              numberOfFiltersEnabled() > 1
-                  ? 'Aplicar filtros'
-                  : 'Aplicar filtro',
-              style: TextStyles.buttonBoldBackground),
+            numberOfFiltersEnabled() > 1 ? 'Aplicar filtros' : 'Aplicar filtro',
+            style: TextStyles(context).buttonBoldBackground,
+          ),
           onPressed: () {
             _experimentsViewmodel.setOrderBy(dropdownOrderByValue);
             _experimentsViewmodel.setOrdering(dropdownOrderingValue);

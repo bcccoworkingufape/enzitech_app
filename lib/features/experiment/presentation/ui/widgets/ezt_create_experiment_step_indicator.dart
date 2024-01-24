@@ -22,7 +22,7 @@ class EZTCreateExperimentStepIndicator extends StatelessWidget {
         Align(
           alignment: Alignment.center,
           child: SvgPicture.asset(
-            AppSvgs.iconLogo,
+            AppSvgs(context).iconLogo(),
             alignment: Alignment.center,
             width: 75,
           ),
@@ -36,7 +36,7 @@ class EZTCreateExperimentStepIndicator extends StatelessWidget {
               width: MediaQuery.of(context).size.width * 0.7,
               child: Text(
                 title,
-                style: TextStyles.informationExperimentStepTitle,
+                style: TextStyles(context).informationExperimentStepTitle(),
                 textAlign: TextAlign.start,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,

@@ -49,7 +49,7 @@ enum _LiquidPullToRefreshMode {
 
 class LiquidPullToRefresh extends StatefulWidget {
   const LiquidPullToRefresh({
-    Key? key,
+    super.key,
     this.animSpeedFactor = 1.0,
     required this.child,
     required this.onRefresh,
@@ -60,8 +60,7 @@ class LiquidPullToRefresh extends StatefulWidget {
     this.springAnimationDurationInMilliseconds = 1000,
     this.borderWidth = 2.0,
     this.showChildOpacityTransition = true,
-  })  : assert(animSpeedFactor >= 1.0),
-        super(key: key);
+  }) : assert(animSpeedFactor >= 1.0);
 
   /// The widget below this widget in the tree.
   ///

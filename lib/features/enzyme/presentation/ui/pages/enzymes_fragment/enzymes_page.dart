@@ -8,6 +8,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
+import '../../../../../../shared/extensions/context_theme_mode_extensions.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../../../main/presentation/viewmodel/settings_viewmodel.dart';
 import '../../../../domain/entities/enzyme_entity.dart';
@@ -17,8 +18,8 @@ import '../../widgets/enzymes_summary.dart';
 
 class EnzymesPage extends StatefulWidget {
   const EnzymesPage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<EnzymesPage> createState() => _EnzymesPageState();
@@ -102,7 +103,6 @@ class _EnzymesPageState extends State<EnzymesPage> {
               replacement: Dismissible(
                 key: Key(enzyme.id),
                 onDismissed: (direction) {
-                  // Remove the item from the data source.
                   setState(() {
                     _enzymesViewmodel.enzymes.removeAt(index);
                   });
@@ -117,13 +117,12 @@ class _EnzymesPageState extends State<EnzymesPage> {
                     eztSnackBarType: EZTSnackBarType.error,
                     action: SnackBarAction(
                       label: 'Desfazer',
-                      textColor: AppColors.white,
+                      textColor: context.getApplyedColorScheme.onError,
                       onPressed: () {
                         setState(() {
                           _enzymesViewmodel.enzymes.insert(index, enzyme);
                           permanentlyDeleted = false;
                         });
-                        // todoRepository.saveTodoList(todos);
                       },
                     ),
                     onDismissFunction: () async {
@@ -134,19 +133,21 @@ class _EnzymesPageState extends State<EnzymesPage> {
                   );
                 },
                 background: Container(
-                  color: Colors.red,
+                  color: context.getApplyedColorScheme.error,
                   child: Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
-                      children: const [
+                      children: [
                         Icon(
-                          PhosphorIcons.trashLight,
-                          color: Colors.white,
+                          PhosphorIcons.trash(PhosphorIconsStyle.light),
+                          color: context.getApplyedColorScheme.onError,
                         ),
                         Text(
                           'Excluir',
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(
+                            color: context.getApplyedColorScheme.onError,
+                          ),
                           textAlign: TextAlign.right,
                         ),
                       ],
@@ -200,14 +201,15 @@ class _EnzymesPageState extends State<EnzymesPage> {
   Widget build(BuildContext context) {
     var heightMQ = MediaQuery.of(context).size.height;
 
-    return AnimatedBuilder(
-        animation: _enzymesViewmodel,
+    return ListenableBuilder(
+        listenable: _enzymesViewmodel,
         builder: (context, child) {
           return EZTPullToRefresh(
             key: _refreshIndicatorKey,
             onRefresh: _enzymesViewmodel.fetch,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
               child: Column(
                 children: [
                   if (_enzymesViewmodel.enzymes.isNotEmpty &&
@@ -219,7 +221,7 @@ class _EnzymesPageState extends State<EnzymesPage> {
                         ),
                         Text(
                           "🧬 ${_enzymesViewmodel.enzymes.length} enzima${_enzymesViewmodel.enzymes.length > 1 ? 's ' : ' '}encontrada${_enzymesViewmodel.enzymes.length > 1 ? 's ' : ' '}",
-                          style: TextStyles.link.copyWith(fontSize: 16),
+                          style: TextStyles(context).link(fontSize: 16),
                         ),
                         const SizedBox(
                           height: 8,

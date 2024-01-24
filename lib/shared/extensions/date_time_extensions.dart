@@ -4,8 +4,8 @@
 import 'package:intl/intl.dart';
 
 extension DateExtension on DateTime {
-  ///Returns String in
-  ///this format. Ex: 07 de Outubro de 2021 às 12:32:35
+  /// Returns String in
+  /// this format. Ex: 07 de Outubro de 2021 às 12:32:35
   String get ddMMyyHHmmss {
     final dateFormatDate = DateFormat('dd/MM/yy');
     final dateFormatTime = DateFormat('HH:mm:ss');
@@ -16,24 +16,24 @@ extension DateExtension on DateTime {
     return '$date às $time';
   }
 
-  ///Returns String in
-  ///this format. Ex: 07/10/2021
+  /// Returns String in
+  /// this format. Ex: 07/10/2021
   String get ddMMyyyy {
     final dateFormat = DateFormat('dd/MM/yyyy');
 
     return dateFormat.format(this);
   }
 
-  ///Returns String in
-  ///this format. Ex: Terça-feira, 07 de Outubro de 2021
+  /// Returns String in
+  /// this format. Ex: Terça-feira, 07 de Outubro de 2021
   String get EEEEddMMMMyyyy {
     var dateFormat = DateFormat("EEEE, dd 'de' MMMM 'de' yyyy");
 
     return dateFormat.format(this);
   }
 
-  ///Returns String in
-  ///this format. Ex: Ter, 07 Outubro 2021
+  /// Returns String in
+  /// this format. Ex: Ter, 07 Outubro 2021
   String get EddMMMMyyyy {
     var dateFormat = DateFormat("E, dd MMMM yyyy", "pt_BR");
 

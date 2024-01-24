@@ -17,8 +17,8 @@ import '../create_experiment_fragment_template.dart';
 
 class CreateExperimentThirdStepPage extends StatefulWidget {
   const CreateExperimentThirdStepPage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<CreateExperimentThirdStepPage> createState() =>
@@ -71,7 +71,6 @@ class _CreateExperimentThirdStepPageState
   get _validateFields {
     if (_choosedCheckboxList.isNotEmpty) {
       setState(() {
-        // print(_createExperimentViewmodel.formKey.currentState!.validate());
         _createExperimentViewmodel.setEnableNextButtonOnThirdStep(true);
       });
     } else {
@@ -135,9 +134,8 @@ class _CreateExperimentThirdStepPageState
             ),
             Row(
               children: [
-                const Icon(
-                  PhosphorIcons.flask,
-                  color: AppColors.greySweet,
+                Icon(
+                  PhosphorIcons.flask(),
                 ),
                 const SizedBox(width: 4),
                 Text(
@@ -188,7 +186,7 @@ class _CreateExperimentThirdStepPageState
                       color: Constants.dealWithEnzymeChipColor(
                         _enzymesViewmodel.enzymes[index].type,
                       ),
-                      textStyle: TextStyles.titleMinBoldBackground,
+                      textStyle: TextStyles(context).titleMinBoldBackground(),
                       centerTitle: true,
                     );
                   },

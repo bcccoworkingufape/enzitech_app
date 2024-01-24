@@ -8,8 +8,10 @@ import 'package:group_button/group_button.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 // 🌎 Project imports:
+import '../../../../../../../core/routing/routing.dart';
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../../../../../shared/validator/validator.dart';
+import '../../../../../../main/presentation/viewmodel/home_viewmodel.dart';
 import '../../../../../../treatment/domain/entities/treatment_entity.dart';
 import '../../../../../../treatment/presentation/viewmodel/treatments_viewmodel.dart';
 import '../../../../dto/create_experiment_dto.dart';
@@ -18,8 +20,8 @@ import '../create_experiment_fragment_template.dart';
 
 class CreateExperimentSecondStepPage extends StatefulWidget {
   const CreateExperimentSecondStepPage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<CreateExperimentSecondStepPage> createState() =>
@@ -132,6 +134,18 @@ class _CreateExperimentSecondStepPageState
   Widget get _buttons {
     return Column(
       children: [
+        if (_checkboxButtons.isEmpty) ...[
+          EZTButton(
+            text: 'Ir para tratamentos',
+            onPressed: () {
+              GetIt.I.get<HomeViewmodel>().setFragmentIndex(1);
+              _createExperimentViewmodel
+                  .setTemporaryExperiment(CreateExperimentDTO());
+              Navigator.of(context).popUntil(ModalRoute.withName(Routing.home));
+            },
+          ),
+          const SizedBox(height: 16),
+        ],
         EZTButton(
           enabled: _createExperimentViewmodel.enableNextButtonOnSecondStep,
           text: 'Próximo',
@@ -186,9 +200,8 @@ class _CreateExperimentSecondStepPageState
             ),
             Row(
               children: [
-                const Icon(
-                  PhosphorIcons.flask,
-                  color: AppColors.greySweet,
+                Icon(
+                  PhosphorIcons.flask(),
                 ),
                 const SizedBox(width: 4),
                 Text(
@@ -197,35 +210,45 @@ class _CreateExperimentSecondStepPageState
                 ),
               ],
             ),
-            GroupButton(
-              controller: _checkboxesController,
-              isRadio: false,
-              options: const GroupButtonOptions(
-                groupingType: GroupingType.column,
+            Visibility(
+              visible: _checkboxButtons.isNotEmpty,
+              replacement: const Padding(
+                padding: EdgeInsets.only(top: 8.0),
+                child: EZTError(
+                  message:
+                      "Nenhum tratamento cadastrado! É necessário pelo menos um tratamento para prosseguir.",
+                ),
               ),
-              buttons: _checkboxButtons,
-              buttonIndexedBuilder: (selected, index, context) {
-                return EZTCheckBoxTile(
-                  title: _checkboxButtons[index],
-                  selected: selected,
-                  onTap: () {
-                    if (!selected) {
-                      _checkboxesController.selectIndex(index);
+              child: GroupButton(
+                controller: _checkboxesController,
+                isRadio: false,
+                options: const GroupButtonOptions(
+                  groupingType: GroupingType.column,
+                ),
+                buttons: _checkboxButtons,
+                buttonIndexedBuilder: (selected, index, context) {
+                  return EZTCheckBoxTile(
+                    title: _checkboxButtons[index],
+                    selected: selected,
+                    onTap: () {
+                      if (!selected) {
+                        _checkboxesController.selectIndex(index);
+                        choosedCheckboxList
+                            .add(_treatmentsViewmodel.treatments[index]);
+
+                        _validateFields;
+
+                        return;
+                      }
+                      _checkboxesController.unselectIndex(index);
                       choosedCheckboxList
-                          .add(_treatmentsViewmodel.treatments[index]);
+                          .remove(_treatmentsViewmodel.treatments[index]);
 
                       _validateFields;
-
-                      return;
-                    }
-                    _checkboxesController.unselectIndex(index);
-                    choosedCheckboxList
-                        .remove(_treatmentsViewmodel.treatments[index]);
-
-                    _validateFields;
-                  },
-                );
-              },
+                    },
+                  );
+                },
+              ),
             ),
             _textFields,
             const SizedBox(height: 64),

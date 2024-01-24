@@ -37,6 +37,7 @@ class LoginRemoteDataSourceImp implements LoginDataSource {
       await _userPreferencesServices.saveFullUser(jsonEncode(response.data));
       await _userPreferencesServices.saveToken(result.token);
       await _userPreferencesServices.initConfirmationsEnabled();
+      await _userPreferencesServices.initThemeMode();
 
       return Right(result);
     } catch (e) {

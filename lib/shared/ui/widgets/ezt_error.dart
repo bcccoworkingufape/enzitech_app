@@ -19,7 +19,7 @@ class EZTError extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SvgPicture.asset(
-            AppSvgs.error,
+            AppSvgs(context).error(),
             alignment: Alignment.center,
             width: MediaQuery.of(context).size.width,
           ),

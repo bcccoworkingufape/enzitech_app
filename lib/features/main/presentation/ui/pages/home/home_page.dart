@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 // 🎯 Dart imports:
 import 'dart:async';
 import 'dart:math' as math;
@@ -6,6 +8,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
+
 // 📦 Package imports:
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
@@ -16,8 +19,9 @@ import '../../../../../../core/domain/service/connection_checker/connection_chec
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../core/routing/routing.dart';
+import '../../../../../../shared/extensions/extensions.dart';
 import '../../../../../../shared/ui/ui.dart';
-import '../../../../../../shared/ui/widgets/ezt_blink.dart';
+import '../../../../../../shared/ui/widgets/ezt_appbar.dart';
 import '../../../../../enzyme/presentation/ui/pages/enzymes_fragment/enzymes_page.dart';
 import '../../../../../enzyme/presentation/viewmodel/enzymes_viewmodel.dart';
 import '../../../../../experiment/presentation/ui/pages/experiments_fragment/experiments_page.dart';
@@ -29,7 +33,7 @@ import '../../../viewmodel/settings_viewmodel.dart';
 import '../settings_fragment/settings_page.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -52,9 +56,9 @@ class _HomePageState extends State<HomePage>
 
   late List<Widget> _fragments;
 
-  var _isVisibleExperimentButton; // ignore: prefer_typing_uninitialized_variables
-  var _isVisibleTreatmentButton; // ignore: prefer_typing_uninitialized_variables
-  var _isVisibleEnzymeButton; // ignore: prefer_typing_uninitialized_variables
+  var _isVisibleExperimentButton;
+  var _isVisibleTreatmentButton;
+  var _isVisibleEnzymeButton;
 
   late StreamSubscription _connectivitySubscription;
 
@@ -70,7 +74,7 @@ class _HomePageState extends State<HomePage>
 
     _connectionChecker.initialize();
 
-    //Listen for connection change
+    //! Listen for connection change
     _connectivitySubscription =
         _connectionChecker.connectionChange.listen((event) {
       _homeViewmodel.setHasInternetConnection(event);
@@ -220,44 +224,42 @@ class _HomePageState extends State<HomePage>
     ];
   }
 
+  _floatingActionButton(String text, void Function()? onPressed) =>
+      FloatingActionButton.extended(
+        backgroundColor: context.getApplyedColorScheme.secondaryContainer,
+        onPressed: onPressed,
+        label: Text(
+          text,
+          style: TextStyles(context).captionBody(),
+        ),
+        icon: Icon(
+          PhosphorIcons.pencilLine(),
+          color: context.getApplyedColorScheme.onSecondaryContainer,
+        ),
+      );
+
   Widget? get dealWithFloatingActionButton {
     if (_homeViewmodel.fragmentIndex == 0 && _isVisibleExperimentButton) {
-      return FloatingActionButton.extended(
-        onPressed: () {
+      return _floatingActionButton(
+        "Cadastrar\nexperimento",
+        () {
           Navigator.pushNamed(
             context,
             Routing.createExperiment,
           );
         },
-        label: Text(
-          "Cadastrar\nexperimento",
-          style: TextStyles.buttonBackground,
-        ),
-        icon: const Icon(
-          PhosphorIcons.pencilLine,
-          color: AppColors.white,
-          size: 30,
-        ),
       );
     }
 
     if (_homeViewmodel.fragmentIndex == 1 && _isVisibleTreatmentButton) {
-      return FloatingActionButton.extended(
-        onPressed: () {
+      return _floatingActionButton(
+        "Cadastrar\ntratamento",
+        () {
           Navigator.pushNamed(
             context,
             Routing.createTreatment,
           );
         },
-        label: Text(
-          "Cadastrar\ntratamento",
-          style: TextStyles.buttonBackground,
-        ),
-        icon: const Icon(
-          PhosphorIcons.pencilLine,
-          color: AppColors.white,
-          size: 30,
-        ),
       );
     }
 
@@ -265,22 +267,14 @@ class _HomePageState extends State<HomePage>
       if (_homeViewmodel.fragmentIndex == 2 &&
           _accountViewmodel.user!.userType == UserTypeEnum.admin &&
           _isVisibleEnzymeButton) {
-        return FloatingActionButton.extended(
-          onPressed: () {
+        return _floatingActionButton(
+          "Cadastrar\nenzima",
+          () {
             Navigator.pushNamed(
               context,
               Routing.createEnzyme,
             );
           },
-          label: Text(
-            "Cadastrar\nenzima",
-            style: TextStyles.buttonBackground,
-          ),
-          icon: const Icon(
-            PhosphorIcons.pencilLine,
-            color: AppColors.white,
-            size: 30,
-          ),
         );
       }
 
@@ -300,56 +294,19 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _homeViewmodel,
+    return ListenableBuilder(
+      listenable: _homeViewmodel,
       builder: (context, child) {
         return Scaffold(
           key: _scaffold,
-          appBar: AppBar(
-            title: SvgPicture.asset(
-              AppSvgs.logo,
-              fit: BoxFit.contain,
-              alignment: Alignment.center,
-            ),
-            actions: [
-              !_homeViewmodel.hasInternetConnection
-                  ? Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: GestureDetector(
-                        onTap: () => noInternet(context),
-                        child: const EZTBlink(
-                          interval: 750,
-                          children: <Widget>[
-                            Icon(
-                              PhosphorIcons.cloudSlash,
-                              color: Colors.white,
-                            ),
-                            // Icon(
-                            //   PhosphorIcons.wifiSlash,
-                            //   color: Colors.red[200],
-                            // ),
-                            Icon(
-                              PhosphorIcons.cloudSlash,
-                              color: Colors.red,
-                            ),
-                            // Icon(
-                            //   PhosphorIcons.wifiSlash,
-                            //   color: Colors.red[900],
-                            // ),
-                          ],
-                        ),
-                      ),
-                    )
-                  : Container(),
-            ],
-          ),
-          body: AnimatedBuilder(
-            animation: _homeViewmodel,
+          appBar: EZTAppBar(homeViewmodel: _homeViewmodel),
+          body: ListenableBuilder(
+            listenable: _homeViewmodel,
             builder: (context, child) {
               if (_homeViewmodel.state == StateEnum.loading) {
                 return Center(
-                  child: AnimatedBuilder(
-                    animation: animationControllerLogo,
+                  child: ListenableBuilder(
+                    listenable: animationControllerLogo,
                     builder: (_, child) {
                       return Transform.rotate(
                         angle: animationControllerLogo.value * 2 * math.pi,
@@ -357,7 +314,7 @@ class _HomePageState extends State<HomePage>
                       );
                     },
                     child: SvgPicture.asset(
-                      AppSvgs.iconLogo,
+                      AppSvgs(context).iconLogo(),
                       alignment: Alignment.center,
                       width: 75,
                     ),
@@ -369,35 +326,8 @@ class _HomePageState extends State<HomePage>
             },
           ),
           floatingActionButton: dealWithFloatingActionButton,
-          bottomNavigationBar: BottomNavigationBar(
-            type: BottomNavigationBarType.shifting,
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(PhosphorIcons.flask),
-                label: 'Experimentos',
-                backgroundColor: AppColors.primary,
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(PhosphorIcons.testTube),
-                label: 'Tratamentos',
-                backgroundColor: AppColors.primary,
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(PhosphorIcons.atom),
-                label: 'Enzimas',
-                backgroundColor: AppColors.primary,
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(PhosphorIcons.gear),
-                label: 'Configurações',
-                backgroundColor: AppColors.primary,
-              ),
-            ],
-            currentIndex: _homeViewmodel.fragmentIndex,
-            selectedItemColor: AppColors.white,
-            unselectedItemColor: Colors.white70,
-            backgroundColor: AppColors.primary,
-            onTap: (index) {
+          bottomNavigationBar: NavigationBar(
+            onDestinationSelected: (index) {
               setAllButtonsVisible();
               int beforeSet = _homeViewmodel.fragmentIndex;
               _homeViewmodel.setFragmentIndex(index);
@@ -432,6 +362,25 @@ class _HomePageState extends State<HomePage>
                 );
               }
             },
+            selectedIndex: _homeViewmodel.fragmentIndex,
+            destinations: [
+              NavigationDestination(
+                icon: Icon(PhosphorIcons.flask()),
+                label: 'Experimentos',
+              ),
+              NavigationDestination(
+                icon: Icon(PhosphorIcons.testTube()),
+                label: 'Tratamentos',
+              ),
+              NavigationDestination(
+                icon: Icon(PhosphorIcons.atom()),
+                label: 'Enzimas',
+              ),
+              NavigationDestination(
+                icon: Icon(PhosphorIcons.gear()),
+                label: 'Configurações',
+              ),
+            ],
           ),
         );
       },

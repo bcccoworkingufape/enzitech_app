@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:toggle_switch/toggle_switch.dart';
 
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../core/routing/routing.dart';
+import '../../../../../../shared/extensions/context_theme_mode_extensions.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../../../main/presentation/viewmodel/home_viewmodel.dart';
 import '../../../viewmodel/experiments_viewmodel.dart';
@@ -19,8 +19,8 @@ import '../../widgets/experiment_filter_dialog.dart';
 
 class ExperimentsPage extends StatefulWidget {
   const ExperimentsPage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<ExperimentsPage> createState() => _ExperimentsPageState();
@@ -31,8 +31,9 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
   late final HomeViewmodel _homeViewmodel;
   final Key _refreshIndicatorKey = GlobalKey();
 
-  // final _searchTermController = TextEditingController(text: '');
   List<bool> isSelected = [true, false];
+
+  int selectedButtonSegment = 0;
 
   @override
   void initState() {
@@ -61,7 +62,6 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
               HandleFailure.of(_experimentsViewmodel.failure!),
               eztSnackBarType: EZTSnackBarType.error,
             );
-            // var accountViewmodel = context.read<AccountViewmodel>();
             if (_experimentsViewmodel.failure
                     is ExpiredTokenOrWrongUserFailure ||
                 _experimentsViewmodel.failure
@@ -87,31 +87,6 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
       );
     }
   }
-
-  /* Widget get _searchTermInput {
-    final validations = <ValidateRule>[
-      ValidateRule(
-        ValidateTypes.name,
-      ),
-    ];
-
-    final fieldValidator = FieldValidator(validations, context);
-
-    return EZTTextField(
-      viewmodel: _searchTermController,
-      lineHeight: 1.8,
-      eztTextFieldType: EZTTextFieldType.underline,
-      hintText: "Pesquisar experimento",
-      usePrimaryColorOnFocusedBorder: true,
-      keyboardType: TextInputType.name,
-      suffixIcon: const Icon(
-        PhosphorIcons.magnifyingGlass,
-        color: AppColors.primary,
-        size: 35,
-      ),
-      fieldValidator: fieldValidator,
-    );
-  } */
 
   Future<void> _showFiltersDialog() async {
     return showDialog<void>(
@@ -162,80 +137,77 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
 
           return Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: Dismissible(
-                  key: UniqueKey(),
-                  onDismissed: (direction) async {
-                    // Remove the item from the data source.
-                    setState(() {
-                      _experimentsViewmodel.experiments.removeAt(index);
-                    });
+              Dismissible(
+                key: UniqueKey(),
+                onDismissed: (direction) async {
+                  setState(() {
+                    _experimentsViewmodel.experiments.removeAt(index);
+                  });
 
-                    EZTSnackBar.clear(context);
+                  EZTSnackBar.clear(context);
 
-                    bool permanentlyDeleted = true;
+                  bool permanentlyDeleted = true;
 
-                    EZTSnackBar.show(
-                      context,
-                      '${experiment.name} excluído!',
-                      eztSnackBarType: EZTSnackBarType.error,
-                      action: SnackBarAction(
-                        label: 'Desfazer',
-                        textColor: AppColors.white,
-                        onPressed: () {
-                          setState(() {
-                            _experimentsViewmodel.experiments
-                                .insert(index, experiment);
-                            permanentlyDeleted = false;
-                          });
-                          // todoRepository.saveTodoList(todos);
-                        },
-                      ),
-                      onDismissFunction: () async {
-                        if (permanentlyDeleted) {
-                          await _experimentsViewmodel
-                              .deleteExperiment(experiment.id);
-                        }
+                  EZTSnackBar.show(
+                    context,
+                    '${experiment.name} excluído!',
+                    eztSnackBarType: EZTSnackBarType.error,
+                    action: SnackBarAction(
+                      label: 'Desfazer',
+                      textColor: context.getApplyedColorScheme.onError,
+                      onPressed: () {
+                        setState(() {
+                          _experimentsViewmodel.experiments
+                              .insert(index, experiment);
+                          permanentlyDeleted = false;
+                        });
                       },
-                    );
-                  },
-                  background: Container(
-                    color: Colors.red,
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: const [
-                          Icon(
-                            PhosphorIcons.trashLight,
-                            color: Colors.white,
+                    ),
+                    onDismissFunction: () async {
+                      if (permanentlyDeleted) {
+                        await _experimentsViewmodel
+                            .deleteExperiment(experiment.id);
+                      }
+                    },
+                  );
+                },
+                background: Container(
+                  color: context.getApplyedColorScheme.error,
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Icon(
+                          PhosphorIcons.trash(PhosphorIconsStyle.light),
+                          color: context.getApplyedColorScheme.onError,
+                        ),
+                        Text(
+                          'Excluir',
+                          style: TextStyle(
+                            color: context.getApplyedColorScheme.onError,
                           ),
-                          Text(
-                            'Excluir',
-                            style: TextStyle(color: Colors.white),
-                            textAlign: TextAlign.right,
-                          ),
-                        ],
-                      ),
+                          textAlign: TextAlign.right,
+                        ),
+                      ],
                     ),
                   ),
-                  direction: DismissDirection.endToStart,
-                  confirmDismiss:
-                      _homeViewmodel.accountViewmodel.enableExcludeConfirmation!
-                          ? (DismissDirection direction) async {
-                              return await showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return const ExperimentExclusionDialog();
-                                },
-                              );
-                            }
-                          : null,
-                  child: ExperimentCard(
-                    experiment: experiment,
-                    indexOfExperiment: index + 1,
-                  ),
+                ),
+                direction: DismissDirection.endToStart,
+                confirmDismiss:
+                    _homeViewmodel.accountViewmodel.enableExcludeConfirmation!
+                        ? (DismissDirection direction) async {
+                            return await showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return const ExperimentExclusionDialog();
+                              },
+                            );
+                          }
+                        : null,
+                child: ExperimentCard(
+                  experiment: experiment,
+                  indexOfExperiment: index + 1,
                 ),
               ),
               if (_experimentsViewmodel.isLoadingMoreRunning == false &&
@@ -255,20 +227,22 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
               if (_experimentsViewmodel.hasNextPage == false &&
                   _experimentsViewmodel.state == StateEnum.success)
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 16.0),
+                  padding: const EdgeInsets.fromLTRB(4, 0, 4, 16),
                   child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
                     elevation: 4,
-                    shadowColor: AppColors.white,
-                    color: AppColors.yellow,
+                    color: context.getApplyedColorScheme.tertiaryContainer,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 30, bottom: 30),
                       child: Center(
                         child: Text(
                           'Todos os experimentos exibidos!',
-                          style: TextStyles.buttonPrimary.copyWith(
-                            color: AppColors.greySweet,
-                            fontSize: 20,
-                          ),
+                          style: TextStyles(context).buttonPrimary.copyWith(
+                                color: context.getApplyedColorScheme.tertiary,
+                                fontSize: 20.0,
+                              ),
                         ),
                       ),
                     ),
@@ -286,11 +260,10 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
 
   @override
   Widget build(BuildContext context) {
-    var widthMQ = MediaQuery.of(context).size.width;
     var heightMQ = MediaQuery.of(context).size.height;
 
-    return AnimatedBuilder(
-      animation: _experimentsViewmodel,
+    return ListenableBuilder(
+      listenable: _experimentsViewmodel,
       builder: (context, child) {
         return AbsorbPointer(
           absorbing: _experimentsViewmodel.scrollController.hasClients
@@ -302,38 +275,37 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
           child: EZTPullToRefresh(
             key: _refreshIndicatorKey,
             onRefresh: () {
-              // _experimentsViewmodel.setFinishedFilter(false);
               return _experimentsViewmodel.fetch();
             },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Column(
-                children: [
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  //   child: _searchTermInput,
-                  // ),
-                  // const SizedBox(
-                  //   height: 16,
-                  // ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Row(
-                      children: [
-                        ToggleSwitch(
-                          initialLabelIndex:
-                              _experimentsViewmodel.finishedFilter ? 1 : 0,
-                          minWidth: (widthMQ * 0.4),
-                          totalSwitches: 2,
-                          labels: const ['Em andamento', 'Concluído'],
-                          activeFgColor: AppColors.white,
-                          inactiveFgColor: AppColors.primary,
-                          activeBgColor: const [AppColors.primary],
-                          inactiveBgColor: AppColors.white,
-                          borderColor: const [AppColors.primary],
-                          borderWidth: 1.5,
-                          onToggle: (index) {
-                            if (index == 0) {
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      SegmentedButton(
+                        emptySelectionAllowed: false,
+                        showSelectedIcon: false,
+                        segments: <ButtonSegment<int>>[
+                          ButtonSegment<int>(
+                            value: 0,
+                            label: const Text('Em andamento'),
+                            icon: Icon(
+                              PhosphorIcons.clockClockwise(),
+                            ),
+                          ),
+                          ButtonSegment<int>(
+                            value: 1,
+                            label: const Text('Concluído'),
+                            icon: Icon(PhosphorIcons.checks()),
+                          ),
+                        ],
+                        selected: <int>{selectedButtonSegment},
+                        onSelectionChanged: (Set<int> newSelection) {
+                          setState(() {
+                            selectedButtonSegment = newSelection.first;
+                            if (selectedButtonSegment == 0) {
                               if (_experimentsViewmodel.finishedFilter !=
                                   false) {
                                 _experimentsViewmodel.setFinishedFilter(false);
@@ -349,44 +321,35 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
 
                             _experimentsViewmodel.setFinishedFilter(true);
                             _experimentsViewmodel.fetch();
-                          },
+                          });
+                        },
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          _experimentsViewmodel.anyFilterIsEnabled()
+                              ? PhosphorIcons.funnel(PhosphorIconsStyle.fill)
+                              : PhosphorIcons.funnel(),
+                          color: _experimentsViewmodel.anyFilterIsEnabled()
+                              ? context.getApplyedColorScheme.primary
+                              : null,
                         ),
-                        const SizedBox(
-                          width: 4,
-                        ),
-                        Expanded(
-                          child: InkWell(
-                            customBorder: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            onTap: _showFiltersDialog,
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Icon(
-                                _experimentsViewmodel.anyFilterIsEnabled()
-                                    ? PhosphorIcons.funnelFill
-                                    : PhosphorIcons.funnel,
-                                color: AppColors.primary,
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
+                        onPressed: _showFiltersDialog,
+                      ),
+                    ],
                   ),
-                  if (_experimentsViewmodel.experiments.isNotEmpty)
-                    Text(
-                      "🔬 ${_experimentsViewmodel.totalOfExperiments} experimento${isPlural}encontrado$isPlural",
-                      style: TextStyles.link.copyWith(fontSize: 16),
-                    ),
-                  const SizedBox(
-                    height: 16,
+                ),
+                if (_experimentsViewmodel.experiments.isNotEmpty)
+                  Text(
+                    "🔬 ${_experimentsViewmodel.totalOfExperiments} experimento${isPlural}encontrado$isPlural",
+                    style: TextStyles(context).link(fontSize: 16),
                   ),
-                  Expanded(
-                    child: _buildExperimentsList(heightMQ),
-                  ),
-                ],
-              ),
+                const SizedBox(
+                  height: 16,
+                ),
+                Expanded(
+                  child: _buildExperimentsList(heightMQ),
+                ),
+              ],
             ),
           ),
         );
