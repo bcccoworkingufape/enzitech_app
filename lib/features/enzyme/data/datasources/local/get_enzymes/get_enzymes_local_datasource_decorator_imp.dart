@@ -9,15 +9,13 @@ import '../../../../../../core/domain/service/key_value/key_value_service.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../domain/entities/enzyme_entity.dart';
 import '../../../dto/enzyme_dto.dart';
-import '../../get_enzymes_datasource.dart';
 import 'get_enzymes_local_datasource_decorator.dart';
 
 class GetEnzymesDataSourceDecoratorImp extends GetEnzymesDataSourceDecorator {
   final KeyValueService _keyValueService;
 
   GetEnzymesDataSourceDecoratorImp(
-      GetEnzymesDataSource getEnzymesDataSource, this._keyValueService)
-      : super(getEnzymesDataSource);
+      super.getEnzymesDataSource, this._keyValueService);
 
   @override
   Future<Either<Failure, List<EnzymeEntity>>> call() async {

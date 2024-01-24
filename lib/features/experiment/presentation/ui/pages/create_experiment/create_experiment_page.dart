@@ -1,5 +1,6 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
@@ -11,7 +12,6 @@ import '../../../../../../core/routing/routing.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../dto/create_experiment_dto.dart';
 import '../../../viewmodel/create_experiment_viewmodel.dart';
-import '../../../viewmodel/experiments_viewmodel.dart';
 import 'fragments/create_experiment_first_step.dart';
 import 'fragments/create_experiment_fourth_step.dart';
 import 'fragments/create_experiment_second_step.dart';
@@ -19,8 +19,8 @@ import 'fragments/create_experiment_third_step.dart';
 
 class CreateExperimentPage extends StatefulWidget {
   const CreateExperimentPage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<CreateExperimentPage> createState() => _CreateExperimentPageState();
@@ -28,15 +28,11 @@ class CreateExperimentPage extends StatefulWidget {
 
 class _CreateExperimentPageState extends State<CreateExperimentPage> {
   late final CreateExperimentViewmodel _createExperimentViewmodel;
-  late final ExperimentsViewmodel _experimentsViewmodel;
-
-  // bool _expandToSeeMoreVisible = true;
 
   @override
   void initState() {
     super.initState();
     _createExperimentViewmodel = GetIt.I.get<CreateExperimentViewmodel>();
-    _experimentsViewmodel = GetIt.I.get<ExperimentsViewmodel>();
 
     if (mounted) {
       _createExperimentViewmodel.addListener(
@@ -50,26 +46,22 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
           } else if (_createExperimentViewmodel.state == StateEnum.success &&
               _createExperimentViewmodel.experiment != null) {
             if (mounted) {
-              // reload the experiments list
-              // TODO: Verify this (maybe not loading recent created experiment if > 10)
-              _experimentsViewmodel.fetch();
-
-              EZTSnackBar.show(
-                context,
-                "Experimento criado com sucesso!",
-                eztSnackBarType: EZTSnackBarType.success,
-              );
-
               if (!mounted) return;
-              Navigator.popAndPushNamed(
-                context,
-                Routing.experimentDetailed,
-                arguments: _createExperimentViewmodel.experiment,
-              ).whenComplete(() {
-                _createExperimentViewmodel.setExperiment(null);
-                _createExperimentViewmodel.setTemporaryExperiment(
-                  CreateExperimentDTO(),
-                );
+              SchedulerBinding.instance.addPostFrameCallback((_) {
+                Navigator.popAndPushNamed(
+                  context,
+                  Routing.experimentDetailed,
+                  arguments: _createExperimentViewmodel.experiment,
+                ).whenComplete(() {
+                  _createExperimentViewmodel.setExperiment(null);
+                  _createExperimentViewmodel.setTemporaryExperiment(
+                    CreateExperimentDTO(),
+                  );
+                }).then((value) => EZTSnackBar.show(
+                      context,
+                      "Experimento criado com sucesso!",
+                      eztSnackBarType: EZTSnackBarType.success,
+                    ));
               });
             }
           }
@@ -80,15 +72,18 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) async {
+        if (_createExperimentViewmodel.alreadyPopped) {
+          _createExperimentViewmodel.setAlreadyPopped(false);
+          return;
+        }
         _createExperimentViewmodel.onBack(mounted, context);
-        return _createExperimentViewmodel.pageController.page! > 0
-            ? false
-            : true;
+        return;
       },
-      child: AnimatedBuilder(
-        animation: _createExperimentViewmodel,
+      child: ListenableBuilder(
+        listenable: _createExperimentViewmodel,
         builder: (context, child) {
           return Scaffold(
             body: Form(

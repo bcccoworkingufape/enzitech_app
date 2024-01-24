@@ -9,11 +9,16 @@ import '../../../enzyme/data/dto/enzyme_dto.dart';
 import '../../domain/entities/experiment_entity.dart';
 import '../../domain/usecases/create_experiment/create_experiment_usecase.dart';
 import '../dto/create_experiment_dto.dart';
+import 'experiments_viewmodel.dart';
 
 class CreateExperimentViewmodel extends ChangeNotifier {
-  CreateExperimentUseCase _createExperimentUseCase;
+  final CreateExperimentUseCase _createExperimentUseCase;
+  final ExperimentsViewmodel _experimentsViewmodel;
 
-  CreateExperimentViewmodel(this._createExperimentUseCase);
+  CreateExperimentViewmodel(
+    this._createExperimentUseCase,
+    this._experimentsViewmodel,
+  );
 
   StateEnum _state = StateEnum.idle;
   StateEnum get state => _state;
@@ -35,7 +40,6 @@ class CreateExperimentViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // var experimentCreated = false; //? Remover isso
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   PageController _pageController = PageController(initialPage: 0);
@@ -94,9 +98,18 @@ class CreateExperimentViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool _alreadyPopped = false;
+  bool get alreadyPopped => _alreadyPopped;
+  void setAlreadyPopped(bool alreadyPopped) {
+    _alreadyPopped = alreadyPopped;
+    notifyListeners();
+  }
+
   void onBack(bool mounted, BuildContext context, {int? page}) {
     if (mounted) {
       if (page != null) {
+        setAlreadyPopped(false);
+
         pageController.animateToPage(
           page,
           duration: const Duration(milliseconds: 150),
@@ -105,6 +118,7 @@ class CreateExperimentViewmodel extends ChangeNotifier {
       } else {
         {
           if (pageController.page! > 0) {
+            setAlreadyPopped(false);
             pageController.animateToPage(
               pageController.page!.toInt() - 1,
               duration: const Duration(milliseconds: 150),
@@ -112,6 +126,7 @@ class CreateExperimentViewmodel extends ChangeNotifier {
             );
           } else {
             setTemporaryExperiment(CreateExperimentDTO());
+            setAlreadyPopped(true);
             Navigator.pop(context);
           }
         }
@@ -181,6 +196,7 @@ class CreateExperimentViewmodel extends ChangeNotifier {
       },
       (success) async {
         setExperiment(success);
+        await _experimentsViewmodel.fetch();
         setStateEnum(StateEnum.success);
       },
     );

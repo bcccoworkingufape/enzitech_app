@@ -2,13 +2,13 @@
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
+import '../../../../../../shared/extensions/context_theme_mode_extensions.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../../../../shared/utils/utils.dart';
 import '../../../../../../shared/validator/validator.dart';
@@ -16,7 +16,7 @@ import '../../../viewmodel/create_treatment_viewmodel.dart';
 import '../../../viewmodel/treatments_viewmodel.dart';
 
 class CreateTreatmentPage extends StatefulWidget {
-  const CreateTreatmentPage({Key? key}) : super(key: key);
+  const CreateTreatmentPage({super.key});
 
   @override
   State<CreateTreatmentPage> createState() => _CreateTreatmentPageState();
@@ -53,7 +53,6 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
             eztSnackBarType: EZTSnackBarType.error,
           );
         } else if (_createTreatmentViewmodel.state == StateEnum.success) {
-          // reload the experiments list
           _treatmentsViewmodel.fetch();
 
           EZTSnackBar.show(
@@ -82,15 +81,15 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
     }
   }
 
-  Widget get _body {
+  _body(BuildContext context) {
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
       child: Column(
         children: [
           Align(
             alignment: Alignment.center,
-            child: SvgPicture.asset(
-              AppSvgs.iconLogo,
+            child: Image.asset(
+              context.isDarkMode ? AppImages.logoOnDark : AppImages.logoGreen,
               alignment: Alignment.center,
               width: 75,
             ),
@@ -106,9 +105,8 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
           const SizedBox(height: 64),
           Row(
             children: [
-              const Icon(
-                PhosphorIcons.flask,
-                color: AppColors.greySweet,
+              Icon(
+                PhosphorIcons.flask(),
               ),
               const SizedBox(width: 4),
               Text(
@@ -145,7 +143,6 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
       controller: _nameFieldController,
       onChanged: (value) => _validateFields,
       fieldValidator: fieldValidator,
-      // disableSuffixIcon: true,
     );
   }
 
@@ -160,7 +157,6 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
       controller: _descriptionFieldController,
       onChanged: (value) => _validateFields,
       fieldValidator: fieldValidator,
-      // disableSuffixIcon: true,
     );
   }
 
@@ -202,7 +198,7 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
             children: [
               Expanded(
                 flex: 11,
-                child: Center(child: _body),
+                child: Center(child: _body(context)),
               ),
               SizedBox(
                 height: 160,

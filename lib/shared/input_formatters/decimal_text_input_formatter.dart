@@ -12,7 +12,7 @@ class DecimalTextInputFormatter extends TextInputFormatter {
 
   @override
   TextEditingValue formatEditUpdate(
-    TextEditingValue oldValue, // unused.
+    TextEditingValue oldValue,
     TextEditingValue newValue,
   ) {
     TextSelection newSelection = newValue.selection;
@@ -38,6 +38,5 @@ class DecimalTextInputFormatter extends TextInputFormatter {
       selection: newSelection,
       composing: TextRange.empty,
     );
-    // return newValue;
   }
 }

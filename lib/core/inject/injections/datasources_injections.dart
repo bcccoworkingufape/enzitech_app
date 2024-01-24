@@ -32,12 +32,16 @@ import '../../../features/experiment/data/datasources/remote/save_result_remote_
 import '../../../features/experiment/data/datasources/save_result_datasource.dart';
 import '../../../features/main/data/datasources/clear_user_datasource.dart';
 import '../../../features/main/data/datasources/get_exclude_confirmation_datasource.dart';
+import '../../../features/main/data/datasources/get_theme_mode_datasource.dart';
 import '../../../features/main/data/datasources/get_user_datasource.dart';
 import '../../../features/main/data/datasources/local/clear_user/clear_user_local_datasource_imp.dart';
 import '../../../features/main/data/datasources/local/clear_user/get_user_local_datasource_imp.dart';
 import '../../../features/main/data/datasources/local/get_exclude_confirmation/get_exclude_confirmation_local_datasource_imp.dart';
+import '../../../features/main/data/datasources/local/get_theme_mode/get_theme_mode_local_datasource_imp.dart';
 import '../../../features/main/data/datasources/local/save_exclude_confirmation/save_exclude_confirmation_local_datasource_imp.dart';
+import '../../../features/main/data/datasources/local/save_theme_mode/save_theme_mode_local_datasource_imp.dart';
 import '../../../features/main/data/datasources/save_exclude_confirmation_datasource.dart';
+import '../../../features/main/data/datasources/save_theme_mode_datasource.dart';
 import '../../../features/treatment/data/datasources/create_treatment_datasource.dart';
 import '../../../features/treatment/data/datasources/delete_treatment_datasource.dart';
 import '../../../features/treatment/data/datasources/get_treatments_datasource.dart';
@@ -103,6 +107,9 @@ class DataSourcesInjections {
     getIt.registerLazySingleton<GetResultDataSource>(
       () => GetResultRemoteDataSourceImp(getIt()),
     );
+    getIt.registerLazySingleton<GetThemeModeDataSource>(
+      () => GetThemeModeLocalDataSourceImp(getIt()),
+    );
     getIt.registerLazySingleton<GetTreatmentsDataSource>(
       () => GetTreatmentsDataSourceDecoratorImp(
         GetTreatmentsRemoteDataSourceImp(getIt()),
@@ -120,6 +127,9 @@ class DataSourcesInjections {
     );
     getIt.registerLazySingleton<SaveResultDataSource>(
       () => SaveResultRemoteDataSourceImp(getIt()),
+    );
+    getIt.registerLazySingleton<SaveThemeModeDataSource>(
+      () => SaveThemeModeLocalDataSourceImp(getIt()),
     );
   }
 }

@@ -1,17 +1,19 @@
-// 🐦 Flutter imports:
+// 🎯 Dart imports:
 import 'dart:math';
 
-import 'package:data_table_2/data_table_2.dart';
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
-import 'package:flutter_svg/svg.dart';
+
 // 📦 Package imports:
+import 'package:data_table_2/data_table_2.dart';
+import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
+import '../../../../../../shared/extensions/context_theme_mode_extensions.dart';
 import '../../../../../../shared/extensions/double_extensions.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../../domain/entities/experiment_entity.dart';
@@ -20,8 +22,8 @@ import '../../../viewmodel/experiment_results_viewmodel.dart';
 
 class ExperimentResultsPage extends StatefulWidget {
   const ExperimentResultsPage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<ExperimentResultsPage> createState() => _ExperimentResultsPageState();
@@ -63,50 +65,53 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
   }
 
   Widget _buildHeader(String title, String message) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Align(
-          alignment: Alignment.center,
-          child: SvgPicture.asset(
-            AppSvgs.iconLogo,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Align(
             alignment: Alignment.center,
-            width: 75,
+            child: Image.asset(
+              context.isDarkMode ? AppImages.logoOnDark : AppImages.logoGreen,
+              alignment: Alignment.center,
+              width: 75,
+            ),
           ),
-        ),
-        const SizedBox(width: 16),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.7,
-              child: Text(
-                title,
-                style: TextStyles.informationExperimentStepTitle
-                    .copyWith(fontSize: 28),
-                textAlign: TextAlign.start,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
+          const SizedBox(width: 16),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.7,
+                child: Text(
+                  title,
+                  style: TextStyles(context)
+                      .informationExperimentStepTitle(fontSize: 28),
+                  textAlign: TextAlign.start,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.7,
-              child: Text(
-                message,
-                style: TextStyles.informationExperimentStepMessage
-                    .copyWith(fontSize: 20),
-                textAlign: TextAlign.start,
+              const SizedBox(
+                height: 8,
               ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 64),
-      ],
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.7,
+                child: Text(
+                  message,
+                  style: TextStyles.informationExperimentStepMessage
+                      .copyWith(fontSize: 20),
+                  textAlign: TextAlign.start,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 64),
+        ],
+      ),
     );
   }
 
@@ -122,15 +127,9 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
         physics: const NeverScrollableScrollPhysics(),
         slivers: [
           SliverToBoxAdapter(
-            child: Column(
-              children: [
-                const SizedBox(height: 32),
-                _buildHeader(
-                  'Resultados',
-                  'Experimento: ${_experiment.name}',
-                ),
-                const SizedBox(height: 16),
-              ],
+            child: _buildHeader(
+              'Resultados',
+              'Experimento: ${_experiment.name}',
             ),
           ),
           ScrollConfiguration(
@@ -160,8 +159,9 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                               children: [
                                 Text(
                                   results.enzymes[indexOfEnzymes].enzyme.name,
-                                  style:
-                                      TextStyles.informationExperimentStepTitle,
+                                  style: TextStyles(context)
+                                      .informationExperimentStepTitle(
+                                          fontSize: 28),
                                 ),
                                 Text(
                                   'Tipo: ${results.enzymes[indexOfEnzymes].enzyme.name} (${results.enzymes[indexOfEnzymes].enzyme.formula})',
@@ -172,9 +172,6 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                                 .map(
                                   (treatment) => ListTile(
                                     title: ExpansionTile(
-                                      backgroundColor: AppColors
-                                          .materialTheme.shade100
-                                          .withOpacity(0.1),
                                       title: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
@@ -183,12 +180,7 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                                         children: [
                                           Text(
                                             treatment.treatment.name,
-                                            style: TextStyles
-                                                .informationExperimentStepTitle
-                                                .copyWith(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w500,
-                                            ),
+                                            style: TextStyles.bodyBold,
                                           ),
                                           const Text(
                                             'Tratamento',
@@ -199,12 +191,6 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                                         LayoutBuilder(builder:
                                             (BuildContext context,
                                                 BoxConstraints constraints) {
-                                          const borderSideOfTable = BorderSide(
-                                            width: 0.5,
-                                            strokeAlign: 0,
-                                            color: AppColors.primary,
-                                          );
-
                                           double rowHeight = (49.1 *
                                                   (treatment.repetitionResults
                                                           .length +
@@ -219,34 +205,25 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                                                   600, constraints.maxWidth),
                                             ),
                                             child: ScrollConfiguration(
-                                              behavior: const ScrollBehavior(),
+                                              behavior: MyBehavior(),
                                               child: GlowingOverscrollIndicator(
                                                 axisDirection:
                                                     AxisDirection.down,
-                                                color: AppColors.primary
+                                                color: context
+                                                    .getApplyedColorScheme
+                                                    .primary
                                                     .withOpacity(0.3),
                                                 child: DataTable2(
                                                   columnSpacing: 12,
-                                                  // horizontalMargin: 12,
                                                   minWidth: 1200,
-                                                  border: const TableBorder(
-                                                    verticalInside:
-                                                        borderSideOfTable,
-                                                    top: borderSideOfTable,
-                                                    bottom: borderSideOfTable,
-                                                    left: borderSideOfTable,
-                                                    right: borderSideOfTable,
-                                                  ),
                                                   columns: const [
                                                     DataColumn(
                                                       label: Text('ID'),
                                                       numeric: true,
-                                                      // size: ColumnSize.L,
                                                     ),
                                                     DataColumn(
                                                       label: Text('Amostra'),
                                                       numeric: true,
-                                                      // size: ColumnSize.L,
                                                     ),
                                                     DataColumn(
                                                       label: Text('Am. Branca'),
@@ -303,9 +280,9 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                                                       index: index,
                                                       color: index.isEven
                                                           ? MaterialStateProperty
-                                                              .all(
-                                                              AppColors.white,
-                                                            )
+                                                              .all(context
+                                                                  .getApplyedColorScheme
+                                                                  .surfaceVariant)
                                                           : null,
                                                       cells: [
                                                         DataCell(Text(treatment
@@ -411,39 +388,40 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
     );
   }
 
+  get _rotateFloatingActionButtonBuilder => RotateFloatingActionButtonBuilder(
+        child: Icon(PhosphorIcons.dotsThreeVertical()),
+        fabSize: ExpandableFabSize.regular,
+        backgroundColor: context.getApplyedColorScheme.primary,
+        foregroundColor: context.getApplyedColorScheme.onPrimary,
+        shape: const CircleBorder(),
+      );
+
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _experimentResultsViewmodel,
+    return ListenableBuilder(
+      listenable: _experimentResultsViewmodel,
       builder: (context, child) {
         return Scaffold(
-          // appBar: AppBar(
-          //   backgroundColor: AppColors.primary,
-          //   title: Text(
-          //     "Resultados do experimento",
-          //     style: TextStyles.titleBoldBackground,
-          //   ),
-          // ),
           floatingActionButtonLocation: ExpandableFab.location,
           floatingActionButton: _experimentResultsViewmodel.state ==
                       StateEnum.loading ||
                   _experimentResultsViewmodel.state == StateEnum.error
               ? null
               : ExpandableFab(
-                  distance: 72,
-                  foregroundColor: AppColors.white,
-                  closeButtonStyle: const ExpandableFabCloseButtonStyle(
-                      foregroundColor: AppColors.white),
                   type: ExpandableFabType.up,
+                  openButtonBuilder: _rotateFloatingActionButtonBuilder,
+                  closeButtonBuilder: _rotateFloatingActionButtonBuilder,
                   children: [
                     FloatingActionButton.small(
+                      shape: const CircleBorder(),
+                      backgroundColor: context.getApplyedColorScheme.primary,
+                      foregroundColor: context.getApplyedColorScheme.onPrimary,
                       heroTag: null,
-                      child: const Icon(
-                        PhosphorIcons.shareNetwork,
-                        color: AppColors.white,
+                      child: Icon(
+                        PhosphorIcons.share(),
                       ),
                       onPressed: () {
-                        _experimentResultsViewmodel.shareResult().then((flag) {
+                        _experimentResultsViewmodel.shareFile().then((flag) {
                           flag
                               ? null
                               : EZTSnackBar.show(
@@ -456,24 +434,28 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                       },
                     ),
                     FloatingActionButton.small(
+                      shape: const CircleBorder(),
+                      backgroundColor: context.getApplyedColorScheme.primary,
+                      foregroundColor: context.getApplyedColorScheme.onPrimary,
                       heroTag: null,
-                      child: const Icon(
-                        PhosphorIcons.download,
-                        color: AppColors.white,
+                      child: Icon(
+                        PhosphorIcons.downloadSimple(),
                       ),
                       onPressed: () {
-                        _experimentResultsViewmodel.exportToExcel().then(
+                        _experimentResultsViewmodel
+                            .openDialogToUserSaveFile()
+                            .then(
                               (flag) => flag
                                   ? EZTSnackBar.show(
                                       context,
-                                      'Arquivo salvo em ${_experimentResultsViewmodel.savedPath}',
+                                      'Planilha salva com sucesso!',
                                       eztSnackBarType: EZTSnackBarType.success,
                                     )
                                   : _experimentResultsViewmodel.failure
                                           is! UnableToSaveFailure
                                       ? EZTSnackBar.show(
                                           context,
-                                          'Não foi possível salvar o arquivo, tente novamente.',
+                                          'Não foi possível salvar a planilha, tente novamente.',
                                           eztSnackBarType:
                                               EZTSnackBarType.error,
                                         )
@@ -483,33 +465,6 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                     ),
                   ],
                 ),
-          /* floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              _experimentResultsViewmodel.exportToExcel().then(
-                    (flag) => flag
-                        ? EZTSnackBar.show(
-                            context,
-                            'Arquivo salvo com sucesso!',
-                            eztSnackBarType: EZTSnackBarType.success,
-                          )
-                        : EZTSnackBar.show(
-                            context,
-                            'Não foi possível salvar o arquivo, tente novamente.',
-                            eztSnackBarType: EZTSnackBarType.error,
-                          ),
-                  );
-            },
-            // label: Text(
-            //   "Compartilhar",
-            //   style: TextStyles.buttonBoldBackground,
-            // ),
-
-            child: const Icon(
-              PhosphorIcons.shareNetwork,
-              size: 35,
-              color: AppColors.white,
-            ),
-          ), */
           body: _buildBody,
         );
       },

@@ -1,5 +1,5 @@
 abstract class UserPreferencesServices {
-  // ACCOUNT
+  //* ACCOUNT
   Future<void> saveFullUser(String jsonEncoded);
 
   Future<String?> getFullUser();
@@ -10,13 +10,21 @@ abstract class UserPreferencesServices {
 
   Future<void> removeToken();
 
-  // PREFERENCES
+  //* PREFERENCES
   Future<void> initConfirmationsEnabled();
 
   Future<void> saveExcludeConfirmation(bool value);
 
   Future<bool> getExcludeConfirmation();
 
-  // GENERAL
+  Future<void> initThemeMode();
+
+  Future<void> saveThemeModeAsString(String value);
+
+  Future<String> getThemeModeAsString();
+
+  //* GENERAL
   Future<void> clearAll();
+
+  Future<void> clearAllAndKeepTheme();
 }

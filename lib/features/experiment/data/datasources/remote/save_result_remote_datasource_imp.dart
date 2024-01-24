@@ -1,6 +1,7 @@
-// 📦 Package imports:
+// 🎯 Dart imports:
 import 'dart:convert';
 
+// 📦 Package imports:
 import 'package:dartz/dartz.dart';
 
 // 🌎 Project imports:
@@ -28,8 +29,6 @@ class SaveResultRemoteDataSourceImp implements SaveResultDataSource {
       var list = jsonDecode(jsonEncode(listOfExperimentData));
       List<Map<String, double>> listWithoutIds = [];
       for (var i in list) {
-        // print(i);
-        // print(i.runtimeType);
         i.remove('_id');
 
         listWithoutIds.add({

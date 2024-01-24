@@ -2,11 +2,11 @@
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 // 🌎 Project imports:
+import '../../../../../../../shared/extensions/context_theme_mode_extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../../../../../shared/utils/utils.dart';
 import '../../../../../../../shared/validator/validator.dart';
@@ -14,11 +14,11 @@ import '../../../../viewmodel/create_account_viewmodel.dart';
 
 class CreateAccountSecondStep extends StatefulWidget {
   const CreateAccountSecondStep({
-    Key? key,
+    super.key,
     required this.pageController,
     required this.formKey,
     required this.userDataCache,
-  }) : super(key: key);
+  });
 
   final PageController pageController;
   final GlobalKey<FormState> formKey;
@@ -99,7 +99,6 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
       obscureText: true,
       onChanged: (value) => _validateFields,
       fieldValidator: fieldValidator,
-      // disableSuffixIcon: true,
     );
   }
 
@@ -125,8 +124,6 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
       fieldValidator: fieldValidator,
       obscureText: true,
       valueMatcher: () => _passwordFieldController.text,
-
-      // disableSuffixIcon: true,
     );
   }
 
@@ -142,14 +139,14 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
     );
   }
 
-  Widget get _body {
+  _body(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: [
           Align(
             alignment: Alignment.center,
-            child: SvgPicture.asset(
-              AppSvgs.iconLogo,
+            child: Image.asset(
+              context.isDarkMode ? AppImages.logoOnDark : AppImages.logoGreen,
               alignment: Alignment.center,
               width: 75,
             ),
@@ -164,9 +161,8 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
           const SizedBox(height: 64),
           Row(
             children: [
-              const Icon(
-                PhosphorIcons.atBold,
-                color: AppColors.greySweet,
+              Icon(
+                PhosphorIcons.at(PhosphorIconsStyle.bold),
               ),
               const SizedBox(width: 4),
               Text(
@@ -233,7 +229,7 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
             flex: 11,
             child: Padding(
               padding: Constants.padding16all,
-              child: Center(child: _body),
+              child: Center(child: _body(context)),
             ),
           ),
           Expanded(

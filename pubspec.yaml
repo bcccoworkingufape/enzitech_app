@@ -15,10 +15,10 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.4.0+11
+version: 0.6.1+14
 
 environment:
-  sdk: ">=2.17.0 <3.0.0"
+  sdk: ^2.19.0
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -28,44 +28,43 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   auto_size_text: ^3.0.0
-  connectivity_plus: ^3.0.3
+  connectivity_plus: ^5.0.2
   cupertino_icons: ^1.0.5
-  curl_logger_dio_interceptor: ^0.0.3
+  curl_logger_dio_interceptor: ^1.0.0
   dartz: ^0.10.1
   data_table_2: ^2.4.1
-  dio: ^4.0.6
-  excel: ^2.1.0
+  dio: ^5.4.0
+  excel: ^4.0.0
+  firebase_core: ^2.24.2
+  firebase_crashlytics: ^3.4.8
   flutter:
     sdk: flutter
-  flutter_expandable_fab: ^1.7.1
-  flutter_form_builder: ^7.7.0
+  flutter_expandable_fab: ^2.0.0
+  flutter_file_dialog: ^3.0.2
+  flutter_form_builder: ^9.1.1
   flutter_localizations:
     sdk: flutter
-  flutter_svg: ^1.1.6
-  flutter_svg_provider: ^1.0.3
-  form_builder_validators: ^8.4.0
+  flutter_svg: ^2.0.9
+  flutter_svg_provider: ^1.0.7
+  form_builder_validators: ^9.1.0
   get_it: ^7.2.0
-  google_fonts: ^4.0.3
+  google_fonts: ^6.1.0
   group_button: ^5.2.2
   internet_connection_checker: ^1.0.0+1
-  intl: ^0.17.0
-  media_scanner: ^2.1.0
-  package_info_plus: ^3.0.3
+  intl: ^0.18.1
+  package_info_plus: ^5.0.1
   path_provider: ^2.0.14
   percent_indicator: ^4.2.2
-  permission_handler: ^10.2.0
-  phosphor_flutter: ^1.4.0
+  phosphor_flutter: ^2.0.1
   pretty_dio_logger: ^1.2.0-beta-1
-  settings_ui: ^2.0.2
-  share_plus: ^6.3.1
+  share_plus: ^7.2.1
   shared_preferences: ^2.0.17
   toggle_switch: ^2.0.1
   url_launcher: ^6.1.9
 
 dev_dependencies:
-  appwrite: ^8.3.0
   build_runner: ^2.3.3
-  flutter_lints: ^2.0.1
+  flutter_lints: ^3.0.1
   flutter_native_splash: ^2.2.16
   flutter_test:
     sdk: flutter
@@ -76,26 +75,30 @@ dev_dependencies:
   test: ^1.22.0
 
 flutter_native_splash:
-  color: "#06BC67"
-  color_dark: "#06BC67"
+  color: "#006D39"
+  color_dark: "#00391B"
   image: assets/launcher/native_splash.png
-  image_dark: assets/launcher/native_splash.png
+  image_dark: assets/launcher/native_splash_dark.png
   android: true
   ios: true
 
   android_12:
     image: assets/launcher/foreground_icon.png
-    icon_background_color: "#06BC67"
+    icon_background_color: "#006D39"
+    image_dark: assets/launcher/foreground_icon_dark.png
+    icon_background_color_dark: "#00391B"
 
 icons_launcher:
   image_path: "assets/launcher/icon.png"
   platforms:
     android:
       enable: true
+      image_path: "assets/launcher/icon.png"
+      adaptive_background_color: "#006D39"
+      adaptive_foreground_image: "assets/launcher/foreground_icon.png"
     ios:
       enable: true
-  adaptive_background_color: "#06BC67"
-  adaptive_foreground_image: "assets/launcher/foreground_icon.png"
+      image_path: "assets/launcher/icon.png"
 
 import_path_converter:
   relative: true
@@ -121,6 +124,8 @@ flutter:
   assets:
     - assets/images/
     - assets/svgs/
+    - assets/svgs/light/
+    - assets/svgs/dark/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see

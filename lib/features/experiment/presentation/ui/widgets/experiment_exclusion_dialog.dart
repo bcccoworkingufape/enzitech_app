@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 class ExperimentExclusionDialog extends StatefulWidget {
   const ExperimentExclusionDialog({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<ExperimentExclusionDialog> createState() =>

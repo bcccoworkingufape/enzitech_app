@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 // 🌎 Project imports:
+import '../../extensions/context_theme_mode_extensions.dart';
 import '../../validator/validator.dart';
 import '../themes/themes.dart';
 
@@ -59,7 +60,7 @@ class EZTTextField extends StatefulWidget {
   final bool disableSuffixIcon;
 
   const EZTTextField({
-    Key? key,
+    super.key,
     required this.eztTextFieldType,
     this.wdKey,
     this.fieldValidator,
@@ -97,7 +98,7 @@ class EZTTextField extends StatefulWidget {
     this.showSuffixValidationIcon = false,
     this.readOnly = false,
     this.disableSuffixIcon = false,
-  }) : super(key: key);
+  });
 
   @override
   State<EZTTextField> createState() => _EZTTextFieldState();
@@ -106,8 +107,6 @@ class EZTTextField extends StatefulWidget {
 class _EZTTextFieldState extends State<EZTTextField> {
   bool _passwordVisibile = false;
   bool? _validationSuccess;
-
-  //! TODO: mudar cor padrão de alguns campos com "AppColors.greyLight"
 
   @override
   void initState() {
@@ -121,9 +120,11 @@ class _EZTTextFieldState extends State<EZTTextField> {
       prefixIcon: widget.prefixIcon,
       hintText: widget.hintText,
       helperText: widget.helperText,
-      helperStyle: const TextStyle(color: Colors.red),
+      helperStyle: TextStyle(
+        color: context.getApplyedColorScheme.error,
+      ),
       labelText: widget.labelText,
-      labelStyle: const TextStyle(color: AppColors.greySweet),
+      labelStyle: const TextStyle(),
       suffixIcon: widget.suffixIcon ?? _passwordSuffixIcon,
       fillColor: widget.fillColor,
       hintStyle: TextStyle(color: widget.hintColor),
@@ -134,12 +135,12 @@ class _EZTTextFieldState extends State<EZTTextField> {
   Widget get _passwordSuffixIcon {
     final Widget iconToUse;
     if (_passwordVisibile) {
-      iconToUse = const Icon(
-        PhosphorIcons.eye,
+      iconToUse = Icon(
+        PhosphorIcons.eye(),
       );
     } else {
-      iconToUse = const Icon(
-        PhosphorIcons.eyeClosed,
+      iconToUse = Icon(
+        PhosphorIcons.eyeClosed(),
       );
     }
 
@@ -160,13 +161,13 @@ class _EZTTextFieldState extends State<EZTTextField> {
   }
 
   InputDecoration get _underlineInputDecoration {
-    final inputBorder = UnderlineInputBorder(
+    var inputBorder = UnderlineInputBorder(
       borderSide: BorderSide(
         color: (_validationSuccess ?? false)
             ? widget.enableGreenSuccessBorder
-                ? AppColors.success
-                : AppColors.lines
-            : AppColors.lines,
+                ? Colors.green
+                : context.getApplyedColorScheme.onBackground
+            : context.getApplyedColorScheme.onBackground,
       ),
     );
 
@@ -175,21 +176,21 @@ class _EZTTextFieldState extends State<EZTTextField> {
       hintStyle: widget.hintStyle ?? TextStyles.termRegular,
       enabledBorder: inputBorder,
       focusedBorder: (widget.usePrimaryColorOnFocusedBorder)
-          ? const UnderlineInputBorder(
+          ? UnderlineInputBorder(
               borderSide: BorderSide(
-                color: AppColors.primary,
+                color: context.getApplyedColorScheme.primary,
               ),
             )
           : inputBorder,
       border: inputBorder,
       labelStyle: (widget.focusNode?.hasFocus ?? false)
-          ? const TextStyle(
-              color: AppColors.primary,
+          ? TextStyle(
+              color: context.getApplyedColorScheme.primary,
             )
           : null,
       errorBorder: inputBorder.copyWith(
-        borderSide: const BorderSide(
-          color: AppColors.delete,
+        borderSide: BorderSide(
+          color: context.getApplyedColorScheme.error,
         ),
       ),
       contentPadding: const EdgeInsets.only(bottom: 5, top: 15),
@@ -218,24 +219,23 @@ class _EZTTextFieldState extends State<EZTTextField> {
     }
 
     return _validationSuccess!
-        ? const Icon(PhosphorIcons.check)
-        : const Icon(
-            PhosphorIcons.warningCircle,
-            color: AppColors.danger,
+        ? Icon(PhosphorIcons.check())
+        : Icon(
+            PhosphorIcons.warningCircle(),
+            color: context.getApplyedColorScheme.error,
           );
   }
 
   InputDecoration get _underlinedInputDecoration {
-    const inputBorder = UnderlineInputBorder(
+    var inputBorder = UnderlineInputBorder(
       borderSide: BorderSide(
-        color: AppColors.primary,
+        color: context.getApplyedColorScheme.primary,
       ),
     );
 
     return _baseInputDecoration.copyWith(
       hintStyle: widget.hintStyle ??
           const TextStyle(
-            color: AppColors.grey,
             fontSize: 16,
           ),
       enabledBorder: inputBorder,
@@ -249,13 +249,13 @@ class _EZTTextFieldState extends State<EZTTextField> {
   }
 
   InputDecoration get _outlineInputDecoration {
-    final outlineBorder = OutlineInputBorder(
+    var outlineBorder = UnderlineInputBorder(
       borderSide: BorderSide(
         color: (_validationSuccess ?? false)
             ? widget.enableGreenSuccessBorder
-                ? AppColors.success
-                : AppColors.lines
-            : AppColors.lines,
+                ? Colors.green
+                : context.getApplyedColorScheme.scrim
+            : context.getApplyedColorScheme.scrim,
       ),
       borderRadius: const BorderRadius.all(
         Radius.circular(4),
@@ -265,16 +265,15 @@ class _EZTTextFieldState extends State<EZTTextField> {
 
     if (widget.usePrimaryColorOnFocusedBorder) {
       focusedOutlineBorder = focusedOutlineBorder.copyWith(
-        borderSide: const BorderSide(
-          color: AppColors.primary,
+        borderSide: BorderSide(
+          color: context.getApplyedColorScheme.primary,
         ),
       );
     }
 
     return _baseInputDecoration.copyWith(
-      fillColor: widget.enabled
-          ? (widget.fillColor ?? AppColors.white)
-          : AppColors.white,
+      fillColor:
+          widget.enabled ? (widget.fillColor ?? Colors.white) : Colors.white,
       border: outlineBorder,
       hintStyle: widget.hintStyle,
       suffixIcon:
@@ -282,8 +281,8 @@ class _EZTTextFieldState extends State<EZTTextField> {
       enabledBorder: outlineBorder,
       focusedBorder: focusedOutlineBorder,
       errorBorder: outlineBorder.copyWith(
-        borderSide: const BorderSide(
-          color: AppColors.danger,
+        borderSide: BorderSide(
+          color: context.getApplyedColorScheme.error,
         ),
       ),
     );
@@ -291,7 +290,7 @@ class _EZTTextFieldState extends State<EZTTextField> {
 
   InputDecoration get _outlineInputDecorationCheckout {
     const outlineBorder = OutlineInputBorder(
-      borderSide: BorderSide(color: AppColors.grey),
+      borderSide: BorderSide(),
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(4),
         bottomLeft: Radius.circular(4),
@@ -302,24 +301,23 @@ class _EZTTextFieldState extends State<EZTTextField> {
 
     if (widget.usePrimaryColorOnFocusedBorder) {
       focusedOutlineBorder = focusedOutlineBorder.copyWith(
-        borderSide: const BorderSide(
-          color: AppColors.primary,
+        borderSide: BorderSide(
+          color: context.getApplyedColorScheme.primary,
         ),
       );
     }
 
     return _baseInputDecoration.copyWith(
-      fillColor: widget.enabled
-          ? (widget.fillColor ?? AppColors.white)
-          : AppColors.grey,
+      fillColor:
+          widget.enabled ? (widget.fillColor ?? Colors.white) : Colors.grey,
       border: outlineBorder,
       hintStyle: widget.hintStyle,
       suffixIcon: _validationSuffixIcon,
       enabledBorder: outlineBorder,
       focusedBorder: focusedOutlineBorder,
       errorBorder: outlineBorder.copyWith(
-        borderSide: const BorderSide(
-          color: AppColors.danger,
+        borderSide: BorderSide(
+          color: context.getApplyedColorScheme.error,
         ),
       ),
     );
@@ -415,7 +413,7 @@ class _EZTTextFieldState extends State<EZTTextField> {
       style: TextStyle(
         fontSize: widget.fontsize,
         height: widget.lineHeight,
-        color: widget.enabled ? widget.textColor : AppColors.grey,
+        color: widget.enabled ? widget.textColor : Colors.grey,
       ),
       validator: widget.validator ?? _validator,
       obscureText: widget.obscureText && !_passwordVisibile,

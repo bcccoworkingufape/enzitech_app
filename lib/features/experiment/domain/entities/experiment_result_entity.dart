@@ -1,3 +1,4 @@
+// 🌎 Project imports:
 import 'experiment_enzyme_result_entity.dart';
 
 class ExperimentResultEntity {

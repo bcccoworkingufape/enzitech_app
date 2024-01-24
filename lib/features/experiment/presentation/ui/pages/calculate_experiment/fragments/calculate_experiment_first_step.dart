@@ -1,5 +1,6 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
 // 📦 Package imports:
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -8,6 +9,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 // 🌎 Project imports:
 import '../../../../../../../core/enums/enums.dart';
+import '../../../../../../../shared/extensions/context_theme_mode_extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../../../../../shared/utils/utils.dart';
 import '../../../../../../enzyme/domain/entities/enzyme_entity.dart';
@@ -18,8 +20,8 @@ import '../calculate_experiment_fragment_template.dart';
 
 class CalculateExperimentFirstStepPage extends StatefulWidget {
   const CalculateExperimentFirstStepPage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<CalculateExperimentFirstStepPage> createState() =>
@@ -31,9 +33,7 @@ class _CalculateExperimentFirstStepPageState
   late final CalculateExperimentViewmodel _calculateExperimentViewmodel;
   bool? enableNextButton;
   EnzymeEntity? choosedEnzyme;
-  // String? choosedEnzymeName;
   TreatmentEntity? choosedTreatment;
-  // String? choosedTreatmentName;
 
   @override
   void initState() {
@@ -42,12 +42,9 @@ class _CalculateExperimentFirstStepPageState
 
     choosedEnzyme = _calculateExperimentViewmodel
         .temporaryChoosedExperimentCombination.enzyme;
-    // choosedEnzymeName = _calculateExperimentViewmodel
-    //     .temporaryChoosedExperimentCombination.enzyme?.name;
     choosedTreatment = _calculateExperimentViewmodel
         .temporaryChoosedExperimentCombination.treatment;
-    // choosedTreatmentName = _calculateExperimentViewmodel
-    //     .temporaryChoosedExperimentCombination.treatmentName;
+
     WidgetsBinding.instance.addPostFrameCallback((_) => _validateFields());
   }
 
@@ -72,7 +69,6 @@ class _CalculateExperimentFirstStepPageState
       name: 'treatment',
       onChanged: (value) async {
         choosedEnzyme = null;
-        // choosedEnzymeName = null;
 
         choosedTreatment = value;
         await _calculateExperimentViewmodel
@@ -87,7 +83,7 @@ class _CalculateExperimentFirstStepPageState
             ),
           )
           .toList(),
-      selectedColor: AppColors.primary,
+      selectedColor: context.getApplyedColorScheme.primaryContainer,
       spacing: 4,
       validator: FormBuilderValidators.compose(
         [FormBuilderValidators.required()],
@@ -116,7 +112,6 @@ class _CalculateExperimentFirstStepPageState
         initialValue: _calculateExperimentViewmodel
                 .temporaryChoosedExperimentCombination.enzyme ??
             choosedEnzyme,
-
         name: 'enzyme',
         onChanged: (value) {
           if (value != null) {
@@ -127,18 +122,15 @@ class _CalculateExperimentFirstStepPageState
               color: Constants.dealWithEnzymeChipColor(
                 value.type,
               ),
-              textStyle: TextStyles.titleMinBoldBackground,
+              textStyle: TextStyles(context).titleMinBoldBackground(),
               centerTitle: true,
             );
           }
 
           choosedEnzyme = value;
-          // choosedEnzymeName = _calculateExperimentViewmodel.experiment.enzymes!
-          //     .firstWhere((x) => x.id == value)
-          //     .name;
+
           _validateFields();
         },
-        // options: _calculateExperimentViewmodel.experiment.enzymes!
         options: _calculateExperimentViewmodel.enzymesRemaining
             .map(
               (e) => FormBuilderChipOption<EnzymeEntity>(
@@ -150,7 +142,7 @@ class _CalculateExperimentFirstStepPageState
               ),
             )
             .toList(),
-        selectedColor: AppColors.primary,
+        selectedColor: context.getApplyedColorScheme.primaryContainer,
         spacing: 4,
         validator: FormBuilderValidators.compose(
           [FormBuilderValidators.required()],
@@ -175,9 +167,6 @@ class _CalculateExperimentFirstStepPageState
 
             if (_calculateExperimentViewmodel.formKey.currentState!
                 .validate()) {
-              // var temporary = _calculateExperimentViewmodel
-              //     .temporaryChoosedExperimentCombination;
-
               _calculateExperimentViewmodel
                   .setTemporaryChoosedExperimentCombination(
                 ChoosedExperimentCombinationDTO(
@@ -204,7 +193,6 @@ class _CalculateExperimentFirstStepPageState
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
             _calculateExperimentViewmodel.onBack(mounted, context);
-            // widget.callback();
           },
         ),
       ],
@@ -213,8 +201,8 @@ class _CalculateExperimentFirstStepPageState
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _calculateExperimentViewmodel,
+    return ListenableBuilder(
+      listenable: _calculateExperimentViewmodel,
       builder: (context, child) {
         return CalculateExperimentFragmentTemplate(
           titleOfStepIndicator: "Inserir dados no experimento",
@@ -243,9 +231,8 @@ class _CalculateExperimentFirstStepPageState
                     children: [
                       Row(
                         children: [
-                          const Icon(
-                            PhosphorIcons.flask,
-                            color: AppColors.greySweet,
+                          Icon(
+                            PhosphorIcons.flask(),
                           ),
                           const SizedBox(width: 4),
                           Expanded(

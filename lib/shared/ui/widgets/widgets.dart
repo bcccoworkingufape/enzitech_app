@@ -9,5 +9,4 @@ export 'ezt_not_found.dart';
 export 'ezt_progress_indicator.dart';
 export 'ezt_pull_to_refresh.dart';
 export 'ezt_snack_bar.dart';
-export 'ezt_stepper.dart';
 export 'ezt_textfield.dart';

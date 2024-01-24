@@ -14,8 +14,8 @@ import '../create_experiment_fragment_template.dart';
 
 class CreateExperimentFirstStepPage extends StatefulWidget {
   const CreateExperimentFirstStepPage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<CreateExperimentFirstStepPage> createState() =>
@@ -84,7 +84,6 @@ class _CreateExperimentFirstStepPageState
       controller: _nameFieldController,
       onChanged: (value) => _validateFields,
       fieldValidator: fieldValidator,
-      // disableSuffixIcon: true,
     );
   }
 
@@ -99,7 +98,6 @@ class _CreateExperimentFirstStepPageState
       controller: _descriptionFieldController,
       onChanged: (value) => _validateFields,
       fieldValidator: fieldValidator,
-      // disableSuffixIcon: true,
     );
   }
 
@@ -167,9 +165,8 @@ class _CreateExperimentFirstStepPageState
             ),
             Row(
               children: [
-                const Icon(
-                  PhosphorIcons.flask,
-                  color: AppColors.greySweet,
+                Icon(
+                  PhosphorIcons.flask(),
                 ),
                 const SizedBox(width: 4),
                 Text(

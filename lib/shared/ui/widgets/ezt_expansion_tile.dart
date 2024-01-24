@@ -301,7 +301,7 @@ class _EZTExpansionTileState extends State<EZTExpansionTile>
     _backgroundColor =
         _controller.drive(_backgroundColorTween.chain(_easeOutTween));
 
-    _isExpanded = PageStorage.of(context)?.readState(context) as bool? ??
+    _isExpanded = PageStorage.of(context).readState(context) as bool? ??
         widget.initiallyExpanded;
     if (_isExpanded) {
       _controller.value = 1.0;
@@ -329,7 +329,7 @@ class _EZTExpansionTileState extends State<EZTExpansionTile>
           });
         });
       }
-      PageStorage.of(context)?.writeState(context, _isExpanded);
+      PageStorage.of(context).writeState(context, _isExpanded);
     });
     widget.onExpansionChanged?.call(_isExpanded);
   }
@@ -430,7 +430,7 @@ class _EZTExpansionTileState extends State<EZTExpansionTile>
     _headerColorTween
       ..begin = widget.collapsedTextColor ??
           expansionTileTheme.collapsedTextColor ??
-          theme.textTheme.subtitle1!.color
+          theme.textTheme.titleMedium!.color
       ..end = widget.textColor ??
           expansionTileTheme.textColor ??
           colorScheme.primary;

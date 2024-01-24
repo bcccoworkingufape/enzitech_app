@@ -32,12 +32,16 @@ import '../../../features/experiment/domain/repositories/save_result_repository.
 import '../../../features/experiment/domain/repositories/store_experiments_in_cache_repository.dart';
 import '../../../features/main/data/repositories/clear_user_repository_imp.dart';
 import '../../../features/main/data/repositories/get_exclude_confirmation_repository_imp.dart';
+import '../../../features/main/data/repositories/get_theme_mode_repository_imp.dart';
 import '../../../features/main/data/repositories/get_user_repository_imp.dart';
 import '../../../features/main/data/repositories/save_exclude_confirmation_repository_imp.dart';
+import '../../../features/main/data/repositories/save_theme_mode_repository_imp.dart';
 import '../../../features/main/domain/repositories/clear_user_repository.dart';
 import '../../../features/main/domain/repositories/get_exclude_confirmation_repository.dart';
+import '../../../features/main/domain/repositories/get_theme_mode_repository.dart';
 import '../../../features/main/domain/repositories/get_user_repository.dart';
 import '../../../features/main/domain/repositories/save_exclude_confirmation_repository.dart';
+import '../../../features/main/domain/repositories/save_theme_mode_repository.dart';
 import '../../../features/treatment/data/repositories/create_treatment_repository_imp.dart';
 import '../../../features/treatment/data/repositories/delete_treatment_repository_imp.dart';
 import '../../../features/treatment/data/repositories/get_treatments_repository_imp.dart';
@@ -94,6 +98,9 @@ class RepositoriesInjections {
     getIt.registerLazySingleton<GetResultRepository>(
       () => GetResultRepositoryImp(getIt()),
     );
+    getIt.registerLazySingleton<GetThemeModeRepository>(
+      () => GetThemeModeRepositoryImp(getIt()),
+    );
     getIt.registerLazySingleton<GetTreatmentsRepository>(
       () => GetTreatmentsRepositoryImp(getIt()),
     );
@@ -108,6 +115,9 @@ class RepositoriesInjections {
     );
     getIt.registerLazySingleton<SaveResultRepository>(
       () => SaveResultRepositoryImp(getIt()),
+    );
+    getIt.registerLazySingleton<SaveThemeModeRepository>(
+      () => SaveThemeModeRepositoryImp(getIt()),
     );
     getIt.registerLazySingleton<StoreExperimentsInCacheRepository>(
       () => StoreExperimentsInCacheRepositoryImp(getIt()),

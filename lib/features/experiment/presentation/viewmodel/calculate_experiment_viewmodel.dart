@@ -1,5 +1,7 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
 // 🌎 Project imports:
@@ -150,9 +152,17 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
     _listOfNumberDifferencesDTO = listOfNumberDifferencesDTO;
   }
 
+  bool _alreadyPopped = false;
+  bool get alreadyPopped => _alreadyPopped;
+  void setAlreadyPopped(bool alreadyPopped) {
+    _alreadyPopped = alreadyPopped;
+    notifyListeners();
+  }
+
   void onBack(bool mounted, BuildContext context, {int? page}) {
     if (mounted) {
       if (page != null) {
+        setAlreadyPopped(false);
         pageController.animateToPage(
           page,
           duration: const Duration(milliseconds: 150),
@@ -161,6 +171,7 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
       } else {
         {
           if (pageController.page! > 0) {
+            setAlreadyPopped(false);
             pageController.animateToPage(
               pageController.page!.toInt() - 1,
               duration: const Duration(milliseconds: 150),
@@ -171,6 +182,7 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
             setEnableNextButtonOnSecondStep(false, notify: false);
             setTemporaryChoosedExperimentCombination(
                 ChoosedExperimentCombinationDTO());
+            setAlreadyPopped(true);
             Navigator.pop(context);
           }
         }
@@ -259,7 +271,6 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
           controller: sampleFieldController,
           onChanged: (value) {
             _validateFields(value, i.toDouble(), "sample");
-            print(value);
           },
           fieldValidator: fieldValidator,
           inputFormatters: Constants.enzymeDecimalInputFormatters,
@@ -282,7 +293,6 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
           controller: whiteSampleFieldController,
           onChanged: (value) {
             _validateFields(value, i.toDouble(), "whiteSample");
-            print(value);
           },
           fieldValidator: fieldValidator,
           inputFormatters: Constants.enzymeDecimalInputFormatters,
@@ -328,9 +338,6 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
 
     var list = <NumberDifferencesDTO>[];
 
-    // double differenceOfFartherNumber =
-    //     _percentOfDifference(average, results.first);
-
     for (var number in results) {
       var diff = _percentOfDifference(average, number);
       var numberWithDifference = NumberDifferencesDTO(
@@ -340,13 +347,7 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
         fartherNumber: 0,
       );
       list.add(numberWithDifference);
-      // if (diff > differenceOfFartherNumber) {
-      //   differenceOfFartherNumber = diff;
-      //   fartherNumber = number;
-      // }
     }
-
-    print(list);
 
     setListOfNumberDifferencesDTO(list);
   }

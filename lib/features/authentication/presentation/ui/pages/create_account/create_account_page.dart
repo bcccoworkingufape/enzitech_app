@@ -14,7 +14,7 @@ import 'components/create_account_first_step.dart';
 import 'components/create_account_second_step.dart';
 
 class CreateAccountPage extends StatefulWidget {
-  const CreateAccountPage({Key? key}) : super(key: key);
+  const CreateAccountPage({super.key});
 
   @override
   CreateAccountPageState createState() => CreateAccountPageState();

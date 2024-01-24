@@ -21,7 +21,7 @@ class EZTNotFound extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SvgPicture.asset(
-            AppSvgs.notFound,
+            AppSvgs(context).notFound(),
             alignment: Alignment.center,
             width: MediaQuery.of(context).size.width,
           ),
@@ -30,7 +30,7 @@ class EZTNotFound extends StatelessWidget {
               width: MediaQuery.of(context).size.width * 0.7,
               child: Text(
                 title!,
-                style: TextStyles.informationExperimentStepTitle,
+                style: TextStyles(context).informationExperimentStepTitle(),
                 textAlign: TextAlign.center,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,

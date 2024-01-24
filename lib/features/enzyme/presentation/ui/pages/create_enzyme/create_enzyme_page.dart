@@ -1,13 +1,14 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
 // 📦 Package imports:
-import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
+import '../../../../../../shared/extensions/context_theme_mode_extensions.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../../../../shared/utils/utils.dart';
 import '../../../../../../shared/validator/validator.dart';
@@ -15,7 +16,7 @@ import '../../../viewmodel/create_enzyme_viewmodel.dart';
 import '../../../viewmodel/enzymes_viewmodel.dart';
 
 class CreateEnzymePage extends StatefulWidget {
-  const CreateEnzymePage({Key? key}) : super(key: key);
+  const CreateEnzymePage({super.key});
 
   @override
   State<CreateEnzymePage> createState() => _CreateEnzymePageState();
@@ -51,7 +52,6 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
             eztSnackBarType: EZTSnackBarType.error,
           );
         } else if (_createEnzymeViewmodel.state == StateEnum.success) {
-          // reload the experiments list
           _enzymesViewmodel.fetch();
 
           EZTSnackBar.show(
@@ -98,8 +98,8 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
         children: [
           Align(
             alignment: Alignment.center,
-            child: SvgPicture.asset(
-              AppSvgs.iconLogo,
+            child: Image.asset(
+              context.isDarkMode ? AppImages.logoOnDark : AppImages.logoGreen,
               alignment: Alignment.center,
               width: 75,
             ),
@@ -115,9 +115,8 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
           const SizedBox(height: 64),
           Row(
             children: [
-              const Icon(
-                PhosphorIcons.flask,
-                color: AppColors.greySweet,
+              Icon(
+                PhosphorIcons.flask(),
               ),
               const SizedBox(width: 4),
               Text(
@@ -142,7 +141,7 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
         const SizedBox(height: 10),
         _variableBInput,
         const SizedBox(height: 20),
-        _typeInput,
+        _typeInput(context),
       ],
     );
   }
@@ -167,7 +166,6 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
       controller: _nameFieldController,
       onChanged: (value) => _validateFields,
       fieldValidator: fieldValidator,
-      // disableSuffixIcon: true,
     );
   }
 
@@ -219,23 +217,21 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
     );
   }
 
-  Widget get _typeInput {
+  Widget _typeInput(BuildContext context) {
     return DropdownButton<String>(
       isExpanded: true,
       value: dropdownValue,
       hint: const Text("Escolha o tipo da enzima"),
       style: TextStyles.termRegular.copyWith(
         fontSize: 16,
+        color: context.getApplyedColorScheme.onPrimaryContainer,
       ),
       icon: null,
       elevation: 16,
-      // style: const TextStyle(color: Colors.deepPurple),
       underline: Container(
         height: 1.1,
-        color: AppColors.line,
       ),
       onChanged: (String? value) {
-        // This is called when the user selects an item.
         setState(() {
           dropdownValue = value!;
         });
@@ -289,8 +285,8 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-        animation: _createEnzymeViewmodel,
+    return ListenableBuilder(
+        listenable: _createEnzymeViewmodel,
         builder: (context, child) {
           return Scaffold(
             body: Form(

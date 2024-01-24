@@ -16,7 +16,7 @@ class CircularProgress extends StatefulWidget {
   final double startAngle;
 
   const CircularProgress({
-    Key? key,
+    super.key,
     required this.innerCircleRadius,
     required this.progressPercent,
     required this.progressCircleRadius,
@@ -25,7 +25,7 @@ class CircularProgress extends StatefulWidget {
     this.backgroundImage,
     required this.progressCircleOpacity,
     required this.startAngle,
-  }) : super(key: key);
+  });
 
   @override
   CircularProgressState createState() => CircularProgressState();

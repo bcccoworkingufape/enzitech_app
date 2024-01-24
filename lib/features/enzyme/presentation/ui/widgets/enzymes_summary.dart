@@ -1,22 +1,19 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
 // 🌎 Project imports:
+import '../../../../../shared/extensions/context_theme_mode_extensions.dart';
 import '../../../../../shared/ui/ui.dart';
 import '../../../../../shared/utils/utils.dart';
 import '../../viewmodel/enzymes_viewmodel.dart';
 
 class EnzymesSummary extends StatefulWidget {
   const EnzymesSummary({
-    Key? key,
-    // required this.enzymes,
-    // this.indexOfExperiment,
-  }) : super(key: key);
-
-  // final List<EnzymeModel> enzymes;
-  // final int? indexOfExperiment;
+    super.key,
+  });
 
   @override
   State<EnzymesSummary> createState() => _EnzymesSummaryState();
@@ -38,7 +35,7 @@ class _EnzymesSummaryState extends State<EnzymesSummary> {
           ),
           Text(
             "$name ($quantity)",
-            style: TextStyles.bodyMinBold.copyWith(color: AppColors.greySweet),
+            style: TextStyles.bodyMinBold.copyWith(),
           )
         ],
       ),
@@ -53,10 +50,8 @@ class _EnzymesSummaryState extends State<EnzymesSummary> {
       padding: const EdgeInsets.symmetric(horizontal: 4.0),
       child: Container(
         decoration: const BoxDecoration(
-          color: Colors.white,
           borderRadius: BorderRadius.all(
             Radius.circular(8),
-            // bottomRight: Radius.circular(8),
           ),
         ),
         margin: const EdgeInsets.all(0),
@@ -65,14 +60,20 @@ class _EnzymesSummaryState extends State<EnzymesSummary> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              color: AppColors.primary,
+              decoration: BoxDecoration(
+                color: context.getApplyedColorScheme.primary,
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(8),
+                ),
+              ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4.0),
                 child: Center(
                   child: Text(
                     "Sumário de enzimas",
-                    style:
-                        TextStyles.bodyMinBold.copyWith(color: AppColors.white),
+                    style: TextStyles.bodyMinBold.copyWith(
+                      color: context.getApplyedColorScheme.onSecondary,
+                    ),
                   ),
                 ),
               ),
@@ -141,15 +142,6 @@ class _EnzymesSummaryState extends State<EnzymesSummary> {
                                 : 0)
                         .reduce((value, element) => value + element),
                     AppColors.urease),
-                /* enzymeTag(
-                    Constants.typesOfEnzymesListFormmated[5],
-                    viewmodel.enzymes
-                        .map((element) =>
-                            element.type == Constants.typesOfEnzymesList[5]
-                                ? 1
-                                : 0)
-                        .reduce((value, element) => value + element),
-                    AppColors.fda), */
               ],
             ),
             const SizedBox(

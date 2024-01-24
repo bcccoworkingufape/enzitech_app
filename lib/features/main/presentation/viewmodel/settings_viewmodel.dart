@@ -1,8 +1,6 @@
 // 🐦 Flutter imports:
-import 'dart:io' as io;
-
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
+
 // 📦 Package imports:
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -12,30 +10,30 @@ import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
 import '../../../../shared/utils/utils.dart';
 import '../../../authentication/domain/entities/user_entity.dart';
-import '../../../experiment/presentation/viewmodel/experiment_results_viewmodel.dart';
 import '../../domain/entities/app_info_entity.dart';
 import '../../domain/usecases/clear_user/clear_user_usecase.dart';
 import '../../domain/usecases/get_exclude_confirmation/get_exclude_confirmation_usecase.dart';
+import '../../domain/usecases/get_theme_mode/get_theme_mode_usecase.dart';
 import '../../domain/usecases/get_user/get_user_usecase.dart';
 import '../../domain/usecases/save_exclude_confirmation/save_exclude_confirmation_usecase.dart';
+import '../../domain/usecases/save_theme_mode/save_theme_mode_usecase.dart';
 
 class SettingsViewmodel extends ChangeNotifier {
   final GetUserUseCase _getUserUseCase;
   final GetExcludeConfirmationUseCase _getExcludeConfirmationUseCase;
   final SaveExcludeConfirmationUseCase _saveExcludeConfirmationUseCase;
+  final GetThemeModeUseCase _getThemeModeUseCase;
+  final SaveThemeModeUseCase _saveThemeModeUseCase;
   final ClearUserUseCase _clearUserUseCase;
-
-  // final UserPreferencesServices _userPreferencesServices;
 
   SettingsViewmodel(
     this._getUserUseCase,
     this._getExcludeConfirmationUseCase,
     this._saveExcludeConfirmationUseCase,
+    this._getThemeModeUseCase,
+    this._saveThemeModeUseCase,
     this._clearUserUseCase,
-    // this._userPreferencesServices,
-  ) {
-    // fetch();
-  }
+  );
 
   StateEnum _state = StateEnum.idle;
   StateEnum get state => _state;
@@ -64,13 +62,6 @@ class SettingsViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  int _quantityFiles = 0;
-  int get quantityFiles => _quantityFiles;
-  void _setQuantityFiles(int quantityFiles) {
-    _quantityFiles = quantityFiles;
-    notifyListeners();
-  }
-
   get getEnviroment {
     switch (API.enviroment) {
       case EnvironmentEnum.dev:
@@ -82,28 +73,30 @@ class SettingsViewmodel extends ChangeNotifier {
     }
   }
 
-  void fetchQuantityOfFiles() async {
-    var files = io.Directory(
-            "${await GetIt.I.get<ExperimentResultsViewmodel>().getDownloadEnzitechPath()}")
-        .listSync(); //use your folder name insted of resume.
-    _setQuantityFiles(files.length);
-  }
-
-  get dealWithDownloadedFiles {
-    if (quantityFiles == 0) {
-      return 'Você não tem planilhas baixadas';
-    } else if (quantityFiles == 1) {
-      return 'Você tem 1 planilha baixada';
-    } else {
-      return 'Você tem $quantityFiles planilhas baixadas';
-    }
-  }
-
   bool? _enableExcludeConfirmation;
   bool? get enableExcludeConfirmation => _enableExcludeConfirmation;
   void setEnableExcludeConfirmation(bool enableExcludeExperimentConfirmation) {
     _enableExcludeConfirmation = enableExcludeExperimentConfirmation;
     _saveExcludeConfirmationUseCase(enableExcludeExperimentConfirmation);
+    notifyListeners();
+  }
+
+  ThemeMode _themeMode = ThemeMode.system;
+  ThemeMode get themeMode => _themeMode;
+  void setThemeMode(ThemeMode newThemeMode) {
+    _themeMode = newThemeMode;
+    _saveThemeModeUseCase(_themeMode);
+    notifyListeners();
+  }
+
+  Future<void> updateThemeMode() async {
+    setThemeMode(await _getThemeModeUseCase());
+  }
+
+  String _savedPath = '';
+  String get savedPath => _savedPath;
+  void setSavedPath(String savedPath) {
+    _savedPath = savedPath;
     notifyListeners();
   }
 
@@ -133,10 +126,10 @@ class SettingsViewmodel extends ChangeNotifier {
   }
 
   Future<void> loadPreferences() async {
-    // setStateEnum(StateEnum.loading);
+    setThemeMode(await _getThemeModeUseCase());
 
-    var result = await _getExcludeConfirmationUseCase();
-    result.fold(
+    var resultConfirmation = await _getExcludeConfirmationUseCase();
+    resultConfirmation.fold(
       (error) {
         _setFailure(error);
         setStateEnum(StateEnum.error);
@@ -186,16 +179,12 @@ class SettingsViewmodel extends ChangeNotifier {
     );
   }
 
-  Future<void> openUrl() async {
-    try {
-      if (!await launchUrl(Uri.parse(Constants.bccCoworkingLink))) {
-        throw UnableToOpenUrlFailure(
-            message:
-                'Não foi possível acessar ${Uri.parse(Constants.bccCoworkingLink)}');
-      }
-    } on Exception catch (e) {
-      _setFailure(e as Failure);
-      // setStateEnum(StateEnum.error);
+  Future<void> openUrl(String url) async {
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
+    } else {
+      throw UnableToOpenUrlFailure(
+          message: 'Não foi possível acessar ${Uri.parse(url)}');
     }
   }
 }

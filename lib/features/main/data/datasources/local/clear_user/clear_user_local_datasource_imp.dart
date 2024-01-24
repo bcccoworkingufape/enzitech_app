@@ -9,6 +9,6 @@ class ClearUserLocalDataSourceImp extends ClearUserDataSource {
 
   @override
   void call() async {
-    await _userPreferencesServices.clearAll();
+    await _userPreferencesServices.clearAllAndKeepTheme();
   }
 }

@@ -39,7 +39,7 @@ class GetExperimentsRemoteDataSourceImp implements GetExperimentsDataSource {
   }
 
   /// Do not implement or use this method here!
-  /// > If you want to use storeInCache do using the local repository
+  /// If you want to use storeInCache do using the local repository
   @override
   Future<void> saveInCache(
       ExperimentPaginationEntity experimentPaginationEntity) {

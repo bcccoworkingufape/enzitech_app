@@ -1,8 +1,7 @@
 // 🌎 Project imports:
 import '../failure.dart';
 
-// SC-500
+//! SC-500
 class ServiceUnavailableFailure extends Failure {
-  ServiceUnavailableFailure({String message = "", dynamic key = ""})
-      : super(message: message, key: key);
+  ServiceUnavailableFailure({super.message, super.key});
 }

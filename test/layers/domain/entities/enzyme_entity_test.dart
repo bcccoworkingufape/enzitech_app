@@ -20,6 +20,4 @@ main() {
       expect(enzyme, isNotNull);
     },
   );
-
-  // Crie um teste do get_enzymes_usecase.dart
 }
