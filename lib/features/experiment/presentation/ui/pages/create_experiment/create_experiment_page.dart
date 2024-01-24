@@ -11,7 +11,6 @@ import '../../../../../../core/routing/routing.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../dto/create_experiment_dto.dart';
 import '../../../viewmodel/create_experiment_viewmodel.dart';
-import '../../../viewmodel/experiments_viewmodel.dart';
 import 'fragments/create_experiment_first_step.dart';
 import 'fragments/create_experiment_fourth_step.dart';
 import 'fragments/create_experiment_second_step.dart';
@@ -28,15 +27,11 @@ class CreateExperimentPage extends StatefulWidget {
 
 class _CreateExperimentPageState extends State<CreateExperimentPage> {
   late final CreateExperimentViewmodel _createExperimentViewmodel;
-  late final ExperimentsViewmodel _experimentsViewmodel;
-
-  // bool _expandToSeeMoreVisible = true;
 
   @override
   void initState() {
     super.initState();
     _createExperimentViewmodel = GetIt.I.get<CreateExperimentViewmodel>();
-    _experimentsViewmodel = GetIt.I.get<ExperimentsViewmodel>();
 
     if (mounted) {
       _createExperimentViewmodel.addListener(
@@ -74,7 +69,6 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Verify PopScope Migration
     return PopScope(
       canPop: false,
       onPopInvoked: (didPop) async {

@@ -191,12 +191,12 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                                         LayoutBuilder(builder:
                                             (BuildContext context,
                                                 BoxConstraints constraints) {
-                                          var borderSideOfTable = BorderSide(
-                                            width: 0.5,
-                                            strokeAlign: 0,
-                                            color: context
-                                                .getApplyedColorScheme.primary,
-                                          );
+                                          // var borderSideOfTable = BorderSide(
+                                          //   width: 0.5,
+                                          //   strokeAlign: 0,
+                                          //   color: context
+                                          //       .getApplyedColorScheme.primary,
+                                          // );
 
                                           double rowHeight = (49.1 *
                                                   (treatment.repetitionResults

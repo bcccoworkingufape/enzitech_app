@@ -1,0 +1,46 @@
+Desenvolvido por Armstrong Lohãns em 23-01-2024 19:44:00 | fix: canLaunch url to Android and iOS
+Desenvolvido por Armstrong Lohãns em 23-01-2024 18:18:30 | fix: 'Sumário de enzimas' label color
+Desenvolvido por Armstrong Lohãns em 23-01-2024 18:16:20 | fix: 'Desfazer' snackbar label color
+Desenvolvido por Armstrong Lohãns em 23-01-2024 18:14:59 | fix: treatment card width
+Desenvolvido por Armstrong Lohãns em 23-01-2024 17:48:01 | fix: snackbar duplication on create experiment
+Desenvolvido por Armstrong Lohãns em 23-01-2024 17:42:16 | fix: refresh experiments list after experiment creation
+Desenvolvido por Armstrong Lohãns em 11-01-2024 11:48:25 | fix: logo to dark mode
+Desenvolvido por Armstrong Lohãns em 11-01-2024 11:37:28 | fix: overscroll and table colors to dark mode
+Desenvolvido por Armstrong Lohãns em 11-01-2024 10:18:16 | fix: launch icon
+Desenvolvido por Armstrong Lohãns em 10-01-2024 16:40:39 | fix: icon color on experiment details page
+Desenvolvido por Armstrong Lohãns em 10-01-2024 16:35:22 | fix: login page size
+Desenvolvido por Armstrong Lohãns em 10-01-2024 16:13:48 | fix: border color of textfields
+Desenvolvido por Armstrong Lohãns em 10-01-2024 15:48:28 | fix: backgroundImage on dark mode to EZTPullToRefresh
+Desenvolvido por Armstrong Lohãns em 05-01-2024 01:23:50 | fix: erase content style
+Desenvolvido por Armstrong Lohãns em 05-01-2024 01:18:05 | feat: workaround to PopScope Migration
+Desenvolvido por Armstrong Lohãns em 05-01-2024 00:38:45 | fix: remove old refereces to AppColors
+Desenvolvido por Armstrong Lohãns em 02-01-2024 23:48:38 | fix: primary color references
+Desenvolvido por Armstrong Lohãns em 02-01-2024 13:52:10 | feat: improve CircularPercentIndicator style
+Desenvolvido por Armstrong Lohãns em 02-01-2024 13:38:32 | fix: error color
+Desenvolvido por Armstrong Lohãns em 02-01-2024 12:54:44 | feat: replace rewritted Stepper class to default material Stepper class
+Desenvolvido por Armstrong Lohãns em 31-12-2023 13:08:12 | Update README.md
+Desenvolvido por Armstrong Lohãns em 31-12-2023 13:07:06 | feat: update readme
+Desenvolvido por Armstrong Lohãns em 31-12-2023 12:53:27 | feat: update readme
+Desenvolvido por Armstrong Lohãns em 31-12-2023 12:37:44 | feat: add settings to routes
+Desenvolvido por Armstrong Lohãns em 31-12-2023 12:25:30 | feat: widget to info that user doesn't have treatments
+Desenvolvido por Armstrong Lohãns em 31-12-2023 11:58:17 | fix: on pressed of _floatingActionButton
+Desenvolvido por Armstrong Lohãns em 31-12-2023 11:50:42 | fix: routing of floating buttons of home
+Desenvolvido por Armstrong Lohãns em 31-12-2023 11:49:55 | fix: floating button action on home
+Desenvolvido por Armstrong Lohãns em 31-12-2023 11:46:19 | fix: splash color
+Desenvolvido por Armstrong Lohãns em 30-12-2023 01:51:31 | feat: new svgs & colors to dark mode and new primary theme
+Desenvolvido por Armstrong Lohãns em 29-12-2023 21:01:12 | fix: some colors and texts
+Desenvolvido por Armstrong Lohãns em 27-12-2023 15:09:15 | feat: v0.6.0
+Desenvolvido por Armstrong Lohãns em 27-12-2023 15:02:28 | fix: download and share files
+Desenvolvido por Armstrong Lohãns em 26-12-2023 14:33:21 | feat: added feature to open file manager
+Desenvolvido por Armstrong Lohãns em 26-12-2023 12:20:06 | fix: permission of storage to sdk 34
+Desenvolvido por Armstrong Lohãns em 26-12-2023 11:57:57 | feat: migration of experiment detaisl do M3
+Desenvolvido por Armstrong Lohãns em 26-12-2023 10:12:07 | feat: settings page fully migrated to material 3
+Desenvolvido por Armstrong Lohãns em 26-12-2023 00:45:29 | feat: fix settings page and remove unnecessary dependency
+Desenvolvido por Armstrong Lohãns em 25-12-2023 17:52:41 | feat: fix material design of homepages
+Desenvolvido por Armstrong Lohãns em 24-12-2023 08:12:15 | fix: theme mode detection
+Desenvolvido por Armstrong Lohãns em 21-12-2023 12:16:03 | fix: warnings and dart sdk on pubspec
+Desenvolvido por Armstrong Lohãns em 21-12-2023 02:09:11 | fix: change from unnecessary AnimatedBuilder to ListenableBuilder
+Desenvolvido por Armstrong Lohãns em 21-12-2023 02:01:13 | feat: upgrade dependencies and fix imports
+Desenvolvido por Armstrong Lohãns em 21-12-2023 01:49:55 | feat: upgrade and fix dependencies
+Desenvolvido por Armstrong Lohãns em 19-12-2023 18:36:19 | feat: Material You color schemes
+Desenvolvido por Armstrong Lohãns em 19-12-2023 18:11:02 | feat: Upgrade to Material You started
