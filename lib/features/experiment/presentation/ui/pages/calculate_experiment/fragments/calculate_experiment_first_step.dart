@@ -19,9 +19,7 @@ import '../../../../viewmodel/calculate_experiment_viewmodel.dart';
 import '../calculate_experiment_fragment_template.dart';
 
 class CalculateExperimentFirstStepPage extends StatefulWidget {
-  const CalculateExperimentFirstStepPage({
-    super.key,
-  });
+  const CalculateExperimentFirstStepPage({super.key});
 
   @override
   State<CalculateExperimentFirstStepPage> createState() =>
@@ -41,9 +39,11 @@ class _CalculateExperimentFirstStepPageState
     _calculateExperimentViewmodel = GetIt.I.get<CalculateExperimentViewmodel>();
 
     choosedEnzyme = _calculateExperimentViewmodel
-        .temporaryChoosedExperimentCombination.enzyme;
+        .temporaryChoosedExperimentCombination
+        .enzyme;
     choosedTreatment = _calculateExperimentViewmodel
-        .temporaryChoosedExperimentCombination.treatment;
+        .temporaryChoosedExperimentCombination
+        .treatment;
 
     WidgetsBinding.instance.addPostFrameCallback((_) => _validateFields());
   }
@@ -57,7 +57,7 @@ class _CalculateExperimentFirstStepPageState
   }
 
   get _treatmentChoiceChip {
-    return FormBuilderChoiceChip<TreatmentEntity>(
+    return FormBuilderChoiceChips<TreatmentEntity>(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: const InputDecoration(
         labelText: 'Selecione o tratamento:',
@@ -65,14 +65,16 @@ class _CalculateExperimentFirstStepPageState
         contentPadding: EdgeInsets.all(0),
       ),
       initialValue: _calculateExperimentViewmodel
-          .temporaryChoosedExperimentCombination.treatment,
+          .temporaryChoosedExperimentCombination
+          .treatment,
       name: 'treatment',
       onChanged: (value) async {
         choosedEnzyme = null;
 
         choosedTreatment = value;
-        await _calculateExperimentViewmodel
-            .getEnzymesRemainingInExperiment(value!.id);
+        await _calculateExperimentViewmodel.getEnzymesRemainingInExperiment(
+          value!.id,
+        );
         _validateFields();
       },
       options: _calculateExperimentViewmodel.experiment.treatments!
@@ -85,9 +87,9 @@ class _CalculateExperimentFirstStepPageState
           .toList(),
       selectedColor: context.getApplyedColorScheme.primaryContainer,
       spacing: 4,
-      validator: FormBuilderValidators.compose(
-        [FormBuilderValidators.required()],
-      ),
+      validator: FormBuilderValidators.compose([
+        FormBuilderValidators.required(),
+      ]),
     );
   }
 
@@ -99,18 +101,21 @@ class _CalculateExperimentFirstStepPageState
         }
 
         return const Text(
-            'Todas as enzimas para este tratamento já foram calculadas!');
+          'Todas as enzimas para este tratamento já foram calculadas!',
+        );
       }
 
-      return FormBuilderChoiceChip<EnzymeEntity>(
+      return FormBuilderChoiceChips<EnzymeEntity>(
         autovalidateMode: AutovalidateMode.onUserInteraction,
         decoration: const InputDecoration(
           labelText: 'Selecione a enzima:',
           border: InputBorder.none,
           contentPadding: EdgeInsets.all(0),
         ),
-        initialValue: _calculateExperimentViewmodel
-                .temporaryChoosedExperimentCombination.enzyme ??
+        initialValue:
+            _calculateExperimentViewmodel
+                .temporaryChoosedExperimentCombination
+                .enzyme ??
             choosedEnzyme,
         name: 'enzyme',
         onChanged: (value) {
@@ -119,9 +124,7 @@ class _CalculateExperimentFirstStepPageState
             EZTSnackBar.show(
               context,
               "Tipo da enzima selecionada: ${Constants.typesOfEnzymesListFormmated[Constants.typesOfEnzymesList.indexOf(value.type)]}",
-              color: Constants.dealWithEnzymeChipColor(
-                value.type,
-              ),
+              color: Constants.dealWithEnzymeChipColor(value.type),
               textStyle: TextStyles(context).titleMinBoldBackground(),
               centerTitle: true,
             );
@@ -144,9 +147,9 @@ class _CalculateExperimentFirstStepPageState
             .toList(),
         selectedColor: context.getApplyedColorScheme.primaryContainer,
         spacing: 4,
-        validator: FormBuilderValidators.compose(
-          [FormBuilderValidators.required()],
-        ),
+        validator: FormBuilderValidators.compose([
+          FormBuilderValidators.required(),
+        ]),
       );
     }
 
@@ -169,11 +172,11 @@ class _CalculateExperimentFirstStepPageState
                 .validate()) {
               _calculateExperimentViewmodel
                   .setTemporaryChoosedExperimentCombination(
-                ChoosedExperimentCombinationDTO(
-                  enzyme: choosedEnzyme,
-                  treatment: choosedTreatment,
-                ),
-              );
+                    ChoosedExperimentCombinationDTO(
+                      enzyme: choosedEnzyme,
+                      treatment: choosedTreatment,
+                    ),
+                  );
 
               await _calculateExperimentViewmodel
                   .generateTextFields(context)
@@ -214,14 +217,17 @@ class _CalculateExperimentFirstStepPageState
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               children: [
-                const SizedBox(
-                  height: 32,
-                ),
+                const SizedBox(height: 32),
                 Visibility(
-                  visible: _calculateExperimentViewmodel
-                          .experiment.treatments!.isNotEmpty &&
+                  visible:
                       _calculateExperimentViewmodel
-                          .experiment.enzymes!.isNotEmpty,
+                          .experiment
+                          .treatments!
+                          .isNotEmpty &&
+                      _calculateExperimentViewmodel
+                          .experiment
+                          .enzymes!
+                          .isNotEmpty,
                   replacement: const EZTNotFound(
                     title: "Experimento inválido!",
                     message:
@@ -231,9 +237,7 @@ class _CalculateExperimentFirstStepPageState
                     children: [
                       Row(
                         children: [
-                          Icon(
-                            PhosphorIcons.flask(),
-                          ),
+                          Icon(PhosphorIcons.flask()),
                           const SizedBox(width: 4),
                           Expanded(
                             child: Text(
@@ -270,9 +274,7 @@ class _CalculateExperimentFirstStepPageState
                     ],
                   ),
                 ),
-                const SizedBox(
-                  height: 64,
-                ),
+                const SizedBox(height: 64),
                 _buttons,
               ],
             ),
