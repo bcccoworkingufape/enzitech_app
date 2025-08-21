@@ -51,18 +51,18 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
     final excel = Excel.createExcel();
 
     final CellStyle colorTreatment = CellStyle(
-      fontColorHex: "#Ffffff",
-      backgroundColorHex: "#67252b",
+      fontColorHex: ExcelColor.fromHexString("#Ffffff"),
+      backgroundColorHex: ExcelColor.fromHexString("#67252b"),
       fontFamily: getFontFamily(FontFamily.Calibri),
     );
     final CellStyle colorHeader = CellStyle(
-      fontColorHex: "#Ffffff",
-      backgroundColorHex: "#9b7276",
+      fontColorHex: ExcelColor.fromHexString("#Ffffff"),
+      backgroundColorHex: ExcelColor.fromHexString("#9b7276"),
       fontFamily: getFontFamily(FontFamily.Calibri),
     );
     final CellStyle colorBottom = CellStyle(
-      fontColorHex: "#1b1b1b",
-      backgroundColorHex: "#c2f7cf",
+      fontColorHex: ExcelColor.fromHexString("#1b1b1b"),
+      backgroundColorHex: ExcelColor.fromHexString("#c2f7cf"),
       fontFamily: getFontFamily(FontFamily.Calibri),
     );
 
@@ -72,52 +72,58 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
 
       for (var treatment in experimentEnzyme.treatments) {
         sheet.insertRowIterables([
-          const TextCellValue('Tratamento:'),
+          TextCellValue('Tratamento:'),
           TextCellValue(treatment.treatment.name),
-          const TextCellValue(''),
-          const TextCellValue(''),
-          const TextCellValue(''),
-          const TextCellValue(''),
-          const TextCellValue(''),
-          const TextCellValue(''),
-          const TextCellValue(''),
-          const TextCellValue(''),
-          const TextCellValue(''),
-          const TextCellValue(''),
+          TextCellValue(''),
+          TextCellValue(''),
+          TextCellValue(''),
+          TextCellValue(''),
+          TextCellValue(''),
+          TextCellValue(''),
+          TextCellValue(''),
+          TextCellValue(''),
+          TextCellValue(''),
+          TextCellValue(''),
         ], rowIndex);
         for (var i = 0; i < 12; i++) {
           sheet
-              .cell(CellIndex.indexByColumnRow(
-                columnIndex: i,
-                rowIndex: rowIndex,
-              ))
-              .cellStyle = colorTreatment;
+                  .cell(
+                    CellIndex.indexByColumnRow(
+                      columnIndex: i,
+                      rowIndex: rowIndex,
+                    ),
+                  )
+                  .cellStyle =
+              colorTreatment;
         }
 
         rowIndex++;
 
         sheet.insertRowIterables([
-          const TextCellValue('Id'),
-          const TextCellValue('Abso. Amostra'),
-          const TextCellValue('Abso. Branco'),
-          const TextCellValue('Diferença A - B'),
-          const TextCellValue('a - Coeficiente Angular da Curva'),
-          const TextCellValue('b - Constante da Equação da Curva'),
-          const TextCellValue('Curva Cálculo'),
-          const TextCellValue('FC - Fator de Correção'),
-          const TextCellValue('Tempo (h)'),
-          const TextCellValue('Volume (Solução do substrato)'),
-          const TextCellValue('Peso da amostra (g)'),
-          const TextCellValue('Resultado'),
+          TextCellValue('Id'),
+          TextCellValue('Abso. Amostra'),
+          TextCellValue('Abso. Branco'),
+          TextCellValue('Diferença A - B'),
+          TextCellValue('a - Coeficiente Angular da Curva'),
+          TextCellValue('b - nte da Equação da Curva'),
+          TextCellValue('Curva Cálculo'),
+          TextCellValue('FC - Fator de Correção'),
+          TextCellValue('Tempo (h)'),
+          TextCellValue('Volume (Solução do substrato)'),
+          TextCellValue('Peso da amostra (g)'),
+          TextCellValue('Resultado'),
         ], rowIndex);
 
         for (var i = 0; i < 12; i++) {
           sheet
-              .cell(CellIndex.indexByColumnRow(
-                columnIndex: i,
-                rowIndex: rowIndex,
-              ))
-              .cellStyle = colorHeader;
+                  .cell(
+                    CellIndex.indexByColumnRow(
+                      columnIndex: i,
+                      rowIndex: rowIndex,
+                    ),
+                  )
+                  .cellStyle =
+              colorHeader;
         }
 
         rowIndex++;
@@ -144,25 +150,31 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
         rowIndex++;
         rowIndex++;
         sheet.insertRowIterables([
-          const TextCellValue('Desenvovido por:'),
-          const TextCellValue('ENZITECH'),
-          const TextCellValue(''),
-          const TextCellValue('👨🏻‍💻 SAIBA MAIS:'),
-          const TextCellValue(
-              'http://bcccoworking.ufape.edu.br/show.project?idProject=6'),
-          const TextCellValue(''),
-          const TextCellValue(''),
-          const TextCellValue(''),
-          const TextCellValue(''),
-          const TextCellValue(''),
-          const TextCellValue(''),
-          const TextCellValue(''),
+          TextCellValue('Desenvovido por:'),
+          TextCellValue('ENZITECH'),
+          TextCellValue(''),
+          TextCellValue('👨🏻‍💻 SAIBA MAIS:'),
+          TextCellValue(
+            'http://bcccoworking.ufape.edu.br/show.project?idProject=6',
+          ),
+          TextCellValue(''),
+          TextCellValue(''),
+          TextCellValue(''),
+          TextCellValue(''),
+          TextCellValue(''),
+          TextCellValue(''),
+          TextCellValue(''),
         ], rowIndex);
         for (var i = 0; i < 12; i++) {
           sheet
-              .cell(CellIndex.indexByColumnRow(
-                  columnIndex: i, rowIndex: rowIndex))
-              .cellStyle = colorBottom;
+                  .cell(
+                    CellIndex.indexByColumnRow(
+                      columnIndex: i,
+                      rowIndex: rowIndex,
+                    ),
+                  )
+                  .cellStyle =
+              colorBottom;
         }
       }
       rowIndex = 0;
@@ -198,16 +210,22 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
   Future<bool> shareFile() async {
     final file = await saveFileToTemporaryDirectory(await exportToExcel());
 
-    await Share.shareXFiles([
-      XFile(file.path,
-          name:
-              'Resultados do experimento "${_experimentDetailsViewmodel.experiment!.name}"')
-    ]);
+    await SharePlus.instance.share(
+      ShareParams(
+        files: [
+          XFile(
+            file.path,
+            name:
+                'Resultados do experimento "${_experimentDetailsViewmodel.experiment!.name}"',
+          ),
+        ],
+      ),
+    );
 
     return true;
   }
 
-  fetch() async {
+  Future<void> fetch() async {
     setStateEnum(StateEnum.loading);
 
     var result = await _getExperimentResultsUseCase(
