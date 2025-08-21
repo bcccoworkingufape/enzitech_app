@@ -25,14 +25,17 @@ class ConnectionCheckerImp implements ConnectionChecker {
 
   @override
   void initialize() {
-    _connectivity.onConnectivityChanged.listen(_connectionChange);
+    _connectivity.onConnectivityChanged.listen(_connectionChangeList);
   }
 
   ConnectionCheckerImp();
 
-  //flutter_connectivity's listener
-  void _connectionChange(ConnectivityResult result) {
-    hasInternetInternetConnection();
+  //flutter_connectivity's listener for List<ConnectivityResult>
+  void _connectionChangeList(List<ConnectivityResult> results) {
+    // You can handle multiple results if needed, here we just check the first one
+    if (results.isNotEmpty) {
+      hasInternetInternetConnection();
+    }
   }
 
   @override
@@ -41,12 +44,15 @@ class ConnectionCheckerImp implements ConnectionChecker {
   @override
   Future<bool> hasInternetInternetConnection() async {
     bool previousConnection = hasConnection;
-    var connectivityResult = await (Connectivity().checkConnectivity());
+
+    final List<ConnectivityResult> connectivityResult = await (Connectivity()
+        .checkConnectivity());
+
     //Check if device is just connect with mobile network or wifi
-    if (connectivityResult == ConnectivityResult.mobile ||
-        connectivityResult == ConnectivityResult.wifi) {
+    if (connectivityResult.contains(ConnectivityResult.mobile) ||
+        connectivityResult.contains(ConnectivityResult.wifi)) {
       //Check there is actual internet connection with a mobile network or wifi
-      if (await InternetConnectionChecker().hasConnection) {
+      if (await InternetConnectionChecker.createInstance().hasConnection) {
         // Network data detected & internet connection confirmed.
         hasConnection = true;
       } else {
