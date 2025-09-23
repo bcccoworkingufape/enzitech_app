@@ -24,38 +24,33 @@ import 'shared/ui/ui.dart';
 import 'shared/utils/utils.dart';
 
 Future<void> main() async {
-  runZonedGuarded(
-    () async {
-      WidgetsFlutterBinding.ensureInitialized();
+  runZonedGuarded(() async {
+    WidgetsFlutterBinding.ensureInitialized();
 
-      await Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform,
-      );
+    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-      var keyValueService = SharedPrefsServiceImp();
-      var userPreferencesService = UserPreferencesServicesImp(keyValueService);
+    var keyValueService = SharedPrefsServiceImp();
+    var userPreferencesService = UserPreferencesServicesImp(keyValueService);
 
-      String token = await userPreferencesService.getToken() ?? '';
+    String token = await userPreferencesService.getToken() ?? '';
 
-      API.setEnvironment(EnvironmentEnum.prod);
+    API.setEnvironment(EnvironmentEnum.dev);
 
-      final HttpDriverOptions httpDriverOptions = HttpDriverOptions(
-        accessToken: () {
-          return token;
-        },
-        baseUrl: () => API.apiBaseUrl,
-      );
+    final HttpDriverOptions httpDriverOptions = HttpDriverOptions(
+      accessToken: () {
+        return token;
+      },
+      baseUrl: () => API.apiBaseUrl,
+    );
 
-      Inject.initialize(httpDriverOptions);
+    Inject.initialize(httpDriverOptions);
 
-      FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
-      await GetIt.I.get<SettingsViewmodel>().updateThemeMode();
+    await GetIt.I.get<SettingsViewmodel>().updateThemeMode();
 
-      runApp(const MyApp());
-    },
-    (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack),
-  );
+    runApp(const MyApp());
+  }, (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack));
 }
 
 class MyApp extends StatefulWidget {
@@ -90,14 +85,8 @@ class _MyAppState extends State<MyApp> {
             title: 'Enzitech',
             debugShowCheckedModeBanner: false,
             themeMode: _settingsViewmodel.themeMode,
-            theme: ThemeData(
-              useMaterial3: true,
-              colorScheme: AppColors.lightColorScheme,
-            ),
-            darkTheme: ThemeData(
-              useMaterial3: true,
-              colorScheme: AppColors.darkColorScheme,
-            ),
+            theme: ThemeData(useMaterial3: true, colorScheme: AppColors.lightColorScheme),
+            darkTheme: ThemeData(useMaterial3: true, colorScheme: AppColors.darkColorScheme),
             initialRoute: Routing.initial,
             onGenerateRoute: Routing.generateRoute,
             localizationsDelegates: const [
@@ -106,9 +95,7 @@ class _MyAppState extends State<MyApp> {
               GlobalWidgetsLocalizations.delegate,
               FormBuilderLocalizations.delegate,
             ],
-            supportedLocales: const [
-              ...FormBuilderLocalizations.supportedLocales,
-            ],
+            supportedLocales: const [...FormBuilderLocalizations.supportedLocales],
           );
         },
       ),

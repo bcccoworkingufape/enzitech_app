@@ -31,13 +31,9 @@ class API {
   }
 
   //-> SETUP
-  static Map<String, dynamic> devConstants = {
-    _baseUrl: "http://191.101.78.251:3010/",
-  };
+  static Map<String, dynamic> devConstants = {_baseUrl: "https://enzitech.onrender.com"};
 
-  static Map<String, dynamic> prodConstants = {
-    _baseUrl: "http://200.133.6.201:30001/",
-  };
+  static Map<String, dynamic> prodConstants = {_baseUrl: "http://200.133.6.201:30001/"};
 
   //-> AUTHENTICATION
   /// Route to '/auth'
@@ -50,8 +46,7 @@ class API {
   static const REQUEST_RECOVER_EMAIL = '$_REQUEST_AUTH/send-recover-email';
 
   /// Route to '/auth/send-recover-email/$token'
-  static String REQUEST_RESET_PASSWORD(String token) =>
-      '$REQUEST_RECOVER_EMAIL/$token';
+  static String REQUEST_RESET_PASSWORD(String token) => '$REQUEST_RECOVER_EMAIL/$token';
 
   //-> USER
   /// Route to '/users'
@@ -72,24 +67,20 @@ class API {
   static const REQUEST_TREATMENTS = '/processes';
 
   /// Route to '/processes/$id'
-  static String REQUEST_TREATMENTS_WITH_ID(String id) =>
-      '$REQUEST_TREATMENTS/$id';
+  static String REQUEST_TREATMENTS_WITH_ID(String id) => '$REQUEST_TREATMENTS/$id';
 
   //-> EXPERIMENTS
   /// Route to '/experiments'
   static const REQUEST_EXPERIMENTS = '/experiments';
 
   /// Route to '/experiments/$id'
-  static String REQUEST_EXPERIMENTS_WITH_ID(String id) =>
-      '$REQUEST_EXPERIMENTS/$id';
+  static String REQUEST_EXPERIMENTS_WITH_ID(String id) => '$REQUEST_EXPERIMENTS/$id';
 
   /// Route to '/experiments/calculate/$experiment'
-  static String REQUEST_CALCULATE_EXPERIMENTS(String experiment) =>
-      '$REQUEST_EXPERIMENTS/calculate/$experiment';
+  static String REQUEST_CALCULATE_EXPERIMENTS(String experiment) => '$REQUEST_EXPERIMENTS/calculate/$experiment';
 
   /// Route to '/experiments/save-result/$experiment'
-  static String REQUEST_SAVE_RESULT_EXPERIMENTS(String experiment) =>
-      '$REQUEST_EXPERIMENTS/save-result/$experiment';
+  static String REQUEST_SAVE_RESULT_EXPERIMENTS(String experiment) => '$REQUEST_EXPERIMENTS/save-result/$experiment';
 
   /// Route to '/experiments/save-result/$experiment'
   static String REQUEST_GET_RESULT_EXPERIMENTS(String experiment) =>
