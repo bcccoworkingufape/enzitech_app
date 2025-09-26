@@ -1,6 +1,8 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
+import '../../../../../../l10n/app_localizations.dart';
+
 // 🌎 Project imports:
 import 'ezt_create_experiment_step_indicator.dart';
 

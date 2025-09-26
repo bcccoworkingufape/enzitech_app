@@ -1,6 +1,8 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
+import '../../../../../../../l10n/app_localizations.dart';
+
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -74,11 +76,13 @@ class _CreateExperimentFirstStepPageState
   }
 
   Widget get _nameInput {
+
+    final l10n = AppLocalizations.of(context)!;
     final fieldValidator = FieldValidator(_validations, context);
 
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,
-      labelText: "Nome",
+      labelText: l10n.nameLabel,
       usePrimaryColorOnFocusedBorder: true,
       keyboardType: TextInputType.name,
       controller: _nameFieldController,
@@ -88,11 +92,13 @@ class _CreateExperimentFirstStepPageState
   }
 
   Widget get _descriptionInput {
+
+    final l10n = AppLocalizations.of(context)!;
     final fieldValidator = FieldValidator(_validations, context);
 
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,
-      labelText: "Descrição",
+      labelText: l10n.descriptionLabel,
       usePrimaryColorOnFocusedBorder: true,
       keyboardType: TextInputType.name,
       controller: _descriptionFieldController,
@@ -112,11 +118,12 @@ class _CreateExperimentFirstStepPageState
   }
 
   Widget get _buttons {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       children: [
         EZTButton(
           enabled: _createExperimentViewmodel.enableNextButtonOnFirstStep,
-          text: 'Próximo',
+          text: l10n.nextButton,
           onPressed: () {
             _createExperimentViewmodel.formKey.currentState!.save();
 
@@ -138,7 +145,7 @@ class _CreateExperimentFirstStepPageState
         ),
         const SizedBox(height: 16),
         EZTButton(
-          text: 'Voltar',
+          text: l10n.backButton,
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
             _createExperimentViewmodel.onBack(mounted, context);
@@ -150,9 +157,10 @@ class _CreateExperimentFirstStepPageState
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return CreateExperimentFragmentTemplate(
-      titleOfStepIndicator: "Cadastre um novo experimento",
-      messageOfStepIndicator: "Etapa 1 de 4 - Identificação",
+      titleOfStepIndicator: l10n.registerNewExperiment,
+      messageOfStepIndicator: l10n.stepIndicatorIdentification(1, 4),
       body: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(
           parent: BouncingScrollPhysics(),
@@ -170,7 +178,7 @@ class _CreateExperimentFirstStepPageState
                 ),
                 const SizedBox(width: 4),
                 Text(
-                  'Identificação do experimento',
+                  l10n.experimentIdentification,
                   style: TextStyles.detailBold,
                 ),
               ],

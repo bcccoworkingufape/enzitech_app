@@ -13,6 +13,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import '../../../../../../l10n/app_localizations.dart';
 
 // 🌎 Project imports:
 import '../../../../../../core/domain/service/connection_checker/connection_checker.dart';
@@ -79,6 +80,8 @@ class _HomePageState extends State<HomePage>
         _connectionChecker.connectionChange.listen((event) {
       _homeViewmodel.setHasInternetConnection(event);
 
+      final l10n = AppLocalizations.of(context)!;
+
       if (!_homeViewmodel.hasInternetConnection) {
         EZTSnackBar.clear(context);
         noInternet(context);
@@ -87,7 +90,7 @@ class _HomePageState extends State<HomePage>
           EZTSnackBar.clear(context);
           EZTSnackBar.show(
             context,
-            "✓ Conexão reestabelecida",
+            l10n.connectionRestored,
             centerTitle: true,
             eztSnackBarType: EZTSnackBarType.success,
           );
@@ -101,6 +104,9 @@ class _HomePageState extends State<HomePage>
 
       _homeViewmodel.addListener(
         () {
+
+          final l10n = AppLocalizations.of(context)!;
+
           if (_homeViewmodel.state == StateEnum.error) {
             EZTSnackBar.show(
               context,
@@ -116,7 +122,7 @@ class _HomePageState extends State<HomePage>
                 if (_accountViewmodel.state == StateEnum.success && mounted) {
                   EZTSnackBar.show(
                     context,
-                    "Faça seu login novamente.",
+                    l10n.loginAgain,
                   );
                   await Future.delayed(const Duration(milliseconds: 500));
                   if (mounted) {
@@ -239,9 +245,13 @@ class _HomePageState extends State<HomePage>
       );
 
   Widget? get dealWithFloatingActionButton {
+
+    if (_scaffold.currentContext == null) return null;
+    final l10n = AppLocalizations.of(_scaffold.currentContext!)!;
+
     if (_homeViewmodel.fragmentIndex == 0 && _isVisibleExperimentButton) {
       return _floatingActionButton(
-        "Cadastrar\nexperimento",
+          l10n.registerExperiment,
         () {
           Navigator.pushNamed(
             context,
@@ -253,7 +263,7 @@ class _HomePageState extends State<HomePage>
 
     if (_homeViewmodel.fragmentIndex == 1 && _isVisibleTreatmentButton) {
       return _floatingActionButton(
-        "Cadastrar\ntratamento",
+        l10n.registerTreatment,
         () {
           Navigator.pushNamed(
             context,
@@ -268,7 +278,7 @@ class _HomePageState extends State<HomePage>
           _accountViewmodel.user!.userType == UserTypeEnum.admin &&
           _isVisibleEnzymeButton) {
         return _floatingActionButton(
-          "Cadastrar\nenzima",
+          l10n.registerEnzyme,
           () {
             Navigator.pushNamed(
               context,
@@ -283,10 +293,11 @@ class _HomePageState extends State<HomePage>
     return null;
   }
 
-  static noInternet(context) {
+  static noInternet(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return EZTSnackBar.show(
       context,
-      "⚠ Sem conexão com o servidor: Você está visualizando informações previamente carregadas e sem atualizações, quaisquer mudanças offline não serão mantidas!",
+      l10n.noInternetWarning,
       eztSnackBarType: EZTSnackBarType.error,
       duration: const Duration(seconds: 10),
     );
@@ -294,6 +305,8 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return ListenableBuilder(
       listenable: _homeViewmodel,
       builder: (context, child) {
@@ -366,19 +379,19 @@ class _HomePageState extends State<HomePage>
             destinations: [
               NavigationDestination(
                 icon: Icon(PhosphorIcons.flask()),
-                label: 'Experimentos',
+                  label: l10n.experiments,
               ),
               NavigationDestination(
                 icon: Icon(PhosphorIcons.testTube()),
-                label: 'Tratamentos',
+                label: l10n.treatments,
               ),
               NavigationDestination(
                 icon: Icon(PhosphorIcons.atom()),
-                label: 'Enzimas',
+                label: l10n.enzymes,
               ),
               NavigationDestination(
                 icon: Icon(PhosphorIcons.gear()),
-                label: 'Configurações',
+                label: l10n.settings,
               ),
             ],
           ),

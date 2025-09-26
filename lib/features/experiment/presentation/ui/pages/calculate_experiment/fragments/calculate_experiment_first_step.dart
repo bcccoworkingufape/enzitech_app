@@ -1,5 +1,9 @@
 // 🐦 Flutter imports:
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+
+import '../../../../../../../l10n/app_localizations.dart';
 
 // 📦 Package imports:
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -57,10 +61,11 @@ class _CalculateExperimentFirstStepPageState
   }
 
   get _treatmentChoiceChip {
+    final l10n = AppLocalizations.of(context)!;
     return FormBuilderChoiceChips<TreatmentEntity>(
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      decoration: const InputDecoration(
-        labelText: 'Selecione o tratamento:',
+      decoration: InputDecoration(
+        labelText: l10n.selectTreatment,
         border: InputBorder.none,
         contentPadding: EdgeInsets.all(0),
       ),
@@ -94,21 +99,20 @@ class _CalculateExperimentFirstStepPageState
   }
 
   get _enzymeChoiceChip {
+    final l10n = AppLocalizations.of(context)!;
     if (choosedTreatment != null) {
       if (_calculateExperimentViewmodel.enzymesRemaining.isEmpty) {
         if (_calculateExperimentViewmodel.state == StateEnum.loading) {
-          return const Text('Carregando enzimas disponíveis...');
+          return Text(l10n.loadingAvailableEnzymes);
         }
 
-        return const Text(
-          'Todas as enzimas para este tratamento já foram calculadas!',
-        );
+        return Text(l10n.allEnzymesCalculated);
       }
 
       return FormBuilderChoiceChips<EnzymeEntity>(
         autovalidateMode: AutovalidateMode.onUserInteraction,
-        decoration: const InputDecoration(
-          labelText: 'Selecione a enzima:',
+        decoration: InputDecoration(
+          labelText: l10n.selectEnzyme,
           border: InputBorder.none,
           contentPadding: EdgeInsets.all(0),
         ),
@@ -123,7 +127,8 @@ class _CalculateExperimentFirstStepPageState
             EZTSnackBar.clear(context);
             EZTSnackBar.show(
               context,
-              "Tipo da enzima selecionada: ${Constants.typesOfEnzymesListFormmated[Constants.typesOfEnzymesList.indexOf(value.type)]}",
+              l10n.selectedEnzymeType(Constants.typesOfEnzymesListFormmated[
+              Constants.typesOfEnzymesList.indexOf(value.type)]),
               color: Constants.dealWithEnzymeChipColor(value.type),
               textStyle: TextStyles(context).titleMinBoldBackground(),
               centerTitle: true,
@@ -157,11 +162,12 @@ class _CalculateExperimentFirstStepPageState
   }
 
   Widget get _buttons {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       children: [
         EZTButton(
           enabled: _calculateExperimentViewmodel.enableNextButtonOnFirstStep,
-          text: 'Próximo',
+          text: l10n.nextButton,
           loading: _calculateExperimentViewmodel.state == StateEnum.loading
               ? true
               : false,
@@ -192,7 +198,7 @@ class _CalculateExperimentFirstStepPageState
         ),
         const SizedBox(height: 16),
         EZTButton(
-          text: 'Voltar',
+          text: l10n.backButton,
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
             _calculateExperimentViewmodel.onBack(mounted, context);
@@ -204,12 +210,16 @@ class _CalculateExperimentFirstStepPageState
 
   @override
   Widget build(BuildContext context) {
+
+    final l10n = AppLocalizations.of(context)!;
+
     return ListenableBuilder(
       listenable: _calculateExperimentViewmodel,
       builder: (context, child) {
         return CalculateExperimentFragmentTemplate(
-          titleOfStepIndicator: "Inserir dados no experimento",
-          messageOfStepIndicator: "Etapa 1 de 3 - Identificação",
+          titleOfStepIndicator: l10n.insertExperimentData,
+          messageOfStepIndicator: l10n.stepIndicatorMessage(1, 3),
+
           body: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(
               parent: BouncingScrollPhysics(),
@@ -228,10 +238,9 @@ class _CalculateExperimentFirstStepPageState
                           .experiment
                           .enzymes!
                           .isNotEmpty,
-                  replacement: const EZTNotFound(
-                    title: "Experimento inválido!",
-                    message:
-                        "Não é possível prosseguir sem dados de tratamento(s) e/ou enzima(s)",
+                  replacement: EZTNotFound(
+                    title: l10n.invalidExperimentTitle,
+                    message: l10n.invalidExperimentMessage,
                   ),
                   child: Column(
                     children: [
@@ -241,7 +250,7 @@ class _CalculateExperimentFirstStepPageState
                           const SizedBox(width: 4),
                           Expanded(
                             child: Text(
-                              'Escolha o tratamento e a enzima para inserir os dados',
+                              l10n.chooseTreatmentAndEnzyme,
                               style: TextStyles.detailBold,
                               textAlign: TextAlign.left,
                             ),

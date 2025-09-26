@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../../../../../l10n/app_localizations.dart';
+
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:group_button/group_button.dart';
@@ -95,6 +97,7 @@ class _CreateExperimentSecondStepPageState
   }
 
   Widget get _repetitionsInput {
+    final l10n = AppLocalizations.of(context)!;
     final validations = <ValidateRule>[
       ValidateRule(
         ValidateTypes.required,
@@ -111,7 +114,7 @@ class _CreateExperimentSecondStepPageState
 
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,
-      labelText: "Quantidade de repetições por tratamento",
+      labelText: l10n.repetitionsPerTreatmentLabel,
       usePrimaryColorOnFocusedBorder: true,
       keyboardType: TextInputType.number,
       controller: _repetitionsFieldController,
@@ -132,11 +135,12 @@ class _CreateExperimentSecondStepPageState
   }
 
   Widget get _buttons {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       children: [
         if (_checkboxButtons.isEmpty) ...[
           EZTButton(
-            text: 'Ir para tratamentos',
+            text: l10n.goToTreatmentsButton,
             onPressed: () {
               GetIt.I.get<HomeViewmodel>().setFragmentIndex(1);
               _createExperimentViewmodel
@@ -148,7 +152,7 @@ class _CreateExperimentSecondStepPageState
         ],
         EZTButton(
           enabled: _createExperimentViewmodel.enableNextButtonOnSecondStep,
-          text: 'Próximo',
+          text: l10n.nextButton,
           onPressed: () {
             _createExperimentViewmodel.formKey.currentState!.save();
 
@@ -173,7 +177,7 @@ class _CreateExperimentSecondStepPageState
         ),
         const SizedBox(height: 16),
         EZTButton(
-          text: 'Voltar',
+          text: l10n.backButton,
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
             _createExperimentViewmodel.onBack(mounted, context);
@@ -185,9 +189,10 @@ class _CreateExperimentSecondStepPageState
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return CreateExperimentFragmentTemplate(
-      titleOfStepIndicator: "Cadastre um novo experimento",
-      messageOfStepIndicator: "Etapa 2 de 4 - Tratamentos e Repetições",
+      titleOfStepIndicator: l10n.registerNewExperiment,
+      messageOfStepIndicator: l10n.stepIndicatorTreatments(2, 4),
       body: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(
           parent: BouncingScrollPhysics(),
@@ -205,18 +210,17 @@ class _CreateExperimentSecondStepPageState
                 ),
                 const SizedBox(width: 4),
                 Text(
-                  'Dados dos tratamentos e repetições',
+                  l10n.treatmentsAndRepetitionsData,
                   style: TextStyles.detailBold,
                 ),
               ],
             ),
             Visibility(
               visible: _checkboxButtons.isNotEmpty,
-              replacement: const Padding(
+              replacement: Padding(
                 padding: EdgeInsets.only(top: 8.0),
                 child: EZTError(
-                  message:
-                      "Nenhum tratamento cadastrado! É necessário pelo menos um tratamento para prosseguir.",
+                  message: l10n.noTreatmentsRegisteredError,
                 ),
               ),
               child: GroupButton(

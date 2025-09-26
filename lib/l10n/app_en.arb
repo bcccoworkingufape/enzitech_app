@@ -1,0 +1,290 @@
+{
+  "@@locale": "en",
+  "connectionRestored": "✓ Connection restored",
+  "loginAgain": "Log in again.",
+  "registerExperiment": "Register\n Experiment",
+  "registerTreatment": "Register\n Treatment",
+  "registerEnzyme": "Register\n Enzyme",
+  "noInternetWarning": "⚠ No connection to the server: You are viewing previously loaded and un-updated information, any offline changes will not be maintained!",
+  "experiments": "Experiments",
+  "treatments": "Treatments",
+  "enzymes": "Enzymes",
+  "settings": "Settings",
+  "info": "Info",
+  "about": "About Enzitech",
+  "frequentlyAskedQuestions": "FAQ",
+  "userData": "User Data",
+  "userName": "Name",
+  "email": "E-mail",
+  "userType": "User Role",
+  "roles": "{role, select, admin{Administrator} common{Common} other{Common}}",
+  "@roles": {
+    "description": "Users roles into the app",
+    "placeholders": {
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "deletionConfirmation": "Deletion confirmation",
+  "theme": "Theme",
+  "details": "Details about Enzitech",
+  "environment": "Environment",
+  "version": "Version",
+  "exit": "Exit",
+  "seeYouSoon": "See you soon...",
+
+  "aboutTitle": "About:",
+  "idealizationTitle": "Idealization",
+  "developmentTeamTitle": "Development Team",
+  "closeButton": "Close",
+
+  "idealizationTextP1": " was conceived as a solution for the study and realization of experiments in the field of soil enzymatic activities, idealized in conjunction with the ",
+  "idealizationTextP2": " and the ",
+  "idealizationTextP3": ", located at the ",
+
+  "roleMobileDeveloper": "(Mobile developer)",
+  "roleBackendDeveloper": "(Back-end developer)",
+  "roleProjectManagement": "(Project Management)",
+  "roleProfessorBCC": "(Professor - BCC)",
+  "roleProfessorAgronomy": "(Professor - Agronomy)",
+
+  "question": "Question: ",
+  "question1": "I'm unable to create an enzyme. Why?",
+  "answer": "Answer: ",
+  "answer1": "Creating new enzymes is a feature limited to administrators. Currently, adding a new enzyme to the system requires implementation by our team. Should you need a new enzyme type, please send a request to the system administrator.",
+
+  "selectTreatment": "Select Treatment: ",
+  "loadingAvailableEnzymes": "Loading available enzymes...",
+  "allEnzymesCalculated": "All enzymes for this treatment have already been calculated!",
+  "selectEnzyme": "Select enzyme: ",
+  "selectedEnzymeType": "Selected enzyme type: {enzymeType}",
+  "@selectedEnzymeType": {
+    "placeholders": {
+      "enzymeType": {
+        "type": "String"
+      }
+    }
+  },
+  "nextButton": "Next",
+  "backButton": "Back",
+  "insertExperimentData": "Insert data into experiment",
+  "stepIndicatorMessage": "Step {currentStep} of {totalSteps} - Identification",
+  "@stepIndicatorMessage": {
+    "placeholders": {
+      "currentStep": {
+        "type": "int"
+      },
+      "totalSteps": {
+        "type": "int"
+      }
+    }
+  },
+  "invalidExperimentTitle": "Invalid experiment!",
+  "invalidExperimentMessage": "It is not possible to proceed without treatment(s) and/or enzyme(s) data",
+  "chooseTreatmentAndEnzyme": "Choose the treatment and enzyme to insert the data",
+
+  "calculateButton": "Calculate",
+
+  "stepIndicatorMessageFilling": "Step {currentStep} of {totalSteps} - Filling and calculation",
+  "@stepIndicatorMessageFilling": {
+    "placeholders": {
+      "currentStep": {
+        "type": "int"
+      },
+      "totalSteps": {
+        "type": "int"
+      }
+    }
+  },
+
+  "repetitionDataTitle": "Data for repetition #{repetitionNumber}",
+  "@repetitionDataTitle": {
+    "placeholders": {
+      "repetitionNumber": {
+        "type": "int"
+      }
+    }
+  },
+
+  "saveAndExitButton": "Save and exit",
+  "recalculateButton": "Recalculate",
+  "repetitionLabel": "Repetition {repetitionNumber}:",
+  "@repetitionLabel": {
+    "placeholders": {
+      "repetitionNumber": {
+        "type": "int"
+      }
+    }
+  },
+  "discrepantRepetitionWarning": "This repetition is discrepant!\n\nIts value differs by more than 25% from the average of all repetitions.\n\nIf you want to change it, just press \"Recalculate\".",
+  "average": "Average:",
+  "repetitionColumnTitle": "REPETITION",
+  "resultColumnTitle": "RESULT",
+  "statusColumnTitle": "STATUS",
+  "stepIndicatorMessageResults": "Step {currentStep} of {totalSteps} - Results",
+  "@stepIndicatorMessageResults": {
+    "placeholders": {
+      "currentStep": {
+        "type": "int"
+      },
+      "totalSteps": {
+        "type": "int"
+      }
+    }
+  },
+
+  "nameLabel": "Name",
+  "descriptionLabel": "Description",
+  "registerNewExperiment": "Register a new experiment",
+  "experimentIdentification": "Experiment Identification",
+  "stepIndicatorIdentification": "Step {currentStep} of {totalSteps} - Identification",
+  "@stepIndicatorIdentification": {
+    "placeholders": {
+      "currentStep": {
+        "type": "int"
+      },
+      "totalSteps": {
+        "type": "int"
+      }
+    }
+  },
+
+  "repetitionsPerTreatmentLabel": "Number of repetitions per treatment",
+  "goToTreatmentsButton": "Go to treatments",
+  "treatmentsAndRepetitionsData": "Treatments and Repetitions Data",
+  "noTreatmentsRegisteredError": "No treatments registered! At least one treatment is required to proceed.",
+  "stepIndicatorTreatments": "Step {currentStep} of {totalSteps} - Treatments and Repetitions",
+  "@stepIndicatorTreatments": {
+    "placeholders": {
+      "currentStep": {
+        "type": "int"
+      },
+      "totalSteps": {
+        "type": "int"
+      }
+    }
+  },
+
+  "experimentEnzymes": "Experiment Enzymes",
+  "enzymeTypeIs": "Enzyme type: {enzymeType}",
+  "@enzymeTypeIs": {
+    "placeholders": {
+      "enzymeType": {
+        "type": "String"
+      }
+    }
+  },
+  "stepIndicatorEnzymes": "Step {currentStep} of {totalSteps} - Enzymes",
+  "@stepIndicatorEnzymes": {
+    "placeholders": {
+      "currentStep": {
+        "type": "int"
+      },
+      "totalSteps": {
+        "type": "int"
+      }
+    }
+  },
+
+  "variableA": "Variable A",
+  "variableB": "Variable B",
+  "timeHours": "Time (h)",
+  "solutionVolume": "Solution Volume",
+  "sampleWeightGrams": "Sample Weight (g)",
+  "correctionFactor": "Correction Factor",
+  "curveInformation": "Curve Information:",
+  "otherVariables": "Other Variables:",
+  "createExperimentButton": "Create Experiment",
+  "stepIndicatorFillVariables": "Step {currentStep} of {totalSteps} - Fill variables",
+  "@stepIndicatorFillVariables": {
+    "placeholders": {
+      "currentStep": {
+        "type": "int"
+      },
+      "totalSteps": {
+        "type": "int"
+      }
+    }
+  },
+
+  "repetitions": "Repetitions",
+  "noData": "No data!",
+  "errorLoadingExperiment": "Error loading experiment \"{experimentName}\"",
+  "@errorLoadingExperiment": {
+    "placeholders": {
+      "experimentName": {
+        "type": "String"
+      }
+    }
+  },
+  "loadingExperiment": "Loading experiment...",
+  "tapToSeeMore": "Tap to see more information",
+  "tapToHide": "Tap to hide information",
+  "enzymaticCalculation": "Enzymatic Calculation",
+  "results": "Results",
+  "experimentDetails": "Experiment Details",
+  "experimentDeleted": "{experimentName} deleted!",
+  "@experimentDeleted": {
+    "placeholders": {
+      "experimentName": {
+        "type": "String"
+      }
+    }
+  },
+
+  "loadingResults": "Loading results...",
+  "experimentHeader": "Experiment: {experimentName}",
+  "@experimentHeader": {
+    "placeholders": {
+      "experimentName": {
+        "type": "String"
+      }
+    }
+  },
+  "enzymeTypeHeader": "Type: {enzymeType} ({formula})",
+  "@enzymeTypeHeader": {
+    "placeholders": {
+      "enzymeType": {
+        "type": "String"
+      },
+      "formula": {
+        "type": "String"
+      }
+    }
+  },
+  "treatmentLabel": "Treatment",
+  "shareFileError": "Could not share the file, please try again.",
+  "spreadsheetSavedSuccess": "Spreadsheet saved successfully!",
+  "spreadsheetSaveError": "Could not save the spreadsheet, please try again.",
+
+  "columnId": "ID",
+  "columnSample": "Sample",
+  "columnWhiteSampleShort": "W. Sample",
+  "columnWhiteSampleTooltip": "White Sample",
+  "columnDifference": "Difference",
+  "columnCurve": "Curve",
+  "columnCorrectionFactorShort": "C. Factor",
+  "columnVolume": "Volume",
+  "columnSampleWeightShort": "S. Weight",
+  "columnSampleWeightTooltip": "Sample Weight",
+  "columnResult": "Result",
+
+  "errorLoadingExperiments": "Error loading experiments",
+  "loadingExperiments": "Loading experiments...",
+  "experimentsNotFound": "Experiments not found",
+  "undo": "Undo",
+  "delete": "Delete",
+  "allExperimentsDisplayed": "All experiments displayed!",
+  "inProgress": "In Progress",
+  "completed": "Completed",
+  "experimentsFound": "🔬 {count, plural, =0{No experiments found} =1{1 experiment found} other{{count} experiments found}}",
+  "@experimentsFound": {
+    "description": "A message that shows the number of experiments found",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
+}

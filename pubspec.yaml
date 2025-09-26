@@ -51,7 +51,7 @@ dependencies:
   google_fonts: ^6.1.0
   group_button: ^5.2.2
   internet_connection_checker: ^3.0.1
-  intl: ^0.20.2
+  intl: any
   package_info_plus: ^8.3.1
   path_provider: ^2.0.14
   percent_indicator: ^4.2.2
@@ -119,6 +119,8 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+  generate: true
 
   # To add assets to your application, add an assets section, like this:
   assets:

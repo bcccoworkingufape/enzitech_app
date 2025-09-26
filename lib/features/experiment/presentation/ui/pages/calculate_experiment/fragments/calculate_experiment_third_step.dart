@@ -1,6 +1,8 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
+import '../../../../../../../l10n/app_localizations.dart';
+
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -44,11 +46,12 @@ class _CalculateExperimentThirdStepPageState
   }
 
   Widget get _buttons {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       children: [
         EZTButton(
           enabled: _calculateExperimentViewmodel.enableNextButtonOnSecondStep,
-          text: 'Salvar e sair',
+          text: l10n.saveAndExitButton,
           loading: _calculateExperimentViewmodel.state == StateEnum.loading,
           onPressed: () async {
             await _calculateExperimentViewmodel
@@ -61,7 +64,7 @@ class _CalculateExperimentThirdStepPageState
         ),
         const SizedBox(height: 16),
         EZTButton(
-          text: 'Recalcular',
+          text: l10n.recalculateButton,
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
             _calculateExperimentViewmodel.onBack(mounted, context);
@@ -72,13 +75,14 @@ class _CalculateExperimentThirdStepPageState
   }
 
   TableRow _buildTableRow(num result, int iteration) {
+    final l10n = AppLocalizations.of(context)!;
     return TableRow(
       decoration: const UnderlineTabIndicator(borderSide: BorderSide()),
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 4.0),
           child: Text(
-            "Repetição ${iteration + 1}:",
+            l10n.repetitionLabel(iteration + 1),
             style: TextStyles.bodyBold,
           ),
         ),
@@ -103,7 +107,7 @@ class _CalculateExperimentThirdStepPageState
                 EZTSnackBar.clear(context);
                 EZTSnackBar.show(
                   context,
-                  'Esta repetição está discrepante!\n\nO valor dela difere acima de 25% da média de todos as repetições.\n\nCaso queira mudar, basta pressionar "Recalcular".',
+                  l10n.discrepantRepetitionWarning,
                   textStyle: TextStyles(context).titleMinBoldBackground(),
                   centerTitle: true,
                   eztSnackBarType: EZTSnackBarType.error,
@@ -130,6 +134,7 @@ class _CalculateExperimentThirdStepPageState
   }
 
   List<TableRow> _buildAverageRow(num number) {
+    final l10n = AppLocalizations.of(context)!;
     return [
       const TableRow(
         children: [
@@ -141,7 +146,7 @@ class _CalculateExperimentThirdStepPageState
       TableRow(
         children: [
           Text(
-            "Média:",
+            l10n.average,
             style: TextStyles.bodyBold,
           ),
           Text(
@@ -155,19 +160,20 @@ class _CalculateExperimentThirdStepPageState
   }
 
   List<TableRow> _buildTitleRow() {
+    final l10n = AppLocalizations.of(context)!;
     return [
       TableRow(
         children: [
           Text(
-            "REPETIÇÃO",
+            l10n.repetitionColumnTitle,
             style: TextStyles.bodyBold,
           ),
           Text(
-            "RESULTADO",
+            l10n.resultColumnTitle,
             style: TextStyles.bodyBold,
           ),
           Text(
-            "STATUS",
+            l10n.statusColumnTitle,
             style: TextStyles.bodyBold,
           ),
         ],
@@ -184,12 +190,13 @@ class _CalculateExperimentThirdStepPageState
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return ListenableBuilder(
       listenable: _calculateExperimentViewmodel,
       builder: (context, child) {
         return CalculateExperimentFragmentTemplate(
-          titleOfStepIndicator: "Inserir dados no experimento",
-          messageOfStepIndicator: "Etapa 3 de 3 - Resultados",
+          titleOfStepIndicator: l10n.insertExperimentData,
+          messageOfStepIndicator: l10n.stepIndicatorMessageResults(3,3),
           body: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(
               parent: BouncingScrollPhysics(),
