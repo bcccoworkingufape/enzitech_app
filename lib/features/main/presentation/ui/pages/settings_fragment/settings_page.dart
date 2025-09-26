@@ -9,6 +9,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import '../../../../../../l10n/app_localizations.dart';
 
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
@@ -44,6 +45,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
     if (mounted) {
       _settingsViewmodel.addListener(() async {
+        final l10n = AppLocalizations.of(context)!;
         if (_settingsViewmodel.state == StateEnum.error) {
           EZTSnackBar.show(
             context,
@@ -56,7 +58,7 @@ class _SettingsPageState extends State<SettingsPage> {
             _settingsViewmodel.user == null &&
             mounted) {
           EZTSnackBar.clear(context);
-          EZTSnackBar.show(context, "Até logo...");
+          EZTSnackBar.show(context, l10n.seeYouSoon);
           await Future.delayed(const Duration(milliseconds: 250));
           if (mounted) {
             SchedulerBinding.instance.addPostFrameCallback((_) {
@@ -77,6 +79,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return ListenableBuilder(
       listenable: _settingsViewmodel,
       builder: (context, child) {
@@ -91,13 +94,13 @@ class _SettingsPageState extends State<SettingsPage> {
               return ListView(
                 children: [
                   SettingsSection(
-                    title: 'Informações',
+                    title: l10n.info,
                     tiles: [
                       ListTile(
                         leading: Icon(
                           PhosphorIcons.info(),
                         ),
-                        title: const Text('Sobre o App'),
+                        title: Text(l10n.about),
                         trailing: Icon(PhosphorIcons.caretRight()),
                         onTap: () {
                           showModalBottomSheet(
@@ -118,7 +121,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           PhosphorIcons.question(),
                         ),
                         trailing: Icon(PhosphorIcons.caretRight()),
-                        title: const Text('Perguntas frequentes'),
+                        title: Text(l10n.frequentlyAskedQuestions),
                         onTap: () {
                           showModalBottomSheet(
                             isScrollControlled: true,
@@ -136,13 +139,13 @@ class _SettingsPageState extends State<SettingsPage> {
                     ],
                   ),
                   SettingsSection(
-                    title: 'Dados do usuário',
+                    title: l10n.userData,
                     tiles: [
                       SettingsTile(
                         leading: Icon(
                           PhosphorIcons.user(),
                         ),
-                        title: const Text('Nome'),
+                        title: Text(l10n.userName),
                         subtitle: Text(
                           _settingsViewmodel.user!.name,
                           overflow: TextOverflow.ellipsis,
@@ -153,7 +156,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         leading: Icon(
                           PhosphorIcons.at(),
                         ),
-                        title: const Text('Email'),
+                        title: Text(l10n.email),
                         subtitle: Text(
                           _settingsViewmodel.user!.email,
                           overflow: TextOverflow.ellipsis,
@@ -164,12 +167,9 @@ class _SettingsPageState extends State<SettingsPage> {
                         leading: Icon(
                           PhosphorIcons.identificationBadge(),
                         ),
-                        title: const Text('Tipo de usuário'),
+                        title: Text(l10n.userType),
                         subtitle: Text(
-                          _settingsViewmodel.user!.userType ==
-                                  UserTypeEnum.admin
-                              ? 'Administrador'
-                              : 'Comum',
+                          l10n.roles(_settingsViewmodel.user!.userType.name),
                           overflow: TextOverflow.ellipsis,
                           style: descriptionTextStyle,
                         ),
@@ -177,15 +177,13 @@ class _SettingsPageState extends State<SettingsPage> {
                     ],
                   ),
                   SettingsSection(
-                    title: 'Configurações',
+                    title: l10n.settings,
                     tiles: [
                       SwitchListTile(
                         secondary: Icon(
                           PhosphorIcons.trash(),
                         ),
-                        title: const Text(
-                          'Confirmação de exclusão',
-                        ),
+                        title: Text(l10n.deletionConfirmation),
                         value: _settingsViewmodel.enableExcludeConfirmation!,
                         onChanged: (bool value) => _settingsViewmodel
                             .setEnableExcludeConfirmation(value),
@@ -194,7 +192,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         leading: Icon(
                           PhosphorIcons.paintRoller(),
                         ),
-                        title: const Text('Tema'),
+                        title: Text(l10n.theme),
                         trailing: SegmentedButton<ThemeMode>(
                           showSelectedIcon: false,
                           segments: <ButtonSegment<ThemeMode>>[
@@ -222,13 +220,13 @@ class _SettingsPageState extends State<SettingsPage> {
                     ],
                   ),
                   SettingsSection(
-                    title: 'Detalhes do Aplicativo',
+                    title: l10n.details,
                     tiles: [
                       SettingsTile(
                         leading: Icon(
                           PhosphorIcons.computerTower(),
                         ),
-                        title: const Text('Ambiente'),
+                        title: Text(l10n.environment),
                         subtitle: Text(
                           _settingsViewmodel.getEnviroment,
                           overflow: TextOverflow.ellipsis,
@@ -241,7 +239,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         onTap: () => _settingsViewmodel
                             .openUrl(Constants.enzitechGithubPage),
-                        title: const Text('Versão'),
+                        title: Text(l10n.version),
                         subtitle: Text(
                           "${_settingsViewmodel.appInfo!.version}+${_settingsViewmodel.appInfo!.buildNumber}",
                           overflow: TextOverflow.ellipsis,
@@ -252,7 +250,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         leading: Icon(
                           PhosphorIcons.signOut(),
                         ),
-                        title: const Text('Sair'),
+                        title: Text(l10n.exit),
                         onTap: () {
                           _homeViewmodel.experimentsViewmodel.clearFilters();
                           _settingsViewmodel.logout();

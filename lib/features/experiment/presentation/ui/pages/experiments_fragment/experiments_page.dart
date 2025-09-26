@@ -1,5 +1,9 @@
 // 🐦 Flutter imports:
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+
+import '../../../../../../l10n/app_localizations.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
@@ -73,7 +77,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                   mounted) {
                 EZTSnackBar.show(
                   context,
-                  "Faça seu login novamente.",
+                  AppLocalizations.of(context)!.loginAgain,
                 );
                 await Future.delayed(const Duration(milliseconds: 500));
                 if (mounted) {
@@ -99,26 +103,27 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
   }
 
   Widget _buildExperimentsList(double height) {
+    final l10n = AppLocalizations.of(context)!;
     if (_experimentsViewmodel.state == StateEnum.error) {
-      return const EZTForcedCenter(
+      return EZTForcedCenter(
         child: EZTError(
-          message: 'Erro ao carregar experimentos',
+          message: l10n.errorLoadingExperiments,
         ),
       );
     }
 
     if (_experimentsViewmodel.state == StateEnum.loading &&
         _experimentsViewmodel.isLoadingMoreRunning == false) {
-      return const EZTProgressIndicator(
-        message: "Carregando experimentos...",
+      return EZTProgressIndicator(
+        message: l10n.loadingExperiments,
       );
     }
 
     if (_experimentsViewmodel.state == StateEnum.success &&
         _experimentsViewmodel.experiments.isEmpty) {
-      return const EZTForcedCenter(
+      return EZTForcedCenter(
         child: EZTNotFound(
-          message: "Experimentos não encontrados",
+          message: l10n.experimentsNotFound,
         ),
       );
     }
@@ -150,10 +155,10 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
 
                   EZTSnackBar.show(
                     context,
-                    '${experiment.name} excluído!',
+                    l10n.experimentDeleted(experiment.name),
                     eztSnackBarType: EZTSnackBarType.error,
                     action: SnackBarAction(
-                      label: 'Desfazer',
+                      label: l10n.undo,
                       textColor: context.getApplyedColorScheme.onError,
                       onPressed: () {
                         setState(() {
@@ -183,7 +188,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                           color: context.getApplyedColorScheme.onError,
                         ),
                         Text(
-                          'Excluir',
+                          l10n.delete,
                           style: TextStyle(
                             color: context.getApplyedColorScheme.onError,
                           ),
@@ -238,7 +243,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                       padding: const EdgeInsets.only(top: 30, bottom: 30),
                       child: Center(
                         child: Text(
-                          'Todos os experimentos exibidos!',
+                          l10n.allExperimentsDisplayed,
                           style: TextStyles(context).buttonPrimary.copyWith(
                                 color: context.getApplyedColorScheme.tertiary,
                                 fontSize: 20.0,
@@ -255,11 +260,9 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
     );
   }
 
-  String get isPlural =>
-      _experimentsViewmodel.totalOfExperiments > 1 ? 's ' : ' ';
-
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     var heightMQ = MediaQuery.of(context).size.height;
 
     return ListenableBuilder(
@@ -290,14 +293,14 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                         segments: <ButtonSegment<int>>[
                           ButtonSegment<int>(
                             value: 0,
-                            label: const Text('Em andamento'),
+                            label: Text(l10n.inProgress),
                             icon: Icon(
                               PhosphorIcons.clockClockwise(),
                             ),
                           ),
                           ButtonSegment<int>(
                             value: 1,
-                            label: const Text('Concluído'),
+                            label: Text(l10n.completed),
                             icon: Icon(PhosphorIcons.checks()),
                           ),
                         ],
@@ -340,7 +343,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                 ),
                 if (_experimentsViewmodel.experiments.isNotEmpty)
                   Text(
-                    "🔬 ${_experimentsViewmodel.totalOfExperiments} experimento${isPlural}encontrado$isPlural",
+                    l10n.experimentsFound(_experimentsViewmodel.totalOfExperiments),
                     style: TextStyles(context).link(fontSize: 16),
                   ),
                 const SizedBox(

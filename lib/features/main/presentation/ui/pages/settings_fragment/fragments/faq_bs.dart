@@ -1,5 +1,9 @@
 // 🐦 Flutter imports:
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+
+import '../../../../../../../l10n/app_localizations.dart';
 
 // 🌎 Project imports:
 import '../../../../../../../shared/extensions/context_theme_mode_extensions.dart';
@@ -13,13 +17,16 @@ class FAQBS extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final l10n = AppLocalizations.of(context)!;
+
     return EZTBottomSheet(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Perguntas frequentes:",
+            l10n.frequentlyAskedQuestions,
             style: TextStyles.titleHome,
             textAlign: TextAlign.center,
           ),
@@ -32,11 +39,11 @@ class FAQBS extends StatelessWidget {
               style: TextStyles(context).trailingRegular(),
               children: <TextSpan>[
                 TextSpan(
-                  text: 'Pergunta: ',
+                  text: l10n.question,
                   style: TextStyles(context).trailingRegular(isBold: true),
                 ),
                 TextSpan(
-                  text: 'Não consigo criar enzimas',
+                  text: l10n.question1,
                   style: TextStyles(context).trailingRegular(
                     isBold: true,
                     color: context.getApplyedColorScheme.error,
@@ -54,12 +61,12 @@ class FAQBS extends StatelessWidget {
               style: TextStyles(context).trailingRegular(),
               children: <TextSpan>[
                 TextSpan(
-                  text: 'Resposta: ',
+                  text: l10n.answer,
                   style: TextStyles(context).trailingRegular(isBold: true),
                 ),
                 TextSpan(
                   text:
-                      'A funcionalidade de criação de enzimas é restrita ao adminstrador do Enzitech, pois atualmente para o cadastro de uma enzima é necessário sua implementação até que a mesma possa estar disponível para uso, caso necessite de algum novo tipo de enzima solicite ao administrador do sistema.',
+                      l10n.answer1,
                   style: TextStyles(context).trailingRegular(),
                 ),
               ],
@@ -68,7 +75,7 @@ class FAQBS extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 32.0),
             child: EZTButton(
-              text: 'Fechar',
+              text: l10n.closeButton,
               eztButtonType: EZTButtonType.outline,
               onPressed: () {
                 Navigator.pop(

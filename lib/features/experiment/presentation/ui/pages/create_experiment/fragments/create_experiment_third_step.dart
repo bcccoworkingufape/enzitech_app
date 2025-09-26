@@ -1,6 +1,8 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
+import '../../../../../../../l10n/app_localizations.dart';
+
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:group_button/group_button.dart';
@@ -81,11 +83,12 @@ class _CreateExperimentThirdStepPageState
   }
 
   Widget get _buttons {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       children: [
         EZTButton(
           enabled: _createExperimentViewmodel.enableNextButtonOnThirdStep,
-          text: 'Próximo',
+          text: l10n.nextButton,
           onPressed: () {
             _createExperimentViewmodel.formKey.currentState!.save();
 
@@ -107,7 +110,7 @@ class _CreateExperimentThirdStepPageState
         ),
         const SizedBox(height: 16),
         EZTButton(
-          text: 'Voltar',
+          text: l10n.backButton,
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
             _createExperimentViewmodel.onBack(mounted, context);
@@ -119,9 +122,10 @@ class _CreateExperimentThirdStepPageState
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return CreateExperimentFragmentTemplate(
-      titleOfStepIndicator: "Cadastre um novo experimento",
-      messageOfStepIndicator: "Etapa 3 de 4 - Enzimas",
+      titleOfStepIndicator: l10n.registerNewExperiment,
+      messageOfStepIndicator: l10n.stepIndicatorEnzymes(3, 4),
       body: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(
           parent: BouncingScrollPhysics(),
@@ -139,7 +143,7 @@ class _CreateExperimentThirdStepPageState
                 ),
                 const SizedBox(width: 4),
                 Text(
-                  'Enzimas do experimento',
+                  l10n.experimentEnzymes,
                   style: TextStyles.detailBold,
                 ),
               ],
@@ -182,7 +186,9 @@ class _CreateExperimentThirdStepPageState
                     EZTSnackBar.clear(context);
                     EZTSnackBar.show(
                       context,
-                      "Tipo da enzima: ${Constants.typesOfEnzymesListFormmated[Constants.typesOfEnzymesList.indexOf(_enzymesViewmodel.enzymes[index].type)]}",
+                      l10n.enzymeTypeIs(Constants.typesOfEnzymesListFormmated[
+                        Constants.typesOfEnzymesList
+                          .indexOf(_enzymesViewmodel.enzymes[index].type)]),
                       color: Constants.dealWithEnzymeChipColor(
                         _enzymesViewmodel.enzymes[index].type,
                       ),

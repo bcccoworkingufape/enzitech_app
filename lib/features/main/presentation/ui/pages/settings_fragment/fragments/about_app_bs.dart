@@ -1,6 +1,8 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
+import '../../../../../../../l10n/app_localizations.dart';
+
 // 🌎 Project imports:
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../widgets/ezt_bottomsheet.dart';
@@ -10,13 +12,16 @@ class AboutAppBS extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final l10n = AppLocalizations.of(context)!;
+
     return EZTBottomSheet(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Sobre:",
+            l10n.aboutTitle,
             style: TextStyles.titleHome,
             textAlign: TextAlign.center,
           ),
@@ -24,7 +29,7 @@ class AboutAppBS extends StatelessWidget {
             height: 32,
           ),
           Text(
-            "Idealização",
+            l10n.idealizationTitle,
             style: TextStyles(context).titleBoldHeading,
             textAlign: TextAlign.justify,
           ),
@@ -42,8 +47,7 @@ class AboutAppBS extends StatelessWidget {
                   style: TextStyles(context).trailingRegular(isBold: true),
                 ),
                 TextSpan(
-                  text:
-                      ' foi concebido como uma solução para o estudo e realização de experimentos no campo das atividades enzimáticas do solo, idealizado em conjunto pelo ',
+                  text: l10n.idealizationTextP1,
                   style: TextStyles(context).trailingRegular(),
                 ),
                 TextSpan(
@@ -51,7 +55,7 @@ class AboutAppBS extends StatelessWidget {
                   style: TextStyles(context).trailingRegular(isBold: true),
                 ),
                 TextSpan(
-                  text: ' e o ',
+                  text: l10n.idealizationTextP2,
                   style: TextStyles(context).trailingRegular(),
                 ),
                 TextSpan(
@@ -59,7 +63,7 @@ class AboutAppBS extends StatelessWidget {
                   style: TextStyles(context).trailingRegular(isBold: true),
                 ),
                 TextSpan(
-                  text: ', localizados na ',
+                  text: l10n.idealizationTextP3,
                   style: TextStyles(context).trailingRegular(),
                 ),
                 TextSpan(
@@ -77,7 +81,7 @@ class AboutAppBS extends StatelessWidget {
             height: 32,
           ),
           Text(
-            "Equipe de desenvolvimento",
+            l10n.developmentTeamTitle,
             style: TextStyles(context).titleBoldHeading,
             textAlign: TextAlign.justify,
           ),
@@ -91,7 +95,7 @@ class AboutAppBS extends StatelessWidget {
               style: TextStyles(context).trailingRegular(isBold: true),
               children: <TextSpan>[
                 TextSpan(
-                  text: '(Desenvolvedor mobile)',
+                  text: l10n.roleMobileDeveloper,
                   style: TextStyles(context).trailingRegular(),
                 ),
               ],
@@ -107,7 +111,7 @@ class AboutAppBS extends StatelessWidget {
               style: TextStyles(context).trailingRegular(isBold: true),
               children: <TextSpan>[
                 TextSpan(
-                  text: '(Desenvolvedor back-end)',
+                  text: l10n.roleBackendDeveloper,
                   style: TextStyles(context).trailingRegular(),
                 ),
               ],
@@ -123,7 +127,7 @@ class AboutAppBS extends StatelessWidget {
               style: TextStyles(context).trailingRegular(isBold: true),
               children: <TextSpan>[
                 TextSpan(
-                  text: '(Desenvolvedor back-end)',
+                  text: l10n.roleBackendDeveloper,
                   style: TextStyles(context).trailingRegular(),
                 ),
               ],
@@ -139,7 +143,7 @@ class AboutAppBS extends StatelessWidget {
               style: TextStyles(context).trailingRegular(isBold: true),
               children: <TextSpan>[
                 TextSpan(
-                  text: '(Desenvolvedor mobile)',
+                  text: l10n.roleMobileDeveloper,
                   style: TextStyles(context).trailingRegular(),
                 ),
               ],
@@ -155,7 +159,7 @@ class AboutAppBS extends StatelessWidget {
               style: TextStyles(context).trailingRegular(isBold: true),
               children: <TextSpan>[
                 TextSpan(
-                  text: '(Gestão do Projeto)',
+                  text: l10n.roleProjectManagement,
                   style: TextStyles(context).trailingRegular(),
                 ),
               ],
@@ -171,7 +175,7 @@ class AboutAppBS extends StatelessWidget {
               style: TextStyles(context).trailingRegular(isBold: true),
               children: <TextSpan>[
                 TextSpan(
-                  text: '(Docente - BCC)',
+                  text: l10n.roleProfessorBCC,
                   style: TextStyles(context).trailingRegular(),
                 ),
               ],
@@ -187,7 +191,7 @@ class AboutAppBS extends StatelessWidget {
               style: TextStyles(context).trailingRegular(isBold: true),
               children: <TextSpan>[
                 TextSpan(
-                  text: '(Docente - BCC)',
+                  text: l10n.roleProfessorBCC,
                   style: TextStyles(context).trailingRegular(),
                 ),
               ],
@@ -203,7 +207,7 @@ class AboutAppBS extends StatelessWidget {
               style: TextStyles(context).trailingRegular(isBold: true),
               children: <TextSpan>[
                 TextSpan(
-                  text: '(Docente - BCC)',
+                  text: l10n.roleProfessorBCC,
                   style: TextStyles(context).trailingRegular(),
                 ),
               ],
@@ -219,7 +223,7 @@ class AboutAppBS extends StatelessWidget {
               style: TextStyles(context).trailingRegular(isBold: true),
               children: <TextSpan>[
                 TextSpan(
-                  text: '(Docente - Agronomia)',
+                  text: l10n.roleProfessorAgronomy,
                   style: TextStyles(context).trailingRegular(),
                 ),
               ],
@@ -235,7 +239,7 @@ class AboutAppBS extends StatelessWidget {
               style: TextStyles(context).trailingRegular(isBold: true),
               children: <TextSpan>[
                 TextSpan(
-                  text: '(Docente - Agronomia)',
+                  text: l10n.roleProfessorAgronomy,
                   style: TextStyles(context).trailingRegular(),
                 ),
               ],
@@ -244,7 +248,7 @@ class AboutAppBS extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 32.0),
             child: EZTButton(
-              text: 'Fechar',
+              text: l10n.closeButton,
               eztButtonType: EZTButtonType.outline,
               onPressed: () {
                 Navigator.pop(

@@ -1,6 +1,8 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
+import '../../../../../../../l10n/app_localizations.dart';
+
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
@@ -125,11 +127,12 @@ class _CalculateExperimentSecondStepPageState
   }
 
   Widget get _buttons {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       children: [
         EZTButton(
           enabled: _calculateExperimentViewmodel.enableNextButtonOnSecondStep,
-          text: 'Calcular',
+          text: l10n.calculateButton,
           loading: _calculateExperimentViewmodel.state == StateEnum.loading,
           onPressed: () async {
             if (_calculateExperimentViewmodel.formKey.currentState != null) {
@@ -158,7 +161,7 @@ class _CalculateExperimentSecondStepPageState
         ),
         const SizedBox(height: 16),
         EZTButton(
-          text: 'Voltar',
+          text: l10n.backButton,
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
             _calculateExperimentViewmodel.onBack(mounted, context);
@@ -170,12 +173,13 @@ class _CalculateExperimentSecondStepPageState
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return ListenableBuilder(
       listenable: _calculateExperimentViewmodel,
       builder: (context, child) {
         return CalculateExperimentFragmentTemplate(
-          titleOfStepIndicator: "Inserir dados no experimento",
-          messageOfStepIndicator: "Etapa 2 de 3 - Preenchimento e cálculo",
+          titleOfStepIndicator: l10n.insertExperimentData,
+          messageOfStepIndicator: l10n.stepIndicatorMessageFilling(2, 3),
           body: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(
               parent: BouncingScrollPhysics(),
@@ -208,7 +212,7 @@ class _CalculateExperimentSecondStepPageState
                                           1);
                                 }
                               },
-                              child: const Text('Próximo'),
+                              child: Text(l10n.nextButton),
                             ),
                           if (_calculateExperimentViewmodel.stepPage > 0)
                             TextButton(
@@ -220,7 +224,7 @@ class _CalculateExperimentSecondStepPageState
                                           1);
                                 }
                               },
-                              child: const Text('Voltar'),
+                              child: Text(l10n.backButton),
                             ),
                         ],
                       );
@@ -236,9 +240,10 @@ class _CalculateExperimentSecondStepPageState
                           state: _leadWithStepState(map),
                           title: _isMapCorrectlyFilled(map["_id"].toString())
                               ? Text(
-                                  "Dados da ${map["_id"]!.toInt() + 1}ª repetição")
+                                  l10n.repetitionDataTitle(map["_id"]!.toInt() + 1 ),
+                          )
                               : Text(
-                                  "⚠  Dados da ${map["_id"]!.toInt() + 1}ª repetição",
+                                  "⚠  ${l10n.repetitionDataTitle(map["_id"]!.toInt() + 1)}",
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: context.getApplyedColorScheme.error,

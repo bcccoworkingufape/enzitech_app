@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../../../../../l10n/app_localizations.dart';
+
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
@@ -52,6 +54,7 @@ class _CreateExperimentFourthStepPageState
     Future.delayed(const Duration(milliseconds: 0)).whenComplete(
       () {
         if (mounted) {
+          final l10n = AppLocalizations.of(context)!;
           _createExperimentViewmodel.setStepPage(0, notify: false);
 
           final fieldValidator = FieldValidator(validations, context);
@@ -80,7 +83,7 @@ class _CreateExperimentFourthStepPageState
                   aFieldController.text = enzyme.variableA.toString();
                   return EZTTextField(
                     eztTextFieldType: EZTTextFieldType.underline,
-                    labelText: "Variável A",
+                    labelText: l10n.variableA,
                     usePrimaryColorOnFocusedBorder: true,
                     keyboardType:
                         const TextInputType.numberWithOptions(decimal: true),
@@ -104,7 +107,7 @@ class _CreateExperimentFourthStepPageState
                     bFieldController.text = enzyme.variableB.toString();
                     return EZTTextField(
                       eztTextFieldType: EZTTextFieldType.underline,
-                      labelText: "Variável B",
+                      labelText: l10n.variableB,
                       usePrimaryColorOnFocusedBorder: true,
                       keyboardType:
                           const TextInputType.numberWithOptions(decimal: true),
@@ -127,7 +130,7 @@ class _CreateExperimentFourthStepPageState
                   'duration-${enzyme.id}',
                   () => EZTTextField(
                     eztTextFieldType: EZTTextFieldType.underline,
-                    labelText: "Tempo (h)",
+                    labelText: l10n.timeHours,
                     usePrimaryColorOnFocusedBorder: true,
                     keyboardType:
                         const TextInputType.numberWithOptions(decimal: false),
@@ -148,7 +151,7 @@ class _CreateExperimentFourthStepPageState
                   'size-${enzyme.id}',
                   () => EZTTextField(
                     eztTextFieldType: EZTTextFieldType.underline,
-                    labelText: "Volume da Solução",
+                    labelText: l10n.solutionVolume,
                     usePrimaryColorOnFocusedBorder: true,
                     keyboardType:
                         const TextInputType.numberWithOptions(decimal: true),
@@ -169,7 +172,7 @@ class _CreateExperimentFourthStepPageState
                   'weightSample-${enzyme.id}',
                   () => EZTTextField(
                     eztTextFieldType: EZTTextFieldType.underline,
-                    labelText: "Peso da amostra (g)",
+                    labelText: l10n.sampleWeightGrams,
                     usePrimaryColorOnFocusedBorder: true,
                     keyboardType:
                         const TextInputType.numberWithOptions(decimal: true),
@@ -190,7 +193,7 @@ class _CreateExperimentFourthStepPageState
                   'weightGround-${enzyme.id}',
                   () => EZTTextField(
                     eztTextFieldType: EZTTextFieldType.underline,
-                    labelText: "Fator de correção",
+                    labelText: l10n.correctionFactor,
                     usePrimaryColorOnFocusedBorder: true,
                     keyboardType:
                         const TextInputType.numberWithOptions(decimal: true),
@@ -306,11 +309,12 @@ class _CreateExperimentFourthStepPageState
   }
 
   Widget _textFields(EnzymeEntity enzyme) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Informações da Curva:',
+          l10n.curveInformation,
           style: TextStyles.detailBold,
         ),
         Row(
@@ -328,7 +332,7 @@ class _CreateExperimentFourthStepPageState
         ),
         const SizedBox(height: 40),
         Text(
-          'Demais Variáveis:',
+          l10n.otherVariables,
           style: TextStyles.detailBold,
         ),
         const SizedBox(height: 10),
@@ -364,12 +368,13 @@ class _CreateExperimentFourthStepPageState
   }
 
   Widget get _buttons {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       children: [
         if (_createExperimentViewmodel.enableNextButtonOnFourthStep)
           EZTButton(
             enabled: _createExperimentViewmodel.enableNextButtonOnFourthStep,
-            text: 'Criar Experimento',
+            text: l10n.createExperimentButton,
             loading: _createExperimentViewmodel.state == StateEnum.loading,
             onPressed: () async {
               _createExperimentViewmodel.formKey.currentState!.save();
@@ -390,7 +395,7 @@ class _CreateExperimentFourthStepPageState
           ),
         const SizedBox(height: 16),
         EZTButton(
-          text: 'Voltar',
+          text: l10n.backButton,
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
             _createExperimentViewmodel.onBack(mounted, context);
@@ -407,12 +412,13 @@ class _CreateExperimentFourthStepPageState
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return ListenableBuilder(
       listenable: _createExperimentViewmodel,
       builder: (context, child) {
         return CreateExperimentFragmentTemplate(
-          titleOfStepIndicator: "Cadastre um novo experimento",
-          messageOfStepIndicator: "Etapa 4 de 4 - Preencher variáveis",
+          titleOfStepIndicator: l10n.registerNewExperiment,
+          messageOfStepIndicator: l10n.stepIndicatorFillVariables(4, 4),
           body: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(
               parent: BouncingScrollPhysics(),
@@ -440,7 +446,7 @@ class _CreateExperimentFourthStepPageState
                                     _createExperimentViewmodel.stepPage + 1);
                               }
                             },
-                            child: const Text('Próximo'),
+                            child: Text(l10n.nextButton),
                           ),
                         if (_createExperimentViewmodel.stepPage > 0)
                           TextButton(
@@ -450,7 +456,7 @@ class _CreateExperimentFourthStepPageState
                                     _createExperimentViewmodel.stepPage - 1);
                               }
                             },
-                            child: const Text('Voltar'),
+                            child: Text(l10n.backButton),
                           ),
                       ],
                     );

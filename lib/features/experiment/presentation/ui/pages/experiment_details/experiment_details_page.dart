@@ -2,8 +2,12 @@
 // ignore_for_file: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
 
 // 🐦 Flutter imports:
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+
+import '../../../../../../l10n/app_localizations.dart';
 
 // 📦 Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
@@ -81,6 +85,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
   }
 
   get leadWithEnzymes {
+    final l10n = AppLocalizations.of(context)!;
     if (_experimentDetailsViewmodel.experiment!.enzymes != null) {
       if (_experimentDetailsViewmodel.experiment!.enzymes!.isNotEmpty) {
         return _experimentDetailsViewmodel.experiment!.enzymes!
@@ -88,10 +93,11 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
             .toList();
       }
     }
-    return const [Text("Sem dados!")];
+    return [Text(l10n.noData)];
   }
 
   get leadWithTreatments {
+    final l10n = AppLocalizations.of(context)!;
     if (_experimentDetailsViewmodel.experiment!.treatments != null) {
       if (_experimentDetailsViewmodel.experiment!.treatments!.isNotEmpty) {
         return _experimentDetailsViewmodel.experiment!.treatments!
@@ -99,7 +105,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
             .toList();
       }
     }
-    return const [Text("Sem dados!")];
+    return [Text(l10n.noData)];
   }
 
   Widget _buildCard({required Widget child, Color? color}) {
@@ -119,16 +125,17 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
   }
 
   Widget _buildBody(double height) {
+    final l10n = AppLocalizations.of(context)!;
     if (_experimentDetailsViewmodel.state == StateEnum.error) {
       return EZTError(
-        message:
-            'Erro ao carregar o experimento "${_experimentDetailsViewmodel.experiment!.name}"',
+        message: l10n.errorLoadingExperiment(
+            _experimentDetailsViewmodel.experiment!.name),
       );
     }
 
     if (_experimentDetailsViewmodel.state == StateEnum.loading) {
-      return const EZTProgressIndicator(
-        message: "Carregando experimento...",
+      return EZTProgressIndicator(
+        message: l10n.loadingExperiment,
       );
     }
 
@@ -207,16 +214,16 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
                         _buildInfoBadge(
                           _experimentDetailsViewmodel
                               .experiment!.treatments!.length,
-                          "Tratamentos",
+                          l10n.treatments,
                         ),
                         _buildInfoBadge(
                           _experimentDetailsViewmodel.experiment!.repetitions,
-                          "Repetições",
+                          l10n.repetitions,
                         ),
                         _buildInfoBadge(
                           _experimentDetailsViewmodel
                               .experiment!.enzymes!.length,
-                          "Enzimas",
+                          l10n.enzymes,
                         ),
                       ],
                     ),
@@ -227,8 +234,8 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
                       ),
                       child: Text(
                         !_expandToSeeMoreVisible
-                            ? "Toque para ver mais informações"
-                            : "Toque para ocultar as informações",
+                            ? l10n.tapToSeeMore
+                            : l10n.tapToHide,
                         style: const TextStyle(
                           fontStyle: FontStyle.italic,
                           fontSize: 12,
@@ -261,7 +268,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
               height: 20,
             ),
             EZTButton(
-              text: 'Cálculo enzimático',
+              text: l10n.enzymaticCalculation,
               enabled: _experimentDetailsViewmodel.experiment!.progress != 1,
               icon: Icon(
                 PhosphorIcons.function(),
@@ -285,7 +292,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
               height: 20,
             ),
             EZTButton(
-              text: 'Resultados',
+              text: l10n.results,
               enabled: _experimentDetailsViewmodel.experiment!.progress != 0,
               icon: Icon(
                 PhosphorIcons.fileText(),
@@ -310,6 +317,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return ListenableBuilder(
       listenable: _experimentDetailsViewmodel,
       builder: (context, child) {
@@ -319,7 +327,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
               color: context.getApplyedColorScheme.onBackground,
             ),
             title: Text(
-              "Detalhes do experimento",
+              l10n.experimentDetails,
               style: TextStyles(context).titleBoldBackground(),
             ),
             actions: [
@@ -352,8 +360,8 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
 
                         EZTSnackBar.clear(context);
                         EZTSnackBar.show(
-                          context,
-                          '${_experimentDetailsViewmodel.experiment!.name} excluído!',
+                          context, l10n.experimentDeleted(
+                            _experimentDetailsViewmodel.experiment!.name),
                           eztSnackBarType: EZTSnackBarType.error,
                         );
                       });

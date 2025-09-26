@@ -4,6 +4,8 @@ import 'dart:math';
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
+import '../../../../../../l10n/app_localizations.dart';
+
 // 📦 Package imports:
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
@@ -116,8 +118,9 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
   }
 
   get _buildBody {
+    final l10n = AppLocalizations.of(context)!;
     if (_experimentResultsViewmodel.state == StateEnum.loading) {
-      return const EZTProgressIndicator(message: "Carregando resultados...");
+      return EZTProgressIndicator(message: l10n.loadingResults);
     }
 
     final results = _experimentResultsViewmodel.experimentResult;
@@ -128,8 +131,8 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
         slivers: [
           SliverToBoxAdapter(
             child: _buildHeader(
-              'Resultados',
-              'Experimento: ${_experiment.name}',
+              l10n.results,
+              l10n.experimentHeader(_experiment.name),
             ),
           ),
           ScrollConfiguration(
@@ -164,7 +167,10 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                                           fontSize: 28),
                                 ),
                                 Text(
-                                  'Tipo: ${results.enzymes[indexOfEnzymes].enzyme.name} (${results.enzymes[indexOfEnzymes].enzyme.formula})',
+                                  l10n.enzymeTypeHeader(
+                                    results.enzymes[indexOfEnzymes].enzyme.name,
+                                    results.enzymes[indexOfEnzymes].enzyme.formula
+                                  ),
                                 )
                               ],
                             ),
@@ -182,8 +188,8 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                                             treatment.treatment.name,
                                             style: TextStyles.bodyBold,
                                           ),
-                                          const Text(
-                                            'Tratamento',
+                                          Text(
+                                            l10n.treatmentLabel,
                                           )
                                         ],
                                       ),
@@ -216,60 +222,59 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                                                 child: DataTable2(
                                                   columnSpacing: 12,
                                                   minWidth: 1200,
-                                                  columns: const [
+                                                  columns: [
                                                     DataColumn(
-                                                      label: Text('ID'),
+                                                      label: Text(l10n.columnId),
                                                       numeric: true,
                                                     ),
                                                     DataColumn(
-                                                      label: Text('Amostra'),
+                                                      label: Text(l10n.columnSample),
                                                       numeric: true,
                                                     ),
                                                     DataColumn(
-                                                      label: Text('Am. Branca'),
+                                                      label: Text(l10n.columnWhiteSampleShort),
                                                       numeric: true,
-                                                      tooltip: 'Amostra Branca',
+                                                      tooltip: l10n.columnWhiteSampleTooltip,
                                                     ),
                                                     DataColumn(
-                                                      label: Text('Diferença'),
-                                                      numeric: true,
-                                                    ),
-                                                    DataColumn(
-                                                      label: Text('Variável A'),
+                                                      label: Text(l10n.columnDifference),
                                                       numeric: true,
                                                     ),
                                                     DataColumn(
-                                                      label: Text('Variável B'),
+                                                      label: Text(l10n.variableA),
                                                       numeric: true,
                                                     ),
                                                     DataColumn(
-                                                      label: Text('Curva'),
+                                                      label: Text(l10n.variableB),
                                                       numeric: true,
                                                     ),
                                                     DataColumn(
-                                                      label: Text(
-                                                          'F. de Correção'),
+                                                      label: Text(l10n.columnCurve),
+                                                      numeric: true,
+                                                    ),
+                                                    DataColumn(
+                                                      label: Text(l10n.columnCorrectionFactorShort),
                                                       numeric: true,
                                                       tooltip:
-                                                          'Fator de Correção',
+                                                          l10n.correctionFactor,
                                                     ),
                                                     DataColumn(
-                                                      label: Text('Tempo (h)'),
+                                                      label: Text(l10n.timeHours),
                                                       numeric: true,
                                                     ),
                                                     DataColumn(
-                                                      label: Text('Volume'),
+                                                      label: Text(l10n.columnVolume),
                                                       numeric: true,
                                                     ),
                                                     DataColumn(
                                                       label:
-                                                          Text('Peso da Am.'),
+                                                          Text(l10n.columnSampleWeightShort),
                                                       numeric: true,
                                                       tooltip:
-                                                          'Peso da Amostra',
+                                                          l10n.columnSampleWeightTooltip,
                                                     ),
                                                     DataColumn(
-                                                      label: Text('Resultado'),
+                                                      label: Text(l10n.columnResult),
                                                       numeric: true,
                                                     ),
                                                   ],
@@ -370,7 +375,7 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                       16,
                     ),
                     child: EZTButton(
-                      text: 'Voltar',
+                      text: l10n.backButton,
                       eztButtonType: EZTButtonType.regular,
                       onPressed: () {
                         Navigator.pop(
@@ -398,6 +403,7 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return ListenableBuilder(
       listenable: _experimentResultsViewmodel,
       builder: (context, child) {
@@ -426,7 +432,7 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                               ? null
                               : EZTSnackBar.show(
                                   context,
-                                  'Não foi possível compartilhar o arquivo, tente novamente.',
+                                  l10n.shareFileError,
                                   eztSnackBarType: EZTSnackBarType.error,
                                 ).whenComplete(() => _experimentResultsViewmodel
                                   .setStateEnum(StateEnum.idle));
@@ -448,14 +454,14 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                               (flag) => flag
                                   ? EZTSnackBar.show(
                                       context,
-                                      'Planilha salva com sucesso!',
+                                      l10n.spreadsheetSavedSuccess,
                                       eztSnackBarType: EZTSnackBarType.success,
                                     )
                                   : _experimentResultsViewmodel.failure
                                           is! UnableToSaveFailure
                                       ? EZTSnackBar.show(
                                           context,
-                                          'Não foi possível salvar a planilha, tente novamente.',
+                                          l10n.spreadsheetSaveError,
                                           eztSnackBarType:
                                               EZTSnackBarType.error,
                                         )
