@@ -98,11 +98,7 @@ class _MyAppState extends State<MyApp> {
               GlobalWidgetsLocalizations.delegate,
               FormBuilderLocalizations.delegate,
             ],
-            supportedLocales: [
-              const Locale('pt'),
-              const Locale('en'),
-            ],
-            home: const HomePage(),
+            supportedLocales: [const Locale('pt'), const Locale('en')],
           );
         },
       ),
