@@ -438,4 +438,282 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '🔬 $_temp0';
   }
+
+  @override
+  String modifiedOn(String date) {
+    return 'Modified on $date';
+  }
+
+  @override
+  String get deleteExperimentTitle => 'Delete experiment?';
+
+  @override
+  String get deleteExperimentContent =>
+      'Are you sure you want to delete this experiment?';
+
+  @override
+  String get deleteButton => 'DELETE';
+
+  @override
+  String get cancelButton => 'CANCEL';
+
+  @override
+  String get filters => 'Filters';
+
+  @override
+  String get orderBy => 'Order by:';
+
+  @override
+  String get select => 'Select';
+
+  @override
+  String get organizeInOrder => 'Organize in order:';
+
+  @override
+  String get filter_name => 'Name';
+
+  @override
+  String get filter_description => 'Description';
+
+  @override
+  String get filter_progress => 'Progress';
+
+  @override
+  String get filter_creationDate => 'Creation date';
+
+  @override
+  String get filter_modificationDate => 'Modification date';
+
+  @override
+  String get order_ascending => 'Ascending';
+
+  @override
+  String get order_descending => 'Descending';
+
+  @override
+  String clearFilters(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Clear filters',
+      one: 'Clear filter',
+      zero: 'Clear filters',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String applyFilters(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Apply filters',
+      one: 'Apply filter',
+      zero: 'Apply filters',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get experimentCreatedSuccess => 'Experiment created successfully!';
+
+  @override
+  String get treatmentCreatedSuccess => 'Treatment created successfully!';
+
+  @override
+  String get registerNewTreatment => 'Register a new\n Treatment';
+
+  @override
+  String get treatmentIdentification => 'Treatment Identification';
+
+  @override
+  String get createTreatmentButton => 'Create treatment';
+
+  @override
+  String get errorLoadingTreatments => 'Error loading treatments';
+
+  @override
+  String get loadingTreatments => 'Loading treatments...';
+
+  @override
+  String get treatmentsNotFound => 'Treatments not found';
+
+  @override
+  String treatmentDeleted(String treatmentName) {
+    return '$treatmentName deleted!';
+  }
+
+  @override
+  String get deleteTreatmentTitle => 'Delete treatment?';
+
+  @override
+  String get deleteTreatmentContent =>
+      'Are you sure you want to delete this treatment?';
+
+  @override
+  String treatmentsFound(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count treatments found',
+      one: '1 treatment found',
+      zero: 'No treatments found',
+    );
+    return '🧪 $_temp0';
+  }
+
+  @override
+  String createdOn(String date) {
+    return 'Created on $date';
+  }
+
+  @override
+  String get enzymeCreatedSuccess => 'Enzyme created successfully!';
+
+  @override
+  String get registerNewEnzyme => 'Register a new\n Enzyme';
+
+  @override
+  String get enzymeIdentification => 'Enzyme Identification';
+
+  @override
+  String get variableA_long => 'Variable a - Angular Coefficient of the Curve';
+
+  @override
+  String get variableB_long => 'Variable b - Constant of the Curve Equation';
+
+  @override
+  String get chooseEnzymeType => 'Choose the enzyme type';
+
+  @override
+  String get createEnzymeButton => 'Create enzyme';
+
+  @override
+  String get enzymeType_betaGlucosidase => 'Beta-glucosidase';
+
+  @override
+  String get enzymeType_aryl => 'Aryl';
+
+  @override
+  String get enzymeType_acidPhosphatase => 'Acid Phosphatase';
+
+  @override
+  String get enzymeType_alkalinePhosphatase => 'Alkaline Phosphatase';
+
+  @override
+  String get enzymeType_urease => 'Urease';
+
+  @override
+  String get errorLoadingEnzymes => 'Error loading enzymes';
+
+  @override
+  String get loadingEnzymes => 'Loading enzymes...';
+
+  @override
+  String get noEnzymesRegisteredAdmin => 'No enzymes registered.';
+
+  @override
+  String get noEnzymesRegisteredUser =>
+      'No enzymes registered, please contact your Administrator to solve this issue.';
+
+  @override
+  String enzymeDeleted(String enzymeName) {
+    return '$enzymeName deleted!';
+  }
+
+  @override
+  String get deleteEnzymeTitle => 'Delete enzyme?';
+
+  @override
+  String get deleteEnzymeContent =>
+      'Are you sure you want to delete this enzyme?';
+
+  @override
+  String enzymesFound(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count enzymes found',
+      one: '1 enzyme found',
+      zero: 'No enzymes found',
+    );
+    return '🧬 $_temp0';
+  }
+
+  @override
+  String get formulaLabel => 'Formula: ';
+
+  @override
+  String get variableALabel => 'Variable A: ';
+
+  @override
+  String get variableBLabel => 'Variable B: ';
+
+  @override
+  String get enzymesSummaryTitle => 'Enzymes Summary';
+
+  @override
+  String enzymeTagFormat(String enzymeName, int quantity) {
+    return '$enzymeName ($quantity)';
+  }
+
+  @override
+  String environmentValue(String env) {
+    String _temp0 = intl.Intl.selectLogic(env, {
+      'dev': 'Development',
+      'stage': 'Stage',
+      'prod': 'Production',
+      'other': 'Unknown',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String unableToOpenUrlError(String url) {
+    return 'Could not access $url';
+  }
+
+  @override
+  String get institutionLabel => 'Institution';
+
+  @override
+  String get signUp => 'Sign Up';
+
+  @override
+  String get personalData => 'Personal Data';
+
+  @override
+  String get passwordLabel => 'Password';
+
+  @override
+  String get confirmPasswordLabel => 'Confirm password';
+
+  @override
+  String get access => 'Access';
+
+  @override
+  String get createAccountButton => 'Create account';
+
+  @override
+  String get accountCreatedSuccess => 'Account created successfully!';
+
+  @override
+  String welcomeMessage(String userName) {
+    return 'Welcome $userName!';
+  }
+
+  @override
+  String get helloWelcome => 'Hello,\nwelcome!';
+
+  @override
+  String get forgotMyPassword => 'I forgot my password';
+
+  @override
+  String get loginButton => 'Login';
+
+  @override
+  String get dontHaveAnAccount => 'Don\'t have an account?';
+
+  @override
+  String get createOne => ' Create one';
 }

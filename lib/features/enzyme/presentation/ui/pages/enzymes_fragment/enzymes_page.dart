@@ -1,5 +1,9 @@
 // 🐦 Flutter imports:
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+
+import '../../../../../../l10n/app_localizations.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
@@ -62,17 +66,18 @@ class _EnzymesPageState extends State<EnzymesPage> {
   }
 
   Widget _buildEnzymesList(double height) {
+    final l10n = AppLocalizations.of(context)!;
     if (_enzymesViewmodel.state == StateEnum.error) {
-      return const EZTForcedCenter(
+      return EZTForcedCenter(
         child: EZTError(
-          message: 'Erro ao carregar enzimas',
+          message: l10n.errorLoadingEnzymes,
         ),
       );
     }
 
     if (_enzymesViewmodel.state == StateEnum.loading) {
-      return const EZTProgressIndicator(
-        message: "Carregando enzimas...",
+      return EZTProgressIndicator(
+        message: l10n.loadingEnzymes,
       );
     }
 
@@ -81,8 +86,8 @@ class _EnzymesPageState extends State<EnzymesPage> {
       return EZTForcedCenter(
         child: EZTNotFound(
           message: _accountViewmodel.user!.userType == UserTypeEnum.admin
-              ? "Nenhuma enzima cadastrada."
-              : "Nenhuma enzima cadastrada, entre em contato com o seu Administrador para solucionar este problema.",
+              ? l10n.noEnzymesRegisteredAdmin
+              : l10n.noEnzymesRegisteredUser,
         ),
       );
     }
@@ -113,10 +118,10 @@ class _EnzymesPageState extends State<EnzymesPage> {
 
                   EZTSnackBar.show(
                     context,
-                    '${enzyme.name} excluído!',
+                    l10n.enzymeDeleted(enzyme.name),
                     eztSnackBarType: EZTSnackBarType.error,
                     action: SnackBarAction(
-                      label: 'Desfazer',
+                      label: l10n.undo,
                       textColor: context.getApplyedColorScheme.onError,
                       onPressed: () {
                         setState(() {
@@ -144,7 +149,7 @@ class _EnzymesPageState extends State<EnzymesPage> {
                           color: context.getApplyedColorScheme.onError,
                         ),
                         Text(
-                          'Excluir',
+                          l10n.delete,
                           style: TextStyle(
                             color: context.getApplyedColorScheme.onError,
                           ),
@@ -161,18 +166,17 @@ class _EnzymesPageState extends State<EnzymesPage> {
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: const Text('Excluir a enzima?'),
-                              content: const Text(
-                                  'Você tem certeza que deseja excluir esta enzima?'),
+                              title: Text(l10n.deleteEnzymeTitle),
+                              content: Text(l10n.deleteEnzymeContent),
                               actions: [
                                 TextButton(
                                     onPressed: () =>
                                         Navigator.of(context).pop(true),
-                                    child: const Text("EXCLUIR")),
+                                    child: Text(l10n.deleteButton)),
                                 TextButton(
                                   onPressed: () =>
                                       Navigator.of(context).pop(false),
-                                  child: const Text("CANCELAR"),
+                                  child: Text(l10n.cancelButton),
                                 ),
                               ],
                             );
@@ -199,6 +203,7 @@ class _EnzymesPageState extends State<EnzymesPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     var heightMQ = MediaQuery.of(context).size.height;
 
     return ListenableBuilder(
@@ -220,7 +225,7 @@ class _EnzymesPageState extends State<EnzymesPage> {
                           height: 8,
                         ),
                         Text(
-                          "🧬 ${_enzymesViewmodel.enzymes.length} enzima${_enzymesViewmodel.enzymes.length > 1 ? 's ' : ' '}encontrada${_enzymesViewmodel.enzymes.length > 1 ? 's ' : ' '}",
+                          l10n.enzymesFound(_enzymesViewmodel.enzymes.length),
                           style: TextStyles(context).link(fontSize: 16),
                         ),
                         const SizedBox(

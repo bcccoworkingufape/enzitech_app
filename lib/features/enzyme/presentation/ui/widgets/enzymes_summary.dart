@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
+import '../../../../../../l10n/app_localizations.dart';
+
 // 🌎 Project imports:
 import '../../../../../shared/extensions/context_theme_mode_extensions.dart';
 import '../../../../../shared/ui/ui.dart';
@@ -21,6 +23,7 @@ class EnzymesSummary extends StatefulWidget {
 
 class _EnzymesSummaryState extends State<EnzymesSummary> {
   Widget enzymeTag(String name, int quantity, Color color) {
+    final l10n = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Row(
@@ -34,7 +37,7 @@ class _EnzymesSummaryState extends State<EnzymesSummary> {
             width: 8,
           ),
           Text(
-            "$name ($quantity)",
+            l10n.enzymeTagFormat(name, quantity),
             style: TextStyles.bodyMinBold.copyWith(),
           )
         ],
@@ -44,7 +47,23 @@ class _EnzymesSummaryState extends State<EnzymesSummary> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     var viewmodel = GetIt.I.get<EnzymesViewmodel>();
+
+    final Map<String, String> enzymeTypeTranslations = {
+      'BETA_GLUCOSIDASE': l10n.enzymeType_betaGlucosidase,
+      'ARYL': l10n.enzymeType_aryl,
+      'ACID_PHOSPHATASE': l10n.enzymeType_acidPhosphatase,
+      'ALKALINE_PHOSPHATASE': l10n.enzymeType_alkalinePhosphatase,
+      'UREASE': l10n.enzymeType_urease,
+    };
+
+    int getEnzymeCount(String typeKey) {
+      if (viewmodel.enzymes.isEmpty) return 0;
+      return viewmodel.enzymes
+          .where((enzyme) => enzyme.type == typeKey)
+          .length;
+    }
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4.0),
@@ -70,7 +89,7 @@ class _EnzymesSummaryState extends State<EnzymesSummary> {
                 padding: const EdgeInsets.symmetric(vertical: 4.0),
                 child: Center(
                   child: Text(
-                    "Sumário de enzimas",
+                    l10n.enzymesSummaryTitle,
                     style: TextStyles.bodyMinBold.copyWith(
                       color: context.getApplyedColorScheme.onSecondary,
                     ),
@@ -86,22 +105,12 @@ class _EnzymesSummaryState extends State<EnzymesSummary> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 enzymeTag(
-                    Constants.typesOfEnzymesListFormmated[0],
-                    viewmodel.enzymes
-                        .map((element) =>
-                            element.type == Constants.typesOfEnzymesList[0]
-                                ? 1
-                                : 0)
-                        .reduce((value, element) => value + element),
+                    enzymeTypeTranslations[Constants.typesOfEnzymesList[0]]!,
+                    getEnzymeCount(Constants.typesOfEnzymesList[0]),
                     AppColors.betaGlucosidase),
                 enzymeTag(
-                    Constants.typesOfEnzymesListFormmated[1],
-                    viewmodel.enzymes
-                        .map((element) =>
-                            element.type == Constants.typesOfEnzymesList[1]
-                                ? 1
-                                : 0)
-                        .reduce((value, element) => value + element),
+                    enzymeTypeTranslations[Constants.typesOfEnzymesList[1]]!,
+                    getEnzymeCount(Constants.typesOfEnzymesList[1]),
                     AppColors.aryl),
               ],
             ),
@@ -109,24 +118,14 @@ class _EnzymesSummaryState extends State<EnzymesSummary> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                enzymeTag(
-                    Constants.typesOfEnzymesListFormmated[2],
-                    viewmodel.enzymes
-                        .map((element) =>
-                            element.type == Constants.typesOfEnzymesList[2]
-                                ? 1
-                                : 0)
-                        .reduce((value, element) => value + element),
-                    AppColors.fosfataseAcida),
-                enzymeTag(
-                    Constants.typesOfEnzymesListFormmated[3],
-                    viewmodel.enzymes
-                        .map((element) =>
-                            element.type == Constants.typesOfEnzymesList[3]
-                                ? 1
-                                : 0)
-                        .reduce((value, element) => value + element),
-                    AppColors.fosfataseAlcalina),
+            enzymeTag(
+                enzymeTypeTranslations[Constants.typesOfEnzymesList[2]]!,
+                getEnzymeCount(Constants.typesOfEnzymesList[2]),
+                AppColors.fosfataseAcida),
+            enzymeTag(
+                enzymeTypeTranslations[Constants.typesOfEnzymesList[3]]!,
+                getEnzymeCount(Constants.typesOfEnzymesList[3]),
+                AppColors.fosfataseAlcalina),
               ],
             ),
             Row(
@@ -134,13 +133,8 @@ class _EnzymesSummaryState extends State<EnzymesSummary> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 enzymeTag(
-                    Constants.typesOfEnzymesListFormmated[4],
-                    viewmodel.enzymes
-                        .map((element) =>
-                            element.type == Constants.typesOfEnzymesList[4]
-                                ? 1
-                                : 0)
-                        .reduce((value, element) => value + element),
+                    enzymeTypeTranslations[Constants.typesOfEnzymesList[4]]!,
+                    getEnzymeCount(Constants.typesOfEnzymesList[4]),
                     AppColors.urease),
               ],
             ),

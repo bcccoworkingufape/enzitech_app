@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
+import '../../../../../../l10n/app_localizations.dart';
 
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
@@ -43,6 +44,7 @@ class CreateAccountPageState extends State<CreateAccountPage> {
     _createAccountViewmodel = GetIt.I.get<CreateAccountViewmodel>();
 
     _createAccountViewmodel.addListener(() {
+      final l10n = AppLocalizations.of(context)!;
       if (_createAccountViewmodel.state == StateEnum.error) {
         EZTSnackBar.show(
           context,
@@ -55,7 +57,7 @@ class CreateAccountPageState extends State<CreateAccountPage> {
       } else if (_createAccountViewmodel.state == StateEnum.success) {
         EZTSnackBar.show(
           context,
-          "Conta criada com sucesso!",
+          l10n.accountCreatedSuccess,
           eztSnackBarType: EZTSnackBarType.success,
         );
 

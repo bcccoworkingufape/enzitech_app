@@ -1,9 +1,12 @@
 // 🐦 Flutter imports:
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import '../../../../../../../l10n/app_localizations.dart';
 
 // 🌎 Project imports:
 import '../../../../../../../shared/extensions/context_theme_mode_extensions.dart';
@@ -56,6 +59,7 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
   }
 
   Widget get _emailInput {
+    final l10n = AppLocalizations.of(context)!;
     final validations = <ValidateRule>[
       ValidateRule(
         ValidateTypes.required,
@@ -69,7 +73,7 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
 
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,
-      labelText: "Email",
+      labelText: l10n.email,
       usePrimaryColorOnFocusedBorder: true,
       keyboardType: TextInputType.emailAddress,
       controller: _emailFieldController,
@@ -79,6 +83,7 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
   }
 
   Widget get _passwordInput {
+    final l10n = AppLocalizations.of(context)!;
     final validations = <ValidateRule>[
       ValidateRule(
         ValidateTypes.required,
@@ -92,7 +97,7 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
 
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,
-      labelText: "Senha",
+      labelText: l10n.passwordLabel,
       usePrimaryColorOnFocusedBorder: true,
       keyboardType: TextInputType.emailAddress,
       controller: _passwordFieldController,
@@ -103,6 +108,7 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
   }
 
   Widget get _confirmPasswordInput {
+    final l10n = AppLocalizations.of(context)!;
     final validations = <ValidateRule>[
       ValidateRule(
         ValidateTypes.required,
@@ -116,7 +122,7 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
 
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,
-      labelText: "Confirmar senha",
+      labelText: l10n.confirmPasswordLabel,
       usePrimaryColorOnFocusedBorder: true,
       keyboardType: TextInputType.emailAddress,
       controller: _confirmPasswordFieldController,
@@ -140,6 +146,7 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
   }
 
   _body(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -154,7 +161,7 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
           const SizedBox(height: 16),
           Center(
             child: Text(
-              "Cadastre-se",
+              l10n.signUp,
               style: TextStyles.titleHome,
             ),
           ),
@@ -166,7 +173,7 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
               ),
               const SizedBox(width: 4),
               Text(
-                'Acesso',
+                l10n.access,
                 style: TextStyles.detailBold,
               ),
             ],
@@ -179,13 +186,14 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
   }
 
   Widget get _buttons {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         EZTButton(
           enabled: enableNextButton,
-          text: 'Criar conta',
+          text: l10n.createAccountButton,
           onPressed: () async {
             if (formKeyFinal.currentState!.validate()) {
               var cacheMap = widget.userDataCache;
@@ -205,7 +213,7 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
         ),
         const SizedBox(height: 16),
         EZTButton(
-          text: 'Voltar',
+          text: l10n.backButton,
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
             widget.pageController.animateTo(

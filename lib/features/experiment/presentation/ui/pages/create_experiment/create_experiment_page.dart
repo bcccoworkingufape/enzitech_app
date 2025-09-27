@@ -5,6 +5,9 @@ import 'package:flutter/scheduler.dart';
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
+import '../../../../../../l10n/app_localizations.dart';
+
+
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
@@ -37,6 +40,7 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
     if (mounted) {
       _createExperimentViewmodel.addListener(
         () {
+          final l10n = AppLocalizations.of(context)!;
           if (mounted && _createExperimentViewmodel.state == StateEnum.error) {
             EZTSnackBar.show(
               context,
@@ -59,7 +63,7 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
                   );
                 }).then((value) => EZTSnackBar.show(
                       context,
-                      "Experimento criado com sucesso!",
+                      l10n.experimentCreatedSuccess,
                       eztSnackBarType: EZTSnackBarType.success,
                     ));
               });

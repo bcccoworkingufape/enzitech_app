@@ -114,6 +114,7 @@ class _CalculateExperimentSecondStepPageState
   }
 
   Widget _textFields(Map<String, double?> map) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
