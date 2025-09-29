@@ -718,4 +718,60 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get createOne => ' Crie uma';
+
+  @override
+  String get excel_treatmentLabel => 'Tratamento:';
+
+  @override
+  String get excel_col_id => 'Id';
+
+  @override
+  String get excel_col_sampleAbsorbance => 'Abso. Amostra';
+
+  @override
+  String get excel_col_whiteSampleAbsorbance => 'Abso. Branco';
+
+  @override
+  String get excel_col_difference => 'Diferença A - B';
+
+  @override
+  String get excel_col_variableA => 'a - Coeficiente Angular da Curva';
+
+  @override
+  String get excel_col_variableB => 'b - Constante da Equação da Curva';
+
+  @override
+  String get excel_col_curveCalculation => 'Curva Cálculo';
+
+  @override
+  String get excel_col_correctionFactor => 'FC - Fator de Correção';
+
+  @override
+  String get excel_col_time => 'Tempo (h)';
+
+  @override
+  String get excel_col_volume => 'Volume (Solução do substrato)';
+
+  @override
+  String get excel_col_sampleWeight => 'Peso da amostra (g)';
+
+  @override
+  String get excel_col_result => 'Resultado';
+
+  @override
+  String get excel_footer_developedBy => 'Desenvolvido por:';
+
+  @override
+  String get excel_footer_learnMore => '👨🏻‍💻 SAIBA MAIS:';
+
+  @override
+  String shareExperimentResultsFilename(String experimentName) {
+    return 'Resultados do experimento \"$experimentName\"';
+  }
+
+  @override
+  String get sample => 'Amostra';
+
+  @override
+  String get whiteSample => 'Amostra branca';
 }

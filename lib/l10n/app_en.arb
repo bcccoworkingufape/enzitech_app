@@ -471,5 +471,33 @@
   "forgotMyPassword": "I forgot my password",
   "loginButton": "Login",
   "dontHaveAnAccount": "Don't have an account?",
-  "createOne": " Create one"
+  "createOne": " Create one",
+
+
+  "excel_treatmentLabel": "Treatment:",
+  "excel_col_id": "Id",
+  "excel_col_sampleAbsorbance": "Sample Abs.",
+  "excel_col_whiteSampleAbsorbance": "White Sample Abs.",
+  "excel_col_difference": "Difference A - B",
+  "excel_col_variableA": "a - Angular Coefficient",
+  "excel_col_variableB": "b - Curve Equation Constant",
+  "excel_col_curveCalculation": "Curve Calculation",
+  "excel_col_correctionFactor": "CF - Correction Factor",
+  "excel_col_time": "Time (h)",
+  "excel_col_volume": "Volume (Substrate Solution)",
+  "excel_col_sampleWeight": "Sample Weight (g)",
+  "excel_col_result": "Result",
+  "excel_footer_developedBy": "Developed by:",
+  "excel_footer_learnMore": "👨🏻‍💻 LEARN MORE:",
+  "shareExperimentResultsFilename": "Results for experiment \"{experimentName}\"",
+  "@shareExperimentResultsFilename": {
+    "placeholders": {
+      "experimentName": {
+        "type": "String"
+      }
+    }
+  },
+
+  "sample": "Sample",
+  "whiteSample": "White Sample"
 }

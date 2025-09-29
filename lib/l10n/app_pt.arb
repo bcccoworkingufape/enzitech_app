@@ -473,5 +473,33 @@
   "forgotMyPassword": "Esqueci minha senha",
   "loginButton": "Entrar",
   "dontHaveAnAccount": "Não possui uma conta?",
-  "createOne": " Crie uma"
+  "createOne": " Crie uma",
+
+
+  "excel_treatmentLabel": "Tratamento:",
+  "excel_col_id": "Id",
+  "excel_col_sampleAbsorbance": "Abso. Amostra",
+  "excel_col_whiteSampleAbsorbance": "Abso. Branco",
+  "excel_col_difference": "Diferença A - B",
+  "excel_col_variableA": "a - Coeficiente Angular da Curva",
+  "excel_col_variableB": "b - Constante da Equação da Curva",
+  "excel_col_curveCalculation": "Curva Cálculo",
+  "excel_col_correctionFactor": "FC - Fator de Correção",
+  "excel_col_time": "Tempo (h)",
+  "excel_col_volume": "Volume (Solução do substrato)",
+  "excel_col_sampleWeight": "Peso da amostra (g)",
+  "excel_col_result": "Resultado",
+  "excel_footer_developedBy": "Desenvolvido por:",
+  "excel_footer_learnMore": "👨🏻‍💻 SAIBA MAIS:",
+  "shareExperimentResultsFilename": "Resultados do experimento \"{experimentName}\"",
+  "@shareExperimentResultsFilename": {
+    "placeholders": {
+      "experimentName": {
+        "type": "String"
+      }
+    }
+  },
+
+  "sample": "Amostra",
+  "whiteSample": "Amostra branca"
 }

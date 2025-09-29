@@ -47,7 +47,7 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<Excel> exportToExcel() async {
+  Future<Excel> exportToExcel(Map<String, String> translations) async {
     final excel = Excel.createExcel();
 
     final CellStyle colorTreatment = CellStyle(
@@ -72,7 +72,7 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
 
       for (var treatment in experimentEnzyme.treatments) {
         sheet.insertRowIterables([
-          TextCellValue('Tratamento:'),
+          TextCellValue(translations['excel_treatment_label']!),
           TextCellValue(treatment.treatment.name),
           TextCellValue(''),
           TextCellValue(''),
@@ -100,18 +100,18 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
         rowIndex++;
 
         sheet.insertRowIterables([
-          TextCellValue('Id'),
-          TextCellValue('Abso. Amostra'),
-          TextCellValue('Abso. Branco'),
-          TextCellValue('Diferença A - B'),
-          TextCellValue('a - Coeficiente Angular da Curva'),
-          TextCellValue('b - nte da Equação da Curva'),
-          TextCellValue('Curva Cálculo'),
-          TextCellValue('FC - Fator de Correção'),
-          TextCellValue('Tempo (h)'),
-          TextCellValue('Volume (Solução do substrato)'),
-          TextCellValue('Peso da amostra (g)'),
-          TextCellValue('Resultado'),
+          TextCellValue(translations['excel_col_id']!),
+          TextCellValue(translations['excel_col_sampleAbsorbance']!),
+          TextCellValue(translations['excel_col_whiteSampleAbsorbance']!),
+          TextCellValue(translations['excel_col_difference']!),
+          TextCellValue(translations['excel_col_variableA']!),
+          TextCellValue(translations['excel_col_variableB']!),
+          TextCellValue(translations['excel_col_curveCalculation']!),
+          TextCellValue(translations['excel_col_correctionFactor']!),
+          TextCellValue(translations['excel_col_time']!),
+          TextCellValue(translations['excel_col_volume']!),
+          TextCellValue(translations['excel_col_sampleWeight']!),
+          TextCellValue(translations['excel_col_result']!),
         ], rowIndex);
 
         for (var i = 0; i < 12; i++) {
@@ -150,10 +150,10 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
         rowIndex++;
         rowIndex++;
         sheet.insertRowIterables([
-          TextCellValue('Desenvovido por:'),
+          TextCellValue(translations['excel_footer_developedBy']!),
           TextCellValue('ENZITECH'),
           TextCellValue(''),
-          TextCellValue('👨🏻‍💻 SAIBA MAIS:'),
+          TextCellValue(translations['excel_footer_learnMore']!),
           TextCellValue(
             'http://bcccoworking.ufape.edu.br/show.project?idProject=6',
           ),
@@ -185,7 +185,8 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
     return excel;
   }
 
-  Future<File> saveFileToTemporaryDirectory(Excel excel) async {
+  Future<File> saveFileToTemporaryDirectory(Map<String, String> translations) async {
+    final excel = await exportToExcel(translations);
     final dir = await getTemporaryDirectory();
     var filename =
         '${dir.path}/${_experimentDetailsViewmodel.experiment!.name.replaceAll(' ', '-')}.xlsx';
@@ -195,28 +196,21 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
     return file;
   }
 
-  Future<bool> openDialogToUserSaveFile() async {
-    final file = await saveFileToTemporaryDirectory(await exportToExcel());
-
+  Future<bool> openDialogToUserSaveFile(Map<String, String> translations) async {
+    final file = await saveFileToTemporaryDirectory(translations);
     final params = SaveFileDialogParams(sourceFilePath: file.path);
     final finalPath = await FlutterFileDialog.saveFile(params: params);
-
-    if (finalPath != null) {
-      return true;
-    }
-    return false;
+    return finalPath != null;
   }
 
-  Future<bool> shareFile() async {
-    final file = await saveFileToTemporaryDirectory(await exportToExcel());
-
+  Future<bool> shareFile(Map<String, String> translations, String translatedFilename) async {
+    final file = await saveFileToTemporaryDirectory(translations);
     await SharePlus.instance.share(
       ShareParams(
         files: [
           XFile(
             file.path,
-            name:
-                'Resultados do experimento "${_experimentDetailsViewmodel.experiment!.name}"',
+            name: translatedFilename,
           ),
         ],
       ),

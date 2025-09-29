@@ -10,6 +10,8 @@ import 'package:get_it/get_it.dart';
 import '../../../../../../../core/enums/enums.dart';
 import '../../../../../../../shared/extensions/context_theme_mode_extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
+import '../../../../../../../shared/validator/validator.dart';
+import '../../../../../../../shared/utils/utils.dart';
 import '../../../../viewmodel/calculate_experiment_viewmodel.dart';
 import '../calculate_experiment_fragment_template.dart';
 
@@ -52,50 +54,31 @@ class _CalculateExperimentSecondStepPageState
     return true;
   }
 
-  bool _isMapStillEmpty(String mapId) {
-    Map<String, EZTTextField> filteredMap =
-        Map.from(_calculateExperimentViewmodel.textFields)
-          ..removeWhere((k, v) => !k.toString().contains(mapId));
+  bool _isEnzymeStillEmpty(String enzymeId) {
+    final sampleController =
+    _calculateExperimentViewmodel.textEditingControllers['sample-$enzymeId'];
+    final whiteSampleController = _calculateExperimentViewmodel
+        .textEditingControllers['whiteSample-$enzymeId'];
 
-    var listOfAllTextsOfData = [];
-    filteredMap.forEach((k, v) {
-      listOfAllTextsOfData.add(v.controller!.text);
-    });
+    if (sampleController == null || whiteSampleController == null) return true;
 
-    if (listOfAllTextsOfData.isNotEmpty &&
-        listOfAllTextsOfData.any((element) => element.isEmpty)) {
-      return true;
-    }
-
-    return false;
+    return sampleController.text.isEmpty || whiteSampleController.text.isEmpty;
   }
 
-  bool _isMapCorrectlyFilled(String mapId) {
-    Map<String, EZTTextField> filteredMap =
-        Map.from(_calculateExperimentViewmodel.textFields)
-          ..removeWhere((k, v) => !k.toString().contains(mapId));
+  bool _isEnzymeCorrectlyFilled(String enzymeId) {
+    final sampleController =
+    _calculateExperimentViewmodel.textEditingControllers['sample-$enzymeId'];
+    final whiteSampleController = _calculateExperimentViewmodel
+        .textEditingControllers['whiteSample-$enzymeId'];
 
-    var listOfBools = [];
-    var listOfBoolsIfAllIsEmpty = [];
-    var listOfAllTextsOfData = [];
+    if (sampleController == null || whiteSampleController == null) return false;
 
-    filteredMap.forEach((k, v) {
-      listOfBools.add(_checkIfTextIsGTZAndNumeric(v.controller!.text));
-      listOfBoolsIfAllIsEmpty.add(v.controller!.text.isEmpty);
-      listOfAllTextsOfData.add(v.controller!.text);
-    });
-
-    if (listOfAllTextsOfData.isNotEmpty &&
-        listOfAllTextsOfData.any((element) => element.isEmpty)) {
+    if (sampleController.text.isEmpty && whiteSampleController.text.isEmpty) {
       return true;
     }
 
-    if (listOfBoolsIfAllIsEmpty.isNotEmpty &&
-        listOfBoolsIfAllIsEmpty.every((element) => element == true)) {
-      return true;
-    }
-
-    return listOfBools.every((b) => b == true);
+    return _checkIfTextIsGTZAndNumeric(sampleController.text) &&
+        _checkIfTextIsGTZAndNumeric(whiteSampleController.text);
   }
 
   StepState _leadWithStepState(Map<String, double?> map) {
@@ -104,9 +87,9 @@ class _CalculateExperimentSecondStepPageState
             .toList()
             .indexOf(map)) {
       return StepState.editing;
-    } else if (_isMapStillEmpty(map["_id"].toString())) {
+    } else if (_isEnzymeStillEmpty(map["_id"].toString())) {
       return StepState.indexed;
-    } else if (_isMapCorrectlyFilled(map["_id"].toString())) {
+    } else if (_isEnzymeCorrectlyFilled(map["_id"].toString())) {
       return StepState.complete;
     } else {
       return StepState.error;
@@ -115,14 +98,46 @@ class _CalculateExperimentSecondStepPageState
 
   Widget _textFields(Map<String, double?> map) {
     final l10n = AppLocalizations.of(context)!;
+
+    final validations = <ValidateRule>[
+      ValidateRule(ValidateTypes.required),
+      ValidateRule(ValidateTypes.numeric),
+      ValidateRule(ValidateTypes.greaterThanZeroDecimal),
+    ];
+    final fieldValidator = FieldValidator(validations, context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _calculateExperimentViewmodel.textFields["sample-${map["_id"]}"] ??
-            Container(),
-        const SizedBox(width: 10),
-        _calculateExperimentViewmodel.textFields["whiteSample-${map["_id"]}"] ??
-            Container(),
+        EZTTextField(
+          eztTextFieldType: EZTTextFieldType.underline,
+          labelText: l10n.sample,
+          usePrimaryColorOnFocusedBorder: true,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          controller: _calculateExperimentViewmodel
+              .textEditingControllers["sample-${map["_id"]}"]!,
+          onChanged: (value) {
+            _calculateExperimentViewmodel.validateFields(
+                value, map["_id"] as double, "sample");
+          },
+          fieldValidator: fieldValidator,
+          inputFormatters: Constants.enzymeDecimalInputFormatters,
+        ),
+        const SizedBox(height: 10),
+        EZTTextField(
+          eztTextFieldType: EZTTextFieldType.underline,
+          labelText: l10n.whiteSample,
+          usePrimaryColorOnFocusedBorder: true,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          controller: _calculateExperimentViewmodel
+              .textEditingControllers["whiteSample-${map["_id"]}"]!,
+          onChanged: (value) {
+            _calculateExperimentViewmodel.validateFields(
+                value, map["_id"] as double, "whiteSample");
+          },
+          fieldValidator: fieldValidator,
+          inputFormatters: Constants.enzymeDecimalInputFormatters,
+        ),
       ],
     );
   }
@@ -239,7 +254,7 @@ class _CalculateExperimentSecondStepPageState
                       (map) {
                         return Step(
                           state: _leadWithStepState(map),
-                          title: _isMapCorrectlyFilled(map["_id"].toString())
+                          title: _isEnzymeCorrectlyFilled(map["_id"].toString())
                               ? Text(
                                   l10n.repetitionDataTitle(map["_id"]!.toInt() + 1 ),
                           )
@@ -252,7 +267,7 @@ class _CalculateExperimentSecondStepPageState
                                 ),
                           content: Visibility(
                             visible: _calculateExperimentViewmodel
-                                    .textFields["sample-${map["_id"]}"] !=
+                                .textEditingControllers["sample-${map["_id"]}"] !=
                                 null,
                             child: _textFields(map),
                           ),

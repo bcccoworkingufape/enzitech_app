@@ -185,14 +185,14 @@ class _CalculateExperimentFirstStepPageState
                   );
 
               await _calculateExperimentViewmodel
-                  .generateTextFields(context)
+                  .generateTextFields()
                   .whenComplete(
                     () => Future.delayed(Duration.zero, () {
-                      _calculateExperimentViewmodel.setStepPage(0);
+                  _calculateExperimentViewmodel.setStepPage(0);
 
-                      _calculateExperimentViewmodel.onNext(context);
-                    }),
-                  );
+                  _calculateExperimentViewmodel.onNext(context);
+                }),
+              );
             }
           },
         ),

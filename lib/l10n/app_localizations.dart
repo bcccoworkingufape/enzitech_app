@@ -1279,6 +1279,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **' Create one'**
   String get createOne;
+
+  /// No description provided for @excel_treatmentLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Treatment:'**
+  String get excel_treatmentLabel;
+
+  /// No description provided for @excel_col_id.
+  ///
+  /// In en, this message translates to:
+  /// **'Id'**
+  String get excel_col_id;
+
+  /// No description provided for @excel_col_sampleAbsorbance.
+  ///
+  /// In en, this message translates to:
+  /// **'Sample Abs.'**
+  String get excel_col_sampleAbsorbance;
+
+  /// No description provided for @excel_col_whiteSampleAbsorbance.
+  ///
+  /// In en, this message translates to:
+  /// **'White Sample Abs.'**
+  String get excel_col_whiteSampleAbsorbance;
+
+  /// No description provided for @excel_col_difference.
+  ///
+  /// In en, this message translates to:
+  /// **'Difference A - B'**
+  String get excel_col_difference;
+
+  /// No description provided for @excel_col_variableA.
+  ///
+  /// In en, this message translates to:
+  /// **'a - Angular Coefficient'**
+  String get excel_col_variableA;
+
+  /// No description provided for @excel_col_variableB.
+  ///
+  /// In en, this message translates to:
+  /// **'b - Curve Equation Constant'**
+  String get excel_col_variableB;
+
+  /// No description provided for @excel_col_curveCalculation.
+  ///
+  /// In en, this message translates to:
+  /// **'Curve Calculation'**
+  String get excel_col_curveCalculation;
+
+  /// No description provided for @excel_col_correctionFactor.
+  ///
+  /// In en, this message translates to:
+  /// **'CF - Correction Factor'**
+  String get excel_col_correctionFactor;
+
+  /// No description provided for @excel_col_time.
+  ///
+  /// In en, this message translates to:
+  /// **'Time (h)'**
+  String get excel_col_time;
+
+  /// No description provided for @excel_col_volume.
+  ///
+  /// In en, this message translates to:
+  /// **'Volume (Substrate Solution)'**
+  String get excel_col_volume;
+
+  /// No description provided for @excel_col_sampleWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Sample Weight (g)'**
+  String get excel_col_sampleWeight;
+
+  /// No description provided for @excel_col_result.
+  ///
+  /// In en, this message translates to:
+  /// **'Result'**
+  String get excel_col_result;
+
+  /// No description provided for @excel_footer_developedBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Developed by:'**
+  String get excel_footer_developedBy;
+
+  /// No description provided for @excel_footer_learnMore.
+  ///
+  /// In en, this message translates to:
+  /// **'👨🏻‍💻 LEARN MORE:'**
+  String get excel_footer_learnMore;
+
+  /// No description provided for @shareExperimentResultsFilename.
+  ///
+  /// In en, this message translates to:
+  /// **'Results for experiment \"{experimentName}\"'**
+  String shareExperimentResultsFilename(String experimentName);
+
+  /// No description provided for @sample.
+  ///
+  /// In en, this message translates to:
+  /// **'Sample'**
+  String get sample;
+
+  /// No description provided for @whiteSample.
+  ///
+  /// In en, this message translates to:
+  /// **'White Sample'**
+  String get whiteSample;
 }
 
 class _AppLocalizationsDelegate

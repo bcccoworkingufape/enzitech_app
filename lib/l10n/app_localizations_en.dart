@@ -716,4 +716,60 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get createOne => ' Create one';
+
+  @override
+  String get excel_treatmentLabel => 'Treatment:';
+
+  @override
+  String get excel_col_id => 'Id';
+
+  @override
+  String get excel_col_sampleAbsorbance => 'Sample Abs.';
+
+  @override
+  String get excel_col_whiteSampleAbsorbance => 'White Sample Abs.';
+
+  @override
+  String get excel_col_difference => 'Difference A - B';
+
+  @override
+  String get excel_col_variableA => 'a - Angular Coefficient';
+
+  @override
+  String get excel_col_variableB => 'b - Curve Equation Constant';
+
+  @override
+  String get excel_col_curveCalculation => 'Curve Calculation';
+
+  @override
+  String get excel_col_correctionFactor => 'CF - Correction Factor';
+
+  @override
+  String get excel_col_time => 'Time (h)';
+
+  @override
+  String get excel_col_volume => 'Volume (Substrate Solution)';
+
+  @override
+  String get excel_col_sampleWeight => 'Sample Weight (g)';
+
+  @override
+  String get excel_col_result => 'Result';
+
+  @override
+  String get excel_footer_developedBy => 'Developed by:';
+
+  @override
+  String get excel_footer_learnMore => '👨🏻‍💻 LEARN MORE:';
+
+  @override
+  String shareExperimentResultsFilename(String experimentName) {
+    return 'Results for experiment \"$experimentName\"';
+  }
+
+  @override
+  String get sample => 'Sample';
+
+  @override
+  String get whiteSample => 'White Sample';
 }
