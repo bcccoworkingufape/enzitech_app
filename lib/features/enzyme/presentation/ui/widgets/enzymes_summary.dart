@@ -51,18 +51,26 @@ class _EnzymesSummaryState extends State<EnzymesSummary> {
     var viewmodel = GetIt.I.get<EnzymesViewmodel>();
 
     final Map<String, String> enzymeTypeTranslations = {
-      'BETA_GLUCOSIDASE': l10n.enzymeType_betaGlucosidase,
-      'ARYL': l10n.enzymeType_aryl,
-      'ACID_PHOSPHATASE': l10n.enzymeType_acidPhosphatase,
-      'ALKALINE_PHOSPHATASE': l10n.enzymeType_alkalinePhosphatase,
-      'UREASE': l10n.enzymeType_urease,
+      'Betaglucosidase': l10n.enzymeType_betaGlucosidase,
+      'Aryl': l10n.enzymeType_aryl,
+      'FosfataseAcida': l10n.enzymeType_acidPhosphatase,
+      'FosfataseAlcalina': l10n.enzymeType_alkalinePhosphatase,
+      'Urease': l10n.enzymeType_urease,
+      'FDA': l10n.enzymeType_fda,
+    };
+
+    final Map<String, Color> enzymeColors = {
+      'Betaglucosidase': AppColors.betaGlucosidase,
+      'Aryl': AppColors.aryl,
+      'FosfataseAcida': AppColors.fosfataseAcida,
+      'FosfataseAlcalina': AppColors.fosfataseAlcalina,
+      'Urease': AppColors.urease,
+      'FDA': Colors.purple,
     };
 
     int getEnzymeCount(String typeKey) {
       if (viewmodel.enzymes.isEmpty) return 0;
-      return viewmodel.enzymes
-          .where((enzyme) => enzyme.type == typeKey)
-          .length;
+      return viewmodel.enzymes.where((enzyme) => enzyme.type == typeKey).length;
     }
 
     return Padding(
@@ -100,43 +108,27 @@ class _EnzymesSummaryState extends State<EnzymesSummary> {
             const SizedBox(
               height: 8,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                enzymeTag(
-                    enzymeTypeTranslations[Constants.typesOfEnzymesList[0]]!,
-                    getEnzymeCount(Constants.typesOfEnzymesList[0]),
-                    AppColors.betaGlucosidase),
-                enzymeTag(
-                    enzymeTypeTranslations[Constants.typesOfEnzymesList[1]]!,
-                    getEnzymeCount(Constants.typesOfEnzymesList[1]),
-                    AppColors.aryl),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-            enzymeTag(
-                enzymeTypeTranslations[Constants.typesOfEnzymesList[2]]!,
-                getEnzymeCount(Constants.typesOfEnzymesList[2]),
-                AppColors.fosfataseAcida),
-            enzymeTag(
-                enzymeTypeTranslations[Constants.typesOfEnzymesList[3]]!,
-                getEnzymeCount(Constants.typesOfEnzymesList[3]),
-                AppColors.fosfataseAlcalina),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                enzymeTag(
-                    enzymeTypeTranslations[Constants.typesOfEnzymesList[4]]!,
-                    getEnzymeCount(Constants.typesOfEnzymesList[4]),
-                    AppColors.urease),
-              ],
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Wrap(
+                spacing: 16.0, // Espaço horizontal entre as tags
+                runSpacing: 8.0,  // Espaço vertical entre as linhas
+                children: enzymeTypeTranslations.keys.map((backendKey) {
+                  final count = getEnzymeCount(backendKey);
+
+                  // Só mostra a tag se houver pelo menos uma enzima daquele tipo
+                  if (count > 0) {
+                    return enzymeTag(
+                      enzymeTypeTranslations[backendKey]!, // Nome traduzido
+                      count,
+                      enzymeColors[backendKey] ?? Colors.grey, // Cor correspondente
+                    );
+                  }
+
+                  // Retorna um widget vazio se não houver enzimas desse tipo
+                  return const SizedBox.shrink();
+                }).toList(),
+              ),
             ),
             const SizedBox(
               height: 8,

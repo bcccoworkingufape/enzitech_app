@@ -604,6 +604,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get enzymeType_urease => 'Urease';
 
   @override
+  String get enzymeType_fda => 'FDA';
+
+  @override
   String get errorLoadingEnzymes => 'Error loading enzymes';
 
   @override

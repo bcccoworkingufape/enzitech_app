@@ -386,6 +386,7 @@
   "enzymeType_acidPhosphatase": "Fosfatase Ácida",
   "enzymeType_alkalinePhosphatase": "Fosfatase Alcalina",
   "enzymeType_urease": "Urease",
+  "enzymeType_fda": "FDA",
 
   "errorLoadingEnzymes": "Erro ao carregar enzimas",
   "loadingEnzymes": "Carregando enzimas...",

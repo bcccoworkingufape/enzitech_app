@@ -1106,6 +1106,12 @@ abstract class AppLocalizations {
   /// **'Urease'**
   String get enzymeType_urease;
 
+  /// No description provided for @enzymeType_fda.
+  ///
+  /// In en, this message translates to:
+  /// **'FDA'**
+  String get enzymeType_fda;
+
   /// No description provided for @errorLoadingEnzymes.
   ///
   /// In en, this message translates to:

@@ -31,11 +31,12 @@ class _EnzymeCardState extends State<EnzymeCard> {
     final formattedDate = DateFormat.yMd(locale).format(widget.enzyme.createdAt!);
 
     final Map<String, String> enzymeTypeTranslations = {
-      'BETA_GLUCOSIDASE': l10n.enzymeType_betaGlucosidase,
-      'ARYL': l10n.enzymeType_aryl,
-      'ACID_PHOSPHATASE': l10n.enzymeType_acidPhosphatase,
-      'ALKALINE_PHOSPHATASE': l10n.enzymeType_alkalinePhosphatase,
-      'UREASE': l10n.enzymeType_urease,
+      'Betaglucosidase': l10n.enzymeType_betaGlucosidase,
+      'Aryl': l10n.enzymeType_aryl,
+      'FosfataseAcida': l10n.enzymeType_acidPhosphatase,
+      'FosfataseAlcalina': l10n.enzymeType_alkalinePhosphatase,
+      'Urease': l10n.enzymeType_urease,
+      'FDA': l10n.enzymeType_fda,
     };
 
     final translatedEnzymeType = enzymeTypeTranslations[widget.enzyme.type] ?? widget.enzyme.type;

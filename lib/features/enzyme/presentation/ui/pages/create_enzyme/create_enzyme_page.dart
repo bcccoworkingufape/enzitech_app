@@ -228,13 +228,12 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
     final l10n = AppLocalizations.of(context)!;
 
     final Map<String, String> enzymeTypes = {
-      // Estas chaves (ex: 'BETA_GLUCOSIDASE') devem corresponder
-      // à lógica interna ou ao que envia para o backend.
-      'BETA_GLUCOSIDASE': l10n.enzymeType_betaGlucosidase,
-      'ARYL': l10n.enzymeType_aryl,
-      'ACID_PHOSPHATASE': l10n.enzymeType_acidPhosphatase,
-      'ALKALINE_PHOSPHATASE': l10n.enzymeType_alkalinePhosphatase,
-      'UREASE': l10n.enzymeType_urease,
+      'Betaglucosidase': l10n.enzymeType_betaGlucosidase,
+      'Aryl': l10n.enzymeType_aryl,
+      'FosfataseAcida': l10n.enzymeType_acidPhosphatase,
+      'FosfataseAlcalina': l10n.enzymeType_alkalinePhosphatase,
+      'Urease': l10n.enzymeType_urease,
+      'FDA': l10n.enzymeType_fda,
     };
 
     String? selectedKey;
@@ -290,11 +289,12 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
             if (_formKey.currentState!.validate()) {
               if (mounted) {
                 final Map<String, String> reverseEnzymeMap = {
-                  l10n.enzymeType_betaGlucosidase: 'BETA_GLUCOSIDASE',
-                  l10n.enzymeType_aryl: 'ARYL',
-                  l10n.enzymeType_acidPhosphatase: 'ACID_PHOSPHATASE',
-                  l10n.enzymeType_alkalinePhosphatase: 'ALKALINE_PHOSPHATASE',
-                  l10n.enzymeType_urease: 'UREASE',
+                  l10n.enzymeType_betaGlucosidase: 'Betaglucosidase',
+                  l10n.enzymeType_aryl: 'Aryl',
+                  l10n.enzymeType_acidPhosphatase: 'FosfataseAcida',
+                  l10n.enzymeType_alkalinePhosphatase: 'FosfataseAlcalina',
+                  l10n.enzymeType_urease: 'Urease',
+                  l10n.enzymeType_fda: 'FDA',
                 };
                 final String? originalEnzymeKey = reverseEnzymeMap[dropdownValue];
                 if (originalEnzymeKey != null) {
