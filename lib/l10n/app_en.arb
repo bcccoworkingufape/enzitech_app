@@ -286,5 +286,219 @@
         "type": "int"
       }
     }
-  }
+  },
+
+  "modifiedOn": "Modified on {date}",
+  "@modifiedOn": {
+    "description": "Label to show when an experiment was last modified",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+
+  "deleteExperimentTitle": "Delete experiment?",
+  "deleteExperimentContent": "Are you sure you want to delete this experiment?",
+  "deleteButton": "DELETE",
+  "cancelButton": "CANCEL",
+
+  "filters": "Filters",
+  "orderBy": "Order by:",
+  "select": "Select",
+  "organizeInOrder": "Organize in order:",
+
+  "filter_name": "Name",
+  "filter_description": "Description",
+  "filter_progress": "Progress",
+  "filter_creationDate": "Creation date",
+  "filter_modificationDate": "Modification date",
+
+  "order_ascending": "Ascending",
+  "order_descending": "Descending",
+
+  "clearFilters": "{count, plural, =0{Clear filters} =1{Clear filter} other{Clear filters}}",
+  "@clearFilters": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "applyFilters": "{count, plural, =0{Apply filters} =1{Apply filter} other{Apply filters}}",
+  "@applyFilters": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "experimentCreatedSuccess": "Experiment created successfully!",
+
+  "treatmentCreatedSuccess": "Treatment created successfully!",
+  "registerNewTreatment": "Register a new\n Treatment",
+  "treatmentIdentification": "Treatment Identification",
+  "createTreatmentButton": "Create treatment",
+
+  "errorLoadingTreatments": "Error loading treatments",
+  "loadingTreatments": "Loading treatments...",
+  "treatmentsNotFound": "Treatments not found",
+  "treatmentDeleted": "{treatmentName} deleted!",
+  "@treatmentDeleted": {
+    "placeholders": {
+      "treatmentName": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteTreatmentTitle": "Delete treatment?",
+  "deleteTreatmentContent": "Are you sure you want to delete this treatment?",
+  "treatmentsFound": "🧪 {count, plural, =0{No treatments found} =1{1 treatment found} other{{count} treatments found}}",
+  "@treatmentsFound": {
+    "description": "A message that shows the number of treatments found",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "createdOn": "Created on {date}",
+  "@createdOn": {
+    "description": "Label to show when a treatment was created",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+
+  "enzymeCreatedSuccess": "Enzyme created successfully!",
+  "registerNewEnzyme": "Register a new\n Enzyme",
+  "enzymeIdentification": "Enzyme Identification",
+  "variableA_long": "Variable a - Angular Coefficient of the Curve",
+  "variableB_long": "Variable b - Constant of the Curve Equation",
+  "chooseEnzymeType": "Choose the enzyme type",
+  "createEnzymeButton": "Create enzyme",
+  "enzymeType_betaGlucosidase": "Beta-glucosidase",
+  "enzymeType_aryl": "Aryl",
+  "enzymeType_acidPhosphatase": "Acid Phosphatase",
+  "enzymeType_alkalinePhosphatase": "Alkaline Phosphatase",
+  "enzymeType_urease": "Urease",
+  "enzymeType_fda":  "FDA",
+
+  "errorLoadingEnzymes": "Error loading enzymes",
+  "loadingEnzymes": "Loading enzymes...",
+  "noEnzymesRegisteredAdmin": "No enzymes registered.",
+  "noEnzymesRegisteredUser": "No enzymes registered, please contact your Administrator to solve this issue.",
+  "enzymeDeleted": "{enzymeName} deleted!",
+  "@enzymeDeleted": {
+    "placeholders": {
+      "enzymeName": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteEnzymeTitle": "Delete enzyme?",
+  "deleteEnzymeContent": "Are you sure you want to delete this enzyme?",
+  "enzymesFound": "🧬 {count, plural, =0{No enzymes found} =1{1 enzyme found} other{{count} enzymes found}}",
+  "@enzymesFound": {
+    "description": "A message that shows the number of enzymes found",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "formulaLabel": "Formula: ",
+  "variableALabel": "Variable A: ",
+  "variableBLabel": "Variable B: ",
+
+  "enzymesSummaryTitle": "Enzymes Summary",
+  "enzymeTagFormat": "{enzymeName} ({quantity})",
+  "@enzymeTagFormat": {
+    "description": "Format for the enzyme tag, showing name and quantity",
+    "placeholders": {
+      "enzymeName": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "int"
+      }
+    }
+  },
+
+  "environmentValue": "{env, select, dev{Development} stage{Stage} prod{Production} other{Unknown}}",
+  "@environmentValue": {
+    "description": "The application environment",
+    "placeholders": {
+      "env": {
+        "type": "String"
+      }
+    }
+  },
+
+  "unableToOpenUrlError": "Could not access {url}",
+  "@unableToOpenUrlError": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+
+  "institutionLabel": "Institution",
+  "signUp": "Sign Up",
+  "personalData": "Personal Data",
+
+  "passwordLabel": "Password",
+  "confirmPasswordLabel": "Confirm password",
+  "access": "Access",
+  "createAccountButton": "Create account",
+
+  "accountCreatedSuccess": "Account created successfully!",
+
+  "welcomeMessage": "Welcome {userName}!",
+  "@welcomeMessage": {
+    "placeholders": {
+      "userName": {
+        "type": "String"
+      }
+    }
+  },
+  "helloWelcome": "Hello,\nwelcome!",
+  "forgotMyPassword": "I forgot my password",
+  "loginButton": "Login",
+  "dontHaveAnAccount": "Don't have an account?",
+  "createOne": " Create one",
+
+
+  "excel_treatmentLabel": "Treatment:",
+  "excel_col_id": "Id",
+  "excel_col_sampleAbsorbance": "Sample Abs.",
+  "excel_col_whiteSampleAbsorbance": "White Sample Abs.",
+  "excel_col_difference": "Difference A - B",
+  "excel_col_variableA": "a - Angular Coefficient",
+  "excel_col_variableB": "b - Curve Equation Constant",
+  "excel_col_curveCalculation": "Curve Calculation",
+  "excel_col_correctionFactor": "CF - Correction Factor",
+  "excel_col_time": "Time (h)",
+  "excel_col_volume": "Volume (Substrate Solution)",
+  "excel_col_sampleWeight": "Sample Weight (g)",
+  "excel_col_result": "Result",
+  "excel_footer_developedBy": "Developed by:",
+  "excel_footer_learnMore": "👨🏻‍💻 LEARN MORE:",
+  "shareExperimentResultsFilename": "Results for experiment \"{experimentName}\"",
+  "@shareExperimentResultsFilename": {
+    "placeholders": {
+      "experimentName": {
+        "type": "String"
+      }
+    }
+  },
+
+  "sample": "Sample",
+  "whiteSample": "White Sample"
 }

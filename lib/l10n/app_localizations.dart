@@ -847,6 +847,552 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'🔬 {count, plural, =0{No experiments found} =1{1 experiment found} other{{count} experiments found}}'**
   String experimentsFound(int count);
+
+  /// Label to show when an experiment was last modified
+  ///
+  /// In en, this message translates to:
+  /// **'Modified on {date}'**
+  String modifiedOn(String date);
+
+  /// No description provided for @deleteExperimentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete experiment?'**
+  String get deleteExperimentTitle;
+
+  /// No description provided for @deleteExperimentContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this experiment?'**
+  String get deleteExperimentContent;
+
+  /// No description provided for @deleteButton.
+  ///
+  /// In en, this message translates to:
+  /// **'DELETE'**
+  String get deleteButton;
+
+  /// No description provided for @cancelButton.
+  ///
+  /// In en, this message translates to:
+  /// **'CANCEL'**
+  String get cancelButton;
+
+  /// No description provided for @filters.
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get filters;
+
+  /// No description provided for @orderBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Order by:'**
+  String get orderBy;
+
+  /// No description provided for @select.
+  ///
+  /// In en, this message translates to:
+  /// **'Select'**
+  String get select;
+
+  /// No description provided for @organizeInOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Organize in order:'**
+  String get organizeInOrder;
+
+  /// No description provided for @filter_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get filter_name;
+
+  /// No description provided for @filter_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get filter_description;
+
+  /// No description provided for @filter_progress.
+  ///
+  /// In en, this message translates to:
+  /// **'Progress'**
+  String get filter_progress;
+
+  /// No description provided for @filter_creationDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Creation date'**
+  String get filter_creationDate;
+
+  /// No description provided for @filter_modificationDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Modification date'**
+  String get filter_modificationDate;
+
+  /// No description provided for @order_ascending.
+  ///
+  /// In en, this message translates to:
+  /// **'Ascending'**
+  String get order_ascending;
+
+  /// No description provided for @order_descending.
+  ///
+  /// In en, this message translates to:
+  /// **'Descending'**
+  String get order_descending;
+
+  /// No description provided for @clearFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Clear filters} =1{Clear filter} other{Clear filters}}'**
+  String clearFilters(int count);
+
+  /// No description provided for @applyFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Apply filters} =1{Apply filter} other{Apply filters}}'**
+  String applyFilters(int count);
+
+  /// No description provided for @experimentCreatedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Experiment created successfully!'**
+  String get experimentCreatedSuccess;
+
+  /// No description provided for @treatmentCreatedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Treatment created successfully!'**
+  String get treatmentCreatedSuccess;
+
+  /// No description provided for @registerNewTreatment.
+  ///
+  /// In en, this message translates to:
+  /// **'Register a new\n Treatment'**
+  String get registerNewTreatment;
+
+  /// No description provided for @treatmentIdentification.
+  ///
+  /// In en, this message translates to:
+  /// **'Treatment Identification'**
+  String get treatmentIdentification;
+
+  /// No description provided for @createTreatmentButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Create treatment'**
+  String get createTreatmentButton;
+
+  /// No description provided for @errorLoadingTreatments.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading treatments'**
+  String get errorLoadingTreatments;
+
+  /// No description provided for @loadingTreatments.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading treatments...'**
+  String get loadingTreatments;
+
+  /// No description provided for @treatmentsNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Treatments not found'**
+  String get treatmentsNotFound;
+
+  /// No description provided for @treatmentDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'{treatmentName} deleted!'**
+  String treatmentDeleted(String treatmentName);
+
+  /// No description provided for @deleteTreatmentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete treatment?'**
+  String get deleteTreatmentTitle;
+
+  /// No description provided for @deleteTreatmentContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this treatment?'**
+  String get deleteTreatmentContent;
+
+  /// A message that shows the number of treatments found
+  ///
+  /// In en, this message translates to:
+  /// **'🧪 {count, plural, =0{No treatments found} =1{1 treatment found} other{{count} treatments found}}'**
+  String treatmentsFound(int count);
+
+  /// Label to show when a treatment was created
+  ///
+  /// In en, this message translates to:
+  /// **'Created on {date}'**
+  String createdOn(String date);
+
+  /// No description provided for @enzymeCreatedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Enzyme created successfully!'**
+  String get enzymeCreatedSuccess;
+
+  /// No description provided for @registerNewEnzyme.
+  ///
+  /// In en, this message translates to:
+  /// **'Register a new\n Enzyme'**
+  String get registerNewEnzyme;
+
+  /// No description provided for @enzymeIdentification.
+  ///
+  /// In en, this message translates to:
+  /// **'Enzyme Identification'**
+  String get enzymeIdentification;
+
+  /// No description provided for @variableA_long.
+  ///
+  /// In en, this message translates to:
+  /// **'Variable a - Angular Coefficient of the Curve'**
+  String get variableA_long;
+
+  /// No description provided for @variableB_long.
+  ///
+  /// In en, this message translates to:
+  /// **'Variable b - Constant of the Curve Equation'**
+  String get variableB_long;
+
+  /// No description provided for @chooseEnzymeType.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the enzyme type'**
+  String get chooseEnzymeType;
+
+  /// No description provided for @createEnzymeButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Create enzyme'**
+  String get createEnzymeButton;
+
+  /// No description provided for @enzymeType_betaGlucosidase.
+  ///
+  /// In en, this message translates to:
+  /// **'Beta-glucosidase'**
+  String get enzymeType_betaGlucosidase;
+
+  /// No description provided for @enzymeType_aryl.
+  ///
+  /// In en, this message translates to:
+  /// **'Aryl'**
+  String get enzymeType_aryl;
+
+  /// No description provided for @enzymeType_acidPhosphatase.
+  ///
+  /// In en, this message translates to:
+  /// **'Acid Phosphatase'**
+  String get enzymeType_acidPhosphatase;
+
+  /// No description provided for @enzymeType_alkalinePhosphatase.
+  ///
+  /// In en, this message translates to:
+  /// **'Alkaline Phosphatase'**
+  String get enzymeType_alkalinePhosphatase;
+
+  /// No description provided for @enzymeType_urease.
+  ///
+  /// In en, this message translates to:
+  /// **'Urease'**
+  String get enzymeType_urease;
+
+  /// No description provided for @enzymeType_fda.
+  ///
+  /// In en, this message translates to:
+  /// **'FDA'**
+  String get enzymeType_fda;
+
+  /// No description provided for @errorLoadingEnzymes.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading enzymes'**
+  String get errorLoadingEnzymes;
+
+  /// No description provided for @loadingEnzymes.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading enzymes...'**
+  String get loadingEnzymes;
+
+  /// No description provided for @noEnzymesRegisteredAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'No enzymes registered.'**
+  String get noEnzymesRegisteredAdmin;
+
+  /// No description provided for @noEnzymesRegisteredUser.
+  ///
+  /// In en, this message translates to:
+  /// **'No enzymes registered, please contact your Administrator to solve this issue.'**
+  String get noEnzymesRegisteredUser;
+
+  /// No description provided for @enzymeDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'{enzymeName} deleted!'**
+  String enzymeDeleted(String enzymeName);
+
+  /// No description provided for @deleteEnzymeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete enzyme?'**
+  String get deleteEnzymeTitle;
+
+  /// No description provided for @deleteEnzymeContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this enzyme?'**
+  String get deleteEnzymeContent;
+
+  /// A message that shows the number of enzymes found
+  ///
+  /// In en, this message translates to:
+  /// **'🧬 {count, plural, =0{No enzymes found} =1{1 enzyme found} other{{count} enzymes found}}'**
+  String enzymesFound(int count);
+
+  /// No description provided for @formulaLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Formula: '**
+  String get formulaLabel;
+
+  /// No description provided for @variableALabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Variable A: '**
+  String get variableALabel;
+
+  /// No description provided for @variableBLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Variable B: '**
+  String get variableBLabel;
+
+  /// No description provided for @enzymesSummaryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enzymes Summary'**
+  String get enzymesSummaryTitle;
+
+  /// Format for the enzyme tag, showing name and quantity
+  ///
+  /// In en, this message translates to:
+  /// **'{enzymeName} ({quantity})'**
+  String enzymeTagFormat(String enzymeName, int quantity);
+
+  /// The application environment
+  ///
+  /// In en, this message translates to:
+  /// **'{env, select, dev{Development} stage{Stage} prod{Production} other{Unknown}}'**
+  String environmentValue(String env);
+
+  /// No description provided for @unableToOpenUrlError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not access {url}'**
+  String unableToOpenUrlError(String url);
+
+  /// No description provided for @institutionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Institution'**
+  String get institutionLabel;
+
+  /// No description provided for @signUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign Up'**
+  String get signUp;
+
+  /// No description provided for @personalData.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal Data'**
+  String get personalData;
+
+  /// No description provided for @passwordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get passwordLabel;
+
+  /// No description provided for @confirmPasswordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm password'**
+  String get confirmPasswordLabel;
+
+  /// No description provided for @access.
+  ///
+  /// In en, this message translates to:
+  /// **'Access'**
+  String get access;
+
+  /// No description provided for @createAccountButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Create account'**
+  String get createAccountButton;
+
+  /// No description provided for @accountCreatedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Account created successfully!'**
+  String get accountCreatedSuccess;
+
+  /// No description provided for @welcomeMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome {userName}!'**
+  String welcomeMessage(String userName);
+
+  /// No description provided for @helloWelcome.
+  ///
+  /// In en, this message translates to:
+  /// **'Hello,\nwelcome!'**
+  String get helloWelcome;
+
+  /// No description provided for @forgotMyPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'I forgot my password'**
+  String get forgotMyPassword;
+
+  /// No description provided for @loginButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get loginButton;
+
+  /// No description provided for @dontHaveAnAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account?'**
+  String get dontHaveAnAccount;
+
+  /// No description provided for @createOne.
+  ///
+  /// In en, this message translates to:
+  /// **' Create one'**
+  String get createOne;
+
+  /// No description provided for @excel_treatmentLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Treatment:'**
+  String get excel_treatmentLabel;
+
+  /// No description provided for @excel_col_id.
+  ///
+  /// In en, this message translates to:
+  /// **'Id'**
+  String get excel_col_id;
+
+  /// No description provided for @excel_col_sampleAbsorbance.
+  ///
+  /// In en, this message translates to:
+  /// **'Sample Abs.'**
+  String get excel_col_sampleAbsorbance;
+
+  /// No description provided for @excel_col_whiteSampleAbsorbance.
+  ///
+  /// In en, this message translates to:
+  /// **'White Sample Abs.'**
+  String get excel_col_whiteSampleAbsorbance;
+
+  /// No description provided for @excel_col_difference.
+  ///
+  /// In en, this message translates to:
+  /// **'Difference A - B'**
+  String get excel_col_difference;
+
+  /// No description provided for @excel_col_variableA.
+  ///
+  /// In en, this message translates to:
+  /// **'a - Angular Coefficient'**
+  String get excel_col_variableA;
+
+  /// No description provided for @excel_col_variableB.
+  ///
+  /// In en, this message translates to:
+  /// **'b - Curve Equation Constant'**
+  String get excel_col_variableB;
+
+  /// No description provided for @excel_col_curveCalculation.
+  ///
+  /// In en, this message translates to:
+  /// **'Curve Calculation'**
+  String get excel_col_curveCalculation;
+
+  /// No description provided for @excel_col_correctionFactor.
+  ///
+  /// In en, this message translates to:
+  /// **'CF - Correction Factor'**
+  String get excel_col_correctionFactor;
+
+  /// No description provided for @excel_col_time.
+  ///
+  /// In en, this message translates to:
+  /// **'Time (h)'**
+  String get excel_col_time;
+
+  /// No description provided for @excel_col_volume.
+  ///
+  /// In en, this message translates to:
+  /// **'Volume (Substrate Solution)'**
+  String get excel_col_volume;
+
+  /// No description provided for @excel_col_sampleWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Sample Weight (g)'**
+  String get excel_col_sampleWeight;
+
+  /// No description provided for @excel_col_result.
+  ///
+  /// In en, this message translates to:
+  /// **'Result'**
+  String get excel_col_result;
+
+  /// No description provided for @excel_footer_developedBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Developed by:'**
+  String get excel_footer_developedBy;
+
+  /// No description provided for @excel_footer_learnMore.
+  ///
+  /// In en, this message translates to:
+  /// **'👨🏻‍💻 LEARN MORE:'**
+  String get excel_footer_learnMore;
+
+  /// No description provided for @shareExperimentResultsFilename.
+  ///
+  /// In en, this message translates to:
+  /// **'Results for experiment \"{experimentName}\"'**
+  String shareExperimentResultsFilename(String experimentName);
+
+  /// No description provided for @sample.
+  ///
+  /// In en, this message translates to:
+  /// **'Sample'**
+  String get sample;
+
+  /// No description provided for @whiteSample.
+  ///
+  /// In en, this message translates to:
+  /// **'White Sample'**
+  String get whiteSample;
 }
 
 class _AppLocalizationsDelegate

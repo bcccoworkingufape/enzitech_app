@@ -1,9 +1,12 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
+import '../../../../../../l10n/app_localizations.dart';
+
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:intl/intl.dart';
 
 // 🌎 Project imports:
 import '../../../../../core/routing/routing.dart';
@@ -30,6 +33,11 @@ class ExperimentCard extends StatefulWidget {
 class _ExperimentCardState extends State<ExperimentCard> {
   @override
   Widget build(BuildContext context) {
+
+    final l10n = AppLocalizations.of(context)!;
+    final locale = Localizations.localeOf(context).toString();
+    final formattedDate = DateFormat.yMd(locale).format(widget.experiment.updatedAt);
+
     return IntrinsicHeight(
       child: Container(
         decoration: const BoxDecoration(
@@ -104,7 +112,7 @@ class _ExperimentCardState extends State<ExperimentCard> {
                           height: 2,
                         ),
                         Text(
-                          'Modificado em ${Toolkit.formatBrDate(widget.experiment.updatedAt)}',
+                          l10n.modifiedOn(formattedDate),
                           style: TextStyles.bodyMinRegular,
                         ),
                         const SizedBox(

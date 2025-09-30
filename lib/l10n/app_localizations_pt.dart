@@ -440,4 +440,341 @@ class AppLocalizationsPt extends AppLocalizations {
     );
     return '🔬 $_temp0';
   }
+
+  @override
+  String modifiedOn(String date) {
+    return 'Modificado em $date';
+  }
+
+  @override
+  String get deleteExperimentTitle => 'Excluir o experimento?';
+
+  @override
+  String get deleteExperimentContent =>
+      'Você tem certeza que deseja excluir este experimento?';
+
+  @override
+  String get deleteButton => 'EXCLUIR';
+
+  @override
+  String get cancelButton => 'CANCELAR';
+
+  @override
+  String get filters => 'Filtros';
+
+  @override
+  String get orderBy => 'Ordenar por:';
+
+  @override
+  String get select => 'Selecionar';
+
+  @override
+  String get organizeInOrder => 'Organizar em ordem:';
+
+  @override
+  String get filter_name => 'Nome';
+
+  @override
+  String get filter_description => 'Descrição';
+
+  @override
+  String get filter_progress => 'Progresso';
+
+  @override
+  String get filter_creationDate => 'Data de criação';
+
+  @override
+  String get filter_modificationDate => 'Data de modificação';
+
+  @override
+  String get order_ascending => 'Crescente';
+
+  @override
+  String get order_descending => 'Decrescente';
+
+  @override
+  String clearFilters(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Limpar filtros',
+      one: 'Limpar filtro',
+      zero: 'Limpar filtros',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String applyFilters(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Aplicar filtros',
+      one: 'Aplicar filtro',
+      zero: 'Aplicar filtros',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get experimentCreatedSuccess => 'Experimento criado com sucesso!';
+
+  @override
+  String get treatmentCreatedSuccess => 'Tratamento criado com sucesso!';
+
+  @override
+  String get registerNewTreatment => 'Cadastre um novo\n Tratamento';
+
+  @override
+  String get treatmentIdentification => 'Identificação do tratamento';
+
+  @override
+  String get createTreatmentButton => 'Criar tratamento';
+
+  @override
+  String get errorLoadingTreatments => 'Erro ao carregar tratamentos';
+
+  @override
+  String get loadingTreatments => 'Carregando tratamentos...';
+
+  @override
+  String get treatmentsNotFound => 'Tratamentos não encontrados';
+
+  @override
+  String treatmentDeleted(String treatmentName) {
+    return '$treatmentName excluído!';
+  }
+
+  @override
+  String get deleteTreatmentTitle => 'Excluir o tratamento?';
+
+  @override
+  String get deleteTreatmentContent =>
+      'Você tem certeza que deseja excluir este tratamento?';
+
+  @override
+  String treatmentsFound(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count tratamentos encontrados',
+      one: '1 tratamento encontrado',
+      zero: 'Nenhum tratamento encontrado',
+    );
+    return '🧪 $_temp0';
+  }
+
+  @override
+  String createdOn(String date) {
+    return 'Criado em $date';
+  }
+
+  @override
+  String get enzymeCreatedSuccess => 'Enzima criada com sucesso!';
+
+  @override
+  String get registerNewEnzyme => 'Cadastre uma nova\n Enzima';
+
+  @override
+  String get enzymeIdentification => 'Identificação da enzima';
+
+  @override
+  String get variableA_long => 'Variável a - Coeficiente Angular da Curva';
+
+  @override
+  String get variableB_long => 'Variável b - Constante da Equação da Curva';
+
+  @override
+  String get chooseEnzymeType => 'Escolha o tipo da enzima';
+
+  @override
+  String get createEnzymeButton => 'Criar enzima';
+
+  @override
+  String get enzymeType_betaGlucosidase => 'Beta-glucosidase';
+
+  @override
+  String get enzymeType_aryl => 'Aryl';
+
+  @override
+  String get enzymeType_acidPhosphatase => 'Fosfatase Ácida';
+
+  @override
+  String get enzymeType_alkalinePhosphatase => 'Fosfatase Alcalina';
+
+  @override
+  String get enzymeType_urease => 'Urease';
+
+  @override
+  String get enzymeType_fda => 'FDA';
+
+  @override
+  String get errorLoadingEnzymes => 'Erro ao carregar enzimas';
+
+  @override
+  String get loadingEnzymes => 'Carregando enzimas...';
+
+  @override
+  String get noEnzymesRegisteredAdmin => 'Nenhuma enzima cadastrada.';
+
+  @override
+  String get noEnzymesRegisteredUser =>
+      'Nenhuma enzima cadastrada, entre em contato com o seu Administrador para solucionar este problema.';
+
+  @override
+  String enzymeDeleted(String enzymeName) {
+    return '$enzymeName excluído!';
+  }
+
+  @override
+  String get deleteEnzymeTitle => 'Excluir a enzima?';
+
+  @override
+  String get deleteEnzymeContent =>
+      'Você tem certeza que deseja excluir esta enzima?';
+
+  @override
+  String enzymesFound(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count enzimas encontradas',
+      one: '1 enzima encontrada',
+      zero: 'Nenhuma enzima encontrada',
+    );
+    return '🧬 $_temp0';
+  }
+
+  @override
+  String get formulaLabel => 'Fórmula: ';
+
+  @override
+  String get variableALabel => 'Variável A: ';
+
+  @override
+  String get variableBLabel => 'Variável B: ';
+
+  @override
+  String get enzymesSummaryTitle => 'Sumário de enzimas';
+
+  @override
+  String enzymeTagFormat(String enzymeName, int quantity) {
+    return '$enzymeName ($quantity)';
+  }
+
+  @override
+  String environmentValue(String env) {
+    String _temp0 = intl.Intl.selectLogic(env, {
+      'dev': 'Desenvolvimento',
+      'stage': 'Teste',
+      'prod': 'Produção',
+      'other': 'Desconhecido',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String unableToOpenUrlError(String url) {
+    return 'Não foi possível acessar $url';
+  }
+
+  @override
+  String get institutionLabel => 'Instituição';
+
+  @override
+  String get signUp => 'Cadastre-se';
+
+  @override
+  String get personalData => 'Dados pessoais';
+
+  @override
+  String get passwordLabel => 'Senha';
+
+  @override
+  String get confirmPasswordLabel => 'Confirmar senha';
+
+  @override
+  String get access => 'Acesso';
+
+  @override
+  String get createAccountButton => 'Criar conta';
+
+  @override
+  String get accountCreatedSuccess => 'Conta criada com sucesso!';
+
+  @override
+  String welcomeMessage(String userName) {
+    return 'Bem vindo(a) $userName!';
+  }
+
+  @override
+  String get helloWelcome => 'Olá,\nseja bem vindo(a)!';
+
+  @override
+  String get forgotMyPassword => 'Esqueci minha senha';
+
+  @override
+  String get loginButton => 'Entrar';
+
+  @override
+  String get dontHaveAnAccount => 'Não possui uma conta?';
+
+  @override
+  String get createOne => ' Crie uma';
+
+  @override
+  String get excel_treatmentLabel => 'Tratamento:';
+
+  @override
+  String get excel_col_id => 'Id';
+
+  @override
+  String get excel_col_sampleAbsorbance => 'Abso. Amostra';
+
+  @override
+  String get excel_col_whiteSampleAbsorbance => 'Abso. Branco';
+
+  @override
+  String get excel_col_difference => 'Diferença A - B';
+
+  @override
+  String get excel_col_variableA => 'a - Coeficiente Angular da Curva';
+
+  @override
+  String get excel_col_variableB => 'b - Constante da Equação da Curva';
+
+  @override
+  String get excel_col_curveCalculation => 'Curva Cálculo';
+
+  @override
+  String get excel_col_correctionFactor => 'FC - Fator de Correção';
+
+  @override
+  String get excel_col_time => 'Tempo (h)';
+
+  @override
+  String get excel_col_volume => 'Volume (Solução do substrato)';
+
+  @override
+  String get excel_col_sampleWeight => 'Peso da amostra (g)';
+
+  @override
+  String get excel_col_result => 'Resultado';
+
+  @override
+  String get excel_footer_developedBy => 'Desenvolvido por:';
+
+  @override
+  String get excel_footer_learnMore => '👨🏻‍💻 SAIBA MAIS:';
+
+  @override
+  String shareExperimentResultsFilename(String experimentName) {
+    return 'Resultados do experimento \"$experimentName\"';
+  }
+
+  @override
+  String get sample => 'Amostra';
+
+  @override
+  String get whiteSample => 'Amostra branca';
 }

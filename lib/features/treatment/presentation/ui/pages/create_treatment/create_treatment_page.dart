@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
+import '../../../../../../l10n/app_localizations.dart';
+
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
@@ -46,6 +48,7 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
 
     if (mounted) {
       _createTreatmentViewmodel.addListener(() {
+        final l10n = AppLocalizations.of(context)!;
         if (_createTreatmentViewmodel.state == StateEnum.error) {
           EZTSnackBar.show(
             context,
@@ -57,7 +60,7 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
 
           EZTSnackBar.show(
             context,
-            "Tratamento criado com sucesso!",
+            l10n.treatmentCreatedSuccess,
             eztSnackBarType: EZTSnackBarType.success,
           );
 
@@ -82,6 +85,7 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
   }
 
   _body(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
       child: Column(
@@ -97,7 +101,7 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
           const SizedBox(height: 16),
           Center(
             child: Text(
-              "Cadastre um novo\ntratamento",
+              l10n.registerNewTreatment,
               style: TextStyles.titleHome,
               textAlign: TextAlign.center,
             ),
@@ -110,7 +114,7 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
               ),
               const SizedBox(width: 4),
               Text(
-                'Identificação do tratamento',
+                l10n.treatmentIdentification,
                 style: TextStyles.detailBold,
               ),
             ],
@@ -133,11 +137,12 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
   }
 
   Widget get _nameInput {
+    final l10n = AppLocalizations.of(context)!;
     final fieldValidator = FieldValidator(validations, context);
 
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,
-      labelText: "Nome",
+      labelText: l10n.nameLabel,
       usePrimaryColorOnFocusedBorder: true,
       keyboardType: TextInputType.name,
       controller: _nameFieldController,
@@ -147,11 +152,12 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
   }
 
   Widget get _descriptionInput {
+    final l10n = AppLocalizations.of(context)!;
     final fieldValidator = FieldValidator(validations, context);
 
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,
-      labelText: "Descrição",
+      labelText: l10n.descriptionLabel,
       usePrimaryColorOnFocusedBorder: true,
       keyboardType: TextInputType.name,
       controller: _descriptionFieldController,
@@ -161,11 +167,12 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
   }
 
   Widget get _buttons {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       children: [
         EZTButton(
           enabled: enableCreate,
-          text: 'Criar tratamento',
+          text: l10n.createTreatmentButton,
           onPressed: () async {
             _formKey.currentState!.save();
             if (_formKey.currentState!.validate()) {
@@ -178,7 +185,7 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
         ),
         const SizedBox(height: 16),
         EZTButton(
-          text: 'Voltar',
+          text: l10n.backButton,
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
             Navigator.pop(context);

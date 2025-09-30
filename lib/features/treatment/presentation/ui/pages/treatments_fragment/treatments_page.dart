@@ -1,9 +1,13 @@
 // 🐦 Flutter imports:
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+
+import '../../../../../../l10n/app_localizations.dart';
 
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
@@ -47,25 +51,26 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
   }
 
   Widget _buildTreatmentsList(double height) {
+    final l10n = AppLocalizations.of(context)!;
     if (_treatmentsViewmodel.state == StateEnum.error) {
-      return const EZTForcedCenter(
+      return EZTForcedCenter(
         child: EZTError(
-          message: 'Erro ao carregar tratamentos',
+          message: l10n.errorLoadingTreatments,
         ),
       );
     }
 
     if (_treatmentsViewmodel.state == StateEnum.loading) {
-      return const EZTProgressIndicator(
-        message: "Carregando tratamentos...",
+      return EZTProgressIndicator(
+        message: l10n.loadingTreatments,
       );
     }
 
     if (_treatmentsViewmodel.state == StateEnum.success &&
         _treatmentsViewmodel.treatments.isEmpty) {
-      return const EZTForcedCenter(
+      return EZTForcedCenter(
         child: EZTNotFound(
-          message: "Tratamentos não encontrados",
+          message: l10n.treatmentsNotFound,
         ),
       );
     }
@@ -94,10 +99,10 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
 
                 EZTSnackBar.show(
                   context,
-                  '${treatment.name} excluído!',
+                  l10n.treatmentDeleted(treatment.name),
                   eztSnackBarType: EZTSnackBarType.error,
                   action: SnackBarAction(
-                    label: 'Desfazer',
+                    label: l10n.undo,
                     textColor: context.getApplyedColorScheme.onError,
                     onPressed: () {
                       setState(() {
@@ -126,7 +131,7 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
                         color: context.getApplyedColorScheme.onError,
                       ),
                       Text(
-                        'Excluir',
+                        l10n.delete,
                         style: TextStyle(
                           color: context.getApplyedColorScheme.onError,
                         ),
@@ -144,18 +149,17 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: const Text('Excluir o tratamento?'),
-                                content: const Text(
-                                    'Você tem certeza que deseja excluir este tratamento?'),
+                                title: Text(l10n.deleteTreatmentTitle),
+                                content: Text(l10n.deleteTreatmentContent),
                                 actions: [
                                   TextButton(
                                       onPressed: () =>
                                           Navigator.of(context).pop(true),
-                                      child: const Text("EXCLUIR")),
+                                      child: Text(l10n.deleteButton)),
                                   TextButton(
                                     onPressed: () =>
                                         Navigator.of(context).pop(false),
-                                    child: const Text("CANCELAR"),
+                                    child: Text(l10n.cancelButton),
                                   ),
                                 ],
                               );
@@ -181,6 +185,7 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     var heightMQ = MediaQuery.of(context).size.height;
 
     return ListenableBuilder(
@@ -201,7 +206,9 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
                           height: 8,
                         ),
                         Text(
-                          "🧪 ${_treatmentsViewmodel.treatments.length} tratamento${_treatmentsViewmodel.treatments.length > 1 ? 's ' : ' '}encontrado${_treatmentsViewmodel.treatments.length > 1 ? 's ' : ' '}",
+                          l10n.treatmentsFound(
+                            _treatmentsViewmodel.treatments.length
+                          ),
                           style: TextStyles(context).link(fontSize: 16),
                         ),
                         const SizedBox(

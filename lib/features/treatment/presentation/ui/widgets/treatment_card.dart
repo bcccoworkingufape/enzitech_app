@@ -1,6 +1,9 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
+import '../../../../../../l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
+
 // 🌎 Project imports:
 import '../../../../../shared/extensions/context_theme_mode_extensions.dart';
 import '../../../../../shared/ui/ui.dart';
@@ -27,6 +30,11 @@ class _TreatmentCardState extends State<TreatmentCard> {
 
   @override
   Widget build(BuildContext context) {
+
+    final l10n = AppLocalizations.of(context)!;
+    final locale = Localizations.localeOf(context).toString();
+    final formattedDate = DateFormat.yMd(locale).format(widget.createdAt);
+
     return GestureDetector(
       onTap: () => setState(() {
         expanded = !expanded;
@@ -47,7 +55,7 @@ class _TreatmentCardState extends State<TreatmentCard> {
                 height: 2,
               ),
               Text(
-                'Criado em ${Toolkit.formatBrDate(widget.createdAt)}',
+                l10n.createdOn(formattedDate),
                 style: TextStyles.bodyMinRegular,
               ),
               const SizedBox(

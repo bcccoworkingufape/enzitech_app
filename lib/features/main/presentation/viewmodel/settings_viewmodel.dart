@@ -62,16 +62,7 @@ class SettingsViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  get getEnviroment {
-    switch (API.enviroment) {
-      case EnvironmentEnum.dev:
-        return 'Desenvolvimento';
-      case EnvironmentEnum.stage:
-        return 'Teste';
-      case EnvironmentEnum.prod:
-        return 'Produção';
-    }
-  }
+  EnvironmentEnum get environment => API.enviroment;
 
   bool? _enableExcludeConfirmation;
   bool? get enableExcludeConfirmation => _enableExcludeConfirmation;
@@ -180,11 +171,8 @@ class SettingsViewmodel extends ChangeNotifier {
   }
 
   Future<void> openUrl(String url) async {
-    if (await canLaunchUrl(Uri.parse(url))) {
-      await launchUrl(Uri.parse(url));
-    } else {
-      throw UnableToOpenUrlFailure(
-          message: 'Não foi possível acessar ${Uri.parse(url)}');
+    if (!await canLaunchUrl(Uri.parse(url))) {
+      throw  UnableToOpenUrlFailure(message: url);
     }
   }
 }

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 // 📦 Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
+import '../../../../../../l10n/app_localizations.dart';
 
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
@@ -37,6 +38,7 @@ class LoginPageState extends State<LoginPage> {
 
     if (mounted) {
       _loginViewmodel.addListener(() async {
+        final l10n = AppLocalizations.of(context)!;
         if (_loginViewmodel.state == StateEnum.error) {
           EZTSnackBar.show(
             context,
@@ -52,7 +54,7 @@ class LoginPageState extends State<LoginPage> {
                 mounted) {
               EZTSnackBar.show(
                 context,
-                "Bem vindo(a) ${_loginViewmodel.loggedName}!",
+                l10n.welcomeMessage(_loginViewmodel.loggedName ?? ''), // _loginViewmodel! talvez crashe o app
                 eztSnackBarType: EZTSnackBarType.success,
               );
               Navigator.pushReplacementNamed(context, Routing.home);
@@ -64,6 +66,7 @@ class LoginPageState extends State<LoginPage> {
   }
 
   Widget get _emailInput {
+    final l10n = AppLocalizations.of(context)!;
     final validations = <ValidateRule>[
       ValidateRule(
         ValidateTypes.required,
@@ -77,7 +80,7 @@ class LoginPageState extends State<LoginPage> {
 
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,
-      labelText: "E-mail",
+      labelText: l10n.email,
       usePrimaryColorOnFocusedBorder: true,
       keyboardType: TextInputType.emailAddress,
       controller: _emailFieldController,
@@ -88,6 +91,7 @@ class LoginPageState extends State<LoginPage> {
   }
 
   Widget get _passwordInput {
+    final l10n = AppLocalizations.of(context)!;
     final validations = <ValidateRule>[
       ValidateRule(
         ValidateTypes.required,
@@ -98,7 +102,7 @@ class LoginPageState extends State<LoginPage> {
 
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,
-      labelText: "Senha",
+      labelText: l10n.passwordLabel,
       usePrimaryColorOnFocusedBorder: true,
       controller: _passwordFieldController,
       onChanged: (value) => _loginViewmodel.setPassword(value),
@@ -119,6 +123,7 @@ class LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       body: Form(
         key: _formKey,
@@ -149,7 +154,7 @@ class LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         Text(
-                          "Olá,\nseja bem vindo(a)!",
+                          l10n.helloWelcome,
                           style: TextStyles.titleHomeRegular,
                         ),
                         _textFields,
@@ -168,7 +173,7 @@ class LoginPageState extends State<LoginPage> {
                                   );
                                 },
                                 child: Text(
-                                  "Esqueci minha senha",
+                                  l10n.forgotMyPassword,
                                   style: TextStyles(context).captionBody(),
                                 ),
                               ),
@@ -190,11 +195,11 @@ class LoginPageState extends State<LoginPage> {
                         Center(
                           child: RichText(
                             text: TextSpan(
-                              text: 'Não possui uma conta?',
+                              text: l10n.dontHaveAnAccount,
                               style: TextStyles(context).detailRegular,
                               children: <TextSpan>[
                                 TextSpan(
-                                  text: ' Crie uma',
+                                  text: l10n.createOne,
                                   style: TextStyles(context).link(),
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () {

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
+import '../../../../../../l10n/app_localizations.dart';
+
 // 🌎 Project imports:
 import '../../../../../shared/extensions/context_theme_mode_extensions.dart';
 import '../../../../../shared/ui/ui.dart';
@@ -21,6 +23,7 @@ class EnzymesSummary extends StatefulWidget {
 
 class _EnzymesSummaryState extends State<EnzymesSummary> {
   Widget enzymeTag(String name, int quantity, Color color) {
+    final l10n = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Row(
@@ -34,7 +37,7 @@ class _EnzymesSummaryState extends State<EnzymesSummary> {
             width: 8,
           ),
           Text(
-            "$name ($quantity)",
+            l10n.enzymeTagFormat(name, quantity),
             style: TextStyles.bodyMinBold.copyWith(),
           )
         ],
@@ -44,7 +47,31 @@ class _EnzymesSummaryState extends State<EnzymesSummary> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     var viewmodel = GetIt.I.get<EnzymesViewmodel>();
+
+    final Map<String, String> enzymeTypeTranslations = {
+      'Betaglucosidase': l10n.enzymeType_betaGlucosidase,
+      'Aryl': l10n.enzymeType_aryl,
+      'FosfataseAcida': l10n.enzymeType_acidPhosphatase,
+      'FosfataseAlcalina': l10n.enzymeType_alkalinePhosphatase,
+      'Urease': l10n.enzymeType_urease,
+      'FDA': l10n.enzymeType_fda,
+    };
+
+    final Map<String, Color> enzymeColors = {
+      'Betaglucosidase': AppColors.betaGlucosidase,
+      'Aryl': AppColors.aryl,
+      'FosfataseAcida': AppColors.fosfataseAcida,
+      'FosfataseAlcalina': AppColors.fosfataseAlcalina,
+      'Urease': AppColors.urease,
+      'FDA': Colors.purple,
+    };
+
+    int getEnzymeCount(String typeKey) {
+      if (viewmodel.enzymes.isEmpty) return 0;
+      return viewmodel.enzymes.where((enzyme) => enzyme.type == typeKey).length;
+    }
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4.0),
@@ -70,7 +97,7 @@ class _EnzymesSummaryState extends State<EnzymesSummary> {
                 padding: const EdgeInsets.symmetric(vertical: 4.0),
                 child: Center(
                   child: Text(
-                    "Sumário de enzimas",
+                    l10n.enzymesSummaryTitle,
                     style: TextStyles.bodyMinBold.copyWith(
                       color: context.getApplyedColorScheme.onSecondary,
                     ),
@@ -81,68 +108,27 @@ class _EnzymesSummaryState extends State<EnzymesSummary> {
             const SizedBox(
               height: 8,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                enzymeTag(
-                    Constants.typesOfEnzymesListFormmated[0],
-                    viewmodel.enzymes
-                        .map((element) =>
-                            element.type == Constants.typesOfEnzymesList[0]
-                                ? 1
-                                : 0)
-                        .reduce((value, element) => value + element),
-                    AppColors.betaGlucosidase),
-                enzymeTag(
-                    Constants.typesOfEnzymesListFormmated[1],
-                    viewmodel.enzymes
-                        .map((element) =>
-                            element.type == Constants.typesOfEnzymesList[1]
-                                ? 1
-                                : 0)
-                        .reduce((value, element) => value + element),
-                    AppColors.aryl),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                enzymeTag(
-                    Constants.typesOfEnzymesListFormmated[2],
-                    viewmodel.enzymes
-                        .map((element) =>
-                            element.type == Constants.typesOfEnzymesList[2]
-                                ? 1
-                                : 0)
-                        .reduce((value, element) => value + element),
-                    AppColors.fosfataseAcida),
-                enzymeTag(
-                    Constants.typesOfEnzymesListFormmated[3],
-                    viewmodel.enzymes
-                        .map((element) =>
-                            element.type == Constants.typesOfEnzymesList[3]
-                                ? 1
-                                : 0)
-                        .reduce((value, element) => value + element),
-                    AppColors.fosfataseAlcalina),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                enzymeTag(
-                    Constants.typesOfEnzymesListFormmated[4],
-                    viewmodel.enzymes
-                        .map((element) =>
-                            element.type == Constants.typesOfEnzymesList[4]
-                                ? 1
-                                : 0)
-                        .reduce((value, element) => value + element),
-                    AppColors.urease),
-              ],
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Wrap(
+                spacing: 16.0, // Espaço horizontal entre as tags
+                runSpacing: 8.0,  // Espaço vertical entre as linhas
+                children: enzymeTypeTranslations.keys.map((backendKey) {
+                  final count = getEnzymeCount(backendKey);
+
+                  // Só mostra a tag se houver pelo menos uma enzima daquele tipo
+                  if (count > 0) {
+                    return enzymeTag(
+                      enzymeTypeTranslations[backendKey]!, // Nome traduzido
+                      count,
+                      enzymeColors[backendKey] ?? Colors.grey, // Cor correspondente
+                    );
+                  }
+
+                  // Retorna um widget vazio se não houver enzimas desse tipo
+                  return const SizedBox.shrink();
+                }).toList(),
+              ),
             ),
             const SizedBox(
               height: 8,

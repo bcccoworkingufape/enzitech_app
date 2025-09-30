@@ -80,6 +80,8 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final envEnum = _settingsViewmodel.environment;
+    final translatedEnvValue = l10n.environmentValue(envEnum.name);
     return ListenableBuilder(
       listenable: _settingsViewmodel,
       builder: (context, child) {
@@ -228,7 +230,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         title: Text(l10n.environment),
                         subtitle: Text(
-                          _settingsViewmodel.getEnviroment,
+                          translatedEnvValue,
                           overflow: TextOverflow.ellipsis,
                           style: descriptionTextStyle,
                         ),
@@ -237,8 +239,14 @@ class _SettingsPageState extends State<SettingsPage> {
                         leading: Icon(
                           PhosphorIcons.gitBranch(),
                         ),
-                        onTap: () => _settingsViewmodel
-                            .openUrl(Constants.enzitechGithubPage),
+                        onTap: () async {
+                          try {
+                            await _settingsViewmodel.openUrl(Constants.enzitechGithubPage);
+                          } on UnableToOpenUrlFailure catch (e) {
+                            final l10n = AppLocalizations.of(context)!;
+                            EZTSnackBar.show(context, l10n.unableToOpenUrlError(e.message));
+                          }
+                        },
                         title: Text(l10n.version),
                         subtitle: Text(
                           "${_settingsViewmodel.appInfo!.version}+${_settingsViewmodel.appInfo!.buildNumber}",

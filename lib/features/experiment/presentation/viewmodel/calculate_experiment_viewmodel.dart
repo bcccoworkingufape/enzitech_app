@@ -122,12 +122,6 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
     _listOfExperimentData = listOfExperimentData;
   }
 
-  Map<String, EZTTextField> _textFields = {};
-  Map<String, EZTTextField> get textFields => _textFields;
-  void setTextFields(Map<String, EZTTextField> textFields) {
-    _textFields = textFields;
-    notifyListeners();
-  }
 
   Map<String, TextEditingController> _textEditingControllers = {};
   Map<String, TextEditingController> get textEditingControllers =>
@@ -204,7 +198,7 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
     );
   }
 
-  void _validateFields(String value, double id, String type) {
+  void validateFields(String value, double id, String type) {
     var isAllFilled = <bool>[];
     textEditingControllers.forEach((key, value) {
       isAllFilled.add(value.text.isNotEmpty);
@@ -220,7 +214,7 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
     }
   }
 
-  Future<void> generateTextFields(BuildContext context) async {
+  Future<void> generateTextFields() async {
     setStateEnum(StateEnum.loading);
 
     setTextEditingControllers({});
@@ -237,10 +231,7 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
       ),
     ];
 
-    final fieldValidator = FieldValidator(validations, context);
-
     List<Map<String, double?>> tempList = [];
-
     for (var i = 0; i < experiment.repetitions; i++) {
       tempList.add({
         "sample": null,
@@ -250,9 +241,7 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
     }
 
     setListOfExperimentData(tempList);
-
     textEditingControllers.clear();
-    textFields.clear();
 
     for (var i = 0; i < listOfExperimentData.length; i++) {
       TextEditingController sampleFieldController =
@@ -261,42 +250,12 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
         'sample-${i.toDouble()}',
         () => sampleFieldController,
       );
-      textFields.putIfAbsent(
-        'sample-${i.toDouble()}',
-        () => EZTTextField(
-          eztTextFieldType: EZTTextFieldType.underline,
-          labelText: "Amostra",
-          usePrimaryColorOnFocusedBorder: true,
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          controller: sampleFieldController,
-          onChanged: (value) {
-            _validateFields(value, i.toDouble(), "sample");
-          },
-          fieldValidator: fieldValidator,
-          inputFormatters: Constants.enzymeDecimalInputFormatters,
-        ),
-      );
 
       TextEditingController whiteSampleFieldController =
           TextEditingController(text: '');
       textEditingControllers.putIfAbsent(
         'whiteSample-${i.toDouble()}',
         () => whiteSampleFieldController,
-      );
-      textFields.putIfAbsent(
-        'whiteSample-${i.toDouble()}',
-        () => EZTTextField(
-          eztTextFieldType: EZTTextFieldType.underline,
-          labelText: "Amostra branca",
-          usePrimaryColorOnFocusedBorder: true,
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          controller: whiteSampleFieldController,
-          onChanged: (value) {
-            _validateFields(value, i.toDouble(), "whiteSample");
-          },
-          fieldValidator: fieldValidator,
-          inputFormatters: Constants.enzymeDecimalInputFormatters,
-        ),
       );
     }
     setStateEnum(StateEnum.idle);

@@ -1,6 +1,9 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
+import '../../../../../../l10n/app_localizations.dart';
+
+
 class ExperimentExclusionDialog extends StatefulWidget {
   const ExperimentExclusionDialog({
     super.key,
@@ -14,17 +17,18 @@ class ExperimentExclusionDialog extends StatefulWidget {
 class _ExperimentExclusionDialogState extends State<ExperimentExclusionDialog> {
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return AlertDialog(
-      title: const Text('Excluir o experimento?'),
+      title: Text(l10n.deleteExperimentTitle),
       content:
-          const Text('Você tem certeza que deseja excluir este experimento?'),
+          Text(l10n.deleteExperimentContent),
       actions: [
         TextButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text("EXCLUIR")),
+            child: Text(l10n.deleteButton)),
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),
-          child: const Text("CANCELAR"),
+          child: Text(l10n.cancelButton),
         ),
       ],
     );

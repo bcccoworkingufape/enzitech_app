@@ -20,14 +20,15 @@ class ExperimentAppBar extends StatefulWidget implements PreferredSizeWidget {
 class _ExperimentAppBarState extends State<ExperimentAppBar> {
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return AppBar(
       toolbarHeight: 120,
-      flexibleSpace: const SafeArea(
+      flexibleSpace: SafeArea(
         child: Column(
           children: [
             EZTCreateExperimentStepIndicator(
-              title: "Cadastre um novo experimento",
-              message: "Etapa 1 de 4 - Identificação",
+              title: l10n.registerNewExperiment,
+              message: l10n.stepIndicatorIdentification(1, 4),
             ),
           ],
         ),

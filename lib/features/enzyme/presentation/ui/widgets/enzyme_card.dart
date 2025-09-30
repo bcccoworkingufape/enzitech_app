@@ -1,6 +1,9 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
+import '../../../../../../l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
+
 // 🌎 Project imports:
 import '../../../../../shared/extensions/context_theme_mode_extensions.dart';
 import '../../../../../shared/extensions/double_extensions.dart';
@@ -23,6 +26,21 @@ class EnzymeCard extends StatefulWidget {
 class _EnzymeCardState extends State<EnzymeCard> {
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final locale = Localizations.localeOf(context).toString();
+    final formattedDate = DateFormat.yMd(locale).format(widget.enzyme.createdAt!);
+
+    final Map<String, String> enzymeTypeTranslations = {
+      'Betaglucosidase': l10n.enzymeType_betaGlucosidase,
+      'Aryl': l10n.enzymeType_aryl,
+      'FosfataseAcida': l10n.enzymeType_acidPhosphatase,
+      'FosfataseAlcalina': l10n.enzymeType_alkalinePhosphatase,
+      'Urease': l10n.enzymeType_urease,
+      'FDA': l10n.enzymeType_fda,
+    };
+
+    final translatedEnzymeType = enzymeTypeTranslations[widget.enzyme.type] ?? widget.enzyme.type;
+
     return Card(
       elevation: 4,
       surfaceTintColor: context.getApplyedColorScheme.secondaryContainer,
@@ -48,7 +66,7 @@ class _EnzymeCardState extends State<EnzymeCard> {
                         ),
                       ),
                       Text(
-                        'Criado em ${Toolkit.formatBrDate(widget.enzyme.createdAt!)}',
+                        l10n.createdOn(formattedDate),
                         style: TextStyles.bodyMinRegular,
                       ),
                     ],
@@ -73,9 +91,7 @@ class _EnzymeCardState extends State<EnzymeCard> {
                     backgroundColor:
                         Constants.dealWithEnzymeChipColor(widget.enzyme.type),
                     label: Text(
-                      Constants.typesOfEnzymesListFormmated[Constants
-                          .typesOfEnzymesList
-                          .indexOf(widget.enzyme.type)],
+                      translatedEnzymeType,
                       style: const TextStyle(
                         color: Colors.white,
                       ),
@@ -95,7 +111,7 @@ class _EnzymeCardState extends State<EnzymeCard> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Fórmula: ",
+                  l10n.formulaLabel,
                   style: TextStyles(context).bodyRegular.copyWith(
                         fontSize: 16.0,
                         fontWeight: FontWeight.w600,
@@ -129,7 +145,7 @@ class _EnzymeCardState extends State<EnzymeCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Variável A: ",
+                          l10n.variableALabel,
                           style: TextStyles(context).bodyRegular.copyWith(
                                 fontSize: 16.0,
                                 fontWeight: FontWeight.w600,
@@ -157,7 +173,7 @@ class _EnzymeCardState extends State<EnzymeCard> {
                     Wrap(
                       children: [
                         Text(
-                          "Variável B: ",
+                          l10n.variableBLabel,
                           style: TextStyles(context).bodyRegular.copyWith(
                                 fontSize: 16.0,
                                 fontWeight: FontWeight.w600,
