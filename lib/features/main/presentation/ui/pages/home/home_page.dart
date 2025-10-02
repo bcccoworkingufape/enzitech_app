@@ -110,7 +110,7 @@ class _HomePageState extends State<HomePage>
           if (_homeViewmodel.state == StateEnum.error) {
             EZTSnackBar.show(
               context,
-              HandleFailure.of(_homeViewmodel.failure!),
+              HandleFailure.of(l10n, _homeViewmodel.failure!),
               eztSnackBarType: EZTSnackBarType.error,
             ).whenComplete(() async {
               if (_homeViewmodel.failure is ExpiredTokenOrWrongUserFailure ||

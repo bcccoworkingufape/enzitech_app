@@ -43,7 +43,7 @@ class _SplashPageState extends State<SplashPage> {
             EZTSnackBar.clear(context);
             EZTSnackBar.show(
               context,
-              HandleFailure.of(_splashViewmodel.failure!),
+              HandleFailure.of(l10n, _splashViewmodel.failure!),
               eztSnackBarType: EZTSnackBarType.error,
             );
 

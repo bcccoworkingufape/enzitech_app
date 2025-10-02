@@ -43,6 +43,7 @@ class LoginPageState extends State<LoginPage> {
           EZTSnackBar.show(
             context,
             HandleFailure.of(
+              l10n,
               _loginViewmodel.failure!,
               isLogin: true,
             ),

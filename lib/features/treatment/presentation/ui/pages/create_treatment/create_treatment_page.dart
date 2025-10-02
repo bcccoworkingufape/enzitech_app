@@ -52,7 +52,7 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
         if (_createTreatmentViewmodel.state == StateEnum.error) {
           EZTSnackBar.show(
             context,
-            HandleFailure.of(_createTreatmentViewmodel.failure!),
+            HandleFailure.of(l10n, _createTreatmentViewmodel.failure!),
             eztSnackBarType: EZTSnackBarType.error,
           );
         } else if (_createTreatmentViewmodel.state == StateEnum.success) {

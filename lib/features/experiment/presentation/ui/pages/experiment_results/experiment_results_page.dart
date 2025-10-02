@@ -44,11 +44,12 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
     _experimentResultsViewmodel.fetch();
 
     if (mounted) {
+      final l10n = AppLocalizations.of(context)!;
       _experimentResultsViewmodel.addListener(() {
         if (mounted && _experimentResultsViewmodel.state == StateEnum.error) {
           EZTSnackBar.show(
             context,
-            HandleFailure.of(_experimentResultsViewmodel.failure!),
+            HandleFailure.of(l10n, _experimentResultsViewmodel.failure!),
             duration:
                 _experimentResultsViewmodel.failure! is UnableToSaveFailure
                 ? const Duration(seconds: 15)

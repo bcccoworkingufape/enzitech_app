@@ -3,6 +3,7 @@
 
 // 🐦 Flutter imports:
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -52,12 +53,13 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
     _homeViewmodel = GetIt.I.get<HomeViewmodel>();
 
     if (mounted) {
+      final l10n = AppLocalizations.of(context)!;
       _experimentDetailsViewmodel.addListener(
         () {
           if (mounted && _experimentDetailsViewmodel.state == StateEnum.error) {
             EZTSnackBar.show(
               context,
-              HandleFailure.of(_experimentDetailsViewmodel.failure!),
+              HandleFailure.of(l10n, _experimentDetailsViewmodel.failure!),
               eztSnackBarType: EZTSnackBarType.error,
             );
           }

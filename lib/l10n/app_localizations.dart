@@ -1393,6 +1393,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'White Sample'**
   String get whiteSample;
+
+  /// No description provided for @error_serverConnectionRefused.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ Server Error, please try again later.'**
+  String get error_serverConnectionRefused;
+
+  /// No description provided for @error_statusCodeAndMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ SC{statusCode} - {message}'**
+  String error_statusCodeAndMessage(Object statusCode, Object message);
+
+  /// No description provided for @error_messageOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ {message}'**
+  String error_messageOnly(Object message);
+
+  /// No description provided for @error_400.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ Incorrect data: Some field is invalid or missing.'**
+  String get error_400;
+
+  /// No description provided for @error_401.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ Not authorized: Token expired or invalid user.'**
+  String get error_401;
+
+  /// No description provided for @error_403.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ Access denied: You do not have permission to perform this action.'**
+  String get error_403;
+
+  /// No description provided for @error_404_login.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ User not found.'**
+  String get error_404_login;
+
+  /// No description provided for @error_404_generic.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ Not found: This information may no longer exist.'**
+  String get error_404_generic;
+
+  /// No description provided for @error_422.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ Unprocessable entity: The server understands the content type, but was unable to process the contained instructions.'**
+  String get error_422;
+
+  /// No description provided for @error_426.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ Upgrade required: Invalid device ID.'**
+  String get error_426;
+
+  /// No description provided for @error_500.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ Server Error: The request could not be fulfilled.'**
+  String get error_500;
+
+  /// No description provided for @error_503.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ Server Error: The service is temporarily unavailable.'**
+  String get error_503;
+
+  /// No description provided for @error_noNetwork.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ No internet connection, check your network access and try again.'**
+  String get error_noNetwork;
+
+  /// No description provided for @error_noResultQuery.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ Could not get {query}.'**
+  String error_noResultQuery(Object query);
 }
 
 class _AppLocalizationsDelegate

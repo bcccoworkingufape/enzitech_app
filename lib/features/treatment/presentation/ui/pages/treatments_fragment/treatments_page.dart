@@ -36,12 +36,13 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
     super.initState();
     _treatmentsViewmodel = GetIt.I.get<TreatmentsViewmodel>();
     if (mounted) {
+      final l10n = AppLocalizations.of(context)!;
       _treatmentsViewmodel.addListener(
         () {
           if (mounted && _treatmentsViewmodel.state == StateEnum.error) {
             EZTSnackBar.show(
               context,
-              HandleFailure.of(_treatmentsViewmodel.failure!),
+              HandleFailure.of(l10n, _treatmentsViewmodel.failure!),
               eztSnackBarType: EZTSnackBarType.error,
             );
           }

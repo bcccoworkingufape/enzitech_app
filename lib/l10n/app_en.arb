@@ -500,5 +500,36 @@
   },
 
   "sample": "Sample",
-  "whiteSample": "White Sample"
+  "whiteSample": "White Sample",
+
+  "error_serverConnectionRefused": "⚠ Server Error, please try again later.",
+  "error_statusCodeAndMessage": "⚠ SC{statusCode} - {message}",
+  "@error_statusCodeAndMessage": {
+    "placeholders": {
+      "statusCode": {},
+      "message": {}
+    }
+  },
+  "error_messageOnly": "⚠ {message}",
+  "@error_messageOnly": {
+    "placeholders": {
+      "message": {}
+    }
+  },
+  "error_400": "⚠ Incorrect data: Some field is invalid or missing.",
+  "error_401": "⚠ Not authorized: Token expired or invalid user.",
+  "error_403": "⚠ Access denied: You do not have permission to perform this action.",
+  "error_404_login": "⚠ User not found.",
+  "error_404_generic": "⚠ Not found: This information may no longer exist.",
+  "error_422": "⚠ Unprocessable entity: The server understands the content type, but was unable to process the contained instructions.",
+  "error_426": "⚠ Upgrade required: Invalid device ID.",
+  "error_500": "⚠ Server Error: The request could not be fulfilled.",
+  "error_503": "⚠ Server Error: The service is temporarily unavailable.",
+  "error_noNetwork": "⚠ No internet connection, check your network access and try again.",
+  "error_noResultQuery": "⚠ Could not get {query}.",
+  "@error_noResultQuery": {
+    "placeholders": {
+      "query": {}
+    }
+  }
 }

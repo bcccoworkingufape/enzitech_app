@@ -57,13 +57,14 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
     });
 
     if (mounted) {
+      final l10n = AppLocalizations.of(context)!;
       _experimentsViewmodel.addListener(
         () async {
           if (_experimentsViewmodel.state == StateEnum.error && mounted) {
             EZTSnackBar.clear(context);
             EZTSnackBar.show(
               context,
-              HandleFailure.of(_experimentsViewmodel.failure!),
+              HandleFailure.of(l10n, _experimentsViewmodel.failure!),
               eztSnackBarType: EZTSnackBarType.error,
             );
             if (_experimentsViewmodel.failure

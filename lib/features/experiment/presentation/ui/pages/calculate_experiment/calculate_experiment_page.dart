@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
+import '../../../../../../l10n/app_localizations.dart';
 
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
@@ -40,13 +41,14 @@ class _CalculateExperimentPageState extends State<CalculateExperimentPage> {
     _calculateExperimentViewmodel.setExperiment(widget.experiment);
 
     if (mounted) {
+      final l10n = AppLocalizations.of(context)!;
       _calculateExperimentViewmodel.addListener(
         () {
           if (mounted &&
               _calculateExperimentViewmodel.state == StateEnum.error) {
             EZTSnackBar.show(
               context,
-              HandleFailure.of(_calculateExperimentViewmodel.failure!),
+              HandleFailure.of(l10n ,_calculateExperimentViewmodel.failure!),
               eztSnackBarType: EZTSnackBarType.error,
             );
           }

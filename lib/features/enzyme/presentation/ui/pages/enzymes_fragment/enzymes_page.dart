@@ -51,12 +51,13 @@ class _EnzymesPageState extends State<EnzymesPage> {
     _enzymesViewmodel = GetIt.I.get<EnzymesViewmodel>();
 
     if (mounted) {
+      final l10n = AppLocalizations.of(context)!;
       _enzymesViewmodel.addListener(
         () {
           if (mounted && _enzymesViewmodel.state == StateEnum.error) {
             EZTSnackBar.show(
               context,
-              HandleFailure.of(_enzymesViewmodel.failure!),
+              HandleFailure.of(l10n, _enzymesViewmodel.failure!),
               eztSnackBarType: EZTSnackBarType.error,
             );
           }
