@@ -72,7 +72,7 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
 
       for (var treatment in experimentEnzyme.treatments) {
         sheet.insertRowIterables([
-          TextCellValue(translations['excel_treatment_label']!),
+          TextCellValue(translations['excel_treatment_label'] ?? ""),
           TextCellValue(treatment.treatment.name),
           TextCellValue(''),
           TextCellValue(''),

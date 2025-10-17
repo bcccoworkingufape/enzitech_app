@@ -33,6 +33,7 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
   late final ExperimentResultsViewmodel _experimentResultsViewmodel;
   late final ExperimentDetailsViewmodel _experimentDetailsViewmodel;
   late final ExperimentEntity _experiment;
+  late final AppLocalizations? l10n;
 
   @override
   void initState() {
@@ -44,7 +45,6 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
     _experimentResultsViewmodel.fetch();
 
     if (mounted) {
-      final l10n = AppLocalizations.of(context)!;
       _experimentResultsViewmodel.addListener(() {
         if (mounted && _experimentResultsViewmodel.state == StateEnum.error) {
           EZTSnackBar.show(
@@ -63,6 +63,12 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
         }
       });
     }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    l10n = AppLocalizations.of(context);
   }
 
   Widget _buildHeader(String title, String message) {
@@ -117,9 +123,8 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
   }
 
   get _buildBody {
-    final l10n = AppLocalizations.of(context)!;
     if (_experimentResultsViewmodel.state == StateEnum.loading) {
-      return EZTProgressIndicator(message: l10n.loadingResults);
+      return EZTProgressIndicator(message: l10n?.loadingResults);
     }
 
     final results = _experimentResultsViewmodel.experimentResult;
@@ -130,8 +135,8 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
         slivers: [
           SliverToBoxAdapter(
             child: _buildHeader(
-              l10n.results,
-              l10n.experimentHeader(_experiment.name),
+              l10n?.results ?? "",
+              l10n?.experimentHeader(_experiment.name) ?? "",
             ),
           ),
           ScrollConfiguration(
@@ -167,13 +172,13 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                                       ),
                                 ),
                                 Text(
-                                  l10n.enzymeTypeHeader(
+                                  l10n?.enzymeTypeHeader(
                                     results.enzymes[indexOfEnzymes].enzyme.name,
                                     results
                                         .enzymes[indexOfEnzymes]
                                         .enzyme
                                         .formula,
-                                  ),
+                                  ) ?? "",
                                 ),
                               ],
                             ),
@@ -191,7 +196,7 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                                             treatment.treatment.name,
                                             style: TextStyles.bodyBold,
                                           ),
-                                          Text(l10n.treatmentLabel),
+                                          Text(l10n?.treatmentLabel ?? ""),
                                         ],
                                       ),
                                       children: [
@@ -233,79 +238,79 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                                                         columns: [
                                                           DataColumn(
                                                             label: Text(
-                                                              l10n.columnId,
+                                                              l10n?.columnId ?? "",
                                                             ),
                                                             numeric: true,
                                                           ),
                                                           DataColumn(
                                                             label: Text(
-                                                              l10n.columnSample,
+                                                              l10n?.columnSample ?? "",
                                                             ),
                                                             numeric: true,
                                                           ),
                                                           DataColumn(
                                                             label: Text(
-                                                              l10n.columnWhiteSampleShort,
-                                                            ),
-                                                            numeric: true,
-                                                            tooltip: l10n
-                                                                .columnWhiteSampleTooltip,
-                                                          ),
-                                                          DataColumn(
-                                                            label: Text(
-                                                              l10n.columnDifference,
-                                                            ),
-                                                            numeric: true,
-                                                          ),
-                                                          DataColumn(
-                                                            label: Text(
-                                                              l10n.variableA,
-                                                            ),
-                                                            numeric: true,
-                                                          ),
-                                                          DataColumn(
-                                                            label: Text(
-                                                              l10n.variableB,
-                                                            ),
-                                                            numeric: true,
-                                                          ),
-                                                          DataColumn(
-                                                            label: Text(
-                                                              l10n.columnCurve,
-                                                            ),
-                                                            numeric: true,
-                                                          ),
-                                                          DataColumn(
-                                                            label: Text(
-                                                              l10n.columnCorrectionFactorShort,
+                                                              l10n?.columnWhiteSampleShort ?? "",
                                                             ),
                                                             numeric: true,
                                                             tooltip: l10n
-                                                                .correctionFactor,
+                                                                ?.columnWhiteSampleTooltip ?? "",
                                                           ),
                                                           DataColumn(
                                                             label: Text(
-                                                              l10n.timeHours,
+                                                              l10n?.columnDifference ?? "",
                                                             ),
                                                             numeric: true,
                                                           ),
                                                           DataColumn(
                                                             label: Text(
-                                                              l10n.columnVolume,
+                                                              l10n?.variableA ?? "",
                                                             ),
                                                             numeric: true,
                                                           ),
                                                           DataColumn(
                                                             label: Text(
-                                                              l10n.columnSampleWeightShort,
+                                                              l10n?.variableB ?? "",
+                                                            ),
+                                                            numeric: true,
+                                                          ),
+                                                          DataColumn(
+                                                            label: Text(
+                                                              l10n?.columnCurve ?? "",
+                                                            ),
+                                                            numeric: true,
+                                                          ),
+                                                          DataColumn(
+                                                            label: Text(
+                                                              l10n?.columnCorrectionFactorShort ?? "",
                                                             ),
                                                             numeric: true,
                                                             tooltip: l10n
-                                                                .columnSampleWeightTooltip,
+                                                                ?.correctionFactor,
                                                           ),
                                                           DataColumn(
                                                             label: Text(
-                                                              l10n.columnResult,
+                                                              l10n?.timeHours ?? "",
+                                                            ),
+                                                            numeric: true,
+                                                          ),
+                                                          DataColumn(
+                                                            label: Text(
+                                                              l10n?.columnVolume ?? "",
+                                                            ),
+                                                            numeric: true,
+                                                          ),
+                                                          DataColumn(
+                                                            label: Text(
+                                                              l10n?.columnSampleWeightShort ?? "",
+                                                            ),
+                                                            numeric: true,
+                                                            tooltip: l10n
+                                                                ?.columnSampleWeightTooltip,
+                                                          ),
+                                                          DataColumn(
+                                                            label: Text(
+                                                              l10n?.columnResult ?? "",
                                                             ),
                                                             numeric: true,
                                                           ),
@@ -448,7 +453,7 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                       16,
                     ),
                     child: EZTButton(
-                      text: l10n.backButton,
+                      text: l10n?.backButton ?? "",
                       eztButtonType: EZTButtonType.regular,
                       onPressed: () {
                         Navigator.pop(context);
@@ -472,29 +477,28 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
     shape: const CircleBorder(),
   );
 
+  Map<String, String> _buildExcelTranslations() {
+    return {
+      'excel_treatmentLabel': l10n?.excel_treatmentLabel ?? "",
+      'excel_col_id': l10n?.excel_col_id ?? "",
+      'excel_col_sampleAbsorbance': l10n?.excel_col_sampleAbsorbance ?? "",
+      'excel_col_whiteSampleAbsorbance': l10n?.excel_col_whiteSampleAbsorbance ?? "",
+      'excel_col_difference': l10n?.excel_col_difference ?? "",
+      'excel_col_variableA': l10n?.excel_col_variableA ?? "",
+      'excel_col_variableB': l10n?.excel_col_variableB ?? "",
+      'excel_col_curveCalculation': l10n?.excel_col_curveCalculation ?? "",
+      'excel_col_correctionFactor': l10n?.excel_col_correctionFactor ?? "",
+      'excel_col_time': l10n?.excel_col_time ?? "",
+      'excel_col_volume': l10n?.excel_col_volume ?? "",
+      'excel_col_sampleWeight': l10n?.excel_col_sampleWeight ?? "",
+      'excel_col_result': l10n?.excel_col_result ?? "",
+      'excel_footer_developedBy': l10n?.excel_footer_developedBy ?? "",
+      'excel_footer_learnMore': l10n?.excel_footer_learnMore ?? "",
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
-
-    Map<String, String> _buildExcelTranslations() {
-      final l10n = AppLocalizations.of(context)!;
-      return {
-        'excel_treatmentLabel': l10n.excel_treatmentLabel,
-        'excel_col_id': l10n.excel_col_id,
-        'excel_col_sampleAbsorbance': l10n.excel_col_sampleAbsorbance,
-        'excel_col_whiteSampleAbsorbance': l10n.excel_col_whiteSampleAbsorbance,
-        'excel_col_difference': l10n.excel_col_difference,
-        'excel_col_variableA': l10n.excel_col_variableA,
-        'excel_col_variableB': l10n.excel_col_variableB,
-        'excel_col_curveCalculation': l10n.excel_col_curveCalculation,
-        'excel_col_correctionFactor': l10n.excel_col_correctionFactor,
-        'excel_col_time': l10n.excel_col_time,
-        'excel_col_volume': l10n.excel_col_volume,
-        'excel_col_sampleWeight': l10n.excel_col_sampleWeight,
-        'excel_col_result': l10n.excel_col_result,
-        'excel_footer_developedBy': l10n.excel_footer_developedBy,
-        'excel_footer_learnMore': l10n.excel_footer_learnMore,
-      };
-    }
 
     return ListenableBuilder(
       listenable: _experimentResultsViewmodel,
@@ -517,21 +521,20 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                       heroTag: null,
                       child: Icon(PhosphorIcons.share()),
                       onPressed: () {
-                        final l10n = AppLocalizations.of(context)!;
                         final translations =
                             _buildExcelTranslations();
                         final translatedFilename = l10n
-                            .shareExperimentResultsFilename(
+                            ?.shareExperimentResultsFilename(
                               _experimentDetailsViewmodel.experiment!.name,
                             );
 
                         _experimentResultsViewmodel
-                            .shareFile(translations, translatedFilename)
+                            .shareFile(translations, translatedFilename ?? "")
                             .then((success) {
                               if (!success) {
                                 EZTSnackBar.show(
                                   context,
-                                  l10n.shareFileError,
+                                  l10n?.shareFileError ?? "",
                                   eztSnackBarType: EZTSnackBarType.error,
                                 );
                               }
@@ -547,7 +550,6 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                         PhosphorIcons.downloadSimple(),
                       ),
                       onPressed: () {
-                        final l10n = AppLocalizations.of(context)!;
                         final translations = _buildExcelTranslations();
 
                         _experimentResultsViewmodel
@@ -556,14 +558,14 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                               (flag) => flag
                               ? EZTSnackBar.show(
                             context,
-                            l10n.spreadsheetSavedSuccess,
+                            l10n?.spreadsheetSavedSuccess ?? "",
                             eztSnackBarType: EZTSnackBarType.success,
                           )
                               : _experimentResultsViewmodel.failure
                           is! UnableToSaveFailure
                               ? EZTSnackBar.show(
                             context,
-                            l10n.spreadsheetSaveError,
+                            l10n?.spreadsheetSaveError ?? "",
                             eztSnackBarType:
                             EZTSnackBarType.error,
                           ) : null,
