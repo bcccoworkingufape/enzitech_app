@@ -533,5 +533,48 @@
     "placeholders": {
       "query": {}
     }
-  }
+  },
+  "validation_required": "⚠ Campo obrigatório",
+  "validation_strongPassword": "⚠ Senha não atende ao padrão informado.",
+  "validation_alfanumeric": "⚠ Campo não aceita caracteres especiais",
+  "validation_name": "⚠ Nome inválido",
+  "validation_phone": "⚠ Número inválido",
+  "validation_cellphone": "⚠ Número inválido",
+  "validation_passwordEquals": "⚠ As senhas digitadas não coincidem.",
+  "validation_passwordMustBeDiff": "⚠ A nova senha não pode ser igual a senha atual.",
+  "validation_notFound": "⚠ Não encontrado",
+  "validation_emailEquals": "⚠ Os e-mails digitados não coincidem.",
+  "validation_email": "⚠ E-mail inválido",
+  "validation_cpf": "⚠ CPF inválido",
+  "validation_cnpj": "⚠ CNPJ inválido",
+  "validation_numeric": "⚠ Número inválido",
+  "validation_number": "⚠ Número inválido",
+  "validation_greaterThanZeroDecimal": "⚠ Insira um número maior que zero",
+  "validation_isInteger": "⚠ Insira um número inteiro",
+  "validation_greaterThanZero": "⚠ Insira um número maior que zero",
+  "validation_maxNumber": "⚠ Número deve ser menor ou igual a {value}.",
+  "@validation_maxNumber": {
+    "placeholders": { "value": {} }
+  },
+  "validation_maxChars": "⚠ Esse campo deve ter no máximo {value} caractere(s)",
+  "@validation_maxChars": {
+    "placeholders": { "value": {} }
+  },
+  "validation_maxAge": "⚠ Idade máxima {value} anos",
+  "@validation_maxAge": {
+    "placeholders": { "value": {} }
+  },
+  "validation_minAge": "⚠ Idade mínima {value} anos",
+  "@validation_minAge": {
+    "placeholders": { "value": {} }
+  },
+  "validation_minNumber": "⚠ Número deve ser maior ou igual a {value}.",
+  "@validation_minNumber": {
+    "placeholders": { "value": {} }
+  },
+  "validation_minChars": "⚠ Esse campo deve ter no mínimo {value} caractere(s)",
+  "@validation_minChars": {
+    "placeholders": { "value": {} }
+  },
+  "validation_emailOrRegistration": "⚠ E-mail ou matrícula inválido."
 }

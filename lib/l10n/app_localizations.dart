@@ -1477,6 +1477,156 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'⚠ Could not get {query}.'**
   String error_noResultQuery(Object query);
+
+  /// No description provided for @validation_required.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ Required field'**
+  String get validation_required;
+
+  /// No description provided for @validation_strongPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ Password does not meet the required pattern.'**
+  String get validation_strongPassword;
+
+  /// No description provided for @validation_alfanumeric.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ Field does not accept special characters'**
+  String get validation_alfanumeric;
+
+  /// No description provided for @validation_name.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ Invalid name'**
+  String get validation_name;
+
+  /// No description provided for @validation_phone.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ Invalid number'**
+  String get validation_phone;
+
+  /// No description provided for @validation_cellphone.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ Invalid number'**
+  String get validation_cellphone;
+
+  /// No description provided for @validation_passwordEquals.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ The entered passwords do not match.'**
+  String get validation_passwordEquals;
+
+  /// No description provided for @validation_passwordMustBeDiff.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ The new password cannot be the same as the current one.'**
+  String get validation_passwordMustBeDiff;
+
+  /// No description provided for @validation_notFound.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ Not found'**
+  String get validation_notFound;
+
+  /// No description provided for @validation_emailEquals.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ The entered emails do not match.'**
+  String get validation_emailEquals;
+
+  /// No description provided for @validation_email.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ Invalid email'**
+  String get validation_email;
+
+  /// No description provided for @validation_cpf.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ Invalid CPF'**
+  String get validation_cpf;
+
+  /// No description provided for @validation_cnpj.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ Invalid CNPJ'**
+  String get validation_cnpj;
+
+  /// No description provided for @validation_numeric.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ Invalid number'**
+  String get validation_numeric;
+
+  /// No description provided for @validation_number.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ Invalid number'**
+  String get validation_number;
+
+  /// No description provided for @validation_greaterThanZeroDecimal.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ Enter a number greater than zero'**
+  String get validation_greaterThanZeroDecimal;
+
+  /// No description provided for @validation_isInteger.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ Enter an integer'**
+  String get validation_isInteger;
+
+  /// No description provided for @validation_greaterThanZero.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ Enter a number greater than zero'**
+  String get validation_greaterThanZero;
+
+  /// No description provided for @validation_maxNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ Number must be less than or equal to {value}.'**
+  String validation_maxNumber(Object value);
+
+  /// No description provided for @validation_maxChars.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ This field must have a maximum of {value} character(s)'**
+  String validation_maxChars(Object value);
+
+  /// No description provided for @validation_maxAge.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ Maximum age {value} years'**
+  String validation_maxAge(Object value);
+
+  /// No description provided for @validation_minAge.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ Minimum age {value} years'**
+  String validation_minAge(Object value);
+
+  /// No description provided for @validation_minNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ Number must be greater than or equal to {value}.'**
+  String validation_minNumber(Object value);
+
+  /// No description provided for @validation_minChars.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ This field must have a minimum of {value} character(s)'**
+  String validation_minChars(Object value);
+
+  /// No description provided for @validation_emailOrRegistration.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ Invalid email or registration.'**
+  String get validation_emailOrRegistration;
 }
 
 class _AppLocalizationsDelegate

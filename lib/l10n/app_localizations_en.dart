@@ -829,4 +829,97 @@ class AppLocalizationsEn extends AppLocalizations {
   String error_noResultQuery(Object query) {
     return '⚠ Could not get $query.';
   }
+
+  @override
+  String get validation_required => '⚠ Required field';
+
+  @override
+  String get validation_strongPassword =>
+      '⚠ Password does not meet the required pattern.';
+
+  @override
+  String get validation_alfanumeric =>
+      '⚠ Field does not accept special characters';
+
+  @override
+  String get validation_name => '⚠ Invalid name';
+
+  @override
+  String get validation_phone => '⚠ Invalid number';
+
+  @override
+  String get validation_cellphone => '⚠ Invalid number';
+
+  @override
+  String get validation_passwordEquals =>
+      '⚠ The entered passwords do not match.';
+
+  @override
+  String get validation_passwordMustBeDiff =>
+      '⚠ The new password cannot be the same as the current one.';
+
+  @override
+  String get validation_notFound => '⚠ Not found';
+
+  @override
+  String get validation_emailEquals => '⚠ The entered emails do not match.';
+
+  @override
+  String get validation_email => '⚠ Invalid email';
+
+  @override
+  String get validation_cpf => '⚠ Invalid CPF';
+
+  @override
+  String get validation_cnpj => '⚠ Invalid CNPJ';
+
+  @override
+  String get validation_numeric => '⚠ Invalid number';
+
+  @override
+  String get validation_number => '⚠ Invalid number';
+
+  @override
+  String get validation_greaterThanZeroDecimal =>
+      '⚠ Enter a number greater than zero';
+
+  @override
+  String get validation_isInteger => '⚠ Enter an integer';
+
+  @override
+  String get validation_greaterThanZero => '⚠ Enter a number greater than zero';
+
+  @override
+  String validation_maxNumber(Object value) {
+    return '⚠ Number must be less than or equal to $value.';
+  }
+
+  @override
+  String validation_maxChars(Object value) {
+    return '⚠ This field must have a maximum of $value character(s)';
+  }
+
+  @override
+  String validation_maxAge(Object value) {
+    return '⚠ Maximum age $value years';
+  }
+
+  @override
+  String validation_minAge(Object value) {
+    return '⚠ Minimum age $value years';
+  }
+
+  @override
+  String validation_minNumber(Object value) {
+    return '⚠ Number must be greater than or equal to $value.';
+  }
+
+  @override
+  String validation_minChars(Object value) {
+    return '⚠ This field must have a minimum of $value character(s)';
+  }
+
+  @override
+  String get validation_emailOrRegistration =>
+      '⚠ Invalid email or registration.';
 }
