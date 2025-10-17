@@ -33,6 +33,7 @@ class ExperimentsPage extends StatefulWidget {
 class _ExperimentsPageState extends State<ExperimentsPage> {
   late final ExperimentsViewmodel _experimentsViewmodel;
   late final HomeViewmodel _homeViewmodel;
+  late final AppLocalizations? l10n;
   final Key _refreshIndicatorKey = GlobalKey();
 
   List<bool> isSelected = [true, false];
@@ -57,7 +58,6 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
     });
 
     if (mounted) {
-      final l10n = AppLocalizations.of(context)!;
       _experimentsViewmodel.addListener(
         () async {
           if (_experimentsViewmodel.state == StateEnum.error && mounted) {
@@ -93,6 +93,12 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
     }
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    l10n = AppLocalizations.of(context);
+  }
+
   Future<void> _showFiltersDialog() async {
     return showDialog<void>(
       context: context,
@@ -104,11 +110,11 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
   }
 
   Widget _buildExperimentsList(double height) {
-    final l10n = AppLocalizations.of(context)!;
+
     if (_experimentsViewmodel.state == StateEnum.error) {
       return EZTForcedCenter(
         child: EZTError(
-          message: l10n.errorLoadingExperiments,
+          message: l10n?.errorLoadingExperiments,
         ),
       );
     }
@@ -116,7 +122,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
     if (_experimentsViewmodel.state == StateEnum.loading &&
         _experimentsViewmodel.isLoadingMoreRunning == false) {
       return EZTProgressIndicator(
-        message: l10n.loadingExperiments,
+        message: l10n?.loadingExperiments,
       );
     }
 
@@ -124,7 +130,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
         _experimentsViewmodel.experiments.isEmpty) {
       return EZTForcedCenter(
         child: EZTNotFound(
-          message: l10n.experimentsNotFound,
+          message: l10n?.experimentsNotFound,
         ),
       );
     }
@@ -156,10 +162,10 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
 
                   EZTSnackBar.show(
                     context,
-                    l10n.experimentDeleted(experiment.name),
+                    l10n?.experimentDeleted(experiment.name) ?? "",
                     eztSnackBarType: EZTSnackBarType.error,
                     action: SnackBarAction(
-                      label: l10n.undo,
+                      label: l10n?.undo ?? "",
                       textColor: context.getApplyedColorScheme.onError,
                       onPressed: () {
                         setState(() {
@@ -189,7 +195,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                           color: context.getApplyedColorScheme.onError,
                         ),
                         Text(
-                          l10n.delete,
+                          l10n?.delete ?? "",
                           style: TextStyle(
                             color: context.getApplyedColorScheme.onError,
                           ),
@@ -244,7 +250,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                       padding: const EdgeInsets.only(top: 30, bottom: 30),
                       child: Center(
                         child: Text(
-                          l10n.allExperimentsDisplayed,
+                          l10n?.allExperimentsDisplayed ?? "",
                           style: TextStyles(context).buttonPrimary.copyWith(
                                 color: context.getApplyedColorScheme.tertiary,
                                 fontSize: 20.0,
@@ -263,7 +269,6 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     var heightMQ = MediaQuery.of(context).size.height;
 
     return ListenableBuilder(
@@ -294,14 +299,14 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                         segments: <ButtonSegment<int>>[
                           ButtonSegment<int>(
                             value: 0,
-                            label: Text(l10n.inProgress),
+                            label: Text(l10n?.inProgress ?? ""),
                             icon: Icon(
                               PhosphorIcons.clockClockwise(),
                             ),
                           ),
                           ButtonSegment<int>(
                             value: 1,
-                            label: Text(l10n.completed),
+                            label: Text(l10n?.completed ?? ""),
                             icon: Icon(PhosphorIcons.checks()),
                           ),
                         ],
@@ -344,7 +349,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                 ),
                 if (_experimentsViewmodel.experiments.isNotEmpty)
                   Text(
-                    l10n.experimentsFound(_experimentsViewmodel.totalOfExperiments),
+                    l10n?.experimentsFound(_experimentsViewmodel.totalOfExperiments) ?? "",
                     style: TextStyles(context).link(fontSize: 16),
                   ),
                 const SizedBox(

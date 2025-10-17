@@ -49,6 +49,7 @@ class _HomePageState extends State<HomePage>
   late final ExperimentsViewmodel _experimentsViewmodel;
   late final TreatmentsViewmodel _treatmentsViewmodel;
   late final ConnectionChecker _connectionChecker;
+  late final AppLocalizations? l10n;
 
   late final AnimationController animationControllerLogo = AnimationController(
     vsync: this,
@@ -90,7 +91,7 @@ class _HomePageState extends State<HomePage>
           EZTSnackBar.clear(context);
           EZTSnackBar.show(
             context,
-            l10n.connectionRestored,
+            l10n?.connectionRestored ?? "",
             centerTitle: true,
             eztSnackBarType: EZTSnackBarType.success,
           );
@@ -122,7 +123,7 @@ class _HomePageState extends State<HomePage>
                 if (_accountViewmodel.state == StateEnum.success && mounted) {
                   EZTSnackBar.show(
                     context,
-                    l10n.loginAgain,
+                    l10n?.loginAgain ?? "",
                   );
                   await Future.delayed(const Duration(milliseconds: 500));
                   if (mounted) {
@@ -200,6 +201,12 @@ class _HomePageState extends State<HomePage>
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    l10n = AppLocalizations.of(context);
+  }
+
+  @override
   dispose() {
     _connectivitySubscription.cancel();
 
@@ -251,7 +258,7 @@ class _HomePageState extends State<HomePage>
 
     if (_homeViewmodel.fragmentIndex == 0 && _isVisibleExperimentButton) {
       return _floatingActionButton(
-          l10n.registerExperiment,
+          l10n?.registerExperiment ?? "",
         () {
           Navigator.pushNamed(
             context,
@@ -263,7 +270,7 @@ class _HomePageState extends State<HomePage>
 
     if (_homeViewmodel.fragmentIndex == 1 && _isVisibleTreatmentButton) {
       return _floatingActionButton(
-        l10n.registerTreatment,
+        l10n?.registerTreatment ?? "",
         () {
           Navigator.pushNamed(
             context,
@@ -278,7 +285,7 @@ class _HomePageState extends State<HomePage>
           _accountViewmodel.user!.userType == UserTypeEnum.admin &&
           _isVisibleEnzymeButton) {
         return _floatingActionButton(
-          l10n.registerEnzyme,
+          l10n?.registerEnzyme ?? "",
           () {
             Navigator.pushNamed(
               context,
@@ -297,7 +304,7 @@ class _HomePageState extends State<HomePage>
     final l10n = AppLocalizations.of(context)!;
     return EZTSnackBar.show(
       context,
-      l10n.noInternetWarning,
+      l10n?.noInternetWarning ?? "",
       eztSnackBarType: EZTSnackBarType.error,
       duration: const Duration(seconds: 10),
     );
@@ -305,7 +312,7 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    
 
     return ListenableBuilder(
       listenable: _homeViewmodel,
@@ -379,19 +386,19 @@ class _HomePageState extends State<HomePage>
             destinations: [
               NavigationDestination(
                 icon: Icon(PhosphorIcons.flask()),
-                  label: l10n.experiments,
+                  label: l10n?.experiments ?? "",
               ),
               NavigationDestination(
                 icon: Icon(PhosphorIcons.testTube()),
-                label: l10n.treatments,
+                label: l10n?.treatments ?? "",
               ),
               NavigationDestination(
                 icon: Icon(PhosphorIcons.atom()),
-                label: l10n.enzymes,
+                label: l10n?.enzymes ?? "",
               ),
               NavigationDestination(
                 icon: Icon(PhosphorIcons.gear()),
-                label: l10n.settings,
+                label: l10n?.settings ?? "",
               ),
             ],
           ),

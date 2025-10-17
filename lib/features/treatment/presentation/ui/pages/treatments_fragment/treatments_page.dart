@@ -29,6 +29,7 @@ class TreatmentsPage extends StatefulWidget {
 
 class _TreatmentsPageState extends State<TreatmentsPage> {
   late final TreatmentsViewmodel _treatmentsViewmodel;
+  late final AppLocalizations? l10n;
   final Key _refreshIndicatorKey = GlobalKey();
 
   @override
@@ -36,7 +37,6 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
     super.initState();
     _treatmentsViewmodel = GetIt.I.get<TreatmentsViewmodel>();
     if (mounted) {
-      final l10n = AppLocalizations.of(context)!;
       _treatmentsViewmodel.addListener(
         () {
           if (mounted && _treatmentsViewmodel.state == StateEnum.error) {
@@ -51,19 +51,24 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
     }
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    l10n = AppLocalizations.of(context);
+  }
+
   Widget _buildTreatmentsList(double height) {
-    final l10n = AppLocalizations.of(context)!;
     if (_treatmentsViewmodel.state == StateEnum.error) {
       return EZTForcedCenter(
         child: EZTError(
-          message: l10n.errorLoadingTreatments,
+          message: l10n?.errorLoadingTreatments,
         ),
       );
     }
 
     if (_treatmentsViewmodel.state == StateEnum.loading) {
       return EZTProgressIndicator(
-        message: l10n.loadingTreatments,
+        message: l10n?.loadingTreatments,
       );
     }
 
@@ -71,7 +76,7 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
         _treatmentsViewmodel.treatments.isEmpty) {
       return EZTForcedCenter(
         child: EZTNotFound(
-          message: l10n.treatmentsNotFound,
+          message: l10n?.treatmentsNotFound,
         ),
       );
     }
@@ -100,10 +105,10 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
 
                 EZTSnackBar.show(
                   context,
-                  l10n.treatmentDeleted(treatment.name),
+                  l10n?.treatmentDeleted(treatment.name) ?? "",
                   eztSnackBarType: EZTSnackBarType.error,
                   action: SnackBarAction(
-                    label: l10n.undo,
+                    label: l10n?.undo ?? "",
                     textColor: context.getApplyedColorScheme.onError,
                     onPressed: () {
                       setState(() {
@@ -132,7 +137,7 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
                         color: context.getApplyedColorScheme.onError,
                       ),
                       Text(
-                        l10n.delete,
+                        l10n?.delete ?? "",
                         style: TextStyle(
                           color: context.getApplyedColorScheme.onError,
                         ),
@@ -150,17 +155,17 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: Text(l10n.deleteTreatmentTitle),
-                                content: Text(l10n.deleteTreatmentContent),
+                              title: Text(l10n?.deleteTreatmentTitle ?? ""),
+                                content: Text(l10n?.deleteTreatmentContent ?? ""),
                                 actions: [
                                   TextButton(
                                       onPressed: () =>
                                           Navigator.of(context).pop(true),
-                                      child: Text(l10n.deleteButton)),
+                                      child: Text(l10n?.deleteButton ?? "")),
                                   TextButton(
                                     onPressed: () =>
                                         Navigator.of(context).pop(false),
-                                    child: Text(l10n.cancelButton),
+                                    child: Text(l10n?.cancelButton ?? ""),
                                   ),
                                 ],
                               );
@@ -186,7 +191,6 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     var heightMQ = MediaQuery.of(context).size.height;
 
     return ListenableBuilder(
@@ -207,9 +211,8 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
                           height: 8,
                         ),
                         Text(
-                          l10n.treatmentsFound(
-                            _treatmentsViewmodel.treatments.length
-                          ),
+                          l10n?.treatmentsFound(
+                            _treatmentsViewmodel.treatments.length) ?? "",
                           style: TextStyles(context).link(fontSize: 16),
                         ),
                         const SizedBox(

@@ -42,6 +42,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
   late final ExperimentDetailsViewmodel _experimentDetailsViewmodel;
   late final ExperimentsViewmodel _experimentsViewmodel;
   late final HomeViewmodel _homeViewmodel;
+  late final AppLocalizations? l10n;
 
   bool _expandToSeeMoreVisible = false;
 
@@ -53,7 +54,6 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
     _homeViewmodel = GetIt.I.get<HomeViewmodel>();
 
     if (mounted) {
-      final l10n = AppLocalizations.of(context)!;
       _experimentDetailsViewmodel.addListener(
         () {
           if (mounted && _experimentDetailsViewmodel.state == StateEnum.error) {
@@ -66,6 +66,12 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
         },
       );
     }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    l10n = AppLocalizations.of(context);
   }
 
   _buildInfoBadge(int quantity, String name) {
@@ -87,7 +93,6 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
   }
 
   get leadWithEnzymes {
-    final l10n = AppLocalizations.of(context)!;
     if (_experimentDetailsViewmodel.experiment!.enzymes != null) {
       if (_experimentDetailsViewmodel.experiment!.enzymes!.isNotEmpty) {
         return _experimentDetailsViewmodel.experiment!.enzymes!
@@ -95,11 +100,10 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
             .toList();
       }
     }
-    return [Text(l10n.noData)];
+    return [Text(l10n?.noData ?? "")];
   }
 
   get leadWithTreatments {
-    final l10n = AppLocalizations.of(context)!;
     if (_experimentDetailsViewmodel.experiment!.treatments != null) {
       if (_experimentDetailsViewmodel.experiment!.treatments!.isNotEmpty) {
         return _experimentDetailsViewmodel.experiment!.treatments!
@@ -107,7 +111,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
             .toList();
       }
     }
-    return [Text(l10n.noData)];
+    return [Text(l10n?.noData ?? "")];
   }
 
   Widget _buildCard({required Widget child, Color? color}) {
@@ -127,17 +131,16 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
   }
 
   Widget _buildBody(double height) {
-    final l10n = AppLocalizations.of(context)!;
     if (_experimentDetailsViewmodel.state == StateEnum.error) {
       return EZTError(
-        message: l10n.errorLoadingExperiment(
+        message: l10n?.errorLoadingExperiment(
             _experimentDetailsViewmodel.experiment!.name),
       );
     }
 
     if (_experimentDetailsViewmodel.state == StateEnum.loading) {
       return EZTProgressIndicator(
-        message: l10n.loadingExperiment,
+        message: l10n?.loadingExperiment,
       );
     }
 
@@ -216,16 +219,16 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
                         _buildInfoBadge(
                           _experimentDetailsViewmodel
                               .experiment!.treatments!.length,
-                          l10n.treatments,
+                          l10n?.treatments ?? "",
                         ),
                         _buildInfoBadge(
                           _experimentDetailsViewmodel.experiment!.repetitions,
-                          l10n.repetitions,
+                          l10n?.repetitions ?? "",
                         ),
                         _buildInfoBadge(
                           _experimentDetailsViewmodel
                               .experiment!.enzymes!.length,
-                          l10n.enzymes,
+                          l10n?.enzymes ?? "",
                         ),
                       ],
                     ),
@@ -236,8 +239,8 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
                       ),
                       child: Text(
                         !_expandToSeeMoreVisible
-                            ? l10n.tapToSeeMore
-                            : l10n.tapToHide,
+                            ? l10n?.tapToSeeMore ?? ""
+                            : l10n?.tapToHide ?? "",
                         style: const TextStyle(
                           fontStyle: FontStyle.italic,
                           fontSize: 12,
@@ -270,7 +273,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
               height: 20,
             ),
             EZTButton(
-              text: l10n.enzymaticCalculation,
+              text: l10n?.enzymaticCalculation ?? "",
               enabled: _experimentDetailsViewmodel.experiment!.progress != 1,
               icon: Icon(
                 PhosphorIcons.function(),
@@ -294,7 +297,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
               height: 20,
             ),
             EZTButton(
-              text: l10n.results,
+              text: l10n?.results ?? "",
               enabled: _experimentDetailsViewmodel.experiment!.progress != 0,
               icon: Icon(
                 PhosphorIcons.fileText(),
@@ -319,7 +322,6 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     return ListenableBuilder(
       listenable: _experimentDetailsViewmodel,
       builder: (context, child) {
@@ -329,7 +331,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
               color: context.getApplyedColorScheme.onBackground,
             ),
             title: Text(
-              l10n.experimentDetails,
+              l10n?.experimentDetails ?? "",
               style: TextStyles(context).titleBoldBackground(),
             ),
             actions: [
@@ -362,8 +364,8 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
 
                         EZTSnackBar.clear(context);
                         EZTSnackBar.show(
-                          context, l10n.experimentDeleted(
-                            _experimentDetailsViewmodel.experiment!.name),
+                          context, l10n?.experimentDeleted(
+                            _experimentDetailsViewmodel.experiment!.name) ?? "",
                           eztSnackBarType: EZTSnackBarType.error,
                         );
                       });

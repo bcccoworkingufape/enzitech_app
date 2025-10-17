@@ -30,8 +30,15 @@ class CalculateExperimentPage extends StatefulWidget {
 
 class _CalculateExperimentPageState extends State<CalculateExperimentPage> {
   late final CalculateExperimentViewmodel _calculateExperimentViewmodel;
+  late final AppLocalizations? l10n;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    l10n = AppLocalizations.of(context);
+  }
 
   @override
   void initState() {
@@ -41,7 +48,6 @@ class _CalculateExperimentPageState extends State<CalculateExperimentPage> {
     _calculateExperimentViewmodel.setExperiment(widget.experiment);
 
     if (mounted) {
-      final l10n = AppLocalizations.of(context)!;
       _calculateExperimentViewmodel.addListener(
         () {
           if (mounted &&
