@@ -9,9 +9,7 @@ import '../../domain/usecases/create_enzyme/create_enzyme_usecase.dart';
 class CreateEnzymeViewmodel extends ChangeNotifier {
   final CreateEnzymeUseCase _createEnzymeUseCase;
 
-  CreateEnzymeViewmodel(
-    this._createEnzymeUseCase,
-  );
+  CreateEnzymeViewmodel(this._createEnzymeUseCase);
 
   StateEnum _state = StateEnum.idle;
   StateEnum get state => _state;
@@ -26,20 +24,10 @@ class CreateEnzymeViewmodel extends ChangeNotifier {
     _failure = failure;
   }
 
-  Future<void> createEnzyme(
-    String name,
-    double variableA,
-    double variableB,
-    String type,
-  ) async {
+  Future<void> createEnzyme(String name, double variableA, double variableB, String type) async {
     setStateEnum(StateEnum.loading);
 
-    var result = await _createEnzymeUseCase(
-      name: name,
-      variableA: variableA,
-      variableB: variableB,
-      type: type,
-    );
+    var result = await _createEnzymeUseCase(name: name, variableA: variableA, variableB: variableB, type: type);
 
     result.fold(
       (error) {

@@ -2,16 +2,11 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
-import '../../extensions/context_theme_mode_extensions.dart';
+import '../../extensions/build_context_extensions.dart';
 import '../themes/themes.dart';
 import 'full_widgets_override/liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
-enum EZTPullToRefreshType {
-  regular,
-  outline,
-  center,
-  checkout,
-}
+enum EZTPullToRefreshType { regular, outline, center, checkout }
 
 class EZTPullToRefresh extends StatefulWidget {
   final Future<void> Function() onRefresh;
@@ -41,9 +36,7 @@ class _EZTPullToRefreshState extends State<EZTPullToRefresh> {
       onRefresh: widget.onRefresh,
       showChildOpacityTransition: widget.showChildOpacityTransition,
       springAnimationDurationInMilliseconds: 500,
-      backgroundImage: AssetImage(
-        context.isDarkMode ? AppImages.logoOnDark : AppImages.logoWhite,
-      ),
+      backgroundImage: AssetImage(context.isDarkMode ? AppImages.logoOnDark : AppImages.logoWhite),
       backgroundColor: context.isDarkMode ? AppColors.primary : null,
       color: context.getApplyedColorScheme.surfaceTint,
       child: widget.child,

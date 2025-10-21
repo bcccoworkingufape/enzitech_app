@@ -15,10 +15,7 @@ class CreateExperimentViewmodel extends ChangeNotifier {
   final CreateExperimentUseCase _createExperimentUseCase;
   final ExperimentsViewmodel _experimentsViewmodel;
 
-  CreateExperimentViewmodel(
-    this._createExperimentUseCase,
-    this._experimentsViewmodel,
-  );
+  CreateExperimentViewmodel(this._createExperimentUseCase, this._experimentsViewmodel);
 
   StateEnum _state = StateEnum.idle;
   StateEnum get state => _state;
@@ -110,11 +107,7 @@ class CreateExperimentViewmodel extends ChangeNotifier {
       if (page != null) {
         setAlreadyPopped(false);
 
-        pageController.animateToPage(
-          page,
-          duration: const Duration(milliseconds: 150),
-          curve: Curves.easeIn,
-        );
+        pageController.animateToPage(page, duration: const Duration(milliseconds: 150), curve: Curves.easeIn);
       } else {
         {
           if (pageController.page! > 0) {
@@ -140,10 +133,7 @@ class CreateExperimentViewmodel extends ChangeNotifier {
       currentFocus.focusedChild?.unfocus();
     }
 
-    pageController.nextPage(
-      duration: const Duration(milliseconds: 150),
-      curve: Curves.easeIn,
-    );
+    pageController.nextPage(duration: const Duration(milliseconds: 150), curve: Curves.easeIn);
   }
 
   Future<void> createExperiment() async {
@@ -154,14 +144,10 @@ class CreateExperimentViewmodel extends ChangeNotifier {
           .map(
             (enzyme) => EnzymeDto.toExperimetEnzyme(
               enzyme,
-              duration: int.parse(
-                  textFields['duration-${enzyme.id}']!.controller!.text),
-              weightSample: double.parse(
-                  textFields['weightSample-${enzyme.id}']!.controller!.text),
-              weightGround: double.parse(
-                  textFields['weightGround-${enzyme.id}']!.controller!.text),
-              size: double.parse(
-                  textFields['size-${enzyme.id}']!.controller!.text),
+              duration: int.parse(textFields['duration-${enzyme.id}']!.controller!.text),
+              weightSample: double.parse(textFields['weightSample-${enzyme.id}']!.controller!.text),
+              weightGround: double.parse(textFields['weightGround-${enzyme.id}']!.controller!.text),
+              size: double.parse(textFields['size-${enzyme.id}']!.controller!.text),
             ),
           )
           .toList();

@@ -6,9 +6,12 @@ import 'package:get_it/get_it.dart';
 
 // 🌎 Project imports:
 import '../../features/main/presentation/viewmodel/settings_viewmodel.dart';
+import '../l10n/app_localizations.dart';
 import '../ui/ui.dart';
 
-extension ContextThemeMode on BuildContext {
+extension BuildContextExtension on BuildContext {
+  AppLocalizations get l10n => AppLocalizations.of(this)!;
+
   bool get isDarkMode {
     ColorScheme applyedColorScheme = getApplyedColorScheme;
     return applyedColorScheme.brightness == Brightness.dark;

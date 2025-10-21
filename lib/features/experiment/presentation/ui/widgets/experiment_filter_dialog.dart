@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
-import '../../../../../../l10n/app_localizations.dart';
-
+import '../../../../../shared/l10n/app_localizations.dart';
 
 // 🌎 Project imports:
-import '../../../../../shared/extensions/context_theme_mode_extensions.dart';
+import '../../../../../shared/extensions/build_context_extensions.dart';
 import '../../../../../shared/ui/ui.dart';
 import '../../../../experiment/presentation/viewmodel/experiments_viewmodel.dart';
 
@@ -60,10 +59,7 @@ class _ExperimentFilterDialogState extends State<ExperimentFilterDialog> {
       "updatedAt": l10n.filter_modificationDate,
     };
 
-    final Map<String, String> orderingMap = {
-      "ASC": l10n.order_ascending,
-      "DESC": l10n.order_descending,
-    };
+    final Map<String, String> orderingMap = {"ASC": l10n.order_ascending, "DESC": l10n.order_descending};
 
     return AlertDialog(
       title: Text(l10n.filters, style: TextStyles(context).titleBoldHeading),
@@ -81,19 +77,14 @@ class _ExperimentFilterDialogState extends State<ExperimentFilterDialog> {
               ),
               icon: null,
               elevation: 16,
-              underline: Container(
-                height: 1.1,
-              ),
+              underline: Container(height: 1.1),
               onChanged: (String? value) {
                 setState(() {
                   dropdownOrderByValue = value!;
                 });
               },
               items: orderByMap.keys.toList().map<DropdownMenuItem<String>>((key) {
-                return DropdownMenuItem<String>(
-                  value: key,
-                  child: Text(orderByMap[key]!),
-                );
+                return DropdownMenuItem<String>(value: key, child: Text(orderByMap[key]!));
               }).toList(),
             ),
             const SizedBox(height: 24),
@@ -108,19 +99,14 @@ class _ExperimentFilterDialogState extends State<ExperimentFilterDialog> {
               ),
               icon: null,
               elevation: 16,
-              underline: Container(
-                height: 1.1,
-              ),
+              underline: Container(height: 1.1),
               onChanged: (String? value) {
                 setState(() {
                   dropdownOrderingValue = value!;
                 });
               },
               items: orderingMap.keys.toList().map<DropdownMenuItem<String>>((key) {
-                return DropdownMenuItem<String>(
-                  value: key,
-                  child: Text(orderingMap[key]!),
-                );
+                return DropdownMenuItem<String>(value: key, child: Text(orderingMap[key]!));
               }).toList(),
             ),
           ],
@@ -129,30 +115,20 @@ class _ExperimentFilterDialogState extends State<ExperimentFilterDialog> {
       actionsAlignment: MainAxisAlignment.spaceAround,
       actions: <Widget>[
         TextButton(
-          style: ButtonStyle(
-            overlayColor: MaterialStateProperty.all<Color>(
-              context.getApplyedColorScheme.error,
-            ),
-          ),
+          style: ButtonStyle(overlayColor: MaterialStateProperty.all<Color>(context.getApplyedColorScheme.error)),
           onPressed: () {
             _experimentsViewmodel.clearFilters();
             Navigator.of(context).pop();
           },
           child: Text(
             l10n.clearFilters(numberOfFiltersEnabled()), // Botão usa plural
-            style: TextStyles(context).buttonPrimary.copyWith(
-              color: context.getApplyedColorScheme.error,
-            ),
+            style: TextStyles(context).buttonPrimary.copyWith(color: context.getApplyedColorScheme.error),
           ),
         ),
         TextButton(
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(
-              context.getApplyedColorScheme.primary,
-            ),
-            overlayColor: MaterialStateProperty.all<Color>(
-              context.getApplyedColorScheme.error,
-            ),
+            backgroundColor: MaterialStateProperty.all<Color>(context.getApplyedColorScheme.primary),
+            overlayColor: MaterialStateProperty.all<Color>(context.getApplyedColorScheme.error),
           ),
           child: Text(
             l10n.applyFilters(numberOfFiltersEnabled()), // Botão usa plural

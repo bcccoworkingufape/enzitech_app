@@ -1,7 +1,7 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-import '../../../../../../../l10n/app_localizations.dart';
+import '../../../../../../../shared/l10n/app_localizations.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
@@ -15,54 +15,41 @@ import '../../../../viewmodel/create_experiment_viewmodel.dart';
 import '../create_experiment_fragment_template.dart';
 
 class CreateExperimentFirstStepPage extends StatefulWidget {
-  const CreateExperimentFirstStepPage({
-    super.key,
-  });
+  const CreateExperimentFirstStepPage({super.key});
 
   @override
-  State<CreateExperimentFirstStepPage> createState() =>
-      _CreateExperimentFirstStepPageState();
+  State<CreateExperimentFirstStepPage> createState() => _CreateExperimentFirstStepPageState();
 }
 
-class _CreateExperimentFirstStepPageState
-    extends State<CreateExperimentFirstStepPage> {
+class _CreateExperimentFirstStepPageState extends State<CreateExperimentFirstStepPage> {
   late final CreateExperimentViewmodel _createExperimentViewmodel;
 
   final _nameFieldController = TextEditingController(text: '');
   final _descriptionFieldController = TextEditingController(text: '');
 
-  final _validations = <ValidateRule>[
-    ValidateRule(
-      ValidateTypes.required,
-    ),
-  ];
+  final _validations = <ValidateRule>[ValidateRule(ValidateTypes.required)];
 
   @override
   void initState() {
     super.initState();
     _createExperimentViewmodel = GetIt.I.get<CreateExperimentViewmodel>();
 
-    Future.delayed(const Duration(milliseconds: 1))
-        .whenComplete(() => _validateFields);
+    Future.delayed(const Duration(milliseconds: 1)).whenComplete(() => _validateFields);
 
     _initFields();
   }
 
   void _initFields() {
-    _nameFieldController.text =
-        _createExperimentViewmodel.temporaryExperiment.name ?? '';
-    _descriptionFieldController.text =
-        _createExperimentViewmodel.temporaryExperiment.description ?? '';
+    _nameFieldController.text = _createExperimentViewmodel.temporaryExperiment.name ?? '';
+    _descriptionFieldController.text = _createExperimentViewmodel.temporaryExperiment.description ?? '';
 
     setState(() {});
   }
 
   get _validateFields {
-    if (_nameFieldController.text.isNotEmpty &&
-        _descriptionFieldController.text.isNotEmpty) {
+    if (_nameFieldController.text.isNotEmpty && _descriptionFieldController.text.isNotEmpty) {
       if (_createExperimentViewmodel.formKey.currentState != null) {
-        if (_createExperimentViewmodel.formKey.currentState!.validate() &&
-            mounted) {
+        if (_createExperimentViewmodel.formKey.currentState!.validate() && mounted) {
           setState(() {
             _createExperimentViewmodel.setEnableNextButtonOnFirstStep(true);
           });
@@ -76,7 +63,6 @@ class _CreateExperimentFirstStepPageState
   }
 
   Widget get _nameInput {
-
     final l10n = AppLocalizations.of(context)!;
     final fieldValidator = FieldValidator(_validations, context);
 
@@ -92,7 +78,6 @@ class _CreateExperimentFirstStepPageState
   }
 
   Widget get _descriptionInput {
-
     final l10n = AppLocalizations.of(context)!;
     final fieldValidator = FieldValidator(_validations, context);
 
@@ -108,13 +93,7 @@ class _CreateExperimentFirstStepPageState
   }
 
   Widget get _textFields {
-    return Column(
-      children: [
-        _nameInput,
-        const SizedBox(height: 10),
-        _descriptionInput,
-      ],
-    );
+    return Column(children: [_nameInput, const SizedBox(height: 10), _descriptionInput]);
   }
 
   Widget get _buttons {
@@ -162,34 +141,21 @@ class _CreateExperimentFirstStepPageState
       titleOfStepIndicator: l10n.registerNewExperiment,
       messageOfStepIndicator: l10n.stepIndicatorIdentification(1, 4),
       body: SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(
-          parent: BouncingScrollPhysics(),
-        ),
+        physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           children: [
-            const SizedBox(
-              height: 32,
-            ),
+            const SizedBox(height: 32),
             Row(
               children: [
-                Icon(
-                  PhosphorIcons.flask(),
-                ),
+                Icon(PhosphorIcons.flask()),
                 const SizedBox(width: 4),
-                Text(
-                  l10n.experimentIdentification,
-                  style: TextStyles.detailBold,
-                ),
+                Text(l10n.experimentIdentification, style: TextStyles.detailBold),
               ],
             ),
-            const SizedBox(
-              height: 8,
-            ),
+            const SizedBox(height: 8),
             _textFields,
-            const SizedBox(
-              height: 64,
-            ),
+            const SizedBox(height: 64),
             _buttons,
           ],
         ),

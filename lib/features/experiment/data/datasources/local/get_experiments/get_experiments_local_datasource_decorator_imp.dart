@@ -11,12 +11,10 @@ import '../../../../domain/entities/experiment_pagination_entity.dart';
 import '../../../dto/experiment_pagination_dto.dart';
 import 'get_experiments_local_datasource_decorator.dart';
 
-class GetExperimentsDataSourceDecoratorImp
-    extends GetExperimentsDataSourceDecorator {
+class GetExperimentsDataSourceDecoratorImp extends GetExperimentsDataSourceDecorator {
   final KeyValueService _keyValueService;
 
-  GetExperimentsDataSourceDecoratorImp(
-      super.getExperimentsDataSource, this._keyValueService);
+  GetExperimentsDataSourceDecoratorImp(super.getExperimentsDataSource, this._keyValueService);
 
   @override
   Future<Either<Failure, ExperimentPaginationEntity>> call(
@@ -26,17 +24,8 @@ class GetExperimentsDataSourceDecoratorImp
     int? limit,
     bool? finished,
   }) async {
-    return (await super(
-      page,
-      orderBy: orderBy,
-      ordering: ordering,
-      limit: limit,
-      finished: finished,
-    ))
-        .fold(
-      (error) async => error is ExpiredTokenOrWrongUserFailure
-          ? Left(error)
-          : await _getInCache(),
+    return (await super(page, orderBy: orderBy, ordering: ordering, limit: limit, finished: finished)).fold(
+      (error) async => error is ExpiredTokenOrWrongUserFailure ? Left(error) : await _getInCache(),
       (result) {
         //TODO: _saveInCache(result);
         return Right(result);
@@ -53,8 +42,7 @@ class GetExperimentsDataSourceDecoratorImp
 
   Future<Either<Failure, ExperimentPaginationEntity>> _getInCache() async {
     try {
-      var treatmentsJsonString =
-          await _keyValueService.getString('experiments_cache');
+      var treatmentsJsonString = await _keyValueService.getString('experiments_cache');
 
       if (treatmentsJsonString == null) {
         throw NoResultQueryFailure(message: "a listagem de experimentos");

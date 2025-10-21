@@ -1,7 +1,7 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-import '../../../../../../l10n/app_localizations.dart';
+import '../l10n/app_localizations.dart';
 
 // 🌎 Project imports:
 import '../utils/utils.dart';
@@ -140,8 +140,7 @@ class FieldValidator {
 
             var isStrong = pass == confirm;
             if (!isStrong) {
-              result =
-                  customErrorMessage ?? l10n.validation_passwordEquals;
+              result = customErrorMessage ?? l10n.validation_passwordEquals;
             } else {
               result = null;
             }
@@ -252,8 +251,7 @@ class FieldValidator {
           {
             var number = double.parse(value);
             if (number <= 0) {
-              result =
-                  customErrorMessage ?? l10n.validation_greaterThanZeroDecimal;
+              result = customErrorMessage ?? l10n.validation_greaterThanZeroDecimal;
             } else {
               result = null;
             }
@@ -274,8 +272,7 @@ class FieldValidator {
           {
             var number = int.parse(value);
             if (number < 1) {
-              result =
-                  customErrorMessage ?? l10n.validation_greaterThanZero;
+              result = customErrorMessage ?? l10n.validation_greaterThanZero;
             } else {
               result = null;
             }
@@ -344,16 +341,14 @@ class FieldValidator {
               if (!EnrollValidator.isValid(value.toString()) &&
                   !CNPJValidator.isValid(value.toString()) &&
                   !CPFValidator.isValid(value.toString())) {
-                result =
-                    customErrorMessage ?? l10n.validation_emailOrRegistration;
+                result = customErrorMessage ?? l10n.validation_emailOrRegistration;
               } else {
                 result = null;
               }
             } else {
               var emailValid = Validator.email(value.toString());
               if (!emailValid) {
-                result =
-                    customErrorMessage ?? l10n.validation_emailOrRegistration;
+                result = customErrorMessage ?? l10n.validation_emailOrRegistration;
               } else {
                 result = null;
               }

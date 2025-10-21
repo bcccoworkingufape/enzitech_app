@@ -2,8 +2,7 @@
 import '../../repositories/save_exclude_confirmation_repository.dart';
 import 'save_exclude_confirmation_usecase.dart';
 
-class SaveExcludeConfirmationUseCaseImp
-    implements SaveExcludeConfirmationUseCase {
+class SaveExcludeConfirmationUseCaseImp implements SaveExcludeConfirmationUseCase {
   final SaveExcludeConfirmationRepository _saveExcludeConfirmationRepository;
 
   SaveExcludeConfirmationUseCaseImp(this._saveExcludeConfirmationRepository);

@@ -10,10 +10,5 @@ class HttpDriverOptions {
   final String accessTokenType;
   final String? apiKey;
 
-  HttpDriverOptions({
-    required this.accessToken,
-    required this.baseUrl,
-    this.apiKey,
-    this.accessTokenType = "Bearer",
-  });
+  HttpDriverOptions({required this.accessToken, required this.baseUrl, this.apiKey, this.accessTokenType = "Bearer"});
 }

@@ -54,82 +54,39 @@ class DataSourcesInjections {
   final GetIt getIt;
 
   DataSourcesInjections(this.getIt) {
-    getIt.registerLazySingleton<CalculateExperimentDataSource>(
-      () => CalculateExperimentRemoteDataSourceImp(getIt()),
-    );
-    getIt.registerLazySingleton<ClearUserDataSource>(
-      () => ClearUserLocalDataSourceImp(getIt()),
-    );
-    getIt.registerLazySingleton<CreateAccountDataSource>(
-      () => CreateAccountRemoteDataSourceImp(getIt()),
-    );
-    getIt.registerLazySingleton<CreateExperimentDataSource>(
-      () => CreateExperimentRemoteDataSourceImp(getIt()),
-    );
-    getIt.registerLazySingleton<CreateEnzymeDataSource>(
-      () => CreateEnzymeRemoteDataSourceImp(getIt()),
-    );
-    getIt.registerLazySingleton<CreateTreatmentDataSource>(
-      () => CreateTreatmentRemoteDataSourceImp(getIt()),
-    );
-    getIt.registerLazySingleton<DeleteEnzymeDataSource>(
-      () => DeleteEnzymeRemoteDataSourceImp(getIt()),
-    );
-    getIt.registerLazySingleton<DeleteTreatmentDataSource>(
-      () => DeleteTreatmentRemoteDataSourceImp(getIt()),
-    );
-    getIt.registerLazySingleton<DeleteExperimentDataSource>(
-      () => DeleteExperimentRemoteDataSourceImp(getIt()),
-    );
+    getIt.registerLazySingleton<CalculateExperimentDataSource>(() => CalculateExperimentRemoteDataSourceImp(getIt()));
+    getIt.registerLazySingleton<ClearUserDataSource>(() => ClearUserLocalDataSourceImp(getIt()));
+    getIt.registerLazySingleton<CreateAccountDataSource>(() => CreateAccountRemoteDataSourceImp(getIt()));
+    getIt.registerLazySingleton<CreateExperimentDataSource>(() => CreateExperimentRemoteDataSourceImp(getIt()));
+    getIt.registerLazySingleton<CreateEnzymeDataSource>(() => CreateEnzymeRemoteDataSourceImp(getIt()));
+    getIt.registerLazySingleton<CreateTreatmentDataSource>(() => CreateTreatmentRemoteDataSourceImp(getIt()));
+    getIt.registerLazySingleton<DeleteEnzymeDataSource>(() => DeleteEnzymeRemoteDataSourceImp(getIt()));
+    getIt.registerLazySingleton<DeleteTreatmentDataSource>(() => DeleteTreatmentRemoteDataSourceImp(getIt()));
+    getIt.registerLazySingleton<DeleteExperimentDataSource>(() => DeleteExperimentRemoteDataSourceImp(getIt()));
     getIt.registerLazySingleton<GetEnzymesDataSource>(
-      () => GetEnzymesDataSourceDecoratorImp(
-        GetEnzymesRemoteDataSourceImp(getIt()),
-        getIt(),
-      ),
+      () => GetEnzymesDataSourceDecoratorImp(GetEnzymesRemoteDataSourceImp(getIt()), getIt()),
     );
     getIt.registerLazySingleton<GetEnzymesRemainingInExperimentDataSource>(
-      () => GetEnzymesRemainingInExperimentRemoteDataSourceImp(
-        getIt(),
-      ),
+      () => GetEnzymesRemainingInExperimentRemoteDataSourceImp(getIt()),
     );
     getIt.registerLazySingleton<GetExcludeConfirmationDataSource>(
       () => GetExcludeConfirmationLocalDataSourceImp(getIt()),
     );
-    getIt.registerLazySingleton<GetExperimentByIdDataSource>(
-      () => GetExperimentByIdRemoteDataSourceImp(getIt()),
-    );
+    getIt.registerLazySingleton<GetExperimentByIdDataSource>(() => GetExperimentByIdRemoteDataSourceImp(getIt()));
     getIt.registerLazySingleton<GetExperimentsDataSource>(
-      () => GetExperimentsDataSourceDecoratorImp(
-        GetExperimentsRemoteDataSourceImp(getIt()),
-        getIt(),
-      ),
+      () => GetExperimentsDataSourceDecoratorImp(GetExperimentsRemoteDataSourceImp(getIt()), getIt()),
     );
-    getIt.registerLazySingleton<GetResultDataSource>(
-      () => GetResultRemoteDataSourceImp(getIt()),
-    );
-    getIt.registerLazySingleton<GetThemeModeDataSource>(
-      () => GetThemeModeLocalDataSourceImp(getIt()),
-    );
+    getIt.registerLazySingleton<GetResultDataSource>(() => GetResultRemoteDataSourceImp(getIt()));
+    getIt.registerLazySingleton<GetThemeModeDataSource>(() => GetThemeModeLocalDataSourceImp(getIt()));
     getIt.registerLazySingleton<GetTreatmentsDataSource>(
-      () => GetTreatmentsDataSourceDecoratorImp(
-        GetTreatmentsRemoteDataSourceImp(getIt()),
-        getIt(),
-      ),
+      () => GetTreatmentsDataSourceDecoratorImp(GetTreatmentsRemoteDataSourceImp(getIt()), getIt()),
     );
-    getIt.registerLazySingleton<GetUserDataSource>(
-      () => GetUserLocalDataSourceImp(getIt()),
-    );
-    getIt.registerLazySingleton<LoginDataSource>(
-      () => LoginRemoteDataSourceImp(getIt(), getIt()),
-    );
+    getIt.registerLazySingleton<GetUserDataSource>(() => GetUserLocalDataSourceImp(getIt()));
+    getIt.registerLazySingleton<LoginDataSource>(() => LoginRemoteDataSourceImp(getIt(), getIt()));
     getIt.registerLazySingleton<SaveExcludeConfirmationDataSource>(
       () => SaveExcludeConfirmationLocalDataSourceImp(getIt()),
     );
-    getIt.registerLazySingleton<SaveResultDataSource>(
-      () => SaveResultRemoteDataSourceImp(getIt()),
-    );
-    getIt.registerLazySingleton<SaveThemeModeDataSource>(
-      () => SaveThemeModeLocalDataSourceImp(getIt()),
-    );
+    getIt.registerLazySingleton<SaveResultDataSource>(() => SaveResultRemoteDataSourceImp(getIt()));
+    getIt.registerLazySingleton<SaveThemeModeDataSource>(() => SaveThemeModeLocalDataSourceImp(getIt()));
   }
 }

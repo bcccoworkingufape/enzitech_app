@@ -10,9 +10,6 @@ extension ExperimentCalculationDto on ExperimentCalculationEntity {
   }
 
   Map toJson() {
-    return {
-      'results': results,
-      'average': average,
-    };
+    return {'results': results, 'average': average};
   }
 }

@@ -20,18 +20,9 @@ class LoginRemoteDataSourceImp implements LoginDataSource {
   LoginRemoteDataSourceImp(this._httpService, this._userPreferencesServices);
 
   @override
-  Future<Either<Failure, UserEntity>> call({
-    required String email,
-    required String password,
-  }) async {
+  Future<Either<Failure, UserEntity>> call({required String email, required String password}) async {
     try {
-      var response = await _httpService.post(
-        API.REQUEST_LOGIN,
-        data: {
-          'email': email,
-          'password': password,
-        },
-      );
+      var response = await _httpService.post(API.REQUEST_LOGIN, data: {'email': email, 'password': password});
       var result = UserDto.fromJson(response.data);
 
       await _userPreferencesServices.saveFullUser(jsonEncode(response.data));

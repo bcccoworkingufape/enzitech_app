@@ -22,10 +22,7 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
   final GetResultUseCase _getExperimentResultsUseCase;
   final ExperimentDetailsViewmodel _experimentDetailsViewmodel;
 
-  ExperimentResultsViewmodel(
-    this._getExperimentResultsUseCase,
-    this._experimentDetailsViewmodel,
-  );
+  ExperimentResultsViewmodel(this._getExperimentResultsUseCase, this._experimentDetailsViewmodel);
 
   StateEnum _state = StateEnum.idle;
   StateEnum get state => _state;
@@ -86,15 +83,7 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
           TextCellValue(''),
         ], rowIndex);
         for (var i = 0; i < 12; i++) {
-          sheet
-                  .cell(
-                    CellIndex.indexByColumnRow(
-                      columnIndex: i,
-                      rowIndex: rowIndex,
-                    ),
-                  )
-                  .cellStyle =
-              colorTreatment;
+          sheet.cell(CellIndex.indexByColumnRow(columnIndex: i, rowIndex: rowIndex)).cellStyle = colorTreatment;
         }
 
         rowIndex++;
@@ -115,15 +104,7 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
         ], rowIndex);
 
         for (var i = 0; i < 12; i++) {
-          sheet
-                  .cell(
-                    CellIndex.indexByColumnRow(
-                      columnIndex: i,
-                      rowIndex: rowIndex,
-                    ),
-                  )
-                  .cellStyle =
-              colorHeader;
+          sheet.cell(CellIndex.indexByColumnRow(columnIndex: i, rowIndex: rowIndex)).cellStyle = colorHeader;
         }
 
         rowIndex++;
@@ -154,9 +135,7 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
           TextCellValue('ENZITECH'),
           TextCellValue(''),
           TextCellValue(translations['excel_footer_learnMore']!),
-          TextCellValue(
-            'http://bcccoworking.ufape.edu.br/show.project?idProject=6',
-          ),
+          TextCellValue('http://bcccoworking.ufape.edu.br/show.project?idProject=6'),
           TextCellValue(''),
           TextCellValue(''),
           TextCellValue(''),
@@ -166,15 +145,7 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
           TextCellValue(''),
         ], rowIndex);
         for (var i = 0; i < 12; i++) {
-          sheet
-                  .cell(
-                    CellIndex.indexByColumnRow(
-                      columnIndex: i,
-                      rowIndex: rowIndex,
-                    ),
-                  )
-                  .cellStyle =
-              colorBottom;
+          sheet.cell(CellIndex.indexByColumnRow(columnIndex: i, rowIndex: rowIndex)).cellStyle = colorBottom;
         }
       }
       rowIndex = 0;
@@ -188,8 +159,7 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
   Future<File> saveFileToTemporaryDirectory(Map<String, String> translations) async {
     final excel = await exportToExcel(translations);
     final dir = await getTemporaryDirectory();
-    var filename =
-        '${dir.path}/${_experimentDetailsViewmodel.experiment!.name.replaceAll(' ', '-')}.xlsx';
+    var filename = '${dir.path}/${_experimentDetailsViewmodel.experiment!.name.replaceAll(' ', '-')}.xlsx';
     final file = File(filename);
     await file.writeAsBytes(excel.encode()!);
 
@@ -205,16 +175,7 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
 
   Future<bool> shareFile(Map<String, String> translations, String translatedFilename) async {
     final file = await saveFileToTemporaryDirectory(translations);
-    await SharePlus.instance.share(
-      ShareParams(
-        files: [
-          XFile(
-            file.path,
-            name: translatedFilename,
-          ),
-        ],
-      ),
-    );
+    await SharePlus.instance.share(ShareParams(files: [XFile(file.path, name: translatedFilename)]));
 
     return true;
   }

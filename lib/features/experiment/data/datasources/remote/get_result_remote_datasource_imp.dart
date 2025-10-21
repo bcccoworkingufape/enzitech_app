@@ -14,13 +14,9 @@ class GetResultRemoteDataSourceImp implements GetResultDataSource {
   GetResultRemoteDataSourceImp(this._httpService);
 
   @override
-  Future<Either<Failure, ExperimentResultEntity>> call({
-    required String experimentId,
-  }) async {
+  Future<Either<Failure, ExperimentResultEntity>> call({required String experimentId}) async {
     try {
-      var response = await _httpService.get(
-        API.REQUEST_GET_RESULT_EXPERIMENTS(experimentId),
-      );
+      var response = await _httpService.get(API.REQUEST_GET_RESULT_EXPERIMENTS(experimentId));
 
       var result = ExperimentResultDto.fromJson(response.data);
 

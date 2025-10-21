@@ -2,14 +2,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../../../../../l10n/app_localizations.dart';
+import '../../../../../../../shared/l10n/app_localizations.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
 // 🌎 Project imports:
 import '../../../../../../../core/enums/state_enum.dart';
-import '../../../../../../../shared/extensions/context_theme_mode_extensions.dart';
+import '../../../../../../../shared/extensions/build_context_extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../../../../../shared/utils/utils.dart';
 import '../../../../../../../shared/validator/validator.dart';
@@ -19,31 +19,21 @@ import '../../../../viewmodel/experiment_details_viewmodel.dart';
 import '../create_experiment_fragment_template.dart';
 
 class CreateExperimentFourthStepPage extends StatefulWidget {
-  const CreateExperimentFourthStepPage({
-    super.key,
-  });
+  const CreateExperimentFourthStepPage({super.key});
 
   @override
-  State<CreateExperimentFourthStepPage> createState() =>
-      _CreateExperimentFourthStepPageState();
+  State<CreateExperimentFourthStepPage> createState() => _CreateExperimentFourthStepPageState();
 }
 
-class _CreateExperimentFourthStepPageState
-    extends State<CreateExperimentFourthStepPage> {
+class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthStepPage> {
   late final CreateExperimentViewmodel _createExperimentViewmodel;
 
   Map<String, TextEditingController> textEditingControllers = {};
 
   final validations = <ValidateRule>[
-    ValidateRule(
-      ValidateTypes.required,
-    ),
-    ValidateRule(
-      ValidateTypes.numeric,
-    ),
-    ValidateRule(
-      ValidateTypes.greaterThanZeroDecimal,
-    ),
+    ValidateRule(ValidateTypes.required),
+    ValidateRule(ValidateTypes.numeric),
+    ValidateRule(ValidateTypes.greaterThanZeroDecimal),
   ];
 
   @override
@@ -51,164 +41,120 @@ class _CreateExperimentFourthStepPageState
     super.initState();
     _createExperimentViewmodel = GetIt.I.get<CreateExperimentViewmodel>();
 
-    Future.delayed(const Duration(milliseconds: 0)).whenComplete(
-      () {
-        if (mounted) {
-          final l10n = AppLocalizations.of(context)!;
-          _createExperimentViewmodel.setStepPage(0, notify: false);
+    Future.delayed(const Duration(milliseconds: 0)).whenComplete(() {
+      if (mounted) {
+        final l10n = AppLocalizations.of(context)!;
+        _createExperimentViewmodel.setStepPage(0, notify: false);
 
-          final fieldValidator = FieldValidator(validations, context);
-          final durationFieldValidator = FieldValidator([
-            ...validations,
-            ValidateRule(
-              ValidateTypes.isInteger,
-            )
-          ], context);
+        final fieldValidator = FieldValidator(validations, context);
+        final durationFieldValidator = FieldValidator([...validations, ValidateRule(ValidateTypes.isInteger)], context);
 
-          setState(
-            () {
-              textEditingControllers.clear();
-              _createExperimentViewmodel.textFields.clear();
+        setState(() {
+          textEditingControllers.clear();
+          _createExperimentViewmodel.textFields.clear();
 
-              for (var enzyme
-                  in _createExperimentViewmodel.temporaryExperiment.enzymes!) {
-                TextEditingController aFieldController =
-                    TextEditingController(text: '');
-                textEditingControllers.putIfAbsent(
-                  'aVariable-${enzyme.id}',
-                  () => aFieldController,
-                );
-                _createExperimentViewmodel.textFields
-                    .putIfAbsent('aVariable-${enzyme.id}', () {
-                  aFieldController.text = enzyme.variableA.toString();
-                  return EZTTextField(
-                    eztTextFieldType: EZTTextFieldType.underline,
-                    labelText: l10n.variableA,
-                    usePrimaryColorOnFocusedBorder: true,
-                    keyboardType:
-                        const TextInputType.numberWithOptions(decimal: true),
-                    controller: aFieldController,
-                    enabled: false,
-                    onChanged: (value) => _validateFields,
-                    fieldValidator: fieldValidator,
-                    inputFormatters: Constants.enzymeDecimalInputFormatters,
-                  );
-                });
+          for (var enzyme in _createExperimentViewmodel.temporaryExperiment.enzymes!) {
+            TextEditingController aFieldController = TextEditingController(text: '');
+            textEditingControllers.putIfAbsent('aVariable-${enzyme.id}', () => aFieldController);
+            _createExperimentViewmodel.textFields.putIfAbsent('aVariable-${enzyme.id}', () {
+              aFieldController.text = enzyme.variableA.toString();
+              return EZTTextField(
+                eztTextFieldType: EZTTextFieldType.underline,
+                labelText: l10n.variableA,
+                usePrimaryColorOnFocusedBorder: true,
+                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                controller: aFieldController,
+                enabled: false,
+                onChanged: (value) => _validateFields,
+                fieldValidator: fieldValidator,
+                inputFormatters: Constants.enzymeDecimalInputFormatters,
+              );
+            });
 
-                TextEditingController bFieldController =
-                    TextEditingController(text: '');
-                textEditingControllers.putIfAbsent(
-                  'bVariable-${enzyme.id}',
-                  () => bFieldController,
-                );
-                _createExperimentViewmodel.textFields.putIfAbsent(
-                  'bVariable-${enzyme.id}',
-                  () {
-                    bFieldController.text = enzyme.variableB.toString();
-                    return EZTTextField(
-                      eztTextFieldType: EZTTextFieldType.underline,
-                      labelText: l10n.variableB,
-                      usePrimaryColorOnFocusedBorder: true,
-                      keyboardType:
-                          const TextInputType.numberWithOptions(decimal: true),
-                      controller: bFieldController,
-                      enabled: false,
-                      onChanged: (value) => _validateFields,
-                      fieldValidator: fieldValidator,
-                      inputFormatters: Constants.enzymeDecimalInputFormatters,
-                    );
-                  },
-                );
+            TextEditingController bFieldController = TextEditingController(text: '');
+            textEditingControllers.putIfAbsent('bVariable-${enzyme.id}', () => bFieldController);
+            _createExperimentViewmodel.textFields.putIfAbsent('bVariable-${enzyme.id}', () {
+              bFieldController.text = enzyme.variableB.toString();
+              return EZTTextField(
+                eztTextFieldType: EZTTextFieldType.underline,
+                labelText: l10n.variableB,
+                usePrimaryColorOnFocusedBorder: true,
+                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                controller: bFieldController,
+                enabled: false,
+                onChanged: (value) => _validateFields,
+                fieldValidator: fieldValidator,
+                inputFormatters: Constants.enzymeDecimalInputFormatters,
+              );
+            });
 
-                TextEditingController durationFieldController =
-                    TextEditingController(text: '');
-                textEditingControllers.putIfAbsent(
-                  'duration-${enzyme.id}',
-                  () => durationFieldController,
-                );
-                _createExperimentViewmodel.textFields.putIfAbsent(
-                  'duration-${enzyme.id}',
-                  () => EZTTextField(
-                    eztTextFieldType: EZTTextFieldType.underline,
-                    labelText: l10n.timeHours,
-                    usePrimaryColorOnFocusedBorder: true,
-                    keyboardType:
-                        const TextInputType.numberWithOptions(decimal: false),
-                    controller: durationFieldController,
-                    onChanged: (value) => _validateFields,
-                    fieldValidator: durationFieldValidator,
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  ),
-                );
+            TextEditingController durationFieldController = TextEditingController(text: '');
+            textEditingControllers.putIfAbsent('duration-${enzyme.id}', () => durationFieldController);
+            _createExperimentViewmodel.textFields.putIfAbsent(
+              'duration-${enzyme.id}',
+              () => EZTTextField(
+                eztTextFieldType: EZTTextFieldType.underline,
+                labelText: l10n.timeHours,
+                usePrimaryColorOnFocusedBorder: true,
+                keyboardType: const TextInputType.numberWithOptions(decimal: false),
+                controller: durationFieldController,
+                onChanged: (value) => _validateFields,
+                fieldValidator: durationFieldValidator,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              ),
+            );
 
-                TextEditingController sizeFieldController =
-                    TextEditingController(text: '');
-                textEditingControllers.putIfAbsent(
-                  'size-${enzyme.id}',
-                  () => sizeFieldController,
-                );
-                _createExperimentViewmodel.textFields.putIfAbsent(
-                  'size-${enzyme.id}',
-                  () => EZTTextField(
-                    eztTextFieldType: EZTTextFieldType.underline,
-                    labelText: l10n.solutionVolume,
-                    usePrimaryColorOnFocusedBorder: true,
-                    keyboardType:
-                        const TextInputType.numberWithOptions(decimal: true),
-                    controller: sizeFieldController,
-                    onChanged: (value) => _validateFields,
-                    fieldValidator: fieldValidator,
-                    inputFormatters: Constants.enzymeDecimalInputFormatters,
-                  ),
-                );
+            TextEditingController sizeFieldController = TextEditingController(text: '');
+            textEditingControllers.putIfAbsent('size-${enzyme.id}', () => sizeFieldController);
+            _createExperimentViewmodel.textFields.putIfAbsent(
+              'size-${enzyme.id}',
+              () => EZTTextField(
+                eztTextFieldType: EZTTextFieldType.underline,
+                labelText: l10n.solutionVolume,
+                usePrimaryColorOnFocusedBorder: true,
+                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                controller: sizeFieldController,
+                onChanged: (value) => _validateFields,
+                fieldValidator: fieldValidator,
+                inputFormatters: Constants.enzymeDecimalInputFormatters,
+              ),
+            );
 
-                TextEditingController weightSampleFieldController =
-                    TextEditingController(text: '');
-                textEditingControllers.putIfAbsent(
-                  'weightSample-${enzyme.id}',
-                  () => weightSampleFieldController,
-                );
-                _createExperimentViewmodel.textFields.putIfAbsent(
-                  'weightSample-${enzyme.id}',
-                  () => EZTTextField(
-                    eztTextFieldType: EZTTextFieldType.underline,
-                    labelText: l10n.sampleWeightGrams,
-                    usePrimaryColorOnFocusedBorder: true,
-                    keyboardType:
-                        const TextInputType.numberWithOptions(decimal: true),
-                    controller: weightSampleFieldController,
-                    onChanged: (value) => _validateFields,
-                    fieldValidator: fieldValidator,
-                    inputFormatters: Constants.enzymeDecimalInputFormatters,
-                  ),
-                );
+            TextEditingController weightSampleFieldController = TextEditingController(text: '');
+            textEditingControllers.putIfAbsent('weightSample-${enzyme.id}', () => weightSampleFieldController);
+            _createExperimentViewmodel.textFields.putIfAbsent(
+              'weightSample-${enzyme.id}',
+              () => EZTTextField(
+                eztTextFieldType: EZTTextFieldType.underline,
+                labelText: l10n.sampleWeightGrams,
+                usePrimaryColorOnFocusedBorder: true,
+                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                controller: weightSampleFieldController,
+                onChanged: (value) => _validateFields,
+                fieldValidator: fieldValidator,
+                inputFormatters: Constants.enzymeDecimalInputFormatters,
+              ),
+            );
 
-                TextEditingController weightGroundFieldController =
-                    TextEditingController(text: '');
-                textEditingControllers.putIfAbsent(
-                  'weightGround-${enzyme.id}',
-                  () => weightGroundFieldController,
-                );
-                _createExperimentViewmodel.textFields.putIfAbsent(
-                  'weightGround-${enzyme.id}',
-                  () => EZTTextField(
-                    eztTextFieldType: EZTTextFieldType.underline,
-                    labelText: l10n.correctionFactor,
-                    usePrimaryColorOnFocusedBorder: true,
-                    keyboardType:
-                        const TextInputType.numberWithOptions(decimal: true),
-                    controller: weightGroundFieldController,
-                    onChanged: (value) => _validateFields,
-                    fieldValidator: fieldValidator,
-                    inputFormatters: Constants.enzymeDecimalInputFormatters,
-                  ),
-                );
-              }
-            },
-          );
-        }
-      },
-    );
+            TextEditingController weightGroundFieldController = TextEditingController(text: '');
+            textEditingControllers.putIfAbsent('weightGround-${enzyme.id}', () => weightGroundFieldController);
+            _createExperimentViewmodel.textFields.putIfAbsent(
+              'weightGround-${enzyme.id}',
+              () => EZTTextField(
+                eztTextFieldType: EZTTextFieldType.underline,
+                labelText: l10n.correctionFactor,
+                usePrimaryColorOnFocusedBorder: true,
+                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                controller: weightGroundFieldController,
+                onChanged: (value) => _validateFields,
+                fieldValidator: fieldValidator,
+                inputFormatters: Constants.enzymeDecimalInputFormatters,
+              ),
+            );
+          }
+        });
+      }
+    });
   }
 
   get _validateFields {
@@ -247,17 +193,15 @@ class _CreateExperimentFourthStepPageState
   }
 
   bool _isEnzymeStillEmpty(String enzymeId) {
-    Map<String, EZTTextField> filteredMap =
-        Map.from(_createExperimentViewmodel.textFields)
-          ..removeWhere((k, v) => !k.toString().contains(enzymeId));
+    Map<String, EZTTextField> filteredMap = Map.from(_createExperimentViewmodel.textFields)
+      ..removeWhere((k, v) => !k.toString().contains(enzymeId));
 
     var listOfAllTextsOfEnzymes = [];
     filteredMap.forEach((k, v) {
       listOfAllTextsOfEnzymes.add(v.controller!.text);
     });
 
-    if (listOfAllTextsOfEnzymes.isNotEmpty &&
-        listOfAllTextsOfEnzymes.sublist(2).any((element) => element.isEmpty)) {
+    if (listOfAllTextsOfEnzymes.isNotEmpty && listOfAllTextsOfEnzymes.sublist(2).any((element) => element.isEmpty)) {
       return true;
     }
 
@@ -265,9 +209,8 @@ class _CreateExperimentFourthStepPageState
   }
 
   bool _isEnzymeCorrectlyFilled(String enzymeId) {
-    Map<String, EZTTextField> filteredMap =
-        Map.from(_createExperimentViewmodel.textFields)
-          ..removeWhere((k, v) => !k.toString().contains(enzymeId));
+    Map<String, EZTTextField> filteredMap = Map.from(_createExperimentViewmodel.textFields)
+      ..removeWhere((k, v) => !k.toString().contains(enzymeId));
 
     var listOfBools = [];
     var listOfBoolsIfAllIsEmpty = [];
@@ -279,15 +222,11 @@ class _CreateExperimentFourthStepPageState
       listOfAllTextsOfEnzymes.add(v.controller!.text);
     });
 
-    if (listOfAllTextsOfEnzymes.isNotEmpty &&
-        listOfAllTextsOfEnzymes.sublist(2).any((element) => element.isEmpty)) {
+    if (listOfAllTextsOfEnzymes.isNotEmpty && listOfAllTextsOfEnzymes.sublist(2).any((element) => element.isEmpty)) {
       return true;
     }
 
-    if (listOfBoolsIfAllIsEmpty.isNotEmpty &&
-        listOfBoolsIfAllIsEmpty
-            .sublist(2)
-            .every((element) => element == true)) {
+    if (listOfBoolsIfAllIsEmpty.isNotEmpty && listOfBoolsIfAllIsEmpty.sublist(2).every((element) => element == true)) {
       return true;
     }
 
@@ -296,8 +235,7 @@ class _CreateExperimentFourthStepPageState
 
   StepState _leadWithStepState(EnzymeEntity enzyme) {
     if (_createExperimentViewmodel.stepPage ==
-        _createExperimentViewmodel.temporaryExperiment.enzymes!
-            .indexOf(enzyme)) {
+        _createExperimentViewmodel.temporaryExperiment.enzymes!.indexOf(enzyme)) {
       return StepState.editing;
     } else if (_isEnzymeStillEmpty(enzyme.id)) {
       return StepState.indexed;
@@ -313,54 +251,30 @@ class _CreateExperimentFourthStepPageState
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          l10n.curveInformation,
-          style: TextStyles.detailBold,
-        ),
+        Text(l10n.curveInformation, style: TextStyles.detailBold),
         Row(
           children: [
-            Expanded(
-                child: _createExperimentViewmodel
-                        .textFields["aVariable-${enzyme.id}"] ??
-                    Container()),
+            Expanded(child: _createExperimentViewmodel.textFields["aVariable-${enzyme.id}"] ?? Container()),
             const SizedBox(width: 10),
-            Expanded(
-                child: _createExperimentViewmodel
-                        .textFields["bVariable-${enzyme.id}"] ??
-                    Container()),
+            Expanded(child: _createExperimentViewmodel.textFields["bVariable-${enzyme.id}"] ?? Container()),
           ],
         ),
         const SizedBox(height: 40),
-        Text(
-          l10n.otherVariables,
-          style: TextStyles.detailBold,
-        ),
+        Text(l10n.otherVariables, style: TextStyles.detailBold),
         const SizedBox(height: 10),
         Row(
           children: [
-            Expanded(
-                child: _createExperimentViewmodel
-                        .textFields["duration-${enzyme.id}"] ??
-                    Container()),
+            Expanded(child: _createExperimentViewmodel.textFields["duration-${enzyme.id}"] ?? Container()),
             const SizedBox(width: 10),
-            Expanded(
-                child: _createExperimentViewmodel
-                        .textFields["size-${enzyme.id}"] ??
-                    Container()),
+            Expanded(child: _createExperimentViewmodel.textFields["size-${enzyme.id}"] ?? Container()),
           ],
         ),
         const SizedBox(height: 10),
         Row(
           children: [
-            Expanded(
-                child: _createExperimentViewmodel
-                        .textFields["weightSample-${enzyme.id}"] ??
-                    Container()),
+            Expanded(child: _createExperimentViewmodel.textFields["weightSample-${enzyme.id}"] ?? Container()),
             const SizedBox(width: 10),
-            Expanded(
-                child: _createExperimentViewmodel
-                        .textFields["weightGround-${enzyme.id}"] ??
-                    Container()),
+            Expanded(child: _createExperimentViewmodel.textFields["weightGround-${enzyme.id}"] ?? Container()),
           ],
         ),
       ],
@@ -383,10 +297,9 @@ class _CreateExperimentFourthStepPageState
                 if (mounted) {
                   await _createExperimentViewmodel.createExperiment();
 
-                  GetIt.I
-                      .get<ExperimentDetailsViewmodel>()
-                      .getExperimentDetails(
-                          _createExperimentViewmodel.experiment!.id);
+                  GetIt.I.get<ExperimentDetailsViewmodel>().getExperimentDetails(
+                    _createExperimentViewmodel.experiment!.id,
+                  );
                 }
 
                 return;
@@ -420,30 +333,22 @@ class _CreateExperimentFourthStepPageState
           titleOfStepIndicator: l10n.registerNewExperiment,
           messageOfStepIndicator: l10n.stepIndicatorFillVariables(4, 4),
           body: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(
-              parent: BouncingScrollPhysics(),
-            ),
+            physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
             child: Column(
               children: [
                 Stepper(
                   physics: const ClampingScrollPhysics(),
                   currentStep: _createExperimentViewmodel.stepPage,
-                  controlsBuilder:
-                      (BuildContext context, ControlsDetails details) {
+                  controlsBuilder: (BuildContext context, ControlsDetails details) {
                     return Row(
                       children: <Widget>[
                         if (_createExperimentViewmodel.stepPage <
-                            _createExperimentViewmodel
-                                    .temporaryExperiment.enzymes!.length -
-                                1)
+                            _createExperimentViewmodel.temporaryExperiment.enzymes!.length - 1)
                           TextButton(
                             onPressed: () {
                               if (_createExperimentViewmodel.stepPage <
-                                  _createExperimentViewmodel
-                                          .temporaryExperiment.enzymes!.length -
-                                      1) {
-                                _createExperimentViewmodel.setStepPage(
-                                    _createExperimentViewmodel.stepPage + 1);
+                                  _createExperimentViewmodel.temporaryExperiment.enzymes!.length - 1) {
+                                _createExperimentViewmodel.setStepPage(_createExperimentViewmodel.stepPage + 1);
                               }
                             },
                             child: Text(l10n.nextButton),
@@ -452,8 +357,7 @@ class _CreateExperimentFourthStepPageState
                           TextButton(
                             onPressed: () {
                               if (_createExperimentViewmodel.stepPage > 0) {
-                                _createExperimentViewmodel.setStepPage(
-                                    _createExperimentViewmodel.stepPage - 1);
+                                _createExperimentViewmodel.setStepPage(_createExperimentViewmodel.stepPage - 1);
                               }
                             },
                             child: Text(l10n.backButton),
@@ -465,36 +369,26 @@ class _CreateExperimentFourthStepPageState
                     _createExperimentViewmodel.setStepPage(index);
                   },
                   type: StepperType.vertical,
-                  steps: _createExperimentViewmodel.temporaryExperiment.enzymes!
-                      .map(
-                    (enzyme) {
-                      return Step(
-                        state: _leadWithStepState(enzyme),
-                        title: _isEnzymeCorrectlyFilled(enzyme.id)
-                            ? Text(enzyme.name)
-                            : Text(
-                                "⚠  ${enzyme.name}",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: context.getApplyedColorScheme.error,
-                                ),
-                              ),
-                        content: Container(
-                          alignment: Alignment.centerLeft,
-                          child: Visibility(
-                              visible: _createExperimentViewmodel
-                                      .textFields["aVariable-${enzyme.id}"] !=
-                                  null,
-                              child: _textFields(enzyme)),
+                  steps: _createExperimentViewmodel.temporaryExperiment.enzymes!.map((enzyme) {
+                    return Step(
+                      state: _leadWithStepState(enzyme),
+                      title: _isEnzymeCorrectlyFilled(enzyme.id)
+                          ? Text(enzyme.name)
+                          : Text(
+                              "⚠  ${enzyme.name}",
+                              style: TextStyle(fontWeight: FontWeight.bold, color: context.getApplyedColorScheme.error),
+                            ),
+                      content: Container(
+                        alignment: Alignment.centerLeft,
+                        child: Visibility(
+                          visible: _createExperimentViewmodel.textFields["aVariable-${enzyme.id}"] != null,
+                          child: _textFields(enzyme),
                         ),
-                      );
-                    },
-                  ).toList(),
+                      ),
+                    );
+                  }).toList(),
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 64, 16, 32),
-                  child: _buttons,
-                ),
+                Padding(padding: const EdgeInsets.fromLTRB(16, 64, 16, 32), child: _buttons),
               ],
             ),
           ),

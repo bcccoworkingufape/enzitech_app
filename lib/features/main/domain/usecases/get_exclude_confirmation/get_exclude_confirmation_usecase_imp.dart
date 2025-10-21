@@ -6,8 +6,7 @@ import '../../../../../core/failures/failure.dart';
 import '../../repositories/get_exclude_confirmation_repository.dart';
 import 'get_exclude_confirmation_usecase.dart';
 
-class GetExcludeConfirmationUseCaseImp
-    implements GetExcludeConfirmationUseCase {
+class GetExcludeConfirmationUseCaseImp implements GetExcludeConfirmationUseCase {
   final GetExcludeConfirmationRepository _getExcludeConfirmationRepository;
 
   GetExcludeConfirmationUseCaseImp(this._getExcludeConfirmationRepository);

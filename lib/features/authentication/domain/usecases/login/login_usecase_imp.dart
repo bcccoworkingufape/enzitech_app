@@ -13,10 +13,7 @@ class LoginUseCaseImp implements LoginUseCase {
   LoginUseCaseImp(this._loginRepository);
 
   @override
-  Future<Either<Failure, UserEntity>> call({
-    required String email,
-    required String password,
-  }) async {
+  Future<Either<Failure, UserEntity>> call({required String email, required String password}) async {
     return await _loginRepository.call(email: email, password: password);
   }
 }

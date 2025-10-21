@@ -10,8 +10,7 @@ class EZTBlink extends StatefulWidget {
   State<EZTBlink> createState() => _EZTBlinkState();
 }
 
-class _EZTBlinkState extends State<EZTBlink>
-    with SingleTickerProviderStateMixin {
+class _EZTBlinkState extends State<EZTBlink> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   int _currentWidget = 0;
 
@@ -20,7 +19,9 @@ class _EZTBlinkState extends State<EZTBlink>
     super.initState();
 
     _controller = AnimationController(
-        duration: Duration(milliseconds: widget.interval), vsync: this);
+      duration: Duration(milliseconds: widget.interval),
+      vsync: this,
+    );
 
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
@@ -45,8 +46,6 @@ class _EZTBlinkState extends State<EZTBlink>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: widget.children[_currentWidget],
-    );
+    return Container(child: widget.children[_currentWidget]);
   }
 }

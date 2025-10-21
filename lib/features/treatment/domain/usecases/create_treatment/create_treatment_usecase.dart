@@ -5,8 +5,5 @@ import 'package:dartz/dartz.dart';
 import '../../../../../core/failures/failures.dart';
 
 abstract class CreateTreatmentUseCase {
-  Future<Either<Failure, Unit>> call({
-    required String name,
-    required String description,
-  });
+  Future<Either<Failure, Unit>> call({required String name, required String description});
 }

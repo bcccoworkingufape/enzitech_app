@@ -11,19 +11,15 @@ import '../../../../domain/entities/treatment_entity.dart';
 import '../../../dto/treatment_dto.dart';
 import 'get_treatments_local_datasource_decorator.dart';
 
-class GetTreatmentsDataSourceDecoratorImp
-    extends GetTreatmentsDataSourceDecorator {
+class GetTreatmentsDataSourceDecoratorImp extends GetTreatmentsDataSourceDecorator {
   final KeyValueService _keyValueService;
 
-  GetTreatmentsDataSourceDecoratorImp(
-      super.getTreatmentsDataSource, this._keyValueService);
+  GetTreatmentsDataSourceDecoratorImp(super.getTreatmentsDataSource, this._keyValueService);
 
   @override
   Future<Either<Failure, List<TreatmentEntity>>> call() async {
     return (await super()).fold(
-      (error) async => error is ExpiredTokenOrWrongUserFailure
-          ? Left(error)
-          : await _getInCache(),
+      (error) async => error is ExpiredTokenOrWrongUserFailure ? Left(error) : await _getInCache(),
       (result) {
         _saveInCache(result);
         return Right(result);
@@ -32,25 +28,21 @@ class GetTreatmentsDataSourceDecoratorImp
   }
 
   _saveInCache(List<TreatmentEntity> treatments) async {
-    String json = jsonEncode(
-      treatments.map((i) => i.toJson()).toList(),
-    ).toString();
+    String json = jsonEncode(treatments.map((i) => i.toJson()).toList()).toString();
 
     _keyValueService.setString('treatments_cache', json);
   }
 
   Future<Either<Failure, List<TreatmentEntity>>> _getInCache() async {
     try {
-      var treatmentsJsonString =
-          await _keyValueService.getString('treatments_cache');
+      var treatmentsJsonString = await _keyValueService.getString('treatments_cache');
 
       if (treatmentsJsonString == null) {
         throw NoResultQueryFailure(message: "a listagem de tratamentos");
       }
 
       var json = jsonDecode(treatmentsJsonString);
-      var treatments =
-          (json as List).map((e) => TreatmentDto.fromJson(e)).toList();
+      var treatments = (json as List).map((e) => TreatmentDto.fromJson(e)).toList();
 
       return Right(treatments);
     } catch (e) {

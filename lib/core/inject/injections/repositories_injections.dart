@@ -53,74 +53,30 @@ class RepositoriesInjections {
   final GetIt getIt;
 
   RepositoriesInjections(this.getIt) {
-    getIt.registerLazySingleton<CalculateExperimentRepository>(
-      () => CalculateExperimentRepositoryImp(getIt()),
-    );
-    getIt.registerLazySingleton<ClearUserRepository>(
-      () => ClearUserRepositoryImp(getIt()),
-    );
-    getIt.registerLazySingleton<CreateAccountRepository>(
-      () => CreateAccountRepositoryImp(getIt()),
-    );
-    getIt.registerLazySingleton<CreateEnzymeRepository>(
-      () => CreateEnzymeRepositoryImp(getIt()),
-    );
-    getIt.registerLazySingleton<CreateExperimentRepository>(
-      () => CreateExperimentRepositoryImp(getIt()),
-    );
-    getIt.registerLazySingleton<CreateTreatmentRepository>(
-      () => CreateTreatmentRepositoryImp(getIt()),
-    );
-    getIt.registerLazySingleton<DeleteEnzymeRepository>(
-      () => DeleteEnzymeRepositoryImp(getIt()),
-    );
-    getIt.registerLazySingleton<DeleteTreatmentRepository>(
-      () => DeleteTreatmentRepositoryImp(getIt()),
-    );
-    getIt.registerLazySingleton<DeleteExperimentRepository>(
-      () => DeleteExperimentRepositoryImp(getIt()),
-    );
-    getIt.registerLazySingleton<GetEnzymesRepository>(
-      () => GetEnzymesRepositoryImp(getIt()),
-    );
+    getIt.registerLazySingleton<CalculateExperimentRepository>(() => CalculateExperimentRepositoryImp(getIt()));
+    getIt.registerLazySingleton<ClearUserRepository>(() => ClearUserRepositoryImp(getIt()));
+    getIt.registerLazySingleton<CreateAccountRepository>(() => CreateAccountRepositoryImp(getIt()));
+    getIt.registerLazySingleton<CreateEnzymeRepository>(() => CreateEnzymeRepositoryImp(getIt()));
+    getIt.registerLazySingleton<CreateExperimentRepository>(() => CreateExperimentRepositoryImp(getIt()));
+    getIt.registerLazySingleton<CreateTreatmentRepository>(() => CreateTreatmentRepositoryImp(getIt()));
+    getIt.registerLazySingleton<DeleteEnzymeRepository>(() => DeleteEnzymeRepositoryImp(getIt()));
+    getIt.registerLazySingleton<DeleteTreatmentRepository>(() => DeleteTreatmentRepositoryImp(getIt()));
+    getIt.registerLazySingleton<DeleteExperimentRepository>(() => DeleteExperimentRepositoryImp(getIt()));
+    getIt.registerLazySingleton<GetEnzymesRepository>(() => GetEnzymesRepositoryImp(getIt()));
     getIt.registerLazySingleton<GetEnzymesRemainingInExperimentRepository>(
       () => GetEnzymesRemainingInExperimentRepositoryImp(getIt()),
     );
-    getIt.registerLazySingleton<GetExcludeConfirmationRepository>(
-      () => GetExcludeConfirmationRepositoryImp(getIt()),
-    );
-    getIt.registerLazySingleton<GetExperimentByIdRepository>(
-      () => GetExperimentByIdRepositoryImp(getIt()),
-    );
-    getIt.registerLazySingleton<GetExperimentsRepository>(
-      () => GetExperimentsRepositoryImp(getIt()),
-    );
-    getIt.registerLazySingleton<GetResultRepository>(
-      () => GetResultRepositoryImp(getIt()),
-    );
-    getIt.registerLazySingleton<GetThemeModeRepository>(
-      () => GetThemeModeRepositoryImp(getIt()),
-    );
-    getIt.registerLazySingleton<GetTreatmentsRepository>(
-      () => GetTreatmentsRepositoryImp(getIt()),
-    );
-    getIt.registerLazySingleton<GetUserRepository>(
-      () => GetUserRepositoryImp(getIt()),
-    );
-    getIt.registerLazySingleton<LoginRepository>(
-      () => LoginRepositoryImp(getIt()),
-    );
-    getIt.registerLazySingleton<SaveExcludeConfirmationRepository>(
-      () => SaveExcludeConfirmationRepositoryImp(getIt()),
-    );
-    getIt.registerLazySingleton<SaveResultRepository>(
-      () => SaveResultRepositoryImp(getIt()),
-    );
-    getIt.registerLazySingleton<SaveThemeModeRepository>(
-      () => SaveThemeModeRepositoryImp(getIt()),
-    );
-    getIt.registerLazySingleton<StoreExperimentsInCacheRepository>(
-      () => StoreExperimentsInCacheRepositoryImp(getIt()),
-    );
+    getIt.registerLazySingleton<GetExcludeConfirmationRepository>(() => GetExcludeConfirmationRepositoryImp(getIt()));
+    getIt.registerLazySingleton<GetExperimentByIdRepository>(() => GetExperimentByIdRepositoryImp(getIt()));
+    getIt.registerLazySingleton<GetExperimentsRepository>(() => GetExperimentsRepositoryImp(getIt()));
+    getIt.registerLazySingleton<GetResultRepository>(() => GetResultRepositoryImp(getIt()));
+    getIt.registerLazySingleton<GetThemeModeRepository>(() => GetThemeModeRepositoryImp(getIt()));
+    getIt.registerLazySingleton<GetTreatmentsRepository>(() => GetTreatmentsRepositoryImp(getIt()));
+    getIt.registerLazySingleton<GetUserRepository>(() => GetUserRepositoryImp(getIt()));
+    getIt.registerLazySingleton<LoginRepository>(() => LoginRepositoryImp(getIt()));
+    getIt.registerLazySingleton<SaveExcludeConfirmationRepository>(() => SaveExcludeConfirmationRepositoryImp(getIt()));
+    getIt.registerLazySingleton<SaveResultRepository>(() => SaveResultRepositoryImp(getIt()));
+    getIt.registerLazySingleton<SaveThemeModeRepository>(() => SaveThemeModeRepositoryImp(getIt()));
+    getIt.registerLazySingleton<StoreExperimentsInCacheRepository>(() => StoreExperimentsInCacheRepositoryImp(getIt()));
   }
 }

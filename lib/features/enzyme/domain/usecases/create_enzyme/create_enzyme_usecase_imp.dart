@@ -18,11 +18,6 @@ class CreateEnzymeUseCaseImp implements CreateEnzymeUseCase {
     required double variableB,
     required String type,
   }) async {
-    return await _createEnzymeRepository.call(
-      name: name,
-      variableA: variableA,
-      variableB: variableB,
-      type: type,
-    );
+    return await _createEnzymeRepository.call(name: name, variableA: variableA, variableB: variableB, type: type);
   }
 }

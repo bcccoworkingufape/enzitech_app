@@ -10,9 +10,7 @@ import 'calculate_experiment_usecase.dart';
 class CalculateExperimentUseCaseImp implements CalculateExperimentUseCase {
   final CalculateExperimentRepository _calculateExperimentRepository;
 
-  CalculateExperimentUseCaseImp(
-    this._calculateExperimentRepository,
-  );
+  CalculateExperimentUseCaseImp(this._calculateExperimentRepository);
 
   @override
   Future<Either<Failure, ExperimentCalculationEntity>> call({

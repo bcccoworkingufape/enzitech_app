@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
-import '../../../../../shared/extensions/context_theme_mode_extensions.dart';
+import '../../../../../shared/extensions/build_context_extensions.dart';
 
 class SettingsSection extends StatelessWidget {
   final String title;
@@ -44,23 +44,10 @@ class SettingsTile extends StatelessWidget {
   final Widget? trailing;
   final void Function()? onTap;
 
-  const SettingsTile({
-    super.key,
-    required this.leading,
-    required this.title,
-    this.subtitle,
-    this.trailing,
-    this.onTap,
-  });
+  const SettingsTile({super.key, required this.leading, required this.title, this.subtitle, this.trailing, this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: leading,
-      title: title,
-      subtitle: subtitle,
-      trailing: trailing,
-      onTap: onTap,
-    );
+    return ListTile(leading: leading, title: title, subtitle: subtitle, trailing: trailing, onTap: onTap);
   }
 }

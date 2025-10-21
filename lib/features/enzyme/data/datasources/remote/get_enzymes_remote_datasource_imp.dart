@@ -17,11 +17,7 @@ class GetEnzymesRemoteDataSourceImp implements GetEnzymesDataSource {
   Future<Either<Failure, List<EnzymeEntity>>> call() async {
     try {
       var response = await _httpService.get(API.REQUEST_ENZYMES);
-      var result = (response.data as List)
-          .map(
-            (e) => EnzymeDto.fromJson(e),
-          )
-          .toList();
+      var result = (response.data as List).map((e) => EnzymeDto.fromJson(e)).toList();
       return Right(result);
     } catch (e) {
       return Left(e as Failure);

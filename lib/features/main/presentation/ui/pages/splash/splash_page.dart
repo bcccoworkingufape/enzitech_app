@@ -1,7 +1,7 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-import '../../../../../../l10n/app_localizations.dart';
+import '../../../../../../shared/l10n/app_localizations.dart';
 
 // 📦 Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
@@ -34,71 +34,58 @@ class _SplashPageState extends State<SplashPage> {
     _splashViewmodel = GetIt.I.get<SplashViewmodel>();
 
     if (mounted) {
-      _splashViewmodel.addListener(
-        () async {
+      _splashViewmodel.addListener(() async {
+        final l10n = AppLocalizations.of(context)!;
 
-          final l10n = AppLocalizations.of(context)!;
+        if (_splashViewmodel.state == StateEnum.error && mounted) {
+          EZTSnackBar.clear(context);
+          EZTSnackBar.show(
+            context,
+            HandleFailure.of(l10n, _splashViewmodel.failure!),
+            eztSnackBarType: EZTSnackBarType.error,
+          );
 
-          if (_splashViewmodel.state == StateEnum.error && mounted) {
-            EZTSnackBar.clear(context);
-            EZTSnackBar.show(
-              context,
-              HandleFailure.of(l10n, _splashViewmodel.failure!),
-              eztSnackBarType: EZTSnackBarType.error,
-            );
+          var accountViewmodel = GetIt.I.get<SettingsViewmodel>();
+          if (_splashViewmodel.failure is ExpiredTokenOrWrongUserFailure ||
+              _splashViewmodel.failure is UserNotFoundOrWrongTokenFailure ||
+              _splashViewmodel.failure is SessionNotFoundFailure) {
+            accountViewmodel.logout();
 
-            var accountViewmodel = GetIt.I.get<SettingsViewmodel>();
-            if (_splashViewmodel.failure is ExpiredTokenOrWrongUserFailure ||
-                _splashViewmodel.failure is UserNotFoundOrWrongTokenFailure ||
-                _splashViewmodel.failure is SessionNotFoundFailure) {
-              accountViewmodel.logout();
-
-              if (accountViewmodel.state == StateEnum.success && mounted) {
-                EZTSnackBar.show(
-                  context,
-                  l10n.loginAgain,
-                );
-                await Future.delayed(const Duration(milliseconds: 500));
-                if (mounted) {
-                  Navigator.pushReplacementNamed(context, Routing.login);
-                  GetIt.I.get<HomeViewmodel>().setFragmentIndex(0);
-                }
+            if (accountViewmodel.state == StateEnum.success && mounted) {
+              EZTSnackBar.show(context, l10n.loginAgain);
+              await Future.delayed(const Duration(milliseconds: 500));
+              if (mounted) {
+                Navigator.pushReplacementNamed(context, Routing.login);
+                GetIt.I.get<HomeViewmodel>().setFragmentIndex(0);
               }
             }
           }
+        }
 
-          _checkAuth();
-        },
-      );
+        _checkAuth();
+      });
     }
   }
 
   _checkAuth() async {
-    await Future.delayed(const Duration(seconds: 1)).then(
-      (_) async {
-        String token =
-            await GetIt.I.get<UserPreferencesServices>().getToken() ?? '';
+    await Future.delayed(const Duration(seconds: 1)).then((_) async {
+      String token = await GetIt.I.get<UserPreferencesServices>().getToken() ?? '';
 
-        if (!mounted) return;
+      if (!mounted) return;
 
-        if (token.isEmpty) {
-          Navigator.pushReplacementNamed(context, Routing.login);
-        } else {
-          Navigator.pushReplacementNamed(context, Routing.home);
-        }
-      },
-    );
+      if (token.isEmpty) {
+        Navigator.pushReplacementNamed(context, Routing.login);
+      } else {
+        Navigator.pushReplacementNamed(context, Routing.home);
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: context.getApplyedColorScheme.primary,
-      body: SvgPicture.asset(
-        AppSvgs(context).splash(),
-        fit: BoxFit.contain,
-        alignment: Alignment.center,
-      ),
+      body: SvgPicture.asset(AppSvgs(context).splash(), fit: BoxFit.contain, alignment: Alignment.center),
     );
   }
 }

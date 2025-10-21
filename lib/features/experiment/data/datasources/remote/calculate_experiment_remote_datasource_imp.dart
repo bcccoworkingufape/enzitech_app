@@ -12,8 +12,7 @@ import '../../../domain/entities/experiment_calculation_entity.dart';
 import '../../dto/experiment_calculation_dto.dart';
 import '../calculate_experiment_datasource.dart';
 
-class CalculateExperimentRemoteDataSourceImp
-    implements CalculateExperimentDataSource {
+class CalculateExperimentRemoteDataSourceImp implements CalculateExperimentDataSource {
   final HttpService _httpService;
   CalculateExperimentRemoteDataSourceImp(this._httpService);
 
@@ -31,21 +30,14 @@ class CalculateExperimentRemoteDataSourceImp
         i.remove('_id');
 
         listWithoutIds.add({
-          'sample':
-              i['sample'] is String ? double.parse(i['sample']) : i['sample'],
-          'whiteSample': i['whiteSample'] is String
-              ? double.parse(i['whiteSample'])
-              : i['whiteSample']
+          'sample': i['sample'] is String ? double.parse(i['sample']) : i['sample'],
+          'whiteSample': i['whiteSample'] is String ? double.parse(i['whiteSample']) : i['whiteSample'],
         });
       }
 
       var response = await _httpService.post(
         API.REQUEST_CALCULATE_EXPERIMENTS(experimentId),
-        data: {
-          "enzyme": enzymeId,
-          "process": treatmentID,
-          "experimentData": listWithoutIds,
-        },
+        data: {"enzyme": enzymeId, "process": treatmentID, "experimentData": listWithoutIds},
       );
 
       var result = ExperimentCalculationDto.fromJson(response.data);

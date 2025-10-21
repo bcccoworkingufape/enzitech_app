@@ -10,9 +10,7 @@ import 'get_experiment_by_id_usecase.dart';
 class GetExperimentByIdUseCaseImp implements GetExperimentByIdUseCase {
   final GetExperimentByIdRepository _getExperimentByIdRepository;
 
-  GetExperimentByIdUseCaseImp(
-    this._getExperimentByIdRepository,
-  );
+  GetExperimentByIdUseCaseImp(this._getExperimentByIdRepository);
 
   @override
   Future<Either<Failure, ExperimentEntity>> call(String id) async {

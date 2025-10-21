@@ -53,74 +53,30 @@ class UseCasesInjections {
   final GetIt getIt;
 
   UseCasesInjections(this.getIt) {
-    getIt.registerLazySingleton<CalculateExperimentUseCase>(
-      () => CalculateExperimentUseCaseImp(getIt()),
-    );
-    getIt.registerLazySingleton<ClearUserUseCase>(
-      () => ClearUserUseCaseImp(getIt()),
-    );
-    getIt.registerLazySingleton<CreateAccountUseCase>(
-      () => CreateAccountUseCaseImp(getIt()),
-    );
-    getIt.registerLazySingleton<CreateEnzymeUseCase>(
-      () => CreateEnzymeUseCaseImp(getIt()),
-    );
-    getIt.registerLazySingleton<CreateExperimentUseCase>(
-      () => CreateExperimentUseCaseImp(getIt()),
-    );
-    getIt.registerLazySingleton<CreateTreatmentUseCase>(
-      () => CreateTreatmentUseCaseImp(getIt()),
-    );
-    getIt.registerLazySingleton<DeleteEnzymeUseCase>(
-      () => DeleteEnzymeUseCaseImp(getIt()),
-    );
-    getIt.registerLazySingleton<DeleteTreatmentUseCase>(
-      () => DeleteTreatmentUseCaseImp(getIt()),
-    );
-    getIt.registerLazySingleton<DeleteExperimentUseCase>(
-      () => DeleteExperimentUseCaseImp(getIt()),
-    );
-    getIt.registerLazySingleton<GetEnzymesUseCase>(
-      () => GetEnzymesUseCaseImp(getIt()),
-    );
+    getIt.registerLazySingleton<CalculateExperimentUseCase>(() => CalculateExperimentUseCaseImp(getIt()));
+    getIt.registerLazySingleton<ClearUserUseCase>(() => ClearUserUseCaseImp(getIt()));
+    getIt.registerLazySingleton<CreateAccountUseCase>(() => CreateAccountUseCaseImp(getIt()));
+    getIt.registerLazySingleton<CreateEnzymeUseCase>(() => CreateEnzymeUseCaseImp(getIt()));
+    getIt.registerLazySingleton<CreateExperimentUseCase>(() => CreateExperimentUseCaseImp(getIt()));
+    getIt.registerLazySingleton<CreateTreatmentUseCase>(() => CreateTreatmentUseCaseImp(getIt()));
+    getIt.registerLazySingleton<DeleteEnzymeUseCase>(() => DeleteEnzymeUseCaseImp(getIt()));
+    getIt.registerLazySingleton<DeleteTreatmentUseCase>(() => DeleteTreatmentUseCaseImp(getIt()));
+    getIt.registerLazySingleton<DeleteExperimentUseCase>(() => DeleteExperimentUseCaseImp(getIt()));
+    getIt.registerLazySingleton<GetEnzymesUseCase>(() => GetEnzymesUseCaseImp(getIt()));
     getIt.registerLazySingleton<GetEnzymesRemainingInExperimentUseCase>(
       () => GetEnzymesRemainingInExperimentUseCaseImp(getIt()),
     );
-    getIt.registerLazySingleton<GetExcludeConfirmationUseCase>(
-      () => GetExcludeConfirmationUseCaseImp(getIt()),
-    );
-    getIt.registerLazySingleton<GetExperimentByIdUseCase>(
-      () => GetExperimentByIdUseCaseImp(getIt()),
-    );
-    getIt.registerLazySingleton<GetExperimentsUseCase>(
-      () => GetExperimentsUseCaseImp(getIt()),
-    );
-    getIt.registerLazySingleton<GetResultUseCase>(
-      () => GetResultUseCaseImp(getIt()),
-    );
-    getIt.registerLazySingleton<GetThemeModeUseCase>(
-      () => GetThemeModeUseCaseImp(getIt()),
-    );
-    getIt.registerLazySingleton<GetTreatmentsUseCase>(
-      () => GetTreatmentsUseCaseImp(getIt()),
-    );
-    getIt.registerLazySingleton<GetUserUseCase>(
-      () => GetUserUseCaseImp(getIt()),
-    );
-    getIt.registerLazySingleton<LoginUseCase>(
-      () => LoginUseCaseImp(getIt()),
-    );
-    getIt.registerLazySingleton<SaveExcludeConfirmationUseCase>(
-      () => SaveExcludeConfirmationUseCaseImp(getIt()),
-    );
-    getIt.registerLazySingleton<SaveResultUseCase>(
-      () => SaveResultUseCaseImp(getIt()),
-    );
-    getIt.registerLazySingleton<SaveThemeModeUseCase>(
-      () => SaveThemeModeUseCaseImp(getIt()),
-    );
-    getIt.registerLazySingleton<StoreExperimentsInCacheUseCase>(
-      () => StoreExperimentsInCacheUseCaseImp(getIt()),
-    );
+    getIt.registerLazySingleton<GetExcludeConfirmationUseCase>(() => GetExcludeConfirmationUseCaseImp(getIt()));
+    getIt.registerLazySingleton<GetExperimentByIdUseCase>(() => GetExperimentByIdUseCaseImp(getIt()));
+    getIt.registerLazySingleton<GetExperimentsUseCase>(() => GetExperimentsUseCaseImp(getIt()));
+    getIt.registerLazySingleton<GetResultUseCase>(() => GetResultUseCaseImp(getIt()));
+    getIt.registerLazySingleton<GetThemeModeUseCase>(() => GetThemeModeUseCaseImp(getIt()));
+    getIt.registerLazySingleton<GetTreatmentsUseCase>(() => GetTreatmentsUseCaseImp(getIt()));
+    getIt.registerLazySingleton<GetUserUseCase>(() => GetUserUseCaseImp(getIt()));
+    getIt.registerLazySingleton<LoginUseCase>(() => LoginUseCaseImp(getIt()));
+    getIt.registerLazySingleton<SaveExcludeConfirmationUseCase>(() => SaveExcludeConfirmationUseCaseImp(getIt()));
+    getIt.registerLazySingleton<SaveResultUseCase>(() => SaveResultUseCaseImp(getIt()));
+    getIt.registerLazySingleton<SaveThemeModeUseCase>(() => SaveThemeModeUseCaseImp(getIt()));
+    getIt.registerLazySingleton<StoreExperimentsInCacheUseCase>(() => StoreExperimentsInCacheUseCaseImp(getIt()));
   }
 }

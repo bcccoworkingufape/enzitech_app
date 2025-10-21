@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 // 📦 Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
-import '../../../../../../l10n/app_localizations.dart';
+import '../../../../../../shared/l10n/app_localizations.dart';
 
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
@@ -42,17 +42,12 @@ class LoginPageState extends State<LoginPage> {
         if (_loginViewmodel.state == StateEnum.error) {
           EZTSnackBar.show(
             context,
-            HandleFailure.of(
-              l10n,
-              _loginViewmodel.failure!,
-              isLogin: true,
-            ),
+            HandleFailure.of(l10n, _loginViewmodel.failure!, isLogin: true),
             eztSnackBarType: EZTSnackBarType.error,
           );
         } else if (_loginViewmodel.state == StateEnum.success && mounted) {
           GetIt.I.get<HomeViewmodel>().fetch().then((value) {
-            if (GetIt.I.get<HomeViewmodel>().state == StateEnum.success &&
-                mounted) {
+            if (GetIt.I.get<HomeViewmodel>().state == StateEnum.success && mounted) {
               EZTSnackBar.show(
                 context,
                 l10n.welcomeMessage(_loginViewmodel.loggedName ?? ''), // _loginViewmodel! talvez crashe o app
@@ -68,14 +63,7 @@ class LoginPageState extends State<LoginPage> {
 
   Widget get _emailInput {
     final l10n = AppLocalizations.of(context)!;
-    final validations = <ValidateRule>[
-      ValidateRule(
-        ValidateTypes.required,
-      ),
-      ValidateRule(
-        ValidateTypes.email,
-      ),
-    ];
+    final validations = <ValidateRule>[ValidateRule(ValidateTypes.required), ValidateRule(ValidateTypes.email)];
 
     final fieldValidator = FieldValidator(validations, context);
 
@@ -93,11 +81,7 @@ class LoginPageState extends State<LoginPage> {
 
   Widget get _passwordInput {
     final l10n = AppLocalizations.of(context)!;
-    final validations = <ValidateRule>[
-      ValidateRule(
-        ValidateTypes.required,
-      ),
-    ];
+    final validations = <ValidateRule>[ValidateRule(ValidateTypes.required)];
 
     final fieldValidator = FieldValidator(validations, context);
 
@@ -113,13 +97,7 @@ class LoginPageState extends State<LoginPage> {
   }
 
   Widget get _textFields {
-    return Column(
-      children: [
-        _emailInput,
-        const SizedBox(height: 10),
-        _passwordInput,
-      ],
-    );
+    return Column(children: [_emailInput, const SizedBox(height: 10), _passwordInput]);
   }
 
   @override
@@ -137,10 +115,7 @@ class LoginPageState extends State<LoginPage> {
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 24,
-                      vertical: 32,
-                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -154,29 +129,19 @@ class LoginPageState extends State<LoginPage> {
                             height: MediaQuery.of(context).size.height / 3.33,
                           ),
                         ),
-                        Text(
-                          l10n.helloWelcome,
-                          style: TextStyles.titleHomeRegular,
-                        ),
+                        Text(l10n.helloWelcome, style: TextStyles.titleHomeRegular),
                         _textFields,
                         Visibility(
-                          visible:
-                              false, // TODO: Implementar e remover Visibility
+                          visible: false, // TODO: Implementar e remover Visibility
                           child: Padding(
                             padding: const EdgeInsets.only(top: 16.0),
                             child: Align(
                               alignment: Alignment.centerRight,
                               child: GestureDetector(
                                 onTap: () {
-                                  Navigator.pushNamed(
-                                    context,
-                                    Routing.recoverPassword,
-                                  );
+                                  Navigator.pushNamed(context, Routing.recoverPassword);
                                 },
-                                child: Text(
-                                  l10n.forgotMyPassword,
-                                  style: TextStyles(context).captionBody(),
-                                ),
+                                child: Text(l10n.forgotMyPassword, style: TextStyles(context).captionBody()),
                               ),
                             ),
                           ),
@@ -186,10 +151,7 @@ class LoginPageState extends State<LoginPage> {
                           alignment: Alignment.center,
                           child: SizedBox(
                             width: MediaQuery.of(context).size.width / 1.75,
-                            child: LoginButton(
-                              formKey: _formKey,
-                              loginViewmodel: _loginViewmodel,
-                            ),
+                            child: LoginButton(formKey: _formKey, loginViewmodel: _loginViewmodel),
                           ),
                         ),
                         const SizedBox(height: 32),
@@ -204,10 +166,7 @@ class LoginPageState extends State<LoginPage> {
                                   style: TextStyles(context).link(),
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () {
-                                      Navigator.pushNamed(
-                                        context,
-                                        Routing.createAccount,
-                                      );
+                                      Navigator.pushNamed(context, Routing.createAccount);
                                     },
                                 ),
                               ],
@@ -216,7 +175,7 @@ class LoginPageState extends State<LoginPage> {
                         ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

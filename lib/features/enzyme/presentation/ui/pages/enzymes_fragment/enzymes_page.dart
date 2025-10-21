@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
-import '../../../../../../l10n/app_localizations.dart';
+import '../../../../../../shared/l10n/app_localizations.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
@@ -12,7 +12,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
-import '../../../../../../shared/extensions/context_theme_mode_extensions.dart';
+import '../../../../../../shared/extensions/build_context_extensions.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../../../main/presentation/viewmodel/settings_viewmodel.dart';
 import '../../../../domain/entities/enzyme_entity.dart';
@@ -21,9 +21,7 @@ import '../../widgets/enzyme_card.dart';
 import '../../widgets/enzymes_summary.dart';
 
 class EnzymesPage extends StatefulWidget {
-  const EnzymesPage({
-    super.key,
-  });
+  const EnzymesPage({super.key});
 
   @override
   State<EnzymesPage> createState() => _EnzymesPageState();
@@ -39,9 +37,7 @@ class _EnzymesPageState extends State<EnzymesPage> {
   Widget getEnzymeCard(EnzymeEntity enzyme) {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
-      child: EnzymeCard(
-        enzyme: enzyme,
-      ),
+      child: EnzymeCard(enzyme: enzyme),
     );
   }
 
@@ -52,17 +48,15 @@ class _EnzymesPageState extends State<EnzymesPage> {
     _enzymesViewmodel = GetIt.I.get<EnzymesViewmodel>();
 
     if (mounted) {
-      _enzymesViewmodel.addListener(
-        () {
-          if (mounted && _enzymesViewmodel.state == StateEnum.error) {
-            EZTSnackBar.show(
-              context,
-              HandleFailure.of(l10n, _enzymesViewmodel.failure!),
-              eztSnackBarType: EZTSnackBarType.error,
-            );
-          }
-        },
-      );
+      _enzymesViewmodel.addListener(() {
+        if (mounted && _enzymesViewmodel.state == StateEnum.error) {
+          EZTSnackBar.show(
+            context,
+            HandleFailure.of(l10n, _enzymesViewmodel.failure!),
+            eztSnackBarType: EZTSnackBarType.error,
+          );
+        }
+      });
     }
   }
 
@@ -74,21 +68,14 @@ class _EnzymesPageState extends State<EnzymesPage> {
 
   Widget _buildEnzymesList(double height) {
     if (_enzymesViewmodel.state == StateEnum.error) {
-      return EZTForcedCenter(
-        child: EZTError(
-          message: l10n?.errorLoadingEnzymes,
-        ),
-      );
+      return EZTForcedCenter(child: EZTError(message: l10n?.errorLoadingEnzymes));
     }
 
     if (_enzymesViewmodel.state == StateEnum.loading) {
-      return EZTProgressIndicator(
-        message: l10n?.loadingEnzymes,
-      );
+      return EZTProgressIndicator(message: l10n?.loadingEnzymes);
     }
 
-    if (_enzymesViewmodel.state == StateEnum.success &&
-        _enzymesViewmodel.enzymes.isEmpty) {
+    if (_enzymesViewmodel.state == StateEnum.success && _enzymesViewmodel.enzymes.isEmpty) {
       return EZTForcedCenter(
         child: EZTNotFound(
           message: _accountViewmodel.user!.userType == UserTypeEnum.admin
@@ -101,9 +88,7 @@ class _EnzymesPageState extends State<EnzymesPage> {
     return ListView.builder(
       controller: _enzymesViewmodel.scrollController,
       shrinkWrap: true,
-      physics: const AlwaysScrollableScrollPhysics(
-        parent: BouncingScrollPhysics(),
-      ),
+      physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
       itemCount: _enzymesViewmodel.enzymes.length,
       itemBuilder: (context, index) {
         var enzyme = _enzymesViewmodel.enzymes[index];
@@ -156,9 +141,7 @@ class _EnzymesPageState extends State<EnzymesPage> {
                         ),
                         Text(
                           l10n?.delete ?? "",
-                          style: TextStyle(
-                            color: context.getApplyedColorScheme.onError,
-                          ),
+                          style: TextStyle(color: context.getApplyedColorScheme.onError),
                           textAlign: TextAlign.right,
                         ),
                       ],
@@ -176,12 +159,11 @@ class _EnzymesPageState extends State<EnzymesPage> {
                               content: Text(l10n?.deleteEnzymeContent ?? ""),
                               actions: [
                                 TextButton(
-                                    onPressed: () =>
-                                        Navigator.of(context).pop(true),
-                                    child: Text(l10n?.deleteButton ?? "")),
+                                  onPressed: () => Navigator.of(context).pop(true),
+                                  child: Text(l10n?.deleteButton ?? ""),
+                                ),
                                 TextButton(
-                                  onPressed: () =>
-                                      Navigator.of(context).pop(false),
+                                  onPressed: () => Navigator.of(context).pop(false),
                                   child: Text(l10n?.cancelButton ?? ""),
                                 ),
                               ],
@@ -192,15 +174,9 @@ class _EnzymesPageState extends State<EnzymesPage> {
                     : null,
                 child: getEnzymeCard(enzyme),
               ),
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: getEnzymeCard(enzyme),
-              ),
+              child: Padding(padding: const EdgeInsets.only(bottom: 8.0), child: getEnzymeCard(enzyme)),
             ),
-            if (index == _enzymesViewmodel.enzymes.length - 1)
-              const Padding(
-                padding: EdgeInsets.only(bottom: 8),
-              )
+            if (index == _enzymesViewmodel.enzymes.length - 1) const Padding(padding: EdgeInsets.only(bottom: 8)),
           ],
         );
       },
@@ -212,43 +188,34 @@ class _EnzymesPageState extends State<EnzymesPage> {
     var heightMQ = MediaQuery.of(context).size.height;
 
     return ListenableBuilder(
-        listenable: _enzymesViewmodel,
-        builder: (context, child) {
-          return EZTPullToRefresh(
-            key: _refreshIndicatorKey,
-            onRefresh: _enzymesViewmodel.fetch,
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
-              child: Column(
-                children: [
-                  if (_enzymesViewmodel.enzymes.isNotEmpty &&
-                      _enzymesViewmodel.state != StateEnum.loading)
-                    Column(
-                      children: [
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        Text(
-                          l10n?.enzymesFound(_enzymesViewmodel.enzymes.length) ?? "",
-                          style: TextStyles(context).link(fontSize: 16),
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        const EnzymesSummary(),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                      ],
-                    ),
-                  Expanded(
-                    child: _buildEnzymesList(heightMQ),
+      listenable: _enzymesViewmodel,
+      builder: (context, child) {
+        return EZTPullToRefresh(
+          key: _refreshIndicatorKey,
+          onRefresh: _enzymesViewmodel.fetch,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
+            child: Column(
+              children: [
+                if (_enzymesViewmodel.enzymes.isNotEmpty && _enzymesViewmodel.state != StateEnum.loading)
+                  Column(
+                    children: [
+                      const SizedBox(height: 8),
+                      Text(
+                        l10n?.enzymesFound(_enzymesViewmodel.enzymes.length) ?? "",
+                        style: TextStyles(context).link(fontSize: 16),
+                      ),
+                      const SizedBox(height: 8),
+                      const EnzymesSummary(),
+                      const SizedBox(height: 8),
+                    ],
                   ),
-                ],
-              ),
+                Expanded(child: _buildEnzymesList(heightMQ)),
+              ],
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 }

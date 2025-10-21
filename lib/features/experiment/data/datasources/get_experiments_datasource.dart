@@ -14,6 +14,5 @@ abstract class GetExperimentsDataSource {
     bool? finished,
   });
 
-  Future<void> saveInCache(
-      ExperimentPaginationEntity experimentPaginationEntity);
+  Future<void> saveInCache(ExperimentPaginationEntity experimentPaginationEntity);
 }

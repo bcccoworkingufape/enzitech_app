@@ -9,9 +9,7 @@ import '../../domain/usecases/create_account/create_account_usecase.dart';
 class CreateAccountViewmodel extends ChangeNotifier {
   final CreateAccountUseCase _createAccountUseCase;
 
-  CreateAccountViewmodel(
-    this._createAccountUseCase,
-  );
+  CreateAccountViewmodel(this._createAccountUseCase);
 
   StateEnum _state = StateEnum.idle;
   StateEnum get state => _state;
@@ -26,18 +24,9 @@ class CreateAccountViewmodel extends ChangeNotifier {
     _failure = failure;
   }
 
-  Future<void> createUser(
-    String name,
-    String institution,
-    String email,
-    String password,
-  ) async {
+  Future<void> createUser(String name, String institution, String email, String password) async {
     setStateEnum(StateEnum.loading);
-    var result = await _createAccountUseCase(
-      name: name.trim(),
-      email: email.trim(),
-      password: password.trim(),
-    );
+    var result = await _createAccountUseCase(name: name.trim(), email: email.trim(), password: password.trim());
 
     result.fold(
       (error) {

@@ -13,7 +13,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import '../../../../../../l10n/app_localizations.dart';
+import '../../../../../../shared/l10n/app_localizations.dart';
 
 // 🌎 Project imports:
 import '../../../../../../core/domain/service/connection_checker/connection_checker.dart';
@@ -40,8 +40,7 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage>
-    with SingleTickerProviderStateMixin {
+class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
   final GlobalKey _scaffold = GlobalKey();
   late final HomeViewmodel _homeViewmodel;
   late final SettingsViewmodel _accountViewmodel;
@@ -77,8 +76,7 @@ class _HomePageState extends State<HomePage>
     _connectionChecker.initialize();
 
     //! Listen for connection change
-    _connectivitySubscription =
-        _connectionChecker.connectionChange.listen((event) {
+    _connectivitySubscription = _connectionChecker.connectionChange.listen((event) {
       _homeViewmodel.setHasInternetConnection(event);
 
       final l10n = AppLocalizations.of(context)!;
@@ -103,53 +101,43 @@ class _HomePageState extends State<HomePage>
       setAllButtonsVisible();
       initFragements();
 
-      _homeViewmodel.addListener(
-        () {
+      _homeViewmodel.addListener(() {
+        final l10n = AppLocalizations.of(context)!;
 
-          final l10n = AppLocalizations.of(context)!;
+        if (_homeViewmodel.state == StateEnum.error) {
+          EZTSnackBar.show(
+            context,
+            HandleFailure.of(l10n, _homeViewmodel.failure!),
+            eztSnackBarType: EZTSnackBarType.error,
+          ).whenComplete(() async {
+            if (_homeViewmodel.failure is ExpiredTokenOrWrongUserFailure ||
+                _homeViewmodel.failure is UserNotFoundOrWrongTokenFailure ||
+                _homeViewmodel.failure is SessionNotFoundFailure) {
+              debugPrint("SAIR :)");
+              _accountViewmodel.logout();
 
-          if (_homeViewmodel.state == StateEnum.error) {
-            EZTSnackBar.show(
-              context,
-              HandleFailure.of(l10n, _homeViewmodel.failure!),
-              eztSnackBarType: EZTSnackBarType.error,
-            ).whenComplete(() async {
-              if (_homeViewmodel.failure is ExpiredTokenOrWrongUserFailure ||
-                  _homeViewmodel.failure is UserNotFoundOrWrongTokenFailure ||
-                  _homeViewmodel.failure is SessionNotFoundFailure) {
-                debugPrint("SAIR :)");
-                _accountViewmodel.logout();
-
-                if (_accountViewmodel.state == StateEnum.success && mounted) {
-                  EZTSnackBar.show(
-                    context,
-                    l10n?.loginAgain ?? "",
-                  );
-                  await Future.delayed(const Duration(milliseconds: 500));
-                  if (mounted) {
-                    Navigator.pushReplacementNamed(context, Routing.login);
-                    _homeViewmodel.setFragmentIndex(0);
-                  }
+              if (_accountViewmodel.state == StateEnum.success && mounted) {
+                EZTSnackBar.show(context, l10n?.loginAgain ?? "");
+                await Future.delayed(const Duration(milliseconds: 500));
+                if (mounted) {
+                  Navigator.pushReplacementNamed(context, Routing.login);
+                  _homeViewmodel.setFragmentIndex(0);
                 }
               }
-            });
-          }
-        },
-      );
+            }
+          });
+        }
+      });
 
       _experimentsViewmodel.scrollController.addListener(() {
-        if (_experimentsViewmodel
-                .scrollController.position.userScrollDirection ==
-            ScrollDirection.reverse) {
+        if (_experimentsViewmodel.scrollController.position.userScrollDirection == ScrollDirection.reverse) {
           if (_isVisibleExperimentButton == true && mounted) {
             setState(() {
               _isVisibleExperimentButton = false;
             });
           }
         }
-        if (_experimentsViewmodel
-                .scrollController.position.userScrollDirection ==
-            ScrollDirection.forward) {
+        if (_experimentsViewmodel.scrollController.position.userScrollDirection == ScrollDirection.forward) {
           if (_isVisibleExperimentButton == false && mounted) {
             setState(() {
               _isVisibleExperimentButton = true;
@@ -159,18 +147,14 @@ class _HomePageState extends State<HomePage>
       });
 
       _treatmentsViewmodel.scrollController.addListener(() {
-        if (_treatmentsViewmodel
-                .scrollController.position.userScrollDirection ==
-            ScrollDirection.reverse) {
+        if (_treatmentsViewmodel.scrollController.position.userScrollDirection == ScrollDirection.reverse) {
           if (_isVisibleTreatmentButton == true && mounted) {
             setState(() {
               _isVisibleTreatmentButton = false;
             });
           }
         }
-        if (_treatmentsViewmodel
-                .scrollController.position.userScrollDirection ==
-            ScrollDirection.forward) {
+        if (_treatmentsViewmodel.scrollController.position.userScrollDirection == ScrollDirection.forward) {
           if (_isVisibleTreatmentButton == false && mounted) {
             setState(() {
               _isVisibleTreatmentButton = true;
@@ -180,16 +164,14 @@ class _HomePageState extends State<HomePage>
       });
 
       _enzymesViewmodel.scrollController.addListener(() {
-        if (_enzymesViewmodel.scrollController.position.userScrollDirection ==
-            ScrollDirection.reverse) {
+        if (_enzymesViewmodel.scrollController.position.userScrollDirection == ScrollDirection.reverse) {
           if (_isVisibleEnzymeButton == true && mounted) {
             setState(() {
               _isVisibleEnzymeButton = false;
             });
           }
         }
-        if (_enzymesViewmodel.scrollController.position.userScrollDirection ==
-            ScrollDirection.forward) {
+        if (_enzymesViewmodel.scrollController.position.userScrollDirection == ScrollDirection.forward) {
           if (_isVisibleEnzymeButton == false && mounted) {
             setState(() {
               _isVisibleEnzymeButton = true;
@@ -229,70 +211,39 @@ class _HomePageState extends State<HomePage>
   }
 
   initFragements() {
-    _fragments = const [
-      ExperimentsPage(),
-      TreatmentsPage(),
-      EnzymesPage(),
-      SettingsPage(),
-    ];
+    _fragments = const [ExperimentsPage(), TreatmentsPage(), EnzymesPage(), SettingsPage()];
   }
 
-  _floatingActionButton(String text, void Function()? onPressed) =>
-      FloatingActionButton.extended(
-        backgroundColor: context.getApplyedColorScheme.secondaryContainer,
-        onPressed: onPressed,
-        label: Text(
-          text,
-          style: TextStyles(context).captionBody(),
-        ),
-        icon: Icon(
-          PhosphorIcons.pencilLine(),
-          color: context.getApplyedColorScheme.onSecondaryContainer,
-        ),
-      );
+  _floatingActionButton(String text, void Function()? onPressed) => FloatingActionButton.extended(
+    backgroundColor: context.getApplyedColorScheme.secondaryContainer,
+    onPressed: onPressed,
+    label: Text(text, style: TextStyles(context).captionBody()),
+    icon: Icon(PhosphorIcons.pencilLine(), color: context.getApplyedColorScheme.onSecondaryContainer),
+  );
 
   Widget? get dealWithFloatingActionButton {
-
     if (_scaffold.currentContext == null) return null;
     final l10n = AppLocalizations.of(_scaffold.currentContext!)!;
 
     if (_homeViewmodel.fragmentIndex == 0 && _isVisibleExperimentButton) {
-      return _floatingActionButton(
-          l10n?.registerExperiment ?? "",
-        () {
-          Navigator.pushNamed(
-            context,
-            Routing.createExperiment,
-          );
-        },
-      );
+      return _floatingActionButton(l10n?.registerExperiment ?? "", () {
+        Navigator.pushNamed(context, Routing.createExperiment);
+      });
     }
 
     if (_homeViewmodel.fragmentIndex == 1 && _isVisibleTreatmentButton) {
-      return _floatingActionButton(
-        l10n?.registerTreatment ?? "",
-        () {
-          Navigator.pushNamed(
-            context,
-            Routing.createTreatment,
-          );
-        },
-      );
+      return _floatingActionButton(l10n?.registerTreatment ?? "", () {
+        Navigator.pushNamed(context, Routing.createTreatment);
+      });
     }
 
     if (_accountViewmodel.user != null) {
       if (_homeViewmodel.fragmentIndex == 2 &&
           _accountViewmodel.user!.userType == UserTypeEnum.admin &&
           _isVisibleEnzymeButton) {
-        return _floatingActionButton(
-          l10n?.registerEnzyme ?? "",
-          () {
-            Navigator.pushNamed(
-              context,
-              Routing.createEnzyme,
-            );
-          },
-        );
+        return _floatingActionButton(l10n?.registerEnzyme ?? "", () {
+          Navigator.pushNamed(context, Routing.createEnzyme);
+        });
       }
 
       return null;
@@ -312,8 +263,6 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    
-
     return ListenableBuilder(
       listenable: _homeViewmodel,
       builder: (context, child) {
@@ -328,16 +277,9 @@ class _HomePageState extends State<HomePage>
                   child: ListenableBuilder(
                     listenable: animationControllerLogo,
                     builder: (_, child) {
-                      return Transform.rotate(
-                        angle: animationControllerLogo.value * 2 * math.pi,
-                        child: child,
-                      );
+                      return Transform.rotate(angle: animationControllerLogo.value * 2 * math.pi, child: child);
                     },
-                    child: SvgPicture.asset(
-                      AppSvgs(context).iconLogo(),
-                      alignment: Alignment.center,
-                      width: 75,
-                    ),
+                    child: SvgPicture.asset(AppSvgs(context).iconLogo(), alignment: Alignment.center, width: 75),
                   ),
                 );
               }
@@ -351,32 +293,22 @@ class _HomePageState extends State<HomePage>
               setAllButtonsVisible();
               int beforeSet = _homeViewmodel.fragmentIndex;
               _homeViewmodel.setFragmentIndex(index);
-              if (index == 0 &&
-                  beforeSet == 0 &&
-                  _experimentsViewmodel.scrollController.hasClients) {
+              if (index == 0 && beforeSet == 0 && _experimentsViewmodel.scrollController.hasClients) {
                 _experimentsViewmodel.scrollController.animateTo(
-                  _experimentsViewmodel
-                          .scrollController.position.minScrollExtent +
+                  _experimentsViewmodel.scrollController.position.minScrollExtent +
                       (kBottomNavigationBarHeight / 10000),
                   duration: const Duration(milliseconds: 1500),
                   curve: Curves.fastOutSlowIn,
                 );
-              } else if (index == 1 &&
-                  beforeSet == 1 &&
-                  _treatmentsViewmodel.scrollController.hasClients) {
+              } else if (index == 1 && beforeSet == 1 && _treatmentsViewmodel.scrollController.hasClients) {
                 _treatmentsViewmodel.scrollController.animateTo(
-                  _treatmentsViewmodel
-                          .scrollController.position.minScrollExtent +
-                      (kBottomNavigationBarHeight / 10000),
+                  _treatmentsViewmodel.scrollController.position.minScrollExtent + (kBottomNavigationBarHeight / 10000),
                   duration: const Duration(milliseconds: 1500),
                   curve: Curves.fastOutSlowIn,
                 );
-              } else if (index == 2 &&
-                  beforeSet == 2 &&
-                  _enzymesViewmodel.scrollController.hasClients) {
+              } else if (index == 2 && beforeSet == 2 && _enzymesViewmodel.scrollController.hasClients) {
                 _enzymesViewmodel.scrollController.animateTo(
-                  _enzymesViewmodel.scrollController.position.minScrollExtent +
-                      (kBottomNavigationBarHeight / 10000),
+                  _enzymesViewmodel.scrollController.position.minScrollExtent + (kBottomNavigationBarHeight / 10000),
                   duration: const Duration(milliseconds: 1500),
                   curve: Curves.fastOutSlowIn,
                 );
@@ -384,22 +316,10 @@ class _HomePageState extends State<HomePage>
             },
             selectedIndex: _homeViewmodel.fragmentIndex,
             destinations: [
-              NavigationDestination(
-                icon: Icon(PhosphorIcons.flask()),
-                  label: l10n?.experiments ?? "",
-              ),
-              NavigationDestination(
-                icon: Icon(PhosphorIcons.testTube()),
-                label: l10n?.treatments ?? "",
-              ),
-              NavigationDestination(
-                icon: Icon(PhosphorIcons.atom()),
-                label: l10n?.enzymes ?? "",
-              ),
-              NavigationDestination(
-                icon: Icon(PhosphorIcons.gear()),
-                label: l10n?.settings ?? "",
-              ),
+              NavigationDestination(icon: Icon(PhosphorIcons.flask()), label: l10n?.experiments ?? ""),
+              NavigationDestination(icon: Icon(PhosphorIcons.testTube()), label: l10n?.treatments ?? ""),
+              NavigationDestination(icon: Icon(PhosphorIcons.atom()), label: l10n?.enzymes ?? ""),
+              NavigationDestination(icon: Icon(PhosphorIcons.gear()), label: l10n?.settings ?? ""),
             ],
           ),
         );

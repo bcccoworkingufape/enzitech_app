@@ -17,17 +17,9 @@ class CoreInjections {
   final GetIt getIt;
 
   CoreInjections(this.httpDriverOptions, this.getIt) {
-    getIt.registerLazySingleton<HttpService>(
-      () => DioHttpServiceImp(httpDriverOptions),
-    );
-    getIt.registerLazySingleton<KeyValueService>(
-      () => SharedPrefsServiceImp(),
-    );
-    getIt.registerLazySingleton<UserPreferencesServices>(
-      () => UserPreferencesServicesImp(getIt()),
-    );
-    getIt.registerLazySingleton<ConnectionChecker>(
-      () => ConnectionCheckerImp(),
-    );
+    getIt.registerLazySingleton<HttpService>(() => DioHttpServiceImp(httpDriverOptions));
+    getIt.registerLazySingleton<KeyValueService>(() => SharedPrefsServiceImp());
+    getIt.registerLazySingleton<UserPreferencesServices>(() => UserPreferencesServicesImp(getIt()));
+    getIt.registerLazySingleton<ConnectionChecker>(() => ConnectionCheckerImp());
   }
 }

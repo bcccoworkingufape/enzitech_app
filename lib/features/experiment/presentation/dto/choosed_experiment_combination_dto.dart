@@ -6,10 +6,7 @@ class ChoosedExperimentCombinationDTO {
   EnzymeEntity? enzyme;
   TreatmentEntity? treatment;
 
-  ChoosedExperimentCombinationDTO({
-    this.enzyme,
-    this.treatment,
-  });
+  ChoosedExperimentCombinationDTO({this.enzyme, this.treatment});
 
   @override
   String toString() {

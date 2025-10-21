@@ -7,8 +7,7 @@ import '../../domain/entities/experiment_calculation_entity.dart';
 import '../../domain/repositories/calculate_experiment_repository.dart';
 import '../datasources/calculate_experiment_datasource.dart';
 
-class CalculateExperimentRepositoryImp
-    implements CalculateExperimentRepository {
+class CalculateExperimentRepositoryImp implements CalculateExperimentRepository {
   final CalculateExperimentDataSource _calculateExperimentDataSource;
 
   CalculateExperimentRepositoryImp(this._calculateExperimentDataSource);

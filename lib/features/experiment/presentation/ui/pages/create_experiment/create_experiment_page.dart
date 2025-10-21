@@ -5,8 +5,7 @@ import 'package:flutter/scheduler.dart';
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
-import '../../../../../../l10n/app_localizations.dart';
-
+import '../../../../../../shared/l10n/app_localizations.dart';
 
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
@@ -21,9 +20,7 @@ import 'fragments/create_experiment_second_step.dart';
 import 'fragments/create_experiment_third_step.dart';
 
 class CreateExperimentPage extends StatefulWidget {
-  const CreateExperimentPage({
-    super.key,
-  });
+  const CreateExperimentPage({super.key});
 
   @override
   State<CreateExperimentPage> createState() => _CreateExperimentPageState();
@@ -38,39 +35,39 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
     _createExperimentViewmodel = GetIt.I.get<CreateExperimentViewmodel>();
 
     if (mounted) {
-      _createExperimentViewmodel.addListener(
-        () {
-          final l10n = AppLocalizations.of(context)!;
-          if (mounted && _createExperimentViewmodel.state == StateEnum.error) {
-            EZTSnackBar.show(
-              context,
-              HandleFailure.of(l10n, _createExperimentViewmodel.failure!),
-              eztSnackBarType: EZTSnackBarType.error,
-            );
-          } else if (_createExperimentViewmodel.state == StateEnum.success &&
-              _createExperimentViewmodel.experiment != null) {
-            if (mounted) {
-              if (!mounted) return;
-              SchedulerBinding.instance.addPostFrameCallback((_) {
-                Navigator.popAndPushNamed(
-                  context,
-                  Routing.experimentDetailed,
-                  arguments: _createExperimentViewmodel.experiment,
-                ).whenComplete(() {
-                  _createExperimentViewmodel.setExperiment(null);
-                  _createExperimentViewmodel.setTemporaryExperiment(
-                    CreateExperimentDTO(),
-                  );
-                }).then((value) => EZTSnackBar.show(
+      _createExperimentViewmodel.addListener(() {
+        final l10n = AppLocalizations.of(context)!;
+        if (mounted && _createExperimentViewmodel.state == StateEnum.error) {
+          EZTSnackBar.show(
+            context,
+            HandleFailure.of(l10n, _createExperimentViewmodel.failure!),
+            eztSnackBarType: EZTSnackBarType.error,
+          );
+        } else if (_createExperimentViewmodel.state == StateEnum.success &&
+            _createExperimentViewmodel.experiment != null) {
+          if (mounted) {
+            if (!mounted) return;
+            SchedulerBinding.instance.addPostFrameCallback((_) {
+              Navigator.popAndPushNamed(
+                    context,
+                    Routing.experimentDetailed,
+                    arguments: _createExperimentViewmodel.experiment,
+                  )
+                  .whenComplete(() {
+                    _createExperimentViewmodel.setExperiment(null);
+                    _createExperimentViewmodel.setTemporaryExperiment(CreateExperimentDTO());
+                  })
+                  .then(
+                    (value) => EZTSnackBar.show(
                       context,
                       l10n.experimentCreatedSuccess,
                       eztSnackBarType: EZTSnackBarType.success,
-                    ));
-              });
-            }
+                    ),
+                  );
+            });
           }
-        },
-      );
+        }
+      });
     }
   }
 

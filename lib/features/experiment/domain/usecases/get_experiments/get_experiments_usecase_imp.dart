@@ -10,9 +10,7 @@ import 'get_experiments_usecase.dart';
 class GetExperimentsUseCaseImp implements GetExperimentsUseCase {
   final GetExperimentsRepository _getExperimentsRepository;
 
-  GetExperimentsUseCaseImp(
-    this._getExperimentsRepository,
-  );
+  GetExperimentsUseCaseImp(this._getExperimentsRepository);
 
   @override
   Future<Either<Failure, ExperimentPaginationEntity>> call(

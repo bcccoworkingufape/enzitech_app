@@ -13,11 +13,7 @@ class GetResultRepositoryImp implements GetResultRepository {
   GetResultRepositoryImp(this._getResultDataSource);
 
   @override
-  Future<Either<Failure, ExperimentResultEntity>> call({
-    required String experimentId,
-  }) async {
-    return await _getResultDataSource(
-      experimentId: experimentId,
-    );
+  Future<Either<Failure, ExperimentResultEntity>> call({required String experimentId}) async {
+    return await _getResultDataSource(experimentId: experimentId);
   }
 }

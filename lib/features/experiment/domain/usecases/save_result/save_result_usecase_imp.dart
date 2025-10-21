@@ -10,9 +10,7 @@ import 'save_result_usecase.dart';
 class SaveResultUseCaseImp implements SaveResultUseCase {
   final SaveResultRepository _saveResultRepository;
 
-  SaveResultUseCaseImp(
-    this._saveResultRepository,
-  );
+  SaveResultUseCaseImp(this._saveResultRepository);
 
   @override
   Future<Either<Failure, ExperimentEntity>> call({

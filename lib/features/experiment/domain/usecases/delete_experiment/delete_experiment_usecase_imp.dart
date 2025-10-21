@@ -9,9 +9,7 @@ import 'delete_experiment_usecase.dart';
 class DeleteExperimentUseCaseImp implements DeleteExperimentUseCase {
   final DeleteExperimentRepository _deleteExperimentRepository;
 
-  DeleteExperimentUseCaseImp(
-    this._deleteExperimentRepository,
-  );
+  DeleteExperimentUseCaseImp(this._deleteExperimentRepository);
 
   @override
   Future<Either<Failure, Unit>> call(String id) async {

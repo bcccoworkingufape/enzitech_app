@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
-import '../../../../../../l10n/app_localizations.dart';
+import '../../../../../../shared/l10n/app_localizations.dart';
 
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
-import '../../../../../../shared/extensions/context_theme_mode_extensions.dart';
+import '../../../../../../shared/extensions/build_context_extensions.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../../../../shared/utils/utils.dart';
 import '../../../../../../shared/validator/validator.dart';
@@ -57,11 +57,7 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
         } else if (_createEnzymeViewmodel.state == StateEnum.success) {
           _enzymesViewmodel.fetch();
 
-          EZTSnackBar.show(
-            context,
-            l10n.enzymeCreatedSuccess,
-            eztSnackBarType: EZTSnackBarType.success,
-          );
+          EZTSnackBar.show(context, l10n.enzymeCreatedSuccess, eztSnackBarType: EZTSnackBarType.success);
 
           if (!mounted) return;
           Navigator.pop(context);
@@ -110,23 +106,14 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
           ),
           const SizedBox(height: 16),
           Center(
-            child: Text(
-              l10n.registerNewEnzyme,
-              style: TextStyles.titleHome,
-              textAlign: TextAlign.center,
-            ),
+            child: Text(l10n.registerNewEnzyme, style: TextStyles.titleHome, textAlign: TextAlign.center),
           ),
           const SizedBox(height: 64),
           Row(
             children: [
-              Icon(
-                PhosphorIcons.flask(),
-              ),
+              Icon(PhosphorIcons.flask()),
               const SizedBox(width: 4),
-              Text(
-                l10n.enzymeIdentification,
-                style: TextStyles.detailBold,
-              ),
+              Text(l10n.enzymeIdentification, style: TextStyles.detailBold),
             ],
           ),
           _textFields,
@@ -152,14 +139,7 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
 
   Widget get _nameInput {
     final l10n = AppLocalizations.of(context)!;
-    final validations = <ValidateRule>[
-      ValidateRule(
-        ValidateTypes.required,
-      ),
-      ValidateRule(
-        ValidateTypes.name,
-      ),
-    ];
+    final validations = <ValidateRule>[ValidateRule(ValidateTypes.required), ValidateRule(ValidateTypes.name)];
 
     final fieldValidator = FieldValidator(validations, context);
 
@@ -176,14 +156,7 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
 
   Widget get _variableAInput {
     final l10n = AppLocalizations.of(context)!;
-    final validations = <ValidateRule>[
-      ValidateRule(
-        ValidateTypes.required,
-      ),
-      ValidateRule(
-        ValidateTypes.numeric,
-      ),
-    ];
+    final validations = <ValidateRule>[ValidateRule(ValidateTypes.required), ValidateRule(ValidateTypes.numeric)];
 
     final fieldValidator = FieldValidator(validations, context);
 
@@ -201,14 +174,7 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
 
   Widget get _variableBInput {
     final l10n = AppLocalizations.of(context)!;
-    final validations = <ValidateRule>[
-      ValidateRule(
-        ValidateTypes.required,
-      ),
-      ValidateRule(
-        ValidateTypes.numeric,
-      ),
-    ];
+    final validations = <ValidateRule>[ValidateRule(ValidateTypes.required), ValidateRule(ValidateTypes.numeric)];
 
     final fieldValidator = FieldValidator(validations, context);
 
@@ -249,15 +215,10 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
       isExpanded: true,
       value: selectedKey,
       hint: Text(l10n.chooseEnzymeType),
-      style: TextStyles.termRegular.copyWith(
-        fontSize: 16,
-        color: context.getApplyedColorScheme.onPrimaryContainer,
-      ),
+      style: TextStyles.termRegular.copyWith(fontSize: 16, color: context.getApplyedColorScheme.onPrimaryContainer),
       icon: null,
       elevation: 16,
-      underline: Container(
-        height: 1.1,
-      ),
+      underline: Container(height: 1.1),
       onChanged: (String? newSelectedKey) {
         setState(() {
           dropdownValue = enzymeTypes[newSelectedKey!];
@@ -265,12 +226,8 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
 
         _validateFields;
       },
-      items: enzymeTypes.keys
-            .map<DropdownMenuItem<String>>((String key) {
-        return DropdownMenuItem<String>(
-          value: key,
-          child: Text(enzymeTypes[key]!),
-        );
+      items: enzymeTypes.keys.map<DropdownMenuItem<String>>((String key) {
+        return DropdownMenuItem<String>(value: key, child: Text(enzymeTypes[key]!));
       }).toList(),
     );
   }
@@ -324,28 +281,23 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
   @override
   Widget build(BuildContext context) {
     return ListenableBuilder(
-        listenable: _createEnzymeViewmodel,
-        builder: (context, child) {
-          return Scaffold(
-            body: Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  Expanded(
-                    flex: 11,
-                    child: Center(child: _body),
-                  ),
-                  SizedBox(
-                    height: 160,
-                    child: Padding(
-                      padding: Constants.padding16all,
-                      child: _buttons,
-                    ),
-                  ),
-                ],
-              ),
+      listenable: _createEnzymeViewmodel,
+      builder: (context, child) {
+        return Scaffold(
+          body: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                Expanded(flex: 11, child: Center(child: _body)),
+                SizedBox(
+                  height: 160,
+                  child: Padding(padding: Constants.padding16all, child: _buttons),
+                ),
+              ],
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 }

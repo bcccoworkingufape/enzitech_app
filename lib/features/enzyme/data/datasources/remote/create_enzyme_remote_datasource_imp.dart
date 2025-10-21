@@ -21,12 +21,7 @@ class CreateEnzymeRemoteDataSourceImp implements CreateEnzymeDataSource {
     try {
       await _httpService.post(
         API.REQUEST_ENZYMES,
-        data: {
-          "name": name,
-          "variableA": variableA,
-          "variableB": variableB,
-          "type": type
-        },
+        data: {"name": name, "variableA": variableA, "variableB": variableB, "type": type},
       );
 
       return const Right(unit);

@@ -18,11 +18,6 @@ class CreateEnzymeRepositoryImp implements CreateEnzymeRepository {
     required double variableB,
     required String type,
   }) async {
-    return await _createEnzymeDataSource(
-      name: name,
-      variableA: variableA,
-      variableB: variableB,
-      type: type,
-    );
+    return await _createEnzymeDataSource(name: name, variableA: variableA, variableB: variableB, type: type);
   }
 }

@@ -6,8 +6,7 @@ import '../../../../core/failures/failure.dart';
 import '../../domain/repositories/get_exclude_confirmation_repository.dart';
 import '../datasources/get_exclude_confirmation_datasource.dart';
 
-class GetExcludeConfirmationRepositoryImp
-    implements GetExcludeConfirmationRepository {
+class GetExcludeConfirmationRepositoryImp implements GetExcludeConfirmationRepository {
   final GetExcludeConfirmationDataSource _getExcludeConfirmationDataSource;
 
   GetExcludeConfirmationRepositoryImp(this._getExcludeConfirmationDataSource);

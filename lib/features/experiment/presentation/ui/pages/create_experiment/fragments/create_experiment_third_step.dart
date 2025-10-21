@@ -1,7 +1,7 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-import '../../../../../../../l10n/app_localizations.dart';
+import '../../../../../../../shared/l10n/app_localizations.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
@@ -18,17 +18,13 @@ import '../../../../viewmodel/create_experiment_viewmodel.dart';
 import '../create_experiment_fragment_template.dart';
 
 class CreateExperimentThirdStepPage extends StatefulWidget {
-  const CreateExperimentThirdStepPage({
-    super.key,
-  });
+  const CreateExperimentThirdStepPage({super.key});
 
   @override
-  State<CreateExperimentThirdStepPage> createState() =>
-      _CreateExperimentThirdStepPageState();
+  State<CreateExperimentThirdStepPage> createState() => _CreateExperimentThirdStepPageState();
 }
 
-class _CreateExperimentThirdStepPageState
-    extends State<CreateExperimentThirdStepPage> {
+class _CreateExperimentThirdStepPageState extends State<CreateExperimentThirdStepPage> {
   late final CreateExperimentViewmodel _createExperimentViewmodel;
   late final EnzymesViewmodel _enzymesViewmodel;
 
@@ -48,8 +44,7 @@ class _CreateExperimentThirdStepPageState
 
     _checkboxesController = GroupButtonController();
 
-    Future.delayed(const Duration(milliseconds: 1))
-        .whenComplete(() => _validateFields);
+    Future.delayed(const Duration(milliseconds: 1)).whenComplete(() => _validateFields);
 
     _initFields();
   }
@@ -59,11 +54,11 @@ class _CreateExperimentThirdStepPageState
 
     if (tempEnz.isNotEmpty) {
       for (var enz in tempEnz) {
-        _checkboxesController.selectIndex(_enzymesViewmodel.enzymes.indexOf(
-            _enzymesViewmodel.enzymes.firstWhere((e) => e.id == enz.id)));
+        _checkboxesController.selectIndex(
+          _enzymesViewmodel.enzymes.indexOf(_enzymesViewmodel.enzymes.firstWhere((e) => e.id == enz.id)),
+        );
 
-        _choosedCheckboxList
-            .add(_enzymesViewmodel.enzymes.firstWhere((e) => e.id == enz.id));
+        _choosedCheckboxList.add(_enzymesViewmodel.enzymes.firstWhere((e) => e.id == enz.id));
       }
     }
 
@@ -127,33 +122,22 @@ class _CreateExperimentThirdStepPageState
       titleOfStepIndicator: l10n.registerNewExperiment,
       messageOfStepIndicator: l10n.stepIndicatorEnzymes(3, 4),
       body: SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(
-          parent: BouncingScrollPhysics(),
-        ),
+        physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           children: [
-            const SizedBox(
-              height: 32,
-            ),
+            const SizedBox(height: 32),
             Row(
               children: [
-                Icon(
-                  PhosphorIcons.flask(),
-                ),
+                Icon(PhosphorIcons.flask()),
                 const SizedBox(width: 4),
-                Text(
-                  l10n.experimentEnzymes,
-                  style: TextStyles.detailBold,
-                ),
+                Text(l10n.experimentEnzymes, style: TextStyles.detailBold),
               ],
             ),
             GroupButton(
               controller: _checkboxesController,
               isRadio: false,
-              options: const GroupButtonOptions(
-                groupingType: GroupingType.column,
-              ),
+              options: const GroupButtonOptions(groupingType: GroupingType.column),
               buttons: _checkboxButtons,
               buttonIndexedBuilder: (selected, index, context) {
                 return EZTCheckBoxTile(
@@ -162,36 +146,30 @@ class _CreateExperimentThirdStepPageState
                   onTap: () {
                     if (!selected) {
                       _checkboxesController.selectIndex(index);
-                      _choosedCheckboxList
-                          .add(_enzymesViewmodel.enzymes[index]);
+                      _choosedCheckboxList.add(_enzymesViewmodel.enzymes[index]);
                       setState(() {
-                        _createExperimentViewmodel
-                            .setEnableNextButtonOnThirdStep(
-                                _choosedCheckboxList.isNotEmpty);
+                        _createExperimentViewmodel.setEnableNextButtonOnThirdStep(_choosedCheckboxList.isNotEmpty);
                       });
 
                       return;
                     }
                     _checkboxesController.unselectIndex(index);
-                    _choosedCheckboxList
-                        .remove(_enzymesViewmodel.enzymes[index]);
+                    _choosedCheckboxList.remove(_enzymesViewmodel.enzymes[index]);
                     setState(() {
-                      _createExperimentViewmodel.setEnableNextButtonOnThirdStep(
-                          _choosedCheckboxList.isNotEmpty);
+                      _createExperimentViewmodel.setEnableNextButtonOnThirdStep(_choosedCheckboxList.isNotEmpty);
                     });
                   },
-                  color: Constants.dealWithEnzymeChipColor(
-                      _enzymesViewmodel.enzymes[index].type),
+                  color: Constants.dealWithEnzymeChipColor(_enzymesViewmodel.enzymes[index].type),
                   onTapTrailing: () {
                     EZTSnackBar.clear(context);
                     EZTSnackBar.show(
                       context,
-                      l10n.enzymeTypeIs(Constants.typesOfEnzymesListFormmated[
-                        Constants.typesOfEnzymesList
-                          .indexOf(_enzymesViewmodel.enzymes[index].type)]),
-                      color: Constants.dealWithEnzymeChipColor(
-                        _enzymesViewmodel.enzymes[index].type,
+                      l10n.enzymeTypeIs(
+                        Constants.typesOfEnzymesListFormmated[Constants.typesOfEnzymesList.indexOf(
+                          _enzymesViewmodel.enzymes[index].type,
+                        )],
                       ),
+                      color: Constants.dealWithEnzymeChipColor(_enzymesViewmodel.enzymes[index].type),
                       textStyle: TextStyles(context).titleMinBoldBackground(),
                       centerTitle: true,
                     );
@@ -199,9 +177,7 @@ class _CreateExperimentThirdStepPageState
                 );
               },
             ),
-            const SizedBox(
-              height: 64,
-            ),
+            const SizedBox(height: 64),
             _buttons,
           ],
         ),

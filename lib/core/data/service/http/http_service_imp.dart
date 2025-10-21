@@ -14,9 +14,7 @@ class DioHttpServiceImp implements HttpService {
 
   final HttpDriverOptions httpDriverOptions;
 
-  DioHttpServiceImp(
-    this.httpDriverOptions,
-  ) {
+  DioHttpServiceImp(this.httpDriverOptions) {
     setConfig();
   }
 
@@ -30,12 +28,10 @@ class DioHttpServiceImp implements HttpService {
     dio.options.connectTimeout = const Duration(seconds: 60);
     dio.options.receiveTimeout = const Duration(seconds: 60);
 
-    dio.options.headers.addAll(
-      {
-        'content-type': "application/json; charset=utf-8",
-        'Authorization': '${httpDriverOptions.accessTokenType} $gettedToken',
-      },
-    );
+    dio.options.headers.addAll({
+      'content-type': "application/json; charset=utf-8",
+      'Authorization': '${httpDriverOptions.accessTokenType} $gettedToken',
+    });
     dio.interceptors.addAll([
       CurlLoggerDioInterceptor(printOnSuccess: true),
       PrettyDioLogger(
@@ -69,15 +65,13 @@ class DioHttpServiceImp implements HttpService {
           if (data is Map<String, dynamic> && data.containsKey('data')) {
             var message = "";
             if (dioError.response!.data['data']["message"] is List) {
-              message = (dioError.response!.data['data']["message"] as List)
-                  .join(", ");
+              message = (dioError.response!.data['data']["message"] as List).join(", ");
             } else {
               message = dioError.response!.data['data']["message"];
             }
             message = message;
             errorCode = dioError.response!.data['data']["errorCode"];
-          } else if (data is Map<String, dynamic> &&
-              !data.containsKey('data')) {
+          } else if (data is Map<String, dynamic> && !data.containsKey('data')) {
             //-> ENZITECH API configured with the possibility of not containing key 'data'
             if (dioError.response!.data["message"] is List) {
               message = (dioError.response!.data["message"] as List).join(", ");
@@ -90,13 +84,11 @@ class DioHttpServiceImp implements HttpService {
           if (message.isEmpty) {
             if (dioError.response == null) {
               if (dioError.message!.contains('Connection failed')) {
-                throw NoNetworkFailure(
-                    message: dioError.message ?? 'No Network Failure');
+                throw NoNetworkFailure(message: dioError.message ?? 'No Network Failure');
               } else {
                 throw dioError.message!.contains('Connection timed out')
                     ? serverFailure
-                    : ServerFailure(
-                        message: dioError.message ?? 'Server Failure');
+                    : ServerFailure(message: dioError.message ?? 'Server Failure');
               }
             }
             if (dioError.message!.isNotEmpty) {
@@ -120,49 +112,23 @@ class DioHttpServiceImp implements HttpService {
 
           switch (dioError.response!.statusCode) {
             case 400:
-              throw InvalidOrMissingFieldFailure(
-                key: errorCode,
-                message: message,
-              );
+              throw InvalidOrMissingFieldFailure(key: errorCode, message: message);
             case 401:
-              throw ExpiredTokenOrWrongUserFailure(
-                key: errorCode,
-                message: message,
-              );
+              throw ExpiredTokenOrWrongUserFailure(key: errorCode, message: message);
             case 403:
-              throw ForbiddenFailure(
-                key: errorCode,
-                message: message,
-              );
+              throw ForbiddenFailure(key: errorCode, message: message);
             case 404:
-              throw NotFoundFailure(
-                key: errorCode,
-                message: message,
-              );
+              throw NotFoundFailure(key: errorCode, message: message);
             case 422:
-              throw UnprocessableEntityFailure(
-                key: errorCode,
-                message: message,
-              );
+              throw UnprocessableEntityFailure(key: errorCode, message: message);
             case 426:
-              throw InvalidDeviceIdFailure(
-                key: errorCode,
-                message: message,
-              );
+              throw InvalidDeviceIdFailure(key: errorCode, message: message);
             case 500:
-              throw ServiceUnavailableFailure(
-                key: errorCode,
-                message: message,
-              );
+              throw ServiceUnavailableFailure(key: errorCode, message: message);
             case 503:
-              throw ServerFailure(
-                key: errorCode,
-                message: message,
-              );
+              throw ServerFailure(key: errorCode, message: message);
             default:
-              throw message.isEmpty
-                  ? serverFailure
-                  : ServerFailure(message: message, key: errorCode);
+              throw message.isEmpty ? serverFailure : ServerFailure(message: message, key: errorCode);
           }
         default:
           throw serverFailure;
@@ -184,9 +150,7 @@ class DioHttpServiceImp implements HttpService {
         path,
         queryParameters: queryParameters,
         onReceiveProgress: onReceiveProgress,
-        options: Options(
-          headers: extraHeaders,
-        ),
+        options: Options(headers: extraHeaders),
       ),
     );
   }
@@ -198,12 +162,7 @@ class DioHttpServiceImp implements HttpService {
     HttpDriverOptions? options,
   }) async {
     dio.options.headers['content-type'] = 'image/png';
-    return await interceptRequests(
-      dio.get(
-        path,
-        queryParameters: queryParameters,
-      ),
-    );
+    return await interceptRequests(dio.get(path, queryParameters: queryParameters));
   }
 
   @override
@@ -216,10 +175,7 @@ class DioHttpServiceImp implements HttpService {
   }) async {
     resetContentType();
     return await interceptRequests(
-      dio.patch(path,
-          data: data,
-          queryParameters: queryParameters,
-          onReceiveProgress: onReceiveProgress),
+      dio.patch(path, data: data, queryParameters: queryParameters, onReceiveProgress: onReceiveProgress),
     );
   }
 
@@ -233,12 +189,7 @@ class DioHttpServiceImp implements HttpService {
   }) async {
     resetContentType();
     return await interceptRequests(
-      dio.post(
-        path,
-        data: data,
-        queryParameters: queryParameters,
-        onReceiveProgress: onReceiveProgress,
-      ),
+      dio.post(path, data: data, queryParameters: queryParameters, onReceiveProgress: onReceiveProgress),
     );
   }
 
@@ -252,10 +203,7 @@ class DioHttpServiceImp implements HttpService {
   }) async {
     resetContentType();
     return await interceptRequests(
-      dio.put(path,
-          data: data,
-          queryParameters: queryParameters,
-          onReceiveProgress: onReceiveProgress),
+      dio.put(path, data: data, queryParameters: queryParameters, onReceiveProgress: onReceiveProgress),
     );
   }
 
@@ -267,13 +215,7 @@ class DioHttpServiceImp implements HttpService {
     HttpDriverOptions? options,
   }) async {
     resetContentType();
-    return await interceptRequests(
-      dio.delete<T>(
-        path,
-        data: data,
-        queryParameters: queryParameters,
-      ),
-    );
+    return await interceptRequests(dio.delete<T>(path, data: data, queryParameters: queryParameters));
   }
 
   @override
@@ -292,10 +234,7 @@ class DioHttpServiceImp implements HttpService {
   }) async {
     dio.options.headers['content-type'] = 'multipart/form-data';
     return await interceptRequests(
-      dio.post<T>(path,
-          data: data,
-          queryParameters: queryParameters,
-          onReceiveProgress: onReceiveProgress),
+      dio.post<T>(path, data: data, queryParameters: queryParameters, onReceiveProgress: onReceiveProgress),
     );
   }
 }

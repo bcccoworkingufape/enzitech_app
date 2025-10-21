@@ -9,7 +9,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 // 🌎 Project imports:
 import '../../../features/main/presentation/viewmodel/home_viewmodel.dart';
 import '../../../features/main/presentation/viewmodel/settings_viewmodel.dart';
-import '../../extensions/context_theme_mode_extensions.dart';
+import '../../extensions/build_context_extensions.dart';
 import '../ui.dart';
 import 'ezt_blink.dart';
 
@@ -49,10 +49,7 @@ class _EZTAppBarState extends State<EZTAppBar> {
             AppSvgs(context).logo(),
             colorFilter: context.isDarkMode
                 ? const ColorFilter.mode(Colors.white, BlendMode.srcIn)
-                : ColorFilter.mode(
-                    context.getApplyedColorScheme.primary,
-                    BlendMode.srcIn,
-                  ),
+                : ColorFilter.mode(context.getApplyedColorScheme.primary, BlendMode.srcIn),
             fit: BoxFit.contain,
             alignment: Alignment.center,
           ),
@@ -65,16 +62,9 @@ class _EZTAppBarState extends State<EZTAppBar> {
                       child: EZTBlink(
                         interval: 750,
                         children: <Widget>[
-                          Icon(
-                            PhosphorIcons.cloudSlash(),
-                            color: Colors.white,
-                          ),
-                        
-                          Icon(
-                            PhosphorIcons.cloudSlash(),
-                            color: context.getApplyedColorScheme.error,
-                          ),
-                        
+                          Icon(PhosphorIcons.cloudSlash(), color: Colors.white),
+
+                          Icon(PhosphorIcons.cloudSlash(), color: context.getApplyedColorScheme.error),
                         ],
                       ),
                     ),

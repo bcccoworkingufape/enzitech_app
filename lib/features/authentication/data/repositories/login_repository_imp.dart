@@ -13,10 +13,7 @@ class LoginRepositoryImp implements LoginRepository {
   LoginRepositoryImp(this._loginDataSource);
 
   @override
-  Future<Either<Failure, UserEntity>> call({
-    required String email,
-    required String password,
-  }) async {
+  Future<Either<Failure, UserEntity>> call({required String email, required String password}) async {
     return await _loginDataSource(email: email, password: password);
   }
 }

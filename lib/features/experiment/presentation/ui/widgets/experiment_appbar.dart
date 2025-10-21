@@ -1,14 +1,13 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-import '../../../../../../l10n/app_localizations.dart';
+import '../../../../../shared/l10n/app_localizations.dart';
 
 // 🌎 Project imports:
 import 'ezt_create_experiment_step_indicator.dart';
 
 class ExperimentAppBar extends StatefulWidget implements PreferredSizeWidget {
-  const ExperimentAppBar({super.key})
-      : preferredSize = const Size.fromHeight(kToolbarHeight * 3);
+  const ExperimentAppBar({super.key}) : preferredSize = const Size.fromHeight(kToolbarHeight * 3);
 
   @override
   final Size preferredSize; //* Default is 56.0

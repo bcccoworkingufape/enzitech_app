@@ -12,10 +12,7 @@ class EnzymesViewmodel extends ChangeNotifier {
   final GetEnzymesUseCase _getEnzymesUseCase;
   final DeleteEnzymeUseCase _deleteEnzymeUseCase;
 
-  EnzymesViewmodel(
-    this._getEnzymesUseCase,
-    this._deleteEnzymeUseCase,
-  );
+  EnzymesViewmodel(this._getEnzymesUseCase, this._deleteEnzymeUseCase);
 
   StateEnum _state = StateEnum.idle;
   StateEnum get state => _state;
@@ -60,12 +57,9 @@ class EnzymesViewmodel extends ChangeNotifier {
   Future<void> deleteEnzyme(String id) async {
     var result = await _deleteEnzymeUseCase(id);
 
-    result.fold(
-      (error) {
-        _setFailure(error);
-        setStateEnum(StateEnum.error);
-      },
-      (success) async {},
-    );
+    result.fold((error) {
+      _setFailure(error);
+      setStateEnum(StateEnum.error);
+    }, (success) async {});
   }
 }

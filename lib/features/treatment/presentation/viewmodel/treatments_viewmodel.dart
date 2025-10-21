@@ -12,10 +12,7 @@ class TreatmentsViewmodel extends ChangeNotifier {
   final GetTreatmentsUseCase _getTreatmentsUseCase;
   final DeleteTreatmentUseCase _deleteTreatmentUseCase;
 
-  TreatmentsViewmodel(
-    this._getTreatmentsUseCase,
-    this._deleteTreatmentUseCase,
-  );
+  TreatmentsViewmodel(this._getTreatmentsUseCase, this._deleteTreatmentUseCase);
 
   StateEnum _state = StateEnum.idle;
   StateEnum get state => _state;
@@ -60,12 +57,9 @@ class TreatmentsViewmodel extends ChangeNotifier {
   Future<void> deleteTreatment(String id) async {
     var result = await _deleteTreatmentUseCase(id);
 
-    result.fold(
-      (error) {
-        _setFailure(error);
-        setStateEnum(StateEnum.error);
-      },
-      (success) async {},
-    );
+    result.fold((error) {
+      _setFailure(error);
+      setStateEnum(StateEnum.error);
+    }, (success) async {});
   }
 }

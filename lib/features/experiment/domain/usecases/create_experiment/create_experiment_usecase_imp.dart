@@ -11,9 +11,7 @@ import 'create_experiment_usecase.dart';
 class CreateExperimentUseCaseImp implements CreateExperimentUseCase {
   final CreateExperimentRepository _createExperimentRepository;
 
-  CreateExperimentUseCaseImp(
-    this._createExperimentRepository,
-  );
+  CreateExperimentUseCaseImp(this._createExperimentRepository);
 
   @override
   Future<Either<Failure, ExperimentEntity>> call({

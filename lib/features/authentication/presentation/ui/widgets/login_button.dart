@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
-import '../../../../../../l10n/app_localizations.dart';
+import '../../../../../shared/l10n/app_localizations.dart';
 
 // 🌎 Project imports:
 import '../../../../../core/enums/enums.dart';
@@ -13,8 +13,7 @@ import '../../viewmodel/login_viewmodel.dart';
 class LoginButton extends StatelessWidget {
   final GlobalKey<FormState> formKey;
   final LoginViewmodel loginViewmodel;
-  const LoginButton(
-      {super.key, required this.formKey, required this.loginViewmodel});
+  const LoginButton({super.key, required this.formKey, required this.loginViewmodel});
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +21,8 @@ class LoginButton extends StatelessWidget {
     return AnimatedBuilder(
       animation: loginViewmodel,
       builder: (context, child) {
-        bool loading = loginViewmodel.state == StateEnum.loading ||
-            GetIt.I.get<HomeViewmodel>().state == StateEnum.loading;
+        bool loading =
+            loginViewmodel.state == StateEnum.loading || GetIt.I.get<HomeViewmodel>().state == StateEnum.loading;
         return SizedBox(
           width: double.maxFinite,
           height: 48,
@@ -35,9 +34,7 @@ class LoginButton extends StatelessWidget {
                       loginViewmodel.loginAction();
                     }
                   },
-            child: loading
-                ? const CircularProgressIndicator()
-                : Text(l10n.loginButton),
+            child: loading ? const CircularProgressIndicator() : Text(l10n.loginButton),
           ),
         );
       },

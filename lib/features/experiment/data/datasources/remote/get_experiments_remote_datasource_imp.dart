@@ -28,7 +28,8 @@ class GetExperimentsRemoteDataSourceImp implements GetExperimentsDataSource {
       var addFinished = finished != null ? "&finished=$finished" : "";
 
       var response = await _httpService.get(
-          '${API.REQUEST_EXPERIMENTS}?page=$page$addOrderBy$addOrdering$addLimit$addFinished');
+        '${API.REQUEST_EXPERIMENTS}?page=$page$addOrderBy$addOrdering$addLimit$addFinished',
+      );
 
       var result = ExperimentPaginationDto.fromJson(response.data);
 
@@ -41,8 +42,7 @@ class GetExperimentsRemoteDataSourceImp implements GetExperimentsDataSource {
   /// Do not implement or use this method here!
   /// If you want to use storeInCache do using the local repository
   @override
-  Future<void> saveInCache(
-      ExperimentPaginationEntity experimentPaginationEntity) {
+  Future<void> saveInCache(ExperimentPaginationEntity experimentPaginationEntity) {
     throw UnimplementedError();
   }
 }

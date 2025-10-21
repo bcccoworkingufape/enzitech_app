@@ -10,8 +10,7 @@ extension AddressExtension on String {
     if (s.length < 12) {
       return '-';
     }
-    final stateRegistration =
-        '${s.sublist(0, 11).join()}-${s.sublist(12).join()}';
+    final stateRegistration = '${s.sublist(0, 11).join()}-${s.sublist(12).join()}';
     return stateRegistration;
   }
 }

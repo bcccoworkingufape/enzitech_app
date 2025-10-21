@@ -5,11 +5,10 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
-import '../../extensions/context_theme_mode_extensions.dart';
+import '../../extensions/build_context_extensions.dart';
 import '../themes/themes.dart';
 
 // 📦 Package imports:
-
 
 class EZTProgressIndicator extends StatefulWidget {
   final String? message;
@@ -19,8 +18,7 @@ class EZTProgressIndicator extends StatefulWidget {
   State<EZTProgressIndicator> createState() => _EZTProgressIndicatorState();
 }
 
-class _EZTProgressIndicatorState extends State<EZTProgressIndicator>
-    with SingleTickerProviderStateMixin {
+class _EZTProgressIndicatorState extends State<EZTProgressIndicator> with SingleTickerProviderStateMixin {
   late final AnimationController animationController = AnimationController(
     vsync: this,
     duration: const Duration(seconds: 2),
@@ -42,10 +40,7 @@ class _EZTProgressIndicatorState extends State<EZTProgressIndicator>
           AnimatedBuilder(
             animation: animationController,
             builder: (_, child) {
-              return Transform.rotate(
-                angle: animationController.value * 2 * math.pi,
-                child: child,
-              );
+              return Transform.rotate(angle: animationController.value * 2 * math.pi, child: child);
             },
             child: Image.asset(
               context.isDarkMode ? AppImages.logoOnDark : AppImages.logoGreen,
@@ -54,9 +49,7 @@ class _EZTProgressIndicatorState extends State<EZTProgressIndicator>
             ),
           ),
           if (widget.message != null) ...[
-            const SizedBox(
-              height: 16,
-            ),
+            const SizedBox(height: 16),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Text(
@@ -65,7 +58,7 @@ class _EZTProgressIndicatorState extends State<EZTProgressIndicator>
                 textAlign: TextAlign.center,
               ),
             ),
-          ]
+          ],
         ],
       ),
     );

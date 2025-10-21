@@ -1,4 +1,1 @@
-enum UserTypeEnum {
-  user,
-  admin,
-}
+enum UserTypeEnum { user, admin }

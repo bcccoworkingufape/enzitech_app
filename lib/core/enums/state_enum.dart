@@ -1,6 +1,1 @@
-enum StateEnum {
-  error,
-  idle,
-  loading,
-  success,
-}
+enum StateEnum { error, idle, loading, success }

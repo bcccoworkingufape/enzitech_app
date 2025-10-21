@@ -11,8 +11,7 @@ import '../../../domain/entities/experiment_entity.dart';
 import '../../dto/experiment_dto.dart';
 import '../create_experiment_datasource.dart';
 
-class CreateExperimentRemoteDataSourceImp
-    implements CreateExperimentDataSource {
+class CreateExperimentRemoteDataSourceImp implements CreateExperimentDataSource {
   final HttpService _httpService;
   CreateExperimentRemoteDataSourceImp(this._httpService);
 
@@ -25,8 +24,7 @@ class CreateExperimentRemoteDataSourceImp
     required List<EnzymeEntity> enzymes,
   }) async {
     try {
-      List<Map> experimentsEnzymes =
-          enzymes.map((enzyme) => enzyme.toJsonAsExperimentEnzyme()).toList();
+      List<Map> experimentsEnzymes = enzymes.map((enzyme) => enzyme.toJsonAsExperimentEnzyme()).toList();
 
       var response = await _httpService.post(
         API.REQUEST_EXPERIMENTS,

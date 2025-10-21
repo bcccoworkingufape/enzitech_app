@@ -13,20 +13,9 @@ class CreateAccountRemoteDataSourceImp implements CreateAccountDataSource {
   CreateAccountRemoteDataSourceImp(this._httpService);
 
   @override
-  Future<Either<Failure, Unit>> call({
-    required String name,
-    required String email,
-    required String password,
-  }) async {
+  Future<Either<Failure, Unit>> call({required String name, required String email, required String password}) async {
     try {
-      await _httpService.post(
-        API.REQUEST_USERS,
-        data: {
-          'name': name,
-          'email': email,
-          'password': password,
-        },
-      );
+      await _httpService.post(API.REQUEST_USERS, data: {'name': name, 'email': email, 'password': password});
 
       return const Right(unit);
     } catch (e) {

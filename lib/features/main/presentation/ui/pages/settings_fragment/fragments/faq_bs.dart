@@ -3,10 +3,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import '../../../../../../../l10n/app_localizations.dart';
+import '../../../../../../../shared/l10n/app_localizations.dart';
 
 // 🌎 Project imports:
-import '../../../../../../../shared/extensions/context_theme_mode_extensions.dart';
+import '../../../../../../../shared/extensions/build_context_extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../widgets/ezt_bottomsheet.dart';
 
@@ -17,7 +17,6 @@ class FAQBS extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final l10n = AppLocalizations.of(context)!;
 
     return EZTBottomSheet(
@@ -25,50 +24,29 @@ class FAQBS extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            l10n.frequentlyAskedQuestions,
-            style: TextStyles.titleHome,
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(
-            height: 32,
-          ),
+          Text(l10n.frequentlyAskedQuestions, style: TextStyles.titleHome, textAlign: TextAlign.center),
+          const SizedBox(height: 32),
           RichText(
             textAlign: TextAlign.justify,
             text: TextSpan(
               style: TextStyles(context).trailingRegular(),
               children: <TextSpan>[
-                TextSpan(
-                  text: l10n.question,
-                  style: TextStyles(context).trailingRegular(isBold: true),
-                ),
+                TextSpan(text: l10n.question, style: TextStyles(context).trailingRegular(isBold: true)),
                 TextSpan(
                   text: l10n.question1,
-                  style: TextStyles(context).trailingRegular(
-                    isBold: true,
-                    color: context.getApplyedColorScheme.error,
-                  ),
+                  style: TextStyles(context).trailingRegular(isBold: true, color: context.getApplyedColorScheme.error),
                 ),
               ],
             ),
           ),
-          const SizedBox(
-            height: 8,
-          ),
+          const SizedBox(height: 8),
           RichText(
             textAlign: TextAlign.justify,
             text: TextSpan(
               style: TextStyles(context).trailingRegular(),
               children: <TextSpan>[
-                TextSpan(
-                  text: l10n.answer,
-                  style: TextStyles(context).trailingRegular(isBold: true),
-                ),
-                TextSpan(
-                  text:
-                      l10n.answer1,
-                  style: TextStyles(context).trailingRegular(),
-                ),
+                TextSpan(text: l10n.answer, style: TextStyles(context).trailingRegular(isBold: true)),
+                TextSpan(text: l10n.answer1, style: TextStyles(context).trailingRegular()),
               ],
             ),
           ),
@@ -78,9 +56,7 @@ class FAQBS extends StatelessWidget {
               text: l10n.closeButton,
               eztButtonType: EZTButtonType.outline,
               onPressed: () {
-                Navigator.pop(
-                  context,
-                );
+                Navigator.pop(context);
               },
             ),
           ),

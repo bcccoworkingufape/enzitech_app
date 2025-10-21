@@ -51,7 +51,7 @@ dependencies:
   google_fonts: ^6.1.0
   group_button: ^5.2.2
   internet_connection_checker: ^3.0.1
-  intl: any
+  intl: ^0.20.2
   package_info_plus: ^8.3.1
   path_provider: ^2.0.14
   percent_indicator: ^4.2.2

@@ -2,8 +2,7 @@
 import '../../../../../../core/domain/service/user_preferences/user_preferences_service.dart';
 import '../../save_exclude_confirmation_datasource.dart';
 
-class SaveExcludeConfirmationLocalDataSourceImp
-    extends SaveExcludeConfirmationDataSource {
+class SaveExcludeConfirmationLocalDataSourceImp extends SaveExcludeConfirmationDataSource {
   final UserPreferencesServices _userPreferencesServices;
 
   SaveExcludeConfirmationLocalDataSourceImp(this._userPreferencesServices);

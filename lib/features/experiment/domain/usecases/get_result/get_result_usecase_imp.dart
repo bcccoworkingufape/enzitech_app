@@ -10,16 +10,10 @@ import 'get_result_usecase.dart';
 class GetResultUseCaseImp implements GetResultUseCase {
   final GetResultRepository _getResultRepository;
 
-  GetResultUseCaseImp(
-    this._getResultRepository,
-  );
+  GetResultUseCaseImp(this._getResultRepository);
 
   @override
-  Future<Either<Failure, ExperimentResultEntity>> call({
-    required String experimentId,
-  }) async {
-    return await _getResultRepository.call(
-      experimentId: experimentId,
-    );
+  Future<Either<Failure, ExperimentResultEntity>> call({required String experimentId}) async {
+    return await _getResultRepository.call(experimentId: experimentId);
   }
 }

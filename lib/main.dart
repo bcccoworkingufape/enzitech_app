@@ -18,12 +18,11 @@ import 'core/domain/entities/http_driver_options.dart';
 import 'core/enums/enums.dart';
 import 'core/inject/inject.dart';
 import 'core/routing/routing.dart';
-import 'features/main/presentation/ui/pages/home/home_page.dart';
 import 'features/main/presentation/viewmodel/settings_viewmodel.dart';
 import 'firebase_options.dart';
 import 'shared/ui/ui.dart';
 import 'shared/utils/utils.dart';
-import 'l10n/app_localizations.dart';
+import 'shared/l10n/app_localizations.dart';
 
 Future<void> main() async {
   runZonedGuarded(() async {
@@ -36,7 +35,7 @@ Future<void> main() async {
 
     String token = await userPreferencesService.getToken() ?? '';
 
-    API.setEnvironment(EnvironmentEnum.dev);
+    API.setEnvironment(EnvironmentEnum.prod);
 
     final HttpDriverOptions httpDriverOptions = HttpDriverOptions(
       accessToken: () {

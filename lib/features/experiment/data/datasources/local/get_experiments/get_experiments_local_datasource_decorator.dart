@@ -6,8 +6,7 @@ import '../../../../../../core/failures/failures.dart';
 import '../../../../domain/entities/experiment_pagination_entity.dart';
 import '../../get_experiments_datasource.dart';
 
-abstract class GetExperimentsDataSourceDecorator
-    implements GetExperimentsDataSource {
+abstract class GetExperimentsDataSourceDecorator implements GetExperimentsDataSource {
   final GetExperimentsDataSource _getExperimentsDataSource;
 
   GetExperimentsDataSourceDecorator(this._getExperimentsDataSource);
@@ -19,16 +18,8 @@ abstract class GetExperimentsDataSourceDecorator
     String? ordering,
     int? limit,
     bool? finished,
-  }) =>
-      _getExperimentsDataSource(
-        page,
-        orderBy: orderBy,
-        ordering: ordering,
-        limit: limit,
-        finished: finished,
-      );
+  }) => _getExperimentsDataSource(page, orderBy: orderBy, ordering: ordering, limit: limit, finished: finished);
 
   @override
-  Future<void> saveInCache(
-      ExperimentPaginationEntity experimentPaginationEntity);
+  Future<void> saveInCache(ExperimentPaginationEntity experimentPaginationEntity);
 }

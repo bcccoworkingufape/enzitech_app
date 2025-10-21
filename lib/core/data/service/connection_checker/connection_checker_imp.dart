@@ -10,8 +10,7 @@ import '../../../domain/service/connection_checker/connection_checker.dart';
 
 class ConnectionCheckerImp implements ConnectionChecker {
   //This creates the single instance by calling the `_internal` constructor specified below
-  static final ConnectionCheckerImp _singleton =
-      ConnectionCheckerImp._internal();
+  static final ConnectionCheckerImp _singleton = ConnectionCheckerImp._internal();
   ConnectionCheckerImp._internal();
 
   //This is what's used to retrieve the instance through the app
@@ -45,8 +44,7 @@ class ConnectionCheckerImp implements ConnectionChecker {
   Future<bool> hasInternetInternetConnection() async {
     bool previousConnection = hasConnection;
 
-    final List<ConnectivityResult> connectivityResult = await (Connectivity()
-        .checkConnectivity());
+    final List<ConnectivityResult> connectivityResult = await (Connectivity().checkConnectivity());
 
     //Check if device is just connect with mobile network or wifi
     if (connectivityResult.contains(ConnectivityResult.mobile) ||

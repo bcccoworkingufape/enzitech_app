@@ -85,9 +85,8 @@ class ExperimentsViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool get hasNextPage => _experiments.isEmpty || _totalOfExperiments == 0
-      ? false
-      : (_totalOfExperiments - _experiments.length) > 0;
+  bool get hasNextPage =>
+      _experiments.isEmpty || _totalOfExperiments == 0 ? false : (_totalOfExperiments - _experiments.length) > 0;
 
   bool _isLoadingMoreRunning = false;
   bool get isLoadingMoreRunning => _isLoadingMoreRunning;
@@ -146,21 +145,15 @@ class ExperimentsViewmodel extends ChangeNotifier {
         _addToExperiments(success.experiments);
         _setTotalOfExperiments(success.total);
 
-        bool hasInternetConnection =
-            await connectionChecker.hasInternetInternetConnection();
+        bool hasInternetConnection = await connectionChecker.hasInternetInternetConnection();
 
-        if (hasNextPage &&
-            success.experiments.isNotEmpty &&
-            hasInternetConnection) {
+        if (hasNextPage && success.experiments.isNotEmpty && hasInternetConnection) {
           _setPage(page + 1);
         }
 
         if (success.experiments.isNotEmpty) {
           await _storeExperimentsInCacheRepository(
-            ExperimentPaginationEntity(
-              total: _totalOfExperiments,
-              experiments: experiments,
-            ),
+            ExperimentPaginationEntity(total: _totalOfExperiments, experiments: experiments),
           );
         }
 

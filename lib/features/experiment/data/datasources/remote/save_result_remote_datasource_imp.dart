@@ -32,14 +32,11 @@ class SaveResultRemoteDataSourceImp implements SaveResultDataSource {
         i.remove('_id');
 
         listWithoutIds.add({
-          'sample':
-              i['sample'] is String ? double.parse(i['sample']) : i['sample'],
-          'whiteSample': i['whiteSample'] is String
-              ? double.parse(i['whiteSample'])
-              : i['whiteSample']
+          'sample': i['sample'] is String ? double.parse(i['sample']) : i['sample'],
+          'whiteSample': i['whiteSample'] is String ? double.parse(i['whiteSample']) : i['whiteSample'],
         });
       }
-      
+
       var response = await _httpService.post(
         API.REQUEST_SAVE_RESULT_EXPERIMENTS(experimentId),
         data: {
@@ -47,7 +44,7 @@ class SaveResultRemoteDataSourceImp implements SaveResultDataSource {
           "process": treatmentID,
           "experimentData": listWithoutIds,
           "results": results,
-          "average": average
+          "average": average,
         },
       );
       var result = ExperimentDto.fromJson(response.data);
