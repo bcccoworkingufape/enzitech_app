@@ -10,7 +10,7 @@ import '../l10n/app_localizations.dart';
 import '../ui/ui.dart';
 
 extension BuildContextExtension on BuildContext {
-  AppLocalizations get l10n => AppLocalizations.of(this)!;
+  AppLocalizations get l10n => AppLocalizations.of(this);
 
   bool get isDarkMode {
     ColorScheme applyedColorScheme = getApplyedColorScheme;
