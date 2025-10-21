@@ -1,9 +1,8 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-import '../../../../../shared/l10n/app_localizations.dart';
-
 // 🌎 Project imports:
+import '../../../../../shared/extensions/extensions.dart';
 import 'ezt_create_experiment_step_indicator.dart';
 
 class ExperimentAppBar extends StatefulWidget implements PreferredSizeWidget {
@@ -19,15 +18,14 @@ class ExperimentAppBar extends StatefulWidget implements PreferredSizeWidget {
 class _ExperimentAppBarState extends State<ExperimentAppBar> {
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     return AppBar(
       toolbarHeight: 120,
       flexibleSpace: SafeArea(
         child: Column(
           children: [
             EZTCreateExperimentStepIndicator(
-              title: l10n.registerNewExperiment,
-              message: l10n.stepIndicatorIdentification(1, 4),
+              title: context.l10n.registerNewExperiment,
+              message: context.l10n.stepIndicatorIdentification(1, 4),
             ),
           ],
         ),

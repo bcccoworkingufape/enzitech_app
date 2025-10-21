@@ -1,12 +1,10 @@
 // 🐦 Flutter imports:
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import '../../../../../../../shared/l10n/app_localizations.dart';
 
 // 🌎 Project imports:
 import '../../../../../../../shared/extensions/build_context_extensions.dart';
@@ -59,14 +57,13 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
   }
 
   Widget get _emailInput {
-    final l10n = AppLocalizations.of(context)!;
     final validations = <ValidateRule>[ValidateRule(ValidateTypes.required), ValidateRule(ValidateTypes.email)];
 
     final fieldValidator = FieldValidator(validations, context);
 
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,
-      labelText: l10n.email,
+      labelText: context.l10n.email,
       usePrimaryColorOnFocusedBorder: true,
       keyboardType: TextInputType.emailAddress,
       controller: _emailFieldController,
@@ -76,7 +73,6 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
   }
 
   Widget get _passwordInput {
-    final l10n = AppLocalizations.of(context)!;
     final validations = <ValidateRule>[
       ValidateRule(ValidateTypes.required),
       ValidateRule(ValidateTypes.strongPassword),
@@ -86,7 +82,7 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
 
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,
-      labelText: l10n.passwordLabel,
+      labelText: context.l10n.passwordLabel,
       usePrimaryColorOnFocusedBorder: true,
       keyboardType: TextInputType.emailAddress,
       controller: _passwordFieldController,
@@ -97,7 +93,6 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
   }
 
   Widget get _confirmPasswordInput {
-    final l10n = AppLocalizations.of(context)!;
     final validations = <ValidateRule>[
       ValidateRule(ValidateTypes.required),
       ValidateRule(ValidateTypes.passwordEquals),
@@ -107,7 +102,7 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
 
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,
-      labelText: l10n.confirmPasswordLabel,
+      labelText: context.l10n.confirmPasswordLabel,
       usePrimaryColorOnFocusedBorder: true,
       keyboardType: TextInputType.emailAddress,
       controller: _confirmPasswordFieldController,
@@ -131,7 +126,6 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
   }
 
   _body(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -144,13 +138,13 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
             ),
           ),
           const SizedBox(height: 16),
-          Center(child: Text(l10n.signUp, style: TextStyles.titleHome)),
+          Center(child: Text(context.l10n.signUp, style: TextStyles.titleHome)),
           const SizedBox(height: 64),
           Row(
             children: [
               Icon(PhosphorIcons.at(PhosphorIconsStyle.bold)),
               const SizedBox(width: 4),
-              Text(l10n.access, style: TextStyles.detailBold),
+              Text(context.l10n.access, style: TextStyles.detailBold),
             ],
           ),
           _textFields,
@@ -161,14 +155,13 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
   }
 
   Widget get _buttons {
-    final l10n = AppLocalizations.of(context)!;
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         EZTButton(
           enabled: enableNextButton,
-          text: l10n.createAccountButton,
+          text: context.l10n.createAccountButton,
           onPressed: () async {
             if (formKeyFinal.currentState!.validate()) {
               var cacheMap = widget.userDataCache;
@@ -187,7 +180,7 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
         ),
         const SizedBox(height: 16),
         EZTButton(
-          text: l10n.backButton,
+          text: context.l10n.backButton,
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
             widget.pageController.animateTo(0, duration: const Duration(milliseconds: 150), curve: Curves.easeIn);

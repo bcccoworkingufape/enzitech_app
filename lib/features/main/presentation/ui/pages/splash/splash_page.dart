@@ -1,8 +1,6 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-import '../../../../../../shared/l10n/app_localizations.dart';
-
 // 📦 Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
@@ -35,13 +33,11 @@ class _SplashPageState extends State<SplashPage> {
 
     if (mounted) {
       _splashViewmodel.addListener(() async {
-        final l10n = AppLocalizations.of(context)!;
-
         if (_splashViewmodel.state == StateEnum.error && mounted) {
           EZTSnackBar.clear(context);
           EZTSnackBar.show(
             context,
-            HandleFailure.of(l10n, _splashViewmodel.failure!),
+            HandleFailure.of(context.l10n, _splashViewmodel.failure!),
             eztSnackBarType: EZTSnackBarType.error,
           );
 
@@ -52,7 +48,7 @@ class _SplashPageState extends State<SplashPage> {
             accountViewmodel.logout();
 
             if (accountViewmodel.state == StateEnum.success && mounted) {
-              EZTSnackBar.show(context, l10n.loginAgain);
+              EZTSnackBar.show(context, context.l10n.loginAgain);
               await Future.delayed(const Duration(milliseconds: 500));
               if (mounted) {
                 Navigator.pushReplacementNamed(context, Routing.login);

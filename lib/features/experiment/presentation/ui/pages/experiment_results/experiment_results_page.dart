@@ -4,8 +4,6 @@ import 'dart:math';
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-import '../../../../../../shared/l10n/app_localizations.dart';
-
 // 📦 Package imports:
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
@@ -33,7 +31,6 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
   late final ExperimentResultsViewmodel _experimentResultsViewmodel;
   late final ExperimentDetailsViewmodel _experimentDetailsViewmodel;
   late final ExperimentEntity _experiment;
-  late final AppLocalizations? l10n;
 
   @override
   void initState() {
@@ -49,7 +46,7 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
         if (mounted && _experimentResultsViewmodel.state == StateEnum.error) {
           EZTSnackBar.show(
             context,
-            HandleFailure.of(l10n, _experimentResultsViewmodel.failure!),
+            HandleFailure.of(context.l10n, _experimentResultsViewmodel.failure!),
             duration: _experimentResultsViewmodel.failure! is UnableToSaveFailure ? const Duration(seconds: 15) : null,
             eztSnackBarType: EZTSnackBarType.error,
           ).then(
@@ -65,7 +62,6 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    l10n = AppLocalizations.of(context);
   }
 
   Widget _buildHeader(String title, String message) {
@@ -115,9 +111,9 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
     );
   }
 
-  get _buildBody {
+  Widget get _buildBody {
     if (_experimentResultsViewmodel.state == StateEnum.loading) {
-      return EZTProgressIndicator(message: l10n?.loadingResults);
+      return EZTProgressIndicator(message: context.l10n.loadingResults);
     }
 
     final results = _experimentResultsViewmodel.experimentResult;
@@ -126,7 +122,9 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
       child: CustomScrollView(
         physics: const NeverScrollableScrollPhysics(),
         slivers: [
-          SliverToBoxAdapter(child: _buildHeader(l10n?.results ?? "", l10n?.experimentHeader(_experiment.name) ?? "")),
+          SliverToBoxAdapter(
+            child: _buildHeader(context.l10n.results, context.l10n.experimentHeader(_experiment.name)),
+          ),
           ScrollConfiguration(
             behavior: MyBehavior(),
             child: SliverFillRemaining(
@@ -153,11 +151,10 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                                   style: TextStyles(context).informationExperimentStepTitle(fontSize: 28),
                                 ),
                                 Text(
-                                  l10n?.enzymeTypeHeader(
-                                        results.enzymes[indexOfEnzymes].enzyme.name,
-                                        results.enzymes[indexOfEnzymes].enzyme.formula,
-                                      ) ??
-                                      "",
+                                  context.l10n.enzymeTypeHeader(
+                                    results.enzymes[indexOfEnzymes].enzyme.name,
+                                    results.enzymes[indexOfEnzymes].enzyme.formula,
+                                  ),
                                 ),
                               ],
                             ),
@@ -170,7 +167,7 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text(treatment.treatment.name, style: TextStyles.bodyBold),
-                                          Text(l10n?.treatmentLabel ?? ""),
+                                          Text(context.l10n.treatmentLabel),
                                         ],
                                       ),
                                       children: [
@@ -193,33 +190,33 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                                                     columnSpacing: 12,
                                                     minWidth: 1200,
                                                     columns: [
-                                                      DataColumn(label: Text(l10n?.columnId ?? ""), numeric: true),
-                                                      DataColumn(label: Text(l10n?.columnSample ?? ""), numeric: true),
+                                                      DataColumn(label: Text(context.l10n.columnId), numeric: true),
+                                                      DataColumn(label: Text(context.l10n.columnSample), numeric: true),
                                                       DataColumn(
-                                                        label: Text(l10n?.columnWhiteSampleShort ?? ""),
+                                                        label: Text(context.l10n.columnWhiteSampleShort),
                                                         numeric: true,
-                                                        tooltip: l10n?.columnWhiteSampleTooltip ?? "",
+                                                        tooltip: context.l10n.columnWhiteSampleTooltip,
                                                       ),
                                                       DataColumn(
-                                                        label: Text(l10n?.columnDifference ?? ""),
+                                                        label: Text(context.l10n.columnDifference),
                                                         numeric: true,
                                                       ),
-                                                      DataColumn(label: Text(l10n?.variableA ?? ""), numeric: true),
-                                                      DataColumn(label: Text(l10n?.variableB ?? ""), numeric: true),
-                                                      DataColumn(label: Text(l10n?.columnCurve ?? ""), numeric: true),
+                                                      DataColumn(label: Text(context.l10n.variableA), numeric: true),
+                                                      DataColumn(label: Text(context.l10n.variableB), numeric: true),
+                                                      DataColumn(label: Text(context.l10n.columnCurve), numeric: true),
                                                       DataColumn(
-                                                        label: Text(l10n?.columnCorrectionFactorShort ?? ""),
+                                                        label: Text(context.l10n.columnCorrectionFactorShort),
                                                         numeric: true,
-                                                        tooltip: l10n?.correctionFactor,
+                                                        tooltip: context.l10n.correctionFactor,
                                                       ),
-                                                      DataColumn(label: Text(l10n?.timeHours ?? ""), numeric: true),
-                                                      DataColumn(label: Text(l10n?.columnVolume ?? ""), numeric: true),
+                                                      DataColumn(label: Text(context.l10n.timeHours), numeric: true),
+                                                      DataColumn(label: Text(context.l10n.columnVolume), numeric: true),
                                                       DataColumn(
-                                                        label: Text(l10n?.columnSampleWeightShort ?? ""),
+                                                        label: Text(context.l10n.columnSampleWeightShort),
                                                         numeric: true,
-                                                        tooltip: l10n?.columnSampleWeightTooltip,
+                                                        tooltip: context.l10n.columnSampleWeightTooltip,
                                                       ),
-                                                      DataColumn(label: Text(l10n?.columnResult ?? ""), numeric: true),
+                                                      DataColumn(label: Text(context.l10n.columnResult), numeric: true),
                                                     ],
                                                     rows: List<DataRow2>.generate(
                                                       treatment.repetitionResults.length,
@@ -327,7 +324,7 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                   Padding(
                     padding: EdgeInsets.fromLTRB(16, 16, MediaQuery.of(context).size.width * 0.2125, 16),
                     child: EZTButton(
-                      text: l10n?.backButton ?? "",
+                      text: context.l10n.backButton,
                       eztButtonType: EZTButtonType.regular,
                       onPressed: () {
                         Navigator.pop(context);
@@ -343,7 +340,7 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
     );
   }
 
-  get _rotateFloatingActionButtonBuilder => RotateFloatingActionButtonBuilder(
+  RotateFloatingActionButtonBuilder get _rotateFloatingActionButtonBuilder => RotateFloatingActionButtonBuilder(
     child: Icon(PhosphorIcons.dotsThreeVertical()),
     fabSize: ExpandableFabSize.regular,
     backgroundColor: context.getApplyedColorScheme.primary,
@@ -353,21 +350,21 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
 
   Map<String, String> _buildExcelTranslations() {
     return {
-      'excel_treatmentLabel': l10n?.excel_treatmentLabel ?? "",
-      'excel_col_id': l10n?.excel_col_id ?? "",
-      'excel_col_sampleAbsorbance': l10n?.excel_col_sampleAbsorbance ?? "",
-      'excel_col_whiteSampleAbsorbance': l10n?.excel_col_whiteSampleAbsorbance ?? "",
-      'excel_col_difference': l10n?.excel_col_difference ?? "",
-      'excel_col_variableA': l10n?.excel_col_variableA ?? "",
-      'excel_col_variableB': l10n?.excel_col_variableB ?? "",
-      'excel_col_curveCalculation': l10n?.excel_col_curveCalculation ?? "",
-      'excel_col_correctionFactor': l10n?.excel_col_correctionFactor ?? "",
-      'excel_col_time': l10n?.excel_col_time ?? "",
-      'excel_col_volume': l10n?.excel_col_volume ?? "",
-      'excel_col_sampleWeight': l10n?.excel_col_sampleWeight ?? "",
-      'excel_col_result': l10n?.excel_col_result ?? "",
-      'excel_footer_developedBy': l10n?.excel_footer_developedBy ?? "",
-      'excel_footer_learnMore': l10n?.excel_footer_learnMore ?? "",
+      'excel_treatmentLabel': context.l10n.excel_treatmentLabel,
+      'excel_col_id': context.l10n.excel_col_id,
+      'excel_col_sampleAbsorbance': context.l10n.excel_col_sampleAbsorbance,
+      'excel_col_whiteSampleAbsorbance': context.l10n.excel_col_whiteSampleAbsorbance,
+      'excel_col_difference': context.l10n.excel_col_difference,
+      'excel_col_variableA': context.l10n.excel_col_variableA,
+      'excel_col_variableB': context.l10n.excel_col_variableB,
+      'excel_col_curveCalculation': context.l10n.excel_col_curveCalculation,
+      'excel_col_correctionFactor': context.l10n.excel_col_correctionFactor,
+      'excel_col_time': context.l10n.excel_col_time,
+      'excel_col_volume': context.l10n.excel_col_volume,
+      'excel_col_sampleWeight': context.l10n.excel_col_sampleWeight,
+      'excel_col_result': context.l10n.excel_col_result,
+      'excel_footer_developedBy': context.l10n.excel_footer_developedBy,
+      'excel_footer_learnMore': context.l10n.excel_footer_learnMore,
     };
   }
 
@@ -395,15 +392,15 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                       child: Icon(PhosphorIcons.share()),
                       onPressed: () {
                         final translations = _buildExcelTranslations();
-                        final translatedFilename = l10n?.shareExperimentResultsFilename(
+                        final translatedFilename = context.l10n.shareExperimentResultsFilename(
                           _experimentDetailsViewmodel.experiment!.name,
                         );
 
-                        _experimentResultsViewmodel.shareFile(translations, translatedFilename ?? "").then((success) {
+                        _experimentResultsViewmodel.shareFile(translations, translatedFilename).then((success) {
                           if (!success) {
                             EZTSnackBar.show(
                               context,
-                              l10n?.shareFileError ?? "",
+                              context.l10n.shareFileError,
                               eztSnackBarType: EZTSnackBarType.error,
                             );
                           }
@@ -425,13 +422,13 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                               (flag) => flag
                                   ? EZTSnackBar.show(
                                       context,
-                                      l10n?.spreadsheetSavedSuccess ?? "",
+                                      context.l10n.spreadsheetSavedSuccess,
                                       eztSnackBarType: EZTSnackBarType.success,
                                     )
                                   : _experimentResultsViewmodel.failure is! UnableToSaveFailure
                                   ? EZTSnackBar.show(
                                       context,
-                                      l10n?.spreadsheetSaveError ?? "",
+                                      context.l10n.spreadsheetSaveError,
                                       eztSnackBarType: EZTSnackBarType.error,
                                     )
                                   : null,

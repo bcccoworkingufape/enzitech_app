@@ -1,6 +1,3 @@
-// 🐦 Flutter imports:
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 
 import '../../../../../../shared/l10n/app_localizations.dart';
@@ -31,7 +28,6 @@ class ExperimentsPage extends StatefulWidget {
 class _ExperimentsPageState extends State<ExperimentsPage> {
   late final ExperimentsViewmodel _experimentsViewmodel;
   late final HomeViewmodel _homeViewmodel;
-  late final AppLocalizations? l10n;
   final Key _refreshIndicatorKey = GlobalKey();
 
   List<bool> isSelected = [true, false];
@@ -60,7 +56,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
           EZTSnackBar.clear(context);
           EZTSnackBar.show(
             context,
-            HandleFailure.of(l10n, _experimentsViewmodel.failure!),
+            HandleFailure.of(context.l10n, _experimentsViewmodel.failure!),
             eztSnackBarType: EZTSnackBarType.error,
           );
           if (_experimentsViewmodel.failure is ExpiredTokenOrWrongUserFailure ||
@@ -85,7 +81,6 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    l10n = AppLocalizations.of(context);
   }
 
   Future<void> _showFiltersDialog() async {
@@ -100,15 +95,15 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
 
   Widget _buildExperimentsList(double height) {
     if (_experimentsViewmodel.state == StateEnum.error) {
-      return EZTForcedCenter(child: EZTError(message: l10n?.errorLoadingExperiments));
+      return EZTForcedCenter(child: EZTError(message: context.l10n.errorLoadingExperiments));
     }
 
     if (_experimentsViewmodel.state == StateEnum.loading && _experimentsViewmodel.isLoadingMoreRunning == false) {
-      return EZTProgressIndicator(message: l10n?.loadingExperiments);
+      return EZTProgressIndicator(message: context.l10n.loadingExperiments);
     }
 
     if (_experimentsViewmodel.state == StateEnum.success && _experimentsViewmodel.experiments.isEmpty) {
-      return EZTForcedCenter(child: EZTNotFound(message: l10n?.experimentsNotFound));
+      return EZTForcedCenter(child: EZTNotFound(message: context.l10n.experimentsNotFound));
     }
 
     return ListView.builder(
@@ -136,10 +131,10 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
 
                   EZTSnackBar.show(
                     context,
-                    l10n?.experimentDeleted(experiment.name) ?? "",
+                    context.l10n.experimentDeleted(experiment.name),
                     eztSnackBarType: EZTSnackBarType.error,
                     action: SnackBarAction(
-                      label: l10n?.undo ?? "",
+                      label: context.l10n.undo,
                       textColor: context.getApplyedColorScheme.onError,
                       onPressed: () {
                         setState(() {
@@ -167,7 +162,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                           color: context.getApplyedColorScheme.onError,
                         ),
                         Text(
-                          l10n?.delete ?? "",
+                          context.l10n.delete,
                           style: TextStyle(color: context.getApplyedColorScheme.onError),
                           textAlign: TextAlign.right,
                         ),
@@ -213,7 +208,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                       padding: const EdgeInsets.only(top: 30, bottom: 30),
                       child: Center(
                         child: Text(
-                          l10n?.allExperimentsDisplayed ?? "",
+                          context.l10n.allExperimentsDisplayed,
                           style: TextStyles(
                             context,
                           ).buttonPrimary.copyWith(color: context.getApplyedColorScheme.tertiary, fontSize: 20.0),
@@ -260,12 +255,12 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                         segments: <ButtonSegment<int>>[
                           ButtonSegment<int>(
                             value: 0,
-                            label: Text(l10n?.inProgress ?? ""),
+                            label: Text(context.l10n.inProgress),
                             icon: Icon(PhosphorIcons.clockClockwise()),
                           ),
                           ButtonSegment<int>(
                             value: 1,
-                            label: Text(l10n?.completed ?? ""),
+                            label: Text(context.l10n.completed),
                             icon: Icon(PhosphorIcons.checks()),
                           ),
                         ],
@@ -306,7 +301,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                 ),
                 if (_experimentsViewmodel.experiments.isNotEmpty)
                   Text(
-                    l10n?.experimentsFound(_experimentsViewmodel.totalOfExperiments) ?? "",
+                    context.l10n.experimentsFound(_experimentsViewmodel.totalOfExperiments),
                     style: TextStyles(context).link(fontSize: 16),
                   ),
                 const SizedBox(height: 16),

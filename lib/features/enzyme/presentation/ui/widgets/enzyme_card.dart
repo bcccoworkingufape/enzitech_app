@@ -1,7 +1,6 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-import '../../../../../shared/l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
 // 🌎 Project imports:
@@ -23,17 +22,16 @@ class EnzymeCard extends StatefulWidget {
 class _EnzymeCardState extends State<EnzymeCard> {
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     final locale = Localizations.localeOf(context).toString();
     final formattedDate = DateFormat.yMd(locale).format(widget.enzyme.createdAt!);
 
     final Map<String, String> enzymeTypeTranslations = {
-      'Betaglucosidase': l10n.enzymeType_betaGlucosidase,
-      'Aryl': l10n.enzymeType_aryl,
-      'FosfataseAcida': l10n.enzymeType_acidPhosphatase,
-      'FosfataseAlcalina': l10n.enzymeType_alkalinePhosphatase,
-      'Urease': l10n.enzymeType_urease,
-      'FDA': l10n.enzymeType_fda,
+      'Betaglucosidase': context.l10n.enzymeType_betaGlucosidase,
+      'Aryl': context.l10n.enzymeType_aryl,
+      'FosfataseAcida': context.l10n.enzymeType_acidPhosphatase,
+      'FosfataseAlcalina': context.l10n.enzymeType_alkalinePhosphatase,
+      'Urease': context.l10n.enzymeType_urease,
+      'FDA': context.l10n.enzymeType_fda,
     };
 
     final translatedEnzymeType = enzymeTypeTranslations[widget.enzyme.type] ?? widget.enzyme.type;
@@ -61,7 +59,7 @@ class _EnzymeCardState extends State<EnzymeCard> {
                           textStyle: TextStyles(context).titleMoreBoldHeadingColored,
                         ),
                       ),
-                      Text(l10n.createdOn(formattedDate), style: TextStyles.bodyMinRegular),
+                      Text(context.l10n.createdOn(formattedDate), style: TextStyles.bodyMinRegular),
                     ],
                   ),
                 ),
@@ -87,7 +85,7 @@ class _EnzymeCardState extends State<EnzymeCard> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  l10n.formulaLabel,
+                  context.l10n.formulaLabel,
                   style: TextStyles(context).bodyRegular.copyWith(fontSize: 16.0, fontWeight: FontWeight.w600),
                 ),
                 Text(
@@ -112,7 +110,7 @@ class _EnzymeCardState extends State<EnzymeCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          l10n.variableALabel,
+                          context.l10n.variableALabel,
                           style: TextStyles(context).bodyRegular.copyWith(fontSize: 16.0, fontWeight: FontWeight.w600),
                         ),
                       ],
@@ -137,7 +135,7 @@ class _EnzymeCardState extends State<EnzymeCard> {
                     Wrap(
                       children: [
                         Text(
-                          l10n.variableBLabel,
+                          context.l10n.variableBLabel,
                           style: TextStyles(context).bodyRegular.copyWith(fontSize: 16.0, fontWeight: FontWeight.w600),
                         ),
                         Text(

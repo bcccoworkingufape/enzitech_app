@@ -9,12 +9,12 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import '../../../../../../shared/l10n/app_localizations.dart';
 
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../core/routing/routing.dart';
+import '../../../../../../shared/extensions/extensions.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../../../../shared/utils/utils.dart';
 import '../../../viewmodel/home_viewmodel.dart';
@@ -43,18 +43,17 @@ class _SettingsPageState extends State<SettingsPage> {
 
     if (mounted) {
       _settingsViewmodel.addListener(() async {
-        final l10n = AppLocalizations.of(context)!;
         if (_settingsViewmodel.state == StateEnum.error) {
           EZTSnackBar.show(
             context,
-            HandleFailure.of(l10n, _settingsViewmodel.failure!),
+            HandleFailure.of(context.l10n, _settingsViewmodel.failure!),
             eztSnackBarType: EZTSnackBarType.error,
           );
         }
 
         if (_settingsViewmodel.state == StateEnum.success && _settingsViewmodel.user == null && mounted) {
           EZTSnackBar.clear(context);
-          EZTSnackBar.show(context, l10n.seeYouSoon);
+          EZTSnackBar.show(context, context.l10n.seeYouSoon);
           await Future.delayed(const Duration(milliseconds: 250));
           if (mounted) {
             SchedulerBinding.instance.addPostFrameCallback((_) {
@@ -71,9 +70,8 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     final envEnum = _settingsViewmodel.environment;
-    final translatedEnvValue = l10n.environmentValue(envEnum.name);
+    final translatedEnvValue = context.l10n.environmentValue(envEnum.name);
     return ListenableBuilder(
       listenable: _settingsViewmodel,
       builder: (context, child) {
@@ -87,11 +85,11 @@ class _SettingsPageState extends State<SettingsPage> {
               return ListView(
                 children: [
                   SettingsSection(
-                    title: l10n.info,
+                    title: context.l10n.info,
                     tiles: [
                       ListTile(
                         leading: Icon(PhosphorIcons.info()),
-                        title: Text(l10n.about),
+                        title: Text(context.l10n.about),
                         trailing: Icon(PhosphorIcons.caretRight()),
                         onTap: () {
                           showModalBottomSheet(
@@ -106,7 +104,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       ListTile(
                         leading: Icon(PhosphorIcons.question()),
                         trailing: Icon(PhosphorIcons.caretRight()),
-                        title: Text(l10n.frequentlyAskedQuestions),
+                        title: Text(context.l10n.frequentlyAskedQuestions),
                         onTap: () {
                           showModalBottomSheet(
                             isScrollControlled: true,
@@ -120,11 +118,11 @@ class _SettingsPageState extends State<SettingsPage> {
                     ],
                   ),
                   SettingsSection(
-                    title: l10n.userData,
+                    title: context.l10n.userData,
                     tiles: [
                       SettingsTile(
                         leading: Icon(PhosphorIcons.user()),
-                        title: Text(l10n.userName),
+                        title: Text(context.l10n.userName),
                         subtitle: Text(
                           _settingsViewmodel.user!.name,
                           overflow: TextOverflow.ellipsis,
@@ -133,7 +131,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                       SettingsTile(
                         leading: Icon(PhosphorIcons.at()),
-                        title: Text(l10n.email),
+                        title: Text(context.l10n.email),
                         subtitle: Text(
                           _settingsViewmodel.user!.email,
                           overflow: TextOverflow.ellipsis,
@@ -142,9 +140,9 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                       SettingsTile(
                         leading: Icon(PhosphorIcons.identificationBadge()),
-                        title: Text(l10n.userType),
+                        title: Text(context.l10n.userType),
                         subtitle: Text(
-                          l10n.roles(_settingsViewmodel.user!.userType.name),
+                          context.l10n.roles(_settingsViewmodel.user!.userType.name),
                           overflow: TextOverflow.ellipsis,
                           style: descriptionTextStyle,
                         ),
@@ -152,17 +150,17 @@ class _SettingsPageState extends State<SettingsPage> {
                     ],
                   ),
                   SettingsSection(
-                    title: l10n.settings,
+                    title: context.l10n.settings,
                     tiles: [
                       SwitchListTile(
                         secondary: Icon(PhosphorIcons.trash()),
-                        title: Text(l10n.deletionConfirmation),
+                        title: Text(context.l10n.deletionConfirmation),
                         value: _settingsViewmodel.enableExcludeConfirmation!,
                         onChanged: (bool value) => _settingsViewmodel.setEnableExcludeConfirmation(value),
                       ),
                       SettingsTile(
                         leading: Icon(PhosphorIcons.paintRoller()),
-                        title: Text(l10n.theme),
+                        title: Text(context.l10n.theme),
                         trailing: SegmentedButton<ThemeMode>(
                           showSelectedIcon: false,
                           segments: <ButtonSegment<ThemeMode>>[
@@ -184,11 +182,11 @@ class _SettingsPageState extends State<SettingsPage> {
                     ],
                   ),
                   SettingsSection(
-                    title: l10n.details,
+                    title: context.l10n.details,
                     tiles: [
                       SettingsTile(
                         leading: Icon(PhosphorIcons.computerTower()),
-                        title: Text(l10n.environment),
+                        title: Text(context.l10n.environment),
                         subtitle: Text(
                           translatedEnvValue,
                           overflow: TextOverflow.ellipsis,
@@ -201,11 +199,10 @@ class _SettingsPageState extends State<SettingsPage> {
                           try {
                             await _settingsViewmodel.openUrl(Constants.enzitechGithubPage);
                           } on UnableToOpenUrlFailure catch (e) {
-                            final l10n = AppLocalizations.of(context)!;
-                            EZTSnackBar.show(context, l10n.unableToOpenUrlError(e.message));
+                            EZTSnackBar.show(context, context.l10n.unableToOpenUrlError(e.message));
                           }
                         },
-                        title: Text(l10n.version),
+                        title: Text(context.l10n.version),
                         subtitle: Text(
                           "${_settingsViewmodel.appInfo!.version}+${_settingsViewmodel.appInfo!.buildNumber}",
                           overflow: TextOverflow.ellipsis,
@@ -214,7 +211,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                       SettingsTile(
                         leading: Icon(PhosphorIcons.signOut()),
-                        title: Text(l10n.exit),
+                        title: Text(context.l10n.exit),
                         onTap: () {
                           _homeViewmodel.experimentsViewmodel.clearFilters();
                           _settingsViewmodel.logout();

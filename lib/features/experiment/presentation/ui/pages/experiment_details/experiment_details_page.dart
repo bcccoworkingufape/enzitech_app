@@ -1,14 +1,5 @@
-// 🐦 Flutter imports:
-// ignore_for_file: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
-
-// 🐦 Flutter imports:
-import 'dart:convert';
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-
-import '../../../../../../shared/l10n/app_localizations.dart';
 
 // 📦 Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
@@ -40,7 +31,6 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
   late final ExperimentDetailsViewmodel _experimentDetailsViewmodel;
   late final ExperimentsViewmodel _experimentsViewmodel;
   late final HomeViewmodel _homeViewmodel;
-  late final AppLocalizations? l10n;
 
   bool _expandToSeeMoreVisible = false;
 
@@ -56,7 +46,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
         if (mounted && _experimentDetailsViewmodel.state == StateEnum.error) {
           EZTSnackBar.show(
             context,
-            HandleFailure.of(l10n, _experimentDetailsViewmodel.failure!),
+            HandleFailure.of(context.l10n, _experimentDetailsViewmodel.failure!),
             eztSnackBarType: EZTSnackBarType.error,
           );
         }
@@ -67,10 +57,9 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    l10n = AppLocalizations.of(context);
   }
 
-  _buildInfoBadge(int quantity, String name) {
+  Column _buildInfoBadge(int quantity, String name) {
     return Column(
       children: [
         Text(quantity.toString(), style: TextStyles.titleHome),
@@ -80,22 +69,22 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
     );
   }
 
-  get leadWithEnzymes {
+  List<Text> get leadWithEnzymes {
     if (_experimentDetailsViewmodel.experiment!.enzymes != null) {
       if (_experimentDetailsViewmodel.experiment!.enzymes!.isNotEmpty) {
         return _experimentDetailsViewmodel.experiment!.enzymes!.map((element) => Text(element.name)).toList();
       }
     }
-    return [Text(l10n?.noData ?? "")];
+    return [Text(context.l10n.noData)];
   }
 
-  get leadWithTreatments {
+  List<Text> get leadWithTreatments {
     if (_experimentDetailsViewmodel.experiment!.treatments != null) {
       if (_experimentDetailsViewmodel.experiment!.treatments!.isNotEmpty) {
         return _experimentDetailsViewmodel.experiment!.treatments!.map((element) => Text(element.name)).toList();
       }
     }
-    return [Text(l10n?.noData ?? "")];
+    return [Text(context.l10n.noData)];
   }
 
   Widget _buildCard({required Widget child, Color? color}) {
@@ -110,11 +99,11 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
 
   Widget _buildBody(double height) {
     if (_experimentDetailsViewmodel.state == StateEnum.error) {
-      return EZTError(message: l10n?.errorLoadingExperiment(_experimentDetailsViewmodel.experiment!.name));
+      return EZTError(message: context.l10n.errorLoadingExperiment(_experimentDetailsViewmodel.experiment!.name));
     }
 
     if (_experimentDetailsViewmodel.state == StateEnum.loading) {
-      return EZTProgressIndicator(message: l10n?.loadingExperiment);
+      return EZTProgressIndicator(message: context.l10n.loadingExperiment);
     }
 
     return SingleChildScrollView(
@@ -181,16 +170,16 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
                       children: [
                         _buildInfoBadge(
                           _experimentDetailsViewmodel.experiment!.treatments!.length,
-                          l10n?.treatments ?? "",
+                          context.l10n.treatments,
                         ),
-                        _buildInfoBadge(_experimentDetailsViewmodel.experiment!.repetitions, l10n?.repetitions ?? ""),
-                        _buildInfoBadge(_experimentDetailsViewmodel.experiment!.enzymes!.length, l10n?.enzymes ?? ""),
+                        _buildInfoBadge(_experimentDetailsViewmodel.experiment!.repetitions, context.l10n.repetitions),
+                        _buildInfoBadge(_experimentDetailsViewmodel.experiment!.enzymes!.length, context.l10n.enzymes),
                       ],
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 24.0, bottom: !_expandToSeeMoreVisible ? 0 : 24.0),
                       child: Text(
-                        !_expandToSeeMoreVisible ? l10n?.tapToSeeMore ?? "" : l10n?.tapToHide ?? "",
+                        !_expandToSeeMoreVisible ? context.l10n.tapToSeeMore : context.l10n.tapToHide,
                         style: const TextStyle(fontStyle: FontStyle.italic, fontSize: 12),
                       ),
                     ),
@@ -212,7 +201,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
             ),
             const SizedBox(height: 20),
             EZTButton(
-              text: l10n?.enzymaticCalculation ?? "",
+              text: context.l10n.enzymaticCalculation,
               enabled: _experimentDetailsViewmodel.experiment!.progress != 1,
               icon: Icon(
                 PhosphorIcons.function(),
@@ -232,7 +221,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
             ),
             const SizedBox(height: 20),
             EZTButton(
-              text: l10n?.results ?? "",
+              text: context.l10n.results,
               enabled: _experimentDetailsViewmodel.experiment!.progress != 0,
               icon: Icon(
                 PhosphorIcons.fileText(),
@@ -258,7 +247,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
         return Scaffold(
           appBar: AppBar(
             iconTheme: IconThemeData(color: context.getApplyedColorScheme.onBackground),
-            title: Text(l10n?.experimentDetails ?? "", style: TextStyles(context).titleBoldBackground()),
+            title: Text(context.l10n.experimentDetails, style: TextStyles(context).titleBoldBackground()),
             actions: [
               if (_experimentDetailsViewmodel.state == StateEnum.success)
                 IconButton(
@@ -289,7 +278,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
                         EZTSnackBar.clear(context);
                         EZTSnackBar.show(
                           context,
-                          l10n?.experimentDeleted(_experimentDetailsViewmodel.experiment!.name) ?? "",
+                          context.l10n.experimentDeleted(_experimentDetailsViewmodel.experiment!.name),
                           eztSnackBarType: EZTSnackBarType.error,
                         );
                       });

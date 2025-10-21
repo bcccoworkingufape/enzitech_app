@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
+import '../../../../../../shared/extensions/build_context_extensions.dart';
 import '../../../../../../shared/l10n/app_localizations.dart';
 
 // 🌎 Project imports:
@@ -26,14 +27,12 @@ class CalculateExperimentPage extends StatefulWidget {
 
 class _CalculateExperimentPageState extends State<CalculateExperimentPage> {
   late final CalculateExperimentViewmodel _calculateExperimentViewmodel;
-  late final AppLocalizations? l10n;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    l10n = AppLocalizations.of(context);
   }
 
   @override
@@ -48,7 +47,7 @@ class _CalculateExperimentPageState extends State<CalculateExperimentPage> {
         if (mounted && _calculateExperimentViewmodel.state == StateEnum.error) {
           EZTSnackBar.show(
             context,
-            HandleFailure.of(l10n, _calculateExperimentViewmodel.failure!),
+            HandleFailure.of(context.l10n, _calculateExperimentViewmodel.failure!),
             eztSnackBarType: EZTSnackBarType.error,
           );
         }

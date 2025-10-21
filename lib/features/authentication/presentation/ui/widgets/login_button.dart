@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
-import '../../../../../shared/l10n/app_localizations.dart';
 
 // 🌎 Project imports:
 import '../../../../../core/enums/enums.dart';
+import '../../../../../shared/extensions/extensions.dart';
 import '../../../../main/presentation/viewmodel/home_viewmodel.dart';
 import '../../viewmodel/login_viewmodel.dart';
 
@@ -17,7 +17,6 @@ class LoginButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     return AnimatedBuilder(
       animation: loginViewmodel,
       builder: (context, child) {
@@ -34,7 +33,7 @@ class LoginButton extends StatelessWidget {
                       loginViewmodel.loginAction();
                     }
                   },
-            child: loading ? const CircularProgressIndicator() : Text(l10n.loginButton),
+            child: loading ? const CircularProgressIndicator() : Text(context.l10n.loginButton),
           ),
         );
       },

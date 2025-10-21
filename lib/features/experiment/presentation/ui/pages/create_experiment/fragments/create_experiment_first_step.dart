@@ -1,13 +1,12 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-import '../../../../../../../shared/l10n/app_localizations.dart';
-
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 // 🌎 Project imports:
+import '../../../../../../../shared/extensions/extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../../../../../shared/validator/validator.dart';
 import '../../../../dto/create_experiment_dto.dart';
@@ -63,12 +62,11 @@ class _CreateExperimentFirstStepPageState extends State<CreateExperimentFirstSte
   }
 
   Widget get _nameInput {
-    final l10n = AppLocalizations.of(context)!;
     final fieldValidator = FieldValidator(_validations, context);
 
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,
-      labelText: l10n.nameLabel,
+      labelText: context.l10n.nameLabel,
       usePrimaryColorOnFocusedBorder: true,
       keyboardType: TextInputType.name,
       controller: _nameFieldController,
@@ -78,12 +76,11 @@ class _CreateExperimentFirstStepPageState extends State<CreateExperimentFirstSte
   }
 
   Widget get _descriptionInput {
-    final l10n = AppLocalizations.of(context)!;
     final fieldValidator = FieldValidator(_validations, context);
 
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,
-      labelText: l10n.descriptionLabel,
+      labelText: context.l10n.descriptionLabel,
       usePrimaryColorOnFocusedBorder: true,
       keyboardType: TextInputType.name,
       controller: _descriptionFieldController,
@@ -97,12 +94,11 @@ class _CreateExperimentFirstStepPageState extends State<CreateExperimentFirstSte
   }
 
   Widget get _buttons {
-    final l10n = AppLocalizations.of(context)!;
     return Column(
       children: [
         EZTButton(
           enabled: _createExperimentViewmodel.enableNextButtonOnFirstStep,
-          text: l10n.nextButton,
+          text: context.l10n.nextButton,
           onPressed: () {
             _createExperimentViewmodel.formKey.currentState!.save();
 
@@ -124,7 +120,7 @@ class _CreateExperimentFirstStepPageState extends State<CreateExperimentFirstSte
         ),
         const SizedBox(height: 16),
         EZTButton(
-          text: l10n.backButton,
+          text: context.l10n.backButton,
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
             _createExperimentViewmodel.onBack(mounted, context);
@@ -136,10 +132,9 @@ class _CreateExperimentFirstStepPageState extends State<CreateExperimentFirstSte
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     return CreateExperimentFragmentTemplate(
-      titleOfStepIndicator: l10n.registerNewExperiment,
-      messageOfStepIndicator: l10n.stepIndicatorIdentification(1, 4),
+      titleOfStepIndicator: context.l10n.registerNewExperiment,
+      messageOfStepIndicator: context.l10n.stepIndicatorIdentification(1, 4),
       body: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -150,7 +145,7 @@ class _CreateExperimentFirstStepPageState extends State<CreateExperimentFirstSte
               children: [
                 Icon(PhosphorIcons.flask()),
                 const SizedBox(width: 4),
-                Text(l10n.experimentIdentification, style: TextStyles.detailBold),
+                Text(context.l10n.experimentIdentification, style: TextStyles.detailBold),
               ],
             ),
             const SizedBox(height: 8),

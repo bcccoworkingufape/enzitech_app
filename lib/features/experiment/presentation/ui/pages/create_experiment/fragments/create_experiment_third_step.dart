@@ -1,14 +1,13 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-import '../../../../../../../shared/l10n/app_localizations.dart';
-
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:group_button/group_button.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 // 🌎 Project imports:
+import '../../../../../../../shared/extensions/extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../../../../../shared/utils/utils.dart';
 import '../../../../../../enzyme/domain/entities/enzyme_entity.dart';
@@ -78,12 +77,11 @@ class _CreateExperimentThirdStepPageState extends State<CreateExperimentThirdSte
   }
 
   Widget get _buttons {
-    final l10n = AppLocalizations.of(context)!;
     return Column(
       children: [
         EZTButton(
           enabled: _createExperimentViewmodel.enableNextButtonOnThirdStep,
-          text: l10n.nextButton,
+          text: context.l10n.nextButton,
           onPressed: () {
             _createExperimentViewmodel.formKey.currentState!.save();
 
@@ -105,7 +103,7 @@ class _CreateExperimentThirdStepPageState extends State<CreateExperimentThirdSte
         ),
         const SizedBox(height: 16),
         EZTButton(
-          text: l10n.backButton,
+          text: context.l10n.backButton,
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
             _createExperimentViewmodel.onBack(mounted, context);
@@ -117,10 +115,9 @@ class _CreateExperimentThirdStepPageState extends State<CreateExperimentThirdSte
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     return CreateExperimentFragmentTemplate(
-      titleOfStepIndicator: l10n.registerNewExperiment,
-      messageOfStepIndicator: l10n.stepIndicatorEnzymes(3, 4),
+      titleOfStepIndicator: context.l10n.registerNewExperiment,
+      messageOfStepIndicator: context.l10n.stepIndicatorEnzymes(3, 4),
       body: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -131,7 +128,7 @@ class _CreateExperimentThirdStepPageState extends State<CreateExperimentThirdSte
               children: [
                 Icon(PhosphorIcons.flask()),
                 const SizedBox(width: 4),
-                Text(l10n.experimentEnzymes, style: TextStyles.detailBold),
+                Text(context.l10n.experimentEnzymes, style: TextStyles.detailBold),
               ],
             ),
             GroupButton(
@@ -164,7 +161,7 @@ class _CreateExperimentThirdStepPageState extends State<CreateExperimentThirdSte
                     EZTSnackBar.clear(context);
                     EZTSnackBar.show(
                       context,
-                      l10n.enzymeTypeIs(
+                      context.l10n.enzymeTypeIs(
                         Constants.typesOfEnzymesListFormmated[Constants.typesOfEnzymesList.indexOf(
                           _enzymesViewmodel.enzymes[index].type,
                         )],

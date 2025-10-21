@@ -1,8 +1,6 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-import '../../../../../shared/l10n/app_localizations.dart';
-
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -29,7 +27,6 @@ class ExperimentCard extends StatefulWidget {
 class _ExperimentCardState extends State<ExperimentCard> {
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     final locale = Localizations.localeOf(context).toString();
     final formattedDate = DateFormat.yMd(locale).format(widget.experiment.updatedAt);
 
@@ -87,7 +84,7 @@ class _ExperimentCardState extends State<ExperimentCard> {
                           style: TextStyles(context).titleMoreBoldHeadingColored,
                         ),
                         const SizedBox(height: 2),
-                        Text(l10n.modifiedOn(formattedDate), style: TextStyles.bodyMinRegular),
+                        Text(context.l10n.modifiedOn(formattedDate), style: TextStyles.bodyMinRegular),
                         const SizedBox(height: 16),
                         Text(
                           widget.experiment.description,

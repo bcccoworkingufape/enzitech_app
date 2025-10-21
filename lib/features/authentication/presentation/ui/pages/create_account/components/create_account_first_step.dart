@@ -1,9 +1,6 @@
 // 🐦 Flutter imports:
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
-
-import '../../../../../../../shared/l10n/app_localizations.dart';
 
 // 📦 Package imports:
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -55,7 +52,7 @@ class CreateAccountFirstStepState extends State<CreateAccountFirstStep> {
     setState(() {});
   }
 
-  get _validateFields {
+  void get _validateFields {
     if (_nameFieldController.text.isNotEmpty && _institutionFieldController.text.isNotEmpty) {
       setState(() {
         enableNextButton = widget.formKey.currentState!.validate();
@@ -68,14 +65,13 @@ class CreateAccountFirstStepState extends State<CreateAccountFirstStep> {
   }
 
   Widget get _nameInput {
-    final l10n = AppLocalizations.of(context)!;
     final validations = <ValidateRule>[ValidateRule(ValidateTypes.required), ValidateRule(ValidateTypes.name)];
 
     final fieldValidator = FieldValidator(validations, context);
 
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,
-      labelText: l10n.nameLabel,
+      labelText: context.l10n.nameLabel,
       usePrimaryColorOnFocusedBorder: true,
       keyboardType: TextInputType.emailAddress,
       controller: _nameFieldController,
@@ -85,14 +81,13 @@ class CreateAccountFirstStepState extends State<CreateAccountFirstStep> {
   }
 
   Widget get _institutionInput {
-    final l10n = AppLocalizations.of(context)!;
     final validations = <ValidateRule>[ValidateRule(ValidateTypes.required), ValidateRule(ValidateTypes.name)];
 
     final fieldValidator = FieldValidator(validations, context);
 
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,
-      labelText: l10n.institutionLabel,
+      labelText: context.l10n.institutionLabel,
       usePrimaryColorOnFocusedBorder: true,
       keyboardType: TextInputType.emailAddress,
       controller: _institutionFieldController,
@@ -105,8 +100,7 @@ class CreateAccountFirstStepState extends State<CreateAccountFirstStep> {
     return Column(children: [_nameInput, const SizedBox(height: 10), _institutionInput]);
   }
 
-  _body(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+  SingleChildScrollView _body(BuildContext context) {
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
       child: Column(
@@ -120,13 +114,13 @@ class CreateAccountFirstStepState extends State<CreateAccountFirstStep> {
             ),
           ),
           const SizedBox(height: 16),
-          Center(child: Text(l10n.signUp, style: TextStyles.titleHome)),
+          Center(child: Text(context.l10n.signUp, style: TextStyles.titleHome)),
           const SizedBox(height: 64),
           Row(
             children: [
               Icon(PhosphorIcons.identificationCard()),
               const SizedBox(width: 4),
-              Text(l10n.personalData, style: TextStyles.detailBold),
+              Text(context.l10n.personalData, style: TextStyles.detailBold),
             ],
           ),
           _textFields,
@@ -137,12 +131,11 @@ class CreateAccountFirstStepState extends State<CreateAccountFirstStep> {
   }
 
   Widget get _buttons {
-    final l10n = AppLocalizations.of(context)!;
     return Column(
       children: [
         EZTButton(
           enabled: enableNextButton,
-          text: l10n.nextButton,
+          text: context.l10n.nextButton,
           onPressed: () {
             widget.formKey.currentState!.save();
 
@@ -159,7 +152,7 @@ class CreateAccountFirstStepState extends State<CreateAccountFirstStep> {
         ),
         const SizedBox(height: 16),
         EZTButton(
-          text: l10n.backButton,
+          text: context.l10n.backButton,
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
             Navigator.pop(context);

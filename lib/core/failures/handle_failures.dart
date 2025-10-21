@@ -5,13 +5,12 @@ import '../../shared/l10n/app_localizations.dart';
 
 class HandleFailure {
   static String of(
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     Failure failure, {
     bool enableStatusCode = false,
     bool overrideDefaultMessage = false,
     bool isLogin = false,
   }) {
-    if (l10n == null) return "";
     //* EZT custom error when API is down
     if (failure.runtimeType is ServerFailure) {
       if (failure.message.contains("Connection refused")) {

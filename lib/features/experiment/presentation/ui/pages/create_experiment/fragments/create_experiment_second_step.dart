@@ -2,8 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../../../../../shared/l10n/app_localizations.dart';
-
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:group_button/group_button.dart';
@@ -11,6 +9,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 // 🌎 Project imports:
 import '../../../../../../../core/routing/routing.dart';
+import '../../../../../../../shared/extensions/extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../../../../../shared/validator/validator.dart';
 import '../../../../../../main/presentation/viewmodel/home_viewmodel.dart';
@@ -87,7 +86,6 @@ class _CreateExperimentSecondStepPageState extends State<CreateExperimentSecondS
   }
 
   Widget get _repetitionsInput {
-    final l10n = AppLocalizations.of(context)!;
     final validations = <ValidateRule>[
       ValidateRule(ValidateTypes.required),
       ValidateRule(ValidateTypes.number),
@@ -98,7 +96,7 @@ class _CreateExperimentSecondStepPageState extends State<CreateExperimentSecondS
 
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,
-      labelText: l10n.repetitionsPerTreatmentLabel,
+      labelText: context.l10n.repetitionsPerTreatmentLabel,
       usePrimaryColorOnFocusedBorder: true,
       keyboardType: TextInputType.number,
       controller: _repetitionsFieldController,
@@ -114,12 +112,11 @@ class _CreateExperimentSecondStepPageState extends State<CreateExperimentSecondS
   }
 
   Widget get _buttons {
-    final l10n = AppLocalizations.of(context)!;
     return Column(
       children: [
         if (_checkboxButtons.isEmpty) ...[
           EZTButton(
-            text: l10n.goToTreatmentsButton,
+            text: context.l10n.goToTreatmentsButton,
             onPressed: () {
               GetIt.I.get<HomeViewmodel>().setFragmentIndex(1);
               _createExperimentViewmodel.setTemporaryExperiment(CreateExperimentDTO());
@@ -130,7 +127,7 @@ class _CreateExperimentSecondStepPageState extends State<CreateExperimentSecondS
         ],
         EZTButton(
           enabled: _createExperimentViewmodel.enableNextButtonOnSecondStep,
-          text: l10n.nextButton,
+          text: context.l10n.nextButton,
           onPressed: () {
             _createExperimentViewmodel.formKey.currentState!.save();
 
@@ -153,7 +150,7 @@ class _CreateExperimentSecondStepPageState extends State<CreateExperimentSecondS
         ),
         const SizedBox(height: 16),
         EZTButton(
-          text: l10n.backButton,
+          text: context.l10n.backButton,
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
             _createExperimentViewmodel.onBack(mounted, context);
@@ -165,10 +162,9 @@ class _CreateExperimentSecondStepPageState extends State<CreateExperimentSecondS
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     return CreateExperimentFragmentTemplate(
-      titleOfStepIndicator: l10n.registerNewExperiment,
-      messageOfStepIndicator: l10n.stepIndicatorTreatments(2, 4),
+      titleOfStepIndicator: context.l10n.registerNewExperiment,
+      messageOfStepIndicator: context.l10n.stepIndicatorTreatments(2, 4),
       body: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -179,14 +175,14 @@ class _CreateExperimentSecondStepPageState extends State<CreateExperimentSecondS
               children: [
                 Icon(PhosphorIcons.flask()),
                 const SizedBox(width: 4),
-                Text(l10n.treatmentsAndRepetitionsData, style: TextStyles.detailBold),
+                Text(context.l10n.treatmentsAndRepetitionsData, style: TextStyles.detailBold),
               ],
             ),
             Visibility(
               visible: _checkboxButtons.isNotEmpty,
               replacement: Padding(
                 padding: EdgeInsets.only(top: 8.0),
-                child: EZTError(message: l10n.noTreatmentsRegisteredError),
+                child: EZTError(message: context.l10n.noTreatmentsRegisteredError),
               ),
               child: GroupButton(
                 controller: _checkboxesController,

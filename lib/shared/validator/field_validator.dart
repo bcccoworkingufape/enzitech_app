@@ -1,9 +1,8 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-import '../l10n/app_localizations.dart';
-
 // 🌎 Project imports:
+import '../extensions/extensions.dart';
 import '../utils/utils.dart';
 import 'validator.dart';
 
@@ -52,7 +51,6 @@ class FieldValidator {
   FieldValidator(this.validations, this.context);
 
   String? validate(dynamic value, {String? confirmation}) {
-    final l10n = AppLocalizations.of(context)!;
     String? result;
 
     for (var i = 0; i < validations.length; i++) {
@@ -66,7 +64,7 @@ class FieldValidator {
         case ValidateTypes.required:
           {
             if (value == null || value.toString().trim().isEmpty) {
-              result = customErrorMessage ?? l10n.validation_required;
+              result = customErrorMessage ?? context.l10n.validation_required;
             } else {
               result = null;
             }
@@ -76,7 +74,7 @@ class FieldValidator {
           {
             var isStrong = Validator.isStrongPassword(value);
             if (!isStrong) {
-              result = customErrorMessage ?? l10n.validation_strongPassword;
+              result = customErrorMessage ?? context.l10n.validation_strongPassword;
             } else {
               result = null;
             }
@@ -87,7 +85,7 @@ class FieldValidator {
           {
             var isStrong = Validator.isAlfanumeric(value);
             if (!isStrong) {
-              result = customErrorMessage ?? l10n.validation_alfanumeric;
+              result = customErrorMessage ?? context.l10n.validation_alfanumeric;
             } else {
               result = null;
             }
@@ -97,7 +95,7 @@ class FieldValidator {
           {
             var isStrong = Validator.isName(value);
             if (!isStrong) {
-              result = customErrorMessage ?? l10n.validation_name;
+              result = customErrorMessage ?? context.l10n.validation_name;
             } else {
               result = null;
             }
@@ -112,7 +110,7 @@ class FieldValidator {
 
             var isStrong = Validator.isPhone(value);
             if (!isStrong) {
-              result = customErrorMessage ?? l10n.validation_phone;
+              result = customErrorMessage ?? context.l10n.validation_phone;
             } else {
               result = null;
             }
@@ -127,7 +125,7 @@ class FieldValidator {
 
             var isStrong = Validator.isCellPhone(value);
             if (!isStrong) {
-              result = customErrorMessage ?? l10n.validation_cellphone;
+              result = customErrorMessage ?? context.l10n.validation_cellphone;
             } else {
               result = null;
             }
@@ -140,7 +138,7 @@ class FieldValidator {
 
             var isStrong = pass == confirm;
             if (!isStrong) {
-              result = customErrorMessage ?? l10n.validation_passwordEquals;
+              result = customErrorMessage ?? context.l10n.validation_passwordEquals;
             } else {
               result = null;
             }
@@ -154,7 +152,7 @@ class FieldValidator {
 
             var isDiff = pass != confirm;
             if (!isDiff) {
-              result = customErrorMessage ?? l10n.validation_passwordMustBeDiff;
+              result = customErrorMessage ?? context.l10n.validation_passwordMustBeDiff;
             } else {
               result = null;
             }
@@ -162,7 +160,7 @@ class FieldValidator {
           }
 
         case ValidateTypes.notFound:
-          result = l10n.validation_notFound;
+          result = context.l10n.validation_notFound;
           break;
 
         case ValidateTypes.emailEquals:
@@ -172,7 +170,7 @@ class FieldValidator {
 
             var isStrong = pass == confirm;
             if (!isStrong) {
-              result = customErrorMessage ?? l10n.validation_emailEquals;
+              result = customErrorMessage ?? context.l10n.validation_emailEquals;
             } else {
               result = null;
             }
@@ -182,7 +180,7 @@ class FieldValidator {
           {
             var emailValid = Validator.email(value.toString());
             if (!emailValid) {
-              result = customErrorMessage ?? l10n.validation_email;
+              result = customErrorMessage ?? context.l10n.validation_email;
             } else {
               result = null;
             }
@@ -191,7 +189,7 @@ class FieldValidator {
         case ValidateTypes.cpf:
           {
             if (!CPFValidator.isValid(value.toString())) {
-              result = customErrorMessage ?? l10n.validation_cpf;
+              result = customErrorMessage ?? context.l10n.validation_cpf;
             } else {
               result = null;
             }
@@ -200,7 +198,7 @@ class FieldValidator {
         case ValidateTypes.cnpj:
           {
             if (!CNPJValidator.isValid(value.toString())) {
-              result = customErrorMessage ?? l10n.validation_cnpj;
+              result = customErrorMessage ?? context.l10n.validation_cnpj;
             } else {
               result = null;
             }
@@ -211,13 +209,13 @@ class FieldValidator {
             var text = Toolkit.removeEspecialCharacters(value.toString());
             if (text.length <= 11) {
               if (!CPFValidator.isValid(value.toString())) {
-                result = customErrorMessage ?? l10n.validation_cpf;
+                result = customErrorMessage ?? context.l10n.validation_cpf;
               } else {
                 result = null;
               }
             } else {
               if (!CNPJValidator.isValid(value.toString())) {
-                result = customErrorMessage ?? l10n.validation_cnpj;
+                result = customErrorMessage ?? context.l10n.validation_cnpj;
               } else {
                 result = null;
               }
@@ -228,7 +226,7 @@ class FieldValidator {
         case ValidateTypes.numeric:
           {
             if (value == null) {
-              result = customErrorMessage ?? l10n.validation_numeric;
+              result = customErrorMessage ?? context.l10n.validation_numeric;
             }
 
             if (double.tryParse(value) != null) {
@@ -241,7 +239,7 @@ class FieldValidator {
           {
             var isNumber = Validator.isNumeric(value);
             if (!isNumber) {
-              result = customErrorMessage ?? l10n.validation_number;
+              result = customErrorMessage ?? context.l10n.validation_number;
             } else {
               result = null;
             }
@@ -251,7 +249,7 @@ class FieldValidator {
           {
             var number = double.parse(value);
             if (number <= 0) {
-              result = customErrorMessage ?? l10n.validation_greaterThanZeroDecimal;
+              result = customErrorMessage ?? context.l10n.validation_greaterThanZeroDecimal;
             } else {
               result = null;
             }
@@ -264,7 +262,7 @@ class FieldValidator {
             if (number is int) {
               result = null;
             } else {
-              result = customErrorMessage ?? l10n.validation_isInteger;
+              result = customErrorMessage ?? context.l10n.validation_isInteger;
             }
             break;
           }
@@ -272,7 +270,7 @@ class FieldValidator {
           {
             var number = int.parse(value);
             if (number < 1) {
-              result = customErrorMessage ?? l10n.validation_greaterThanZero;
+              result = customErrorMessage ?? context.l10n.validation_greaterThanZero;
             } else {
               result = null;
             }
@@ -282,13 +280,13 @@ class FieldValidator {
           {
             if (value.runtimeType == int || value.runtimeType == double) {
               if (value > valueRule) {
-                result = customErrorMessage ?? l10n.validation_maxNumber(valueRule.toString());
+                result = customErrorMessage ?? context.l10n.validation_maxNumber(valueRule.toString());
               } else {
                 result = null;
               }
             } else if (value.runtimeType == String) {
               if (value.toString().length > valueRule) {
-                result = customErrorMessage ?? l10n.validation_maxChars(valueRule.toString());
+                result = customErrorMessage ?? context.l10n.validation_maxChars(valueRule.toString());
               } else {
                 result = null;
               }
@@ -300,7 +298,7 @@ class FieldValidator {
             var val = int.parse(value);
 
             if (val > valueRule) {
-              result = customErrorMessage ?? l10n.validation_maxAge(valueRule.toString());
+              result = customErrorMessage ?? context.l10n.validation_maxAge(valueRule.toString());
             } else {
               result = null;
             }
@@ -311,7 +309,7 @@ class FieldValidator {
           {
             var val = int.parse(value);
             if (valueRule > val) {
-              result = customErrorMessage ?? l10n.validation_minAge(valueRule.toString());
+              result = customErrorMessage ?? context.l10n.validation_minAge(valueRule.toString());
             } else {
               result = null;
             }
@@ -322,13 +320,13 @@ class FieldValidator {
           {
             if (value.runtimeType == int || value.runtimeType == double) {
               if (value < valueRule) {
-                result = customErrorMessage ?? l10n.validation_minNumber(valueRule.toString());
+                result = customErrorMessage ?? context.l10n.validation_minNumber(valueRule.toString());
               } else {
                 result = null;
               }
             } else if (value.runtimeType == String) {
               if (value.toString().length < valueRule) {
-                result = customErrorMessage ?? l10n.validation_minChars(valueRule.toString());
+                result = customErrorMessage ?? context.l10n.validation_minChars(valueRule.toString());
               } else {
                 result = null;
               }
@@ -341,14 +339,14 @@ class FieldValidator {
               if (!EnrollValidator.isValid(value.toString()) &&
                   !CNPJValidator.isValid(value.toString()) &&
                   !CPFValidator.isValid(value.toString())) {
-                result = customErrorMessage ?? l10n.validation_emailOrRegistration;
+                result = customErrorMessage ?? context.l10n.validation_emailOrRegistration;
               } else {
                 result = null;
               }
             } else {
               var emailValid = Validator.email(value.toString());
               if (!emailValid) {
-                result = customErrorMessage ?? l10n.validation_emailOrRegistration;
+                result = customErrorMessage ?? context.l10n.validation_emailOrRegistration;
               } else {
                 result = null;
               }

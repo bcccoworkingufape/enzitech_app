@@ -5,12 +5,11 @@ import 'package:flutter/scheduler.dart';
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
-import '../../../../../../shared/l10n/app_localizations.dart';
-
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../core/routing/routing.dart';
+import '../../../../../../shared/extensions/extensions.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../dto/create_experiment_dto.dart';
 import '../../../viewmodel/create_experiment_viewmodel.dart';
@@ -36,11 +35,10 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
 
     if (mounted) {
       _createExperimentViewmodel.addListener(() {
-        final l10n = AppLocalizations.of(context)!;
         if (mounted && _createExperimentViewmodel.state == StateEnum.error) {
           EZTSnackBar.show(
             context,
-            HandleFailure.of(l10n, _createExperimentViewmodel.failure!),
+            HandleFailure.of(context.l10n, _createExperimentViewmodel.failure!),
             eztSnackBarType: EZTSnackBarType.error,
           );
         } else if (_createExperimentViewmodel.state == StateEnum.success &&
@@ -60,7 +58,7 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
                   .then(
                     (value) => EZTSnackBar.show(
                       context,
-                      l10n.experimentCreatedSuccess,
+                      context.l10n.experimentCreatedSuccess,
                       eztSnackBarType: EZTSnackBarType.success,
                     ),
                   );

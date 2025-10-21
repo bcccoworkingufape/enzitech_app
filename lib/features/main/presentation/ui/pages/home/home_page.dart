@@ -48,7 +48,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   late final ExperimentsViewmodel _experimentsViewmodel;
   late final TreatmentsViewmodel _treatmentsViewmodel;
   late final ConnectionChecker _connectionChecker;
-  late final AppLocalizations? l10n;
 
   late final AnimationController animationControllerLogo = AnimationController(
     vsync: this,
@@ -79,8 +78,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     _connectivitySubscription = _connectionChecker.connectionChange.listen((event) {
       _homeViewmodel.setHasInternetConnection(event);
 
-      final l10n = AppLocalizations.of(context)!;
-
       if (!_homeViewmodel.hasInternetConnection) {
         EZTSnackBar.clear(context);
         noInternet(context);
@@ -89,7 +86,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           EZTSnackBar.clear(context);
           EZTSnackBar.show(
             context,
-            l10n?.connectionRestored ?? "",
+            context.l10n.connectionRestored,
             centerTitle: true,
             eztSnackBarType: EZTSnackBarType.success,
           );
@@ -102,12 +99,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       initFragements();
 
       _homeViewmodel.addListener(() {
-        final l10n = AppLocalizations.of(context)!;
-
         if (_homeViewmodel.state == StateEnum.error) {
           EZTSnackBar.show(
             context,
-            HandleFailure.of(l10n, _homeViewmodel.failure!),
+            HandleFailure.of(context.l10n, _homeViewmodel.failure!),
             eztSnackBarType: EZTSnackBarType.error,
           ).whenComplete(() async {
             if (_homeViewmodel.failure is ExpiredTokenOrWrongUserFailure ||
@@ -117,7 +112,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               _accountViewmodel.logout();
 
               if (_accountViewmodel.state == StateEnum.success && mounted) {
-                EZTSnackBar.show(context, l10n?.loginAgain ?? "");
+                EZTSnackBar.show(context, context.l10n.loginAgain);
                 await Future.delayed(const Duration(milliseconds: 500));
                 if (mounted) {
                   Navigator.pushReplacementNamed(context, Routing.login);
@@ -185,7 +180,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    l10n = AppLocalizations.of(context);
   }
 
   @override
@@ -200,7 +194,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     super.dispose();
   }
 
-  setAllButtonsVisible() {
+  void setAllButtonsVisible() {
     if (mounted) {
       setState(() {
         _isVisibleExperimentButton = true;
@@ -210,11 +204,11 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     }
   }
 
-  initFragements() {
+  void initFragements() {
     _fragments = const [ExperimentsPage(), TreatmentsPage(), EnzymesPage(), SettingsPage()];
   }
 
-  _floatingActionButton(String text, void Function()? onPressed) => FloatingActionButton.extended(
+  FloatingActionButton _floatingActionButton(String text, void Function()? onPressed) => FloatingActionButton.extended(
     backgroundColor: context.getApplyedColorScheme.secondaryContainer,
     onPressed: onPressed,
     label: Text(text, style: TextStyles(context).captionBody()),
@@ -223,16 +217,15 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   Widget? get dealWithFloatingActionButton {
     if (_scaffold.currentContext == null) return null;
-    final l10n = AppLocalizations.of(_scaffold.currentContext!)!;
 
     if (_homeViewmodel.fragmentIndex == 0 && _isVisibleExperimentButton) {
-      return _floatingActionButton(l10n?.registerExperiment ?? "", () {
+      return _floatingActionButton(context.l10n.registerExperiment, () {
         Navigator.pushNamed(context, Routing.createExperiment);
       });
     }
 
     if (_homeViewmodel.fragmentIndex == 1 && _isVisibleTreatmentButton) {
-      return _floatingActionButton(l10n?.registerTreatment ?? "", () {
+      return _floatingActionButton(context.l10n.registerTreatment, () {
         Navigator.pushNamed(context, Routing.createTreatment);
       });
     }
@@ -241,7 +234,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       if (_homeViewmodel.fragmentIndex == 2 &&
           _accountViewmodel.user!.userType == UserTypeEnum.admin &&
           _isVisibleEnzymeButton) {
-        return _floatingActionButton(l10n?.registerEnzyme ?? "", () {
+        return _floatingActionButton(context.l10n.registerEnzyme, () {
           Navigator.pushNamed(context, Routing.createEnzyme);
         });
       }
@@ -251,11 +244,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     return null;
   }
 
-  static noInternet(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+  static Future noInternet(BuildContext context) {
     return EZTSnackBar.show(
       context,
-      l10n?.noInternetWarning ?? "",
+      context.l10n.noInternetWarning,
       eztSnackBarType: EZTSnackBarType.error,
       duration: const Duration(seconds: 10),
     );
@@ -316,10 +308,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             },
             selectedIndex: _homeViewmodel.fragmentIndex,
             destinations: [
-              NavigationDestination(icon: Icon(PhosphorIcons.flask()), label: l10n?.experiments ?? ""),
-              NavigationDestination(icon: Icon(PhosphorIcons.testTube()), label: l10n?.treatments ?? ""),
-              NavigationDestination(icon: Icon(PhosphorIcons.atom()), label: l10n?.enzymes ?? ""),
-              NavigationDestination(icon: Icon(PhosphorIcons.gear()), label: l10n?.settings ?? ""),
+              NavigationDestination(icon: Icon(PhosphorIcons.flask()), label: context.l10n.experiments),
+              NavigationDestination(icon: Icon(PhosphorIcons.testTube()), label: context.l10n.treatments),
+              NavigationDestination(icon: Icon(PhosphorIcons.atom()), label: context.l10n.enzymes),
+              NavigationDestination(icon: Icon(PhosphorIcons.gear()), label: context.l10n.settings),
             ],
           ),
         );

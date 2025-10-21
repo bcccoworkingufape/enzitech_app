@@ -1,9 +1,4 @@
-// 🐦 Flutter imports:
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-
-import '../../../../../../../shared/l10n/app_localizations.dart';
 
 // 🌎 Project imports:
 import '../../../../../../../shared/extensions/build_context_extensions.dart';
@@ -17,23 +12,21 @@ class FAQBS extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-
     return EZTBottomSheet(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(l10n.frequentlyAskedQuestions, style: TextStyles.titleHome, textAlign: TextAlign.center),
+          Text(context.l10n.frequentlyAskedQuestions, style: TextStyles.titleHome, textAlign: TextAlign.center),
           const SizedBox(height: 32),
           RichText(
             textAlign: TextAlign.justify,
             text: TextSpan(
               style: TextStyles(context).trailingRegular(),
               children: <TextSpan>[
-                TextSpan(text: l10n.question, style: TextStyles(context).trailingRegular(isBold: true)),
+                TextSpan(text: context.l10n.question, style: TextStyles(context).trailingRegular(isBold: true)),
                 TextSpan(
-                  text: l10n.question1,
+                  text: context.l10n.question1,
                   style: TextStyles(context).trailingRegular(isBold: true, color: context.getApplyedColorScheme.error),
                 ),
               ],
@@ -45,15 +38,15 @@ class FAQBS extends StatelessWidget {
             text: TextSpan(
               style: TextStyles(context).trailingRegular(),
               children: <TextSpan>[
-                TextSpan(text: l10n.answer, style: TextStyles(context).trailingRegular(isBold: true)),
-                TextSpan(text: l10n.answer1, style: TextStyles(context).trailingRegular()),
+                TextSpan(text: context.l10n.answer, style: TextStyles(context).trailingRegular(isBold: true)),
+                TextSpan(text: context.l10n.answer1, style: TextStyles(context).trailingRegular()),
               ],
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 32.0),
             child: EZTButton(
-              text: l10n.closeButton,
+              text: context.l10n.closeButton,
               eztButtonType: EZTButtonType.outline,
               onPressed: () {
                 Navigator.pop(context);

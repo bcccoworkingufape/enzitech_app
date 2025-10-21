@@ -33,16 +33,17 @@ class DioHttpServiceImp implements HttpService {
       'Authorization': '${httpDriverOptions.accessTokenType} $gettedToken',
     });
     dio.interceptors.addAll([
-      CurlLoggerDioInterceptor(printOnSuccess: true),
-      PrettyDioLogger(
-        requestHeader: true,
-        requestBody: true,
-        responseBody: true,
+      // TODO: Enable loggers only in dev mode
+      CurlLoggerDioInterceptor(printOnSuccess: false),
+      /* PrettyDioLogger(
+        requestHeader: false,
+        requestBody: false,
+        responseBody: false,
         responseHeader: false,
         error: true,
         compact: true,
         maxWidth: 90,
-      ),
+      ), */
     ]);
   }
 

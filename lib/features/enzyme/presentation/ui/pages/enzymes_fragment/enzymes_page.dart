@@ -1,9 +1,6 @@
 // 🐦 Flutter imports:
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
-
-import '../../../../../../shared/l10n/app_localizations.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
@@ -30,7 +27,6 @@ class EnzymesPage extends StatefulWidget {
 class _EnzymesPageState extends State<EnzymesPage> {
   late final SettingsViewmodel _accountViewmodel;
   late final EnzymesViewmodel _enzymesViewmodel;
-  late final AppLocalizations? l10n;
 
   final Key _refreshIndicatorKey = GlobalKey();
 
@@ -52,7 +48,7 @@ class _EnzymesPageState extends State<EnzymesPage> {
         if (mounted && _enzymesViewmodel.state == StateEnum.error) {
           EZTSnackBar.show(
             context,
-            HandleFailure.of(l10n, _enzymesViewmodel.failure!),
+            HandleFailure.of(context.l10n, _enzymesViewmodel.failure!),
             eztSnackBarType: EZTSnackBarType.error,
           );
         }
@@ -63,24 +59,23 @@ class _EnzymesPageState extends State<EnzymesPage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    l10n = AppLocalizations.of(context);
   }
 
   Widget _buildEnzymesList(double height) {
     if (_enzymesViewmodel.state == StateEnum.error) {
-      return EZTForcedCenter(child: EZTError(message: l10n?.errorLoadingEnzymes));
+      return EZTForcedCenter(child: EZTError(message: context.l10n.errorLoadingEnzymes));
     }
 
     if (_enzymesViewmodel.state == StateEnum.loading) {
-      return EZTProgressIndicator(message: l10n?.loadingEnzymes);
+      return EZTProgressIndicator(message: context.l10n.loadingEnzymes);
     }
 
     if (_enzymesViewmodel.state == StateEnum.success && _enzymesViewmodel.enzymes.isEmpty) {
       return EZTForcedCenter(
         child: EZTNotFound(
           message: _accountViewmodel.user!.userType == UserTypeEnum.admin
-              ? l10n?.noEnzymesRegisteredAdmin
-              : l10n?.noEnzymesRegisteredUser,
+              ? context.l10n.noEnzymesRegisteredAdmin
+              : context.l10n.noEnzymesRegisteredUser,
         ),
       );
     }
@@ -109,10 +104,10 @@ class _EnzymesPageState extends State<EnzymesPage> {
 
                   EZTSnackBar.show(
                     context,
-                    l10n?.enzymeDeleted(enzyme.name) ?? "",
+                    context.l10n.enzymeDeleted(enzyme.name) ?? "",
                     eztSnackBarType: EZTSnackBarType.error,
                     action: SnackBarAction(
-                      label: l10n?.undo ?? "",
+                      label: context.l10n.undo ?? "",
                       textColor: context.getApplyedColorScheme.onError,
                       onPressed: () {
                         setState(() {
@@ -140,7 +135,7 @@ class _EnzymesPageState extends State<EnzymesPage> {
                           color: context.getApplyedColorScheme.onError,
                         ),
                         Text(
-                          l10n?.delete ?? "",
+                          context.l10n.delete ?? "",
                           style: TextStyle(color: context.getApplyedColorScheme.onError),
                           textAlign: TextAlign.right,
                         ),
@@ -155,16 +150,16 @@ class _EnzymesPageState extends State<EnzymesPage> {
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: Text(l10n?.deleteEnzymeTitle ?? ""),
-                              content: Text(l10n?.deleteEnzymeContent ?? ""),
+                              title: Text(context.l10n.deleteEnzymeTitle ?? ""),
+                              content: Text(context.l10n.deleteEnzymeContent ?? ""),
                               actions: [
                                 TextButton(
                                   onPressed: () => Navigator.of(context).pop(true),
-                                  child: Text(l10n?.deleteButton ?? ""),
+                                  child: Text(context.l10n.deleteButton ?? ""),
                                 ),
                                 TextButton(
                                   onPressed: () => Navigator.of(context).pop(false),
-                                  child: Text(l10n?.cancelButton ?? ""),
+                                  child: Text(context.l10n.cancelButton ?? ""),
                                 ),
                               ],
                             );
@@ -202,7 +197,7 @@ class _EnzymesPageState extends State<EnzymesPage> {
                     children: [
                       const SizedBox(height: 8),
                       Text(
-                        l10n?.enzymesFound(_enzymesViewmodel.enzymes.length) ?? "",
+                        context.l10n.enzymesFound(_enzymesViewmodel.enzymes.length) ?? "",
                         style: TextStyles(context).link(fontSize: 16),
                       ),
                       const SizedBox(height: 8),

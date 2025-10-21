@@ -2,8 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../../../../../shared/l10n/app_localizations.dart';
-
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
@@ -43,7 +41,6 @@ class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthS
 
     Future.delayed(const Duration(milliseconds: 0)).whenComplete(() {
       if (mounted) {
-        final l10n = AppLocalizations.of(context)!;
         _createExperimentViewmodel.setStepPage(0, notify: false);
 
         final fieldValidator = FieldValidator(validations, context);
@@ -60,7 +57,7 @@ class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthS
               aFieldController.text = enzyme.variableA.toString();
               return EZTTextField(
                 eztTextFieldType: EZTTextFieldType.underline,
-                labelText: l10n.variableA,
+                labelText: context.l10n.variableA,
                 usePrimaryColorOnFocusedBorder: true,
                 keyboardType: const TextInputType.numberWithOptions(decimal: true),
                 controller: aFieldController,
@@ -77,7 +74,7 @@ class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthS
               bFieldController.text = enzyme.variableB.toString();
               return EZTTextField(
                 eztTextFieldType: EZTTextFieldType.underline,
-                labelText: l10n.variableB,
+                labelText: context.l10n.variableB,
                 usePrimaryColorOnFocusedBorder: true,
                 keyboardType: const TextInputType.numberWithOptions(decimal: true),
                 controller: bFieldController,
@@ -94,7 +91,7 @@ class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthS
               'duration-${enzyme.id}',
               () => EZTTextField(
                 eztTextFieldType: EZTTextFieldType.underline,
-                labelText: l10n.timeHours,
+                labelText: context.l10n.timeHours,
                 usePrimaryColorOnFocusedBorder: true,
                 keyboardType: const TextInputType.numberWithOptions(decimal: false),
                 controller: durationFieldController,
@@ -110,7 +107,7 @@ class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthS
               'size-${enzyme.id}',
               () => EZTTextField(
                 eztTextFieldType: EZTTextFieldType.underline,
-                labelText: l10n.solutionVolume,
+                labelText: context.l10n.solutionVolume,
                 usePrimaryColorOnFocusedBorder: true,
                 keyboardType: const TextInputType.numberWithOptions(decimal: true),
                 controller: sizeFieldController,
@@ -126,7 +123,7 @@ class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthS
               'weightSample-${enzyme.id}',
               () => EZTTextField(
                 eztTextFieldType: EZTTextFieldType.underline,
-                labelText: l10n.sampleWeightGrams,
+                labelText: context.l10n.sampleWeightGrams,
                 usePrimaryColorOnFocusedBorder: true,
                 keyboardType: const TextInputType.numberWithOptions(decimal: true),
                 controller: weightSampleFieldController,
@@ -142,7 +139,7 @@ class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthS
               'weightGround-${enzyme.id}',
               () => EZTTextField(
                 eztTextFieldType: EZTTextFieldType.underline,
-                labelText: l10n.correctionFactor,
+                labelText: context.l10n.correctionFactor,
                 usePrimaryColorOnFocusedBorder: true,
                 keyboardType: const TextInputType.numberWithOptions(decimal: true),
                 controller: weightGroundFieldController,
@@ -247,11 +244,10 @@ class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthS
   }
 
   Widget _textFields(EnzymeEntity enzyme) {
-    final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(l10n.curveInformation, style: TextStyles.detailBold),
+        Text(context.l10n.curveInformation, style: TextStyles.detailBold),
         Row(
           children: [
             Expanded(child: _createExperimentViewmodel.textFields["aVariable-${enzyme.id}"] ?? Container()),
@@ -260,7 +256,7 @@ class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthS
           ],
         ),
         const SizedBox(height: 40),
-        Text(l10n.otherVariables, style: TextStyles.detailBold),
+        Text(context.l10n.otherVariables, style: TextStyles.detailBold),
         const SizedBox(height: 10),
         Row(
           children: [
@@ -282,13 +278,12 @@ class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthS
   }
 
   Widget get _buttons {
-    final l10n = AppLocalizations.of(context)!;
     return Column(
       children: [
         if (_createExperimentViewmodel.enableNextButtonOnFourthStep)
           EZTButton(
             enabled: _createExperimentViewmodel.enableNextButtonOnFourthStep,
-            text: l10n.createExperimentButton,
+            text: context.l10n.createExperimentButton,
             loading: _createExperimentViewmodel.state == StateEnum.loading,
             onPressed: () async {
               _createExperimentViewmodel.formKey.currentState!.save();
@@ -308,7 +303,7 @@ class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthS
           ),
         const SizedBox(height: 16),
         EZTButton(
-          text: l10n.backButton,
+          text: context.l10n.backButton,
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
             _createExperimentViewmodel.onBack(mounted, context);
@@ -325,13 +320,12 @@ class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthS
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     return ListenableBuilder(
       listenable: _createExperimentViewmodel,
       builder: (context, child) {
         return CreateExperimentFragmentTemplate(
-          titleOfStepIndicator: l10n.registerNewExperiment,
-          messageOfStepIndicator: l10n.stepIndicatorFillVariables(4, 4),
+          titleOfStepIndicator: context.l10n.registerNewExperiment,
+          messageOfStepIndicator: context.l10n.stepIndicatorFillVariables(4, 4),
           body: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
             child: Column(
@@ -351,7 +345,7 @@ class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthS
                                 _createExperimentViewmodel.setStepPage(_createExperimentViewmodel.stepPage + 1);
                               }
                             },
-                            child: Text(l10n.nextButton),
+                            child: Text(context.l10n.nextButton),
                           ),
                         if (_createExperimentViewmodel.stepPage > 0)
                           TextButton(
@@ -360,7 +354,7 @@ class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthS
                                 _createExperimentViewmodel.setStepPage(_createExperimentViewmodel.stepPage - 1);
                               }
                             },
-                            child: Text(l10n.backButton),
+                            child: Text(context.l10n.backButton),
                           ),
                       ],
                     );

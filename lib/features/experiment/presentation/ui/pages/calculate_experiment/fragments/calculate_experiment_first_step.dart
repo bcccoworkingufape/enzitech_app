@@ -1,9 +1,6 @@
 // 🐦 Flutter imports:
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
-
-import '../../../../../../../shared/l10n/app_localizations.dart';
 
 // 📦 Package imports:
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -46,7 +43,7 @@ class _CalculateExperimentFirstStepPageState extends State<CalculateExperimentFi
     WidgetsBinding.instance.addPostFrameCallback((_) => _validateFields());
   }
 
-  _validateFields() {
+  void _validateFields() {
     if (choosedEnzyme != null && choosedTreatment != null) {
       _calculateExperimentViewmodel.setEnableNextButtonOnFirstStep(true);
     } else {
@@ -54,12 +51,11 @@ class _CalculateExperimentFirstStepPageState extends State<CalculateExperimentFi
     }
   }
 
-  get _treatmentChoiceChip {
-    final l10n = AppLocalizations.of(context)!;
+  FormBuilderChoiceChips<TreatmentEntity> get _treatmentChoiceChip {
     return FormBuilderChoiceChips<TreatmentEntity>(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
-        labelText: l10n.selectTreatment,
+        labelText: context.l10n.selectTreatment,
         border: InputBorder.none,
         contentPadding: EdgeInsets.all(0),
       ),
@@ -81,21 +77,20 @@ class _CalculateExperimentFirstStepPageState extends State<CalculateExperimentFi
     );
   }
 
-  get _enzymeChoiceChip {
-    final l10n = AppLocalizations.of(context)!;
+  Widget get _enzymeChoiceChip {
     if (choosedTreatment != null) {
       if (_calculateExperimentViewmodel.enzymesRemaining.isEmpty) {
         if (_calculateExperimentViewmodel.state == StateEnum.loading) {
-          return Text(l10n.loadingAvailableEnzymes);
+          return Text(context.l10n.loadingAvailableEnzymes);
         }
 
-        return Text(l10n.allEnzymesCalculated);
+        return Text(context.l10n.allEnzymesCalculated);
       }
 
       return FormBuilderChoiceChips<EnzymeEntity>(
         autovalidateMode: AutovalidateMode.onUserInteraction,
         decoration: InputDecoration(
-          labelText: l10n.selectEnzyme,
+          labelText: context.l10n.selectEnzyme,
           border: InputBorder.none,
           contentPadding: EdgeInsets.all(0),
         ),
@@ -106,7 +101,7 @@ class _CalculateExperimentFirstStepPageState extends State<CalculateExperimentFi
             EZTSnackBar.clear(context);
             EZTSnackBar.show(
               context,
-              l10n.selectedEnzymeType(
+              context.l10n.selectedEnzymeType(
                 Constants.typesOfEnzymesListFormmated[Constants.typesOfEnzymesList.indexOf(value.type)],
               ),
               color: Constants.dealWithEnzymeChipColor(value.type),
@@ -138,12 +133,11 @@ class _CalculateExperimentFirstStepPageState extends State<CalculateExperimentFi
   }
 
   Widget get _buttons {
-    final l10n = AppLocalizations.of(context)!;
     return Column(
       children: [
         EZTButton(
           enabled: _calculateExperimentViewmodel.enableNextButtonOnFirstStep,
-          text: l10n.nextButton,
+          text: context.l10n.nextButton,
           loading: _calculateExperimentViewmodel.state == StateEnum.loading ? true : false,
           onPressed: () async {
             _calculateExperimentViewmodel.formKey.currentState?.save();
@@ -165,7 +159,7 @@ class _CalculateExperimentFirstStepPageState extends State<CalculateExperimentFi
         ),
         const SizedBox(height: 16),
         EZTButton(
-          text: l10n.backButton,
+          text: context.l10n.backButton,
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
             _calculateExperimentViewmodel.onBack(mounted, context);
@@ -177,14 +171,12 @@ class _CalculateExperimentFirstStepPageState extends State<CalculateExperimentFi
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-
     return ListenableBuilder(
       listenable: _calculateExperimentViewmodel,
       builder: (context, child) {
         return CalculateExperimentFragmentTemplate(
-          titleOfStepIndicator: l10n.insertExperimentData,
-          messageOfStepIndicator: l10n.stepIndicatorMessage(1, 3),
+          titleOfStepIndicator: context.l10n.insertExperimentData,
+          messageOfStepIndicator: context.l10n.stepIndicatorMessage(1, 3),
 
           body: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
@@ -196,7 +188,10 @@ class _CalculateExperimentFirstStepPageState extends State<CalculateExperimentFi
                   visible:
                       _calculateExperimentViewmodel.experiment.treatments!.isNotEmpty &&
                       _calculateExperimentViewmodel.experiment.enzymes!.isNotEmpty,
-                  replacement: EZTNotFound(title: l10n.invalidExperimentTitle, message: l10n.invalidExperimentMessage),
+                  replacement: EZTNotFound(
+                    title: context.l10n.invalidExperimentTitle,
+                    message: context.l10n.invalidExperimentMessage,
+                  ),
                   child: Column(
                     children: [
                       Row(
@@ -205,7 +200,7 @@ class _CalculateExperimentFirstStepPageState extends State<CalculateExperimentFi
                           const SizedBox(width: 4),
                           Expanded(
                             child: Text(
-                              l10n.chooseTreatmentAndEnzyme,
+                              context.l10n.chooseTreatmentAndEnzyme,
                               style: TextStyles.detailBold,
                               textAlign: TextAlign.left,
                             ),

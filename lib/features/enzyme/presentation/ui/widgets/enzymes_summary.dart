@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
-import '../../../../../shared/l10n/app_localizations.dart';
-
 // 🌎 Project imports:
 import '../../../../../shared/extensions/build_context_extensions.dart';
 import '../../../../../shared/ui/ui.dart';
@@ -20,14 +18,13 @@ class EnzymesSummary extends StatefulWidget {
 
 class _EnzymesSummaryState extends State<EnzymesSummary> {
   Widget enzymeTag(String name, int quantity, Color color) {
-    final l10n = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Row(
         children: [
           Icon(Icons.circle, color: color, size: 16),
           const SizedBox(width: 8),
-          Text(l10n.enzymeTagFormat(name, quantity), style: TextStyles.bodyMinBold.copyWith()),
+          Text(context.l10n.enzymeTagFormat(name, quantity), style: TextStyles.bodyMinBold.copyWith()),
         ],
       ),
     );
@@ -35,16 +32,15 @@ class _EnzymesSummaryState extends State<EnzymesSummary> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     var viewmodel = GetIt.I.get<EnzymesViewmodel>();
 
     final Map<String, String> enzymeTypeTranslations = {
-      'Betaglucosidase': l10n.enzymeType_betaGlucosidase,
-      'Aryl': l10n.enzymeType_aryl,
-      'FosfataseAcida': l10n.enzymeType_acidPhosphatase,
-      'FosfataseAlcalina': l10n.enzymeType_alkalinePhosphatase,
-      'Urease': l10n.enzymeType_urease,
-      'FDA': l10n.enzymeType_fda,
+      'Betaglucosidase': context.l10n.enzymeType_betaGlucosidase,
+      'Aryl': context.l10n.enzymeType_aryl,
+      'FosfataseAcida': context.l10n.enzymeType_acidPhosphatase,
+      'FosfataseAlcalina': context.l10n.enzymeType_alkalinePhosphatase,
+      'Urease': context.l10n.enzymeType_urease,
+      'FDA': context.l10n.enzymeType_fda,
     };
 
     final Map<String, Color> enzymeColors = {
@@ -79,7 +75,7 @@ class _EnzymesSummaryState extends State<EnzymesSummary> {
                 padding: const EdgeInsets.symmetric(vertical: 4.0),
                 child: Center(
                   child: Text(
-                    l10n.enzymesSummaryTitle,
+                    context.l10n.enzymesSummaryTitle,
                     style: TextStyles.bodyMinBold.copyWith(color: context.getApplyedColorScheme.onSecondary),
                   ),
                 ),

@@ -1,8 +1,6 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-import '../../../../../../../shared/l10n/app_localizations.dart';
-
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -42,12 +40,11 @@ class _CalculateExperimentThirdStepPageState extends State<CalculateExperimentTh
   }
 
   Widget get _buttons {
-    final l10n = AppLocalizations.of(context)!;
     return Column(
       children: [
         EZTButton(
           enabled: _calculateExperimentViewmodel.enableNextButtonOnSecondStep,
-          text: l10n.saveAndExitButton,
+          text: context.l10n.saveAndExitButton,
           loading: _calculateExperimentViewmodel.state == StateEnum.loading,
           onPressed: () async {
             await _calculateExperimentViewmodel.saveResult().whenComplete(
@@ -57,7 +54,7 @@ class _CalculateExperimentThirdStepPageState extends State<CalculateExperimentTh
         ),
         const SizedBox(height: 16),
         EZTButton(
-          text: l10n.recalculateButton,
+          text: context.l10n.recalculateButton,
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
             _calculateExperimentViewmodel.onBack(mounted, context);
@@ -68,13 +65,12 @@ class _CalculateExperimentThirdStepPageState extends State<CalculateExperimentTh
   }
 
   TableRow _buildTableRow(num result, int iteration) {
-    final l10n = AppLocalizations.of(context)!;
     return TableRow(
       decoration: const UnderlineTabIndicator(borderSide: BorderSide()),
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 4.0),
-          child: Text(l10n.repetitionLabel(iteration + 1), style: TextStyles.bodyBold),
+          child: Text(context.l10n.repetitionLabel(iteration + 1), style: TextStyles.bodyBold),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 4.0),
@@ -90,7 +86,7 @@ class _CalculateExperimentThirdStepPageState extends State<CalculateExperimentTh
                 EZTSnackBar.clear(context);
                 EZTSnackBar.show(
                   context,
-                  l10n.discrepantRepetitionWarning,
+                  context.l10n.discrepantRepetitionWarning,
                   textStyle: TextStyles(context).titleMinBoldBackground(),
                   centerTitle: true,
                   eztSnackBarType: EZTSnackBarType.error,
@@ -117,12 +113,11 @@ class _CalculateExperimentThirdStepPageState extends State<CalculateExperimentTh
   }
 
   List<TableRow> _buildAverageRow(num number) {
-    final l10n = AppLocalizations.of(context)!;
     return [
       const TableRow(children: [SizedBox(height: 16), SizedBox(height: 16), SizedBox(height: 16)]),
       TableRow(
         children: [
-          Text(l10n.average, style: TextStyles.bodyBold),
+          Text(context.l10n.average, style: TextStyles.bodyBold),
           Text(number.formmatedNumber, style: TextStyles.bodyBold),
           Container(),
         ],
@@ -131,13 +126,12 @@ class _CalculateExperimentThirdStepPageState extends State<CalculateExperimentTh
   }
 
   List<TableRow> _buildTitleRow() {
-    final l10n = AppLocalizations.of(context)!;
     return [
       TableRow(
         children: [
-          Text(l10n.repetitionColumnTitle, style: TextStyles.bodyBold),
-          Text(l10n.resultColumnTitle, style: TextStyles.bodyBold),
-          Text(l10n.statusColumnTitle, style: TextStyles.bodyBold),
+          Text(context.l10n.repetitionColumnTitle, style: TextStyles.bodyBold),
+          Text(context.l10n.resultColumnTitle, style: TextStyles.bodyBold),
+          Text(context.l10n.statusColumnTitle, style: TextStyles.bodyBold),
         ],
       ),
       const TableRow(children: [SizedBox(height: 8), SizedBox(height: 8), SizedBox(height: 8)]),
@@ -146,13 +140,12 @@ class _CalculateExperimentThirdStepPageState extends State<CalculateExperimentTh
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     return ListenableBuilder(
       listenable: _calculateExperimentViewmodel,
       builder: (context, child) {
         return CalculateExperimentFragmentTemplate(
-          titleOfStepIndicator: l10n.insertExperimentData,
-          messageOfStepIndicator: l10n.stepIndicatorMessageResults(3, 3),
+          titleOfStepIndicator: context.l10n.insertExperimentData,
+          messageOfStepIndicator: context.l10n.stepIndicatorMessageResults(3, 3),
           body: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
             padding: const EdgeInsets.symmetric(horizontal: 16),

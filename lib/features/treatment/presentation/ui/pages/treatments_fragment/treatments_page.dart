@@ -27,7 +27,6 @@ class TreatmentsPage extends StatefulWidget {
 
 class _TreatmentsPageState extends State<TreatmentsPage> {
   late final TreatmentsViewmodel _treatmentsViewmodel;
-  late final AppLocalizations? l10n;
   final Key _refreshIndicatorKey = GlobalKey();
 
   @override
@@ -39,7 +38,7 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
         if (mounted && _treatmentsViewmodel.state == StateEnum.error) {
           EZTSnackBar.show(
             context,
-            HandleFailure.of(l10n, _treatmentsViewmodel.failure!),
+            HandleFailure.of(context.l10n, _treatmentsViewmodel.failure!),
             eztSnackBarType: EZTSnackBarType.error,
           );
         }
@@ -50,20 +49,19 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    l10n = AppLocalizations.of(context);
   }
 
   Widget _buildTreatmentsList(double height) {
     if (_treatmentsViewmodel.state == StateEnum.error) {
-      return EZTForcedCenter(child: EZTError(message: l10n?.errorLoadingTreatments));
+      return EZTForcedCenter(child: EZTError(message: context.l10n.errorLoadingTreatments));
     }
 
     if (_treatmentsViewmodel.state == StateEnum.loading) {
-      return EZTProgressIndicator(message: l10n?.loadingTreatments);
+      return EZTProgressIndicator(message: context.l10n.loadingTreatments);
     }
 
     if (_treatmentsViewmodel.state == StateEnum.success && _treatmentsViewmodel.treatments.isEmpty) {
-      return EZTForcedCenter(child: EZTNotFound(message: l10n?.treatmentsNotFound));
+      return EZTForcedCenter(child: EZTNotFound(message: context.l10n.treatmentsNotFound));
     }
 
     return ListView.builder(
@@ -88,10 +86,10 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
 
                 EZTSnackBar.show(
                   context,
-                  l10n?.treatmentDeleted(treatment.name) ?? "",
+                  context.l10n.treatmentDeleted(treatment.name),
                   eztSnackBarType: EZTSnackBarType.error,
                   action: SnackBarAction(
-                    label: l10n?.undo ?? "",
+                    label: context.l10n.undo,
                     textColor: context.getApplyedColorScheme.onError,
                     onPressed: () {
                       setState(() {
@@ -116,7 +114,7 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
                     children: [
                       Icon(PhosphorIcons.trash(PhosphorIconsStyle.light), color: context.getApplyedColorScheme.onError),
                       Text(
-                        l10n?.delete ?? "",
+                        context.l10n.delete,
                         style: TextStyle(color: context.getApplyedColorScheme.onError),
                         textAlign: TextAlign.right,
                       ),
@@ -131,16 +129,16 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text(l10n?.deleteTreatmentTitle ?? ""),
-                            content: Text(l10n?.deleteTreatmentContent ?? ""),
+                            title: Text(context.l10n.deleteTreatmentTitle),
+                            content: Text(context.l10n.deleteTreatmentContent),
                             actions: [
                               TextButton(
                                 onPressed: () => Navigator.of(context).pop(true),
-                                child: Text(l10n?.deleteButton ?? ""),
+                                child: Text(context.l10n.deleteButton),
                               ),
                               TextButton(
                                 onPressed: () => Navigator.of(context).pop(false),
-                                child: Text(l10n?.cancelButton ?? ""),
+                                child: Text(context.l10n.cancelButton),
                               ),
                             ],
                           );
@@ -180,7 +178,7 @@ class _TreatmentsPageState extends State<TreatmentsPage> {
                     children: [
                       const SizedBox(height: 8),
                       Text(
-                        l10n?.treatmentsFound(_treatmentsViewmodel.treatments.length) ?? "",
+                        context.l10n.treatmentsFound(_treatmentsViewmodel.treatments.length),
                         style: TextStyles(context).link(fontSize: 16),
                       ),
                       const SizedBox(height: 8),
