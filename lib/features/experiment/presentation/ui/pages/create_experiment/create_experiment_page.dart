@@ -44,7 +44,7 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
           if (mounted && _createExperimentViewmodel.state == StateEnum.error) {
             EZTSnackBar.show(
               context,
-              HandleFailure.of(_createExperimentViewmodel.failure!),
+              HandleFailure.of(l10n, _createExperimentViewmodel.failure!),
               eztSnackBarType: EZTSnackBarType.error,
             );
           } else if (_createExperimentViewmodel.state == StateEnum.success &&

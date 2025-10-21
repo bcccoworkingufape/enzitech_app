@@ -1,57 +1,57 @@
 // 🌎 Project imports:
 import 'failures.dart';
 
+import '../../../../../../l10n/app_localizations.dart';
+
 class HandleFailure {
   static String of(
+    AppLocalizations? l10n,
     Failure failure, {
     bool enableStatusCode = false,
     bool overrideDefaultMessage = false,
     bool isLogin = false,
   }) {
+    if (l10n == null) return "";
     //* EZT custom error when API is down
     if (failure.runtimeType is ServerFailure) {
       if (failure.message.contains("Connection refused")) {
-        return "⚠ Erro de Servidor, tente novamente mais tarde.";
+        return l10n.error_serverConnectionRefused;
       }
     }
 
     if (overrideDefaultMessage) {
       return enableStatusCode
-          ? "⚠ SC${failure.key} - ${failure.message}"
-          : "⚠ ${failure.message}";
+          ? l10n.error_statusCodeAndMessage(failure.key.toString(), failure.message)
+          : l10n.error_messageOnly(failure.message);
     }
 
     switch (failure.key) {
       case 400:
-        return "⚠ Dados incorretos: Algum campo inválido ou ausente.";
+        return l10n.error_400;
       case 401:
-        return "⚠ Não autorizado: Token expirado ou usuário inválido.";
+        return l10n.error_401;
       case 403:
-        return "⚠ Acesso negado: Você não tem permissão para executar esta ação.";
+        return l10n.error_403;
       case 404:
-        if (isLogin) {
-          return "⚠ Usuário não encontrado.";
-        } else {
-          return "⚠ Não encontrado: Talvez essa informação não exista mais.";
-        }
+        return isLogin ? l10n.error_404_login : l10n.error_404_generic;
       case 422:
-        return "⚠ Entidade não processável: Não foi possível processar as instruções presentes.";
+        return l10n.error_422;
       case 426:
-        return "⚠ Upgrade requerido: ID de dispositivo inválido.";
+        return l10n.error_426;
       case 500:
-        return "⚠ Erro do Servidor: Não foi possível atender à solicitação.";
+        return l10n.error_500;
       case 503:
-        return "⚠ Erro do Servidor: Não foi possível atender à solicitação neste momento.";
+        return l10n.error_503;
       default:
         switch (failure.runtimeType) {
           case NoNetworkFailure:
-            return "⚠ Sem conexão com a internet, verfique seu acesso à rede e tente novamente.";
+            return l10n.error_noNetwork;
           case NoResultQueryFailure:
-            return "⚠ Não foi possível obter ${(failure.message).toLowerCase()}.";
+            return l10n.error_noResultQuery(failure.message.toLowerCase());
           default:
             return enableStatusCode
-                ? "⚠ SC${failure.key} - ${failure.message}"
-                : "⚠ ${failure.message}";
+                ? l10n.error_statusCodeAndMessage(failure.key.toString(), failure.message)
+                : l10n.error_messageOnly(failure.message);
         }
     }
   }

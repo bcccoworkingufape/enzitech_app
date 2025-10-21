@@ -775,4 +775,151 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get whiteSample => 'White Sample';
+
+  @override
+  String get error_serverConnectionRefused =>
+      '⚠ Server Error, please try again later.';
+
+  @override
+  String error_statusCodeAndMessage(Object statusCode, Object message) {
+    return '⚠ SC$statusCode - $message';
+  }
+
+  @override
+  String error_messageOnly(Object message) {
+    return '⚠ $message';
+  }
+
+  @override
+  String get error_400 => '⚠ Incorrect data: Some field is invalid or missing.';
+
+  @override
+  String get error_401 => '⚠ Not authorized: Token expired or invalid user.';
+
+  @override
+  String get error_403 =>
+      '⚠ Access denied: You do not have permission to perform this action.';
+
+  @override
+  String get error_404_login => '⚠ User not found.';
+
+  @override
+  String get error_404_generic =>
+      '⚠ Not found: This information may no longer exist.';
+
+  @override
+  String get error_422 =>
+      '⚠ Unprocessable entity: The server understands the content type, but was unable to process the contained instructions.';
+
+  @override
+  String get error_426 => '⚠ Upgrade required: Invalid device ID.';
+
+  @override
+  String get error_500 => '⚠ Server Error: The request could not be fulfilled.';
+
+  @override
+  String get error_503 =>
+      '⚠ Server Error: The service is temporarily unavailable.';
+
+  @override
+  String get error_noNetwork =>
+      '⚠ No internet connection, check your network access and try again.';
+
+  @override
+  String error_noResultQuery(Object query) {
+    return '⚠ Could not get $query.';
+  }
+
+  @override
+  String get validation_required => '⚠ Required field';
+
+  @override
+  String get validation_strongPassword =>
+      '⚠ Password does not meet the required pattern.';
+
+  @override
+  String get validation_alfanumeric =>
+      '⚠ Field does not accept special characters';
+
+  @override
+  String get validation_name => '⚠ Invalid name';
+
+  @override
+  String get validation_phone => '⚠ Invalid number';
+
+  @override
+  String get validation_cellphone => '⚠ Invalid number';
+
+  @override
+  String get validation_passwordEquals =>
+      '⚠ The entered passwords do not match.';
+
+  @override
+  String get validation_passwordMustBeDiff =>
+      '⚠ The new password cannot be the same as the current one.';
+
+  @override
+  String get validation_notFound => '⚠ Not found';
+
+  @override
+  String get validation_emailEquals => '⚠ The entered emails do not match.';
+
+  @override
+  String get validation_email => '⚠ Invalid email';
+
+  @override
+  String get validation_cpf => '⚠ Invalid CPF';
+
+  @override
+  String get validation_cnpj => '⚠ Invalid CNPJ';
+
+  @override
+  String get validation_numeric => '⚠ Invalid number';
+
+  @override
+  String get validation_number => '⚠ Invalid number';
+
+  @override
+  String get validation_greaterThanZeroDecimal =>
+      '⚠ Enter a number greater than zero';
+
+  @override
+  String get validation_isInteger => '⚠ Enter an integer';
+
+  @override
+  String get validation_greaterThanZero => '⚠ Enter a number greater than zero';
+
+  @override
+  String validation_maxNumber(Object value) {
+    return '⚠ Number must be less than or equal to $value.';
+  }
+
+  @override
+  String validation_maxChars(Object value) {
+    return '⚠ This field must have a maximum of $value character(s)';
+  }
+
+  @override
+  String validation_maxAge(Object value) {
+    return '⚠ Maximum age $value years';
+  }
+
+  @override
+  String validation_minAge(Object value) {
+    return '⚠ Minimum age $value years';
+  }
+
+  @override
+  String validation_minNumber(Object value) {
+    return '⚠ Number must be greater than or equal to $value.';
+  }
+
+  @override
+  String validation_minChars(Object value) {
+    return '⚠ This field must have a minimum of $value character(s)';
+  }
+
+  @override
+  String get validation_emailOrRegistration =>
+      '⚠ Invalid email or registration.';
 }

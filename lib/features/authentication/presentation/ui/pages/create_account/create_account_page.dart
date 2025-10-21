@@ -49,6 +49,7 @@ class CreateAccountPageState extends State<CreateAccountPage> {
         EZTSnackBar.show(
           context,
           HandleFailure.of(
+            l10n,
             _createAccountViewmodel.failure!,
             overrideDefaultMessage: true,
           ),

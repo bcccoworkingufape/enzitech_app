@@ -49,7 +49,7 @@ class _SettingsPageState extends State<SettingsPage> {
         if (_settingsViewmodel.state == StateEnum.error) {
           EZTSnackBar.show(
             context,
-            HandleFailure.of(_settingsViewmodel.failure!),
+            HandleFailure.of(l10n, _settingsViewmodel.failure!),
             eztSnackBarType: EZTSnackBarType.error,
           );
         }

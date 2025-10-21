@@ -155,6 +155,22 @@ class AboutAppBS extends StatelessWidget {
           RichText(
             textAlign: TextAlign.justify,
             text: TextSpan(
+              text: '• Guilherme Felix ',
+              style: TextStyles(context).trailingRegular(isBold: true),
+              children: <TextSpan>[
+                TextSpan(
+                  text: l10n.roleMobileDeveloper,
+                  style: TextStyles(context).trailingRegular(),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          RichText(
+            textAlign: TextAlign.justify,
+            text: TextSpan(
               text: '• Eduarda Interaminense ',
               style: TextStyles(context).trailingRegular(isBold: true),
               children: <TextSpan>[

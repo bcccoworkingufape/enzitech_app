@@ -32,6 +32,7 @@ class EnzymesPage extends StatefulWidget {
 class _EnzymesPageState extends State<EnzymesPage> {
   late final SettingsViewmodel _accountViewmodel;
   late final EnzymesViewmodel _enzymesViewmodel;
+  late final AppLocalizations? l10n;
 
   final Key _refreshIndicatorKey = GlobalKey();
 
@@ -56,7 +57,7 @@ class _EnzymesPageState extends State<EnzymesPage> {
           if (mounted && _enzymesViewmodel.state == StateEnum.error) {
             EZTSnackBar.show(
               context,
-              HandleFailure.of(_enzymesViewmodel.failure!),
+              HandleFailure.of(l10n, _enzymesViewmodel.failure!),
               eztSnackBarType: EZTSnackBarType.error,
             );
           }
@@ -65,19 +66,24 @@ class _EnzymesPageState extends State<EnzymesPage> {
     }
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    l10n = AppLocalizations.of(context);
+  }
+
   Widget _buildEnzymesList(double height) {
-    final l10n = AppLocalizations.of(context)!;
     if (_enzymesViewmodel.state == StateEnum.error) {
       return EZTForcedCenter(
         child: EZTError(
-          message: l10n.errorLoadingEnzymes,
+          message: l10n?.errorLoadingEnzymes,
         ),
       );
     }
 
     if (_enzymesViewmodel.state == StateEnum.loading) {
       return EZTProgressIndicator(
-        message: l10n.loadingEnzymes,
+        message: l10n?.loadingEnzymes,
       );
     }
 
@@ -86,8 +92,8 @@ class _EnzymesPageState extends State<EnzymesPage> {
       return EZTForcedCenter(
         child: EZTNotFound(
           message: _accountViewmodel.user!.userType == UserTypeEnum.admin
-              ? l10n.noEnzymesRegisteredAdmin
-              : l10n.noEnzymesRegisteredUser,
+              ? l10n?.noEnzymesRegisteredAdmin
+              : l10n?.noEnzymesRegisteredUser,
         ),
       );
     }
@@ -118,10 +124,10 @@ class _EnzymesPageState extends State<EnzymesPage> {
 
                   EZTSnackBar.show(
                     context,
-                    l10n.enzymeDeleted(enzyme.name),
+                    l10n?.enzymeDeleted(enzyme.name) ?? "",
                     eztSnackBarType: EZTSnackBarType.error,
                     action: SnackBarAction(
-                      label: l10n.undo,
+                      label: l10n?.undo ?? "",
                       textColor: context.getApplyedColorScheme.onError,
                       onPressed: () {
                         setState(() {
@@ -149,7 +155,7 @@ class _EnzymesPageState extends State<EnzymesPage> {
                           color: context.getApplyedColorScheme.onError,
                         ),
                         Text(
-                          l10n.delete,
+                          l10n?.delete ?? "",
                           style: TextStyle(
                             color: context.getApplyedColorScheme.onError,
                           ),
@@ -166,17 +172,17 @@ class _EnzymesPageState extends State<EnzymesPage> {
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: Text(l10n.deleteEnzymeTitle),
-                              content: Text(l10n.deleteEnzymeContent),
+                              title: Text(l10n?.deleteEnzymeTitle ?? ""),
+                              content: Text(l10n?.deleteEnzymeContent ?? ""),
                               actions: [
                                 TextButton(
                                     onPressed: () =>
                                         Navigator.of(context).pop(true),
-                                    child: Text(l10n.deleteButton)),
+                                    child: Text(l10n?.deleteButton ?? "")),
                                 TextButton(
                                   onPressed: () =>
                                       Navigator.of(context).pop(false),
-                                  child: Text(l10n.cancelButton),
+                                  child: Text(l10n?.cancelButton ?? ""),
                                 ),
                               ],
                             );
@@ -203,7 +209,6 @@ class _EnzymesPageState extends State<EnzymesPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     var heightMQ = MediaQuery.of(context).size.height;
 
     return ListenableBuilder(
@@ -225,7 +230,7 @@ class _EnzymesPageState extends State<EnzymesPage> {
                           height: 8,
                         ),
                         Text(
-                          l10n.enzymesFound(_enzymesViewmodel.enzymes.length),
+                          l10n?.enzymesFound(_enzymesViewmodel.enzymes.length) ?? "",
                           style: TextStyles(context).link(fontSize: 16),
                         ),
                         const SizedBox(

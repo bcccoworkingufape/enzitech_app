@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
+import '../../../../../../l10n/app_localizations.dart';
 
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
@@ -29,8 +30,15 @@ class CalculateExperimentPage extends StatefulWidget {
 
 class _CalculateExperimentPageState extends State<CalculateExperimentPage> {
   late final CalculateExperimentViewmodel _calculateExperimentViewmodel;
+  late final AppLocalizations? l10n;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    l10n = AppLocalizations.of(context);
+  }
 
   @override
   void initState() {
@@ -46,7 +54,7 @@ class _CalculateExperimentPageState extends State<CalculateExperimentPage> {
               _calculateExperimentViewmodel.state == StateEnum.error) {
             EZTSnackBar.show(
               context,
-              HandleFailure.of(_calculateExperimentViewmodel.failure!),
+              HandleFailure.of(l10n ,_calculateExperimentViewmodel.failure!),
               eztSnackBarType: EZTSnackBarType.error,
             );
           }
