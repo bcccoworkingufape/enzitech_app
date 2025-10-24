@@ -17,6 +17,10 @@ abstract class UserPreferencesServices {
 
   Future<bool> getExcludeConfirmation();
 
+  Future<void> saveReplaceLanguage(bool value);
+
+  Future<bool> getReplaceLanguage();
+
   Future<void> initThemeMode();
 
   Future<void> saveThemeModeAsString(String value);

@@ -1,5 +1,6 @@
 // 🎯 Dart imports:
 import 'dart:async';
+import 'dart:io';
 
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
@@ -98,6 +99,7 @@ class _MyAppState extends State<MyApp> {
               FormBuilderLocalizations.delegate,
             ],
             supportedLocales: [const Locale('pt'), const Locale('en')],
+            locale: _settingsViewmodel.isReplaceLanguage ? _settingsViewmodel.locale : null,
           );
         },
       ),

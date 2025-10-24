@@ -74,6 +74,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deletionConfirmation => 'Deletion confirmation';
 
   @override
+  String get languages => 'Languages';
+
+  @override
+  String get replaceLanguage => 'Replace language';
+
+  @override
   String get theme => 'Theme';
 
   @override

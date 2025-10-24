@@ -212,6 +212,18 @@ abstract class AppLocalizations {
   /// **'Deletion confirmation'**
   String get deletionConfirmation;
 
+  /// No description provided for @languages.
+  ///
+  /// In en, this message translates to:
+  /// **'Languages'**
+  String get languages;
+
+  /// No description provided for @replaceLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace language'**
+  String get replaceLanguage;
+
   /// No description provided for @theme.
   ///
   /// In en, this message translates to:

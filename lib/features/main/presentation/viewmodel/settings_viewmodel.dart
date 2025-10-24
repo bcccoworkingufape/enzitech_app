@@ -8,14 +8,17 @@ import 'package:url_launcher/url_launcher.dart';
 // 🌎 Project imports:
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
+import '../../../../shared/l10n/app_localizations.dart';
 import '../../../../shared/utils/utils.dart';
 import '../../../authentication/domain/entities/user_entity.dart';
 import '../../domain/entities/app_info_entity.dart';
 import '../../domain/usecases/clear_user/clear_user_usecase.dart';
 import '../../domain/usecases/get_exclude_confirmation/get_exclude_confirmation_usecase.dart';
+import '../../domain/usecases/get_replace_language/get_replace_language.dart';
 import '../../domain/usecases/get_theme_mode/get_theme_mode_usecase.dart';
 import '../../domain/usecases/get_user/get_user_usecase.dart';
 import '../../domain/usecases/save_exclude_confirmation/save_exclude_confirmation_usecase.dart';
+import '../../domain/usecases/save_replace_language/save_replace_language.dart';
 import '../../domain/usecases/save_theme_mode/save_theme_mode_usecase.dart';
 
 class SettingsViewmodel extends ChangeNotifier {
@@ -23,6 +26,8 @@ class SettingsViewmodel extends ChangeNotifier {
   final GetExcludeConfirmationUseCase _getExcludeConfirmationUseCase;
   final SaveExcludeConfirmationUseCase _saveExcludeConfirmationUseCase;
   final GetThemeModeUseCase _getThemeModeUseCase;
+  final GetReplaceLanguageUseCase _getReplaceLanguageUseCase;
+  final SaveReplaceLanguageUseCase _saveReplaceLanguageUseCase;
   final SaveThemeModeUseCase _saveThemeModeUseCase;
   final ClearUserUseCase _clearUserUseCase;
 
@@ -31,9 +36,28 @@ class SettingsViewmodel extends ChangeNotifier {
     this._getExcludeConfirmationUseCase,
     this._saveExcludeConfirmationUseCase,
     this._getThemeModeUseCase,
+    this._getReplaceLanguageUseCase,
+    this._saveReplaceLanguageUseCase,
     this._saveThemeModeUseCase,
     this._clearUserUseCase,
   );
+
+  bool _isReplaceLanguage = false;
+  bool get isReplaceLanguage => _isReplaceLanguage;
+  void setReplaceLanguage(bool isReplaceLanguage) {
+    _isReplaceLanguage = isReplaceLanguage;
+    _saveReplaceLanguageUseCase(isReplaceLanguage);
+    notifyListeners();
+  }
+
+  List<Locale> get locales => AppLocalizations.supportedLocales;
+
+  Locale _locale = const Locale('en');
+  Locale get locale => _locale;
+  void setLocale(Locale locale) {
+    _locale = locale;
+    notifyListeners();
+  }
 
   StateEnum _state = StateEnum.idle;
   StateEnum get state => _state;
@@ -91,7 +115,27 @@ class SettingsViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  logout() async {
+  Future<void> updateLocale(BuildContext context) async {
+    final locale = Localizations.localeOf(context);
+
+    //* switch between locales
+    switch (locale.languageCode) {
+      case 'en':
+        setLocale(const Locale('tr'));
+        break;
+      case 'tr':
+        setLocale(const Locale('de'));
+        break;
+      case 'de':
+        setLocale(const Locale('en'));
+        break;
+      default:
+        setLocale(const Locale('en'));
+        break;
+    }
+  }
+
+  Future<void> logout() async {
     setStateEnum(StateEnum.loading);
     try {
       _clearUserUseCase();
@@ -127,6 +171,18 @@ class SettingsViewmodel extends ChangeNotifier {
       },
       (success) async {
         setEnableExcludeConfirmation(success);
+        notifyListeners();
+      },
+    );
+
+    var resultReplaceLanguage = await _getReplaceLanguageUseCase();
+    resultReplaceLanguage.fold(
+      (error) {
+        _setFailure(error);
+        setStateEnum(StateEnum.error);
+      },
+      (success) async {
+        setReplaceLanguage(success);
         notifyListeners();
       },
     );
@@ -172,7 +228,7 @@ class SettingsViewmodel extends ChangeNotifier {
 
   Future<void> openUrl(String url) async {
     if (!await canLaunchUrl(Uri.parse(url))) {
-      throw  UnableToOpenUrlFailure(message: url);
+      throw UnableToOpenUrlFailure(message: url);
     }
   }
 }

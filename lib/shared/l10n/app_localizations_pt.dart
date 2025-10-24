@@ -74,6 +74,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String get deletionConfirmation => 'Confirmação de exclusão';
 
   @override
+  String get languages => 'Idiomas';
+
+  @override
+  String get replaceLanguage => 'Substituir idioma';
+
+  @override
   String get theme => 'Tema';
 
   @override

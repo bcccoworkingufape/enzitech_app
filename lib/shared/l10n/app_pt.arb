@@ -27,6 +27,8 @@
     }
   },
   "deletionConfirmation": "Confirmação de exclusão",
+  "languages": "Idiomas",
+  "replaceLanguage": "Substituir idioma",
   "theme": "Tema",
   "details": "Detalhes sobre o Enzitech",
   "environment": "Ambiente",

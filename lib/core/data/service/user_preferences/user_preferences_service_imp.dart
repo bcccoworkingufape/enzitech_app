@@ -8,6 +8,7 @@ class UserPreferencesServicesImp implements UserPreferencesServices {
   static const _tokenKey = "token";
   static const _userKey = "user";
   static const _excludeConfirmationKey = "excludeConfirmationKey";
+  static const _replaceLanguageKey = "replaceLanguageKey";
   static const _themeModeKey = "themeModeKey";
 
   final KeyValueService _keyValueService;
@@ -54,6 +55,16 @@ class UserPreferencesServicesImp implements UserPreferencesServices {
   @override
   Future<bool> getExcludeConfirmation() async {
     return await _keyValueService.getBool(_excludeConfirmationKey) ?? false;
+  }
+
+  @override
+  Future<void> saveReplaceLanguage(bool value) async {
+    return await _keyValueService.setBool(_replaceLanguageKey, value);
+  }
+
+  @override
+  Future<bool> getReplaceLanguage() async {
+    return await _keyValueService.getBool(_replaceLanguageKey) ?? false;
   }
 
   @override

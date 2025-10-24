@@ -15,6 +15,7 @@ import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../core/routing/routing.dart';
 import '../../../../../../shared/extensions/extensions.dart';
+import '../../../../../../shared/l10n/app_localizations.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../../../../shared/utils/utils.dart';
 import '../../../viewmodel/home_viewmodel.dart';
@@ -153,10 +154,34 @@ class _SettingsPageState extends State<SettingsPage> {
                     title: context.l10n.settings,
                     tiles: [
                       SwitchListTile(
-                        secondary: Icon(PhosphorIcons.trash()),
-                        title: Text(context.l10n.deletionConfirmation),
-                        value: _settingsViewmodel.enableExcludeConfirmation!,
-                        onChanged: (bool value) => _settingsViewmodel.setEnableExcludeConfirmation(value),
+                        secondary: Icon(PhosphorIcons.globe()),
+                        title: Text(context.l10n.replaceLanguage),
+                        value: _settingsViewmodel.isReplaceLanguage,
+                        onChanged: (bool value) => _settingsViewmodel.setReplaceLanguage(value),
+                      ),
+                      Opacity(
+                        opacity: _settingsViewmodel.isReplaceLanguage
+                            ? 1.0
+                            : 0.5, // Reduce opacity to indicate disabled state
+                        child: SettingsTile(
+                          leading: Icon(PhosphorIcons.quotes()),
+                          title: Text(context.l10n.languages),
+                          trailing: SegmentedButton<Locale>(
+                            showSelectedIcon: false,
+                            segments: _settingsViewmodel.locales.map((locale) {
+                              return ButtonSegment<Locale>(
+                                value: locale,
+                                icon: Text(locale.languageCode.toUpperCase()),
+                              );
+                            }).toList(),
+                            selected: <Locale>{Locale(AppLocalizations.of(context).localeName)},
+                            onSelectionChanged: (Set<Locale> newSelection) {
+                              setState(() {
+                                _settingsViewmodel.setLocale(newSelection.first);
+                              });
+                            },
+                          ),
+                        ),
                       ),
                       SettingsTile(
                         leading: Icon(PhosphorIcons.paintRoller()),
@@ -178,6 +203,12 @@ class _SettingsPageState extends State<SettingsPage> {
                             });
                           },
                         ),
+                      ),
+                      SwitchListTile(
+                        secondary: Icon(PhosphorIcons.trash()),
+                        title: Text(context.l10n.deletionConfirmation),
+                        value: _settingsViewmodel.enableExcludeConfirmation!,
+                        onChanged: (bool value) => _settingsViewmodel.setEnableExcludeConfirmation(value),
                       ),
                     ],
                   ),
