@@ -21,9 +21,9 @@ import 'core/inject/inject.dart';
 import 'core/routing/routing.dart';
 import 'features/main/presentation/viewmodel/settings_viewmodel.dart';
 import 'firebase_options.dart';
+import 'shared/l10n/app_localizations.dart';
 import 'shared/ui/ui.dart';
 import 'shared/utils/utils.dart';
-import 'shared/l10n/app_localizations.dart';
 
 Future<void> main() async {
   runZonedGuarded(() async {

@@ -1,7 +1,6 @@
 // 🌎 Project imports:
-import 'failures.dart';
-
 import '../../shared/l10n/app_localizations.dart';
+import 'failures.dart';
 
 class HandleFailure {
   static String of(

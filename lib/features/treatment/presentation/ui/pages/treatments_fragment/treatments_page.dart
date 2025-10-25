@@ -1,18 +1,18 @@
-// 🐦 Flutter imports:
+// 🎯 Dart imports:
 import 'dart:convert';
 
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
-import '../../../../../../shared/l10n/app_localizations.dart';
-
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../shared/extensions/build_context_extensions.dart';
+import '../../../../../../shared/l10n/app_localizations.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../../../main/presentation/viewmodel/settings_viewmodel.dart';
 import '../../../viewmodel/treatments_viewmodel.dart';

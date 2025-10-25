@@ -8,8 +8,8 @@ import 'package:get_it/get_it.dart';
 import '../../../../../../../core/enums/enums.dart';
 import '../../../../../../../shared/extensions/build_context_extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
-import '../../../../../../../shared/validator/validator.dart';
 import '../../../../../../../shared/utils/utils.dart';
+import '../../../../../../../shared/validator/validator.dart';
 import '../../../../viewmodel/calculate_experiment_viewmodel.dart';
 import '../calculate_experiment_fragment_template.dart';
 

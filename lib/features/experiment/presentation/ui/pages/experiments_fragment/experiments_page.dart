@@ -1,6 +1,5 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-
-import '../../../../../../shared/l10n/app_localizations.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
@@ -11,6 +10,7 @@ import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../core/routing/routing.dart';
 import '../../../../../../shared/extensions/build_context_extensions.dart';
+import '../../../../../../shared/l10n/app_localizations.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../../../main/presentation/viewmodel/home_viewmodel.dart';
 import '../../../viewmodel/experiments_viewmodel.dart';
