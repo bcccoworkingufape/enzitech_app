@@ -1,0 +1,19 @@
+{
+  "@@Locale": "pt",
+  "connectionRestored": "✓ Conexão reestabelecida",
+  "noInternetWarning": "⚠ Sem conexão com o servidor: Você está visualizando informações previamente carregadas e sem atualizações, quaisquer mudanças offline não serão mantidas!",
+  "experiments": "Experimentos",
+  "treatments": "Tratamentos",
+  "enzymes": "Enzimas",
+  "settings": "Configurações",
+  "nextButton": "Próximo",
+  "backButton": "Voltar",
+  "loginAgain": "Faça seu login novamente.",
+  "noData": "Sem dados!",
+  "select": "Selecionar",
+  "tryAgain": "Tentar Novamente",
+  "undo": "Desfazer",
+  "delete": "Excluir",
+  "deleteButton": "EXCLUIR",
+  "cancelButton": "CANCELAR"
+}

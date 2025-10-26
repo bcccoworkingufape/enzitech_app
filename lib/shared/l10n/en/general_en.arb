@@ -1,0 +1,19 @@
+{
+  "@@locale": "en",
+  "connectionRestored": "✓ Connection restored",
+  "noInternetWarning": "⚠ No connection to the server: You are viewing previously loaded and un-updated information, any offline changes will not be maintained!",
+  "experiments": "Experiments",
+  "treatments": "Treatments",
+  "enzymes": "Enzymes",
+  "settings": "Settings",
+  "nextButton": "Next",
+  "backButton": "Back",
+  "loginAgain": "Log in again.",
+  "noData": "No data!",
+  "select": "Select",
+  "tryAgain": "Try Again",
+  "undo": "Undo",
+  "delete": "Delete",
+  "deleteButton": "DELETE",
+  "cancelButton": "CANCEL"
+}

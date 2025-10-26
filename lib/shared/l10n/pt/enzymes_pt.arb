@@ -1,0 +1,56 @@
+{
+  "@@Locale": "pt",
+  "enzymeCreatedSuccess": "Enzima criada com sucesso!",
+  "registerNewEnzyme": "Cadastre uma nova\nenzima",
+  "enzymeIdentification": "Identificação da enzima",
+  "chooseEnzymeType": "Escolha o tipo da enzima",
+  "createEnzymeButton": "Criar enzima",
+  "enzymeType_acidPhosphatase": "Fosfatase Ácida",
+  "enzymeType_alkalinePhosphatase": "Fosfatase Alcalina",
+  "enzymeType_arylsulfatase": "Arilsulfatase",
+  "enzymeType_betaGlucosidase": "Beta-Glicosidase",
+  "enzymeType_urease": "Urease",
+  "enzymeType_fda": "FDA",
+  "enzymeType_aryl": "Aryl",
+  "errorLoadingEnzymes": "Erro ao carregar enzimas",
+  "loadingEnzymes": "Carregando enzimas...",
+  "noEnzymesRegisteredAdmin": "Nenhuma enzima cadastrada.",
+  "noEnzymesRegisteredUser": "Nenhuma enzima cadastrada, entre em contato com o seu Administrador para solucionar este problema.",
+  "enzymeDeleted": "{enzymeName} excluído!",
+  "@enzymeDeleted": {
+    "placeholders": {
+      "enzymeName": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteEnzymeTitle": "Excluir a enzima?",
+  "deleteEnzymeContent": "Você tem certeza que deseja excluir esta enzima?",
+  "enzymesFound": "🧬 {count, plural, =0{Nenhuma enzima encontrada} =1{1 enzima encontrada} other{{count} enzimas encontradas}}",
+  "@enzymesFound": {
+    "description": "Uma mensagem que mostra o número de enzimas encontradas",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "formulaLabel": "Fórmula: ",
+  "variableALabel": "Variável A: ",
+  "variableBLabel": "Variável B: ",
+  "enzymesSummaryTitle": "Sumário de enzimas",
+  "enzymeTagFormat": "{enzymeName} ({quantity})",
+  "@enzymeTagFormat": {
+    "description": "Formato para a tag da enzima, mostrando nome e quantidade",
+    "placeholders": {
+      "enzymeName": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "int"
+      }
+    }
+  },
+  "variableA": "Variável A",
+  "variableB": "Variável B"
+}

@@ -1,0 +1,25 @@
+{
+  "@@locale": "en",
+  "welcomeMessage": "Welcome {userName}!",
+  "@welcomeMessage": {
+    "placeholders": {
+      "userName": {
+        "type": "String"
+      }
+    }
+  },
+  "helloWelcome": "Hello,\nwelcome!",
+  "forgotMyPassword": "I forgot my password",
+  "loginButton": "Login",
+  "dontHaveAnAccount": "Don't have an account?",
+  "createOne": " Create one",
+  "institutionLabel": "Institution",
+  "signUp": "Sign Up",
+  "personalData": "Personal Data",
+  "email": "E-mail",
+  "passwordLabel": "Password",
+  "confirmPasswordLabel": "Confirm password",
+  "access": "Access",
+  "createAccountButton": "Create account",
+  "accountCreatedSuccess": "Account created successfully!"
+}

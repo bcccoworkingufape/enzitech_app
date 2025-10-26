@@ -5,6 +5,7 @@ import 'dart:io';
 
 Future<void> main() async {
   final locales = ['en', 'pt'];
+  bool hasErrors = false;
 
   try {
     for (final locale in locales) {
@@ -13,25 +14,55 @@ Future<void> main() async {
 
       final Map<String, dynamic> merged = {"@@locale": locale};
 
-      if (!await directory.exists()) continue;
+      if (!await directory.exists()){
+        print('⚠️ Diretório não encontrado para o idioma: $locale (${directory.path})');
+        continue;
+      }
 
       final files = directory.listSync().whereType<File>().where((f) => f.path.endsWith('.arb')).toList();
 
-      for (final file in files) {
-        final content = await file.readAsString();
-        final jsonMap = json.decode(content) as Map<String, dynamic>;
 
-        merged.addAll(jsonMap);
+      for (final file in files) {
+        print('  Lendo: ${file.path}');
+        try {
+          final content = await file.readAsString();
+          final jsonMap = json.decode(content) as Map<String, dynamic>;
+
+          jsonMap.remove('@@locale');
+
+          merged.addAll(jsonMap);
+        } on FormatException catch (e) {
+          print('❌ ERRO DE FORMATAÇÃO JSON no arquivo: ${file.path}');
+          print('   Detalhes: $e');
+          hasErrors = true;
+        } catch (e) {
+          print('❌ Erro ao processar o arquivo ${file.path}: $e');
+          hasErrors = true;
+        }
       }
 
-      // Grava o arquivo final formatado
-      final encoder = JsonEncoder.withIndent('  ');
-      await outputFile.writeAsString(encoder.convert(merged));
-
-      print('✅ Gerado: ${outputFile.path}');
+      // Só grava o arquivo final se não houve erros de formatação
+      if (!hasErrors) {
+        try {
+          final encoder = JsonEncoder.withIndent('  ');
+          await outputFile.writeAsString(encoder.convert(merged));
+          print('✅ Gerado: ${outputFile.path}');
+        } catch (e) {
+          print('❌ Erro ao gravar o arquivo ${outputFile.path}: $e');
+          hasErrors = true;
+        }
+      } else {
+        print('⚠️ Arquivo final ${outputFile.path} NÃO foi gerado devido a erros anteriores.');
+      }
     }
-    print('\n🎉 Todos os arquivos ARB foram mesclados com sucesso!');
+
+    if (hasErrors) {
+      print('\n💔 Processo finalizado com erros. Verifique os arquivos ARB indicados.');
+    } else {
+      print('\n🎉 Todos os arquivos ARB foram mesclados com sucesso!');
+    }
+
   } catch (e) {
-    print('Erro ao gerar os arquivos: $e');
+    print('Erro geral ao gerar os arquivos: $e');
   }
 }

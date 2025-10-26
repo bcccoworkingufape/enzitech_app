@@ -1,4 +1,61 @@
 {
   "@@locale": "en",
-  "stringtest3": "Test3"
+  "info": "Info",
+  "about": "About Enzitech",
+  "frequentlyAskedQuestions": "FAQ",
+  "userData": "User Data",
+  "userName": "Name",
+  "userType": "User Role",
+  "roles": "{role, select, admin{Administrator} common{Common} other{Common}}",
+  "@roles": {
+    "description": "Users roles into the app",
+    "placeholders": {
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "deletionConfirmation": "Deletion confirmation",
+  "languages": "Languages",
+  "replaceLanguage": "Replace language",
+  "theme": "Theme",
+  "details": "Details about Enzitech",
+  "environment": "Environment",
+  "version": "Version",
+  "exit": "Exit",
+  "seeYouSoon": "See you soon...",
+  "environmentValue": "{env, select, dev{Development} stage{Stage} prod{Production} other{Unknown}}",
+  "@environmentValue": {
+    "description": "The translated value of the application environment",
+    "placeholders": {
+      "env": {
+        "type": "String"
+      }
+    }
+  },
+  "unableToOpenUrlError": "Could not access {url}",
+  "@unableToOpenUrlError": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "aboutTitle": "About:",
+  "idealizationTitle": "Idealization",
+  "developmentTeamTitle": "Development Team",
+  "closeButton": "Close",
+  "idealizationTextP1": " was conceived as a solution for the study and realization of experiments in the field of soil enzymatic activities, idealized in conjunction with the ",
+  "idealizationTextP2": " and the ",
+  "idealizationTextP3": ", located at the ",
+  "idealizationTextP4": ".",
+  "roleMobileDeveloper": "(Mobile developer)",
+  "roleBackendDeveloper": "(Back-end developer)",
+  "roleProjectManagement": "(Project Management)",
+  "roleProfessorBCC": "(Professor - BCC)",
+  "roleProfessorAgronomy": "(Professor - Agronomy)",
+  "question": "Question: ",
+  "question1": "I'm unable to create an enzyme. Why?",
+  "answer": "Answer: ",
+  "answer1": "Creating new enzymes is a feature limited to administrators. Currently, adding a new enzyme to the system requires implementation by our team. Should you need a new enzyme type, please send a request to the system administrator."
 }

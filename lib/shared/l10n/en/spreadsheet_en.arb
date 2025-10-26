@@ -1,0 +1,29 @@
+{
+  "@@locale": "en",
+  "excel_treatmentLabel": "Treatment:",
+  "excel_col_id": "Id",
+  "excel_col_sampleAbsorbance": "Sample Abs.",
+  "excel_col_whiteSampleAbsorbance": "White Abs.",
+  "excel_col_difference": "Difference",
+  "excel_col_variableA": "Variable A",
+  "excel_col_variableB": "Variable B",
+  "excel_col_curveCalculation": "Curve Calc.",
+  "excel_col_correctionFactor": "Corr. Factor",
+  "excel_col_time": "Time (h)",
+  "excel_col_volume": "Volume",
+  "excel_col_sampleWeight": "Sample Weight (g)",
+  "excel_col_result": "Result",
+  "excel_footer_developedBy": "Developed by:",
+  "excel_footer_learnMore": "👨🏻‍💻 LEARN MORE:",
+  "shareExperimentResultsFilename": "Results for experiment \"{experimentName}\"",
+  "@shareExperimentResultsFilename": {
+    "placeholders": {
+      "experimentName": {
+        "type": "String"
+      }
+    }
+  },
+  "spreadsheetSavedSuccess": "Spreadsheet saved successfully!",
+  "spreadsheetSaveError": "Could not save the spreadsheet, please try again.",
+  "shareFileError": "Could not share the file, please try again."
+}

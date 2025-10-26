@@ -1,0 +1,38 @@
+{
+  "@@Locale": "pt",
+  "treatmentCreatedSuccess": "Tratamento criado com sucesso!",
+  "registerNewTreatment": "Cadastre um novo\ntratamento",
+  "treatmentIdentification": "Identificação do tratamento",
+  "createTreatmentButton": "Criar tratamento",
+  "errorLoadingTreatments": "Erro ao carregar tratamentos",
+  "loadingTreatments": "Carregando tratamentos...",
+  "treatmentsNotFound": "Tratamentos não encontrados",
+  "treatmentDeleted": "{treatmentName} excluído!",
+  "@treatmentDeleted": {
+    "placeholders": {
+      "treatmentName": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteTreatmentTitle": "Excluir o tratamento?",
+  "deleteTreatmentContent": "Você tem certeza que deseja excluir este tratamento?",
+  "treatmentsFound": "🧪 {count, plural, =0{Nenhum tratamento encontrado} =1{1 tratamento encontrado} other{{count} tratamentos encontrados}}",
+  "@treatmentsFound": {
+    "description": "Uma mensagem que mostra o número de tratamentos encontrados",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "createdOn": "Criado em {date}",
+  "@createdOn": {
+    "description": "Rótulo para mostrar quando um tratamento foi criado",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  }
+}

@@ -1,4 +1,6 @@
 {
-  "@@locale": "pt",
-  "stringtest2": "Teste2"
+  "@@Locale": "pt",
+  "registerExperiment": "Cadastrar\n Experimento",
+  "registerTreatment": "Cadastrar\n Tratamento",
+  "registerEnzyme": "Cadastrar\n Enzima"
 }
