@@ -1,0 +1,25 @@
+{
+  "@@Locale": "pt",
+  "welcomeMessage": "Bem vindo(a) {userName}!",
+  "@welcomeMessage": {
+    "placeholders": {
+      "userName": {
+        "type": "String"
+      }
+    }
+  },
+  "helloWelcome": "Olá,\nseja bem vindo(a)!",
+  "forgotMyPassword": "Esqueci minha senha",
+  "loginButton": "Entrar",
+  "dontHaveAnAccount": "Não possui uma conta?",
+  "createOne": " Crie uma",
+  "institutionLabel": "Instituição",
+  "signUp": "Cadastre-se",
+  "personalData": "Dados pessoais",
+  "email": "E-mail",
+  "passwordLabel": "Senha",
+  "confirmPasswordLabel": "Confirmar senha",
+  "access": "Acesso",
+  "createAccountButton": "Criar conta",
+  "accountCreatedSuccess": "Conta criada com sucesso!"
+}

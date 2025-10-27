@@ -1,0 +1,38 @@
+{
+  "@@locale": "en",
+  "treatmentCreatedSuccess": "Treatment created successfully!",
+  "registerNewTreatment": "Register a new\ntreatment",
+  "treatmentIdentification": "Treatment Identification",
+  "createTreatmentButton": "Create treatment",
+  "errorLoadingTreatments": "Error loading treatments",
+  "loadingTreatments": "Loading treatments...",
+  "treatmentsNotFound": "Treatments not found",
+  "treatmentDeleted": "{treatmentName} deleted!",
+  "@treatmentDeleted": {
+    "placeholders": {
+      "treatmentName": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteTreatmentTitle": "Delete treatment?",
+  "deleteTreatmentContent": "Are you sure you want to delete this treatment?",
+  "treatmentsFound": "🧪 {count, plural, =0{No treatments found} =1{1 treatment found} other{{count} treatments found}}",
+  "@treatmentsFound": {
+    "description": "A message that shows the number of treatments found",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "createdOn": "Created on {date}",
+  "@createdOn": {
+    "description": "Label to show when a treatment was created",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  }
+}

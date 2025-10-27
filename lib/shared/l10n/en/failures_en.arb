@@ -1,4 +1,88 @@
 {
   "@@locale": "en",
-  "stringtest": "Test1"
+  "error_serverConnectionRefused": "⚠ Server Error, please try again later.",
+  "error_statusCodeAndMessage": "⚠ SC{statusCode} - {message}",
+  "@error_statusCodeAndMessage": {
+    "placeholders": {
+      "statusCode": {},
+      "message": {}
+    }
+  },
+  "error_messageOnly": "⚠ {message}",
+  "@error_messageOnly": {
+    "placeholders": {
+      "message": {}
+    }
+  },
+  "error_400": "⚠ Incorrect data: Some field is invalid or missing.",
+  "error_401": "⚠ Not authorized: Token expired or invalid user.",
+  "error_403": "⚠ Access denied: You do not have permission to perform this action.",
+  "error_404_login": "⚠ User not found.",
+  "error_404_generic": "⚠ Not found: This information may no longer exist.",
+  "error_422": "⚠ Unprocessable entity: The server understands the content type, but was unable to process the contained instructions.",
+  "error_426": "⚠ Upgrade required: Invalid device ID.",
+  "error_500": "⚠ Server Error: The request could not be fulfilled.",
+  "error_503": "⚠ Server Error: The service is temporarily unavailable.",
+  "error_noNetwork": "⚠ No internet connection, check your network access and try again.",
+  "error_noResultQuery": "⚠ Could not get {query}.",
+  "@error_noResultQuery": {
+    "placeholders": {
+      "query": {}
+    }
+  },
+  "validation_required": "⚠ Required field",
+  "validation_strongPassword": "⚠ Password does not meet the required pattern.",
+  "validation_alfanumeric": "⚠ Field does not accept special characters",
+  "validation_name": "⚠ Invalid name",
+  "validation_phone": "⚠ Invalid number",
+  "validation_cellphone": "⚠ Invalid number",
+  "validation_passwordEquals": "⚠ The entered passwords do not match.",
+  "validation_passwordMustBeDiff": "⚠ The new password cannot be the same as the current one.",
+  "validation_notFound": "⚠ Not found",
+  "validation_emailEquals": "⚠ The entered emails do not match.",
+  "validation_email": "⚠ Invalid email",
+  "validation_cpf": "⚠ Invalid CPF",
+  "validation_cnpj": "⚠ Invalid CNPJ",
+  "validation_numeric": "⚠ Invalid number",
+  "validation_number": "⚠ Invalid number",
+  "validation_greaterThanZeroDecimal": "⚠ Enter a number greater than zero",
+  "validation_isInteger": "⚠ Enter an integer",
+  "validation_greaterThanZero": "⚠ Enter a number greater than zero",
+  "validation_maxNumber": "⚠ Number must be less than or equal to {value}.",
+  "@validation_maxNumber": {
+    "placeholders": {
+      "value": {}
+    }
+  },
+  "validation_maxChars": "⚠ This field must have a maximum of {value} character(s)",
+  "@validation_maxChars": {
+    "placeholders": {
+      "value": {}
+    }
+  },
+  "validation_maxAge": "⚠ Maximum age {value} years",
+  "@validation_maxAge": {
+    "placeholders": {
+      "value": {}
+    }
+  },
+  "validation_minAge": "⚠ Minimum age {value} years",
+  "@validation_minAge": {
+    "placeholders": {
+      "value": {}
+    }
+  },
+  "validation_minNumber": "⚠ Number must be greater than or equal to {value}.",
+  "@validation_minNumber": {
+    "placeholders": {
+      "value": {}
+    }
+  },
+  "validation_minChars": "⚠ This field must have a minimum of {value} character(s)",
+  "@validation_minChars": {
+    "placeholders": {
+      "value": {}
+    }
+  },
+  "validation_emailOrRegistration": "⚠ Invalid email or registration."
 }

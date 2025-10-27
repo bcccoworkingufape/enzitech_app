@@ -363,7 +363,7 @@ class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthS
                     _createExperimentViewmodel.setStepPage(index);
                   },
                   type: StepperType.vertical,
-                  steps: _createExperimentViewmodel.temporaryExperiment.enzymes!.map((enzyme) {
+                  steps: _createExperimentViewmodel.temporaryExperiment.enzymes?.map((enzyme) {
                     return Step(
                       state: _leadWithStepState(enzyme),
                       title: _isEnzymeCorrectlyFilled(enzyme.id)
@@ -380,7 +380,7 @@ class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthS
                         ),
                       ),
                     );
-                  }).toList(),
+                  }).toList() ?? [],
                 ),
                 Padding(padding: const EdgeInsets.fromLTRB(16, 64, 16, 32), child: _buttons),
               ],

@@ -1,4 +1,6 @@
 {
   "@@locale": "en",
-  "stringtest2": "Test2"
+  "registerExperiment": "Register\n Experiment",
+  "registerTreatment": "Register\n Treatment",
+  "registerEnzyme": "Register\n Enzyme"
 }

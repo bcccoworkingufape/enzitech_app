@@ -1,4 +1,88 @@
 {
-  "@@locale": "pt",
-  "stringtest": "Teste1"
+  "@@Locale": "pt",
+  "error_serverConnectionRefused": "⚠ Erro de Servidor, tente novamente mais tarde.",
+  "error_statusCodeAndMessage": "⚠ SC{statusCode} - {message}",
+  "@error_statusCodeAndMessage": {
+    "placeholders": {
+      "statusCode": {},
+      "message": {}
+    }
+  },
+  "error_messageOnly": "⚠ {message}",
+  "@error_messageOnly": {
+    "placeholders": {
+      "message": {}
+    }
+  },
+  "error_400": "⚠ Dados incorretos: Algum campo inválido ou ausente.",
+  "error_401": "⚠ Não autorizado: Token expirado ou usuário inválido.",
+  "error_403": "⚠ Acesso negado: Você não tem permissão para executar esta ação.",
+  "error_404_login": "⚠ Usuário não encontrado.",
+  "error_404_generic": "⚠ Não encontrado: Talvez essa informação não exista mais.",
+  "error_422": "⚠ Entidade não processável: Não foi possível processar as instruções presentes.",
+  "error_426": "⚠ Upgrade requerido: ID de dispositivo inválido.",
+  "error_500": "⚠ Erro do Servidor: Não foi possível atender à solicitação.",
+  "error_503": "⚠ Erro do Servidor: Não foi possível atender à solicitação neste momento.",
+  "error_noNetwork": "⚠ Sem conexão com a internet, verifique seu acesso à rede e tente novamente.",
+  "error_noResultQuery": "⚠ Não foi possível obter {query}.",
+  "@error_noResultQuery": {
+    "placeholders": {
+      "query": {}
+    }
+  },
+  "validation_required": "⚠ Campo obrigatório",
+  "validation_strongPassword": "⚠ Senha não atende ao padrão informado.",
+  "validation_alfanumeric": "⚠ Campo não aceita caracteres especiais",
+  "validation_name": "⚠ Nome inválido",
+  "validation_phone": "⚠ Número inválido",
+  "validation_cellphone": "⚠ Número inválido",
+  "validation_passwordEquals": "⚠ As senhas digitadas não coincidem.",
+  "validation_passwordMustBeDiff": "⚠ A nova senha não pode ser igual a senha atual.",
+  "validation_notFound": "⚠ Não encontrado",
+  "validation_emailEquals": "⚠ Os e-mails digitados não coincidem.",
+  "validation_email": "⚠ E-mail inválido",
+  "validation_cpf": "⚠ CPF inválido",
+  "validation_cnpj": "⚠ CNPJ inválido",
+  "validation_numeric": "⚠ Número inválido",
+  "validation_number": "⚠ Número inválido",
+  "validation_greaterThanZeroDecimal": "⚠ Insira um número maior que zero",
+  "validation_isInteger": "⚠ Insira um número inteiro",
+  "validation_greaterThanZero": "⚠ Insira um número maior que zero",
+  "validation_maxNumber": "⚠ Número deve ser menor ou igual a {value}.",
+  "@validation_maxNumber": {
+    "placeholders": {
+      "value": {}
+    }
+  },
+  "validation_maxChars": "⚠ Esse campo deve ter no máximo {value} caractere(s)",
+  "@validation_maxChars": {
+    "placeholders": {
+      "value": {}
+    }
+  },
+  "validation_maxAge": "⚠ Idade máxima {value} anos",
+  "@validation_maxAge": {
+    "placeholders": {
+      "value": {}
+    }
+  },
+  "validation_minAge": "⚠ Idade mínima {value} anos",
+  "@validation_minAge": {
+    "placeholders": {
+      "value": {}
+    }
+  },
+  "validation_minNumber": "⚠ Número deve ser maior ou igual a {value}.",
+  "@validation_minNumber": {
+    "placeholders": {
+      "value": {}
+    }
+  },
+  "validation_minChars": "⚠ Esse campo deve ter no mínimo {value} caractere(s)",
+  "@validation_minChars": {
+    "placeholders": {
+      "value": {}
+    }
+  },
+  "validation_emailOrRegistration": "⚠ E-mail ou matrícula inválido."
 }
