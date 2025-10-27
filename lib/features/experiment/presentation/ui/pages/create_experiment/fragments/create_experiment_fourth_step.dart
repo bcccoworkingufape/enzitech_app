@@ -1,7 +1,6 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
@@ -328,62 +327,73 @@ class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthS
           messageOfStepIndicator: context.l10n.stepIndicatorFillVariables(4, 4),
           body: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
-            child: Column(
-              children: [
-                Stepper(
-                  physics: const ClampingScrollPhysics(),
-                  currentStep: _createExperimentViewmodel.stepPage,
-                  controlsBuilder: (BuildContext context, ControlsDetails details) {
-                    return Row(
-                      children: <Widget>[
-                        if (_createExperimentViewmodel.stepPage <
-                            _createExperimentViewmodel.temporaryExperiment.enzymes!.length - 1)
-                          TextButton(
-                            onPressed: () {
-                              if (_createExperimentViewmodel.stepPage <
-                                  _createExperimentViewmodel.temporaryExperiment.enzymes!.length - 1) {
-                                _createExperimentViewmodel.setStepPage(_createExperimentViewmodel.stepPage + 1);
-                              }
-                            },
-                            child: Text(context.l10n.nextButton),
-                          ),
-                        if (_createExperimentViewmodel.stepPage > 0)
-                          TextButton(
-                            onPressed: () {
-                              if (_createExperimentViewmodel.stepPage > 0) {
-                                _createExperimentViewmodel.setStepPage(_createExperimentViewmodel.stepPage - 1);
-                              }
-                            },
-                            child: Text(context.l10n.backButton),
-                          ),
-                      ],
-                    );
-                  },
-                  onStepTapped: (int index) {
-                    _createExperimentViewmodel.setStepPage(index);
-                  },
-                  type: StepperType.vertical,
-                  steps: _createExperimentViewmodel.temporaryExperiment.enzymes?.map((enzyme) {
-                    return Step(
-                      state: _leadWithStepState(enzyme),
-                      title: _isEnzymeCorrectlyFilled(enzyme.id)
-                          ? Text(enzyme.name)
-                          : Text(
-                              "⚠  ${enzyme.name}",
-                              style: TextStyle(fontWeight: FontWeight.bold, color: context.getApplyedColorScheme.error),
+            child: Visibility(
+              visible:
+                  _createExperimentViewmodel.temporaryExperiment.enzymes != null &&
+                  _createExperimentViewmodel.temporaryExperiment.enzymes!.isNotEmpty,
+              replacement: EZTForcedCenter(child: EZTProgressIndicator(message: context.l10n.loadingEnzymes)),
+              child: Column(
+                children: [
+                  Stepper(
+                    physics: const ClampingScrollPhysics(),
+                    currentStep: _createExperimentViewmodel.stepPage,
+                    controlsBuilder: (BuildContext context, ControlsDetails details) {
+                      return Row(
+                        children: <Widget>[
+                          if (_createExperimentViewmodel.stepPage <
+                              _createExperimentViewmodel.temporaryExperiment.enzymes!.length - 1)
+                            TextButton(
+                              onPressed: () {
+                                if (_createExperimentViewmodel.stepPage <
+                                    _createExperimentViewmodel.temporaryExperiment.enzymes!.length - 1) {
+                                  _createExperimentViewmodel.setStepPage(_createExperimentViewmodel.stepPage + 1);
+                                }
+                              },
+                              child: Text(context.l10n.nextButton),
                             ),
-                      content: Container(
-                        alignment: Alignment.centerLeft,
-                        child: Visibility(
-                          visible: _createExperimentViewmodel.textFields["aVariable-${enzyme.id}"] != null,
-                          child: _textFields(enzyme),
-                        ),
-                      ),
-                    );
-                  }).toList() ?? [],
-                ),
-                Padding(padding: const EdgeInsets.fromLTRB(16, 64, 16, 32), child: _buttons),
-              ],
+                          if (_createExperimentViewmodel.stepPage > 0)
+                            TextButton(
+                              onPressed: () {
+                                if (_createExperimentViewmodel.stepPage > 0) {
+                                  _createExperimentViewmodel.setStepPage(_createExperimentViewmodel.stepPage - 1);
+                                }
+                              },
+                              child: Text(context.l10n.backButton),
+                            ),
+                        ],
+                      );
+                    },
+                    onStepTapped: (int index) {
+                      _createExperimentViewmodel.setStepPage(index);
+                    },
+                    type: StepperType.vertical,
+                    steps:
+                        _createExperimentViewmodel.temporaryExperiment.enzymes?.map((enzyme) {
+                          return Step(
+                            state: _leadWithStepState(enzyme),
+                            title: _isEnzymeCorrectlyFilled(enzyme.id)
+                                ? Text(enzyme.name)
+                                : Text(
+                                    "⚠  ${enzyme.name}",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: context.getApplyedColorScheme.error,
+                                    ),
+                                  ),
+                            content: Container(
+                              alignment: Alignment.centerLeft,
+                              child: Visibility(
+                                visible: _createExperimentViewmodel.textFields["aVariable-${enzyme.id}"] != null,
+                                child: _textFields(enzyme),
+                              ),
+                            ),
+                          );
+                        }).toList() ??
+                        [],
+                  ),
+                  Padding(padding: const EdgeInsets.fromLTRB(16, 64, 16, 32), child: _buttons),
+                ],
+              ),
             ),
           ),
         );
