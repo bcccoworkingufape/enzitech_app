@@ -71,8 +71,7 @@ class EZTAutoScroll extends StatefulWidget {
   State<EZTAutoScroll> createState() => _EZTAutoScrollState();
 }
 
-class _EZTAutoScrollState extends State<EZTAutoScroll>
-    with SingleTickerProviderStateMixin {
+class _EZTAutoScrollState extends State<EZTAutoScroll> with SingleTickerProviderStateMixin {
   late final AnimationController animationController;
   late Animation<Offset> offset;
 
@@ -94,20 +93,17 @@ class _EZTAutoScrollState extends State<EZTAutoScroll>
       }
     });
 
-    animationController = AnimationController(
-      duration: widget.duration,
-      vsync: this,
-    );
+    animationController = AnimationController(duration: widget.duration, vsync: this);
 
     offset = Tween<Offset>(
       begin: Offset.zero,
       end: widget.scrollDirection == Axis.horizontal
           ? widget.reverseScroll
-              ? const Offset(.5, 0)
-              : const Offset(-.5, 0)
+                ? const Offset(.5, 0)
+                : const Offset(-.5, 0)
           : widget.reverseScroll
-              ? const Offset(0, .5)
-              : const Offset(0, -.5),
+          ? const Offset(0, .5)
+          : const Offset(0, -.5),
     ).animate(animationController);
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
@@ -118,7 +114,7 @@ class _EZTAutoScrollState extends State<EZTAutoScroll>
     super.initState();
   }
 
-  animationHandler() async {
+  Future<void> animationHandler() async {
     if (!scrollController.hasClients) return;
 
     if (scrollController.position.maxScrollExtent > 0) {
@@ -139,9 +135,7 @@ class _EZTAutoScrollState extends State<EZTAutoScroll>
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      physics: widget.enableScrollInput
-          ? const BouncingScrollPhysics()
-          : const NeverScrollableScrollPhysics(),
+      physics: widget.enableScrollInput ? const BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
       controller: scrollController,
       scrollDirection: widget.scrollDirection,
       reverse: widget.reverseScroll,
@@ -153,31 +147,28 @@ class _EZTAutoScrollState extends State<EZTAutoScroll>
             return widget.scrollDirection == Axis.horizontal
                 ? Row(
                     children: List.generate(
-                        widget.duplicateChild,
-                        (index) => Padding(
-                              padding: EdgeInsets.only(
-                                  right: shouldScroll && !widget.reverseScroll
-                                      ? widget.gap
-                                      : 0,
-                                  left: shouldScroll && widget.reverseScroll
-                                      ? widget.gap
-                                      : 0),
-                              child: widget.child,
-                            )))
+                      widget.duplicateChild,
+                      (index) => Padding(
+                        padding: EdgeInsets.only(
+                          right: shouldScroll && !widget.reverseScroll ? widget.gap : 0,
+                          left: shouldScroll && widget.reverseScroll ? widget.gap : 0,
+                        ),
+                        child: widget.child,
+                      ),
+                    ),
+                  )
                 : Column(
                     children: List.generate(
-                    widget.duplicateChild,
-                    (index) => Padding(
-                      padding: EdgeInsets.only(
-                          bottom: shouldScroll && !widget.reverseScroll
-                              ? widget.gap
-                              : 0,
-                          top: shouldScroll && widget.reverseScroll
-                              ? widget.gap
-                              : 0),
-                      child: widget.child,
+                      widget.duplicateChild,
+                      (index) => Padding(
+                        padding: EdgeInsets.only(
+                          bottom: shouldScroll && !widget.reverseScroll ? widget.gap : 0,
+                          top: shouldScroll && widget.reverseScroll ? widget.gap : 0,
+                        ),
+                        child: widget.child,
+                      ),
                     ),
-                  ));
+                  );
           },
         ),
       ),

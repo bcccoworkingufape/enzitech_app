@@ -311,7 +311,6 @@ class _EZTTextFieldState extends State<EZTTextField> {
         return _outlineInputDecorationCheckout;
 
       case EZTTextFieldType.none:
-      default:
         return _regularInputDecoration;
     }
   }

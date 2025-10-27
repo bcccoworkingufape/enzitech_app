@@ -1,7 +1,7 @@
 // 📦 Package imports:
 import 'package:curl_logger_dio_interceptor/curl_logger_dio_interceptor.dart';
 import 'package:dio/dio.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+// import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 // 🌎 Project imports:
 import '../../../domain/entities/http_driver_options.dart';
@@ -19,7 +19,7 @@ class DioHttpServiceImp implements HttpService {
   }
 
   @override
-  setConfig({String? token}) async {
+  Future<void> setConfig({String? token}) async {
     String gettedToken = httpDriverOptions.accessToken();
     if (token != null) {
       gettedToken = token;
@@ -58,9 +58,9 @@ class DioHttpServiceImp implements HttpService {
 
       var serverFailure = ServerFailure();
       switch (e.runtimeType) {
-        case NoNetworkFailure:
+        case NoNetworkFailure _:
           rethrow;
-        case DioException:
+        case DioException _:
           var dioError = (e as DioException);
           var data = dioError.response?.data;
           if (data is Map<String, dynamic> && data.containsKey('data')) {

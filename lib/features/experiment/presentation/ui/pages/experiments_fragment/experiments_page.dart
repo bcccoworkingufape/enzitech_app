@@ -65,7 +65,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
             _homeViewmodel.accountViewmodel.logout();
 
             if (_homeViewmodel.accountViewmodel.state == StateEnum.success && mounted) {
-              EZTSnackBar.show(context, AppLocalizations.of(context)!.loginAgain);
+              EZTSnackBar.show(context, AppLocalizations.of(context).loginAgain);
               await Future.delayed(const Duration(milliseconds: 500));
               if (mounted) {
                 Navigator.pushReplacementNamed(context, Routing.login);

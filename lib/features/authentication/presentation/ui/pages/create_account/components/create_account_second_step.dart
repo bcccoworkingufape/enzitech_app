@@ -43,7 +43,7 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
     super.initState();
   }
 
-  get _validateFields {
+  void get _validateFields {
     if (_emailFieldController.text.isNotEmpty &&
         _passwordFieldController.text.isNotEmpty &&
         _confirmPasswordFieldController.text.isNotEmpty) {
@@ -126,7 +126,7 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
     );
   }
 
-  _body(BuildContext context) {
+  SingleChildScrollView _body(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: [

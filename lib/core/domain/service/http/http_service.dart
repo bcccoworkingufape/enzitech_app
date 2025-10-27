@@ -3,7 +3,7 @@ import '../../entities/http_driver_options.dart';
 import '../../entities/http_driver_response.dart';
 
 abstract class HttpService {
-  setConfig({String? token});
+  Future<void> setConfig({String? token});
 
   Future<HttpDriverResponse> get(
     String path, {

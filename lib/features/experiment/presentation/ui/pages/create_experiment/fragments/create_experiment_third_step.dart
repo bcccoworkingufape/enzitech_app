@@ -64,7 +64,7 @@ class _CreateExperimentThirdStepPageState extends State<CreateExperimentThirdSte
     setState(() {});
   }
 
-  get _validateFields {
+  void get _validateFields {
     if (_choosedCheckboxList.isNotEmpty) {
       setState(() {
         _createExperimentViewmodel.setEnableNextButtonOnThirdStep(true);

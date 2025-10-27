@@ -72,7 +72,7 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
     super.dispose();
   }
 
-  get _validateFields {
+  void get _validateFields {
     if (_nameFieldController.text.isNotEmpty &&
         _variableAFieldController.text.isNotEmpty &&
         _variableBFieldController.text.isNotEmpty &&

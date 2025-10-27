@@ -27,7 +27,7 @@ class GetTreatmentsDataSourceDecoratorImp extends GetTreatmentsDataSourceDecorat
     );
   }
 
-  _saveInCache(List<TreatmentEntity> treatments) async {
+  Future<void> _saveInCache(List<TreatmentEntity> treatments) async {
     String json = jsonEncode(treatments.map((i) => i.toJson()).toList()).toString();
 
     _keyValueService.setString('treatments_cache', json);

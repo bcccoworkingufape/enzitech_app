@@ -105,10 +105,10 @@ class _EnzymesPageState extends State<EnzymesPage> {
 
                   EZTSnackBar.show(
                     context,
-                    context.l10n.enzymeDeleted(enzyme.name) ?? "",
+                    context.l10n.enzymeDeleted(enzyme.name),
                     eztSnackBarType: EZTSnackBarType.error,
                     action: SnackBarAction(
-                      label: context.l10n.undo ?? "",
+                      label: context.l10n.undo,
                       textColor: context.getApplyedColorScheme.onError,
                       onPressed: () {
                         setState(() {
@@ -136,7 +136,7 @@ class _EnzymesPageState extends State<EnzymesPage> {
                           color: context.getApplyedColorScheme.onError,
                         ),
                         Text(
-                          context.l10n.delete ?? "",
+                          context.l10n.delete,
                           style: TextStyle(color: context.getApplyedColorScheme.onError),
                           textAlign: TextAlign.right,
                         ),
@@ -151,16 +151,16 @@ class _EnzymesPageState extends State<EnzymesPage> {
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: Text(context.l10n.deleteEnzymeTitle ?? ""),
-                              content: Text(context.l10n.deleteEnzymeContent ?? ""),
+                              title: Text(context.l10n.deleteEnzymeTitle),
+                              content: Text(context.l10n.deleteEnzymeContent),
                               actions: [
                                 TextButton(
                                   onPressed: () => Navigator.of(context).pop(true),
-                                  child: Text(context.l10n.deleteButton ?? ""),
+                                  child: Text(context.l10n.deleteButton),
                                 ),
                                 TextButton(
                                   onPressed: () => Navigator.of(context).pop(false),
-                                  child: Text(context.l10n.cancelButton ?? ""),
+                                  child: Text(context.l10n.cancelButton),
                                 ),
                               ],
                             );
@@ -198,7 +198,7 @@ class _EnzymesPageState extends State<EnzymesPage> {
                     children: [
                       const SizedBox(height: 8),
                       Text(
-                        context.l10n.enzymesFound(_enzymesViewmodel.enzymes.length) ?? "",
+                        context.l10n.enzymesFound(_enzymesViewmodel.enzymes.length),
                         style: TextStyles(context).link(fontSize: 16),
                       ),
                       const SizedBox(height: 8),

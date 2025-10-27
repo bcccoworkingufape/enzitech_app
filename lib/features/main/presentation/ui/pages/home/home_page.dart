@@ -20,6 +20,7 @@ import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../core/routing/routing.dart';
 import '../../../../../../shared/extensions/extensions.dart';
+// ignore: unused_import
 import '../../../../../../shared/l10n/app_localizations.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../../../../shared/ui/widgets/ezt_appbar.dart';
@@ -56,9 +57,9 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   late List<Widget> _fragments;
 
-  var _isVisibleExperimentButton;
-  var _isVisibleTreatmentButton;
-  var _isVisibleEnzymeButton;
+  bool _isVisibleExperimentButton = false;
+  bool _isVisibleTreatmentButton = false;
+  bool _isVisibleEnzymeButton = false;
 
   late StreamSubscription _connectivitySubscription;
 

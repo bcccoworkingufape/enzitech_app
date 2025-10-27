@@ -27,7 +27,7 @@ class GetEnzymesDataSourceDecoratorImp extends GetEnzymesDataSourceDecorator {
     );
   }
 
-  _saveInCache(List<EnzymeEntity> enzymes) async {
+  Future<void> _saveInCache(List<EnzymeEntity> enzymes) async {
     String json = jsonEncode(enzymes.map((i) => i.toJson()).toList()).toString();
 
     _keyValueService.setString('enzymes_cache', json);

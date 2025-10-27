@@ -42,9 +42,9 @@ class HandleFailure {
         return l10n.error_503;
       default:
         switch (failure.runtimeType) {
-          case NoNetworkFailure:
+          case NoNetworkFailure _:
             return l10n.error_noNetwork;
-          case NoResultQueryFailure:
+          case NoResultQueryFailure _:
             return l10n.error_noResultQuery(failure.message.toLowerCase());
           default:
             return enableStatusCode

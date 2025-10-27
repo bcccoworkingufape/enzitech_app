@@ -45,7 +45,7 @@ class _CreateExperimentFirstStepPageState extends State<CreateExperimentFirstSte
     setState(() {});
   }
 
-  get _validateFields {
+  void get _validateFields {
     if (_nameFieldController.text.isNotEmpty && _descriptionFieldController.text.isNotEmpty) {
       if (_createExperimentViewmodel.formKey.currentState != null) {
         if (_createExperimentViewmodel.formKey.currentState!.validate() && mounted) {

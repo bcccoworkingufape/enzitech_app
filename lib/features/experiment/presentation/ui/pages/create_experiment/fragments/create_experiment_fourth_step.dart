@@ -154,7 +154,7 @@ class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthS
     });
   }
 
-  get _validateFields {
+  void get _validateFields {
     var isAllFilled = <bool>[];
     textEditingControllers.forEach((key, value) {
       isAllFilled.add(value.text.isNotEmpty);
@@ -170,7 +170,7 @@ class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthS
     }
   }
 
-  bool _checkIfTextIsGTZAndNumeric(text) {
+  bool _checkIfTextIsGTZAndNumeric(dynamic text) {
     //* Numeric
     if (text == null) {
       return false;
@@ -363,24 +363,29 @@ class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthS
                     _createExperimentViewmodel.setStepPage(index);
                   },
                   type: StepperType.vertical,
-                  steps: _createExperimentViewmodel.temporaryExperiment.enzymes?.map((enzyme) {
-                    return Step(
-                      state: _leadWithStepState(enzyme),
-                      title: _isEnzymeCorrectlyFilled(enzyme.id)
-                          ? Text(enzyme.name)
-                          : Text(
-                              "⚠  ${enzyme.name}",
-                              style: TextStyle(fontWeight: FontWeight.bold, color: context.getApplyedColorScheme.error),
+                  steps:
+                      _createExperimentViewmodel.temporaryExperiment.enzymes?.map((enzyme) {
+                        return Step(
+                          state: _leadWithStepState(enzyme),
+                          title: _isEnzymeCorrectlyFilled(enzyme.id)
+                              ? Text(enzyme.name)
+                              : Text(
+                                  "⚠  ${enzyme.name}",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: context.getApplyedColorScheme.error,
+                                  ),
+                                ),
+                          content: Container(
+                            alignment: Alignment.centerLeft,
+                            child: Visibility(
+                              visible: _createExperimentViewmodel.textFields["aVariable-${enzyme.id}"] != null,
+                              child: _textFields(enzyme),
                             ),
-                      content: Container(
-                        alignment: Alignment.centerLeft,
-                        child: Visibility(
-                          visible: _createExperimentViewmodel.textFields["aVariable-${enzyme.id}"] != null,
-                          child: _textFields(enzyme),
-                        ),
-                      ),
-                    );
-                  }).toList() ?? [],
+                          ),
+                        );
+                      }).toList() ??
+                      [],
                 ),
                 Padding(padding: const EdgeInsets.fromLTRB(16, 64, 16, 32), child: _buttons),
               ],

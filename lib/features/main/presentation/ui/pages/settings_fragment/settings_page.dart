@@ -67,7 +67,8 @@ class _SettingsPageState extends State<SettingsPage> {
     }
   }
 
-  get descriptionTextStyle => const TextStyle(color: Color(0xFF97979A), fontSize: 17, fontWeight: FontWeight.w400);
+  TextStyle get descriptionTextStyle =>
+      const TextStyle(color: Color(0xFF97979A), fontSize: 17, fontWeight: FontWeight.w400);
 
   @override
   Widget build(BuildContext context) {
