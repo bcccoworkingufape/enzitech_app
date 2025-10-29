@@ -6,12 +6,8 @@ import '../../../features/authentication/domain/usecases/create_account/create_a
 import '../../../features/authentication/domain/usecases/create_account/create_account_usecase_imp.dart';
 import '../../../features/authentication/domain/usecases/login/login_usecase.dart';
 import '../../../features/authentication/domain/usecases/login/login_usecase_imp.dart';
-import '../../../features/enzyme/domain/usecases/create_enzyme/create_enzyme_usecase.dart';
-import '../../../features/enzyme/domain/usecases/create_enzyme/create_enzyme_usecase_imp.dart';
-import '../../../features/enzyme/domain/usecases/delete_enzyme/delete_enzyme_usecase.dart';
-import '../../../features/enzyme/domain/usecases/delete_enzyme/delete_enzyme_usecase_imp.dart';
-import '../../../features/enzyme/domain/usecases/get_enzymes/get_enzymes_usecase.dart';
-import '../../../features/enzyme/domain/usecases/get_enzymes/get_enzymes_usecase_imp.dart';
+import '../../../features/enzyme/domain/usecases/enzymes_usecases.dart';
+import '../../../features/enzyme/domain/usecases/enzymes_usecases_imp.dart';
 import '../../../features/experiment/domain/usecases/calculate_experiment/calculate_experiment_usecase.dart';
 import '../../../features/experiment/domain/usecases/calculate_experiment/calculate_experiment_usecase_imp.dart';
 import '../../../features/experiment/domain/usecases/create_experiment/create_experiment_usecase.dart';
@@ -57,16 +53,16 @@ class UseCasesInjections {
   final GetIt getIt;
 
   UseCasesInjections(this.getIt) {
+    getIt.registerLazySingleton<EnzymesUseCases>(() => EnzymesUseCasesImp(getIt()));
+
     getIt.registerLazySingleton<CalculateExperimentUseCase>(() => CalculateExperimentUseCaseImp(getIt()));
     getIt.registerLazySingleton<ClearUserUseCase>(() => ClearUserUseCaseImp(getIt()));
     getIt.registerLazySingleton<CreateAccountUseCase>(() => CreateAccountUseCaseImp(getIt()));
-    getIt.registerLazySingleton<CreateEnzymeUseCase>(() => CreateEnzymeUseCaseImp(getIt()));
     getIt.registerLazySingleton<CreateExperimentUseCase>(() => CreateExperimentUseCaseImp(getIt()));
     getIt.registerLazySingleton<CreateTreatmentUseCase>(() => CreateTreatmentUseCaseImp(getIt()));
-    getIt.registerLazySingleton<DeleteEnzymeUseCase>(() => DeleteEnzymeUseCaseImp(getIt()));
     getIt.registerLazySingleton<DeleteTreatmentUseCase>(() => DeleteTreatmentUseCaseImp(getIt()));
     getIt.registerLazySingleton<DeleteExperimentUseCase>(() => DeleteExperimentUseCaseImp(getIt()));
-    getIt.registerLazySingleton<GetEnzymesUseCase>(() => GetEnzymesUseCaseImp(getIt()));
+
     getIt.registerLazySingleton<GetEnzymesRemainingInExperimentUseCase>(
       () => GetEnzymesRemainingInExperimentUseCaseImp(getIt()),
     );

@@ -2,10 +2,11 @@
 import 'package:dartz/dartz.dart';
 
 // 🌎 Project imports:
-import '../../../../core/failures/failures.dart';
-import '../entities/enzyme_entity.dart';
+import '../../../../../../core/failures/failures.dart';
+import '../../domain/entities/enzyme_entity.dart';
 
-abstract class EnzymesUseCases {
+abstract class EnzymesDataSource {
+
   Future<Either<Failure, Unit>> deleteEnzyme(String id);
 
   Future<Either<Failure, Unit>> createEnzyme({

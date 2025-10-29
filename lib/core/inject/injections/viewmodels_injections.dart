@@ -31,7 +31,7 @@ class ViewmodelsInjections {
     getIt.registerLazySingleton<CreateEnzymeViewmodel>(() => CreateEnzymeViewmodel(getIt()));
     getIt.registerLazySingleton<CreateExperimentViewmodel>(() => CreateExperimentViewmodel(getIt(), getIt()));
     getIt.registerLazySingleton<CreateTreatmentViewmodel>(() => CreateTreatmentViewmodel(getIt()));
-    getIt.registerLazySingleton<EnzymesViewmodel>(() => EnzymesViewmodel(getIt(), getIt()));
+    getIt.registerLazySingleton<EnzymesViewmodel>(() => EnzymesViewmodel(getIt()));
     getIt.registerLazySingleton<ExperimentDetailsViewmodel>(() => ExperimentDetailsViewmodel(getIt()));
     getIt.registerLazySingleton<ExperimentResultsViewmodel>(() => ExperimentResultsViewmodel(getIt(), getIt()));
     getIt.registerLazySingleton<ExperimentsViewmodel>(() => ExperimentsViewmodel(getIt(), getIt(), getIt(), getIt()));

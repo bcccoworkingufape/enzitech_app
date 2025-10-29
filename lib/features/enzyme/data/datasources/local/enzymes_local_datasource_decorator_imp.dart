@@ -5,20 +5,20 @@ import 'dart:convert';
 import 'package:dartz/dartz.dart';
 
 // 🌎 Project imports:
-import '../../../../../../core/domain/service/key_value/key_value_service.dart';
-import '../../../../../../core/failures/failures.dart';
-import '../../../../domain/entities/enzyme_entity.dart';
-import '../../../dto/enzyme_dto.dart';
-import 'get_enzymes_local_datasource_decorator.dart';
+import '../../../../../core/domain/service/key_value/key_value_service.dart';
+import '../../../../../core/failures/failures.dart';
+import '../../../domain/entities/enzyme_entity.dart';
+import '../../dto/enzyme_dto.dart';
+import 'enzymes_local_datasource_decorator.dart';
 
-class GetEnzymesDataSourceDecoratorImp extends GetEnzymesDataSourceDecorator {
+class EnzymesDataSourceDecoratorImp extends EnzymesDataSourceDecorator {
   final KeyValueService _keyValueService;
 
-  GetEnzymesDataSourceDecoratorImp(super.getEnzymesDataSource, this._keyValueService);
+  EnzymesDataSourceDecoratorImp(super.enzymesDataSource, this._keyValueService);
 
   @override
-  Future<Either<Failure, List<EnzymeEntity>>> call() async {
-    return (await super()).fold(
+  Future<Either<Failure, List<EnzymeEntity>>> getEnzymes() async {
+    return (await super.getEnzymes()).fold(
       (error) async => error is ExpiredTokenOrWrongUserFailure ? Left(error) : await _getInCache(),
       (result) {
         _saveInCache(result);
@@ -27,7 +27,7 @@ class GetEnzymesDataSourceDecoratorImp extends GetEnzymesDataSourceDecorator {
     );
   }
 
-  _saveInCache(List<EnzymeEntity> enzymes) async {
+  Future<void> _saveInCache(List<EnzymeEntity> enzymes) async {
     String json = jsonEncode(enzymes.map((i) => i.toJson()).toList()).toString();
 
     _keyValueService.setString('enzymes_cache', json);
