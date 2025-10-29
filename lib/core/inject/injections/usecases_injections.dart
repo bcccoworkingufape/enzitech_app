@@ -42,12 +42,8 @@ import '../../../features/main/domain/usecases/save_replace_language/save_replac
 import '../../../features/main/domain/usecases/save_replace_language/save_replace_language_imp.dart';
 import '../../../features/main/domain/usecases/save_theme_mode/save_theme_mode_usecase.dart';
 import '../../../features/main/domain/usecases/save_theme_mode/save_theme_mode_usecase_imp.dart';
-import '../../../features/treatment/domain/usecases/create_treatment/create_treatment_usecase.dart';
-import '../../../features/treatment/domain/usecases/create_treatment/create_treatment_usecase_imp.dart';
-import '../../../features/treatment/domain/usecases/delete_treatment/delete_treatment_usecase.dart';
-import '../../../features/treatment/domain/usecases/delete_treatment/delete_treatment_usecase_imp.dart';
-import '../../../features/treatment/domain/usecases/get_treatments/get_treatments_usecase.dart';
-import '../../../features/treatment/domain/usecases/get_treatments/get_treatments_usecase_imp.dart';
+import '../../../features/treatment/domain/usecases/treatments_usecases.dart';
+import '../../../features/treatment/domain/usecases/treatments_usecases_imp.dart';
 
 class UseCasesInjections {
   final GetIt getIt;
@@ -55,14 +51,13 @@ class UseCasesInjections {
   UseCasesInjections(this.getIt) {
     getIt.registerLazySingleton<EnzymesUseCases>(() => EnzymesUseCasesImp(getIt()));
 
+    getIt.registerLazySingleton<TreatmentsUseCases>(() => TreatmentsUseCasesImp(getIt()));
+
     getIt.registerLazySingleton<CalculateExperimentUseCase>(() => CalculateExperimentUseCaseImp(getIt()));
     getIt.registerLazySingleton<ClearUserUseCase>(() => ClearUserUseCaseImp(getIt()));
     getIt.registerLazySingleton<CreateAccountUseCase>(() => CreateAccountUseCaseImp(getIt()));
     getIt.registerLazySingleton<CreateExperimentUseCase>(() => CreateExperimentUseCaseImp(getIt()));
-    getIt.registerLazySingleton<CreateTreatmentUseCase>(() => CreateTreatmentUseCaseImp(getIt()));
-    getIt.registerLazySingleton<DeleteTreatmentUseCase>(() => DeleteTreatmentUseCaseImp(getIt()));
     getIt.registerLazySingleton<DeleteExperimentUseCase>(() => DeleteExperimentUseCaseImp(getIt()));
-
     getIt.registerLazySingleton<GetEnzymesRemainingInExperimentUseCase>(
       () => GetEnzymesRemainingInExperimentUseCaseImp(getIt()),
     );
@@ -71,7 +66,6 @@ class UseCasesInjections {
     getIt.registerLazySingleton<GetExperimentsUseCase>(() => GetExperimentsUseCaseImp(getIt()));
     getIt.registerLazySingleton<GetResultUseCase>(() => GetResultUseCaseImp(getIt()));
     getIt.registerLazySingleton<GetThemeModeUseCase>(() => GetThemeModeUseCaseImp(getIt()));
-    getIt.registerLazySingleton<GetTreatmentsUseCase>(() => GetTreatmentsUseCaseImp(getIt()));
     getIt.registerLazySingleton<GetUserUseCase>(() => GetUserUseCaseImp(getIt()));
     getIt.registerLazySingleton<GetReplaceLanguageUseCase>(() => GetReplaceLanguageUseCaseImp(getIt()));
     getIt.registerLazySingleton<LoginUseCase>(() => LoginUseCaseImp(getIt()));

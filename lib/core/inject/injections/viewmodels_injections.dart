@@ -38,6 +38,6 @@ class ViewmodelsInjections {
     getIt.registerLazySingleton<HomeViewmodel>(() => HomeViewmodel(getIt(), getIt(), getIt(), getIt()));
     getIt.registerLazySingleton<LoginViewmodel>(() => LoginViewmodel(getIt()));
     getIt.registerFactory<SplashViewmodel>(() => SplashViewmodel(getIt(), getIt(), getIt(), getIt(), getIt()));
-    getIt.registerLazySingleton<TreatmentsViewmodel>(() => TreatmentsViewmodel(getIt(), getIt()));
+    getIt.registerLazySingleton<TreatmentsViewmodel>(() => TreatmentsViewmodel(getIt()));
   }
 }

@@ -5,20 +5,20 @@ import 'dart:convert';
 import 'package:dartz/dartz.dart';
 
 // 🌎 Project imports:
-import '../../../../../../core/domain/service/key_value/key_value_service.dart';
-import '../../../../../../core/failures/failures.dart';
-import '../../../../domain/entities/treatment_entity.dart';
-import '../../../dto/treatment_dto.dart';
-import 'get_treatments_local_datasource_decorator.dart';
+import '../../../../../core/domain/service/key_value/key_value_service.dart';
+import '../../../../../core/failures/failures.dart';
+import '../../../domain/entities/treatment_entity.dart';
+import '../../dto/treatment_dto.dart';
+import 'treatments_local_datasource_decorator.dart';
 
-class GetTreatmentsDataSourceDecoratorImp extends GetTreatmentsDataSourceDecorator {
+class TreatmentsDataSourceDecoratorImp extends TreatmentsDataSourceDecorator {
   final KeyValueService _keyValueService;
 
-  GetTreatmentsDataSourceDecoratorImp(super.getTreatmentsDataSource, this._keyValueService);
+  TreatmentsDataSourceDecoratorImp(super.treatmentsDataSource, this._keyValueService);
 
   @override
-  Future<Either<Failure, List<TreatmentEntity>>> call() async {
-    return (await super()).fold(
+  Future<Either<Failure, List<TreatmentEntity>>> getTreatments() async {
+    return (await super.getTreatments()).fold(
       (error) async => error is ExpiredTokenOrWrongUserFailure ? Left(error) : await _getInCache(),
       (result) {
         _saveInCache(result);
@@ -27,7 +27,7 @@ class GetTreatmentsDataSourceDecoratorImp extends GetTreatmentsDataSourceDecorat
     );
   }
 
-  _saveInCache(List<TreatmentEntity> treatments) async {
+  Future<void> _saveInCache(List<TreatmentEntity> treatments) async {
     String json = jsonEncode(treatments.map((i) => i.toJson()).toList()).toString();
 
     _keyValueService.setString('treatments_cache', json);

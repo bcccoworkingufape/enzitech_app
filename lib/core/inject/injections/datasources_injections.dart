@@ -42,13 +42,9 @@ import '../../../features/main/data/datasources/local/save_theme_mode/save_theme
 import '../../../features/main/data/datasources/save_exclude_confirmation_datasource.dart';
 import '../../../features/main/data/datasources/save_replace_language_datasource.dart';
 import '../../../features/main/data/datasources/save_theme_mode_datasource.dart';
-import '../../../features/treatment/data/datasources/create_treatment_datasource.dart';
-import '../../../features/treatment/data/datasources/delete_treatment_datasource.dart';
-import '../../../features/treatment/data/datasources/get_treatments_datasource.dart';
-import '../../../features/treatment/data/datasources/local/get_treatments/get_treatments_local_datasource_decorator_imp.dart';
-import '../../../features/treatment/data/datasources/remote/create_treatment_remote_datasource_imp.dart';
-import '../../../features/treatment/data/datasources/remote/delete_treatment_remote_datasource_imp.dart';
-import '../../../features/treatment/data/datasources/remote/get_treatments_remote_datasource_imp.dart';
+import '../../../features/treatment/data/datasources/local/treatments_local_datasource_decorator_imp.dart';
+import '../../../features/treatment/data/datasources/remote/treatments_remote_datasource_imp.dart';
+import '../../../features/treatment/data/datasources/treatments_datasource.dart';
 
 class DataSourcesInjections {
   final GetIt getIt;
@@ -58,12 +54,14 @@ class DataSourcesInjections {
       () => EnzymesDataSourceDecoratorImp(EnzymesRemoteDataSourceImp(getIt()), getIt()),
     );
 
+    getIt.registerLazySingleton<TreatmentsDataSource>(
+      () => TreatmentsDataSourceDecoratorImp(TreatmentsRemoteDataSourceImp(getIt()), getIt()),
+    );
+
     getIt.registerLazySingleton<CalculateExperimentDataSource>(() => CalculateExperimentRemoteDataSourceImp(getIt()));
     getIt.registerLazySingleton<ClearUserDataSource>(() => ClearUserLocalDataSourceImp(getIt()));
     getIt.registerLazySingleton<CreateAccountDataSource>(() => CreateAccountRemoteDataSourceImp(getIt()));
     getIt.registerLazySingleton<CreateExperimentDataSource>(() => CreateExperimentRemoteDataSourceImp(getIt()));
-    getIt.registerLazySingleton<CreateTreatmentDataSource>(() => CreateTreatmentRemoteDataSourceImp(getIt()));
-    getIt.registerLazySingleton<DeleteTreatmentDataSource>(() => DeleteTreatmentRemoteDataSourceImp(getIt()));
     getIt.registerLazySingleton<DeleteExperimentDataSource>(() => DeleteExperimentRemoteDataSourceImp(getIt()));
     getIt.registerLazySingleton<GetEnzymesRemainingInExperimentDataSource>(
       () => GetEnzymesRemainingInExperimentRemoteDataSourceImp(getIt()),
@@ -78,9 +76,6 @@ class DataSourcesInjections {
     getIt.registerLazySingleton<GetResultDataSource>(() => GetResultRemoteDataSourceImp(getIt()));
     getIt.registerLazySingleton<GetThemeModeDataSource>(() => GetThemeModeLocalDataSourceImp(getIt()));
     getIt.registerLazySingleton<GetReplaceLanguageDataSource>(() => GetReplaceLanguageDataSourceImp(getIt()));
-    getIt.registerLazySingleton<GetTreatmentsDataSource>(
-      () => GetTreatmentsDataSourceDecoratorImp(GetTreatmentsRemoteDataSourceImp(getIt()), getIt()),
-    );
     getIt.registerLazySingleton<GetUserDataSource>(() => GetUserLocalDataSourceImp(getIt()));
     getIt.registerLazySingleton<LoginDataSource>(() => LoginRemoteDataSourceImp(getIt(), getIt()));
     getIt.registerLazySingleton<SaveExcludeConfirmationDataSource>(

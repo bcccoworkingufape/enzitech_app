@@ -42,12 +42,8 @@ import '../../../features/main/domain/repositories/get_user_repository.dart';
 import '../../../features/main/domain/repositories/save_exclude_confirmation_repository.dart';
 import '../../../features/main/domain/repositories/save_replace_language_repository.dart';
 import '../../../features/main/domain/repositories/save_theme_mode_repository.dart';
-import '../../../features/treatment/data/repositories/create_treatment_repository_imp.dart';
-import '../../../features/treatment/data/repositories/delete_treatment_repository_imp.dart';
-import '../../../features/treatment/data/repositories/get_treatments_repository_imp.dart';
-import '../../../features/treatment/domain/repositories/create_treatment_repository.dart';
-import '../../../features/treatment/domain/repositories/delete_treatment_repository.dart';
-import '../../../features/treatment/domain/repositories/get_treatments_repository.dart';
+import '../../../features/treatment/data/repositories/treatments_repository_imp.dart';
+import '../../../features/treatment/domain/repositories/treatments_repository.dart';
 
 class RepositoriesInjections {
   final GetIt getIt;
@@ -55,12 +51,12 @@ class RepositoriesInjections {
   RepositoriesInjections(this.getIt) {
     getIt.registerLazySingleton<EnzymesRepository>(() => EnzymesRepositoryImp(getIt()));
 
+    getIt.registerLazySingleton<TreatmentsRepository>(() => TreatmentsRepositoryImp(getIt()));
+
     getIt.registerLazySingleton<CalculateExperimentRepository>(() => CalculateExperimentRepositoryImp(getIt()));
     getIt.registerLazySingleton<ClearUserRepository>(() => ClearUserRepositoryImp(getIt()));
     getIt.registerLazySingleton<CreateAccountRepository>(() => CreateAccountRepositoryImp(getIt()));
     getIt.registerLazySingleton<CreateExperimentRepository>(() => CreateExperimentRepositoryImp(getIt()));
-    getIt.registerLazySingleton<CreateTreatmentRepository>(() => CreateTreatmentRepositoryImp(getIt()));
-    getIt.registerLazySingleton<DeleteTreatmentRepository>(() => DeleteTreatmentRepositoryImp(getIt()));
     getIt.registerLazySingleton<DeleteExperimentRepository>(() => DeleteExperimentRepositoryImp(getIt()));
     getIt.registerLazySingleton<GetEnzymesRemainingInExperimentRepository>(
       () => GetEnzymesRemainingInExperimentRepositoryImp(getIt()),
@@ -71,7 +67,6 @@ class RepositoriesInjections {
     getIt.registerLazySingleton<GetResultRepository>(() => GetResultRepositoryImp(getIt()));
     getIt.registerLazySingleton<GetThemeModeRepository>(() => GetThemeModeRepositoryImp(getIt()));
     getIt.registerLazySingleton<GetReplaceLanguageRepository>(() => GetReplaceLanguageRepositoryImp(getIt()));
-    getIt.registerLazySingleton<GetTreatmentsRepository>(() => GetTreatmentsRepositoryImp(getIt()));
     getIt.registerLazySingleton<GetUserRepository>(() => GetUserRepositoryImp(getIt()));
     getIt.registerLazySingleton<LoginRepository>(() => LoginRepositoryImp(getIt()));
     getIt.registerLazySingleton<SaveExcludeConfirmationRepository>(() => SaveExcludeConfirmationRepositoryImp(getIt()));
