@@ -20,7 +20,6 @@ import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../core/routing/routing.dart';
 import '../../../../../../shared/extensions/extensions.dart';
-import '../../../../../../shared/l10n/app_localizations.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../../../../shared/ui/widgets/ezt_appbar.dart';
 import '../../../../../enzyme/presentation/ui/pages/enzymes_fragment/enzymes_page.dart';
@@ -32,8 +31,6 @@ import '../../../../../treatment/presentation/viewmodel/treatments_viewmodel.dar
 import '../../../viewmodel/home_viewmodel.dart';
 import '../../../viewmodel/settings_viewmodel.dart';
 import '../settings_fragment/settings_page.dart';
-
-// ignore: unused_import
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
