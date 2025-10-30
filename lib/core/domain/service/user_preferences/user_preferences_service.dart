@@ -1,4 +1,4 @@
-abstract class UserPreferencesServices {
+abstract class UserPreferencesService {
   //* ACCOUNT
   Future<void> saveFullUser(String jsonEncoded);
 

@@ -65,7 +65,7 @@ class _SplashPageState extends State<SplashPage> {
 
   Future<void> _checkAuth() async {
     await Future.delayed(const Duration(seconds: 1)).then((_) async {
-      String token = await GetIt.I.get<UserPreferencesServices>().getToken() ?? '';
+      String token = await GetIt.I.get<UserPreferencesService>().getToken() ?? '';
 
       if (!mounted) return;
 

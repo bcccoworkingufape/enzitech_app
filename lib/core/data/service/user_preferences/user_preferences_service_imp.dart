@@ -4,7 +4,7 @@
 import '../../../domain/service/key_value/key_value_service.dart';
 import '../../../domain/service/user_preferences/user_preferences_service.dart';
 
-class UserPreferencesServicesImp implements UserPreferencesServices {
+class UserPreferencesServiceImp implements UserPreferencesService {
   static const _tokenKey = "token";
   static const _userKey = "user";
   static const _excludeConfirmationKey = "excludeConfirmationKey";
@@ -13,7 +13,7 @@ class UserPreferencesServicesImp implements UserPreferencesServices {
 
   final KeyValueService _keyValueService;
 
-  UserPreferencesServicesImp(this._keyValueService);
+  UserPreferencesServiceImp(this._keyValueService);
 
   //* ACCOUNT
   @override
