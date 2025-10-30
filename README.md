@@ -2,8 +2,8 @@
 
 ![BCC - Coworking](https://img.shields.io/badge/BCC-Coworking-06BC67?logo=slack)
 ![last-commit](https://img.shields.io/github/last-commit/bcccoworkingufape/enzitech_app.svg)
-![Dart - 3.2.3](https://img.shields.io/badge/Dart-3.2.3-02569B?logo=dart)
-![Flutter - 3.16.8](https://img.shields.io/badge/Flutter-3.16.8-0175C2?logo=flutter)
+![Dart - 3.9.2](https://img.shields.io/badge/Dart-3.9.2-02569B?logo=dart)
+![Flutter - 3.35.7](https://img.shields.io/badge/Flutter-3.35.7-0175C2?logo=flutter)
 ![Android - Released](https://img.shields.io/badge/Android-Released-3DDC84?logo=android&logoColor=FFFFFF)
 ![iOS - In development](https://img.shields.io/badge/iOS-In_development-000000?logo=apple&logoColor=FFFFFF)
 
@@ -25,17 +25,35 @@ Posteriormente este projeto tornou-se um [Trabalho de Conclusão de Curso](https
 
 - Ambiente configurado para desenvolvimento Flutter
 - Executar `flutter pub get` para obter as dependencias do projeto
-- Em `local.properties` adicionar as seguintes linhas ao fim do arquivo:
+- Se vazio, criar o arquivo `local.properties`, então adicionar as seguintes linhas ao fim do arquivo:
 
 ```properties
-flutter.minSdkVersion=20
+flutter.minSdkVersion=24
 flutter.targetSdkVersion=34
 flutter.compileSdkVersion=34
 ```
 
-> Arquivo gerado em `enzitech_app\android\local.properties`
+> Arquivo gerado em `enzitech_app/android/local.properties`
 
-### Como gerar o log de alterações
+Para publicações, vai ser necessário o arquivo `key.properties`, que está sob domínio dos desenvolvedores da ferramenta, contendo as _chaves secretas de deploy_. O arquivo deve ter a seguinte estrutura:
+
+```properties
+storePassword=
+keyPassword=
+keyAlias=
+storeFile=C:/Users/user/upload-keystore.jks //Caminho até a chave de upload
+```
+> Arquivo gerado em `enzitech_app/android/key.properties`
+
+### Scripts
+
+O projeto conta com um script auxiliar, que executa todos os comandos necessários para organizar o projeto, na raiz do projeto execute:
+
+```shell
+dart run tool/start.dart
+```
+
+### Como gerar o log de alterações para publicar mudanças
 
 Executar o comando abaixo no terminal, alterando para a data desejada afim de obter os últimos commits, no exemplo, substituir `YYYY-MM-DD` por uma data neste formato: `2023-12-31`.
 
