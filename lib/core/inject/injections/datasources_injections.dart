@@ -2,10 +2,8 @@
 import 'package:get_it/get_it.dart';
 
 // 🌎 Project imports:
-import '../../../features/authentication/data/datasources/create_account_datasource.dart';
-import '../../../features/authentication/data/datasources/login_datasource.dart';
-import '../../../features/authentication/data/datasources/remote/create_account_remote_datasource_imp.dart';
-import '../../../features/authentication/data/datasources/remote/login_remote_datasource_imp.dart';
+import '../../../features/authentication/data/datasources/auth_datasource.dart';
+import '../../../features/authentication/data/datasources/remote/auth_remote_datasource_imp.dart';
 import '../../../features/enzyme/data/datasources/enzymes_datasource.dart';
 import '../../../features/enzyme/data/datasources/local/enzymes_local_datasource_decorator_imp.dart';
 import '../../../features/enzyme/data/datasources/remote/enzymes_remote_datasource_imp.dart';
@@ -36,8 +34,6 @@ class DataSourcesInjections {
 
     getIt.registerLazySingleton<UserPreferencesDataSource>(() => UserPreferencesLocalDataSourceImp(getIt()));
 
-    getIt.registerLazySingleton<CreateAccountDataSource>(() => CreateAccountRemoteDataSourceImp(getIt()));
-
-    getIt.registerLazySingleton<LoginDataSource>(() => LoginRemoteDataSourceImp(getIt(), getIt()));
+    getIt.registerLazySingleton<AuthDataSource>(() => AuthRemoteDataSourceImp(getIt(), getIt()));
   }
 }

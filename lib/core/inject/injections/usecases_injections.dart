@@ -2,10 +2,8 @@
 import 'package:get_it/get_it.dart';
 
 // 🌎 Project imports:
-import '../../../features/authentication/domain/usecases/create_account/create_account_usecase.dart';
-import '../../../features/authentication/domain/usecases/create_account/create_account_usecase_imp.dart';
-import '../../../features/authentication/domain/usecases/login/login_usecase.dart';
-import '../../../features/authentication/domain/usecases/login/login_usecase_imp.dart';
+import '../../../features/authentication/domain/usecases/auth/auth_usecase.dart';
+import '../../../features/authentication/domain/usecases/auth/auth_usecase_imp.dart';
 import '../../../features/enzyme/domain/usecases/enzymes_usecases.dart';
 import '../../../features/enzyme/domain/usecases/enzymes_usecases_imp.dart';
 import '../../../features/experiment/domain/usecases/experiments_usecases.dart';
@@ -27,8 +25,6 @@ class UseCasesInjections {
 
     getIt.registerLazySingleton<UserPreferencesUseCases>(() => UserPreferencesUseCasesImp(getIt()));
 
-    getIt.registerLazySingleton<CreateAccountUseCase>(() => CreateAccountUseCaseImp(getIt()));
-
-    getIt.registerLazySingleton<LoginUseCase>(() => LoginUseCaseImp(getIt()));
+    getIt.registerLazySingleton<AuthUseCase>(() => AuthUseCaseImp(getIt()));
   }
 }

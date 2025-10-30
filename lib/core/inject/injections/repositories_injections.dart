@@ -2,10 +2,8 @@
 import 'package:get_it/get_it.dart';
 
 // 🌎 Project imports:
-import '../../../features/authentication/data/repositories/create_account_repository_imp.dart';
-import '../../../features/authentication/data/repositories/login_repository_imp.dart';
-import '../../../features/authentication/domain/repositories/create_account_repository.dart';
-import '../../../features/authentication/domain/repositories/login_repository.dart';
+import '../../../features/authentication/data/repositories/auth_repository_imp.dart';
+import '../../../features/authentication/domain/repositories/auth_repository.dart';
 import '../../../features/enzyme/data/repositories/enzymes_repository_imp.dart';
 import '../../../features/enzyme/domain/repositories/enzymes_repository.dart';
 import '../../../features/experiment/data/repositories/experiments_repository_imp.dart';
@@ -27,8 +25,6 @@ class RepositoriesInjections {
 
     getIt.registerLazySingleton<UserPreferencesRepository>(() => UserPreferencesRepositoryImp(getIt()));
 
-    getIt.registerLazySingleton<CreateAccountRepository>(() => CreateAccountRepositoryImp(getIt()));
-
-    getIt.registerLazySingleton<LoginRepository>(() => LoginRepositoryImp(getIt()));
+    getIt.registerLazySingleton<AuthRepository>(() => AuthRepositoryImp(getIt()));
   }
 }
