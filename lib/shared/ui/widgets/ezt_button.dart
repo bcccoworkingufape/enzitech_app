@@ -65,8 +65,6 @@ class _EZTButtonState extends State<EZTButton> {
     }
   }
 
-  // TODO: Checar comportamento de alguns botoes, cores e estilos
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(width: double.infinity, height: 48, child: _eztButtonType(context));
