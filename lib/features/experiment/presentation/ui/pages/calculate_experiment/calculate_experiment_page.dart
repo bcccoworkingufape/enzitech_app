@@ -58,7 +58,7 @@ class _CalculateExperimentPageState extends State<CalculateExperimentPage> {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      onPopInvoked: (didPop) async {
+      onPopInvokedWithResult: (bool didPop, void result) async {
         if (_calculateExperimentViewmodel.alreadyPopped) {
           _calculateExperimentViewmodel.setAlreadyPopped(false);
           return;

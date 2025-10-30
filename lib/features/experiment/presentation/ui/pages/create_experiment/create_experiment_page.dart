@@ -73,7 +73,7 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      onPopInvoked: (didPop) async {
+      onPopInvokedWithResult: (bool didPop, void result) async {
         if (_createExperimentViewmodel.alreadyPopped) {
           _createExperimentViewmodel.setAlreadyPopped(false);
           return;
