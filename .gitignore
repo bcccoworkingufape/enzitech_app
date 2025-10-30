@@ -58,3 +58,7 @@ ios/Runner/GoogleService-Info.plist
 
 # FVM Version Cache
 .fvm/
+
+# ARB generated files
+lib/shared/l10n/app_en.arb
+lib/shared/l10n/app_pt.arb
