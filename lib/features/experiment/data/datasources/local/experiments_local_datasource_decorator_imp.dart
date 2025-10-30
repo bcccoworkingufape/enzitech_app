@@ -5,36 +5,38 @@ import 'dart:convert';
 import 'package:dartz/dartz.dart';
 
 // 🌎 Project imports:
-import '../../../../../../core/domain/service/key_value/key_value_service.dart';
-import '../../../../../../core/failures/failures.dart';
-import '../../../../domain/entities/experiment_pagination_entity.dart';
-import '../../../dto/experiment_pagination_dto.dart';
-import 'get_experiments_local_datasource_decorator.dart';
+import '../../../../../core/domain/service/key_value/key_value_service.dart';
+import '../../../../../core/failures/failures.dart';
+import '../../../domain/entities/experiment_pagination_entity.dart';
+import '../../dto/experiment_pagination_dto.dart';
+import 'experiments_local_datasource_decorator.dart';
 
-class GetExperimentsDataSourceDecoratorImp extends GetExperimentsDataSourceDecorator {
+class ExperimentsDataSourceDecoratorImp extends ExperimentsDataSourceDecorator {
   final KeyValueService _keyValueService;
 
-  GetExperimentsDataSourceDecoratorImp(super.getExperimentsDataSource, this._keyValueService);
+  ExperimentsDataSourceDecoratorImp(super.experimentsDataSource, this._keyValueService);
 
   @override
-  Future<Either<Failure, ExperimentPaginationEntity>> call(
+  Future<Either<Failure, ExperimentPaginationEntity>> getExperiments(
     int page, {
     String? orderBy,
     String? ordering,
     int? limit,
     bool? finished,
   }) async {
-    return (await super(page, orderBy: orderBy, ordering: ordering, limit: limit, finished: finished)).fold(
-      (error) async => error is ExpiredTokenOrWrongUserFailure ? Left(error) : await _getInCache(),
-      (result) {
-        //TODO: _saveInCache(result);
-        return Right(result);
-      },
-    );
+    return (await super.getExperiments(
+      page,
+      orderBy: orderBy,
+      ordering: ordering,
+      limit: limit,
+      finished: finished,
+    )).fold((error) async => error is ExpiredTokenOrWrongUserFailure ? Left(error) : await _getInCache(), (result) {
+      _saveInCache(result);
+      return Right(result);
+    });
   }
 
-  @override
-  saveInCache(ExperimentPaginationEntity experimentPaginationEntity) async {
+  Future<void> _saveInCache(ExperimentPaginationEntity experimentPaginationEntity) async {
     String json = jsonEncode(experimentPaginationEntity.toJson()).toString();
 
     _keyValueService.setString('experiments_cache', json);

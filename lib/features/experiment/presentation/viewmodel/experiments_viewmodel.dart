@@ -9,22 +9,13 @@ import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
 import '../../domain/entities/experiment_entity.dart';
 import '../../domain/entities/experiment_pagination_entity.dart';
-import '../../domain/repositories/store_experiments_in_cache_repository.dart';
-import '../../domain/usecases/delete_experiment/delete_experiment_usecase.dart';
-import '../../domain/usecases/get_experiments/get_experiments_usecase.dart';
+import '../../domain/usecases/experiments_usecases.dart';
 
 class ExperimentsViewmodel extends ChangeNotifier {
-  final GetExperimentsUseCase _getExperimentsUseCase;
-  final DeleteExperimentUseCase _deleteExperimentUseCase;
-  final StoreExperimentsInCacheRepository _storeExperimentsInCacheRepository;
+  final ExperimentsUseCases _experimentsUseCases;
   final ConnectionChecker connectionChecker;
 
-  ExperimentsViewmodel(
-    this._getExperimentsUseCase,
-    this._deleteExperimentUseCase,
-    this._storeExperimentsInCacheRepository,
-    this.connectionChecker,
-  );
+  ExperimentsViewmodel(this._experimentsUseCases, this.connectionChecker);
 
   StateEnum _state = StateEnum.idle;
   StateEnum get state => _state;
@@ -128,7 +119,7 @@ class ExperimentsViewmodel extends ChangeNotifier {
       _setIsLoadingMoreRunning(true);
     }
 
-    var result = await _getExperimentsUseCase(
+    var result = await _experimentsUseCases.getExperiments(
       pagination,
       orderBy: orderBy,
       ordering: ordering,
@@ -152,7 +143,7 @@ class ExperimentsViewmodel extends ChangeNotifier {
         }
 
         if (success.experiments.isNotEmpty) {
-          await _storeExperimentsInCacheRepository(
+          await _experimentsUseCases.storeExperimentsInCache(
             ExperimentPaginationEntity(total: _totalOfExperiments, experiments: experiments),
           );
         }
@@ -181,7 +172,7 @@ class ExperimentsViewmodel extends ChangeNotifier {
   }
 
   Future<void> deleteExperiment(String id) async {
-    var result = await _deleteExperimentUseCase(id);
+    var result = await _experimentsUseCases.deleteExperiment(id);
 
     result.fold(
       (error) {

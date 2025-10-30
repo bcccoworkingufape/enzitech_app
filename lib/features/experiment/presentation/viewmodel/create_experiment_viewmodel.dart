@@ -7,15 +7,15 @@ import '../../../../core/failures/failures.dart';
 import '../../../../shared/ui/ui.dart';
 import '../../../enzyme/data/dto/enzyme_dto.dart';
 import '../../domain/entities/experiment_entity.dart';
-import '../../domain/usecases/create_experiment/create_experiment_usecase.dart';
+import '../../domain/usecases/experiments_usecases.dart';
 import '../dto/create_experiment_dto.dart';
 import 'experiments_viewmodel.dart';
 
 class CreateExperimentViewmodel extends ChangeNotifier {
-  final CreateExperimentUseCase _createExperimentUseCase;
+  final ExperimentsUseCases _experimentsUseCases;
   final ExperimentsViewmodel _experimentsViewmodel;
 
-  CreateExperimentViewmodel(this._createExperimentUseCase, this._experimentsViewmodel);
+  CreateExperimentViewmodel(this._experimentsUseCases, this._experimentsViewmodel);
 
   StateEnum _state = StateEnum.idle;
   StateEnum get state => _state;
@@ -167,7 +167,7 @@ class CreateExperimentViewmodel extends ChangeNotifier {
       return;
     }
 
-    var result = await _createExperimentUseCase(
+    var result = await _experimentsUseCases.createExperiment(
       name: _temporaryExperiment.name!,
       description: _temporaryExperiment.description!,
       repetitions: _temporaryExperiment.repetitions!,

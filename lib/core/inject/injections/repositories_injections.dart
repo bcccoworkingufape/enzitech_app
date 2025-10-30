@@ -8,24 +8,8 @@ import '../../../features/authentication/domain/repositories/create_account_repo
 import '../../../features/authentication/domain/repositories/login_repository.dart';
 import '../../../features/enzyme/data/repositories/enzymes_repository_imp.dart';
 import '../../../features/enzyme/domain/repositories/enzymes_repository.dart';
-import '../../../features/experiment/data/repositories/calculate_experiment_repository_imp.dart';
-import '../../../features/experiment/data/repositories/create_experiment_repository_imp.dart';
-import '../../../features/experiment/data/repositories/delete_experiment_repository_imp.dart';
-import '../../../features/experiment/data/repositories/get_enzymes_remaining_in_experiment_repository_imp.dart';
-import '../../../features/experiment/data/repositories/get_experiment_by_id_repository_imp.dart';
-import '../../../features/experiment/data/repositories/get_experiments_repository_imp.dart';
-import '../../../features/experiment/data/repositories/get_result_repository_imp.dart';
-import '../../../features/experiment/data/repositories/save_result_repository_imp.dart';
-import '../../../features/experiment/data/repositories/store_experiments_in_cache_repository_imp.dart';
-import '../../../features/experiment/domain/repositories/calculate_experiment_repository.dart';
-import '../../../features/experiment/domain/repositories/create_experiment_repository.dart';
-import '../../../features/experiment/domain/repositories/delete_experiment_repository.dart';
-import '../../../features/experiment/domain/repositories/get_enzymes_remaining_in_experiment_repository.dart';
-import '../../../features/experiment/domain/repositories/get_experiment_by_id_repository.dart';
-import '../../../features/experiment/domain/repositories/get_experiments_repository.dart';
-import '../../../features/experiment/domain/repositories/get_result_repository.dart';
-import '../../../features/experiment/domain/repositories/save_result_repository.dart';
-import '../../../features/experiment/domain/repositories/store_experiments_in_cache_repository.dart';
+import '../../../features/experiment/data/repositories/experiments_repository_imp.dart';
+import '../../../features/experiment/domain/repositories/experiments_repository.dart';
 import '../../../features/main/data/repositories/clear_user_repository_imp.dart';
 import '../../../features/main/data/repositories/get_exclude_confirmation_repository_imp.dart';
 import '../../../features/main/data/repositories/get_replace_language_repository_imp.dart';
@@ -53,26 +37,17 @@ class RepositoriesInjections {
 
     getIt.registerLazySingleton<TreatmentsRepository>(() => TreatmentsRepositoryImp(getIt()));
 
-    getIt.registerLazySingleton<CalculateExperimentRepository>(() => CalculateExperimentRepositoryImp(getIt()));
+    getIt.registerLazySingleton<ExperimentsRepository>(() => ExperimentsRepositoryImp(getIt()));
+
     getIt.registerLazySingleton<ClearUserRepository>(() => ClearUserRepositoryImp(getIt()));
     getIt.registerLazySingleton<CreateAccountRepository>(() => CreateAccountRepositoryImp(getIt()));
-    getIt.registerLazySingleton<CreateExperimentRepository>(() => CreateExperimentRepositoryImp(getIt()));
-    getIt.registerLazySingleton<DeleteExperimentRepository>(() => DeleteExperimentRepositoryImp(getIt()));
-    getIt.registerLazySingleton<GetEnzymesRemainingInExperimentRepository>(
-      () => GetEnzymesRemainingInExperimentRepositoryImp(getIt()),
-    );
     getIt.registerLazySingleton<GetExcludeConfirmationRepository>(() => GetExcludeConfirmationRepositoryImp(getIt()));
-    getIt.registerLazySingleton<GetExperimentByIdRepository>(() => GetExperimentByIdRepositoryImp(getIt()));
-    getIt.registerLazySingleton<GetExperimentsRepository>(() => GetExperimentsRepositoryImp(getIt()));
-    getIt.registerLazySingleton<GetResultRepository>(() => GetResultRepositoryImp(getIt()));
     getIt.registerLazySingleton<GetThemeModeRepository>(() => GetThemeModeRepositoryImp(getIt()));
     getIt.registerLazySingleton<GetReplaceLanguageRepository>(() => GetReplaceLanguageRepositoryImp(getIt()));
     getIt.registerLazySingleton<GetUserRepository>(() => GetUserRepositoryImp(getIt()));
     getIt.registerLazySingleton<LoginRepository>(() => LoginRepositoryImp(getIt()));
     getIt.registerLazySingleton<SaveExcludeConfirmationRepository>(() => SaveExcludeConfirmationRepositoryImp(getIt()));
-    getIt.registerLazySingleton<SaveResultRepository>(() => SaveResultRepositoryImp(getIt()));
     getIt.registerLazySingleton<SaveThemeModeRepository>(() => SaveThemeModeRepositoryImp(getIt()));
     getIt.registerLazySingleton<SaveReplaceLanguageRepository>(() => SaveReplaceLanguageRepositoryImp(getIt()));
-    getIt.registerLazySingleton<StoreExperimentsInCacheRepository>(() => StoreExperimentsInCacheRepositoryImp(getIt()));
   }
 }

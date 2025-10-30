@@ -8,24 +8,8 @@ import '../../../features/authentication/domain/usecases/login/login_usecase.dar
 import '../../../features/authentication/domain/usecases/login/login_usecase_imp.dart';
 import '../../../features/enzyme/domain/usecases/enzymes_usecases.dart';
 import '../../../features/enzyme/domain/usecases/enzymes_usecases_imp.dart';
-import '../../../features/experiment/domain/usecases/calculate_experiment/calculate_experiment_usecase.dart';
-import '../../../features/experiment/domain/usecases/calculate_experiment/calculate_experiment_usecase_imp.dart';
-import '../../../features/experiment/domain/usecases/create_experiment/create_experiment_usecase.dart';
-import '../../../features/experiment/domain/usecases/create_experiment/create_experiment_usecase_imp.dart';
-import '../../../features/experiment/domain/usecases/delete_experiment/delete_experiment_usecase.dart';
-import '../../../features/experiment/domain/usecases/delete_experiment/delete_experiment_usecase_imp.dart';
-import '../../../features/experiment/domain/usecases/get_enzymes_remaining_in_experiment/get_enzymes_remaining_in_experiment_usecase.dart';
-import '../../../features/experiment/domain/usecases/get_enzymes_remaining_in_experiment/get_enzymes_remaining_in_experiment_usecase_imp.dart';
-import '../../../features/experiment/domain/usecases/get_experiment_by_id/get_experiment_by_id_usecase.dart';
-import '../../../features/experiment/domain/usecases/get_experiment_by_id/get_experiment_by_id_usecase_imp.dart';
-import '../../../features/experiment/domain/usecases/get_experiments/get_experiments_usecase.dart';
-import '../../../features/experiment/domain/usecases/get_experiments/get_experiments_usecase_imp.dart';
-import '../../../features/experiment/domain/usecases/get_result/get_result_usecase.dart';
-import '../../../features/experiment/domain/usecases/get_result/get_result_usecase_imp.dart';
-import '../../../features/experiment/domain/usecases/save_result/save_result_usecase.dart';
-import '../../../features/experiment/domain/usecases/save_result/save_result_usecase_imp.dart';
-import '../../../features/experiment/domain/usecases/store_experiments_in_cache/store_experiments_in_cache_usecase.dart';
-import '../../../features/experiment/domain/usecases/store_experiments_in_cache/store_experiments_in_cache_usecase_imp.dart';
+import '../../../features/experiment/domain/usecases/experiments_usecases.dart';
+import '../../../features/experiment/domain/usecases/experiments_usecases_imp.dart';
 import '../../../features/main/domain/usecases/clear_user/clear_user_usecase.dart';
 import '../../../features/main/domain/usecases/clear_user/clear_user_usecase_imp.dart';
 import '../../../features/main/domain/usecases/get_exclude_confirmation/get_exclude_confirmation_usecase.dart';
@@ -53,26 +37,17 @@ class UseCasesInjections {
 
     getIt.registerLazySingleton<TreatmentsUseCases>(() => TreatmentsUseCasesImp(getIt()));
 
-    getIt.registerLazySingleton<CalculateExperimentUseCase>(() => CalculateExperimentUseCaseImp(getIt()));
+    getIt.registerLazySingleton<ExperimentsUseCases>(() => ExperimentsUseCasesImp(getIt()));
+
     getIt.registerLazySingleton<ClearUserUseCase>(() => ClearUserUseCaseImp(getIt()));
     getIt.registerLazySingleton<CreateAccountUseCase>(() => CreateAccountUseCaseImp(getIt()));
-    getIt.registerLazySingleton<CreateExperimentUseCase>(() => CreateExperimentUseCaseImp(getIt()));
-    getIt.registerLazySingleton<DeleteExperimentUseCase>(() => DeleteExperimentUseCaseImp(getIt()));
-    getIt.registerLazySingleton<GetEnzymesRemainingInExperimentUseCase>(
-      () => GetEnzymesRemainingInExperimentUseCaseImp(getIt()),
-    );
     getIt.registerLazySingleton<GetExcludeConfirmationUseCase>(() => GetExcludeConfirmationUseCaseImp(getIt()));
-    getIt.registerLazySingleton<GetExperimentByIdUseCase>(() => GetExperimentByIdUseCaseImp(getIt()));
-    getIt.registerLazySingleton<GetExperimentsUseCase>(() => GetExperimentsUseCaseImp(getIt()));
-    getIt.registerLazySingleton<GetResultUseCase>(() => GetResultUseCaseImp(getIt()));
     getIt.registerLazySingleton<GetThemeModeUseCase>(() => GetThemeModeUseCaseImp(getIt()));
     getIt.registerLazySingleton<GetUserUseCase>(() => GetUserUseCaseImp(getIt()));
     getIt.registerLazySingleton<GetReplaceLanguageUseCase>(() => GetReplaceLanguageUseCaseImp(getIt()));
     getIt.registerLazySingleton<LoginUseCase>(() => LoginUseCaseImp(getIt()));
     getIt.registerLazySingleton<SaveExcludeConfirmationUseCase>(() => SaveExcludeConfirmationUseCaseImp(getIt()));
-    getIt.registerLazySingleton<SaveResultUseCase>(() => SaveResultUseCaseImp(getIt()));
     getIt.registerLazySingleton<SaveThemeModeUseCase>(() => SaveThemeModeUseCaseImp(getIt()));
     getIt.registerLazySingleton<SaveReplaceLanguageUseCase>(() => SaveReplaceLanguageUseCaseImp(getIt()));
-    getIt.registerLazySingleton<StoreExperimentsInCacheUseCase>(() => StoreExperimentsInCacheUseCaseImp(getIt()));
   }
 }
