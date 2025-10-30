@@ -9,6 +9,13 @@ class HttpDriverOptions {
   final BaseUrl baseUrl;
   final String accessTokenType;
   final String? apiKey;
+  bool? useDebugLogger = false;
 
-  HttpDriverOptions({required this.accessToken, required this.baseUrl, this.apiKey, this.accessTokenType = "Bearer"});
+  HttpDriverOptions({
+    required this.accessToken,
+    required this.baseUrl,
+    this.accessTokenType = "Bearer",
+    this.apiKey,
+    this.useDebugLogger,
+  });
 }

@@ -1,15 +1,13 @@
 // 📦 Package imports:
 import 'package:curl_logger_dio_interceptor/curl_logger_dio_interceptor.dart';
 import 'package:dio/dio.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 // 🌎 Project imports:
 import '../../../domain/entities/http_driver_options.dart';
 import '../../../domain/entities/http_driver_response.dart';
 import '../../../domain/service/http/http_service.dart';
 import '../../../failures/failures.dart';
-
-// import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-
 
 class DioHttpServiceImp implements HttpService {
   Dio dio = Dio();
@@ -34,19 +32,20 @@ class DioHttpServiceImp implements HttpService {
       'content-type': "application/json; charset=utf-8",
       'Authorization': '${httpDriverOptions.accessTokenType} $gettedToken',
     });
-    dio.interceptors.addAll([
-      // TODO: Enable loggers only in dev mode
-      CurlLoggerDioInterceptor(printOnSuccess: false),
-      /* PrettyDioLogger(
-        requestHeader: false,
-        requestBody: false,
-        responseBody: false,
-        responseHeader: false,
-        error: true,
-        compact: true,
-        maxWidth: 90,
-      ), */
-    ]);
+    if (httpDriverOptions.useDebugLogger == true) {
+      dio.interceptors.addAll([
+        CurlLoggerDioInterceptor(printOnSuccess: false),
+        PrettyDioLogger(
+          requestHeader: false,
+          requestBody: false,
+          responseBody: false,
+          responseHeader: false,
+          error: true,
+          compact: true,
+          maxWidth: 90,
+        ),
+      ]);
+    }
   }
 
   Future<HttpDriverResponse> interceptRequests(Future request) async {
@@ -106,7 +105,6 @@ class DioHttpServiceImp implements HttpService {
             message = message.isEmpty ? serverFailure.message : message;
           }
 
-          //TODO: Verify this
           if (dioError.type == DioExceptionType.connectionTimeout) {
             throw NoNetworkFailure(message: "Connection Timeout Exception");
           } else if (dioError.type == DioExceptionType.receiveTimeout) {
