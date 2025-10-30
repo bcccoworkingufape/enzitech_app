@@ -91,7 +91,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
   Widget _buildCard({required Widget child, Color? color}) {
     return Container(
       decoration: BoxDecoration(
-        color: color ?? context.getApplyedColorScheme.secondaryContainer.withOpacity(0.25),
+        color: color ?? context.getApplyedColorScheme.secondaryContainer.withValues(alpha: 0.25),
         borderRadius: const BorderRadius.all(Radius.circular(32)),
       ),
       child: Padding(padding: const EdgeInsets.all(32.0), child: child),
@@ -127,7 +127,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
                       style: TextStyles(context).titleBoldHeading,
                     ),
                     progressColor: context.getApplyedColorScheme.primary,
-                    backgroundColor: context.getApplyedColorScheme.primary.withOpacity(0.4),
+                    backgroundColor: context.getApplyedColorScheme.primary.withValues(alpha: 0.4),
                   ),
                   const SizedBox(width: 32),
                   Expanded(
@@ -162,7 +162,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
                 _expandToSeeMoreVisible = !_expandToSeeMoreVisible;
               }),
               child: _buildCard(
-                color: context.getApplyedColorScheme.tertiaryContainer.withOpacity(0.25),
+                color: context.getApplyedColorScheme.tertiaryContainer.withValues(alpha: 0.25),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [

@@ -249,8 +249,8 @@ class LiquidPullToRefreshState extends State<LiquidPullToRefresh> with TickerPro
     final ThemeData theme = Theme.of(context);
     _valueColor = _positionController.drive(
       ColorTween(
-        begin: (widget.color ?? theme.colorScheme.secondary).withOpacity(0.0),
-        end: (widget.color ?? theme.colorScheme.secondary).withOpacity(1.0),
+        begin: (widget.color ?? theme.colorScheme.secondary).withValues(alpha: 0.0),
+        end: (widget.color ?? theme.colorScheme.secondary).withValues(alpha: 1.0),
       ).chain(CurveTween(curve: const Interval(0.0, 1.0 / _kDragSizeFactorLimit))),
     );
     super.didChangeDependencies();

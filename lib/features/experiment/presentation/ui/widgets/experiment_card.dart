@@ -108,7 +108,7 @@ class _ExperimentCardState extends State<ExperimentCard> {
                       style: TextStyles(context).buttonPrimary,
                     ),
                     progressColor: context.getApplyedColorScheme.primary,
-                    backgroundColor: context.getApplyedColorScheme.primary.withOpacity(0.4),
+                    backgroundColor: context.getApplyedColorScheme.primary.withValues(alpha: 0.4),
                   ),
                   const SizedBox(width: 10),
                 ],

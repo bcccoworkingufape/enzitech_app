@@ -185,7 +185,7 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                                                 behavior: MyBehavior(),
                                                 child: GlowingOverscrollIndicator(
                                                   axisDirection: AxisDirection.down,
-                                                  color: context.getApplyedColorScheme.primary.withOpacity(0.3),
+                                                  color: context.getApplyedColorScheme.primary.withValues(alpha: 0.3),
                                                   child: DataTable2(
                                                     columnSpacing: 12,
                                                     minWidth: 1200,
