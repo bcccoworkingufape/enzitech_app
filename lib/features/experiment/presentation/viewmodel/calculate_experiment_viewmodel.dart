@@ -1,6 +1,5 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
@@ -11,24 +10,16 @@ import '../../../../shared/ui/ui.dart';
 import '../../../enzyme/domain/entities/enzyme_entity.dart';
 import '../../domain/entities/experiment_calculation_entity.dart';
 import '../../domain/entities/experiment_entity.dart';
-import '../../domain/usecases/calculate_experiment/calculate_experiment_usecase.dart';
-import '../../domain/usecases/get_enzymes_remaining_in_experiment/get_enzymes_remaining_in_experiment_usecase.dart';
-import '../../domain/usecases/save_result/save_result_usecase.dart';
+import '../../domain/usecases/experiments_usecases.dart';
 import '../dto/choosed_experiment_combination_dto.dart';
 import '../dto/number_differences_dto.dart';
 import 'experiment_details_viewmodel.dart';
 import 'experiments_viewmodel.dart';
 
 class CalculateExperimentViewmodel extends ChangeNotifier {
-  final CalculateExperimentUseCase _calculateExperimentUseCase;
-  final SaveResultUseCase _saveResultUseCase;
-  final GetEnzymesRemainingInExperimentUseCase _getEnzymesRemainingInExperimentUseCase;
+  final ExperimentsUseCases _experimentsUseCases;
 
-  CalculateExperimentViewmodel(
-    this._calculateExperimentUseCase,
-    this._saveResultUseCase,
-    this._getEnzymesRemainingInExperimentUseCase,
-  );
+  CalculateExperimentViewmodel(this._experimentsUseCases);
 
   StateEnum _state = StateEnum.idle;
   StateEnum get state => _state;
@@ -266,7 +257,10 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
   Future<void> getEnzymesRemainingInExperiment(String treatmentId) async {
     setStateEnum(StateEnum.loading);
 
-    var result = await _getEnzymesRemainingInExperimentUseCase(experimentId: experiment.id, treatmentId: treatmentId);
+    var result = await _experimentsUseCases.getEnzymesRemainingInExperiment(
+      experimentId: experiment.id,
+      treatmentId: treatmentId,
+    );
 
     result.fold(
       (error) {
@@ -283,7 +277,7 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
   Future<void> calculateExperiment() async {
     setStateEnum(StateEnum.loading);
 
-    var result = await _calculateExperimentUseCase(
+    var result = await _experimentsUseCases.calculateExperiment(
       experimentId: experiment.id,
       enzymeId: temporaryChoosedExperimentCombination.enzyme!.id,
       treatmentID: temporaryChoosedExperimentCombination.treatment!.id,
@@ -305,7 +299,7 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
   Future<void> saveResult() async {
     setStateEnum(StateEnum.loading);
 
-    var result = await _saveResultUseCase(
+    var result = await _experimentsUseCases.saveResult(
       experimentId: experiment.id,
       enzymeId: temporaryChoosedExperimentCombination.enzyme!.id,
       treatmentID: temporaryChoosedExperimentCombination.treatment!.id,

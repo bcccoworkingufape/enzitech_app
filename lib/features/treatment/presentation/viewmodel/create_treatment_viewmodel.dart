@@ -4,14 +4,12 @@ import 'package:flutter/material.dart';
 // 🌎 Project imports:
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
-import '../../domain/usecases/create_treatment/create_treatment_usecase.dart';
+import '../../domain/usecases/treatments_usecases.dart';
 
 class CreateTreatmentViewmodel extends ChangeNotifier {
-  final CreateTreatmentUseCase _createTreatmentUseCase;
+  final TreatmentsUseCases _treatmentsUseCases;
 
-  CreateTreatmentViewmodel(
-    this._createTreatmentUseCase,
-  );
+  CreateTreatmentViewmodel(this._treatmentsUseCases);
 
   StateEnum _state = StateEnum.idle;
   StateEnum get state => _state;
@@ -26,16 +24,10 @@ class CreateTreatmentViewmodel extends ChangeNotifier {
     _failure = failure;
   }
 
-  Future<void> createTreatment(
-    String name,
-    String description,
-  ) async {
+  Future<void> createTreatment(String name, String description) async {
     setStateEnum(StateEnum.loading);
 
-    var result = await _createTreatmentUseCase(
-      name: name,
-      description: description,
-    );
+    var result = await _treatmentsUseCases.createTreatment(name: name, description: description);
 
     result.fold(
       (error) {

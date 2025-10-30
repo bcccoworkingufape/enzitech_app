@@ -1,6 +1,5 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-
 // 📦 Package imports:
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -12,41 +11,18 @@ import '../../../../shared/l10n/app_localizations.dart';
 import '../../../../shared/utils/utils.dart';
 import '../../../authentication/domain/entities/user_entity.dart';
 import '../../domain/entities/app_info_entity.dart';
-import '../../domain/usecases/clear_user/clear_user_usecase.dart';
-import '../../domain/usecases/get_exclude_confirmation/get_exclude_confirmation_usecase.dart';
-import '../../domain/usecases/get_replace_language/get_replace_language.dart';
-import '../../domain/usecases/get_theme_mode/get_theme_mode_usecase.dart';
-import '../../domain/usecases/get_user/get_user_usecase.dart';
-import '../../domain/usecases/save_exclude_confirmation/save_exclude_confirmation_usecase.dart';
-import '../../domain/usecases/save_replace_language/save_replace_language.dart';
-import '../../domain/usecases/save_theme_mode/save_theme_mode_usecase.dart';
+import '../../domain/usecases/users_usecases.dart';
 
 class SettingsViewmodel extends ChangeNotifier {
-  final GetUserUseCase _getUserUseCase;
-  final GetExcludeConfirmationUseCase _getExcludeConfirmationUseCase;
-  final SaveExcludeConfirmationUseCase _saveExcludeConfirmationUseCase;
-  final GetThemeModeUseCase _getThemeModeUseCase;
-  final GetReplaceLanguageUseCase _getReplaceLanguageUseCase;
-  final SaveReplaceLanguageUseCase _saveReplaceLanguageUseCase;
-  final SaveThemeModeUseCase _saveThemeModeUseCase;
-  final ClearUserUseCase _clearUserUseCase;
+  final UsersUseCases _usersUseCases;
 
-  SettingsViewmodel(
-    this._getUserUseCase,
-    this._getExcludeConfirmationUseCase,
-    this._saveExcludeConfirmationUseCase,
-    this._getThemeModeUseCase,
-    this._getReplaceLanguageUseCase,
-    this._saveReplaceLanguageUseCase,
-    this._saveThemeModeUseCase,
-    this._clearUserUseCase,
-  );
+  SettingsViewmodel(this._usersUseCases);
 
   bool _isReplaceLanguage = false;
   bool get isReplaceLanguage => _isReplaceLanguage;
   void setReplaceLanguage(bool isReplaceLanguage) {
     _isReplaceLanguage = isReplaceLanguage;
-    _saveReplaceLanguageUseCase(isReplaceLanguage);
+    _usersUseCases.saveReplaceLanguage(isReplaceLanguage);
     notifyListeners();
   }
 
@@ -92,7 +68,7 @@ class SettingsViewmodel extends ChangeNotifier {
   bool? get enableExcludeConfirmation => _enableExcludeConfirmation;
   void setEnableExcludeConfirmation(bool enableExcludeExperimentConfirmation) {
     _enableExcludeConfirmation = enableExcludeExperimentConfirmation;
-    _saveExcludeConfirmationUseCase(enableExcludeExperimentConfirmation);
+    _usersUseCases.saveExcludeConfirmation(enableExcludeExperimentConfirmation);
     notifyListeners();
   }
 
@@ -100,12 +76,12 @@ class SettingsViewmodel extends ChangeNotifier {
   ThemeMode get themeMode => _themeMode;
   void setThemeMode(ThemeMode newThemeMode) {
     _themeMode = newThemeMode;
-    _saveThemeModeUseCase(_themeMode);
+    _usersUseCases.saveThemeMode(_themeMode);
     notifyListeners();
   }
 
   Future<void> updateThemeMode() async {
-    setThemeMode(await _getThemeModeUseCase());
+    setThemeMode(await _usersUseCases.getThemeMode());
   }
 
   String _savedPath = '';
@@ -138,7 +114,7 @@ class SettingsViewmodel extends ChangeNotifier {
   Future<void> logout() async {
     setStateEnum(StateEnum.loading);
     try {
-      _clearUserUseCase();
+      _usersUseCases.clearUser();
 
       setStateEnum(StateEnum.success);
 
@@ -161,9 +137,9 @@ class SettingsViewmodel extends ChangeNotifier {
   }
 
   Future<void> loadPreferences() async {
-    setThemeMode(await _getThemeModeUseCase());
+    setThemeMode(await _usersUseCases.getThemeMode());
 
-    var resultConfirmation = await _getExcludeConfirmationUseCase();
+    var resultConfirmation = await _usersUseCases.getExcludeConfirmation();
     resultConfirmation.fold(
       (error) {
         _setFailure(error);
@@ -175,7 +151,7 @@ class SettingsViewmodel extends ChangeNotifier {
       },
     );
 
-    var resultReplaceLanguage = await _getReplaceLanguageUseCase();
+    var resultReplaceLanguage = await _usersUseCases.getReplaceLanguage();
     resultReplaceLanguage.fold(
       (error) {
         _setFailure(error);
@@ -212,7 +188,7 @@ class SettingsViewmodel extends ChangeNotifier {
   Future<void> loadAccount() async {
     setStateEnum(StateEnum.loading);
 
-    var result = await _getUserUseCase();
+    var result = await _usersUseCases.getUser();
 
     result.fold(
       (error) {

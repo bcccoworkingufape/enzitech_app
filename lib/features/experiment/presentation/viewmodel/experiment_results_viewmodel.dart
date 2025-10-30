@@ -1,11 +1,10 @@
 // 🎯 Dart imports:
 import 'dart:io';
 
-// 🐦 Flutter imports:
-import 'package:flutter/material.dart';
-
 // 📦 Package imports:
 import 'package:excel/excel.dart';
+// 🐦 Flutter imports:
+import 'package:flutter/material.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:get_it/get_it.dart';
 import 'package:path_provider/path_provider.dart';
@@ -15,14 +14,14 @@ import 'package:share_plus/share_plus.dart';
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
 import '../../domain/entities/experiment_result_entity.dart';
-import '../../domain/usecases/get_result/get_result_usecase.dart';
+import '../../domain/usecases/experiments_usecases.dart';
 import 'experiment_details_viewmodel.dart';
 
 class ExperimentResultsViewmodel extends ChangeNotifier {
-  final GetResultUseCase _getExperimentResultsUseCase;
+  final ExperimentsUseCases _experimentsUseCases;
   final ExperimentDetailsViewmodel _experimentDetailsViewmodel;
 
-  ExperimentResultsViewmodel(this._getExperimentResultsUseCase, this._experimentDetailsViewmodel);
+  ExperimentResultsViewmodel(this._experimentsUseCases, this._experimentDetailsViewmodel);
 
   StateEnum _state = StateEnum.idle;
   StateEnum get state => _state;
@@ -183,7 +182,7 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
   Future<void> fetch() async {
     setStateEnum(StateEnum.loading);
 
-    var result = await _getExperimentResultsUseCase(
+    var result = await _experimentsUseCases.getResult(
       experimentId: GetIt.I.get<ExperimentDetailsViewmodel>().experiment!.id,
     );
 
