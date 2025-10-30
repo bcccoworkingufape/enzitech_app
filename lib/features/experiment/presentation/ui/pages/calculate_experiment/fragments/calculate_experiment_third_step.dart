@@ -171,7 +171,7 @@ class _CalculateExperimentThirdStepPageState extends State<CalculateExperimentTh
                       const SizedBox(height: 8),
                       Card(
                         margin: const EdgeInsets.all(16),
-                        color: context.getApplyedColorScheme.background,
+                        color: context.getApplyedColorScheme.surface,
                         shadowColor: Colors.transparent,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
