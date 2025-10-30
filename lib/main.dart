@@ -1,6 +1,5 @@
 // 🎯 Dart imports:
 import 'dart:async';
-import 'dart:io';
 
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
@@ -24,11 +23,6 @@ import 'firebase_options.dart';
 import 'shared/l10n/app_localizations.dart';
 import 'shared/ui/ui.dart';
 import 'shared/utils/utils.dart';
-
-// ignore: unused_import
-
-
-
 
 Future<void> main() async {
   runZonedGuarded(() async {

@@ -109,9 +109,13 @@ import_path_converter:
 import_sorter:
   emojis: true
   comments: true
+  ignored_files:
+    - \/.*\_localizations.dart
+    - \/.*\_localizations_en.dart
+    - \/.*\_localizations_pt.dart
 
 scripts:
-  build: dart run lib/l10n/build_arb.dart
+  build: dart run tool/build_all.dart
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
