@@ -45,6 +45,7 @@ class _EZTAppBarState extends State<EZTAppBar> {
       listenable: GetIt.I.get<SettingsViewmodel>(),
       builder: (context, _) {
         return AppBar(
+          scrolledUnderElevation: 0.0,
           title: SvgPicture.asset(
             AppSvgs(context).logo(),
             colorFilter: context.isDarkMode
