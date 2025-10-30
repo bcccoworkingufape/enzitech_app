@@ -31,12 +31,13 @@ class ExperimentsDataSourceDecoratorImp extends ExperimentsDataSourceDecorator {
       limit: limit,
       finished: finished,
     )).fold((error) async => error is ExpiredTokenOrWrongUserFailure ? Left(error) : await _getInCache(), (result) {
-      _saveInCache(result);
+      storeExperimentsInCache(result);
       return Right(result);
     });
   }
 
-  Future<void> _saveInCache(ExperimentPaginationEntity experimentPaginationEntity) async {
+  @override
+  Future<void> storeExperimentsInCache(ExperimentPaginationEntity experimentPaginationEntity) async {
     String json = jsonEncode(experimentPaginationEntity.toJson()).toString();
 
     _keyValueService.setString('experiments_cache', json);
