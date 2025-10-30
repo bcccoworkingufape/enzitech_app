@@ -231,12 +231,27 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
     return ListenableBuilder(
       listenable: _experimentsViewmodel,
       builder: (context, child) {
+        // Calcula com segurança se a rolagem atingiu o máximo sem assumir que a posição não é nula.
+        bool isAtMaxScroll = false;
+
+        try {
+          final controller = _experimentsViewmodel.scrollController;
+          if (controller.hasClients && controller.positions.isNotEmpty) {
+            final pos = controller.position;
+            // Usando pixels em vez de deslocamento para compatibilidade com ScrollPosition.
+            isAtMaxScroll = pos.maxScrollExtent == pos.pixels;
+          }
+        } catch (_) {
+          // Em caso de qualquer estado inesperado, trata como não estando no máximo para evitar falhas.
+          isAtMaxScroll = false;
+        }
+
+        final bool absorbing = _experimentsViewmodel.scrollController.hasClients
+            ? (_experimentsViewmodel.state == StateEnum.loading && isAtMaxScroll)
+            : (_experimentsViewmodel.state == StateEnum.loading);
+
         return AbsorbPointer(
-          absorbing: _experimentsViewmodel.scrollController.hasClients
-              ? _experimentsViewmodel.state == StateEnum.loading &&
-                    _experimentsViewmodel.scrollController.position.maxScrollExtent ==
-                        _experimentsViewmodel.scrollController.offset
-              : _experimentsViewmodel.state == StateEnum.loading,
+          absorbing: absorbing,
           child: EZTPullToRefresh(
             key: _refreshIndicatorKey,
             onRefresh: () {
