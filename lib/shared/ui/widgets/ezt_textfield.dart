@@ -149,8 +149,8 @@ class _EZTTextFieldState extends State<EZTTextField> {
         color: (_validationSuccess ?? false)
             ? widget.enableGreenSuccessBorder
                   ? Colors.green
-                  : context.getApplyedColorScheme.onBackground
-            : context.getApplyedColorScheme.onBackground,
+                  : context.getApplyedColorScheme.onSurface
+            : context.getApplyedColorScheme.onSurface,
       ),
     );
 

@@ -247,7 +247,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
       builder: (context, child) {
         return Scaffold(
           appBar: AppBar(
-            iconTheme: IconThemeData(color: context.getApplyedColorScheme.onBackground),
+            iconTheme: IconThemeData(color: context.getApplyedColorScheme.onSurface),
             title: Text(context.l10n.experimentDetails, style: TextStyles(context).titleBoldBackground()),
             actions: [
               if (_experimentDetailsViewmodel.state == StateEnum.success)
@@ -281,7 +281,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
                       });
                     }
                   },
-                  icon: Icon(PhosphorIcons.trash(), color: context.getApplyedColorScheme.onBackground, size: 25),
+                  icon: Icon(PhosphorIcons.trash(), color: context.getApplyedColorScheme.onSurface, size: 25),
                 ),
             ],
           ),

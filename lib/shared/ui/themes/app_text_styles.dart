@@ -113,7 +113,7 @@ class TextStyles {
   TextStyle titleBoldBackground({double? fontSize, FontWeight? fontWeight}) => GoogleFonts.ubuntu(
     fontSize: fontSize ?? 20,
     fontWeight: fontWeight ?? FontWeight.w600,
-    color: context.getApplyedColorScheme.onBackground,
+    color: context.getApplyedColorScheme.onSurface,
   );
   static final titleListTile = GoogleFonts.ubuntu(fontSize: 17, fontWeight: FontWeight.w600);
   TextStyle trailingRegular({bool isBold = false, FontStyle? fontStyle, Color? color}) => GoogleFonts.ubuntu(
