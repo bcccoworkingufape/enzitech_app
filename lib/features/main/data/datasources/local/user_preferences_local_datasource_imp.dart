@@ -13,19 +13,19 @@ import '../../../../authentication/domain/entities/user_entity.dart';
 import '../user_preferences_datasource.dart';
 
 class UserPreferencesLocalDataSourceImp extends UserPreferencesDataSource {
-  final UserPreferencesServices _userPreferencesServices;
+  final UserPreferencesService _userPreferencesService;
 
-  UserPreferencesLocalDataSourceImp(this._userPreferencesServices);
+  UserPreferencesLocalDataSourceImp(this._userPreferencesService);
 
   @override
   Future<void> clearUser() async {
-    await _userPreferencesServices.clearAllAndKeepTheme();
+    await _userPreferencesService.clearAllAndKeepTheme();
   }
 
   @override
   Future<Either<Failure, bool>> getExcludeConfirmation() async {
     try {
-      var response = await _userPreferencesServices.getExcludeConfirmation();
+      var response = await _userPreferencesService.getExcludeConfirmation();
       return Right(response);
     } catch (e) {
       return Left(e as Failure);
@@ -35,7 +35,7 @@ class UserPreferencesLocalDataSourceImp extends UserPreferencesDataSource {
   @override
   Future<Either<Failure, bool>> getReplaceLanguage() async {
     try {
-      var response = await _userPreferencesServices.getReplaceLanguage();
+      var response = await _userPreferencesService.getReplaceLanguage();
       return Right(response);
     } catch (e) {
       return Left(e as Failure);
@@ -45,7 +45,7 @@ class UserPreferencesLocalDataSourceImp extends UserPreferencesDataSource {
   @override
   Future<Either<Failure, String>> getThemeMode() async {
     try {
-      var response = await _userPreferencesServices.getThemeModeAsString();
+      var response = await _userPreferencesService.getThemeModeAsString();
       return Right(response);
     } catch (e) {
       return Left(e as Failure);
@@ -55,7 +55,7 @@ class UserPreferencesLocalDataSourceImp extends UserPreferencesDataSource {
   @override
   Future<Either<Failure, UserEntity>> getUser() async {
     try {
-      var response = await _userPreferencesServices.getFullUser();
+      var response = await _userPreferencesService.getFullUser();
       if (response == null) {
         throw NoResultQueryFailure(message: "os dados do usuário");
       } else {
@@ -69,16 +69,16 @@ class UserPreferencesLocalDataSourceImp extends UserPreferencesDataSource {
 
   @override
   Future<void> saveExcludeConfirmation(bool value) async {
-    await _userPreferencesServices.saveExcludeConfirmation(value);
+    await _userPreferencesService.saveExcludeConfirmation(value);
   }
 
   @override
   Future<void> saveReplaceLanguage(bool value) async {
-    await _userPreferencesServices.saveReplaceLanguage(value);
+    await _userPreferencesService.saveReplaceLanguage(value);
   }
 
   @override
   Future<void> saveThemeMode(String value) async {
-    await _userPreferencesServices.saveThemeModeAsString(value);
+    await _userPreferencesService.saveThemeModeAsString(value);
   }
 }

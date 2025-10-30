@@ -15,9 +15,9 @@ import '../auth_datasource.dart';
 
 class AuthRemoteDataSourceImp implements AuthDataSource {
   final HttpService _httpService;
-  final UserPreferencesServices _userPreferencesServices;
+  final UserPreferencesService _userPreferencesService;
 
-  AuthRemoteDataSourceImp(this._httpService, this._userPreferencesServices);
+  AuthRemoteDataSourceImp(this._httpService, this._userPreferencesService);
 
   @override
   Future<Either<Failure, UserEntity>> login({required String email, required String password}) async {
@@ -25,10 +25,10 @@ class AuthRemoteDataSourceImp implements AuthDataSource {
       var response = await _httpService.post(API.REQUEST_LOGIN, data: {'email': email, 'password': password});
       var result = UserDto.fromJson(response.data);
 
-      await _userPreferencesServices.saveFullUser(jsonEncode(response.data));
-      await _userPreferencesServices.saveToken(result.token);
-      await _userPreferencesServices.initConfirmationsEnabled();
-      await _userPreferencesServices.initThemeMode();
+      await _userPreferencesService.saveFullUser(jsonEncode(response.data));
+      await _userPreferencesService.saveToken(result.token);
+      await _userPreferencesService.initConfirmationsEnabled();
+      await _userPreferencesService.initThemeMode();
 
       return Right(result);
     } catch (e) {

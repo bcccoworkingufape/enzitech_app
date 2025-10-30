@@ -11,6 +11,7 @@ import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 // 🌎 Project imports:
+import '../../../../../../core/domain/service/platform_service/platform_service.dart';
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../core/routing/routing.dart';
@@ -34,6 +35,7 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   late final SettingsViewmodel _settingsViewmodel;
   late final HomeViewmodel _homeViewmodel;
+  final platformService = GetIt.I<PlatformService>();
 
   @override
   void initState() {
@@ -69,6 +71,23 @@ class _SettingsPageState extends State<SettingsPage> {
 
   TextStyle get descriptionTextStyle =>
       const TextStyle(color: Color(0xFF97979A), fontSize: 17, fontWeight: FontWeight.w400);
+
+  Icon _getIconTheme() {
+    switch (platformService.getPlatformType()) {
+      case PlatformTypeEnum.web:
+        return Icon(PhosphorIcons.globe());
+      case PlatformTypeEnum.android:
+        return Icon(PhosphorIcons.androidLogo());
+      case PlatformTypeEnum.iOS:
+        return Icon(PhosphorIcons.appleLogo());
+      case PlatformTypeEnum.windows:
+        return Icon(PhosphorIcons.windowsLogo());
+      case PlatformTypeEnum.linux:
+        return Icon(PhosphorIcons.linuxLogo());
+      case PlatformTypeEnum.macOS:
+        return Icon(PhosphorIcons.desktop());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -190,10 +209,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         trailing: SegmentedButton<ThemeMode>(
                           showSelectedIcon: false,
                           segments: <ButtonSegment<ThemeMode>>[
-                            ButtonSegment<ThemeMode>(
-                              value: ThemeMode.system,
-                              icon: Icon(Platform.isIOS ? PhosphorIcons.appleLogo() : PhosphorIcons.androidLogo()),
-                            ),
+                            ButtonSegment<ThemeMode>(value: ThemeMode.system, icon: _getIconTheme()),
                             ButtonSegment<ThemeMode>(value: ThemeMode.light, icon: Icon(PhosphorIcons.sun())),
                             ButtonSegment<ThemeMode>(value: ThemeMode.dark, icon: Icon(PhosphorIcons.moon())),
                           ],

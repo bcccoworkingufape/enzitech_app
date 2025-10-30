@@ -31,7 +31,7 @@ Future<void> main() async {
     await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
     var keyValueService = SharedPrefsServiceImp();
-    var userPreferencesService = UserPreferencesServicesImp(keyValueService);
+    var userPreferencesService = UserPreferencesServiceImp(keyValueService);
 
     String token = await userPreferencesService.getToken() ?? '';
 
