@@ -109,7 +109,7 @@ class ExperimentsViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  fetch({int pagination = 1}) async {
+  Future<void> fetch({int pagination = 1}) async {
     setStateEnum(StateEnum.loading);
 
     if (pagination == 1) {

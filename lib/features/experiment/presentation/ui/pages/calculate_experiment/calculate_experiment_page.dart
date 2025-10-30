@@ -8,7 +8,6 @@ import 'package:get_it/get_it.dart';
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../shared/extensions/build_context_extensions.dart';
-import '../../../../../../shared/l10n/app_localizations.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../../domain/entities/experiment_entity.dart';
 import '../../../viewmodel/calculate_experiment_viewmodel.dart';

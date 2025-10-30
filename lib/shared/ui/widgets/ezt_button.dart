@@ -61,7 +61,6 @@ class _EZTButtonState extends State<EZTButton> {
       case EZTButtonType.checkout:
         return _buildButtonCheckout(context);
       case EZTButtonType.regular:
-      default:
         return _buildButton(context);
     }
   }

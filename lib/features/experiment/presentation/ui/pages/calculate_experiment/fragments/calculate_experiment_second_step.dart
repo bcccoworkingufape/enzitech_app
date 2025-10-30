@@ -29,7 +29,7 @@ class _CalculateExperimentSecondStepPageState extends State<CalculateExperimentS
     _calculateExperimentViewmodel = GetIt.I.get<CalculateExperimentViewmodel>();
   }
 
-  bool _checkIfTextIsGTZAndNumeric(text) {
+  bool _checkIfTextIsGTZAndNumeric(dynamic text) {
     //* Numeric
     if (text == null) {
       return false;

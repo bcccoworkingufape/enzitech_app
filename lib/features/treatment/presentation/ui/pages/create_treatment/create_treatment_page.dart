@@ -60,7 +60,7 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
     }
   }
 
-  get _validateFields {
+  void get _validateFields {
     if (_nameFieldController.text.isNotEmpty && _descriptionFieldController.text.isNotEmpty) {
       setState(() {
         enableCreate = _formKey.currentState!.validate();
@@ -72,7 +72,7 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
     }
   }
 
-  _body(BuildContext context) {
+  SingleChildScrollView _body(BuildContext context) {
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
       child: Column(

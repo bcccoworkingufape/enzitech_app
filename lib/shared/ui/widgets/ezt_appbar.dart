@@ -30,7 +30,7 @@ class _EZTAppBarState extends State<EZTAppBar> {
     super.initState();
   }
 
-  static noInternet(context) {
+  static Future noInternet(BuildContext context) {
     return EZTSnackBar.show(
       context,
       "⚠ Sem conexão com o servidor: Você está visualizando informações previamente carregadas e sem atualizações, quaisquer mudanças offline não serão mantidas!",

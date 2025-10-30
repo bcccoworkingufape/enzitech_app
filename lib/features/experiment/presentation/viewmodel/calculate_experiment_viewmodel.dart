@@ -7,7 +7,6 @@ import 'package:get_it/get_it.dart';
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
 import '../../../../shared/ui/ui.dart';
-import '../../../../shared/validator/validator.dart';
 import '../../../enzyme/domain/entities/enzyme_entity.dart';
 import '../../domain/entities/experiment_calculation_entity.dart';
 import '../../domain/entities/experiment_entity.dart';
@@ -182,12 +181,6 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
 
     setTextEditingControllers({});
 
-    final validations = <ValidateRule>[
-      ValidateRule(ValidateTypes.required),
-      ValidateRule(ValidateTypes.numeric),
-      ValidateRule(ValidateTypes.greaterThanZeroDecimal),
-    ];
-
     List<Map<String, double?>> tempList = [];
     for (var i = 0; i < experiment.repetitions; i++) {
       tempList.add({"sample": null, "whiteSample": null, "_id": i.toDouble()});
@@ -208,7 +201,7 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
 
   double _percentOfDifference(num num1, num num2) => (((num2 - num1) / num1) * 100).abs();
 
-  getAbsNumberFartherFromAverage() {
+  void getAbsNumberFartherFromAverage() {
     final average = experimentCalculationEntity!.average.toDouble();
 
     final results = experimentCalculationEntity!.results;
@@ -230,7 +223,7 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
     );
   }
 
-  calculateListOfNumbersFartherFromAverage() {
+  void calculateListOfNumbersFartherFromAverage() {
     final average = experimentCalculationEntity!.average;
 
     final results = experimentCalculationEntity!.results;
@@ -251,7 +244,7 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
     setListOfNumberDifferencesDTO(list);
   }
 
-  clearTemporaryInfos() {
+  void clearTemporaryInfos() {
     setEnableNextButtonOnFirstStep(false, notify: false);
     setEnableNextButtonOnSecondStep(false, notify: false);
     setTemporaryChoosedExperimentCombination(ChoosedExperimentCombinationDTO());

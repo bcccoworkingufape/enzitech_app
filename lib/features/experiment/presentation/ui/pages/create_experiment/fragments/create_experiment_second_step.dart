@@ -71,7 +71,7 @@ class _CreateExperimentSecondStepPageState extends State<CreateExperimentSecondS
     setState(() {});
   }
 
-  get _validateFields {
+  void get _validateFields {
     if (_repetitionsFieldController.text.isNotEmpty && choosedCheckboxList.isNotEmpty) {
       setState(() {
         _createExperimentViewmodel.setEnableNextButtonOnSecondStep(

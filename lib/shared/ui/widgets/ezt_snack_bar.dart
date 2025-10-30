@@ -9,7 +9,7 @@ enum EZTSnackBarType { regular, success, error }
 class EZTSnackBar {
   const EZTSnackBar({Key? key});
 
-  _buildSnackBar(
+  SnackBar _buildSnackBar(
     BuildContext context,
     String message,
     Color? snackBarColor,
@@ -32,7 +32,7 @@ class EZTSnackBar {
     );
   }
 
-  _buildSuccessSnackBar(
+  SnackBar _buildSuccessSnackBar(
     BuildContext context,
     String message,
     TextStyle? textStyle,
@@ -54,7 +54,7 @@ class EZTSnackBar {
     );
   }
 
-  _buildErrorSnackBar(
+  SnackBar _buildErrorSnackBar(
     BuildContext context,
     String message,
     TextStyle? textStyle,
@@ -86,7 +86,6 @@ class EZTSnackBar {
       case EZTSnackBarType.error:
         return _buildErrorSnackBar(context, message, textStyle, centerTitle, action, duration);
       case EZTSnackBarType.regular:
-      default:
         return _buildSnackBar(context, message, snackBarColor, textStyle, centerTitle, action, duration);
     }
   }
@@ -116,7 +115,7 @@ class EZTSnackBar {
         });
   }
 
-  static clear(BuildContext context) {
+  static void clear(BuildContext context) {
     ScaffoldMessenger.of(context).clearSnackBars();
   }
 }
