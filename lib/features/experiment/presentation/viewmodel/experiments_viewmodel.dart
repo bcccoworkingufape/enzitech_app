@@ -181,6 +181,8 @@ class ExperimentsViewmodel extends ChangeNotifier {
       },
       (success) async {
         _setTotalOfExperiments(_totalOfExperiments - 1);
+        experiments.removeWhere((exp) => exp.id == id);
+        notifyListeners();
       },
     );
   }

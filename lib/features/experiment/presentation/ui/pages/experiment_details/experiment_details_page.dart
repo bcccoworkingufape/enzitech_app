@@ -267,10 +267,6 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
                     }
 
                     _experimentsViewmodel.deleteExperiment(_experimentDetailsViewmodel.experiment!.id);
-                    _experimentsViewmodel.experiments.removeWhere(
-                      (exp) => exp.id == _experimentDetailsViewmodel.experiment!.id,
-                    );
-                    _experimentsViewmodel.notifyListeners();
 
                     if (mounted) {
                       SchedulerBinding.instance.addPostFrameCallback((_) {
