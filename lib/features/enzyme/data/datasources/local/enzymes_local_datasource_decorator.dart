@@ -1,7 +1,9 @@
 // 📦 Package imports:
-// 🌎 Project imports:
+
+// 📦 Package imports:
 import 'package:dartz/dartz.dart';
 
+// 🌎 Project imports:
 import '../../../../../core/failures/failure.dart';
 import '../../../domain/entities/enzyme_entity.dart';
 import '../enzymes_datasource.dart';

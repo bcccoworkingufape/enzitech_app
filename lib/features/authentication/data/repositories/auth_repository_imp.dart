@@ -2,10 +2,10 @@
 import 'package:dartz/dartz.dart';
 
 // 🌎 Project imports:
-import '../../../../../core/failures/failure.dart';
-import '../../../domain/entities/user_entity.dart';
-import '../../../domain/repositories/auth_repository.dart';
-import '../../datasources/auth_datasource.dart';
+import '../../../../core/failures/failure.dart';
+import '../../domain/entities/user_entity.dart';
+import '../../domain/repositories/auth_repository.dart';
+import '../datasources/auth_datasource.dart';
 
 class AuthRepositoryImp implements AuthRepository {
   final AuthDataSource _authDataSource;

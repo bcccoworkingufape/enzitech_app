@@ -1,10 +1,11 @@
 // 🎯 Dart imports:
 import 'dart:io';
 
-// 📦 Package imports:
-import 'package:excel/excel.dart';
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
+import 'package:excel/excel.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:get_it/get_it.dart';
 import 'package:path_provider/path_provider.dart';

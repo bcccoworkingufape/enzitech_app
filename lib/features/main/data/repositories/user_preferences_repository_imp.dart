@@ -1,7 +1,10 @@
-// 🌎 Project imports:
-import 'package:dartz/dartz.dart';
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
+// 📦 Package imports:
+import 'package:dartz/dartz.dart';
+
+// 🌎 Project imports:
 import '../../../../core/failures/failure.dart';
 import '../../../authentication/domain/entities/user_entity.dart';
 import '../../domain/repositories/user_preferences_repository.dart';
