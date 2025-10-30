@@ -47,9 +47,10 @@ class _CalculateExperimentThirdStepPageState extends State<CalculateExperimentTh
           text: context.l10n.saveAndExitButton,
           loading: _calculateExperimentViewmodel.state == StateEnum.loading,
           onPressed: () async {
-            await _calculateExperimentViewmodel.saveResult().whenComplete(
-              () => Navigator.popUntil(context, ModalRoute.withName(Routing.experimentDetailed)),
-            );
+            await _calculateExperimentViewmodel.saveResult().whenComplete(() {
+              if (!mounted) return;
+              Navigator.popUntil(context, ModalRoute.withName(Routing.experimentDetailed));
+            });
           },
         ),
         const SizedBox(height: 16),

@@ -55,13 +55,14 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
                     _createExperimentViewmodel.setExperiment(null);
                     _createExperimentViewmodel.setTemporaryExperiment(CreateExperimentDTO());
                   })
-                  .then(
-                    (value) => EZTSnackBar.show(
+                  .then((value) {
+                    if (!mounted) return;
+                    EZTSnackBar.show(
                       context,
                       context.l10n.experimentCreatedSuccess,
                       eztSnackBarType: EZTSnackBarType.success,
-                    ),
-                  );
+                    );
+                  });
             });
           }
         }

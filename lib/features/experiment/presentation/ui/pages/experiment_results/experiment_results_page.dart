@@ -396,15 +396,7 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                           _experimentDetailsViewmodel.experiment!.name,
                         );
 
-                        _experimentResultsViewmodel.shareFile(translations, translatedFilename).then((success) {
-                          if (!success) {
-                            EZTSnackBar.show(
-                              context,
-                              context.l10n.shareFileError,
-                              eztSnackBarType: EZTSnackBarType.error,
-                            );
-                          }
-                        });
+                        _experimentResultsViewmodel.shareFile(translations, translatedFilename);
                       },
                     ),
                     FloatingActionButton.small(
@@ -416,23 +408,7 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                       onPressed: () {
                         final translations = _buildExcelTranslations();
 
-                        _experimentResultsViewmodel
-                            .openDialogToUserSaveFile(translations)
-                            .then(
-                              (flag) => flag
-                                  ? EZTSnackBar.show(
-                                      context,
-                                      context.l10n.spreadsheetSavedSuccess,
-                                      eztSnackBarType: EZTSnackBarType.success,
-                                    )
-                                  : _experimentResultsViewmodel.failure is! UnableToSaveFailure
-                                  ? EZTSnackBar.show(
-                                      context,
-                                      context.l10n.spreadsheetSaveError,
-                                      eztSnackBarType: EZTSnackBarType.error,
-                                    )
-                                  : null,
-                            );
+                        _experimentResultsViewmodel.openDialogToUserSaveFile(translations, context);
                       },
                     ),
                   ],

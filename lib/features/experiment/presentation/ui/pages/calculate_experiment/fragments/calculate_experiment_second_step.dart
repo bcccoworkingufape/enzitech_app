@@ -136,16 +136,14 @@ class _CalculateExperimentSecondStepPageState extends State<CalculateExperimentS
               _calculateExperimentViewmodel.formKey.currentState!.save();
 
               if (_calculateExperimentViewmodel.formKey.currentState!.validate()) {
-                if (mounted) {
-                  await _calculateExperimentViewmodel.calculateExperiment().whenComplete(
-                    () =>
-                        (_calculateExperimentViewmodel.experimentCalculationEntity != null &&
-                            _calculateExperimentViewmodel.experimentCalculationEntity?.average != 0)
-                        ? _calculateExperimentViewmodel.onNext(context)
-                        : debugPrint('Error on calculate'),
-                  );
-                  //TODO: Corrigir enzimas bugadas (sem calculo -> retorno 0)
-                }
+                await _calculateExperimentViewmodel.calculateExperiment().whenComplete(() {
+                  if (!mounted) return;
+                  (_calculateExperimentViewmodel.experimentCalculationEntity != null &&
+                          _calculateExperimentViewmodel.experimentCalculationEntity?.average != 0)
+                      ? _calculateExperimentViewmodel.onNext(context)
+                      : debugPrint('Error on calculate');
+                });
+                //TODO: Corrigir enzimas bugadas (sem calculo -> retorno 0)
 
                 return;
               }

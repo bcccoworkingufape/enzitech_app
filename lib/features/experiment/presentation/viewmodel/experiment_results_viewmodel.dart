@@ -14,6 +14,8 @@ import 'package:share_plus/share_plus.dart';
 // 🌎 Project imports:
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
+import '../../../../shared/extensions/extensions.dart';
+import '../../../../shared/ui/ui.dart';
 import '../../domain/entities/experiment_result_entity.dart';
 import '../../domain/usecases/experiments_usecases.dart';
 import 'experiment_details_viewmodel.dart';
@@ -166,18 +168,28 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
     return file;
   }
 
-  Future<bool> openDialogToUserSaveFile(Map<String, String> translations) async {
-    final file = await saveFileToTemporaryDirectory(translations);
-    final params = SaveFileDialogParams(sourceFilePath: file.path);
-    final finalPath = await FlutterFileDialog.saveFile(params: params);
-    return finalPath != null;
+  Future<void> openDialogToUserSaveFile(Map<String, String> translations, BuildContext context) async {
+    try {
+      final file = await saveFileToTemporaryDirectory(translations);
+      final params = SaveFileDialogParams(sourceFilePath: file.path);
+      final finalPath = await FlutterFileDialog.saveFile(params: params);
+      if (finalPath != null && context.mounted) {
+        EZTSnackBar.show(context, context.l10n.spreadsheetSavedSuccess, eztSnackBarType: EZTSnackBarType.success);
+      }
+    } on Exception catch (e) {
+      _setFailure(e is Failure ? e : UnableToSaveFailure(message: e.toString()));
+      setStateEnum(StateEnum.error);
+    }
   }
 
-  Future<bool> shareFile(Map<String, String> translations, String translatedFilename) async {
-    final file = await saveFileToTemporaryDirectory(translations);
-    await SharePlus.instance.share(ShareParams(files: [XFile(file.path, name: translatedFilename)]));
-
-    return true;
+  Future<void> shareFile(Map<String, String> translations, String translatedFilename) async {
+    try {
+      final file = await saveFileToTemporaryDirectory(translations);
+      await SharePlus.instance.share(ShareParams(files: [XFile(file.path, name: translatedFilename)]));
+    } on Exception catch (e) {
+      _setFailure(e is Failure ? e : UnableToSaveFailure(message: e.toString()));
+      setStateEnum(StateEnum.error);
+    }
   }
 
   Future<void> fetch() async {

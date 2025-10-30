@@ -244,7 +244,8 @@ class _SettingsPageState extends State<SettingsPage> {
                           try {
                             await _settingsViewmodel.openUrl(Constants.enzitechGithubPage);
                           } on UnableToOpenUrlFailure catch (e) {
-                            EZTSnackBar.show(context, context.l10n.unableToOpenUrlError(e.message));
+                            // ignore: use_build_context_synchronously
+                            if (mounted) EZTSnackBar.show(context, context.l10n.unableToOpenUrlError(e.message));
                           }
                         },
                         title: Text(context.l10n.version),

@@ -152,6 +152,7 @@ class _CalculateExperimentFirstStepPageState extends State<CalculateExperimentFi
                 () => Future.delayed(Duration.zero, () {
                   _calculateExperimentViewmodel.setStepPage(0);
 
+                  if (!mounted) return;
                   _calculateExperimentViewmodel.onNext(context);
                 }),
               );
