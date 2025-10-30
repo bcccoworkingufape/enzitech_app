@@ -1,4 +1,4 @@
-abstract class UserPreferencesServices {
+abstract class UserPreferencesService {
   //* ACCOUNT
   Future<void> saveFullUser(String jsonEncoded);
 
@@ -16,6 +16,10 @@ abstract class UserPreferencesServices {
   Future<void> saveExcludeConfirmation(bool value);
 
   Future<bool> getExcludeConfirmation();
+
+  Future<void> saveReplaceLanguage(bool value);
+
+  Future<bool> getReplaceLanguage();
 
   Future<void> initThemeMode();
 

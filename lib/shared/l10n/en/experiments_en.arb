@@ -1,0 +1,264 @@
+{
+  "@@locale": "en",
+  "modifiedOn": "Modified on {date}",
+  "@modifiedOn": {
+    "description": "Label to show when an experiment was last modified",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "repetitions": "Repetitions",
+  "errorLoadingExperiment": "Error loading experiment \"{experimentName}\"",
+  "@errorLoadingExperiment": {
+    "placeholders": {
+      "experimentName": {
+        "type": "String"
+      }
+    }
+  },
+  "loadingExperiment": "Loading experiment...",
+  "tapToSeeMore": "Tap to see more information",
+  "tapToHide": "Tap to hide information",
+  "enzymaticCalculation": "Enzymatic Calculation",
+  "results": "Results",
+  "experimentDetails": "Experiment Details",
+  "experimentDeleted": "{experimentName} deleted!",
+  "@experimentDeleted": {
+    "placeholders": {
+      "experimentName": {
+        "type": "String"
+      }
+    }
+  },
+  "loadingResults": "Loading results...",
+  "experimentHeader": "Experiment: {experimentName}",
+  "@experimentHeader": {
+    "placeholders": {
+      "experimentName": {
+        "type": "String"
+      }
+    }
+  },
+  "enzymeTypeHeader": "Type: {enzymeType} ({formula})",
+  "@enzymeTypeHeader": {
+    "placeholders": {
+      "enzymeType": {
+        "type": "String"
+      },
+      "formula": {
+        "type": "String"
+      }
+    }
+  },
+  "treatmentLabel": "Treatment",
+  "shareFileError": "Could not share the file, please try again.",
+  "spreadsheetSavedSuccess": "Spreadsheet saved successfully!",
+  "spreadsheetSaveError": "Could not save the spreadsheet, please try again.",
+  "columnId": "ID",
+  "columnSample": "Sample",
+  "columnWhiteSampleShort": "W. Sample",
+  "columnWhiteSampleTooltip": "White Sample",
+  "columnDifference": "Difference",
+  "columnCurve": "Curve",
+  "columnCorrectionFactorShort": "C. Factor",
+  "columnVolume": "Volume",
+  "columnSampleWeightShort": "S. Weight",
+  "columnSampleWeightTooltip": "Sample Weight",
+  "columnResult": "Result",
+
+  "errorLoadingExperiments": "Error loading experiments",
+  "loadingExperiments": "Loading experiments...",
+  "experimentsNotFound": "Experiments not found",
+  "allExperimentsDisplayed": "All experiments displayed!",
+  "inProgress": "In Progress",
+  "completed": "Completed",
+  "experimentsFound": "🔬 {count, plural, =0{No experiments found} =1{1 experiment found} other{{count} experiments found}}",
+  "@experimentsFound": {
+    "description": "A message that shows the number of experiments found",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "selectTreatment": "Select the treatment:",
+  "loadingAvailableEnzymes": "Loading available enzymes...",
+  "allEnzymesCalculated": "All enzymes for this treatment have already been calculated!",
+  "selectEnzyme": "Select the enzyme:",
+  "selectedEnzymeType": "Selected enzyme type: {enzymeType}",
+  "@selectedEnzymeType": {
+    "placeholders": {
+      "enzymeType": {
+        "type": "String"
+      }
+    }
+  },
+  "insertExperimentData": "Insert data into experiment",
+  "stepIndicatorMessage": "Step {currentStep} of {totalSteps} - Identification",
+  "@stepIndicatorMessage": {
+    "placeholders": {
+      "currentStep": {
+        "type": "int"
+      },
+      "totalSteps": {
+        "type": "int"
+      }
+    }
+  },
+  "invalidExperimentTitle": "Invalid experiment!",
+  "invalidExperimentMessage": "It is not possible to proceed without treatment(s) and/or enzyme(s) data",
+  "chooseTreatmentAndEnzyme": "Choose the treatment and enzyme to insert the data",
+  "calculateButton": "Calculate",
+  "stepIndicatorMessageFilling": "Step {currentStep} of {totalSteps} - Filling and calculation",
+  "@stepIndicatorMessageFilling": {
+    "placeholders": {
+      "currentStep": {
+        "type": "int"
+      },
+      "totalSteps": {
+        "type": "int"
+      }
+    }
+  },
+  "repetitionDataTitle": "Data for repetition #{repetitionNumber}",
+  "@repetitionDataTitle": {
+    "placeholders": {
+      "repetitionNumber": {
+        "type": "int"
+      }
+    }
+  },
+  "saveAndExitButton": "Save and exit",
+  "recalculateButton": "Recalculate",
+  "repetitionLabel": "Repetition {repetitionNumber}:",
+  "@repetitionLabel": {
+    "placeholders": {
+      "repetitionNumber": {
+        "type": "int"
+      }
+    }
+  },
+  "discrepantRepetitionWarning": "This repetition is discrepant!\n\nIts value differs by more than 25% from the average of all repetitions.\n\nIf you want to change it, just press \"Recalculate\".",
+  "average": "Average:",
+  "repetitionColumnTitle": "REPETITION",
+  "resultColumnTitle": "RESULT",
+  "statusColumnTitle": "STATUS",
+  "stepIndicatorMessageResults": "Step {currentStep} of {totalSteps} - Results",
+  "@stepIndicatorMessageResults": {
+    "placeholders": {
+      "currentStep": {
+        "type": "int"
+      },
+      "totalSteps": {
+        "type": "int"
+      }
+    }
+  },
+  "registerNewExperiment": "Register a new experiment",
+  "experimentIdentification": "Experiment Identification",
+  "stepIndicatorIdentification": "Step {currentStep} of {totalSteps} - Identification",
+  "@stepIndicatorIdentification": {
+    "placeholders": {
+      "currentStep": {
+        "type": "int"
+      },
+      "totalSteps": {
+        "type": "int"
+      }
+    }
+  },
+  "repetitionsPerTreatmentLabel": "Number of repetitions per treatment",
+  "goToTreatmentsButton": "Go to treatments",
+  "treatmentsAndRepetitionsData": "Treatments and Repetitions Data",
+  "noTreatmentsRegisteredError": "No treatments registered! At least one treatment is required to proceed.",
+  "stepIndicatorTreatments": "Step {currentStep} of {totalSteps} - Treatments and Repetitions",
+  "@stepIndicatorTreatments": {
+    "placeholders": {
+      "currentStep": {
+        "type": "int"
+      },
+      "totalSteps": {
+        "type": "int"
+      }
+    }
+  },
+  "experimentEnzymes": "Experiment Enzymes",
+  "enzymeTypeIs": "Enzyme type: {enzymeType}",
+  "@enzymeTypeIs": {
+    "placeholders": {
+      "enzymeType": {
+        "type": "String"
+      }
+    }
+  },
+  "stepIndicatorEnzymes": "Step {currentStep} of {totalSteps} - Enzymes",
+  "@stepIndicatorEnzymes": {
+    "placeholders": {
+      "currentStep": {
+        "type": "int"
+      },
+      "totalSteps": {
+        "type": "int"
+      }
+    }
+  },
+  "variableA_long": "Variable a - Angular Coefficient of the Curve",
+  "variableB_long": "Variable b - Constant of the Curve Equation",
+  "timeHours": "Time (h)",
+  "solutionVolume": "Solution Volume",
+  "sampleWeightGrams": "Sample Weight (g)",
+  "correctionFactor": "Correction Factor",
+  "curveInformation": "Curve Information:",
+  "otherVariables": "Other Variables:",
+  "createExperimentButton": "Create Experiment",
+  "stepIndicatorFillVariables": "Step {currentStep} of {totalSteps} - Fill variables",
+  "@stepIndicatorFillVariables": {
+    "placeholders": {
+      "currentStep": {
+        "type": "int"
+      },
+      "totalSteps": {
+        "type": "int"
+      }
+    }
+  },
+  "experimentCreatedSuccess": "Experiment created successfully!",
+  "deleteExperimentTitle": "Delete experiment?",
+  "deleteExperimentContent": "Are you sure you want to delete this experiment?",
+  "nameLabel": "Name",
+  "descriptionLabel": "Description",
+  "sample": "Sample",
+  "whiteSample": "White Sample",
+
+  "filters": "Filters",
+  "orderBy": "Order by:",
+  "organizeInOrder": "Organize in order:",
+
+  "filter_name": "Name",
+  "filter_description": "Description",
+  "filter_progress": "Progress",
+  "filter_creationDate": "Creation date",
+  "filter_modificationDate": "Modification date",
+
+  "order_ascending": "Ascending",
+  "order_descending": "Descending",
+
+  "clearFilters": "{count, plural, =0{Clear filters} =1{Clear filter} other{Clear filters}}",
+  "@clearFilters": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "applyFilters": "{count, plural, =0{Apply filters} =1{Apply filter} other{Apply filters}}",
+  "@applyFilters": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
+}

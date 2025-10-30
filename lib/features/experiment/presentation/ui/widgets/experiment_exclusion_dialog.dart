@@ -1,35 +1,25 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-import '../../../../../../l10n/app_localizations.dart';
-
+// 🌎 Project imports:
+import '../../../../../shared/extensions/extensions.dart';
 
 class ExperimentExclusionDialog extends StatefulWidget {
-  const ExperimentExclusionDialog({
-    super.key,
-  });
+  const ExperimentExclusionDialog({super.key});
 
   @override
-  State<ExperimentExclusionDialog> createState() =>
-      _ExperimentExclusionDialogState();
+  State<ExperimentExclusionDialog> createState() => _ExperimentExclusionDialogState();
 }
 
 class _ExperimentExclusionDialogState extends State<ExperimentExclusionDialog> {
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     return AlertDialog(
-      title: Text(l10n.deleteExperimentTitle),
-      content:
-          Text(l10n.deleteExperimentContent),
+      title: Text(context.l10n.deleteExperimentTitle),
+      content: Text(context.l10n.deleteExperimentContent),
       actions: [
-        TextButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: Text(l10n.deleteButton)),
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(false),
-          child: Text(l10n.cancelButton),
-        ),
+        TextButton(onPressed: () => Navigator.of(context).pop(true), child: Text(context.l10n.deleteButton)),
+        TextButton(onPressed: () => Navigator.of(context).pop(false), child: Text(context.l10n.cancelButton)),
       ],
     );
   }

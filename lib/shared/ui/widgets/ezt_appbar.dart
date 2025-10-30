@@ -9,7 +9,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 // 🌎 Project imports:
 import '../../../features/main/presentation/viewmodel/home_viewmodel.dart';
 import '../../../features/main/presentation/viewmodel/settings_viewmodel.dart';
-import '../../extensions/context_theme_mode_extensions.dart';
+import '../../extensions/build_context_extensions.dart';
 import '../ui.dart';
 import 'ezt_blink.dart';
 
@@ -30,7 +30,7 @@ class _EZTAppBarState extends State<EZTAppBar> {
     super.initState();
   }
 
-  static noInternet(context) {
+  static Future noInternet(BuildContext context) {
     return EZTSnackBar.show(
       context,
       "⚠ Sem conexão com o servidor: Você está visualizando informações previamente carregadas e sem atualizações, quaisquer mudanças offline não serão mantidas!",
@@ -45,14 +45,12 @@ class _EZTAppBarState extends State<EZTAppBar> {
       listenable: GetIt.I.get<SettingsViewmodel>(),
       builder: (context, _) {
         return AppBar(
+          scrolledUnderElevation: 0.0,
           title: SvgPicture.asset(
             AppSvgs(context).logo(),
             colorFilter: context.isDarkMode
                 ? const ColorFilter.mode(Colors.white, BlendMode.srcIn)
-                : ColorFilter.mode(
-                    context.getApplyedColorScheme.primary,
-                    BlendMode.srcIn,
-                  ),
+                : ColorFilter.mode(context.getApplyedColorScheme.primary, BlendMode.srcIn),
             fit: BoxFit.contain,
             alignment: Alignment.center,
           ),
@@ -65,16 +63,9 @@ class _EZTAppBarState extends State<EZTAppBar> {
                       child: EZTBlink(
                         interval: 750,
                         children: <Widget>[
-                          Icon(
-                            PhosphorIcons.cloudSlash(),
-                            color: Colors.white,
-                          ),
-                        
-                          Icon(
-                            PhosphorIcons.cloudSlash(),
-                            color: context.getApplyedColorScheme.error,
-                          ),
-                        
+                          Icon(PhosphorIcons.cloudSlash(), color: Colors.white),
+
+                          Icon(PhosphorIcons.cloudSlash(), color: context.getApplyedColorScheme.error),
                         ],
                       ),
                     ),

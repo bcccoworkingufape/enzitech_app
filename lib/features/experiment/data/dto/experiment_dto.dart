@@ -12,18 +12,14 @@ extension ExperimentDto on ExperimentEntity {
       name: json['name'],
       description: json['description'],
       repetitions: json['repetitions'],
-      progress: json['progress'] is double
-          ? json['progress']
-          : double.parse(json['progress']),
+      progress: json['progress'] is double ? json['progress'] : double.parse(json['progress']),
       createdAt: DateTime.parse(json['createdAt']),
       updatedAt: DateTime.parse(json['updatedAt']),
       treatments: json['processes'] != null
-          ? List<TreatmentEntity>.from(
-              json['processes']?.map((x) => TreatmentDto.fromJson(x)))
+          ? List<TreatmentEntity>.from(json['processes']?.map((x) => TreatmentDto.fromJson(x)))
           : null,
       enzymes: json['enzymes'] != null
-          ? List<EnzymeEntity>.from(
-              json['enzymes']?.map((x) => EnzymeDto.fromJson(x)))
+          ? List<EnzymeEntity>.from(json['enzymes']?.map((x) => EnzymeDto.fromJson(x)))
           : null,
     );
   }

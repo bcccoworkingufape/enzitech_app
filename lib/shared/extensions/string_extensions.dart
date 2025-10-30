@@ -33,8 +33,7 @@ extension StringExtension on String {
       return output;
     } catch (e) {
       if (kDebugMode) {
-        print(
-            'Error in convertStringToList: The input is not a string representation of a list');
+        print('Error in convertStringToList: The input is not a string representation of a list');
       }
       return null;
     }

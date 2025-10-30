@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.7.0+15
+version: 1.0.0+16
 
 environment:
   sdk: ^3.9.0
@@ -51,7 +51,7 @@ dependencies:
   google_fonts: ^6.1.0
   group_button: ^5.2.2
   internet_connection_checker: ^3.0.1
-  intl: any
+  intl: ^0.20.2
   package_info_plus: ^8.3.1
   path_provider: ^2.0.14
   percent_indicator: ^4.2.2
@@ -109,6 +109,13 @@ import_path_converter:
 import_sorter:
   emojis: true
   comments: true
+  ignored_files:
+    - \/.*\_localizations.dart
+    - \/.*\_localizations_en.dart
+    - \/.*\_localizations_pt.dart
+
+scripts:
+  build: dart run tool/build_all.dart
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

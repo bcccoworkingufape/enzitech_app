@@ -1,15 +1,13 @@
 // 🐦 Flutter imports:
-import 'dart:convert';
 
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-
-import '../../../../../../../l10n/app_localizations.dart';
 
 // 📦 Package imports:
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 // 🌎 Project imports:
-import '../../../../../../../shared/extensions/context_theme_mode_extensions.dart';
+import '../../../../../../../shared/extensions/build_context_extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../../../../../shared/utils/utils.dart';
 import '../../../../../../../shared/validator/validator.dart';
@@ -43,12 +41,9 @@ class CreateAccountFirstStepState extends State<CreateAccountFirstStep> {
   }
 
   void initFieldControllerTexts() {
-    _nameFieldController.text.isEmpty
-        ? _nameFieldController.text = widget.userDataCache['name'] ?? ''
-        : null;
+    _nameFieldController.text.isEmpty ? _nameFieldController.text = widget.userDataCache['name'] ?? '' : null;
     _institutionFieldController.text.isEmpty
-        ? _institutionFieldController.text =
-            widget.userDataCache['institution'] ?? ''
+        ? _institutionFieldController.text = widget.userDataCache['institution'] ?? ''
         : null;
 
     enableNextButton = widget.userDataCache['enableNext'] != null
@@ -58,9 +53,8 @@ class CreateAccountFirstStepState extends State<CreateAccountFirstStep> {
     setState(() {});
   }
 
-  get _validateFields {
-    if (_nameFieldController.text.isNotEmpty &&
-        _institutionFieldController.text.isNotEmpty) {
+  void get _validateFields {
+    if (_nameFieldController.text.isNotEmpty && _institutionFieldController.text.isNotEmpty) {
       setState(() {
         enableNextButton = widget.formKey.currentState!.validate();
       });
@@ -72,21 +66,13 @@ class CreateAccountFirstStepState extends State<CreateAccountFirstStep> {
   }
 
   Widget get _nameInput {
-    final l10n = AppLocalizations.of(context)!;
-    final validations = <ValidateRule>[
-      ValidateRule(
-        ValidateTypes.required,
-      ),
-      ValidateRule(
-        ValidateTypes.name,
-      ),
-    ];
+    final validations = <ValidateRule>[ValidateRule(ValidateTypes.required), ValidateRule(ValidateTypes.name)];
 
     final fieldValidator = FieldValidator(validations, context);
 
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,
-      labelText: l10n.nameLabel,
+      labelText: context.l10n.nameLabel,
       usePrimaryColorOnFocusedBorder: true,
       keyboardType: TextInputType.emailAddress,
       controller: _nameFieldController,
@@ -96,21 +82,13 @@ class CreateAccountFirstStepState extends State<CreateAccountFirstStep> {
   }
 
   Widget get _institutionInput {
-    final l10n = AppLocalizations.of(context)!;
-    final validations = <ValidateRule>[
-      ValidateRule(
-        ValidateTypes.required,
-      ),
-      ValidateRule(
-        ValidateTypes.name,
-      ),
-    ];
+    final validations = <ValidateRule>[ValidateRule(ValidateTypes.required), ValidateRule(ValidateTypes.name)];
 
     final fieldValidator = FieldValidator(validations, context);
 
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,
-      labelText: l10n.institutionLabel,
+      labelText: context.l10n.institutionLabel,
       usePrimaryColorOnFocusedBorder: true,
       keyboardType: TextInputType.emailAddress,
       controller: _institutionFieldController,
@@ -120,17 +98,10 @@ class CreateAccountFirstStepState extends State<CreateAccountFirstStep> {
   }
 
   Widget get _textFields {
-    return Column(
-      children: [
-        _nameInput,
-        const SizedBox(height: 10),
-        _institutionInput,
-      ],
-    );
+    return Column(children: [_nameInput, const SizedBox(height: 10), _institutionInput]);
   }
 
-  _body(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+  SingleChildScrollView _body(BuildContext context) {
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
       child: Column(
@@ -144,23 +115,13 @@ class CreateAccountFirstStepState extends State<CreateAccountFirstStep> {
             ),
           ),
           const SizedBox(height: 16),
-          Center(
-            child: Text(
-              l10n.signUp,
-              style: TextStyles.titleHome,
-            ),
-          ),
+          Center(child: Text(context.l10n.signUp, style: TextStyles.titleHome)),
           const SizedBox(height: 64),
           Row(
             children: [
-              Icon(
-                PhosphorIcons.identificationCard(),
-              ),
+              Icon(PhosphorIcons.identificationCard()),
               const SizedBox(width: 4),
-              Text(
-                l10n.personalData,
-                style: TextStyles.detailBold,
-              ),
+              Text(context.l10n.personalData, style: TextStyles.detailBold),
             ],
           ),
           _textFields,
@@ -171,19 +132,16 @@ class CreateAccountFirstStepState extends State<CreateAccountFirstStep> {
   }
 
   Widget get _buttons {
-    final l10n = AppLocalizations.of(context)!;
     return Column(
       children: [
         EZTButton(
           enabled: enableNextButton,
-          text: l10n.nextButton,
+          text: context.l10n.nextButton,
           onPressed: () {
             widget.formKey.currentState!.save();
 
-            widget.userDataCache
-                .update('name', (value) => _nameFieldController.text);
-            widget.userDataCache.update(
-                'institution', (value) => _institutionFieldController.text);
+            widget.userDataCache.update('name', (value) => _nameFieldController.text);
+            widget.userDataCache.update('institution', (value) => _institutionFieldController.text);
             widget.userDataCache.update('enableNext', (value) => 'true');
 
             widget.pageController.animateTo(
@@ -195,7 +153,7 @@ class CreateAccountFirstStepState extends State<CreateAccountFirstStep> {
         ),
         const SizedBox(height: 16),
         EZTButton(
-          text: l10n.backButton,
+          text: context.l10n.backButton,
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
             Navigator.pop(context);
@@ -209,18 +167,12 @@ class CreateAccountFirstStepState extends State<CreateAccountFirstStep> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Expanded(
-          flex: 11,
-          child: Center(child: _body(context)),
-        ),
+        Expanded(flex: 11, child: Center(child: _body(context))),
         Expanded(
           flex: 4,
           child: SingleChildScrollView(
             physics: const NeverScrollableScrollPhysics(),
-            child: Padding(
-              padding: Constants.padding16all,
-              child: _buttons,
-            ),
+            child: Padding(padding: Constants.padding16all, child: _buttons),
           ),
         ),
       ],

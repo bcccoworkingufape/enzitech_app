@@ -15,12 +15,7 @@ class HomeViewmodel extends ChangeNotifier {
   final TreatmentsViewmodel treatmentsViewmodel;
   final SettingsViewmodel accountViewmodel;
 
-  HomeViewmodel(
-    this.experimentsViewmodel,
-    this.enzymesViewmodel,
-    this.treatmentsViewmodel,
-    this.accountViewmodel,
-  ) {
+  HomeViewmodel(this.experimentsViewmodel, this.enzymesViewmodel, this.treatmentsViewmodel, this.accountViewmodel) {
     // fetch();
   }
 
@@ -47,8 +42,7 @@ class HomeViewmodel extends ChangeNotifier {
   bool _hasInternetConnection = true;
   bool get hasInternetConnection => _hasInternetConnection;
   bool previousHasInternetConnection = true;
-  bool get notifyInternetConnection =>
-      previousHasInternetConnection != _hasInternetConnection;
+  bool get notifyInternetConnection => previousHasInternetConnection != _hasInternetConnection;
 
   void setHasInternetConnection(bool flag) {
     previousHasInternetConnection = _hasInternetConnection;
@@ -56,7 +50,7 @@ class HomeViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  fetch() async {
+  Future<void> fetch() async {
     setStateEnum(StateEnum.loading);
     await experimentsViewmodel.fetch();
     await enzymesViewmodel.fetch();

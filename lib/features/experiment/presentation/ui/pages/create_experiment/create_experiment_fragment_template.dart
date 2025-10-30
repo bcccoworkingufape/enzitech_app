@@ -17,12 +17,10 @@ class CreateExperimentFragmentTemplate extends StatefulWidget {
   final Widget body;
 
   @override
-  State<CreateExperimentFragmentTemplate> createState() =>
-      _CreateExperimentFragmentTemplateState();
+  State<CreateExperimentFragmentTemplate> createState() => _CreateExperimentFragmentTemplateState();
 }
 
-class _CreateExperimentFragmentTemplateState
-    extends State<CreateExperimentFragmentTemplate> {
+class _CreateExperimentFragmentTemplateState extends State<CreateExperimentFragmentTemplate> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -41,10 +39,7 @@ class _CreateExperimentFragmentTemplateState
               ],
             ),
           ),
-          SliverFillRemaining(
-            hasScrollBody: true,
-            child: widget.body,
-          ),
+          SliverFillRemaining(hasScrollBody: true, child: widget.body),
         ],
       ),
     );

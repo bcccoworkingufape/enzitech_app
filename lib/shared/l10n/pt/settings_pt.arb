@@ -1,0 +1,61 @@
+{
+  "@@Locale": "pt",
+  "info": "Informações",
+  "about": "Sobre o Enzitech",
+  "frequentlyAskedQuestions": "Perguntas frequentes",
+  "userData": "Dados do Usuário",
+  "userName": "Nome",
+  "userType": "Tipo de usuário",
+  "roles": "{role, select, admin{Administrador} common{Comum} other{Comum}}",
+  "@roles": {
+    "description": "Users roles into the app",
+    "placeholders": {
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "deletionConfirmation": "Confirmação de exclusão",
+  "languages": "Idiomas",
+  "replaceLanguage": "Substituir idioma",
+  "theme": "Tema",
+  "details": "Detalhes sobre o Enzitech",
+  "environment": "Ambiente",
+  "version": "Versão",
+  "exit": "Sair",
+  "seeYouSoon": "Até logo...",
+  "environmentValue": "{env, select, dev{Desenvolvimento} stage{Teste} prod{Produção} other{Desconhecido}}",
+  "@environmentValue": {
+    "description": "O valor traduzido do ambiente da aplicação",
+    "placeholders": {
+      "env": {
+        "type": "String"
+      }
+    }
+  },
+  "unableToOpenUrlError": "Não foi possível acessar {url}",
+  "@unableToOpenUrlError": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "aboutTitle": "Sobre:",
+  "idealizationTitle": "Idealização",
+  "developmentTeamTitle": "Equipe de desenvolvimento",
+  "closeButton": "Fechar",
+  "idealizationTextP1": " foi concebido como uma solução para o estudo e realização de experimentos no campo das atividades enzimáticas do solo, idealizado em conjunto pelo ",
+  "idealizationTextP2": " e o ",
+  "idealizationTextP3": ", localizados na ",
+  "idealizationTextP4": ".",
+  "roleMobileDeveloper": "(Desenvolvedor mobile)",
+  "roleBackendDeveloper": "(Desenvolvedor back-end)",
+  "roleProjectManagement": "(Gestão do Projeto)",
+  "roleProfessorBCC": "(Docente - BCC)",
+  "roleProfessorAgronomy": "(Docente - Agronomia)",
+  "question": "Pergunta: ",
+  "question1": "Por que não consigo criar enzimas?",
+  "answer": "Resposta: ",
+  "answer1": "A funcionalidade de criação de enzimas é restrita ao adminstrador do Enzitech, pois atualmente para o cadastro de uma enzima é necessário sua implementação até que a mesma possa estar disponível para uso, caso necessite de algum novo tipo de enzima solicite ao administrador do sistema."
+}

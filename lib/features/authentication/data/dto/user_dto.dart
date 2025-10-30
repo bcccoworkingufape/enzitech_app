@@ -9,21 +9,14 @@ extension UserDto on UserEntity {
       name: json['user']['name'],
       email: json['user']['email'],
       id: json['user']['id'],
-      userType: json['user']['role'] == 'User'
-          ? UserTypeEnum.user
-          : UserTypeEnum.admin,
+      userType: json['user']['role'] == 'User' ? UserTypeEnum.user : UserTypeEnum.admin,
     );
   }
 
   Map toJson() {
     return {
       'accessToken': token,
-      'user': {
-        'name': name,
-        'email': email,
-        'id': id,
-        'role': userType == UserTypeEnum.user ? 'User' : 'Admin',
-      }
+      'user': {'name': name, 'email': email, 'id': id, 'role': userType == UserTypeEnum.user ? 'User' : 'Admin'},
     };
   }
 }

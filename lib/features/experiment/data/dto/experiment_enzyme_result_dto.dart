@@ -9,17 +9,12 @@ extension ExperimentEnzymeResultDto on ExperimentEnzymeResultEntity {
     return ExperimentEnzymeResultEntity(
       enzyme: EnzymeDto.fromJson(json['enzyme']),
       treatments: List<ExperimentTreatmentResultEntity>.from(
-        json['processes'].map(
-          (x) => ExperimentTreatmentResultDto.fromJson(x),
-        ),
+        json['processes'].map((x) => ExperimentTreatmentResultDto.fromJson(x)),
       ),
     );
   }
 
   Map toJson() {
-    return {
-      'enzyme': enzyme,
-      'processes': treatments.map((x) => x.toJson()).toList(),
-    };
+    return {'enzyme': enzyme, 'processes': treatments.map((x) => x.toJson()).toList()};
   }
 }

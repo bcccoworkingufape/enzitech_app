@@ -13,7 +13,7 @@ GetIt getIt = GetIt.instance;
 
 class Inject {
   //-> HttpDriverOptions is required to reset Dio's token options
-  static initialize(HttpDriverOptions httpDriverOptions) {
+  static void initialize(HttpDriverOptions httpDriverOptions) {
     CoreInjections(httpDriverOptions, getIt);
 
     DataSourcesInjections(getIt);

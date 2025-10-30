@@ -8,12 +8,12 @@ import 'package:get_it/get_it.dart';
 import '../../../../core/domain/service/http/http_service.dart';
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
-import '../../domain/usecases/login/login_usecase.dart';
+import '../../domain/usecases/auth/auth_usecase.dart';
 
 class LoginViewmodel extends ChangeNotifier {
-  final LoginUseCase _loginUseCase;
+  final AuthUseCase _authUseCase;
 
-  LoginViewmodel(this._loginUseCase);
+  LoginViewmodel(this._authUseCase);
 
   StateEnum _state = StateEnum.idle;
   StateEnum get state => _state;
@@ -48,10 +48,7 @@ class LoginViewmodel extends ChangeNotifier {
 
   Future<void> loginAction() async {
     setStateEnum(StateEnum.loading);
-    var result = await _loginUseCase.call(
-      email: email!.trim(),
-      password: password!.trim(),
-    );
+    var result = await _authUseCase.login(email: email!.trim(), password: password!.trim());
 
     result.fold(
       (error) {

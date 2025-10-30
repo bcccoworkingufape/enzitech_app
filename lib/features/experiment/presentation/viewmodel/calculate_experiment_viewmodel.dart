@@ -8,30 +8,19 @@ import 'package:get_it/get_it.dart';
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
 import '../../../../shared/ui/ui.dart';
-import '../../../../shared/utils/utils.dart';
-import '../../../../shared/validator/validator.dart';
 import '../../../enzyme/domain/entities/enzyme_entity.dart';
 import '../../domain/entities/experiment_calculation_entity.dart';
 import '../../domain/entities/experiment_entity.dart';
-import '../../domain/usecases/calculate_experiment/calculate_experiment_usecase.dart';
-import '../../domain/usecases/get_enzymes_remaining_in_experiment/get_enzymes_remaining_in_experiment_usecase.dart';
-import '../../domain/usecases/save_result/save_result_usecase.dart';
+import '../../domain/usecases/experiments_usecases.dart';
 import '../dto/choosed_experiment_combination_dto.dart';
 import '../dto/number_differences_dto.dart';
 import 'experiment_details_viewmodel.dart';
 import 'experiments_viewmodel.dart';
 
 class CalculateExperimentViewmodel extends ChangeNotifier {
-  final CalculateExperimentUseCase _calculateExperimentUseCase;
-  final SaveResultUseCase _saveResultUseCase;
-  final GetEnzymesRemainingInExperimentUseCase
-      _getEnzymesRemainingInExperimentUseCase;
+  final ExperimentsUseCases _experimentsUseCases;
 
-  CalculateExperimentViewmodel(
-    this._calculateExperimentUseCase,
-    this._saveResultUseCase,
-    this._getEnzymesRemainingInExperimentUseCase,
-  );
+  CalculateExperimentViewmodel(this._experimentsUseCases);
 
   StateEnum _state = StateEnum.idle;
   StateEnum get state => _state;
@@ -59,10 +48,8 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
   }
 
   ExperimentCalculationEntity? _experimentCalculationEntity;
-  ExperimentCalculationEntity? get experimentCalculationEntity =>
-      _experimentCalculationEntity;
-  void setExperimentCalculation(
-      ExperimentCalculationEntity? experimentCalculationEntity) {
+  ExperimentCalculationEntity? get experimentCalculationEntity => _experimentCalculationEntity;
+  void setExperimentCalculation(ExperimentCalculationEntity? experimentCalculationEntity) {
     _experimentCalculationEntity = experimentCalculationEntity;
     notifyListeners();
   }
@@ -86,48 +73,34 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
 
   bool _enableNextButtonOnFirstStep = false;
   bool get enableNextButtonOnFirstStep => _enableNextButtonOnFirstStep;
-  void setEnableNextButtonOnFirstStep(
-    bool enableNextButtonOnFirstStep, {
-    bool notify = true,
-  }) {
+  void setEnableNextButtonOnFirstStep(bool enableNextButtonOnFirstStep, {bool notify = true}) {
     _enableNextButtonOnFirstStep = enableNextButtonOnFirstStep;
     if (notify) notifyListeners();
   }
 
   bool _enableNextButtonOnSecondStep = false;
   bool get enableNextButtonOnSecondStep => _enableNextButtonOnSecondStep;
-  void setEnableNextButtonOnSecondStep(
-    bool enableNextButtonOnSecondStep, {
-    bool notify = true,
-  }) {
+  void setEnableNextButtonOnSecondStep(bool enableNextButtonOnSecondStep, {bool notify = true}) {
     _enableNextButtonOnSecondStep = enableNextButtonOnSecondStep;
     if (notify) notifyListeners();
   }
 
-  ChoosedExperimentCombinationDTO _temporaryChoosedExperimentCombination =
-      ChoosedExperimentCombinationDTO();
-  ChoosedExperimentCombinationDTO get temporaryChoosedExperimentCombination =>
-      _temporaryChoosedExperimentCombination;
-  void setTemporaryChoosedExperimentCombination(
-      ChoosedExperimentCombinationDTO temporaryChoosedExperimentCombination) {
-    _temporaryChoosedExperimentCombination =
-        temporaryChoosedExperimentCombination;
+  ChoosedExperimentCombinationDTO _temporaryChoosedExperimentCombination = ChoosedExperimentCombinationDTO();
+  ChoosedExperimentCombinationDTO get temporaryChoosedExperimentCombination => _temporaryChoosedExperimentCombination;
+  void setTemporaryChoosedExperimentCombination(ChoosedExperimentCombinationDTO temporaryChoosedExperimentCombination) {
+    _temporaryChoosedExperimentCombination = temporaryChoosedExperimentCombination;
     notifyListeners();
   }
 
   List<Map<String, double?>> _listOfExperimentData = [];
   List<Map<String, double?>> get listOfExperimentData => _listOfExperimentData;
-  void setListOfExperimentData(
-      List<Map<String, double?>> listOfExperimentData) {
+  void setListOfExperimentData(List<Map<String, double?>> listOfExperimentData) {
     _listOfExperimentData = listOfExperimentData;
   }
 
-
   Map<String, TextEditingController> _textEditingControllers = {};
-  Map<String, TextEditingController> get textEditingControllers =>
-      _textEditingControllers;
-  void setTextEditingControllers(
-      Map<String, TextEditingController> textEditingControllers) {
+  Map<String, TextEditingController> get textEditingControllers => _textEditingControllers;
+  void setTextEditingControllers(Map<String, TextEditingController> textEditingControllers) {
     _textEditingControllers = textEditingControllers;
     notifyListeners();
   }
@@ -139,10 +112,8 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
   }
 
   List<NumberDifferencesDTO?> _listOfNumberDifferencesDTO = [];
-  List<NumberDifferencesDTO?> get listOfNumberDifferencesDTO =>
-      _listOfNumberDifferencesDTO;
-  void setListOfNumberDifferencesDTO(
-      List<NumberDifferencesDTO?> listOfNumberDifferencesDTO) {
+  List<NumberDifferencesDTO?> get listOfNumberDifferencesDTO => _listOfNumberDifferencesDTO;
+  void setListOfNumberDifferencesDTO(List<NumberDifferencesDTO?> listOfNumberDifferencesDTO) {
     _listOfNumberDifferencesDTO = listOfNumberDifferencesDTO;
   }
 
@@ -157,11 +128,7 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
     if (mounted) {
       if (page != null) {
         setAlreadyPopped(false);
-        pageController.animateToPage(
-          page,
-          duration: const Duration(milliseconds: 150),
-          curve: Curves.easeIn,
-        );
+        pageController.animateToPage(page, duration: const Duration(milliseconds: 150), curve: Curves.easeIn);
       } else {
         {
           if (pageController.page! > 0) {
@@ -174,8 +141,7 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
           } else {
             setEnableNextButtonOnFirstStep(false, notify: false);
             setEnableNextButtonOnSecondStep(false, notify: false);
-            setTemporaryChoosedExperimentCombination(
-                ChoosedExperimentCombinationDTO());
+            setTemporaryChoosedExperimentCombination(ChoosedExperimentCombinationDTO());
             setAlreadyPopped(true);
             Navigator.pop(context);
           }
@@ -192,10 +158,7 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
 
     EZTSnackBar.clear(context);
 
-    pageController.nextPage(
-      duration: const Duration(milliseconds: 150),
-      curve: Curves.easeIn,
-    );
+    pageController.nextPage(duration: const Duration(milliseconds: 150), curve: Curves.easeIn);
   }
 
   void validateFields(String value, double id, String type) {
@@ -219,58 +182,32 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
 
     setTextEditingControllers({});
 
-    final validations = <ValidateRule>[
-      ValidateRule(
-        ValidateTypes.required,
-      ),
-      ValidateRule(
-        ValidateTypes.numeric,
-      ),
-      ValidateRule(
-        ValidateTypes.greaterThanZeroDecimal,
-      ),
-    ];
-
     List<Map<String, double?>> tempList = [];
     for (var i = 0; i < experiment.repetitions; i++) {
-      tempList.add({
-        "sample": null,
-        "whiteSample": null,
-        "_id": i.toDouble(),
-      });
+      tempList.add({"sample": null, "whiteSample": null, "_id": i.toDouble()});
     }
 
     setListOfExperimentData(tempList);
     textEditingControllers.clear();
 
     for (var i = 0; i < listOfExperimentData.length; i++) {
-      TextEditingController sampleFieldController =
-          TextEditingController(text: '');
-      textEditingControllers.putIfAbsent(
-        'sample-${i.toDouble()}',
-        () => sampleFieldController,
-      );
+      TextEditingController sampleFieldController = TextEditingController(text: '');
+      textEditingControllers.putIfAbsent('sample-${i.toDouble()}', () => sampleFieldController);
 
-      TextEditingController whiteSampleFieldController =
-          TextEditingController(text: '');
-      textEditingControllers.putIfAbsent(
-        'whiteSample-${i.toDouble()}',
-        () => whiteSampleFieldController,
-      );
+      TextEditingController whiteSampleFieldController = TextEditingController(text: '');
+      textEditingControllers.putIfAbsent('whiteSample-${i.toDouble()}', () => whiteSampleFieldController);
     }
     setStateEnum(StateEnum.idle);
   }
 
-  double _percentOfDifference(num num1, num num2) =>
-      (((num2 - num1) / num1) * 100).abs();
+  double _percentOfDifference(num num1, num num2) => (((num2 - num1) / num1) * 100).abs();
 
-  getAbsNumberFartherFromAverage() {
+  void getAbsNumberFartherFromAverage() {
     final average = experimentCalculationEntity!.average.toDouble();
 
     final results = experimentCalculationEntity!.results;
 
-    double differenceOfFartherNumber =
-        _percentOfDifference(average, results.first);
+    double differenceOfFartherNumber = _percentOfDifference(average, results.first);
 
     num fartherNumber = experimentCalculationEntity!.results.first;
 
@@ -283,14 +220,11 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
     }
 
     setNumberDifferencesDTO(
-      NumberDifferencesDTO(
-        differenceOfFartherNumber: differenceOfFartherNumber,
-        fartherNumber: fartherNumber,
-      ),
+      NumberDifferencesDTO(differenceOfFartherNumber: differenceOfFartherNumber, fartherNumber: fartherNumber),
     );
   }
 
-  calculateListOfNumbersFartherFromAverage() {
+  void calculateListOfNumbersFartherFromAverage() {
     final average = experimentCalculationEntity!.average;
 
     final results = experimentCalculationEntity!.results;
@@ -311,7 +245,7 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
     setListOfNumberDifferencesDTO(list);
   }
 
-  clearTemporaryInfos() {
+  void clearTemporaryInfos() {
     setEnableNextButtonOnFirstStep(false, notify: false);
     setEnableNextButtonOnSecondStep(false, notify: false);
     setTemporaryChoosedExperimentCombination(ChoosedExperimentCombinationDTO());
@@ -324,7 +258,7 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
   Future<void> getEnzymesRemainingInExperiment(String treatmentId) async {
     setStateEnum(StateEnum.loading);
 
-    var result = await _getEnzymesRemainingInExperimentUseCase(
+    var result = await _experimentsUseCases.getEnzymesRemainingInExperiment(
       experimentId: experiment.id,
       treatmentId: treatmentId,
     );
@@ -344,7 +278,7 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
   Future<void> calculateExperiment() async {
     setStateEnum(StateEnum.loading);
 
-    var result = await _calculateExperimentUseCase(
+    var result = await _experimentsUseCases.calculateExperiment(
       experimentId: experiment.id,
       enzymeId: temporaryChoosedExperimentCombination.enzyme!.id,
       treatmentID: temporaryChoosedExperimentCombination.treatment!.id,
@@ -366,7 +300,7 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
   Future<void> saveResult() async {
     setStateEnum(StateEnum.loading);
 
-    var result = await _saveResultUseCase(
+    var result = await _experimentsUseCases.saveResult(
       experimentId: experiment.id,
       enzymeId: temporaryChoosedExperimentCombination.enzyme!.id,
       treatmentID: temporaryChoosedExperimentCombination.treatment!.id,

@@ -71,9 +71,7 @@ class Routing {
         if (args is ExperimentEntity) {
           return MaterialPageRoute(
             settings: const RouteSettings(name: calculateExperiment),
-            builder: (_) => CalculateExperimentPage(
-              experiment: args,
-            ),
+            builder: (_) => CalculateExperimentPage(experiment: args),
           );
         } else {
           return _errorRoute();
@@ -90,10 +88,7 @@ class Routing {
         );
       default:
         return MaterialPageRoute(
-          builder: (_) => Scaffold(
-            body: Center(
-                child: Text('Sem rota definida para "${settings.name}"')),
-          ),
+          builder: (_) => Scaffold(body: Center(child: Text('Sem rota definida para "${settings.name}"'))),
         );
     }
   }
@@ -102,9 +97,7 @@ class Routing {
     return MaterialPageRoute(
       builder: (_) {
         return Scaffold(
-          appBar: AppBar(
-            title: const Text('Não encontrado'),
-          ),
+          appBar: AppBar(title: const Text('Não encontrado')),
           body: const EZTError(message: 'ERRO 404'),
         );
       },

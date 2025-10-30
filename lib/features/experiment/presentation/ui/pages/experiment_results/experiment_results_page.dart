@@ -4,8 +4,6 @@ import 'dart:math';
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-import '../../../../../../l10n/app_localizations.dart';
-
 // 📦 Package imports:
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
@@ -15,7 +13,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
-import '../../../../../../shared/extensions/context_theme_mode_extensions.dart';
+import '../../../../../../shared/extensions/build_context_extensions.dart';
 import '../../../../../../shared/extensions/double_extensions.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../../domain/entities/experiment_entity.dart';
@@ -33,7 +31,6 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
   late final ExperimentResultsViewmodel _experimentResultsViewmodel;
   late final ExperimentDetailsViewmodel _experimentDetailsViewmodel;
   late final ExperimentEntity _experiment;
-  late final AppLocalizations? l10n;
 
   @override
   void initState() {
@@ -49,11 +46,8 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
         if (mounted && _experimentResultsViewmodel.state == StateEnum.error) {
           EZTSnackBar.show(
             context,
-            HandleFailure.of(l10n, _experimentResultsViewmodel.failure!),
-            duration:
-                _experimentResultsViewmodel.failure! is UnableToSaveFailure
-                ? const Duration(seconds: 15)
-                : null,
+            HandleFailure.of(context.l10n, _experimentResultsViewmodel.failure!),
+            duration: _experimentResultsViewmodel.failure! is UnableToSaveFailure ? const Duration(seconds: 15) : null,
             eztSnackBarType: EZTSnackBarType.error,
           ).then(
             (_) => Future.delayed(const Duration(seconds: 7), () {
@@ -68,7 +62,6 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    l10n = AppLocalizations.of(context);
   }
 
   Widget _buildHeader(String title, String message) {
@@ -95,9 +88,7 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                 width: MediaQuery.of(context).size.width * 0.7,
                 child: Text(
                   title,
-                  style: TextStyles(
-                    context,
-                  ).informationExperimentStepTitle(fontSize: 28),
+                  style: TextStyles(context).informationExperimentStepTitle(fontSize: 28),
                   textAlign: TextAlign.start,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -108,9 +99,7 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                 width: MediaQuery.of(context).size.width * 0.7,
                 child: Text(
                   message,
-                  style: TextStyles.informationExperimentStepMessage.copyWith(
-                    fontSize: 20,
-                  ),
+                  style: TextStyles.informationExperimentStepMessage.copyWith(fontSize: 20),
                   textAlign: TextAlign.start,
                 ),
               ),
@@ -122,9 +111,9 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
     );
   }
 
-  get _buildBody {
+  Widget get _buildBody {
     if (_experimentResultsViewmodel.state == StateEnum.loading) {
-      return EZTProgressIndicator(message: l10n?.loadingResults);
+      return EZTProgressIndicator(message: context.l10n.loadingResults);
     }
 
     final results = _experimentResultsViewmodel.experimentResult;
@@ -134,10 +123,7 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
         physics: const NeverScrollableScrollPhysics(),
         slivers: [
           SliverToBoxAdapter(
-            child: _buildHeader(
-              l10n?.results ?? "",
-              l10n?.experimentHeader(_experiment.name) ?? "",
-            ),
+            child: _buildHeader(context.l10n.results, context.l10n.experimentHeader(_experiment.name)),
           ),
           ScrollConfiguration(
             behavior: MyBehavior(),
@@ -147,17 +133,13 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                 children: [
                   Expanded(
                     child: ListView.builder(
-                      physics: const AlwaysScrollableScrollPhysics(
-                        parent: BouncingScrollPhysics(),
-                      ),
+                      physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
                       itemCount: results!.enzymes.length,
                       shrinkWrap: true,
                       itemBuilder: (context, indexOfEnzymes) {
                         return ListTile(
                           title: ExpansionTile(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                             backgroundColor: Colors.transparent,
                             initiallyExpanded: true,
                             title: Column(
@@ -166,19 +148,13 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                               children: [
                                 Text(
                                   results.enzymes[indexOfEnzymes].enzyme.name,
-                                  style: TextStyles(context)
-                                      .informationExperimentStepTitle(
-                                        fontSize: 28,
-                                      ),
+                                  style: TextStyles(context).informationExperimentStepTitle(fontSize: 28),
                                 ),
                                 Text(
-                                  l10n?.enzymeTypeHeader(
+                                  context.l10n.enzymeTypeHeader(
                                     results.enzymes[indexOfEnzymes].enzyme.name,
-                                    results
-                                        .enzymes[indexOfEnzymes]
-                                        .enzyme
-                                        .formula,
-                                  ) ?? "",
+                                    results.enzymes[indexOfEnzymes].enzyme.formula,
+                                  ),
                                 ),
                               ],
                             ),
@@ -187,253 +163,153 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                                   (treatment) => ListTile(
                                     title: ExpansionTile(
                                       title: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text(
-                                            treatment.treatment.name,
-                                            style: TextStyles.bodyBold,
-                                          ),
-                                          Text(l10n?.treatmentLabel ?? ""),
+                                          Text(treatment.treatment.name, style: TextStyles.bodyBold),
+                                          Text(context.l10n.treatmentLabel),
                                         ],
                                       ),
                                       children: [
                                         LayoutBuilder(
-                                          builder:
-                                              (
-                                                BuildContext context,
-                                                BoxConstraints constraints,
-                                              ) {
-                                                double rowHeight =
-                                                    (49.1 *
-                                                            (treatment
-                                                                    .repetitionResults
-                                                                    .length +
-                                                                1))
-                                                        .toDouble();
+                                          builder: (BuildContext context, BoxConstraints constraints) {
+                                            double rowHeight = (49.1 * (treatment.repetitionResults.length + 1))
+                                                .toDouble();
 
-                                                return ConstrainedBox(
-                                                  constraints:
-                                                      BoxConstraints.tightFor(
-                                                        height: rowHeight,
-                                                        width: max(
-                                                          600,
-                                                          constraints.maxWidth,
-                                                        ),
+                                            return ConstrainedBox(
+                                              constraints: BoxConstraints.tightFor(
+                                                height: rowHeight,
+                                                width: max(600, constraints.maxWidth),
+                                              ),
+                                              child: ScrollConfiguration(
+                                                behavior: MyBehavior(),
+                                                child: GlowingOverscrollIndicator(
+                                                  axisDirection: AxisDirection.down,
+                                                  color: context.getApplyedColorScheme.primary.withValues(alpha: 0.3),
+                                                  child: DataTable2(
+                                                    columnSpacing: 12,
+                                                    minWidth: 1200,
+                                                    columns: [
+                                                      DataColumn(label: Text(context.l10n.columnId), numeric: true),
+                                                      DataColumn(label: Text(context.l10n.columnSample), numeric: true),
+                                                      DataColumn(
+                                                        label: Text(context.l10n.columnWhiteSampleShort),
+                                                        numeric: true,
+                                                        tooltip: context.l10n.columnWhiteSampleTooltip,
                                                       ),
-                                                  child: ScrollConfiguration(
-                                                    behavior: MyBehavior(),
-                                                    child: GlowingOverscrollIndicator(
-                                                      axisDirection:
-                                                          AxisDirection.down,
-                                                      color: context
-                                                          .getApplyedColorScheme
-                                                          .primary
-                                                          .withOpacity(0.3),
-                                                      child: DataTable2(
-                                                        columnSpacing: 12,
-                                                        minWidth: 1200,
-                                                        columns: [
-                                                          DataColumn(
-                                                            label: Text(
-                                                              l10n?.columnId ?? "",
-                                                            ),
-                                                            numeric: true,
+                                                      DataColumn(
+                                                        label: Text(context.l10n.columnDifference),
+                                                        numeric: true,
+                                                      ),
+                                                      DataColumn(label: Text(context.l10n.variableA), numeric: true),
+                                                      DataColumn(label: Text(context.l10n.variableB), numeric: true),
+                                                      DataColumn(label: Text(context.l10n.columnCurve), numeric: true),
+                                                      DataColumn(
+                                                        label: Text(context.l10n.columnCorrectionFactorShort),
+                                                        numeric: true,
+                                                        tooltip: context.l10n.correctionFactor,
+                                                      ),
+                                                      DataColumn(label: Text(context.l10n.timeHours), numeric: true),
+                                                      DataColumn(label: Text(context.l10n.columnVolume), numeric: true),
+                                                      DataColumn(
+                                                        label: Text(context.l10n.columnSampleWeightShort),
+                                                        numeric: true,
+                                                        tooltip: context.l10n.columnSampleWeightTooltip,
+                                                      ),
+                                                      DataColumn(label: Text(context.l10n.columnResult), numeric: true),
+                                                    ],
+                                                    rows: List<DataRow2>.generate(
+                                                      treatment.repetitionResults.length,
+                                                      (index) => DataRow2.byIndex(
+                                                        index: index,
+                                                        color: index.isEven
+                                                            ? WidgetStateProperty.all(
+                                                                context.getApplyedColorScheme.surfaceContainerHighest,
+                                                              )
+                                                            : null,
+                                                        cells: [
+                                                          DataCell(
+                                                            Text(treatment.repetitionResults[index].repetitionId),
                                                           ),
-                                                          DataColumn(
-                                                            label: Text(
-                                                              l10n?.columnSample ?? "",
+                                                          DataCell(
+                                                            Text(
+                                                              treatment.repetitionResults[index].sample.formmatedNumber,
                                                             ),
-                                                            numeric: true,
                                                           ),
-                                                          DataColumn(
-                                                            label: Text(
-                                                              l10n?.columnWhiteSampleShort ?? "",
+                                                          DataCell(
+                                                            Text(
+                                                              treatment
+                                                                  .repetitionResults[index]
+                                                                  .whiteSample
+                                                                  .formmatedNumber,
                                                             ),
-                                                            numeric: true,
-                                                            tooltip: l10n
-                                                                ?.columnWhiteSampleTooltip ?? "",
                                                           ),
-                                                          DataColumn(
-                                                            label: Text(
-                                                              l10n?.columnDifference ?? "",
+                                                          DataCell(
+                                                            Text(
+                                                              treatment
+                                                                  .repetitionResults[index]
+                                                                  .differenceBetweenSamples
+                                                                  .formmatedNumber,
                                                             ),
-                                                            numeric: true,
                                                           ),
-                                                          DataColumn(
-                                                            label: Text(
-                                                              l10n?.variableA ?? "",
+                                                          DataCell(
+                                                            Text(
+                                                              treatment
+                                                                  .repetitionResults[index]
+                                                                  .variableA
+                                                                  .formmatedNumber,
                                                             ),
-                                                            numeric: true,
                                                           ),
-                                                          DataColumn(
-                                                            label: Text(
-                                                              l10n?.variableB ?? "",
+                                                          DataCell(
+                                                            Text(
+                                                              treatment
+                                                                  .repetitionResults[index]
+                                                                  .variableB
+                                                                  .formmatedNumber,
                                                             ),
-                                                            numeric: true,
                                                           ),
-                                                          DataColumn(
-                                                            label: Text(
-                                                              l10n?.columnCurve ?? "",
+                                                          DataCell(
+                                                            Text(
+                                                              treatment.repetitionResults[index].curve.formmatedNumber,
                                                             ),
-                                                            numeric: true,
                                                           ),
-                                                          DataColumn(
-                                                            label: Text(
-                                                              l10n?.columnCorrectionFactorShort ?? "",
+                                                          DataCell(
+                                                            Text(
+                                                              treatment
+                                                                  .repetitionResults[index]
+                                                                  .correctionFactor
+                                                                  .formmatedNumber,
                                                             ),
-                                                            numeric: true,
-                                                            tooltip: l10n
-                                                                ?.correctionFactor,
                                                           ),
-                                                          DataColumn(
-                                                            label: Text(
-                                                              l10n?.timeHours ?? "",
-                                                            ),
-                                                            numeric: true,
+                                                          DataCell(
+                                                            Text(treatment.repetitionResults[index].time.toString()),
                                                           ),
-                                                          DataColumn(
-                                                            label: Text(
-                                                              l10n?.columnVolume ?? "",
+                                                          DataCell(
+                                                            Text(
+                                                              treatment.repetitionResults[index].volume.formmatedNumber,
                                                             ),
-                                                            numeric: true,
                                                           ),
-                                                          DataColumn(
-                                                            label: Text(
-                                                              l10n?.columnSampleWeightShort ?? "",
+                                                          DataCell(
+                                                            Text(
+                                                              treatment
+                                                                  .repetitionResults[index]
+                                                                  .weightSample
+                                                                  .formmatedNumber,
                                                             ),
-                                                            numeric: true,
-                                                            tooltip: l10n
-                                                                ?.columnSampleWeightTooltip,
                                                           ),
-                                                          DataColumn(
-                                                            label: Text(
-                                                              l10n?.columnResult ?? "",
+                                                          DataCell(
+                                                            Text(
+                                                              treatment.repetitionResults[index].result.formmatedNumber,
                                                             ),
-                                                            numeric: true,
                                                           ),
                                                         ],
-                                                        rows: List<DataRow2>.generate(
-                                                          treatment
-                                                              .repetitionResults
-                                                              .length,
-                                                          (
-                                                            index,
-                                                          ) => DataRow2.byIndex(
-                                                            index: index,
-                                                            color: index.isEven
-                                                                ? MaterialStateProperty.all(
-                                                                    context
-                                                                        .getApplyedColorScheme
-                                                                        .surfaceVariant,
-                                                                  )
-                                                                : null,
-                                                            cells: [
-                                                              DataCell(
-                                                                Text(
-                                                                  treatment
-                                                                      .repetitionResults[index]
-                                                                      .repetitionId,
-                                                                ),
-                                                              ),
-                                                              DataCell(
-                                                                Text(
-                                                                  treatment
-                                                                      .repetitionResults[index]
-                                                                      .sample
-                                                                      .formmatedNumber,
-                                                                ),
-                                                              ),
-                                                              DataCell(
-                                                                Text(
-                                                                  treatment
-                                                                      .repetitionResults[index]
-                                                                      .whiteSample
-                                                                      .formmatedNumber,
-                                                                ),
-                                                              ),
-                                                              DataCell(
-                                                                Text(
-                                                                  treatment
-                                                                      .repetitionResults[index]
-                                                                      .differenceBetweenSamples
-                                                                      .formmatedNumber,
-                                                                ),
-                                                              ),
-                                                              DataCell(
-                                                                Text(
-                                                                  treatment
-                                                                      .repetitionResults[index]
-                                                                      .variableA
-                                                                      .formmatedNumber,
-                                                                ),
-                                                              ),
-                                                              DataCell(
-                                                                Text(
-                                                                  treatment
-                                                                      .repetitionResults[index]
-                                                                      .variableB
-                                                                      .formmatedNumber,
-                                                                ),
-                                                              ),
-                                                              DataCell(
-                                                                Text(
-                                                                  treatment
-                                                                      .repetitionResults[index]
-                                                                      .curve
-                                                                      .formmatedNumber,
-                                                                ),
-                                                              ),
-                                                              DataCell(
-                                                                Text(
-                                                                  treatment
-                                                                      .repetitionResults[index]
-                                                                      .correctionFactor
-                                                                      .formmatedNumber,
-                                                                ),
-                                                              ),
-                                                              DataCell(
-                                                                Text(
-                                                                  treatment
-                                                                      .repetitionResults[index]
-                                                                      .time
-                                                                      .toString(),
-                                                                ),
-                                                              ),
-                                                              DataCell(
-                                                                Text(
-                                                                  treatment
-                                                                      .repetitionResults[index]
-                                                                      .volume
-                                                                      .formmatedNumber,
-                                                                ),
-                                                              ),
-                                                              DataCell(
-                                                                Text(
-                                                                  treatment
-                                                                      .repetitionResults[index]
-                                                                      .weightSample
-                                                                      .formmatedNumber,
-                                                                ),
-                                                              ),
-                                                              DataCell(
-                                                                Text(
-                                                                  treatment
-                                                                      .repetitionResults[index]
-                                                                      .result
-                                                                      .formmatedNumber,
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
                                                       ),
                                                     ),
                                                   ),
-                                                );
-                                              },
+                                                ),
+                                              ),
+                                            );
+                                          },
                                         ),
                                       ],
                                     ),
@@ -446,14 +322,9 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(
-                      16,
-                      16,
-                      MediaQuery.of(context).size.width * 0.2125,
-                      16,
-                    ),
+                    padding: EdgeInsets.fromLTRB(16, 16, MediaQuery.of(context).size.width * 0.2125, 16),
                     child: EZTButton(
-                      text: l10n?.backButton ?? "",
+                      text: context.l10n.backButton,
                       eztButtonType: EZTButtonType.regular,
                       onPressed: () {
                         Navigator.pop(context);
@@ -469,7 +340,7 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
     );
   }
 
-  get _rotateFloatingActionButtonBuilder => RotateFloatingActionButtonBuilder(
+  RotateFloatingActionButtonBuilder get _rotateFloatingActionButtonBuilder => RotateFloatingActionButtonBuilder(
     child: Icon(PhosphorIcons.dotsThreeVertical()),
     fabSize: ExpandableFabSize.regular,
     backgroundColor: context.getApplyedColorScheme.primary,
@@ -479,27 +350,26 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
 
   Map<String, String> _buildExcelTranslations() {
     return {
-      'excel_treatmentLabel': l10n?.excel_treatmentLabel ?? "",
-      'excel_col_id': l10n?.excel_col_id ?? "",
-      'excel_col_sampleAbsorbance': l10n?.excel_col_sampleAbsorbance ?? "",
-      'excel_col_whiteSampleAbsorbance': l10n?.excel_col_whiteSampleAbsorbance ?? "",
-      'excel_col_difference': l10n?.excel_col_difference ?? "",
-      'excel_col_variableA': l10n?.excel_col_variableA ?? "",
-      'excel_col_variableB': l10n?.excel_col_variableB ?? "",
-      'excel_col_curveCalculation': l10n?.excel_col_curveCalculation ?? "",
-      'excel_col_correctionFactor': l10n?.excel_col_correctionFactor ?? "",
-      'excel_col_time': l10n?.excel_col_time ?? "",
-      'excel_col_volume': l10n?.excel_col_volume ?? "",
-      'excel_col_sampleWeight': l10n?.excel_col_sampleWeight ?? "",
-      'excel_col_result': l10n?.excel_col_result ?? "",
-      'excel_footer_developedBy': l10n?.excel_footer_developedBy ?? "",
-      'excel_footer_learnMore': l10n?.excel_footer_learnMore ?? "",
+      'excel_treatmentLabel': context.l10n.excel_treatmentLabel,
+      'excel_col_id': context.l10n.excel_col_id,
+      'excel_col_sampleAbsorbance': context.l10n.excel_col_sampleAbsorbance,
+      'excel_col_whiteSampleAbsorbance': context.l10n.excel_col_whiteSampleAbsorbance,
+      'excel_col_difference': context.l10n.excel_col_difference,
+      'excel_col_variableA': context.l10n.excel_col_variableA,
+      'excel_col_variableB': context.l10n.excel_col_variableB,
+      'excel_col_curveCalculation': context.l10n.excel_col_curveCalculation,
+      'excel_col_correctionFactor': context.l10n.excel_col_correctionFactor,
+      'excel_col_time': context.l10n.excel_col_time,
+      'excel_col_volume': context.l10n.excel_col_volume,
+      'excel_col_sampleWeight': context.l10n.excel_col_sampleWeight,
+      'excel_col_result': context.l10n.excel_col_result,
+      'excel_footer_developedBy': context.l10n.excel_footer_developedBy,
+      'excel_footer_learnMore': context.l10n.excel_footer_learnMore,
     };
   }
 
   @override
   Widget build(BuildContext context) {
-
     return ListenableBuilder(
       listenable: _experimentResultsViewmodel,
       builder: (context, child) {
@@ -521,24 +391,12 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                       heroTag: null,
                       child: Icon(PhosphorIcons.share()),
                       onPressed: () {
-                        final translations =
-                            _buildExcelTranslations();
-                        final translatedFilename = l10n
-                            ?.shareExperimentResultsFilename(
-                              _experimentDetailsViewmodel.experiment!.name,
-                            );
+                        final translations = _buildExcelTranslations();
+                        final translatedFilename = context.l10n.shareExperimentResultsFilename(
+                          _experimentDetailsViewmodel.experiment!.name,
+                        );
 
-                        _experimentResultsViewmodel
-                            .shareFile(translations, translatedFilename ?? "")
-                            .then((success) {
-                              if (!success) {
-                                EZTSnackBar.show(
-                                  context,
-                                  l10n?.shareFileError ?? "",
-                                  eztSnackBarType: EZTSnackBarType.error,
-                                );
-                              }
-                            });
+                        _experimentResultsViewmodel.shareFile(translations, translatedFilename);
                       },
                     ),
                     FloatingActionButton.small(
@@ -546,30 +404,11 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                       backgroundColor: context.getApplyedColorScheme.primary,
                       foregroundColor: context.getApplyedColorScheme.onPrimary,
                       heroTag: null,
-                      child: Icon(
-                        PhosphorIcons.downloadSimple(),
-                      ),
+                      child: Icon(PhosphorIcons.downloadSimple()),
                       onPressed: () {
                         final translations = _buildExcelTranslations();
 
-                        _experimentResultsViewmodel
-                            .openDialogToUserSaveFile(translations)
-                            .then(
-                              (flag) => flag
-                              ? EZTSnackBar.show(
-                            context,
-                            l10n?.spreadsheetSavedSuccess ?? "",
-                            eztSnackBarType: EZTSnackBarType.success,
-                          )
-                              : _experimentResultsViewmodel.failure
-                          is! UnableToSaveFailure
-                              ? EZTSnackBar.show(
-                            context,
-                            l10n?.spreadsheetSaveError ?? "",
-                            eztSnackBarType:
-                            EZTSnackBarType.error,
-                          ) : null,
-                        );
+                        _experimentResultsViewmodel.openDialogToUserSaveFile(translations, context);
                       },
                     ),
                   ],
@@ -583,11 +422,7 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
 
 class MyBehavior extends ScrollBehavior {
   @override
-  Widget buildOverscrollIndicator(
-    BuildContext context,
-    Widget child,
-    ScrollableDetails details,
-  ) {
+  Widget buildOverscrollIndicator(BuildContext context, Widget child, ScrollableDetails details) {
     return child;
   }
 }

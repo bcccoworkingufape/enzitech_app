@@ -1,0 +1,56 @@
+{
+  "@@locale": "en",
+  "enzymeCreatedSuccess": "Enzyme created successfully!",
+  "registerNewEnzyme": "Register a new\nenzyme",
+  "enzymeIdentification": "Enzyme Identification",
+  "chooseEnzymeType": "Choose the enzyme type",
+  "createEnzymeButton": "Create enzyme",
+  "enzymeType_acidPhosphatase": "Acid Phosphatase",
+  "enzymeType_alkalinePhosphatase": "Alkaline Phosphatase",
+  "enzymeType_arylsulfatase": "Arylsulfatase",
+  "enzymeType_betaGlucosidase": "Beta-Glucosidase",
+  "enzymeType_urease": "Urease",
+  "enzymeType_fda": "FDA",
+  "enzymeType_aryl": "Aryl",
+  "errorLoadingEnzymes": "Error loading enzymes",
+  "loadingEnzymes": "Loading enzymes...",
+  "noEnzymesRegisteredAdmin": "No enzymes registered.",
+  "noEnzymesRegisteredUser": "No enzymes registered, please contact your Administrator to solve this issue.",
+  "enzymeDeleted": "{enzymeName} deleted!",
+  "@enzymeDeleted": {
+    "placeholders": {
+      "enzymeName": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteEnzymeTitle": "Delete enzyme?",
+  "deleteEnzymeContent": "Are you sure you want to delete this enzyme?",
+  "enzymesFound": "🧬 {count, plural, =0{No enzymes found} =1{1 enzyme found} other{{count} enzymes found}}",
+  "@enzymesFound": {
+    "description": "A message that shows the number of enzymes found",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "formulaLabel": "Formula: ",
+  "variableALabel": "Variable A: ",
+  "variableBLabel": "Variable B: ",
+  "enzymesSummaryTitle": "Enzymes Summary",
+  "enzymeTagFormat": "{enzymeName} ({quantity})",
+  "@enzymeTagFormat": {
+    "description": "Format for the enzyme tag, showing name and quantity",
+    "placeholders": {
+      "enzymeName": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "int"
+      }
+    }
+  },
+  "variableA": "Variable A",
+  "variableB": "Variable B"
+}

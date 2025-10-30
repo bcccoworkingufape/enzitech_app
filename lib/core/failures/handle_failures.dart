@@ -1,17 +1,15 @@
 // 🌎 Project imports:
+import '../../shared/l10n/app_localizations.dart';
 import 'failures.dart';
-
-import '../../../../../../l10n/app_localizations.dart';
 
 class HandleFailure {
   static String of(
-    AppLocalizations? l10n,
+    AppLocalizations l10n,
     Failure failure, {
     bool enableStatusCode = false,
     bool overrideDefaultMessage = false,
     bool isLogin = false,
   }) {
-    if (l10n == null) return "";
     //* EZT custom error when API is down
     if (failure.runtimeType is ServerFailure) {
       if (failure.message.contains("Connection refused")) {
@@ -44,9 +42,9 @@ class HandleFailure {
         return l10n.error_503;
       default:
         switch (failure.runtimeType) {
-          case NoNetworkFailure:
+          case NoNetworkFailure _:
             return l10n.error_noNetwork;
-          case NoResultQueryFailure:
+          case NoResultQueryFailure _:
             return l10n.error_noResultQuery(failure.message.toLowerCase());
           default:
             return enableStatusCode

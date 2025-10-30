@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
-import '../../../../../../l10n/app_localizations.dart';
 
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../core/routing/routing.dart';
+import '../../../../../../shared/extensions/build_context_extensions.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../viewmodel/create_account_viewmodel.dart';
 import 'components/create_account_first_step.dart';
@@ -44,29 +44,16 @@ class CreateAccountPageState extends State<CreateAccountPage> {
     _createAccountViewmodel = GetIt.I.get<CreateAccountViewmodel>();
 
     _createAccountViewmodel.addListener(() {
-      final l10n = AppLocalizations.of(context)!;
       if (_createAccountViewmodel.state == StateEnum.error) {
         EZTSnackBar.show(
           context,
-          HandleFailure.of(
-            l10n,
-            _createAccountViewmodel.failure!,
-            overrideDefaultMessage: true,
-          ),
+          HandleFailure.of(context.l10n, _createAccountViewmodel.failure!, overrideDefaultMessage: true),
           eztSnackBarType: EZTSnackBarType.error,
         );
       } else if (_createAccountViewmodel.state == StateEnum.success) {
-        EZTSnackBar.show(
-          context,
-          l10n.accountCreatedSuccess,
-          eztSnackBarType: EZTSnackBarType.success,
-        );
+        EZTSnackBar.show(context, context.l10n.accountCreatedSuccess, eztSnackBarType: EZTSnackBarType.success);
 
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          Routing.login,
-          (Route<dynamic> route) => false,
-        );
+        Navigator.pushNamedAndRemoveUntil(context, Routing.login, (Route<dynamic> route) => false);
       }
     });
   }
@@ -80,16 +67,8 @@ class CreateAccountPageState extends State<CreateAccountPage> {
           controller: _pageController,
           physics: const NeverScrollableScrollPhysics(),
           children: [
-            CreateAccountFirstStep(
-              pageController: _pageController,
-              formKey: _formKey,
-              userDataCache: userDataCache,
-            ),
-            CreateAccountSecondStep(
-              pageController: _pageController,
-              formKey: _formKey,
-              userDataCache: userDataCache,
-            ),
+            CreateAccountFirstStep(pageController: _pageController, formKey: _formKey, userDataCache: userDataCache),
+            CreateAccountSecondStep(pageController: _pageController, formKey: _formKey, userDataCache: userDataCache),
           ],
         ),
       ),

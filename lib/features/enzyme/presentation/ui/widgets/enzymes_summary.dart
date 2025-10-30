@@ -4,18 +4,13 @@ import 'package:flutter/material.dart';
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
-import '../../../../../../l10n/app_localizations.dart';
-
 // 🌎 Project imports:
-import '../../../../../shared/extensions/context_theme_mode_extensions.dart';
+import '../../../../../shared/extensions/build_context_extensions.dart';
 import '../../../../../shared/ui/ui.dart';
-import '../../../../../shared/utils/utils.dart';
 import '../../viewmodel/enzymes_viewmodel.dart';
 
 class EnzymesSummary extends StatefulWidget {
-  const EnzymesSummary({
-    super.key,
-  });
+  const EnzymesSummary({super.key});
 
   @override
   State<EnzymesSummary> createState() => _EnzymesSummaryState();
@@ -23,23 +18,13 @@ class EnzymesSummary extends StatefulWidget {
 
 class _EnzymesSummaryState extends State<EnzymesSummary> {
   Widget enzymeTag(String name, int quantity, Color color) {
-    final l10n = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Row(
         children: [
-          Icon(
-            Icons.circle,
-            color: color,
-            size: 16,
-          ),
-          const SizedBox(
-            width: 8,
-          ),
-          Text(
-            l10n.enzymeTagFormat(name, quantity),
-            style: TextStyles.bodyMinBold.copyWith(),
-          )
+          Icon(Icons.circle, color: color, size: 16),
+          const SizedBox(width: 8),
+          Text(context.l10n.enzymeTagFormat(name, quantity), style: TextStyles.bodyMinBold.copyWith()),
         ],
       ),
     );
@@ -47,16 +32,15 @@ class _EnzymesSummaryState extends State<EnzymesSummary> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     var viewmodel = GetIt.I.get<EnzymesViewmodel>();
 
     final Map<String, String> enzymeTypeTranslations = {
-      'Betaglucosidase': l10n.enzymeType_betaGlucosidase,
-      'Aryl': l10n.enzymeType_aryl,
-      'FosfataseAcida': l10n.enzymeType_acidPhosphatase,
-      'FosfataseAlcalina': l10n.enzymeType_alkalinePhosphatase,
-      'Urease': l10n.enzymeType_urease,
-      'FDA': l10n.enzymeType_fda,
+      'Betaglucosidase': context.l10n.enzymeType_betaGlucosidase,
+      'Aryl': context.l10n.enzymeType_aryl,
+      'FosfataseAcida': context.l10n.enzymeType_acidPhosphatase,
+      'FosfataseAlcalina': context.l10n.enzymeType_alkalinePhosphatase,
+      'Urease': context.l10n.enzymeType_urease,
+      'FDA': context.l10n.enzymeType_fda,
     };
 
     final Map<String, Color> enzymeColors = {
@@ -76,11 +60,7 @@ class _EnzymesSummaryState extends State<EnzymesSummary> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4.0),
       child: Container(
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(
-            Radius.circular(8),
-          ),
-        ),
+        decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(8))),
         margin: const EdgeInsets.all(0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -89,30 +69,24 @@ class _EnzymesSummaryState extends State<EnzymesSummary> {
             Container(
               decoration: BoxDecoration(
                 color: context.getApplyedColorScheme.primary,
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(8),
-                ),
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
               ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4.0),
                 child: Center(
                   child: Text(
-                    l10n.enzymesSummaryTitle,
-                    style: TextStyles.bodyMinBold.copyWith(
-                      color: context.getApplyedColorScheme.onSecondary,
-                    ),
+                    context.l10n.enzymesSummaryTitle,
+                    style: TextStyles.bodyMinBold.copyWith(color: context.getApplyedColorScheme.onSecondary),
                   ),
                 ),
               ),
             ),
-            const SizedBox(
-              height: 8,
-            ),
+            const SizedBox(height: 8),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Wrap(
                 spacing: 16.0, // Espaço horizontal entre as tags
-                runSpacing: 8.0,  // Espaço vertical entre as linhas
+                runSpacing: 8.0, // Espaço vertical entre as linhas
                 children: enzymeTypeTranslations.keys.map((backendKey) {
                   final count = getEnzymeCount(backendKey);
 
@@ -130,9 +104,7 @@ class _EnzymesSummaryState extends State<EnzymesSummary> {
                 }).toList(),
               ),
             ),
-            const SizedBox(
-              height: 8,
-            ),
+            const SizedBox(height: 8),
           ],
         ),
       ),
