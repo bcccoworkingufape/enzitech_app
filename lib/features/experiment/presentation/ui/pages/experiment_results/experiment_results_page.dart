@@ -223,8 +223,8 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                                                       (index) => DataRow2.byIndex(
                                                         index: index,
                                                         color: index.isEven
-                                                            ? MaterialStateProperty.all(
-                                                                context.getApplyedColorScheme.surfaceVariant,
+                                                            ? WidgetStateProperty.all(
+                                                                context.getApplyedColorScheme.surfaceContainerHighest,
                                                               )
                                                             : null,
                                                         cells: [

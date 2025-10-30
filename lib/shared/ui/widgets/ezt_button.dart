@@ -150,8 +150,8 @@ class _EZTButtonState extends State<EZTButton> {
     return ElevatedButton(
       key: widget.wdKey,
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(_buildButtonColor(context)),
-        elevation: MaterialStateProperty.all<double>(widget.elevation ?? _defaultFlutterButtonElevation),
+        backgroundColor: WidgetStateProperty.all<Color>(_buildButtonColor(context)),
+        elevation: WidgetStateProperty.all<double>(widget.elevation ?? _defaultFlutterButtonElevation),
       ),
       onPressed: (!widget.enabled || widget.loading) ? null : widget.onPressed,
       child: widget.loading
@@ -164,7 +164,7 @@ class _EZTButtonState extends State<EZTButton> {
     return ElevatedButton(
       key: widget.wdKey,
       style: ButtonStyle(
-        shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
+        shape: WidgetStateProperty.resolveWith<OutlinedBorder>(
           (_) => const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.zero,
@@ -174,8 +174,8 @@ class _EZTButtonState extends State<EZTButton> {
             ),
           ),
         ),
-        backgroundColor: MaterialStateProperty.all<Color>(_buildButtonColor(context)),
-        elevation: MaterialStateProperty.all<double>(widget.elevation ?? _defaultFlutterButtonElevation),
+        backgroundColor: WidgetStateProperty.all<Color>(_buildButtonColor(context)),
+        elevation: WidgetStateProperty.all<double>(widget.elevation ?? _defaultFlutterButtonElevation),
       ),
       onPressed: (!widget.enabled || widget.loading) ? null : widget.onPressed,
       child: widget.loading
@@ -189,8 +189,8 @@ class _EZTButtonState extends State<EZTButton> {
       key: widget.wdKey,
       style: ButtonStyle(
         padding: ButtonStyleButton.allOrNull<EdgeInsetsGeometry>(widget.padding),
-        backgroundColor: MaterialStateProperty.all<Color>(_buildButtonColor(context)),
-        elevation: MaterialStateProperty.all<double>(widget.elevation ?? _defaultFlutterButtonElevation),
+        backgroundColor: WidgetStateProperty.all<Color>(_buildButtonColor(context)),
+        elevation: WidgetStateProperty.all<double>(widget.elevation ?? _defaultFlutterButtonElevation),
       ),
       onPressed: (!widget.enabled || widget.loading) ? null : widget.onPressed,
       child: widget.loading

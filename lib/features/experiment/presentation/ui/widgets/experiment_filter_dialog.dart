@@ -114,7 +114,7 @@ class _ExperimentFilterDialogState extends State<ExperimentFilterDialog> {
       actionsAlignment: MainAxisAlignment.spaceAround,
       actions: <Widget>[
         TextButton(
-          style: ButtonStyle(overlayColor: MaterialStateProperty.all<Color>(context.getApplyedColorScheme.error)),
+          style: ButtonStyle(overlayColor: WidgetStateProperty.all<Color>(context.getApplyedColorScheme.error)),
           onPressed: () {
             _experimentsViewmodel.clearFilters();
             Navigator.of(context).pop();
@@ -126,8 +126,8 @@ class _ExperimentFilterDialogState extends State<ExperimentFilterDialog> {
         ),
         TextButton(
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(context.getApplyedColorScheme.primary),
-            overlayColor: MaterialStateProperty.all<Color>(context.getApplyedColorScheme.error),
+            backgroundColor: WidgetStateProperty.all<Color>(context.getApplyedColorScheme.primary),
+            overlayColor: WidgetStateProperty.all<Color>(context.getApplyedColorScheme.error),
           ),
           child: Text(
             context.l10n.applyFilters(numberOfFiltersEnabled()), // Botão usa plural

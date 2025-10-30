@@ -154,7 +154,7 @@ class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthS
     });
   }
 
-  get _validateFields {
+  void get _validateFields {
     var isAllFilled = <bool>[];
     textEditingControllers.forEach((key, value) {
       isAllFilled.add(value.text.isNotEmpty);
@@ -170,7 +170,7 @@ class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthS
     }
   }
 
-  bool _checkIfTextIsGTZAndNumeric(text) {
+  bool _checkIfTextIsGTZAndNumeric(dynamic text) {
     //* Numeric
     if (text == null) {
       return false;
