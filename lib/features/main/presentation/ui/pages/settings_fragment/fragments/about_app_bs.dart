@@ -55,7 +55,7 @@ class AboutAppBS extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           RichText(
-            textAlign: TextAlign.justify,
+            textAlign: TextAlign.left,
             text: TextSpan(
               text: '• Armstrong Lohãns ',
               style: TextStyles(context).trailingRegular(isBold: true),
@@ -66,7 +66,7 @@ class AboutAppBS extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           RichText(
-            textAlign: TextAlign.justify,
+            textAlign: TextAlign.left,
             text: TextSpan(
               text: '• Matheus Noronha ',
               style: TextStyles(context).trailingRegular(isBold: true),
@@ -77,7 +77,7 @@ class AboutAppBS extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           RichText(
-            textAlign: TextAlign.justify,
+            textAlign: TextAlign.left,
             text: TextSpan(
               text: '• Weverton Cintra ',
               style: TextStyles(context).trailingRegular(isBold: true),
@@ -88,7 +88,7 @@ class AboutAppBS extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           RichText(
-            textAlign: TextAlign.justify,
+            textAlign: TextAlign.left,
             text: TextSpan(
               text: '• José Vieira ',
               style: TextStyles(context).trailingRegular(isBold: true),
@@ -99,7 +99,7 @@ class AboutAppBS extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           RichText(
-            textAlign: TextAlign.justify,
+            textAlign: TextAlign.left,
             text: TextSpan(
               text: '• Guilherme Felix ',
               style: TextStyles(context).trailingRegular(isBold: true),
@@ -110,7 +110,7 @@ class AboutAppBS extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           RichText(
-            textAlign: TextAlign.justify,
+            textAlign: TextAlign.left,
             text: TextSpan(
               text: '• Eduarda Interaminense ',
               style: TextStyles(context).trailingRegular(isBold: true),
@@ -121,7 +121,7 @@ class AboutAppBS extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           RichText(
-            textAlign: TextAlign.justify,
+            textAlign: TextAlign.left,
             text: TextSpan(
               text: '• Rodrigo Rocha ',
               style: TextStyles(context).trailingRegular(isBold: true),
@@ -132,7 +132,7 @@ class AboutAppBS extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           RichText(
-            textAlign: TextAlign.justify,
+            textAlign: TextAlign.left,
             text: TextSpan(
               text: '• Jean Teixeira ',
               style: TextStyles(context).trailingRegular(isBold: true),
@@ -143,7 +143,7 @@ class AboutAppBS extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           RichText(
-            textAlign: TextAlign.justify,
+            textAlign: TextAlign.left,
             text: TextSpan(
               text: '• Igor Medeiros ',
               style: TextStyles(context).trailingRegular(isBold: true),
@@ -154,7 +154,7 @@ class AboutAppBS extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           RichText(
-            textAlign: TextAlign.justify,
+            textAlign: TextAlign.left,
             text: TextSpan(
               text: '• Erika Valente ',
               style: TextStyles(context).trailingRegular(isBold: true),
@@ -165,7 +165,7 @@ class AboutAppBS extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           RichText(
-            textAlign: TextAlign.justify,
+            textAlign: TextAlign.left,
             text: TextSpan(
               text: '• Jamille Barros ',
               style: TextStyles(context).trailingRegular(isBold: true),
