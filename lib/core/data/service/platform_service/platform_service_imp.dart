@@ -1,6 +1,10 @@
-import 'package:flutter/foundation.dart' show kIsWeb;
+// 🎯 Dart imports:
 import 'dart:io' show Platform;
 
+// 🐦 Flutter imports:
+import 'package:flutter/foundation.dart' show kIsWeb;
+
+// 🌎 Project imports:
 import '../../../domain/service/platform_service/platform_service.dart';
 import '../../../enums/platform_type_enum.dart';
 

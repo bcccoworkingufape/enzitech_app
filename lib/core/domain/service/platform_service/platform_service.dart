@@ -1,3 +1,4 @@
+// 🌎 Project imports:
 import '../../../enums/platform_type_enum.dart';
 
 abstract class PlatformService {
