@@ -204,7 +204,9 @@ class SettingsViewmodel extends ChangeNotifier {
   }
 
   Future<void> openUrl(String url) async {
-    if (!await canLaunchUrl(Uri.parse(url))) {
+    try {
+      await launchUrl(Uri.parse(url));
+    } catch (e) {
       throw UnableToOpenUrlFailure(message: url);
     }
   }
