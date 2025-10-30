@@ -30,8 +30,6 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
   late final HomeViewmodel _homeViewmodel;
   final Key _refreshIndicatorKey = GlobalKey();
 
-  List<bool> isSelected = [true, false];
-
   int selectedButtonSegment = 0;
 
   @override
