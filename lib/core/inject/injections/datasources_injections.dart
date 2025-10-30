@@ -12,8 +12,8 @@ import '../../../features/enzyme/data/datasources/remote/enzymes_remote_datasour
 import '../../../features/experiment/data/datasources/experiments_datasource.dart';
 import '../../../features/experiment/data/datasources/local/experiments_local_datasource_decorator_imp.dart';
 import '../../../features/experiment/data/datasources/remote/experiments_remote_datasource_imp.dart';
-import '../../../features/main/data/datasources/local/users_local_datasource_imp.dart';
-import '../../../features/main/data/datasources/users_datasource.dart';
+import '../../../features/main/data/datasources/local/user_preferences_local_datasource_imp.dart';
+import '../../../features/main/data/datasources/user_preferences_datasource.dart';
 import '../../../features/treatment/data/datasources/local/treatments_local_datasource_decorator_imp.dart';
 import '../../../features/treatment/data/datasources/remote/treatments_remote_datasource_imp.dart';
 import '../../../features/treatment/data/datasources/treatments_datasource.dart';
@@ -34,7 +34,7 @@ class DataSourcesInjections {
       () => ExperimentsDataSourceDecoratorImp(ExperimentsRemoteDataSourceImp(getIt()), getIt()),
     );
 
-    getIt.registerLazySingleton<UsersDataSource>(() => UsersLocalDataSourceImp(getIt()));
+    getIt.registerLazySingleton<UserPreferencesDataSource>(() => UserPreferencesLocalDataSourceImp(getIt()));
 
     getIt.registerLazySingleton<CreateAccountDataSource>(() => CreateAccountRemoteDataSourceImp(getIt()));
 

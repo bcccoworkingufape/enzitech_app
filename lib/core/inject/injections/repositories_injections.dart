@@ -10,8 +10,8 @@ import '../../../features/enzyme/data/repositories/enzymes_repository_imp.dart';
 import '../../../features/enzyme/domain/repositories/enzymes_repository.dart';
 import '../../../features/experiment/data/repositories/experiments_repository_imp.dart';
 import '../../../features/experiment/domain/repositories/experiments_repository.dart';
-import '../../../features/main/data/repositories/users_repository_imp.dart';
-import '../../../features/main/domain/repositories/users_repository.dart';
+import '../../../features/main/data/repositories/user_preferences_repository_imp.dart';
+import '../../../features/main/domain/repositories/user_preferences_repository.dart';
 import '../../../features/treatment/data/repositories/treatments_repository_imp.dart';
 import '../../../features/treatment/domain/repositories/treatments_repository.dart';
 
@@ -25,7 +25,7 @@ class RepositoriesInjections {
 
     getIt.registerLazySingleton<ExperimentsRepository>(() => ExperimentsRepositoryImp(getIt()));
 
-    getIt.registerLazySingleton<UsersRepository>(() => UsersRepositoryImp(getIt()));
+    getIt.registerLazySingleton<UserPreferencesRepository>(() => UserPreferencesRepositoryImp(getIt()));
 
     getIt.registerLazySingleton<CreateAccountRepository>(() => CreateAccountRepositoryImp(getIt()));
 

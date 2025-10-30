@@ -10,8 +10,8 @@ import '../../../features/enzyme/domain/usecases/enzymes_usecases.dart';
 import '../../../features/enzyme/domain/usecases/enzymes_usecases_imp.dart';
 import '../../../features/experiment/domain/usecases/experiments_usecases.dart';
 import '../../../features/experiment/domain/usecases/experiments_usecases_imp.dart';
-import '../../../features/main/domain/usecases/users_usecases.dart';
-import '../../../features/main/domain/usecases/users_usecases_imp.dart';
+import '../../../features/main/domain/usecases/user_preferences_usecases.dart';
+import '../../../features/main/domain/usecases/user_preferences_usecases_imp.dart';
 import '../../../features/treatment/domain/usecases/treatments_usecases.dart';
 import '../../../features/treatment/domain/usecases/treatments_usecases_imp.dart';
 
@@ -25,7 +25,7 @@ class UseCasesInjections {
 
     getIt.registerLazySingleton<ExperimentsUseCases>(() => ExperimentsUseCasesImp(getIt()));
 
-    getIt.registerLazySingleton<UsersUseCases>(() => UsersUseCasesImp(getIt()));
+    getIt.registerLazySingleton<UserPreferencesUseCases>(() => UserPreferencesUseCasesImp(getIt()));
 
     getIt.registerLazySingleton<CreateAccountUseCase>(() => CreateAccountUseCaseImp(getIt()));
 

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/failures/failure.dart';
 import '../../../authentication/domain/entities/user_entity.dart';
 
-abstract class UsersRepository {
+abstract class UserPreferencesRepository {
   void clearUser();
 
   Future<Either<Failure, bool>> getExcludeConfirmation();

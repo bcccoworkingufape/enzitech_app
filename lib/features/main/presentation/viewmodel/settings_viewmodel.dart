@@ -11,18 +11,18 @@ import '../../../../shared/l10n/app_localizations.dart';
 import '../../../../shared/utils/utils.dart';
 import '../../../authentication/domain/entities/user_entity.dart';
 import '../../domain/entities/app_info_entity.dart';
-import '../../domain/usecases/users_usecases.dart';
+import '../../domain/usecases/user_preferences_usecases.dart';
 
 class SettingsViewmodel extends ChangeNotifier {
-  final UsersUseCases _usersUseCases;
+  final UserPreferencesUseCases _userPreferencesUseCases;
 
-  SettingsViewmodel(this._usersUseCases);
+  SettingsViewmodel(this._userPreferencesUseCases);
 
   bool _isReplaceLanguage = false;
   bool get isReplaceLanguage => _isReplaceLanguage;
   void setReplaceLanguage(bool isReplaceLanguage) {
     _isReplaceLanguage = isReplaceLanguage;
-    _usersUseCases.saveReplaceLanguage(isReplaceLanguage);
+    _userPreferencesUseCases.saveReplaceLanguage(isReplaceLanguage);
     notifyListeners();
   }
 
@@ -68,7 +68,7 @@ class SettingsViewmodel extends ChangeNotifier {
   bool? get enableExcludeConfirmation => _enableExcludeConfirmation;
   void setEnableExcludeConfirmation(bool enableExcludeExperimentConfirmation) {
     _enableExcludeConfirmation = enableExcludeExperimentConfirmation;
-    _usersUseCases.saveExcludeConfirmation(enableExcludeExperimentConfirmation);
+    _userPreferencesUseCases.saveExcludeConfirmation(enableExcludeExperimentConfirmation);
     notifyListeners();
   }
 
@@ -76,12 +76,12 @@ class SettingsViewmodel extends ChangeNotifier {
   ThemeMode get themeMode => _themeMode;
   void setThemeMode(ThemeMode newThemeMode) {
     _themeMode = newThemeMode;
-    _usersUseCases.saveThemeMode(_themeMode);
+    _userPreferencesUseCases.saveThemeMode(_themeMode);
     notifyListeners();
   }
 
   Future<void> updateThemeMode() async {
-    setThemeMode(await _usersUseCases.getThemeMode());
+    setThemeMode(await _userPreferencesUseCases.getThemeMode());
   }
 
   String _savedPath = '';
@@ -114,7 +114,7 @@ class SettingsViewmodel extends ChangeNotifier {
   Future<void> logout() async {
     setStateEnum(StateEnum.loading);
     try {
-      _usersUseCases.clearUser();
+      _userPreferencesUseCases.clearUser();
 
       setStateEnum(StateEnum.success);
 
@@ -137,9 +137,9 @@ class SettingsViewmodel extends ChangeNotifier {
   }
 
   Future<void> loadPreferences() async {
-    setThemeMode(await _usersUseCases.getThemeMode());
+    setThemeMode(await _userPreferencesUseCases.getThemeMode());
 
-    var resultConfirmation = await _usersUseCases.getExcludeConfirmation();
+    var resultConfirmation = await _userPreferencesUseCases.getExcludeConfirmation();
     resultConfirmation.fold(
       (error) {
         _setFailure(error);
@@ -151,7 +151,7 @@ class SettingsViewmodel extends ChangeNotifier {
       },
     );
 
-    var resultReplaceLanguage = await _usersUseCases.getReplaceLanguage();
+    var resultReplaceLanguage = await _userPreferencesUseCases.getReplaceLanguage();
     resultReplaceLanguage.fold(
       (error) {
         _setFailure(error);
@@ -188,7 +188,7 @@ class SettingsViewmodel extends ChangeNotifier {
   Future<void> loadAccount() async {
     setStateEnum(StateEnum.loading);
 
-    var result = await _usersUseCases.getUser();
+    var result = await _userPreferencesUseCases.getUser();
 
     result.fold(
       (error) {

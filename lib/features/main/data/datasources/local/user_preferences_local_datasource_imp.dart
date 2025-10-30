@@ -8,12 +8,12 @@ import '../../../../../core/failures/database_failures/no_result_query_failure.d
 import '../../../../../core/failures/failure.dart';
 import '../../../../authentication/data/dto/user_dto.dart';
 import '../../../../authentication/domain/entities/user_entity.dart';
-import '../users_datasource.dart';
+import '../user_preferences_datasource.dart';
 
-class UsersLocalDataSourceImp extends UsersDataSource {
+class UserPreferencesLocalDataSourceImp extends UserPreferencesDataSource {
   final UserPreferencesServices _userPreferencesServices;
 
-  UsersLocalDataSourceImp(this._userPreferencesServices);
+  UserPreferencesLocalDataSourceImp(this._userPreferencesServices);
 
   @override
   Future<void> clearUser() async {
