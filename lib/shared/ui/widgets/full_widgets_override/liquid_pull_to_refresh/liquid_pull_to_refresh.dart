@@ -471,7 +471,7 @@ class LiquidPullToRefreshState extends State<LiquidPullToRefresh> with TickerPro
       newValue = math.max(newValue, 1.0 / _kDragSizeFactorLimit);
     }
     _positionController.value = newValue.clamp(0.0, 1.0); // this triggers various rebuilds
-    if (_mode == _LiquidPullToRefreshMode.drag && _valueColor.value!.a == 0xFF) {
+    if (_mode == _LiquidPullToRefreshMode.drag && _valueColor.value!.a == 1.0) {
       _mode = _LiquidPullToRefreshMode.armed;
     }
   }
