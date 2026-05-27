@@ -309,6 +309,8 @@
       }
     }
   },
+  "draft": "Draft Found",
+  "draftContinue": "Pick up right where you left off.",
   "error_serverConnectionRefused": "⚠ Server Error, please try again later.",
   "error_statusCodeAndMessage": "⚠ SC{statusCode} - {message}",
   "@error_statusCodeAndMessage": {

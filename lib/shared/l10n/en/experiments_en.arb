@@ -260,5 +260,8 @@
         "type": "int"
       }
     }
-  }
+  },
+
+  "draft": "Draft Found",
+  "draftContinue": "Pick up right where you left off."
 }

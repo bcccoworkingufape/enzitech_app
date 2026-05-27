@@ -2,11 +2,14 @@
 
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 // 🌎 Project imports:
 import '../../../../core/domain/service/connection_checker/connection_checker.dart';
+import '../../../../core/domain/service/key_value/key_value_service.dart';
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
+import '../../../../core/inject/inject.dart';
 import '../../domain/entities/experiment_entity.dart';
 import '../../domain/entities/experiment_pagination_entity.dart';
 import '../../domain/usecases/experiments_usecases.dart';
@@ -14,8 +17,9 @@ import '../../domain/usecases/experiments_usecases.dart';
 class ExperimentsViewmodel extends ChangeNotifier {
   final ExperimentsUseCases _experimentsUseCases;
   final ConnectionChecker connectionChecker;
+  final KeyValueService _keyValueService;
 
-  ExperimentsViewmodel(this._experimentsUseCases, this.connectionChecker);
+  ExperimentsViewmodel(this._experimentsUseCases, this.connectionChecker, this._keyValueService);
 
   StateEnum _state = StateEnum.idle;
   StateEnum get state => _state;
@@ -106,6 +110,15 @@ class ExperimentsViewmodel extends ChangeNotifier {
 
   void _addToExperiments(List<ExperimentEntity> experiments) {
     _experiments = _experiments + experiments;
+    notifyListeners();
+  }
+
+  bool _hasDraft = false;
+  bool get hasDraft => _hasDraft;
+
+  Future<void> checkDraft() async {
+    final draft = await GetIt.I.get<KeyValueService>().getString('create_experiment_draft');
+    _hasDraft = draft != null;
     notifyListeners();
   }
 

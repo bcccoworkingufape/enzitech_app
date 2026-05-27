@@ -17,6 +17,8 @@ import '../../../viewmodel/experiments_viewmodel.dart';
 import '../../widgets/experiment_card.dart';
 import '../../widgets/experiment_exclusion_dialog.dart';
 import '../../widgets/experiment_filter_dialog.dart';
+import '/../../../../core/domain/service/key_value/key_value_service.dart';
+import '/features/experiment/presentation/viewmodel/create_experiment_viewmodel.dart';
 
 class ExperimentsPage extends StatefulWidget {
   const ExperimentsPage({super.key});
@@ -37,6 +39,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
     super.initState();
     _experimentsViewmodel = GetIt.I.get<ExperimentsViewmodel>();
     _homeViewmodel = GetIt.I.get<HomeViewmodel>();
+    _experimentsViewmodel.checkDraft();
 
     _experimentsViewmodel.scrollController.addListener(() {
       if (_experimentsViewmodel.scrollController.position.pixels >
@@ -252,7 +255,8 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
           absorbing: absorbing,
           child: EZTPullToRefresh(
             key: _refreshIndicatorKey,
-            onRefresh: () {
+            onRefresh: () async {
+              await _experimentsViewmodel.checkDraft();
               return _experimentsViewmodel.fetch();
             },
             child: Column(
@@ -318,6 +322,54 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                     style: TextStyles(context).link(fontSize: 16),
                   ),
                 const SizedBox(height: 16),
+
+                if (_experimentsViewmodel.hasDraft)
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                    child: Card(
+                      elevation: 4,
+                      color: context.getApplyedColorScheme.primaryContainer,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                      child: ListTile(
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        leading: Icon(
+                          PhosphorIcons.pencilLine(PhosphorIconsStyle.bold),
+                          color: context.getApplyedColorScheme.primary,
+                          size: 32,
+                        ),
+                        title: Text(
+                          context.l10n.draft,
+                          style: TextStyles(context).buttonPrimary.copyWith(
+                            color: context.getApplyedColorScheme.onPrimaryContainer,
+                          ),
+                        ),
+                        subtitle: Text(
+                          context.l10n.draftContinue,
+                          style: TextStyles(context).bodyRegular.copyWith(
+                            color: context.getApplyedColorScheme.onPrimaryContainer.withOpacity(0.8),
+                          ),
+                        ),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              icon: Icon(PhosphorIcons.trash(), color: context.getApplyedColorScheme.error),
+                              onPressed: () async {
+                                await GetIt.I.get<KeyValueService>().remove('create_experiment_draft');
+                                _experimentsViewmodel.checkDraft();
+                              },
+                            ),
+                            Icon(PhosphorIcons.caretRight(), color: context.getApplyedColorScheme.primary),
+                          ],
+                        ),
+                        onTap: () async {
+                          final createVm = GetIt.I.get<CreateExperimentViewmodel>();
+                          await createVm.loadDraft();
+                          Navigator.pushNamed(context, Routing.createExperiment);
+                        },
+                      ),
+                    ),
+                  ),
                 Expanded(child: _buildExperimentsList(heightMQ)),
               ],
             ),

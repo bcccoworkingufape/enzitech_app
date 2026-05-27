@@ -842,6 +842,18 @@ abstract class AppLocalizations {
   /// **'{count, plural, =0{Apply filters} =1{Apply filter} other{Apply filters}}'**
   String applyFilters(int count);
 
+  /// No description provided for @draft.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft Found'**
+  String get draft;
+
+  /// No description provided for @draftContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick up right where you left off.'**
+  String get draftContinue;
+
   /// No description provided for @error_serverConnectionRefused.
   ///
   /// In en, this message translates to:

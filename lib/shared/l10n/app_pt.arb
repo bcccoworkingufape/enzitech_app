@@ -310,6 +310,8 @@
       }
     }
   },
+  "draft": "Rascunho Encontrado",
+  "draftContinue": "Continue a criação de onde você parou.",
   "error_serverConnectionRefused": "⚠ Erro de Servidor, tente novamente mais tarde.",
   "error_statusCodeAndMessage": "⚠ SC{statusCode} - {message}",
   "@error_statusCodeAndMessage": {
