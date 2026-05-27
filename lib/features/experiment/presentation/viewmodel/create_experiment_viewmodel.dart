@@ -8,14 +8,61 @@ import '../../../../shared/ui/ui.dart';
 import '../../../enzyme/data/dto/enzyme_dto.dart';
 import '../../domain/entities/experiment_entity.dart';
 import '../../domain/usecases/experiments_usecases.dart';
+import '/core/domain/service/key_value/key_value_service.dart';
 import '../dto/create_experiment_dto.dart';
 import 'experiments_viewmodel.dart';
+
 
 class CreateExperimentViewmodel extends ChangeNotifier {
   final ExperimentsUseCases _experimentsUseCases;
   final ExperimentsViewmodel _experimentsViewmodel;
+  final KeyValueService _keyValueService;
 
-  CreateExperimentViewmodel(this._experimentsUseCases, this._experimentsViewmodel);
+  CreateExperimentViewmodel(this._experimentsUseCases, this._experimentsViewmodel, this._keyValueService);
+
+  static const String _draftKey = 'create_experiment_draft';
+
+  Future<void> saveDraft() async {
+    _temporaryExperiment.savedStep = _stepPage;
+
+    if (_textFields.isNotEmpty) {
+      _temporaryExperiment.formValues = _textFields.map(
+            (key, eztField) => MapEntry(key, eztField.controller?.text ?? ''),
+      );
+    }
+
+    await _keyValueService.setString(_draftKey, _temporaryExperiment.toJson());
+  }
+
+  Future<void> clearDraft() async {
+    await _keyValueService.remove(_draftKey);
+  }
+
+  Future<void> loadDraft() async {
+    try {
+      final draftJson = await _keyValueService.getString(_draftKey);
+      if (draftJson != null) {
+        final draft = CreateExperimentDTO.fromJson(draftJson);
+        setTemporaryExperiment(draft);
+
+        if (draft.savedStep != null) {
+          setStepPage(draft.savedStep!, notify: false);
+          _pageController = PageController(initialPage: draft.savedStep!);
+        }
+        if (draft.formValues != null) {
+          draft.formValues!.forEach((key, value) {
+            if (_textFields.containsKey(key)) {
+              _textFields[key]!.controller?.text = value;
+            }
+          });
+        }
+
+        notifyListeners();
+      }
+    } catch (e) {
+      clearDraft();
+    }
+  }
 
   StateEnum _state = StateEnum.idle;
   StateEnum get state => _state;
@@ -133,6 +180,8 @@ class CreateExperimentViewmodel extends ChangeNotifier {
       currentFocus.focusedChild?.unfocus();
     }
 
+    saveDraft();
+
     pageController.nextPage(duration: const Duration(milliseconds: 150), curve: Curves.easeIn);
   }
 
@@ -182,6 +231,7 @@ class CreateExperimentViewmodel extends ChangeNotifier {
       },
       (success) async {
         setExperiment(success);
+        await clearDraft();
         await _experimentsViewmodel.fetch();
         setStateEnum(StateEnum.success);
       },

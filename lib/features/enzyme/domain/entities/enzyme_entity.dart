@@ -27,6 +27,28 @@ class EnzymeEntity {
     this.size,
   });
 
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'variableA': variableA,
+      'variableB': variableB,
+      'type': type,
+      'formula': formula
+    };
+  }
+
+  factory EnzymeEntity.fromMap(Map<String, dynamic> map) {
+    return EnzymeEntity(
+      id: map['id'],
+      name: map['name'],
+      variableA: map['variableA'],
+      variableB: map['variableB'],
+      type: map['type'],
+      formula: map['formula']
+    );
+  }
+
   @override
   String toString() {
     return "{id: $id, name: $name, variableA: $variableA, variableB: $variableB, type: $type, createdAt: $createdAt, updatedAt $updatedAt}";

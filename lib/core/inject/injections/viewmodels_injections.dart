@@ -25,12 +25,12 @@ class ViewmodelsInjections {
     getIt.registerLazySingleton<CalculateExperimentViewmodel>(() => CalculateExperimentViewmodel(getIt()));
     getIt.registerLazySingleton<CreateAccountViewmodel>(() => CreateAccountViewmodel(getIt()));
     getIt.registerLazySingleton<CreateEnzymeViewmodel>(() => CreateEnzymeViewmodel(getIt()));
-    getIt.registerLazySingleton<CreateExperimentViewmodel>(() => CreateExperimentViewmodel(getIt(), getIt()));
+    getIt.registerLazySingleton<CreateExperimentViewmodel>(() => CreateExperimentViewmodel(getIt(), getIt(), getIt()));
     getIt.registerLazySingleton<CreateTreatmentViewmodel>(() => CreateTreatmentViewmodel(getIt()));
     getIt.registerLazySingleton<EnzymesViewmodel>(() => EnzymesViewmodel(getIt()));
     getIt.registerLazySingleton<ExperimentDetailsViewmodel>(() => ExperimentDetailsViewmodel(getIt()));
     getIt.registerLazySingleton<ExperimentResultsViewmodel>(() => ExperimentResultsViewmodel(getIt(), getIt()));
-    getIt.registerLazySingleton<ExperimentsViewmodel>(() => ExperimentsViewmodel(getIt(), getIt()));
+    getIt.registerLazySingleton<ExperimentsViewmodel>(() => ExperimentsViewmodel(getIt(), getIt(), getIt()));
     getIt.registerLazySingleton<HomeViewmodel>(() => HomeViewmodel(getIt(), getIt(), getIt(), getIt()));
     getIt.registerLazySingleton<LoginViewmodel>(() => LoginViewmodel(getIt()));
     getIt.registerFactory<SplashViewmodel>(() => SplashViewmodel(getIt(), getIt(), getIt(), getIt(), getIt()));
