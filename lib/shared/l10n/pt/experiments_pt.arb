@@ -261,5 +261,8 @@
         "type": "int"
       }
     }
-  }
+  },
+
+  "draft": "Rascunho Encontrado",
+  "draftContinue": "Continue a criação de onde você parou."
 }

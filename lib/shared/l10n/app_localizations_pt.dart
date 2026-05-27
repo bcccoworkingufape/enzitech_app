@@ -465,6 +465,12 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
+  String get draft => 'Rascunho Encontrado';
+
+  @override
+  String get draftContinue => 'Continue a criação de onde você parou.';
+
+  @override
   String get error_serverConnectionRefused =>
       '⚠ Erro de Servidor, tente novamente mais tarde.';
 

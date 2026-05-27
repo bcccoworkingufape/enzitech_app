@@ -463,6 +463,12 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get draft => 'Draft Found';
+
+  @override
+  String get draftContinue => 'Pick up right where you left off.';
+
+  @override
   String get error_serverConnectionRefused =>
       '⚠ Server Error, please try again later.';
 
