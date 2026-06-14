@@ -504,6 +504,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get error_500 => '⚠ Server Error: The request could not be fulfilled.';
 
   @override
+  String get error_502 => '⚠ Bad Gateway: The service is unavailable.';
+
+  @override
   String get error_503 =>
       '⚠ Server Error: The service is temporarily unavailable.';
 
@@ -713,6 +716,37 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get accountCreatedSuccess => 'Account created successfully!';
+
+  @override
+  String get recoverEmailSent => 'Recovery email sent successfully!';
+
+  @override
+  String get recoverPassword => 'Reset Password';
+
+  @override
+  String get recoverPasswordInstructions =>
+      'Enter your email below. We will send you instructions to reset your password.';
+
+  @override
+  String get sendRecoverEmail => 'Send E-mail';
+
+  @override
+  String get resetPassword => 'Reset Password';
+
+  @override
+  String get passwordResetSuccess => 'Password reset successfully!';
+
+  @override
+  String get recoverCode => 'Reset Code';
+
+  @override
+  String get passwordsDoNotMatch => 'Passwords do not match!';
+
+  @override
+  String get newPassword => 'New Password';
+
+  @override
+  String get confirmPassword => 'Confirm New Password';
 
   @override
   String get info => 'Info';

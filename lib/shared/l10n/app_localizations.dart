@@ -908,6 +908,12 @@ abstract class AppLocalizations {
   /// **'⚠ Server Error: The request could not be fulfilled.'**
   String get error_500;
 
+  /// No description provided for @error_502.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ Bad Gateway: The service is unavailable.'**
+  String get error_502;
+
   /// No description provided for @error_503.
   ///
   /// In en, this message translates to:
@@ -1279,6 +1285,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Account created successfully!'**
   String get accountCreatedSuccess;
+
+  /// No description provided for @recoverEmailSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Recovery email sent successfully!'**
+  String get recoverEmailSent;
+
+  /// No description provided for @recoverPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Password'**
+  String get recoverPassword;
+
+  /// No description provided for @recoverPasswordInstructions.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your email below. We will send you instructions to reset your password.'**
+  String get recoverPasswordInstructions;
+
+  /// No description provided for @sendRecoverEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Send E-mail'**
+  String get sendRecoverEmail;
+
+  /// No description provided for @resetPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Password'**
+  String get resetPassword;
+
+  /// No description provided for @passwordResetSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Password reset successfully!'**
+  String get passwordResetSuccess;
+
+  /// No description provided for @recoverCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Code'**
+  String get recoverCode;
+
+  /// No description provided for @passwordsDoNotMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match!'**
+  String get passwordsDoNotMatch;
+
+  /// No description provided for @newPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'New Password'**
+  String get newPassword;
+
+  /// No description provided for @confirmPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm New Password'**
+  String get confirmPassword;
 
   /// No description provided for @info.
   ///

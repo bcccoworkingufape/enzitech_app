@@ -22,6 +22,7 @@
   "error_422": "⚠ Unprocessable entity: The server understands the content type, but was unable to process the contained instructions.",
   "error_426": "⚠ Upgrade required: Invalid device ID.",
   "error_500": "⚠ Server Error: The request could not be fulfilled.",
+  "error_502": "⚠ Bad Gateway: The service is unavailable.",
   "error_503": "⚠ Server Error: The service is temporarily unavailable.",
   "error_noNetwork": "⚠ No internet connection, check your network access and try again.",
   "error_noResultQuery": "⚠ Could not get {query}.",
