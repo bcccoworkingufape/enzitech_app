@@ -153,8 +153,10 @@ class ExperimentsRemoteDataSourceImp implements ExperimentsDataSource {
       var result = ExperimentPaginationDto.fromJson(response.data);
 
       return Right(result);
+    } on Failure catch (e) {
+      return Left(e);
     } catch (e) {
-      return Left(e as Failure);
+      return Left(ServerFailure(message: 'Falha não mapeada nos Experimentos: $e'));
     }
   }
 
