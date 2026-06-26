@@ -8,6 +8,7 @@ import 'package:dartz/dartz.dart';
 import '../../../../../core/domain/service/http/http_service.dart';
 import '../../../../../core/domain/service/user_preferences/user_preferences_service.dart';
 import '../../../../../core/failures/failure.dart';
+import '../../../../../core/failures/server_failures/server_failure.dart';
 import '../../../../../shared/utils/api.dart';
 import '../../../domain/entities/user_entity.dart';
 import '../../dto/user_dto.dart';
@@ -27,12 +28,28 @@ class AuthRemoteDataSourceImp implements AuthDataSource {
 
       await _userPreferencesService.saveFullUser(jsonEncode(response.data));
       await _userPreferencesService.saveToken(result.token);
+      await _httpService.setConfig(token: result.token);
+
       await _userPreferencesService.initConfirmationsEnabled();
       await _userPreferencesService.initThemeMode();
 
       return Right(result);
+    } on Failure catch (e) {
+      return Left(e);
     } catch (e) {
-      return Left(e as Failure);
+      return Left(ServerFailure(message: 'Falha não mapeada: $e'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> recoverPassword({required String email}) async {
+    try {
+      await _httpService.post(API.REQUEST_RECOVER_EMAIL, data: {'email': email});
+      return const Right(unit);
+    } on Failure catch (e) {
+      return Left(e);
+    } catch (e) {
+      return Left(ServerFailure(message: 'Falha não mapeada: $e'));
     }
   }
 

@@ -38,6 +38,8 @@ class HandleFailure {
         return l10n.error_426;
       case 500:
         return l10n.error_500;
+      case 502:
+        return l10n.error_502;
       case 503:
         return l10n.error_503;
       default:

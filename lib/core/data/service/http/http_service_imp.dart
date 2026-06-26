@@ -54,85 +54,45 @@ class DioHttpServiceImp implements HttpService {
       var data = response.data;
       return HttpDriverResponse(data: data, statusCode: response.statusCode);
     } on Exception catch (e) {
-      var message = "";
-      var errorCode = 0;
-
-      var serverFailure = ServerFailure();
-      switch (e.runtimeType) {
+      String message = "";
+      int errorCode = 0;
+      switch (e) {
         case NoNetworkFailure _:
           rethrow;
         case DioException _:
           var dioError = (e as DioException);
-          var data = dioError.response?.data;
-          if (data is Map<String, dynamic> && data.containsKey('data')) {
-            var message = "";
-            if (dioError.response!.data['data']["message"] is List) {
-              message = (dioError.response!.data['data']["message"] as List).join(", ");
-            } else {
-              message = dioError.response!.data['data']["message"];
+          var response = dioError.response;
+          var responseData = response?.data;
+          
+          errorCode = response?.statusCode ?? 0;
+
+          if (responseData != null && responseData is Map) {
+            if (responseData.containsKey('message')) {
+              var msg = responseData['message'];
+              message = (msg is List) ? msg.join(", ") : msg.toString();
+            } 
+            
+            if (responseData.containsKey('errorCode')) {
+              errorCode = responseData['errorCode'];
             }
-            message = message;
-            errorCode = dioError.response!.data['data']["errorCode"];
-          } else if (data is Map<String, dynamic> && !data.containsKey('data')) {
-            //-> ENZITECH API configured with the possibility of not containing key 'data'
-            if (dioError.response!.data["message"] is List) {
-              message = (dioError.response!.data["message"] as List).join(", ");
-            } else {
-              message = dioError.response!.data["message"];
-            }
-            message = message;
-            errorCode = dioError.response!.data["statusCode"];
-          }
-          if (message.isEmpty) {
-            if (dioError.response == null) {
-              if (dioError.message!.contains('Connection failed')) {
-                throw NoNetworkFailure(message: dioError.message ?? 'No Network Failure');
-              } else {
-                throw dioError.message!.contains('Connection timed out')
-                    ? serverFailure
-                    : ServerFailure(message: dioError.message ?? 'Server Failure');
-              }
-            }
-            if (dioError.message!.isNotEmpty) {
-              message = dioError.message ?? '';
-            } else if (dioError.response!.statusMessage != '') {
-              message = dioError.response!.statusMessage ?? message;
-            } else if (dioError.response!.data != '') {
-              message = dioError.response!.data['message'] ?? message;
-            } else {
-              message = dioError.message ?? '';
-            }
-            message = message.isEmpty ? serverFailure.message : message;
           }
 
-          if (dioError.type == DioExceptionType.connectionTimeout) {
-            throw NoNetworkFailure(message: "Connection Timeout Exception");
-          } else if (dioError.type == DioExceptionType.receiveTimeout) {
-            throw NoNetworkFailure(message: "Receive Timeout Exception");
+          if (message.trim().isEmpty) {
+            message = dioError.message ?? "Erro inesperado";
           }
 
-          switch (dioError.response!.statusCode) {
-            case 400:
-              throw InvalidOrMissingFieldFailure(key: errorCode, message: message);
-            case 401:
-              throw ExpiredTokenOrWrongUserFailure(key: errorCode, message: message);
-            case 403:
-              throw ForbiddenFailure(key: errorCode, message: message);
-            case 404:
-              throw NotFoundFailure(key: errorCode, message: message);
-            case 422:
-              throw UnprocessableEntityFailure(key: errorCode, message: message);
-            case 426:
-              throw InvalidDeviceIdFailure(key: errorCode, message: message);
-            case 500:
-              throw ServiceUnavailableFailure(key: errorCode, message: message);
-            case 503:
-              throw ServerFailure(key: errorCode, message: message);
-            default:
-              throw message.isEmpty ? serverFailure : ServerFailure(message: message, key: errorCode);
+          switch (response?.statusCode) {
+            case 400: throw InvalidOrMissingFieldFailure(key: errorCode, message: message);
+            case 401: throw ExpiredTokenOrWrongUserFailure(key: errorCode, message: message);
+            case 403: throw ForbiddenFailure(key: errorCode, message: message);
+            case 404: throw NotFoundFailure(key: errorCode, message: message);
+            case 422: throw UnprocessableEntityFailure(key: errorCode, message: message);
+            case 500: throw ServiceUnavailableFailure(key: errorCode, message: message);
+            default: throw ServerFailure(message: message, key: errorCode);
           }
+
         default:
-          throw serverFailure;
+          throw ServerFailure(message: e.toString());
       }
     }
   }
