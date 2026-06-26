@@ -35,13 +35,14 @@ Future<void> main() async {
 
     String token = await userPreferencesService.getToken() ?? '';
 
-    API.setEnvironment(EnvironmentEnum.prod);
+    API.setEnvironment(EnvironmentEnum.dev);
 
     final HttpDriverOptions httpDriverOptions = HttpDriverOptions(
       accessToken: () {
         return token;
       },
       baseUrl: () => API.apiBaseUrl,
+      useDebugLogger: true,
     );
 
     Inject.initialize(httpDriverOptions);

@@ -60,35 +60,41 @@ class DioHttpServiceImp implements HttpService {
         case NoNetworkFailure _:
           rethrow;
         case DioException _:
-          var dioError = (e as DioException);
-          var response = dioError.response;
+          var response = e.response;
           var responseData = response?.data;
-          
+
           errorCode = response?.statusCode ?? 0;
 
           if (responseData != null && responseData is Map) {
             if (responseData.containsKey('message')) {
               var msg = responseData['message'];
               message = (msg is List) ? msg.join(", ") : msg.toString();
-            } 
-            
+            }
+
             if (responseData.containsKey('errorCode')) {
               errorCode = responseData['errorCode'];
             }
           }
 
           if (message.trim().isEmpty) {
-            message = dioError.message ?? "Erro inesperado";
+            message = e.message ?? "Erro inesperado";
           }
 
           switch (response?.statusCode) {
-            case 400: throw InvalidOrMissingFieldFailure(key: errorCode, message: message);
-            case 401: throw ExpiredTokenOrWrongUserFailure(key: errorCode, message: message);
-            case 403: throw ForbiddenFailure(key: errorCode, message: message);
-            case 404: throw NotFoundFailure(key: errorCode, message: message);
-            case 422: throw UnprocessableEntityFailure(key: errorCode, message: message);
-            case 500: throw ServiceUnavailableFailure(key: errorCode, message: message);
-            default: throw ServerFailure(message: message, key: errorCode);
+            case 400:
+              throw InvalidOrMissingFieldFailure(key: errorCode, message: message);
+            case 401:
+              throw ExpiredTokenOrWrongUserFailure(key: errorCode, message: message);
+            case 403:
+              throw ForbiddenFailure(key: errorCode, message: message);
+            case 404:
+              throw NotFoundFailure(key: errorCode, message: message);
+            case 422:
+              throw UnprocessableEntityFailure(key: errorCode, message: message);
+            case 500:
+              throw ServiceUnavailableFailure(key: errorCode, message: message);
+            default:
+              throw ServerFailure(message: message, key: errorCode);
           }
 
         default:
