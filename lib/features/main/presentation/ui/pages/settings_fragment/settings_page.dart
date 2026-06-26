@@ -1,6 +1,3 @@
-// 🎯 Dart imports:
-import 'dart:io';
-
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -11,9 +8,12 @@ import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 // 🌎 Project imports:
+import '../../../../../../core/domain/service/platform_service/platform_service.dart';
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../core/routing/routing.dart';
+import '../../../../../../shared/extensions/extensions.dart';
+import '../../../../../../shared/l10n/app_localizations.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../../../../shared/utils/utils.dart';
 import '../../../viewmodel/home_viewmodel.dart';
@@ -23,9 +23,7 @@ import 'fragments/about_app_bs.dart';
 import 'fragments/faq_bs.dart';
 
 class SettingsPage extends StatefulWidget {
-  const SettingsPage({
-    super.key,
-  });
+  const SettingsPage({super.key});
 
   @override
   State<SettingsPage> createState() => _SettingsPageState();
@@ -34,6 +32,7 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   late final SettingsViewmodel _settingsViewmodel;
   late final HomeViewmodel _homeViewmodel;
+  final platformService = GetIt.I<PlatformService>();
 
   @override
   void initState() {
@@ -47,16 +46,14 @@ class _SettingsPageState extends State<SettingsPage> {
         if (_settingsViewmodel.state == StateEnum.error) {
           EZTSnackBar.show(
             context,
-            HandleFailure.of(_settingsViewmodel.failure!),
+            HandleFailure.of(context.l10n, _settingsViewmodel.failure!),
             eztSnackBarType: EZTSnackBarType.error,
           );
         }
 
-        if (_settingsViewmodel.state == StateEnum.success &&
-            _settingsViewmodel.user == null &&
-            mounted) {
+        if (_settingsViewmodel.state == StateEnum.success && _settingsViewmodel.user == null && mounted) {
           EZTSnackBar.clear(context);
-          EZTSnackBar.show(context, "Até logo...");
+          EZTSnackBar.show(context, context.l10n.seeYouSoon);
           await Future.delayed(const Duration(milliseconds: 250));
           if (mounted) {
             SchedulerBinding.instance.addPostFrameCallback((_) {
@@ -69,80 +66,81 @@ class _SettingsPageState extends State<SettingsPage> {
     }
   }
 
-  get descriptionTextStyle => const TextStyle(
-        color: Color(0xFF97979A),
-        fontSize: 17,
-        fontWeight: FontWeight.w400,
-      );
+  TextStyle get descriptionTextStyle =>
+      const TextStyle(color: Color(0xFF97979A), fontSize: 17, fontWeight: FontWeight.w400);
+
+  Icon _getIconTheme() {
+    switch (platformService.getPlatformType()) {
+      case PlatformTypeEnum.web:
+        return Icon(PhosphorIcons.globe());
+      case PlatformTypeEnum.android:
+        return Icon(PhosphorIcons.androidLogo());
+      case PlatformTypeEnum.iOS:
+        return Icon(PhosphorIcons.appleLogo());
+      case PlatformTypeEnum.windows:
+        return Icon(PhosphorIcons.windowsLogo());
+      case PlatformTypeEnum.linux:
+        return Icon(PhosphorIcons.linuxLogo());
+      case PlatformTypeEnum.macOS:
+        return Icon(PhosphorIcons.desktop());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final envEnum = _settingsViewmodel.environment;
+    final translatedEnvValue = context.l10n.environmentValue(envEnum.name);
     return ListenableBuilder(
       listenable: _settingsViewmodel,
       builder: (context, child) {
         return Scaffold(
           body: Builder(
             builder: (context) {
-              if (_settingsViewmodel.user == null &&
-                  _settingsViewmodel.state != StateEnum.error) {
+              if (_settingsViewmodel.user == null && _settingsViewmodel.state != StateEnum.error) {
                 return const Center(child: CircularProgressIndicator());
               }
 
               return ListView(
                 children: [
                   SettingsSection(
-                    title: 'Informações',
+                    title: context.l10n.info,
                     tiles: [
                       ListTile(
-                        leading: Icon(
-                          PhosphorIcons.info(),
-                        ),
-                        title: const Text('Sobre o App'),
+                        leading: Icon(PhosphorIcons.info()),
+                        title: Text(context.l10n.about),
                         trailing: Icon(PhosphorIcons.caretRight()),
                         onTap: () {
                           showModalBottomSheet(
                             isScrollControlled: true,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16.0),
-                            ),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
                             context: context,
-                            builder: (BuildContext context) => SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.75,
-                              child: const AboutAppBS(),
-                            ),
+                            builder: (BuildContext context) =>
+                                SizedBox(height: MediaQuery.of(context).size.height * 0.75, child: const AboutAppBS()),
                           );
                         },
                       ),
                       ListTile(
-                        leading: Icon(
-                          PhosphorIcons.question(),
-                        ),
+                        leading: Icon(PhosphorIcons.question()),
                         trailing: Icon(PhosphorIcons.caretRight()),
-                        title: const Text('Perguntas frequentes'),
+                        title: Text(context.l10n.frequentlyAskedQuestions),
                         onTap: () {
                           showModalBottomSheet(
                             isScrollControlled: true,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16.0),
-                            ),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
                             context: context,
-                            builder: (BuildContext context) => SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.75,
-                              child: const FAQBS(),
-                            ),
+                            builder: (BuildContext context) =>
+                                SizedBox(height: MediaQuery.of(context).size.height * 0.75, child: const FAQBS()),
                           );
                         },
                       ),
                     ],
                   ),
                   SettingsSection(
-                    title: 'Dados do usuário',
+                    title: context.l10n.userData,
                     tiles: [
                       SettingsTile(
-                        leading: Icon(
-                          PhosphorIcons.user(),
-                        ),
-                        title: const Text('Nome'),
+                        leading: Icon(PhosphorIcons.user()),
+                        title: Text(context.l10n.userName),
                         subtitle: Text(
                           _settingsViewmodel.user!.name,
                           overflow: TextOverflow.ellipsis,
@@ -150,10 +148,8 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                       ),
                       SettingsTile(
-                        leading: Icon(
-                          PhosphorIcons.at(),
-                        ),
-                        title: const Text('Email'),
+                        leading: Icon(PhosphorIcons.at()),
+                        title: Text(context.l10n.email),
                         subtitle: Text(
                           _settingsViewmodel.user!.email,
                           overflow: TextOverflow.ellipsis,
@@ -161,15 +157,10 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                       ),
                       SettingsTile(
-                        leading: Icon(
-                          PhosphorIcons.identificationBadge(),
-                        ),
-                        title: const Text('Tipo de usuário'),
+                        leading: Icon(PhosphorIcons.identificationBadge()),
+                        title: Text(context.l10n.userType),
                         subtitle: Text(
-                          _settingsViewmodel.user!.userType ==
-                                  UserTypeEnum.admin
-                              ? 'Administrador'
-                              : 'Comum',
+                          context.l10n.roles(_settingsViewmodel.user!.userType.name),
                           overflow: TextOverflow.ellipsis,
                           style: descriptionTextStyle,
                         ),
@@ -177,71 +168,87 @@ class _SettingsPageState extends State<SettingsPage> {
                     ],
                   ),
                   SettingsSection(
-                    title: 'Configurações',
+                    title: context.l10n.settings,
                     tiles: [
                       SwitchListTile(
-                        secondary: Icon(
-                          PhosphorIcons.trash(),
+                        secondary: Icon(PhosphorIcons.globe()),
+                        title: Text(context.l10n.replaceLanguage),
+                        value: _settingsViewmodel.isReplaceLanguage,
+                        onChanged: (bool value) => _settingsViewmodel.setReplaceLanguage(value),
+                      ),
+                      Opacity(
+                        opacity: _settingsViewmodel.isReplaceLanguage
+                            ? 1.0
+                            : 0.5, // Reduce opacity to indicate disabled state
+                        child: SettingsTile(
+                          leading: Icon(PhosphorIcons.quotes()),
+                          title: Text(context.l10n.languages),
+                          trailing: SegmentedButton<Locale>(
+                            showSelectedIcon: false,
+                            segments: _settingsViewmodel.locales.map((locale) {
+                              return ButtonSegment<Locale>(
+                                value: locale,
+                                icon: Text(locale.languageCode.toUpperCase()),
+                              );
+                            }).toList(),
+                            selected: <Locale>{Locale(AppLocalizations.of(context).localeName)},
+                            onSelectionChanged: (Set<Locale> newSelection) {
+                              setState(() {
+                                _settingsViewmodel.setLocale(newSelection.first);
+                              });
+                            },
+                          ),
                         ),
-                        title: const Text(
-                          'Confirmação de exclusão',
-                        ),
-                        value: _settingsViewmodel.enableExcludeConfirmation!,
-                        onChanged: (bool value) => _settingsViewmodel
-                            .setEnableExcludeConfirmation(value),
                       ),
                       SettingsTile(
-                        leading: Icon(
-                          PhosphorIcons.paintRoller(),
-                        ),
-                        title: const Text('Tema'),
+                        leading: Icon(PhosphorIcons.paintRoller()),
+                        title: Text(context.l10n.theme),
                         trailing: SegmentedButton<ThemeMode>(
                           showSelectedIcon: false,
                           segments: <ButtonSegment<ThemeMode>>[
-                            ButtonSegment<ThemeMode>(
-                                value: ThemeMode.system,
-                                icon: Icon(Platform.isIOS
-                                    ? PhosphorIcons.appleLogo()
-                                    : PhosphorIcons.androidLogo())),
-                            ButtonSegment<ThemeMode>(
-                                value: ThemeMode.light,
-                                icon: Icon(PhosphorIcons.sun())),
-                            ButtonSegment<ThemeMode>(
-                                value: ThemeMode.dark,
-                                icon: Icon(PhosphorIcons.moon())),
+                            ButtonSegment<ThemeMode>(value: ThemeMode.system, icon: _getIconTheme()),
+                            ButtonSegment<ThemeMode>(value: ThemeMode.light, icon: Icon(PhosphorIcons.sun())),
+                            ButtonSegment<ThemeMode>(value: ThemeMode.dark, icon: Icon(PhosphorIcons.moon())),
                           ],
                           selected: <ThemeMode>{_settingsViewmodel.themeMode},
                           onSelectionChanged: (Set<ThemeMode> newSelection) {
                             setState(() {
-                              _settingsViewmodel
-                                  .setThemeMode(newSelection.first);
+                              _settingsViewmodel.setThemeMode(newSelection.first);
                             });
                           },
                         ),
                       ),
+                      SwitchListTile(
+                        secondary: Icon(PhosphorIcons.trash()),
+                        title: Text(context.l10n.deletionConfirmation),
+                        value: _settingsViewmodel.enableExcludeConfirmation!,
+                        onChanged: (bool value) => _settingsViewmodel.setEnableExcludeConfirmation(value),
+                      ),
                     ],
                   ),
                   SettingsSection(
-                    title: 'Detalhes do Aplicativo',
+                    title: context.l10n.details,
                     tiles: [
                       SettingsTile(
-                        leading: Icon(
-                          PhosphorIcons.computerTower(),
-                        ),
-                        title: const Text('Ambiente'),
+                        leading: Icon(PhosphorIcons.computerTower()),
+                        title: Text(context.l10n.environment),
                         subtitle: Text(
-                          _settingsViewmodel.getEnviroment,
+                          translatedEnvValue,
                           overflow: TextOverflow.ellipsis,
                           style: descriptionTextStyle,
                         ),
                       ),
                       SettingsTile(
-                        leading: Icon(
-                          PhosphorIcons.gitBranch(),
-                        ),
-                        onTap: () => _settingsViewmodel
-                            .openUrl(Constants.enzitechGithubPage),
-                        title: const Text('Versão'),
+                        leading: Icon(PhosphorIcons.gitBranch()),
+                        onTap: () async {
+                          try {
+                            await _settingsViewmodel.openUrl(Constants.enzitechGithubPage);
+                          } on UnableToOpenUrlFailure catch (e) {
+                            // ignore: use_build_context_synchronously
+                            if (mounted) EZTSnackBar.show(context, context.l10n.unableToOpenUrlError(e.message));
+                          }
+                        },
+                        title: Text(context.l10n.version),
                         subtitle: Text(
                           "${_settingsViewmodel.appInfo!.version}+${_settingsViewmodel.appInfo!.buildNumber}",
                           overflow: TextOverflow.ellipsis,
@@ -249,18 +256,15 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                       ),
                       SettingsTile(
-                        leading: Icon(
-                          PhosphorIcons.signOut(),
-                        ),
-                        title: const Text('Sair'),
+                        leading: Icon(PhosphorIcons.signOut()),
+                        title: Text(context.l10n.exit),
                         onTap: () {
                           _homeViewmodel.experimentsViewmodel.clearFilters();
                           _settingsViewmodel.logout();
                         },
                       ),
                       GestureDetector(
-                        onTap: () => _settingsViewmodel
-                            .openUrl(Constants.bccCoworkingLink),
+                        onTap: () => _settingsViewmodel.openUrl(Constants.bccCoworkingLink),
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                           child: Align(

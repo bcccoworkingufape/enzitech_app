@@ -6,19 +6,11 @@ import 'package:flutter/services.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 // 🌎 Project imports:
-import '../../extensions/context_theme_mode_extensions.dart';
+import '../../extensions/build_context_extensions.dart';
 import '../../validator/validator.dart';
 import '../themes/themes.dart';
 
-enum EZTTextFieldType {
-  none,
-  regular,
-  underline,
-  underlined,
-  outline,
-  outlineCheckout,
-  rounded,
-}
+enum EZTTextFieldType { none, regular, underline, underlined, outline, outlineCheckout, rounded }
 
 class EZTTextField extends StatefulWidget {
   final FieldValidator? fieldValidator;
@@ -120,9 +112,7 @@ class _EZTTextFieldState extends State<EZTTextField> {
       prefixIcon: widget.prefixIcon,
       hintText: widget.hintText,
       helperText: widget.helperText,
-      helperStyle: TextStyle(
-        color: context.getApplyedColorScheme.error,
-      ),
+      helperStyle: TextStyle(color: context.getApplyedColorScheme.error),
       labelText: widget.labelText,
       labelStyle: const TextStyle(),
       suffixIcon: widget.suffixIcon ?? _passwordSuffixIcon,
@@ -135,13 +125,9 @@ class _EZTTextFieldState extends State<EZTTextField> {
   Widget get _passwordSuffixIcon {
     final Widget iconToUse;
     if (_passwordVisibile) {
-      iconToUse = Icon(
-        PhosphorIcons.eye(),
-      );
+      iconToUse = Icon(PhosphorIcons.eye());
     } else {
-      iconToUse = Icon(
-        PhosphorIcons.eyeClosed(),
-      );
+      iconToUse = Icon(PhosphorIcons.eyeClosed());
     }
 
     return Visibility(
@@ -152,10 +138,7 @@ class _EZTTextFieldState extends State<EZTTextField> {
             _passwordVisibile = !_passwordVisibile;
           });
         },
-        child: Stack(
-          alignment: AlignmentDirectional.bottomEnd,
-          children: [iconToUse],
-        ),
+        child: Stack(alignment: AlignmentDirectional.bottomEnd, children: [iconToUse]),
       ),
     );
   }
@@ -165,9 +148,9 @@ class _EZTTextFieldState extends State<EZTTextField> {
       borderSide: BorderSide(
         color: (_validationSuccess ?? false)
             ? widget.enableGreenSuccessBorder
-                ? Colors.green
-                : context.getApplyedColorScheme.onBackground
-            : context.getApplyedColorScheme.onBackground,
+                  ? Colors.green
+                  : context.getApplyedColorScheme.onSurface
+            : context.getApplyedColorScheme.onSurface,
       ),
     );
 
@@ -176,23 +159,13 @@ class _EZTTextFieldState extends State<EZTTextField> {
       hintStyle: widget.hintStyle ?? TextStyles.termRegular,
       enabledBorder: inputBorder,
       focusedBorder: (widget.usePrimaryColorOnFocusedBorder)
-          ? UnderlineInputBorder(
-              borderSide: BorderSide(
-                color: context.getApplyedColorScheme.primary,
-              ),
-            )
+          ? UnderlineInputBorder(borderSide: BorderSide(color: context.getApplyedColorScheme.primary))
           : inputBorder,
       border: inputBorder,
       labelStyle: (widget.focusNode?.hasFocus ?? false)
-          ? TextStyle(
-              color: context.getApplyedColorScheme.primary,
-            )
+          ? TextStyle(color: context.getApplyedColorScheme.primary)
           : null,
-      errorBorder: inputBorder.copyWith(
-        borderSide: BorderSide(
-          color: context.getApplyedColorScheme.error,
-        ),
-      ),
+      errorBorder: inputBorder.copyWith(borderSide: BorderSide(color: context.getApplyedColorScheme.error)),
       contentPadding: const EdgeInsets.only(bottom: 5, top: 15),
       suffixIcon: _validationSuffixIcon,
     );
@@ -220,24 +193,14 @@ class _EZTTextFieldState extends State<EZTTextField> {
 
     return _validationSuccess!
         ? Icon(PhosphorIcons.check())
-        : Icon(
-            PhosphorIcons.warningCircle(),
-            color: context.getApplyedColorScheme.error,
-          );
+        : Icon(PhosphorIcons.warningCircle(), color: context.getApplyedColorScheme.error);
   }
 
   InputDecoration get _underlinedInputDecoration {
-    var inputBorder = UnderlineInputBorder(
-      borderSide: BorderSide(
-        color: context.getApplyedColorScheme.primary,
-      ),
-    );
+    var inputBorder = UnderlineInputBorder(borderSide: BorderSide(color: context.getApplyedColorScheme.primary));
 
     return _baseInputDecoration.copyWith(
-      hintStyle: widget.hintStyle ??
-          const TextStyle(
-            fontSize: 16,
-          ),
+      hintStyle: widget.hintStyle ?? const TextStyle(fontSize: 16),
       enabledBorder: inputBorder,
       focusedBorder: inputBorder,
       errorBorder: inputBorder,
@@ -253,73 +216,53 @@ class _EZTTextFieldState extends State<EZTTextField> {
       borderSide: BorderSide(
         color: (_validationSuccess ?? false)
             ? widget.enableGreenSuccessBorder
-                ? Colors.green
-                : context.getApplyedColorScheme.scrim
+                  ? Colors.green
+                  : context.getApplyedColorScheme.scrim
             : context.getApplyedColorScheme.scrim,
       ),
-      borderRadius: const BorderRadius.all(
-        Radius.circular(4),
-      ),
+      borderRadius: const BorderRadius.all(Radius.circular(4)),
     );
     var focusedOutlineBorder = outlineBorder;
 
     if (widget.usePrimaryColorOnFocusedBorder) {
       focusedOutlineBorder = focusedOutlineBorder.copyWith(
-        borderSide: BorderSide(
-          color: context.getApplyedColorScheme.primary,
-        ),
+        borderSide: BorderSide(color: context.getApplyedColorScheme.primary),
       );
     }
 
     return _baseInputDecoration.copyWith(
-      fillColor:
-          widget.enabled ? (widget.fillColor ?? Colors.white) : Colors.white,
+      fillColor: widget.enabled ? (widget.fillColor ?? Colors.white) : Colors.white,
       border: outlineBorder,
       hintStyle: widget.hintStyle,
-      suffixIcon:
-          widget.showSuffixValidationIcon ? _validationSuffixIcon : null,
+      suffixIcon: widget.showSuffixValidationIcon ? _validationSuffixIcon : null,
       enabledBorder: outlineBorder,
       focusedBorder: focusedOutlineBorder,
-      errorBorder: outlineBorder.copyWith(
-        borderSide: BorderSide(
-          color: context.getApplyedColorScheme.error,
-        ),
-      ),
+      errorBorder: outlineBorder.copyWith(borderSide: BorderSide(color: context.getApplyedColorScheme.error)),
     );
   }
 
   InputDecoration get _outlineInputDecorationCheckout {
     const outlineBorder = OutlineInputBorder(
       borderSide: BorderSide(),
-      borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(4),
-        bottomLeft: Radius.circular(4),
-      ),
+      borderRadius: BorderRadius.only(topLeft: Radius.circular(4), bottomLeft: Radius.circular(4)),
     );
 
     var focusedOutlineBorder = outlineBorder;
 
     if (widget.usePrimaryColorOnFocusedBorder) {
       focusedOutlineBorder = focusedOutlineBorder.copyWith(
-        borderSide: BorderSide(
-          color: context.getApplyedColorScheme.primary,
-        ),
+        borderSide: BorderSide(color: context.getApplyedColorScheme.primary),
       );
     }
 
     return _baseInputDecoration.copyWith(
-      fillColor:
-          widget.enabled ? (widget.fillColor ?? Colors.white) : Colors.grey,
+      fillColor: widget.enabled ? (widget.fillColor ?? Colors.white) : Colors.grey,
       border: outlineBorder,
       hintStyle: widget.hintStyle,
       suffixIcon: _validationSuffixIcon,
       enabledBorder: outlineBorder,
       focusedBorder: focusedOutlineBorder,
-      errorBorder: outlineBorder.copyWith(
-        borderSide: BorderSide(
-          color: context.getApplyedColorScheme.error,
-        ),
-      ),
+      errorBorder: outlineBorder.copyWith(borderSide: BorderSide(color: context.getApplyedColorScheme.error)),
     );
   }
 
@@ -336,22 +279,14 @@ class _EZTTextFieldState extends State<EZTTextField> {
     return _baseInputDecoration.copyWith(
       enabledBorder: _outlineRoundedBorder,
       focusedBorder: _outlineRoundedBorder,
-      contentPadding: const EdgeInsets.symmetric(
-        vertical: 2,
-        horizontal: 12,
-      ),
+      contentPadding: const EdgeInsets.symmetric(vertical: 2, horizontal: 12),
     );
   }
 
   OutlineInputBorder get _outlineRoundedBorder {
     return const OutlineInputBorder(
-      borderRadius: BorderRadius.all(
-        Radius.circular(100.0),
-      ),
-      borderSide: BorderSide(
-        width: 0,
-        style: BorderStyle.none,
-      ),
+      borderRadius: BorderRadius.all(Radius.circular(100.0)),
+      borderSide: BorderSide(width: 0, style: BorderStyle.none),
     );
   }
 
@@ -376,7 +311,6 @@ class _EZTTextFieldState extends State<EZTTextField> {
         return _outlineInputDecorationCheckout;
 
       case EZTTextFieldType.none:
-      default:
         return _regularInputDecoration;
     }
   }
@@ -390,10 +324,7 @@ class _EZTTextFieldState extends State<EZTTextField> {
   String? _validator(String? value) {
     String? validationResult;
 
-    validationResult = widget.fieldValidator?.validate(
-      value,
-      confirmation: widget.valueMatcher?.call(),
-    );
+    validationResult = widget.fieldValidator?.validate(value, confirmation: widget.valueMatcher?.call());
 
     _updateValidation(validationResult);
 

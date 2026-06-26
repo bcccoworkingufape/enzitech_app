@@ -62,11 +62,7 @@ class Toolkit {
   }
 
   static String formatBrMoney(double value) {
-    return NumberFormat.currency(
-      locale: 'pt-BR',
-      decimalDigits: 2,
-      symbol: 'R\$',
-    ).format(value);
+    return NumberFormat.currency(locale: 'pt-BR', decimalDigits: 2, symbol: 'R\$').format(value);
   }
 
   static String getObjValue(dynamic obj, int propIndex, List propArr) {
@@ -80,22 +76,20 @@ class Toolkit {
 
   static List<T> orderList<T>(String order, String fieldOrder, List<T> list) {
     var propArr = fieldOrder.split(".");
-    return list
-      ..sort((a, b) {
-        var mapA = (a as dynamic).toMap();
-        var mapB = (b as dynamic).toMap();
-        var valueA = getObjValue(mapA, 0, propArr);
-        var valueB = getObjValue(mapB, 0, propArr);
-        if (order == "asc") {
-          return valueA.compareTo(valueB);
-        } else {
-          return valueB.compareTo(valueA);
-        }
-      });
+    return list..sort((a, b) {
+      var mapA = (a as dynamic).toMap();
+      var mapB = (b as dynamic).toMap();
+      var valueA = getObjValue(mapA, 0, propArr);
+      var valueB = getObjValue(mapB, 0, propArr);
+      if (order == "asc") {
+        return valueA.compareTo(valueB);
+      } else {
+        return valueB.compareTo(valueA);
+      }
+    });
   }
 
-  static Future<void> when(
-      WhenCondition condition, VoidCallback executor, int milliseconds) async {
+  static Future<void> when(WhenCondition condition, VoidCallback executor, int milliseconds) async {
     var limitSum = 0;
     Timer.periodic(Duration(milliseconds: milliseconds), (timer) {
       if (condition()) {

@@ -36,23 +36,15 @@ class EZTNotFound extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            const SizedBox(
-              height: 16,
-            )
+            const SizedBox(height: 16),
           ],
           if (message != null) ...[
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Text(
-                message!,
-                style: TextStyles.termRegular,
-                textAlign: TextAlign.center,
-              ),
+              child: Text(message!, style: TextStyles.termRegular, textAlign: TextAlign.center),
             ),
-            const SizedBox(
-              height: 16,
-            )
-          ]
+            const SizedBox(height: 16),
+          ],
         ],
       ),
     );

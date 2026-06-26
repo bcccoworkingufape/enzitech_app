@@ -1,0 +1,29 @@
+{
+  "@@Locale": "pt",
+  "excel_treatmentLabel": "Tratamento:",
+  "excel_col_id": "Id",
+  "excel_col_sampleAbsorbance": "Abs. Amostra",
+  "excel_col_whiteSampleAbsorbance": "Abs. Branco",
+  "excel_col_difference": "Diferença",
+  "excel_col_variableA": "Variável A",
+  "excel_col_variableB": "Variável B",
+  "excel_col_curveCalculation": "Cálc. Curva",
+  "excel_col_correctionFactor": "Fator Correção",
+  "excel_col_time": "Tempo (h)",
+  "excel_col_volume": "Volume",
+  "excel_col_sampleWeight": "Peso Amostra (g)",
+  "excel_col_result": "Resultado",
+  "excel_footer_developedBy": "Desenvolvido por:",
+  "excel_footer_learnMore": "👨🏻‍💻 SAIBA MAIS:",
+  "shareExperimentResultsFilename": "Resultados do experimento \"{experimentName}\"",
+  "@shareExperimentResultsFilename": {
+    "placeholders": {
+      "experimentName": {
+        "type": "String"
+      }
+    }
+  },
+  "spreadsheetSavedSuccess": "Planilha salva com sucesso!",
+  "spreadsheetSaveError": "Não foi possível salvar a planilha, tente novamente.",
+  "shareFileError": "Não foi possível compartilhar o arquivo, tente novamente."
+}

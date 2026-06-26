@@ -9,6 +9,7 @@ import 'package:get_it/get_it.dart';
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../core/routing/routing.dart';
+import '../../../../../../shared/extensions/extensions.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../dto/create_experiment_dto.dart';
 import '../../../viewmodel/create_experiment_viewmodel.dart';
@@ -18,9 +19,7 @@ import 'fragments/create_experiment_second_step.dart';
 import 'fragments/create_experiment_third_step.dart';
 
 class CreateExperimentPage extends StatefulWidget {
-  const CreateExperimentPage({
-    super.key,
-  });
+  const CreateExperimentPage({super.key});
 
   @override
   State<CreateExperimentPage> createState() => _CreateExperimentPageState();
@@ -35,38 +34,39 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
     _createExperimentViewmodel = GetIt.I.get<CreateExperimentViewmodel>();
 
     if (mounted) {
-      _createExperimentViewmodel.addListener(
-        () {
-          if (mounted && _createExperimentViewmodel.state == StateEnum.error) {
-            EZTSnackBar.show(
-              context,
-              HandleFailure.of(_createExperimentViewmodel.failure!),
-              eztSnackBarType: EZTSnackBarType.error,
-            );
-          } else if (_createExperimentViewmodel.state == StateEnum.success &&
-              _createExperimentViewmodel.experiment != null) {
-            if (mounted) {
-              if (!mounted) return;
-              SchedulerBinding.instance.addPostFrameCallback((_) {
-                Navigator.popAndPushNamed(
-                  context,
-                  Routing.experimentDetailed,
-                  arguments: _createExperimentViewmodel.experiment,
-                ).whenComplete(() {
-                  _createExperimentViewmodel.setExperiment(null);
-                  _createExperimentViewmodel.setTemporaryExperiment(
-                    CreateExperimentDTO(),
-                  );
-                }).then((value) => EZTSnackBar.show(
+      _createExperimentViewmodel.addListener(() {
+        if (mounted && _createExperimentViewmodel.state == StateEnum.error) {
+          EZTSnackBar.show(
+            context,
+            HandleFailure.of(context.l10n, _createExperimentViewmodel.failure!),
+            eztSnackBarType: EZTSnackBarType.error,
+          );
+        } else if (_createExperimentViewmodel.state == StateEnum.success &&
+            _createExperimentViewmodel.experiment != null) {
+          if (mounted) {
+            if (!mounted) return;
+            SchedulerBinding.instance.addPostFrameCallback((_) {
+              Navigator.popAndPushNamed(
+                    context,
+                    Routing.experimentDetailed,
+                    arguments: _createExperimentViewmodel.experiment,
+                  )
+                  .whenComplete(() {
+                    _createExperimentViewmodel.setExperiment(null);
+                    _createExperimentViewmodel.setTemporaryExperiment(CreateExperimentDTO());
+                  })
+                  .then((value) {
+                    if (!mounted) return;
+                    EZTSnackBar.show(
                       context,
-                      "Experimento criado com sucesso!",
+                      context.l10n.experimentCreatedSuccess,
                       eztSnackBarType: EZTSnackBarType.success,
-                    ));
-              });
-            }
+                    );
+                  });
+            });
           }
-        },
-      );
+        }
+      });
     }
   }
 
@@ -74,7 +74,7 @@ class _CreateExperimentPageState extends State<CreateExperimentPage> {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      onPopInvoked: (didPop) async {
+      onPopInvokedWithResult: (bool didPop, void result) async {
         if (_createExperimentViewmodel.alreadyPopped) {
           _createExperimentViewmodel.setAlreadyPopped(false);
           return;

@@ -9,17 +9,12 @@ extension ExperimentTreatmentResultDto on ExperimentTreatmentResultEntity {
     return ExperimentTreatmentResultEntity(
       treatment: TreatmentDto.fromJson(json['process']),
       repetitionResults: List<ExperimentRepetitionResultEntity>.from(
-        json['results'].map(
-          (x) => ExperimentRepetitionResultDto.fromJson(x),
-        ),
+        json['results'].map((x) => ExperimentRepetitionResultDto.fromJson(x)),
       ),
     );
   }
 
   Map toJson() {
-    return {
-      'process': treatment,
-      'results': repetitionResults.map((x) => x.toJson()).toList(),
-    };
+    return {'process': treatment, 'results': repetitionResults.map((x) => x.toJson()).toList()};
   }
 }

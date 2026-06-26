@@ -9,22 +9,13 @@ import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
 import '../../domain/entities/experiment_entity.dart';
 import '../../domain/entities/experiment_pagination_entity.dart';
-import '../../domain/repositories/store_experiments_in_cache_repository.dart';
-import '../../domain/usecases/delete_experiment/delete_experiment_usecase.dart';
-import '../../domain/usecases/get_experiments/get_experiments_usecase.dart';
+import '../../domain/usecases/experiments_usecases.dart';
 
 class ExperimentsViewmodel extends ChangeNotifier {
-  final GetExperimentsUseCase _getExperimentsUseCase;
-  final DeleteExperimentUseCase _deleteExperimentUseCase;
-  final StoreExperimentsInCacheRepository _storeExperimentsInCacheRepository;
+  final ExperimentsUseCases _experimentsUseCases;
   final ConnectionChecker connectionChecker;
 
-  ExperimentsViewmodel(
-    this._getExperimentsUseCase,
-    this._deleteExperimentUseCase,
-    this._storeExperimentsInCacheRepository,
-    this.connectionChecker,
-  );
+  ExperimentsViewmodel(this._experimentsUseCases, this.connectionChecker);
 
   StateEnum _state = StateEnum.idle;
   StateEnum get state => _state;
@@ -85,9 +76,8 @@ class ExperimentsViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool get hasNextPage => _experiments.isEmpty || _totalOfExperiments == 0
-      ? false
-      : (_totalOfExperiments - _experiments.length) > 0;
+  bool get hasNextPage =>
+      _experiments.isEmpty || _totalOfExperiments == 0 ? false : (_totalOfExperiments - _experiments.length) > 0;
 
   bool _isLoadingMoreRunning = false;
   bool get isLoadingMoreRunning => _isLoadingMoreRunning;
@@ -119,7 +109,7 @@ class ExperimentsViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  fetch({int pagination = 1}) async {
+  Future<void> fetch({int pagination = 1}) async {
     setStateEnum(StateEnum.loading);
 
     if (pagination == 1) {
@@ -129,7 +119,7 @@ class ExperimentsViewmodel extends ChangeNotifier {
       _setIsLoadingMoreRunning(true);
     }
 
-    var result = await _getExperimentsUseCase(
+    var result = await _experimentsUseCases.getExperiments(
       pagination,
       orderBy: orderBy,
       ordering: ordering,
@@ -146,21 +136,15 @@ class ExperimentsViewmodel extends ChangeNotifier {
         _addToExperiments(success.experiments);
         _setTotalOfExperiments(success.total);
 
-        bool hasInternetConnection =
-            await connectionChecker.hasInternetInternetConnection();
+        bool hasInternetConnection = await connectionChecker.hasInternetInternetConnection();
 
-        if (hasNextPage &&
-            success.experiments.isNotEmpty &&
-            hasInternetConnection) {
+        if (hasNextPage && success.experiments.isNotEmpty && hasInternetConnection) {
           _setPage(page + 1);
         }
 
         if (success.experiments.isNotEmpty) {
-          await _storeExperimentsInCacheRepository(
-            ExperimentPaginationEntity(
-              total: _totalOfExperiments,
-              experiments: experiments,
-            ),
+          await _experimentsUseCases.storeExperimentsInCache(
+            ExperimentPaginationEntity(total: _totalOfExperiments, experiments: experiments),
           );
         }
 
@@ -188,7 +172,7 @@ class ExperimentsViewmodel extends ChangeNotifier {
   }
 
   Future<void> deleteExperiment(String id) async {
-    var result = await _deleteExperimentUseCase(id);
+    var result = await _experimentsUseCases.deleteExperiment(id);
 
     result.fold(
       (error) {
@@ -197,6 +181,8 @@ class ExperimentsViewmodel extends ChangeNotifier {
       },
       (success) async {
         _setTotalOfExperiments(_totalOfExperiments - 1);
+        experiments.removeWhere((exp) => exp.id == id);
+        notifyListeners();
       },
     );
   }

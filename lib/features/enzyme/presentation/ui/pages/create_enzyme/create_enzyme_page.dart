@@ -8,7 +8,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
-import '../../../../../../shared/extensions/context_theme_mode_extensions.dart';
+import '../../../../../../shared/extensions/build_context_extensions.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../../../../shared/utils/utils.dart';
 import '../../../../../../shared/validator/validator.dart';
@@ -48,17 +48,13 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
           if (!mounted) return;
           EZTSnackBar.show(
             context,
-            HandleFailure.of(_createEnzymeViewmodel.failure!),
+            HandleFailure.of(context.l10n, _createEnzymeViewmodel.failure!),
             eztSnackBarType: EZTSnackBarType.error,
           );
         } else if (_createEnzymeViewmodel.state == StateEnum.success) {
           _enzymesViewmodel.fetch();
 
-          EZTSnackBar.show(
-            context,
-            "Tratamento criado com sucesso!",
-            eztSnackBarType: EZTSnackBarType.success,
-          );
+          EZTSnackBar.show(context, context.l10n.enzymeCreatedSuccess, eztSnackBarType: EZTSnackBarType.success);
 
           if (!mounted) return;
           Navigator.pop(context);
@@ -76,7 +72,7 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
     super.dispose();
   }
 
-  get _validateFields {
+  void get _validateFields {
     if (_nameFieldController.text.isNotEmpty &&
         _variableAFieldController.text.isNotEmpty &&
         _variableBFieldController.text.isNotEmpty &&
@@ -106,23 +102,14 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
           ),
           const SizedBox(height: 16),
           Center(
-            child: Text(
-              "Cadastre uma nova\nenzima",
-              style: TextStyles.titleHome,
-              textAlign: TextAlign.center,
-            ),
+            child: Text(context.l10n.registerNewEnzyme, style: TextStyles.titleHome, textAlign: TextAlign.center),
           ),
           const SizedBox(height: 64),
           Row(
             children: [
-              Icon(
-                PhosphorIcons.flask(),
-              ),
+              Icon(PhosphorIcons.flask()),
               const SizedBox(width: 4),
-              Text(
-                'Identificação da enzima',
-                style: TextStyles.detailBold,
-              ),
+              Text(context.l10n.enzymeIdentification, style: TextStyles.detailBold),
             ],
           ),
           _textFields,
@@ -147,20 +134,13 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
   }
 
   Widget get _nameInput {
-    final validations = <ValidateRule>[
-      ValidateRule(
-        ValidateTypes.required,
-      ),
-      ValidateRule(
-        ValidateTypes.name,
-      ),
-    ];
+    final validations = <ValidateRule>[ValidateRule(ValidateTypes.required), ValidateRule(ValidateTypes.name)];
 
     final fieldValidator = FieldValidator(validations, context);
 
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,
-      labelText: "Nome",
+      labelText: context.l10n.nameLabel,
       usePrimaryColorOnFocusedBorder: true,
       keyboardType: TextInputType.name,
       controller: _nameFieldController,
@@ -170,20 +150,13 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
   }
 
   Widget get _variableAInput {
-    final validations = <ValidateRule>[
-      ValidateRule(
-        ValidateTypes.required,
-      ),
-      ValidateRule(
-        ValidateTypes.numeric,
-      ),
-    ];
+    final validations = <ValidateRule>[ValidateRule(ValidateTypes.required), ValidateRule(ValidateTypes.numeric)];
 
     final fieldValidator = FieldValidator(validations, context);
 
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,
-      labelText: "Variável a - Coeficiente Angular da Curva",
+      labelText: context.l10n.variableA_long,
       usePrimaryColorOnFocusedBorder: true,
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
       controller: _variableAFieldController,
@@ -194,20 +167,13 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
   }
 
   Widget get _variableBInput {
-    final validations = <ValidateRule>[
-      ValidateRule(
-        ValidateTypes.required,
-      ),
-      ValidateRule(
-        ValidateTypes.numeric,
-      ),
-    ];
+    final validations = <ValidateRule>[ValidateRule(ValidateTypes.required), ValidateRule(ValidateTypes.numeric)];
 
     final fieldValidator = FieldValidator(validations, context);
 
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,
-      labelText: "Variável b - Constante da Equação da Curva",
+      labelText: context.l10n.variableB_long,
       usePrimaryColorOnFocusedBorder: true,
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
       controller: _variableBFieldController,
@@ -218,32 +184,41 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
   }
 
   Widget _typeInput(BuildContext context) {
+    final Map<String, String> enzymeTypes = {
+      'Betaglucosidase': context.l10n.enzymeType_betaGlucosidase,
+      'Aryl': context.l10n.enzymeType_aryl,
+      'FosfataseAcida': context.l10n.enzymeType_acidPhosphatase,
+      'FosfataseAlcalina': context.l10n.enzymeType_alkalinePhosphatase,
+      'Urease': context.l10n.enzymeType_urease,
+      'FDA': context.l10n.enzymeType_fda,
+    };
+
+    String? selectedKey;
+    if (dropdownValue != null) {
+      enzymeTypes.forEach((key, value) {
+        if (value == dropdownValue) {
+          selectedKey = key;
+        }
+      });
+    }
+
     return DropdownButton<String>(
       isExpanded: true,
-      value: dropdownValue,
-      hint: const Text("Escolha o tipo da enzima"),
-      style: TextStyles.termRegular.copyWith(
-        fontSize: 16,
-        color: context.getApplyedColorScheme.onPrimaryContainer,
-      ),
+      value: selectedKey,
+      hint: Text(context.l10n.chooseEnzymeType),
+      style: TextStyles.termRegular.copyWith(fontSize: 16, color: context.getApplyedColorScheme.onPrimaryContainer),
       icon: null,
       elevation: 16,
-      underline: Container(
-        height: 1.1,
-      ),
-      onChanged: (String? value) {
+      underline: Container(height: 1.1),
+      onChanged: (String? newSelectedKey) {
         setState(() {
-          dropdownValue = value!;
+          dropdownValue = enzymeTypes[newSelectedKey!];
         });
 
         _validateFields;
       },
-      items: Constants.typesOfEnzymesListFormmated
-          .map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
+      items: enzymeTypes.keys.map<DropdownMenuItem<String>>((String key) {
+        return DropdownMenuItem<String>(value: key, child: Text(enzymeTypes[key]!));
       }).toList(),
     );
   }
@@ -254,26 +229,35 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
         EZTButton(
           enabled: enableCreate,
           loading: _createEnzymeViewmodel.state == StateEnum.loading,
-          text: 'Criar enzima',
+          text: context.l10n.createEnzymeButton,
           onPressed: () async {
             _formKey.currentState!.save();
             if (_formKey.currentState!.validate()) {
               if (mounted) {
-                await _createEnzymeViewmodel.createEnzyme(
-                  _nameFieldController.text.trim(),
-                  double.parse(_variableAFieldController.text.trim()),
-                  double.parse(_variableBFieldController.text.trim()),
-                  Constants.typesOfEnzymesList[Constants
-                      .typesOfEnzymesListFormmated
-                      .indexOf(dropdownValue!)],
-                );
+                final Map<String, String> reverseEnzymeMap = {
+                  context.l10n.enzymeType_betaGlucosidase: 'Betaglucosidase',
+                  context.l10n.enzymeType_aryl: 'Aryl',
+                  context.l10n.enzymeType_acidPhosphatase: 'FosfataseAcida',
+                  context.l10n.enzymeType_alkalinePhosphatase: 'FosfataseAlcalina',
+                  context.l10n.enzymeType_urease: 'Urease',
+                  context.l10n.enzymeType_fda: 'FDA',
+                };
+                final String? originalEnzymeKey = reverseEnzymeMap[dropdownValue];
+                if (originalEnzymeKey != null) {
+                  await _createEnzymeViewmodel.createEnzyme(
+                    _nameFieldController.text.trim(),
+                    double.parse(_variableAFieldController.text.trim()),
+                    double.parse(_variableBFieldController.text.trim()),
+                    originalEnzymeKey,
+                  );
+                }
               }
             }
           },
         ),
         const SizedBox(height: 16),
         EZTButton(
-          text: 'Voltar',
+          text: context.l10n.backButton,
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
             Navigator.pop(context);
@@ -286,28 +270,23 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
   @override
   Widget build(BuildContext context) {
     return ListenableBuilder(
-        listenable: _createEnzymeViewmodel,
-        builder: (context, child) {
-          return Scaffold(
-            body: Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  Expanded(
-                    flex: 11,
-                    child: Center(child: _body),
-                  ),
-                  SizedBox(
-                    height: 160,
-                    child: Padding(
-                      padding: Constants.padding16all,
-                      child: _buttons,
-                    ),
-                  ),
-                ],
-              ),
+      listenable: _createEnzymeViewmodel,
+      builder: (context, child) {
+        return Scaffold(
+          body: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                Expanded(flex: 11, child: Center(child: _body)),
+                SizedBox(
+                  height: 160,
+                  child: Padding(padding: Constants.padding16all, child: _buttons),
+                ),
+              ],
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 }

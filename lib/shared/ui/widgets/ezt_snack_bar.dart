@@ -2,20 +2,14 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
-import '../../extensions/context_theme_mode_extensions.dart';
+import '../../extensions/build_context_extensions.dart';
 
-enum EZTSnackBarType {
-  regular,
-  success,
-  error,
-}
+enum EZTSnackBarType { regular, success, error }
 
 class EZTSnackBar {
-  const EZTSnackBar({
-    Key? key,
-  });
+  const EZTSnackBar({Key? key});
 
-  _buildSnackBar(
+  SnackBar _buildSnackBar(
     BuildContext context,
     String message,
     Color? snackBarColor,
@@ -29,9 +23,7 @@ class EZTSnackBar {
           ? SizedBox(
               height: 19,
               width: MediaQuery.of(context).size.width,
-              child: Center(
-                child: Text(message, style: textStyle),
-              ),
+              child: Center(child: Text(message, style: textStyle)),
             )
           : Text(message, style: textStyle),
       duration: duration ?? const Duration(seconds: 4),
@@ -40,7 +32,7 @@ class EZTSnackBar {
     );
   }
 
-  _buildSuccessSnackBar(
+  SnackBar _buildSuccessSnackBar(
     BuildContext context,
     String message,
     TextStyle? textStyle,
@@ -53,9 +45,7 @@ class EZTSnackBar {
           ? SizedBox(
               height: 19,
               width: MediaQuery.of(context).size.width,
-              child: Center(
-                child: Text(message, style: textStyle),
-              ),
+              child: Center(child: Text(message, style: textStyle)),
             )
           : Text(message, style: textStyle),
       duration: duration ?? const Duration(seconds: 4),
@@ -64,7 +54,7 @@ class EZTSnackBar {
     );
   }
 
-  _buildErrorSnackBar(
+  SnackBar _buildErrorSnackBar(
     BuildContext context,
     String message,
     TextStyle? textStyle,
@@ -92,22 +82,11 @@ class EZTSnackBar {
   ) {
     switch (eztSnackBarType) {
       case EZTSnackBarType.success:
-        return _buildSuccessSnackBar(
-            context, message, textStyle, centerTitle, action, duration);
+        return _buildSuccessSnackBar(context, message, textStyle, centerTitle, action, duration);
       case EZTSnackBarType.error:
-        return _buildErrorSnackBar(
-            context, message, textStyle, centerTitle, action, duration);
+        return _buildErrorSnackBar(context, message, textStyle, centerTitle, action, duration);
       case EZTSnackBarType.regular:
-      default:
-        return _buildSnackBar(
-          context,
-          message,
-          snackBarColor,
-          textStyle,
-          centerTitle,
-          action,
-          duration,
-        );
+        return _buildSnackBar(context, message, snackBarColor, textStyle, centerTitle, action, duration);
     }
   }
 
@@ -126,28 +105,17 @@ class EZTSnackBar {
 
     ScaffoldMessenger.of(context)
         .showSnackBar(
-          instance._eztSnackBarType(
-            context,
-            message,
-            eztSnackBarType,
-            color,
-            textStyle,
-            centerTitle,
-            action,
-            duration,
-          ),
+          instance._eztSnackBarType(context, message, eztSnackBarType, color, textStyle, centerTitle, action, duration),
         )
         .closed
         .then((reason) {
-      if (onDismissFunction != null) {
-        onDismissFunction();
-      }
-    });
+          if (onDismissFunction != null) {
+            onDismissFunction();
+          }
+        });
   }
 
-  static clear(
-    BuildContext context,
-  ) {
+  static void clear(BuildContext context) {
     ScaffoldMessenger.of(context).clearSnackBars();
   }
 }

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
+import '../extensions/extensions.dart';
 import '../utils/utils.dart';
 import 'validator.dart';
 
@@ -63,7 +64,7 @@ class FieldValidator {
         case ValidateTypes.required:
           {
             if (value == null || value.toString().trim().isEmpty) {
-              result = customErrorMessage ?? "⚠  Campo obrigatório";
+              result = customErrorMessage ?? context.l10n.validation_required;
             } else {
               result = null;
             }
@@ -73,8 +74,7 @@ class FieldValidator {
           {
             var isStrong = Validator.isStrongPassword(value);
             if (!isStrong) {
-              result = customErrorMessage ??
-                  "⚠  Senha não atende ao padrão informado.";
+              result = customErrorMessage ?? context.l10n.validation_strongPassword;
             } else {
               result = null;
             }
@@ -85,8 +85,7 @@ class FieldValidator {
           {
             var isStrong = Validator.isAlfanumeric(value);
             if (!isStrong) {
-              result = customErrorMessage ??
-                  "⚠  Campo não aceita caracteres especiais";
+              result = customErrorMessage ?? context.l10n.validation_alfanumeric;
             } else {
               result = null;
             }
@@ -96,7 +95,7 @@ class FieldValidator {
           {
             var isStrong = Validator.isName(value);
             if (!isStrong) {
-              result = customErrorMessage ?? "⚠  Nome inválido";
+              result = customErrorMessage ?? context.l10n.validation_name;
             } else {
               result = null;
             }
@@ -111,7 +110,7 @@ class FieldValidator {
 
             var isStrong = Validator.isPhone(value);
             if (!isStrong) {
-              result = customErrorMessage ?? "⚠ Número inválido";
+              result = customErrorMessage ?? context.l10n.validation_phone;
             } else {
               result = null;
             }
@@ -126,7 +125,7 @@ class FieldValidator {
 
             var isStrong = Validator.isCellPhone(value);
             if (!isStrong) {
-              result = customErrorMessage ?? "⚠ Número inválido";
+              result = customErrorMessage ?? context.l10n.validation_cellphone;
             } else {
               result = null;
             }
@@ -139,8 +138,7 @@ class FieldValidator {
 
             var isStrong = pass == confirm;
             if (!isStrong) {
-              result =
-                  customErrorMessage ?? "⚠  As senhas digitadas não coincidem.";
+              result = customErrorMessage ?? context.l10n.validation_passwordEquals;
             } else {
               result = null;
             }
@@ -154,8 +152,7 @@ class FieldValidator {
 
             var isDiff = pass != confirm;
             if (!isDiff) {
-              result = customErrorMessage ??
-                  "⚠  A nova senha não pode ser igual a senha atual.";
+              result = customErrorMessage ?? context.l10n.validation_passwordMustBeDiff;
             } else {
               result = null;
             }
@@ -163,7 +160,7 @@ class FieldValidator {
           }
 
         case ValidateTypes.notFound:
-          result = "⚠  Não encontrado";
+          result = context.l10n.validation_notFound;
           break;
 
         case ValidateTypes.emailEquals:
@@ -173,8 +170,7 @@ class FieldValidator {
 
             var isStrong = pass == confirm;
             if (!isStrong) {
-              result = customErrorMessage ??
-                  "⚠  Os e-mails digitados não coincidem.";
+              result = customErrorMessage ?? context.l10n.validation_emailEquals;
             } else {
               result = null;
             }
@@ -184,7 +180,7 @@ class FieldValidator {
           {
             var emailValid = Validator.email(value.toString());
             if (!emailValid) {
-              result = customErrorMessage ?? "⚠  E-mail inválido";
+              result = customErrorMessage ?? context.l10n.validation_email;
             } else {
               result = null;
             }
@@ -193,7 +189,7 @@ class FieldValidator {
         case ValidateTypes.cpf:
           {
             if (!CPFValidator.isValid(value.toString())) {
-              result = customErrorMessage ?? "⚠  CPF inválido";
+              result = customErrorMessage ?? context.l10n.validation_cpf;
             } else {
               result = null;
             }
@@ -202,7 +198,7 @@ class FieldValidator {
         case ValidateTypes.cnpj:
           {
             if (!CNPJValidator.isValid(value.toString())) {
-              result = customErrorMessage ?? "⚠  CNPJ inválido";
+              result = customErrorMessage ?? context.l10n.validation_cnpj;
             } else {
               result = null;
             }
@@ -213,13 +209,13 @@ class FieldValidator {
             var text = Toolkit.removeEspecialCharacters(value.toString());
             if (text.length <= 11) {
               if (!CPFValidator.isValid(value.toString())) {
-                result = customErrorMessage ?? "⚠  CPF inválido";
+                result = customErrorMessage ?? context.l10n.validation_cpf;
               } else {
                 result = null;
               }
             } else {
               if (!CNPJValidator.isValid(value.toString())) {
-                result = customErrorMessage ?? "⚠  CNPJ inválido";
+                result = customErrorMessage ?? context.l10n.validation_cnpj;
               } else {
                 result = null;
               }
@@ -230,7 +226,7 @@ class FieldValidator {
         case ValidateTypes.numeric:
           {
             if (value == null) {
-              result = customErrorMessage ?? "⚠  Número inválido";
+              result = customErrorMessage ?? context.l10n.validation_numeric;
             }
 
             if (double.tryParse(value) != null) {
@@ -243,7 +239,7 @@ class FieldValidator {
           {
             var isNumber = Validator.isNumeric(value);
             if (!isNumber) {
-              result = customErrorMessage ?? "⚠  Número inválido";
+              result = customErrorMessage ?? context.l10n.validation_number;
             } else {
               result = null;
             }
@@ -253,8 +249,7 @@ class FieldValidator {
           {
             var number = double.parse(value);
             if (number <= 0) {
-              result =
-                  customErrorMessage ?? "⚠  Insira um número maior que zero";
+              result = customErrorMessage ?? context.l10n.validation_greaterThanZeroDecimal;
             } else {
               result = null;
             }
@@ -267,7 +262,7 @@ class FieldValidator {
             if (number is int) {
               result = null;
             } else {
-              result = customErrorMessage ?? "⚠  Insira um número inteiro";
+              result = customErrorMessage ?? context.l10n.validation_isInteger;
             }
             break;
           }
@@ -275,8 +270,7 @@ class FieldValidator {
           {
             var number = int.parse(value);
             if (number < 1) {
-              result =
-                  customErrorMessage ?? "⚠  Insira um número maior que zero";
+              result = customErrorMessage ?? context.l10n.validation_greaterThanZero;
             } else {
               result = null;
             }
@@ -286,24 +280,16 @@ class FieldValidator {
           {
             if (value.runtimeType == int || value.runtimeType == double) {
               if (value > valueRule) {
-                result = customErrorMessage ??
-                    "⚠  Número deve ser menor ou igual a {{p1}}."
-                        .replaceAll("{{p1}}", valueRule.toString());
+                result = customErrorMessage ?? context.l10n.validation_maxNumber(valueRule.toString());
               } else {
                 result = null;
               }
             } else if (value.runtimeType == String) {
               if (value.toString().length > valueRule) {
-                result = customErrorMessage ??
-                    "⚠  Esse campo deve ter no máximo {{p1}} caractere(s)"
-                        .replaceAll("{{p1}}", valueRule.toString());
+                result = customErrorMessage ?? context.l10n.validation_maxChars(valueRule.toString());
               } else {
                 result = null;
               }
-            } else {
-              result = customErrorMessage ??
-                  "⚠  Esse campo deve ter no máximo {{p1}} caractere(s)"
-                      .replaceAll("{{p1}}", valueRule.toString());
             }
             break;
           }
@@ -312,9 +298,7 @@ class FieldValidator {
             var val = int.parse(value);
 
             if (val > valueRule) {
-              result = customErrorMessage ??
-                  "⚠  Idade máxima {{p1}} anos"
-                      .replaceAll("{{p1}}", valueRule.toString());
+              result = customErrorMessage ?? context.l10n.validation_maxAge(valueRule.toString());
             } else {
               result = null;
             }
@@ -325,9 +309,7 @@ class FieldValidator {
           {
             var val = int.parse(value);
             if (valueRule > val) {
-              result = customErrorMessage ??
-                  "⚠  Idade mínima {{p1}} anos"
-                      .replaceAll("{{p1}}", valueRule.toString());
+              result = customErrorMessage ?? context.l10n.validation_minAge(valueRule.toString());
             } else {
               result = null;
             }
@@ -338,24 +320,16 @@ class FieldValidator {
           {
             if (value.runtimeType == int || value.runtimeType == double) {
               if (value < valueRule) {
-                result = customErrorMessage ??
-                    "⚠  Número deve ser maior ou igual a {{p1}}."
-                        .replaceAll("{{p1}}", valueRule.toString());
+                result = customErrorMessage ?? context.l10n.validation_minNumber(valueRule.toString());
               } else {
                 result = null;
               }
             } else if (value.runtimeType == String) {
               if (value.toString().length < valueRule) {
-                result = customErrorMessage ??
-                    "⚠  Esse campo deve ter no mínimo {{p1}} caractere(s)"
-                        .replaceAll("{{p1}}", valueRule.toString());
+                result = customErrorMessage ?? context.l10n.validation_minChars(valueRule.toString());
               } else {
                 result = null;
               }
-            } else {
-              result = customErrorMessage ??
-                  "⚠  Esse campo deve ter no mínimo {{p1}} caractere(s)"
-                      .replaceAll("{{p1}}", valueRule.toString());
             }
             break;
           }
@@ -365,16 +339,14 @@ class FieldValidator {
               if (!EnrollValidator.isValid(value.toString()) &&
                   !CNPJValidator.isValid(value.toString()) &&
                   !CPFValidator.isValid(value.toString())) {
-                result =
-                    customErrorMessage ?? "⚠ E-mail ou matrícula inválido.";
+                result = customErrorMessage ?? context.l10n.validation_emailOrRegistration;
               } else {
                 result = null;
               }
             } else {
               var emailValid = Validator.email(value.toString());
               if (!emailValid) {
-                result =
-                    customErrorMessage ?? "⚠ E-mail ou matrícula inválido.";
+                result = customErrorMessage ?? context.l10n.validation_emailOrRegistration;
               } else {
                 result = null;
               }

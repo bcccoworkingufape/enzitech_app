@@ -4,14 +4,12 @@ import 'package:flutter/material.dart';
 // 🌎 Project imports:
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
-import '../../domain/usecases/create_account/create_account_usecase.dart';
+import '../../domain/usecases/auth/auth_usecase.dart';
 
 class CreateAccountViewmodel extends ChangeNotifier {
-  final CreateAccountUseCase _createAccountUseCase;
+  final AuthUseCase _authAccountUseCase;
 
-  CreateAccountViewmodel(
-    this._createAccountUseCase,
-  );
+  CreateAccountViewmodel(this._authAccountUseCase);
 
   StateEnum _state = StateEnum.idle;
   StateEnum get state => _state;
@@ -26,14 +24,9 @@ class CreateAccountViewmodel extends ChangeNotifier {
     _failure = failure;
   }
 
-  Future<void> createUser(
-    String name,
-    String institution,
-    String email,
-    String password,
-  ) async {
+  Future<void> createUser(String name, String institution, String email, String password) async {
     setStateEnum(StateEnum.loading);
-    var result = await _createAccountUseCase(
+    var result = await _authAccountUseCase.createAccount(
       name: name.trim(),
       email: email.trim(),
       password: password.trim(),

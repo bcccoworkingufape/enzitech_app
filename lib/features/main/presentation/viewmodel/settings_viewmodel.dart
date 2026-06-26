@@ -8,32 +8,33 @@ import 'package:url_launcher/url_launcher.dart';
 // 🌎 Project imports:
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
+import '../../../../shared/l10n/app_localizations.dart';
 import '../../../../shared/utils/utils.dart';
 import '../../../authentication/domain/entities/user_entity.dart';
 import '../../domain/entities/app_info_entity.dart';
-import '../../domain/usecases/clear_user/clear_user_usecase.dart';
-import '../../domain/usecases/get_exclude_confirmation/get_exclude_confirmation_usecase.dart';
-import '../../domain/usecases/get_theme_mode/get_theme_mode_usecase.dart';
-import '../../domain/usecases/get_user/get_user_usecase.dart';
-import '../../domain/usecases/save_exclude_confirmation/save_exclude_confirmation_usecase.dart';
-import '../../domain/usecases/save_theme_mode/save_theme_mode_usecase.dart';
+import '../../domain/usecases/user_preferences_usecases.dart';
 
 class SettingsViewmodel extends ChangeNotifier {
-  final GetUserUseCase _getUserUseCase;
-  final GetExcludeConfirmationUseCase _getExcludeConfirmationUseCase;
-  final SaveExcludeConfirmationUseCase _saveExcludeConfirmationUseCase;
-  final GetThemeModeUseCase _getThemeModeUseCase;
-  final SaveThemeModeUseCase _saveThemeModeUseCase;
-  final ClearUserUseCase _clearUserUseCase;
+  final UserPreferencesUseCases _userPreferencesUseCases;
 
-  SettingsViewmodel(
-    this._getUserUseCase,
-    this._getExcludeConfirmationUseCase,
-    this._saveExcludeConfirmationUseCase,
-    this._getThemeModeUseCase,
-    this._saveThemeModeUseCase,
-    this._clearUserUseCase,
-  );
+  SettingsViewmodel(this._userPreferencesUseCases);
+
+  bool _isReplaceLanguage = false;
+  bool get isReplaceLanguage => _isReplaceLanguage;
+  void setReplaceLanguage(bool isReplaceLanguage) {
+    _isReplaceLanguage = isReplaceLanguage;
+    _userPreferencesUseCases.saveReplaceLanguage(isReplaceLanguage);
+    notifyListeners();
+  }
+
+  List<Locale> get locales => AppLocalizations.supportedLocales;
+
+  Locale _locale = const Locale('en');
+  Locale get locale => _locale;
+  void setLocale(Locale locale) {
+    _locale = locale;
+    notifyListeners();
+  }
 
   StateEnum _state = StateEnum.idle;
   StateEnum get state => _state;
@@ -62,22 +63,13 @@ class SettingsViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  get getEnviroment {
-    switch (API.enviroment) {
-      case EnvironmentEnum.dev:
-        return 'Desenvolvimento';
-      case EnvironmentEnum.stage:
-        return 'Teste';
-      case EnvironmentEnum.prod:
-        return 'Produção';
-    }
-  }
+  EnvironmentEnum get environment => API.enviroment;
 
   bool? _enableExcludeConfirmation;
   bool? get enableExcludeConfirmation => _enableExcludeConfirmation;
   void setEnableExcludeConfirmation(bool enableExcludeExperimentConfirmation) {
     _enableExcludeConfirmation = enableExcludeExperimentConfirmation;
-    _saveExcludeConfirmationUseCase(enableExcludeExperimentConfirmation);
+    _userPreferencesUseCases.saveExcludeConfirmation(enableExcludeExperimentConfirmation);
     notifyListeners();
   }
 
@@ -85,12 +77,12 @@ class SettingsViewmodel extends ChangeNotifier {
   ThemeMode get themeMode => _themeMode;
   void setThemeMode(ThemeMode newThemeMode) {
     _themeMode = newThemeMode;
-    _saveThemeModeUseCase(_themeMode);
+    _userPreferencesUseCases.saveThemeMode(_themeMode);
     notifyListeners();
   }
 
   Future<void> updateThemeMode() async {
-    setThemeMode(await _getThemeModeUseCase());
+    setThemeMode(await _userPreferencesUseCases.getThemeMode());
   }
 
   String _savedPath = '';
@@ -100,10 +92,30 @@ class SettingsViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  logout() async {
+  Future<void> updateLocale(BuildContext context) async {
+    final locale = Localizations.localeOf(context);
+
+    //* switch between locales
+    switch (locale.languageCode) {
+      case 'en':
+        setLocale(const Locale('tr'));
+        break;
+      case 'tr':
+        setLocale(const Locale('de'));
+        break;
+      case 'de':
+        setLocale(const Locale('en'));
+        break;
+      default:
+        setLocale(const Locale('en'));
+        break;
+    }
+  }
+
+  Future<void> logout() async {
     setStateEnum(StateEnum.loading);
     try {
-      _clearUserUseCase();
+      _userPreferencesUseCases.clearUser();
 
       setStateEnum(StateEnum.success);
 
@@ -126,9 +138,9 @@ class SettingsViewmodel extends ChangeNotifier {
   }
 
   Future<void> loadPreferences() async {
-    setThemeMode(await _getThemeModeUseCase());
+    setThemeMode(await _userPreferencesUseCases.getThemeMode());
 
-    var resultConfirmation = await _getExcludeConfirmationUseCase();
+    var resultConfirmation = await _userPreferencesUseCases.getExcludeConfirmation();
     resultConfirmation.fold(
       (error) {
         _setFailure(error);
@@ -136,6 +148,18 @@ class SettingsViewmodel extends ChangeNotifier {
       },
       (success) async {
         setEnableExcludeConfirmation(success);
+        notifyListeners();
+      },
+    );
+
+    var resultReplaceLanguage = await _userPreferencesUseCases.getReplaceLanguage();
+    resultReplaceLanguage.fold(
+      (error) {
+        _setFailure(error);
+        setStateEnum(StateEnum.error);
+      },
+      (success) async {
+        setReplaceLanguage(success);
         notifyListeners();
       },
     );
@@ -165,7 +189,7 @@ class SettingsViewmodel extends ChangeNotifier {
   Future<void> loadAccount() async {
     setStateEnum(StateEnum.loading);
 
-    var result = await _getUserUseCase();
+    var result = await _userPreferencesUseCases.getUser();
 
     result.fold(
       (error) {
@@ -180,11 +204,10 @@ class SettingsViewmodel extends ChangeNotifier {
   }
 
   Future<void> openUrl(String url) async {
-    if (await canLaunchUrl(Uri.parse(url))) {
+    try {
       await launchUrl(Uri.parse(url));
-    } else {
-      throw UnableToOpenUrlFailure(
-          message: 'Não foi possível acessar ${Uri.parse(url)}');
+    } catch (e) {
+      throw UnableToOpenUrlFailure(message: url);
     }
   }
 }

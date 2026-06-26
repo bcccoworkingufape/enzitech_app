@@ -8,11 +8,5 @@ class UserEntity {
   String id;
   UserTypeEnum userType;
 
-  UserEntity({
-    required this.token,
-    required this.name,
-    required this.email,
-    required this.id,
-    required this.userType,
-  });
+  UserEntity({required this.token, required this.name, required this.email, required this.id, required this.userType});
 }

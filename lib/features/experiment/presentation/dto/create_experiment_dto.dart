@@ -8,13 +8,7 @@ class CreateExperimentDTO {
   List<String>? treatmentsIDs;
   List<EnzymeEntity>? enzymes;
 
-  CreateExperimentDTO({
-    this.name,
-    this.description,
-    this.repetitions,
-    this.treatmentsIDs,
-    this.enzymes,
-  });
+  CreateExperimentDTO({this.name, this.description, this.repetitions, this.treatmentsIDs, this.enzymes});
 
   @override
   String toString() {

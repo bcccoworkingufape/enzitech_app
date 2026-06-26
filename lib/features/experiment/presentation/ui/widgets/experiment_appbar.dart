@@ -2,11 +2,11 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
+import '../../../../../shared/extensions/extensions.dart';
 import 'ezt_create_experiment_step_indicator.dart';
 
 class ExperimentAppBar extends StatefulWidget implements PreferredSizeWidget {
-  const ExperimentAppBar({super.key})
-      : preferredSize = const Size.fromHeight(kToolbarHeight * 3);
+  const ExperimentAppBar({super.key}) : preferredSize = const Size.fromHeight(kToolbarHeight * 3);
 
   @override
   final Size preferredSize; //* Default is 56.0
@@ -20,12 +20,12 @@ class _ExperimentAppBarState extends State<ExperimentAppBar> {
   Widget build(BuildContext context) {
     return AppBar(
       toolbarHeight: 120,
-      flexibleSpace: const SafeArea(
+      flexibleSpace: SafeArea(
         child: Column(
           children: [
             EZTCreateExperimentStepIndicator(
-              title: "Cadastre um novo experimento",
-              message: "Etapa 1 de 4 - Identificação",
+              title: context.l10n.registerNewExperiment,
+              message: context.l10n.stepIndicatorIdentification(1, 4),
             ),
           ],
         ),

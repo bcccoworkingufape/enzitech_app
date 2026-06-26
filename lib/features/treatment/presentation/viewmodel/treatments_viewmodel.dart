@@ -5,17 +5,12 @@ import 'package:flutter/material.dart';
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
 import '../../domain/entities/treatment_entity.dart';
-import '../../domain/usecases/delete_treatment/delete_treatment_usecase.dart';
-import '../../domain/usecases/get_treatments/get_treatments_usecase.dart';
+import '../../domain/usecases/treatments_usecases.dart';
 
 class TreatmentsViewmodel extends ChangeNotifier {
-  final GetTreatmentsUseCase _getTreatmentsUseCase;
-  final DeleteTreatmentUseCase _deleteTreatmentUseCase;
+  final TreatmentsUseCases _treatmentsUseCases;
 
-  TreatmentsViewmodel(
-    this._getTreatmentsUseCase,
-    this._deleteTreatmentUseCase,
-  );
+  TreatmentsViewmodel(this._treatmentsUseCases);
 
   StateEnum _state = StateEnum.idle;
   StateEnum get state => _state;
@@ -43,7 +38,7 @@ class TreatmentsViewmodel extends ChangeNotifier {
   Future<void> fetch({int pagination = 1}) async {
     setStateEnum(StateEnum.loading);
 
-    var result = await _getTreatmentsUseCase();
+    var result = await _treatmentsUseCases.getTreatments();
 
     result.fold(
       (error) {
@@ -58,14 +53,11 @@ class TreatmentsViewmodel extends ChangeNotifier {
   }
 
   Future<void> deleteTreatment(String id) async {
-    var result = await _deleteTreatmentUseCase(id);
+    var result = await _treatmentsUseCases.deleteTreatment(id);
 
-    result.fold(
-      (error) {
-        _setFailure(error);
-        setStateEnum(StateEnum.error);
-      },
-      (success) async {},
-    );
+    result.fold((error) {
+      _setFailure(error);
+      setStateEnum(StateEnum.error);
+    }, (success) async {});
   }
 }

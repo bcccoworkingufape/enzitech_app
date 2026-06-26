@@ -1,18 +1,15 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
+// 📦 Package imports:
+import 'package:intl/intl.dart';
+
 // 🌎 Project imports:
-import '../../../../../shared/extensions/context_theme_mode_extensions.dart';
+import '../../../../../shared/extensions/build_context_extensions.dart';
 import '../../../../../shared/ui/ui.dart';
-import '../../../../../shared/utils/utils.dart';
 
 class TreatmentCard extends StatefulWidget {
-  const TreatmentCard({
-    super.key,
-    required this.name,
-    required this.createdAt,
-    required this.description,
-  });
+  const TreatmentCard({super.key, required this.name, required this.createdAt, required this.description});
 
   final String name;
   final DateTime createdAt;
@@ -27,6 +24,9 @@ class _TreatmentCardState extends State<TreatmentCard> {
 
   @override
   Widget build(BuildContext context) {
+    final locale = Localizations.localeOf(context).toString();
+    final formattedDate = DateFormat.yMd(locale).format(widget.createdAt);
+
     return GestureDetector(
       onTap: () => setState(() {
         expanded = !expanded;
@@ -39,28 +39,16 @@ class _TreatmentCardState extends State<TreatmentCard> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              EZTMarqueeOnDemand(
-                text: widget.name,
-                textStyle: TextStyles(context).titleMoreBoldHeadingColored,
-              ),
-              const SizedBox(
-                height: 2,
-              ),
-              Text(
-                'Criado em ${Toolkit.formatBrDate(widget.createdAt)}',
-                style: TextStyles.bodyMinRegular,
-              ),
-              const SizedBox(
-                height: 16,
-              ),
+              EZTMarqueeOnDemand(text: widget.name, textStyle: TextStyles(context).titleMoreBoldHeadingColored),
+              const SizedBox(height: 2),
+              Text(context.l10n.createdOn(formattedDate), style: TextStyles.bodyMinRegular),
+              const SizedBox(height: 16),
               Text(
                 widget.description,
                 maxLines: expanded ? 100 : 2,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.justify,
-                style: TextStyles(context).bodyRegular.copyWith(
-                      fontSize: 16.0,
-                    ),
+                style: TextStyles(context).bodyRegular.copyWith(fontSize: 16.0),
               ),
             ],
           ),

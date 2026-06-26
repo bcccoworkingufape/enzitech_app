@@ -3,22 +3,19 @@ import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 // 🌎 Project imports:
 import '../../../../../core/routing/routing.dart';
-import '../../../../../shared/extensions/context_theme_mode_extensions.dart';
+import '../../../../../shared/extensions/build_context_extensions.dart';
 import '../../../../../shared/ui/ui.dart';
 import '../../../../../shared/utils/utils.dart';
 import '../../../domain/entities/experiment_entity.dart';
 import '../../viewmodel/experiment_details_viewmodel.dart';
 
 class ExperimentCard extends StatefulWidget {
-  const ExperimentCard({
-    super.key,
-    required this.experiment,
-    this.indexOfExperiment,
-  });
+  const ExperimentCard({super.key, required this.experiment, this.indexOfExperiment});
 
   final ExperimentEntity experiment;
   final int? indexOfExperiment;
@@ -30,13 +27,13 @@ class ExperimentCard extends StatefulWidget {
 class _ExperimentCardState extends State<ExperimentCard> {
   @override
   Widget build(BuildContext context) {
+    final locale = Localizations.localeOf(context).toString();
+    final formattedDate = DateFormat.yMd(locale).format(widget.experiment.updatedAt);
+
     return IntrinsicHeight(
       child: Container(
         decoration: const BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topRight: Radius.circular(16),
-            bottomRight: Radius.circular(16),
-          ),
+          borderRadius: BorderRadius.only(topRight: Radius.circular(16), bottomRight: Radius.circular(16)),
         ),
         margin: const EdgeInsets.all(0),
         child: Padding(
@@ -47,18 +44,10 @@ class _ExperimentCardState extends State<ExperimentCard> {
             surfaceTintColor: context.getApplyedColorScheme.secondaryContainer,
             child: InkWell(
               onTap: () {
-                GetIt.I
-                    .get<ExperimentDetailsViewmodel>()
-                    .getExperimentDetails(widget.experiment.id);
-                Navigator.pushNamed(
-                  context,
-                  Routing.experimentDetailed,
-                  arguments: widget.experiment,
-                );
+                GetIt.I.get<ExperimentDetailsViewmodel>().getExperimentDetails(widget.experiment.id);
+                Navigator.pushNamed(context, Routing.experimentDetailed, arguments: widget.experiment);
               },
-              borderRadius: const BorderRadius.all(
-                Radius.circular(16),
-              ),
+              borderRadius: const BorderRadius.all(Radius.circular(16)),
               child: Row(
                 children: [
                   if (widget.indexOfExperiment != null)
@@ -75,58 +64,39 @@ class _ExperimentCardState extends State<ExperimentCard> {
                         child: Center(
                           child: Text(
                             widget.indexOfExperiment.toString(),
-                            style: TextStyles(context).titleMinBoldBackground(
-                              color: context.getApplyedColorScheme.onPrimary,
-                            ),
+                            style: TextStyles(
+                              context,
+                            ).titleMinBoldBackground(color: context.getApplyedColorScheme.onPrimary),
                           ),
                         ),
                       ),
                     ),
-                  if (widget.indexOfExperiment != null)
-                    const SizedBox(
-                      width: 8,
-                    ),
+                  if (widget.indexOfExperiment != null) const SizedBox(width: 8),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const SizedBox(
-                          height: 8,
-                        ),
+                        const SizedBox(height: 8),
                         Text(
                           widget.experiment.name,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style:
-                              TextStyles(context).titleMoreBoldHeadingColored,
+                          style: TextStyles(context).titleMoreBoldHeadingColored,
                         ),
-                        const SizedBox(
-                          height: 2,
-                        ),
-                        Text(
-                          'Modificado em ${Toolkit.formatBrDate(widget.experiment.updatedAt)}',
-                          style: TextStyles.bodyMinRegular,
-                        ),
-                        const SizedBox(
-                          height: 16,
-                        ),
+                        const SizedBox(height: 2),
+                        Text(context.l10n.modifiedOn(formattedDate), style: TextStyles.bodyMinRegular),
+                        const SizedBox(height: 16),
                         Text(
                           widget.experiment.description,
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyles(context).bodyRegular.copyWith(
-                                fontSize: 16.0,
-                              ),
+                          style: TextStyles(context).bodyRegular.copyWith(fontSize: 16.0),
                         ),
-                        const SizedBox(
-                          height: 16,
-                        ),
+                        const SizedBox(height: 16),
                       ],
                     ),
                   ),
-                  const SizedBox(
-                    width: 32,
-                  ),
+                  const SizedBox(width: 32),
                   CircularPercentIndicator(
                     radius: 40,
                     lineWidth: 12.0,
@@ -138,12 +108,9 @@ class _ExperimentCardState extends State<ExperimentCard> {
                       style: TextStyles(context).buttonPrimary,
                     ),
                     progressColor: context.getApplyedColorScheme.primary,
-                    backgroundColor:
-                        context.getApplyedColorScheme.primary.withOpacity(0.4),
+                    backgroundColor: context.getApplyedColorScheme.primary.withValues(alpha: 0.4),
                   ),
-                  const SizedBox(
-                    width: 10,
-                  ),
+                  const SizedBox(width: 10),
                 ],
               ),
             ),

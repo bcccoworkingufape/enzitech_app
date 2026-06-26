@@ -9,7 +9,8 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../core/routing/routing.dart';
-import '../../../../../../shared/extensions/context_theme_mode_extensions.dart';
+import '../../../../../../shared/extensions/build_context_extensions.dart';
+import '../../../../../../shared/l10n/app_localizations.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../../../main/presentation/viewmodel/home_viewmodel.dart';
 import '../../../viewmodel/experiments_viewmodel.dart';
@@ -18,9 +19,7 @@ import '../../widgets/experiment_exclusion_dialog.dart';
 import '../../widgets/experiment_filter_dialog.dart';
 
 class ExperimentsPage extends StatefulWidget {
-  const ExperimentsPage({
-    super.key,
-  });
+  const ExperimentsPage({super.key});
 
   @override
   State<ExperimentsPage> createState() => _ExperimentsPageState();
@@ -30,8 +29,6 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
   late final ExperimentsViewmodel _experimentsViewmodel;
   late final HomeViewmodel _homeViewmodel;
   final Key _refreshIndicatorKey = GlobalKey();
-
-  List<bool> isSelected = [true, false];
 
   int selectedButtonSegment = 0;
 
@@ -43,8 +40,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
 
     _experimentsViewmodel.scrollController.addListener(() {
       if (_experimentsViewmodel.scrollController.position.pixels >
-              _experimentsViewmodel.scrollController.position.maxScrollExtent -
-                  200 &&
+              _experimentsViewmodel.scrollController.position.maxScrollExtent - 200 &&
           _experimentsViewmodel.hasNextPage) {
         if (_experimentsViewmodel.state != StateEnum.loading) {
           _experimentsViewmodel.fetch(pagination: _experimentsViewmodel.page);
@@ -53,39 +49,36 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
     });
 
     if (mounted) {
-      _experimentsViewmodel.addListener(
-        () async {
-          if (_experimentsViewmodel.state == StateEnum.error && mounted) {
-            EZTSnackBar.clear(context);
-            EZTSnackBar.show(
-              context,
-              HandleFailure.of(_experimentsViewmodel.failure!),
-              eztSnackBarType: EZTSnackBarType.error,
-            );
-            if (_experimentsViewmodel.failure
-                    is ExpiredTokenOrWrongUserFailure ||
-                _experimentsViewmodel.failure
-                    is UserNotFoundOrWrongTokenFailure ||
-                _experimentsViewmodel.failure is SessionNotFoundFailure) {
-              _homeViewmodel.accountViewmodel.logout();
+      _experimentsViewmodel.addListener(() async {
+        if (_experimentsViewmodel.state == StateEnum.error && mounted) {
+          EZTSnackBar.clear(context);
+          EZTSnackBar.show(
+            context,
+            HandleFailure.of(context.l10n, _experimentsViewmodel.failure!),
+            eztSnackBarType: EZTSnackBarType.error,
+          );
+          if (_experimentsViewmodel.failure is ExpiredTokenOrWrongUserFailure ||
+              _experimentsViewmodel.failure is UserNotFoundOrWrongTokenFailure ||
+              _experimentsViewmodel.failure is SessionNotFoundFailure) {
+            _homeViewmodel.accountViewmodel.logout();
 
-              if (_homeViewmodel.accountViewmodel.state == StateEnum.success &&
-                  mounted) {
-                EZTSnackBar.show(
-                  context,
-                  "Faça seu login novamente.",
-                );
-                await Future.delayed(const Duration(milliseconds: 500));
-                if (mounted) {
-                  Navigator.pushReplacementNamed(context, Routing.login);
-                  GetIt.I.get<HomeViewmodel>().setFragmentIndex(0);
-                }
+            if (_homeViewmodel.accountViewmodel.state == StateEnum.success && mounted) {
+              EZTSnackBar.show(context, AppLocalizations.of(context).loginAgain);
+              await Future.delayed(const Duration(milliseconds: 500));
+              if (mounted) {
+                Navigator.pushReplacementNamed(context, Routing.login);
+                GetIt.I.get<HomeViewmodel>().setFragmentIndex(0);
               }
             }
           }
-        },
-      );
+        }
+      });
     }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
   }
 
   Future<void> _showFiltersDialog() async {
@@ -100,36 +93,22 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
 
   Widget _buildExperimentsList(double height) {
     if (_experimentsViewmodel.state == StateEnum.error) {
-      return const EZTForcedCenter(
-        child: EZTError(
-          message: 'Erro ao carregar experimentos',
-        ),
-      );
+      return EZTForcedCenter(child: EZTError(message: context.l10n.errorLoadingExperiments));
     }
 
-    if (_experimentsViewmodel.state == StateEnum.loading &&
-        _experimentsViewmodel.isLoadingMoreRunning == false) {
-      return const EZTProgressIndicator(
-        message: "Carregando experimentos...",
-      );
+    if (_experimentsViewmodel.state == StateEnum.loading && _experimentsViewmodel.isLoadingMoreRunning == false) {
+      return EZTProgressIndicator(message: context.l10n.loadingExperiments);
     }
 
-    if (_experimentsViewmodel.state == StateEnum.success &&
-        _experimentsViewmodel.experiments.isEmpty) {
-      return const EZTForcedCenter(
-        child: EZTNotFound(
-          message: "Experimentos não encontrados",
-        ),
-      );
+    if (_experimentsViewmodel.state == StateEnum.success && _experimentsViewmodel.experiments.isEmpty) {
+      return EZTForcedCenter(child: EZTNotFound(message: context.l10n.experimentsNotFound));
     }
 
     return ListView.builder(
       key: PageStorageKey(_homeViewmodel.fragmentIndex),
       controller: _experimentsViewmodel.scrollController,
       shrinkWrap: true,
-      physics: const AlwaysScrollableScrollPhysics(
-        parent: BouncingScrollPhysics(),
-      ),
+      physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
       itemCount: _experimentsViewmodel.experiments.length + 1,
       itemBuilder: (context, index) {
         if (index < _experimentsViewmodel.experiments.length) {
@@ -150,23 +129,21 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
 
                   EZTSnackBar.show(
                     context,
-                    '${experiment.name} excluído!',
+                    context.l10n.experimentDeleted(experiment.name),
                     eztSnackBarType: EZTSnackBarType.error,
                     action: SnackBarAction(
-                      label: 'Desfazer',
+                      label: context.l10n.undo,
                       textColor: context.getApplyedColorScheme.onError,
                       onPressed: () {
                         setState(() {
-                          _experimentsViewmodel.experiments
-                              .insert(index, experiment);
+                          _experimentsViewmodel.experiments.insert(index, experiment);
                           permanentlyDeleted = false;
                         });
                       },
                     ),
                     onDismissFunction: () async {
                       if (permanentlyDeleted) {
-                        await _experimentsViewmodel
-                            .deleteExperiment(experiment.id);
+                        await _experimentsViewmodel.deleteExperiment(experiment.id);
                       }
                     },
                   );
@@ -183,10 +160,8 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                           color: context.getApplyedColorScheme.onError,
                         ),
                         Text(
-                          'Excluir',
-                          style: TextStyle(
-                            color: context.getApplyedColorScheme.onError,
-                          ),
+                          context.l10n.delete,
+                          style: TextStyle(color: context.getApplyedColorScheme.onError),
                           textAlign: TextAlign.right,
                         ),
                       ],
@@ -194,21 +169,17 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                   ),
                 ),
                 direction: DismissDirection.endToStart,
-                confirmDismiss:
-                    _homeViewmodel.accountViewmodel.enableExcludeConfirmation!
-                        ? (DismissDirection direction) async {
-                            return await showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return const ExperimentExclusionDialog();
-                              },
-                            );
-                          }
-                        : null,
-                child: ExperimentCard(
-                  experiment: experiment,
-                  indexOfExperiment: index + 1,
-                ),
+                confirmDismiss: _homeViewmodel.accountViewmodel.enableExcludeConfirmation!
+                    ? (DismissDirection direction) async {
+                        return await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return const ExperimentExclusionDialog();
+                          },
+                        );
+                      }
+                    : null,
+                child: ExperimentCard(experiment: experiment, indexOfExperiment: index + 1),
               ),
               if (_experimentsViewmodel.isLoadingMoreRunning == false &&
                   _experimentsViewmodel.hasNextPage == true &&
@@ -224,25 +195,21 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                   padding: EdgeInsets.only(top: 10, bottom: 20),
                   child: Center(child: CircularProgressIndicator()),
                 ),
-              if (_experimentsViewmodel.hasNextPage == false &&
-                  _experimentsViewmodel.state == StateEnum.success)
+              if (_experimentsViewmodel.hasNextPage == false && _experimentsViewmodel.state == StateEnum.success)
                 Padding(
                   padding: const EdgeInsets.fromLTRB(4, 0, 4, 16),
                   child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                     elevation: 4,
                     color: context.getApplyedColorScheme.tertiaryContainer,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 30, bottom: 30),
                       child: Center(
                         child: Text(
-                          'Todos os experimentos exibidos!',
-                          style: TextStyles(context).buttonPrimary.copyWith(
-                                color: context.getApplyedColorScheme.tertiary,
-                                fontSize: 20.0,
-                              ),
+                          context.l10n.allExperimentsDisplayed,
+                          style: TextStyles(
+                            context,
+                          ).buttonPrimary.copyWith(color: context.getApplyedColorScheme.tertiary, fontSize: 20.0),
                         ),
                       ),
                     ),
@@ -255,9 +222,6 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
     );
   }
 
-  String get isPlural =>
-      _experimentsViewmodel.totalOfExperiments > 1 ? 's ' : ' ';
-
   @override
   Widget build(BuildContext context) {
     var heightMQ = MediaQuery.of(context).size.height;
@@ -265,13 +229,27 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
     return ListenableBuilder(
       listenable: _experimentsViewmodel,
       builder: (context, child) {
+        // Calcula com segurança se a rolagem atingiu o máximo sem assumir que a posição não é nula.
+        bool isAtMaxScroll = false;
+
+        try {
+          final controller = _experimentsViewmodel.scrollController;
+          if (controller.hasClients && controller.positions.isNotEmpty) {
+            final pos = controller.position;
+            // Usando pixels em vez de deslocamento para compatibilidade com ScrollPosition.
+            isAtMaxScroll = pos.maxScrollExtent == pos.pixels;
+          }
+        } catch (_) {
+          // Em caso de qualquer estado inesperado, trata como não estando no máximo para evitar falhas.
+          isAtMaxScroll = false;
+        }
+
+        final bool absorbing = _experimentsViewmodel.scrollController.hasClients
+            ? (_experimentsViewmodel.state == StateEnum.loading && isAtMaxScroll)
+            : (_experimentsViewmodel.state == StateEnum.loading);
+
         return AbsorbPointer(
-          absorbing: _experimentsViewmodel.scrollController.hasClients
-              ? _experimentsViewmodel.state == StateEnum.loading &&
-                  _experimentsViewmodel
-                          .scrollController.position.maxScrollExtent ==
-                      _experimentsViewmodel.scrollController.offset
-              : _experimentsViewmodel.state == StateEnum.loading,
+          absorbing: absorbing,
           child: EZTPullToRefresh(
             key: _refreshIndicatorKey,
             onRefresh: () {
@@ -290,14 +268,12 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                         segments: <ButtonSegment<int>>[
                           ButtonSegment<int>(
                             value: 0,
-                            label: const Text('Em andamento'),
-                            icon: Icon(
-                              PhosphorIcons.clockClockwise(),
-                            ),
+                            label: Text(context.l10n.inProgress),
+                            icon: Icon(PhosphorIcons.clockClockwise()),
                           ),
                           ButtonSegment<int>(
                             value: 1,
-                            label: const Text('Concluído'),
+                            label: Text(context.l10n.completed),
                             icon: Icon(PhosphorIcons.checks()),
                           ),
                         ],
@@ -306,8 +282,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                           setState(() {
                             selectedButtonSegment = newSelection.first;
                             if (selectedButtonSegment == 0) {
-                              if (_experimentsViewmodel.finishedFilter !=
-                                  false) {
+                              if (_experimentsViewmodel.finishedFilter != false) {
                                 _experimentsViewmodel.setFinishedFilter(false);
                                 _experimentsViewmodel.fetch();
                                 return;
@@ -316,8 +291,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                               return;
                             }
 
-                            if (_experimentsViewmodel.finishedFilter ||
-                                !_homeViewmodel.hasInternetConnection) return;
+                            if (_experimentsViewmodel.finishedFilter || !_homeViewmodel.hasInternetConnection) return;
 
                             _experimentsViewmodel.setFinishedFilter(true);
                             _experimentsViewmodel.fetch();
@@ -340,15 +314,11 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                 ),
                 if (_experimentsViewmodel.experiments.isNotEmpty)
                   Text(
-                    "🔬 ${_experimentsViewmodel.totalOfExperiments} experimento${isPlural}encontrado$isPlural",
+                    context.l10n.experimentsFound(_experimentsViewmodel.totalOfExperiments),
                     style: TextStyles(context).link(fontSize: 16),
                   ),
-                const SizedBox(
-                  height: 16,
-                ),
-                Expanded(
-                  child: _buildExperimentsList(heightMQ),
-                ),
+                const SizedBox(height: 16),
+                Expanded(child: _buildExperimentsList(heightMQ)),
               ],
             ),
           ),

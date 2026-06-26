@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
 import '../../domain/entities/experiment_entity.dart';
-import '../../domain/usecases/get_experiment_by_id/get_experiment_by_id_usecase.dart';
+import '../../domain/usecases/experiments_usecases.dart';
 
 class ExperimentDetailsViewmodel extends ChangeNotifier {
-  final GetExperimentByIdUseCase _getExperimentByIdUseCase;
+  final ExperimentsUseCases _experimentsUseCases;
 
-  ExperimentDetailsViewmodel(this._getExperimentByIdUseCase);
+  ExperimentDetailsViewmodel(this._experimentsUseCases);
 
   StateEnum _state = StateEnum.idle;
   StateEnum get state => _state;
@@ -32,12 +32,10 @@ class ExperimentDetailsViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getExperimentDetails(
-    String id,
-  ) async {
+  Future<void> getExperimentDetails(String id) async {
     setStateEnum(StateEnum.loading);
 
-    var result = await _getExperimentByIdUseCase(id);
+    var result = await _experimentsUseCases.getExperimentById(id);
 
     result.fold(
       (error) {

@@ -7,28 +7,16 @@ extension EnzymeDto on EnzymeEntity {
     return EnzymeEntity(
       id: json['id'],
       name: json['name'],
-      variableA: json['variableA'] is String
-          ? double.parse(json['variableA']).toPrecision(5)
-          : json['variableA'],
-      variableB: json['variableB'] is String
-          ? double.parse(json['variableB']).toPrecision(5)
-          : json['variableB'],
+      variableA: json['variableA'] is String ? double.parse(json['variableA']).toPrecision(5) : json['variableA'],
+      variableB: json['variableB'] is String ? double.parse(json['variableB']).toPrecision(5) : json['variableB'],
       type: json['type'],
       formula: json['formula'] ?? 'Fórmula não informada',
-      createdAt:
-          json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
-      updatedAt:
-          json['updatedAt'] != null ? DateTime.parse(json['updatedAt']) : null,
+      createdAt: json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
+      updatedAt: json['updatedAt'] != null ? DateTime.parse(json['updatedAt']) : null,
       duration: json['duration'] != null ? int.parse(json['duration']) : null,
-      weightSample: json['weightSample'] != null
-          ? double.parse(json['weightSample']).toPrecision(5)
-          : null,
-      weightGround: json['weightGround'] != null
-          ? double.parse(json['weightGround']).toPrecision(5)
-          : null,
-      size: json['size'] != null
-          ? double.parse(json['size']).toPrecision(5)
-          : null,
+      weightSample: json['weightSample'] != null ? double.parse(json['weightSample']).toPrecision(5) : null,
+      weightGround: json['weightGround'] != null ? double.parse(json['weightGround']).toPrecision(5) : null,
+      size: json['size'] != null ? double.parse(json['size']).toPrecision(5) : null,
     );
   }
 

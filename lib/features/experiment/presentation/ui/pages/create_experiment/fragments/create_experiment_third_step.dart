@@ -7,6 +7,7 @@ import 'package:group_button/group_button.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 // 🌎 Project imports:
+import '../../../../../../../shared/extensions/extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../../../../../shared/utils/utils.dart';
 import '../../../../../../enzyme/domain/entities/enzyme_entity.dart';
@@ -16,17 +17,13 @@ import '../../../../viewmodel/create_experiment_viewmodel.dart';
 import '../create_experiment_fragment_template.dart';
 
 class CreateExperimentThirdStepPage extends StatefulWidget {
-  const CreateExperimentThirdStepPage({
-    super.key,
-  });
+  const CreateExperimentThirdStepPage({super.key});
 
   @override
-  State<CreateExperimentThirdStepPage> createState() =>
-      _CreateExperimentThirdStepPageState();
+  State<CreateExperimentThirdStepPage> createState() => _CreateExperimentThirdStepPageState();
 }
 
-class _CreateExperimentThirdStepPageState
-    extends State<CreateExperimentThirdStepPage> {
+class _CreateExperimentThirdStepPageState extends State<CreateExperimentThirdStepPage> {
   late final CreateExperimentViewmodel _createExperimentViewmodel;
   late final EnzymesViewmodel _enzymesViewmodel;
 
@@ -46,8 +43,7 @@ class _CreateExperimentThirdStepPageState
 
     _checkboxesController = GroupButtonController();
 
-    Future.delayed(const Duration(milliseconds: 1))
-        .whenComplete(() => _validateFields);
+    Future.delayed(const Duration(milliseconds: 1)).whenComplete(() => _validateFields);
 
     _initFields();
   }
@@ -57,18 +53,18 @@ class _CreateExperimentThirdStepPageState
 
     if (tempEnz.isNotEmpty) {
       for (var enz in tempEnz) {
-        _checkboxesController.selectIndex(_enzymesViewmodel.enzymes.indexOf(
-            _enzymesViewmodel.enzymes.firstWhere((e) => e.id == enz.id)));
+        _checkboxesController.selectIndex(
+          _enzymesViewmodel.enzymes.indexOf(_enzymesViewmodel.enzymes.firstWhere((e) => e.id == enz.id)),
+        );
 
-        _choosedCheckboxList
-            .add(_enzymesViewmodel.enzymes.firstWhere((e) => e.id == enz.id));
+        _choosedCheckboxList.add(_enzymesViewmodel.enzymes.firstWhere((e) => e.id == enz.id));
       }
     }
 
     setState(() {});
   }
 
-  get _validateFields {
+  void get _validateFields {
     if (_choosedCheckboxList.isNotEmpty) {
       setState(() {
         _createExperimentViewmodel.setEnableNextButtonOnThirdStep(true);
@@ -85,7 +81,7 @@ class _CreateExperimentThirdStepPageState
       children: [
         EZTButton(
           enabled: _createExperimentViewmodel.enableNextButtonOnThirdStep,
-          text: 'Próximo',
+          text: context.l10n.nextButton,
           onPressed: () {
             _createExperimentViewmodel.formKey.currentState!.save();
 
@@ -107,7 +103,7 @@ class _CreateExperimentThirdStepPageState
         ),
         const SizedBox(height: 16),
         EZTButton(
-          text: 'Voltar',
+          text: context.l10n.backButton,
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
             _createExperimentViewmodel.onBack(mounted, context);
@@ -120,36 +116,25 @@ class _CreateExperimentThirdStepPageState
   @override
   Widget build(BuildContext context) {
     return CreateExperimentFragmentTemplate(
-      titleOfStepIndicator: "Cadastre um novo experimento",
-      messageOfStepIndicator: "Etapa 3 de 4 - Enzimas",
+      titleOfStepIndicator: context.l10n.registerNewExperiment,
+      messageOfStepIndicator: context.l10n.stepIndicatorEnzymes(3, 4),
       body: SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(
-          parent: BouncingScrollPhysics(),
-        ),
+        physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           children: [
-            const SizedBox(
-              height: 32,
-            ),
+            const SizedBox(height: 32),
             Row(
               children: [
-                Icon(
-                  PhosphorIcons.flask(),
-                ),
+                Icon(PhosphorIcons.flask()),
                 const SizedBox(width: 4),
-                Text(
-                  'Enzimas do experimento',
-                  style: TextStyles.detailBold,
-                ),
+                Text(context.l10n.experimentEnzymes, style: TextStyles.detailBold),
               ],
             ),
             GroupButton(
               controller: _checkboxesController,
               isRadio: false,
-              options: const GroupButtonOptions(
-                groupingType: GroupingType.column,
-              ),
+              options: const GroupButtonOptions(groupingType: GroupingType.column),
               buttons: _checkboxButtons,
               buttonIndexedBuilder: (selected, index, context) {
                 return EZTCheckBoxTile(
@@ -158,34 +143,30 @@ class _CreateExperimentThirdStepPageState
                   onTap: () {
                     if (!selected) {
                       _checkboxesController.selectIndex(index);
-                      _choosedCheckboxList
-                          .add(_enzymesViewmodel.enzymes[index]);
+                      _choosedCheckboxList.add(_enzymesViewmodel.enzymes[index]);
                       setState(() {
-                        _createExperimentViewmodel
-                            .setEnableNextButtonOnThirdStep(
-                                _choosedCheckboxList.isNotEmpty);
+                        _createExperimentViewmodel.setEnableNextButtonOnThirdStep(_choosedCheckboxList.isNotEmpty);
                       });
 
                       return;
                     }
                     _checkboxesController.unselectIndex(index);
-                    _choosedCheckboxList
-                        .remove(_enzymesViewmodel.enzymes[index]);
+                    _choosedCheckboxList.remove(_enzymesViewmodel.enzymes[index]);
                     setState(() {
-                      _createExperimentViewmodel.setEnableNextButtonOnThirdStep(
-                          _choosedCheckboxList.isNotEmpty);
+                      _createExperimentViewmodel.setEnableNextButtonOnThirdStep(_choosedCheckboxList.isNotEmpty);
                     });
                   },
-                  color: Constants.dealWithEnzymeChipColor(
-                      _enzymesViewmodel.enzymes[index].type),
+                  color: Constants.dealWithEnzymeChipColor(_enzymesViewmodel.enzymes[index].type),
                   onTapTrailing: () {
                     EZTSnackBar.clear(context);
                     EZTSnackBar.show(
                       context,
-                      "Tipo da enzima: ${Constants.typesOfEnzymesListFormmated[Constants.typesOfEnzymesList.indexOf(_enzymesViewmodel.enzymes[index].type)]}",
-                      color: Constants.dealWithEnzymeChipColor(
-                        _enzymesViewmodel.enzymes[index].type,
+                      context.l10n.enzymeTypeIs(
+                        Constants.typesOfEnzymesListFormmated[Constants.typesOfEnzymesList.indexOf(
+                          _enzymesViewmodel.enzymes[index].type,
+                        )],
                       ),
+                      color: Constants.dealWithEnzymeChipColor(_enzymesViewmodel.enzymes[index].type),
                       textStyle: TextStyles(context).titleMinBoldBackground(),
                       centerTitle: true,
                     );
@@ -193,9 +174,7 @@ class _CreateExperimentThirdStepPageState
                 );
               },
             ),
-            const SizedBox(
-              height: 64,
-            ),
+            const SizedBox(height: 64),
             _buttons,
           ],
         ),

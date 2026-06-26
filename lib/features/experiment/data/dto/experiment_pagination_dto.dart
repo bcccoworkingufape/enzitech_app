@@ -7,18 +7,11 @@ extension ExperimentPaginationDto on ExperimentPaginationEntity {
   static ExperimentPaginationEntity fromJson(Map json) {
     return ExperimentPaginationEntity(
       total: json['total'],
-      experiments: List<ExperimentEntity>.from(
-        json['experiments'].map(
-          (x) => ExperimentDto.fromJson(x),
-        ),
-      ),
+      experiments: List<ExperimentEntity>.from(json['experiments'].map((x) => ExperimentDto.fromJson(x))),
     );
   }
 
   Map toJson() {
-    return {
-      'total': total,
-      'experiments': experiments.map((x) => x.toJson()).toList(),
-    };
+    return {'total': total, 'experiments': experiments.map((x) => x.toJson()).toList()};
   }
 }

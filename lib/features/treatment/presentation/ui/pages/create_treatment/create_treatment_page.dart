@@ -8,7 +8,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
-import '../../../../../../shared/extensions/context_theme_mode_extensions.dart';
+import '../../../../../../shared/extensions/build_context_extensions.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../../../../shared/utils/utils.dart';
 import '../../../../../../shared/validator/validator.dart';
@@ -32,11 +32,7 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
 
   bool enableCreate = false;
 
-  final validations = <ValidateRule>[
-    ValidateRule(
-      ValidateTypes.required,
-    ),
-  ];
+  final validations = <ValidateRule>[ValidateRule(ValidateTypes.required)];
 
   @override
   void initState() {
@@ -49,17 +45,13 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
         if (_createTreatmentViewmodel.state == StateEnum.error) {
           EZTSnackBar.show(
             context,
-            HandleFailure.of(_createTreatmentViewmodel.failure!),
+            HandleFailure.of(context.l10n, _createTreatmentViewmodel.failure!),
             eztSnackBarType: EZTSnackBarType.error,
           );
         } else if (_createTreatmentViewmodel.state == StateEnum.success) {
           _treatmentsViewmodel.fetch();
 
-          EZTSnackBar.show(
-            context,
-            "Tratamento criado com sucesso!",
-            eztSnackBarType: EZTSnackBarType.success,
-          );
+          EZTSnackBar.show(context, context.l10n.treatmentCreatedSuccess, eztSnackBarType: EZTSnackBarType.success);
 
           if (!mounted) return;
           Navigator.pop(context);
@@ -68,9 +60,8 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
     }
   }
 
-  get _validateFields {
-    if (_nameFieldController.text.isNotEmpty &&
-        _descriptionFieldController.text.isNotEmpty) {
+  void get _validateFields {
+    if (_nameFieldController.text.isNotEmpty && _descriptionFieldController.text.isNotEmpty) {
       setState(() {
         enableCreate = _formKey.currentState!.validate();
       });
@@ -81,7 +72,7 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
     }
   }
 
-  _body(BuildContext context) {
+  SingleChildScrollView _body(BuildContext context) {
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
       child: Column(
@@ -96,23 +87,14 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
           ),
           const SizedBox(height: 16),
           Center(
-            child: Text(
-              "Cadastre um novo\ntratamento",
-              style: TextStyles.titleHome,
-              textAlign: TextAlign.center,
-            ),
+            child: Text(context.l10n.registerNewTreatment, style: TextStyles.titleHome, textAlign: TextAlign.center),
           ),
           const SizedBox(height: 64),
           Row(
             children: [
-              Icon(
-                PhosphorIcons.flask(),
-              ),
+              Icon(PhosphorIcons.flask()),
               const SizedBox(width: 4),
-              Text(
-                'Identificação do tratamento',
-                style: TextStyles.detailBold,
-              ),
+              Text(context.l10n.treatmentIdentification, style: TextStyles.detailBold),
             ],
           ),
           _textFields,
@@ -123,13 +105,7 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
   }
 
   Widget get _textFields {
-    return Column(
-      children: [
-        _nameInput,
-        const SizedBox(height: 10),
-        _descriptionInput,
-      ],
-    );
+    return Column(children: [_nameInput, const SizedBox(height: 10), _descriptionInput]);
   }
 
   Widget get _nameInput {
@@ -137,7 +113,7 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
 
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,
-      labelText: "Nome",
+      labelText: context.l10n.nameLabel,
       usePrimaryColorOnFocusedBorder: true,
       keyboardType: TextInputType.name,
       controller: _nameFieldController,
@@ -151,7 +127,7 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
 
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,
-      labelText: "Descrição",
+      labelText: context.l10n.descriptionLabel,
       usePrimaryColorOnFocusedBorder: true,
       keyboardType: TextInputType.name,
       controller: _descriptionFieldController,
@@ -165,7 +141,7 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
       children: [
         EZTButton(
           enabled: enableCreate,
-          text: 'Criar tratamento',
+          text: context.l10n.createTreatmentButton,
           onPressed: () async {
             _formKey.currentState!.save();
             if (_formKey.currentState!.validate()) {
@@ -178,7 +154,7 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
         ),
         const SizedBox(height: 16),
         EZTButton(
-          text: 'Voltar',
+          text: context.l10n.backButton,
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
             Navigator.pop(context);
@@ -196,16 +172,10 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
           key: _formKey,
           child: Column(
             children: [
-              Expanded(
-                flex: 11,
-                child: Center(child: _body(context)),
-              ),
+              Expanded(flex: 11, child: Center(child: _body(context))),
               SizedBox(
                 height: 160,
-                child: Padding(
-                  padding: Constants.padding16all,
-                  child: _buttons,
-                ),
+                child: Padding(padding: Constants.padding16all, child: _buttons),
               ),
             ],
           ),

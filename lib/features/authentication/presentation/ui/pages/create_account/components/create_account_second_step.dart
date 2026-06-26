@@ -1,4 +1,6 @@
 // 🐦 Flutter imports:
+
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -6,7 +8,7 @@ import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 // 🌎 Project imports:
-import '../../../../../../../shared/extensions/context_theme_mode_extensions.dart';
+import '../../../../../../../shared/extensions/build_context_extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../../../../../shared/utils/utils.dart';
 import '../../../../../../../shared/validator/validator.dart';
@@ -41,7 +43,7 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
     super.initState();
   }
 
-  get _validateFields {
+  void get _validateFields {
     if (_emailFieldController.text.isNotEmpty &&
         _passwordFieldController.text.isNotEmpty &&
         _confirmPasswordFieldController.text.isNotEmpty) {
@@ -56,20 +58,13 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
   }
 
   Widget get _emailInput {
-    final validations = <ValidateRule>[
-      ValidateRule(
-        ValidateTypes.required,
-      ),
-      ValidateRule(
-        ValidateTypes.email,
-      ),
-    ];
+    final validations = <ValidateRule>[ValidateRule(ValidateTypes.required), ValidateRule(ValidateTypes.email)];
 
     final fieldValidator = FieldValidator(validations, context);
 
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,
-      labelText: "Email",
+      labelText: context.l10n.email,
       usePrimaryColorOnFocusedBorder: true,
       keyboardType: TextInputType.emailAddress,
       controller: _emailFieldController,
@@ -80,19 +75,15 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
 
   Widget get _passwordInput {
     final validations = <ValidateRule>[
-      ValidateRule(
-        ValidateTypes.required,
-      ),
-      ValidateRule(
-        ValidateTypes.strongPassword,
-      ),
+      ValidateRule(ValidateTypes.required),
+      ValidateRule(ValidateTypes.strongPassword),
     ];
 
     final fieldValidator = FieldValidator(validations, context);
 
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,
-      labelText: "Senha",
+      labelText: context.l10n.passwordLabel,
       usePrimaryColorOnFocusedBorder: true,
       keyboardType: TextInputType.emailAddress,
       controller: _passwordFieldController,
@@ -104,19 +95,15 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
 
   Widget get _confirmPasswordInput {
     final validations = <ValidateRule>[
-      ValidateRule(
-        ValidateTypes.required,
-      ),
-      ValidateRule(
-        ValidateTypes.passwordEquals,
-      ),
+      ValidateRule(ValidateTypes.required),
+      ValidateRule(ValidateTypes.passwordEquals),
     ];
 
     final fieldValidator = FieldValidator(validations, context);
 
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,
-      labelText: "Confirmar senha",
+      labelText: context.l10n.confirmPasswordLabel,
       usePrimaryColorOnFocusedBorder: true,
       keyboardType: TextInputType.emailAddress,
       controller: _confirmPasswordFieldController,
@@ -139,7 +126,7 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
     );
   }
 
-  _body(BuildContext context) {
+  SingleChildScrollView _body(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -152,23 +139,13 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
             ),
           ),
           const SizedBox(height: 16),
-          Center(
-            child: Text(
-              "Cadastre-se",
-              style: TextStyles.titleHome,
-            ),
-          ),
+          Center(child: Text(context.l10n.signUp, style: TextStyles.titleHome)),
           const SizedBox(height: 64),
           Row(
             children: [
-              Icon(
-                PhosphorIcons.at(PhosphorIconsStyle.bold),
-              ),
+              Icon(PhosphorIcons.at(PhosphorIconsStyle.bold)),
               const SizedBox(width: 4),
-              Text(
-                'Acesso',
-                style: TextStyles.detailBold,
-              ),
+              Text(context.l10n.access, style: TextStyles.detailBold),
             ],
           ),
           _textFields,
@@ -185,36 +162,31 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
       children: [
         EZTButton(
           enabled: enableNextButton,
-          text: 'Criar conta',
+          text: context.l10n.createAccountButton,
           onPressed: () async {
             if (formKeyFinal.currentState!.validate()) {
               var cacheMap = widget.userDataCache;
 
               cacheMap.update('email', (value) => _emailFieldController.text);
-              cacheMap.update(
-                  'password', (value) => _confirmPasswordFieldController.text);
+              cacheMap.update('password', (value) => _confirmPasswordFieldController.text);
 
               await GetIt.I.get<CreateAccountViewmodel>().createUser(
-                    cacheMap['name']!,
-                    cacheMap['institution']!,
-                    cacheMap['email']!,
-                    cacheMap['password']!,
-                  );
+                cacheMap['name']!,
+                cacheMap['institution']!,
+                cacheMap['email']!,
+                cacheMap['password']!,
+              );
             }
           },
         ),
         const SizedBox(height: 16),
         EZTButton(
-          text: 'Voltar',
+          text: context.l10n.backButton,
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
-            widget.pageController.animateTo(
-              0,
-              duration: const Duration(milliseconds: 150),
-              curve: Curves.easeIn,
-            );
+            widget.pageController.animateTo(0, duration: const Duration(milliseconds: 150), curve: Curves.easeIn);
           },
-        )
+        ),
       ],
     );
   }
@@ -236,10 +208,7 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
             flex: 4,
             child: SingleChildScrollView(
               physics: const NeverScrollableScrollPhysics(),
-              child: Padding(
-                padding: Constants.padding16all,
-                child: _buttons,
-              ),
+              child: Padding(padding: Constants.padding16all, child: _buttons),
             ),
           ),
         ],

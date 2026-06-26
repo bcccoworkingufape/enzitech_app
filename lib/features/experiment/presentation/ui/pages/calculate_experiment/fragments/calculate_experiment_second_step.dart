@@ -6,23 +6,21 @@ import 'package:get_it/get_it.dart';
 
 // 🌎 Project imports:
 import '../../../../../../../core/enums/enums.dart';
-import '../../../../../../../shared/extensions/context_theme_mode_extensions.dart';
+import '../../../../../../../shared/extensions/build_context_extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
+import '../../../../../../../shared/utils/utils.dart';
+import '../../../../../../../shared/validator/validator.dart';
 import '../../../../viewmodel/calculate_experiment_viewmodel.dart';
 import '../calculate_experiment_fragment_template.dart';
 
 class CalculateExperimentSecondStepPage extends StatefulWidget {
-  const CalculateExperimentSecondStepPage({
-    super.key,
-  });
+  const CalculateExperimentSecondStepPage({super.key});
 
   @override
-  State<CalculateExperimentSecondStepPage> createState() =>
-      _CalculateExperimentSecondStepPageState();
+  State<CalculateExperimentSecondStepPage> createState() => _CalculateExperimentSecondStepPageState();
 }
 
-class _CalculateExperimentSecondStepPageState
-    extends State<CalculateExperimentSecondStepPage> {
+class _CalculateExperimentSecondStepPageState extends State<CalculateExperimentSecondStepPage> {
   late final CalculateExperimentViewmodel _calculateExperimentViewmodel;
 
   @override
@@ -31,7 +29,7 @@ class _CalculateExperimentSecondStepPageState
     _calculateExperimentViewmodel = GetIt.I.get<CalculateExperimentViewmodel>();
   }
 
-  bool _checkIfTextIsGTZAndNumeric(text) {
+  bool _checkIfTextIsGTZAndNumeric(dynamic text) {
     //* Numeric
     if (text == null) {
       return false;
@@ -50,61 +48,36 @@ class _CalculateExperimentSecondStepPageState
     return true;
   }
 
-  bool _isMapStillEmpty(String mapId) {
-    Map<String, EZTTextField> filteredMap =
-        Map.from(_calculateExperimentViewmodel.textFields)
-          ..removeWhere((k, v) => !k.toString().contains(mapId));
+  bool _isEnzymeStillEmpty(String enzymeId) {
+    final sampleController = _calculateExperimentViewmodel.textEditingControllers['sample-$enzymeId'];
+    final whiteSampleController = _calculateExperimentViewmodel.textEditingControllers['whiteSample-$enzymeId'];
 
-    var listOfAllTextsOfData = [];
-    filteredMap.forEach((k, v) {
-      listOfAllTextsOfData.add(v.controller!.text);
-    });
+    if (sampleController == null || whiteSampleController == null) return true;
 
-    if (listOfAllTextsOfData.isNotEmpty &&
-        listOfAllTextsOfData.any((element) => element.isEmpty)) {
-      return true;
-    }
-
-    return false;
+    return sampleController.text.isEmpty || whiteSampleController.text.isEmpty;
   }
 
-  bool _isMapCorrectlyFilled(String mapId) {
-    Map<String, EZTTextField> filteredMap =
-        Map.from(_calculateExperimentViewmodel.textFields)
-          ..removeWhere((k, v) => !k.toString().contains(mapId));
+  bool _isEnzymeCorrectlyFilled(String enzymeId) {
+    final sampleController = _calculateExperimentViewmodel.textEditingControllers['sample-$enzymeId'];
+    final whiteSampleController = _calculateExperimentViewmodel.textEditingControllers['whiteSample-$enzymeId'];
 
-    var listOfBools = [];
-    var listOfBoolsIfAllIsEmpty = [];
-    var listOfAllTextsOfData = [];
+    if (sampleController == null || whiteSampleController == null) return false;
 
-    filteredMap.forEach((k, v) {
-      listOfBools.add(_checkIfTextIsGTZAndNumeric(v.controller!.text));
-      listOfBoolsIfAllIsEmpty.add(v.controller!.text.isEmpty);
-      listOfAllTextsOfData.add(v.controller!.text);
-    });
-
-    if (listOfAllTextsOfData.isNotEmpty &&
-        listOfAllTextsOfData.any((element) => element.isEmpty)) {
+    if (sampleController.text.isEmpty && whiteSampleController.text.isEmpty) {
       return true;
     }
 
-    if (listOfBoolsIfAllIsEmpty.isNotEmpty &&
-        listOfBoolsIfAllIsEmpty.every((element) => element == true)) {
-      return true;
-    }
-
-    return listOfBools.every((b) => b == true);
+    return _checkIfTextIsGTZAndNumeric(sampleController.text) &&
+        _checkIfTextIsGTZAndNumeric(whiteSampleController.text);
   }
 
   StepState _leadWithStepState(Map<String, double?> map) {
     if (_calculateExperimentViewmodel.stepPage ==
-        _calculateExperimentViewmodel.listOfExperimentData
-            .toList()
-            .indexOf(map)) {
+        _calculateExperimentViewmodel.listOfExperimentData.toList().indexOf(map)) {
       return StepState.editing;
-    } else if (_isMapStillEmpty(map["_id"].toString())) {
+    } else if (_isEnzymeStillEmpty(map["_id"].toString())) {
       return StepState.indexed;
-    } else if (_isMapCorrectlyFilled(map["_id"].toString())) {
+    } else if (_isEnzymeCorrectlyFilled(map["_id"].toString())) {
       return StepState.complete;
     } else {
       return StepState.error;
@@ -112,14 +85,41 @@ class _CalculateExperimentSecondStepPageState
   }
 
   Widget _textFields(Map<String, double?> map) {
+    final validations = <ValidateRule>[
+      ValidateRule(ValidateTypes.required),
+      ValidateRule(ValidateTypes.numeric),
+      ValidateRule(ValidateTypes.greaterThanZeroDecimal),
+    ];
+    final fieldValidator = FieldValidator(validations, context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _calculateExperimentViewmodel.textFields["sample-${map["_id"]}"] ??
-            Container(),
-        const SizedBox(width: 10),
-        _calculateExperimentViewmodel.textFields["whiteSample-${map["_id"]}"] ??
-            Container(),
+        EZTTextField(
+          eztTextFieldType: EZTTextFieldType.underline,
+          labelText: context.l10n.sample,
+          usePrimaryColorOnFocusedBorder: true,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          controller: _calculateExperimentViewmodel.textEditingControllers["sample-${map["_id"]}"]!,
+          onChanged: (value) {
+            _calculateExperimentViewmodel.validateFields(value, map["_id"] as double, "sample");
+          },
+          fieldValidator: fieldValidator,
+          inputFormatters: Constants.enzymeDecimalInputFormatters,
+        ),
+        const SizedBox(height: 10),
+        EZTTextField(
+          eztTextFieldType: EZTTextFieldType.underline,
+          labelText: context.l10n.whiteSample,
+          usePrimaryColorOnFocusedBorder: true,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          controller: _calculateExperimentViewmodel.textEditingControllers["whiteSample-${map["_id"]}"]!,
+          onChanged: (value) {
+            _calculateExperimentViewmodel.validateFields(value, map["_id"] as double, "whiteSample");
+          },
+          fieldValidator: fieldValidator,
+          inputFormatters: Constants.enzymeDecimalInputFormatters,
+        ),
       ],
     );
   }
@@ -129,27 +129,21 @@ class _CalculateExperimentSecondStepPageState
       children: [
         EZTButton(
           enabled: _calculateExperimentViewmodel.enableNextButtonOnSecondStep,
-          text: 'Calcular',
+          text: context.l10n.calculateButton,
           loading: _calculateExperimentViewmodel.state == StateEnum.loading,
           onPressed: () async {
             if (_calculateExperimentViewmodel.formKey.currentState != null) {
               _calculateExperimentViewmodel.formKey.currentState!.save();
 
-              if (_calculateExperimentViewmodel.formKey.currentState!
-                  .validate()) {
-                if (mounted) {
-                  await _calculateExperimentViewmodel
-                      .calculateExperiment()
-                      .whenComplete(() => (_calculateExperimentViewmodel
-                                      .experimentCalculationEntity !=
-                                  null &&
-                              _calculateExperimentViewmodel
-                                      .experimentCalculationEntity?.average !=
-                                  0)
-                          ? _calculateExperimentViewmodel.onNext(context)
-                          : debugPrint('Error on calculate'));
-                  //TODO: Corrigir enzimas bugadas (sem calculo -> retorno 0)
-                }
+              if (_calculateExperimentViewmodel.formKey.currentState!.validate()) {
+                await _calculateExperimentViewmodel.calculateExperiment().whenComplete(() {
+                  if (!mounted) return;
+                  (_calculateExperimentViewmodel.experimentCalculationEntity != null &&
+                          _calculateExperimentViewmodel.experimentCalculationEntity?.average != 0)
+                      ? _calculateExperimentViewmodel.onNext(context)
+                      : debugPrint('Error on calculate');
+                });
+                //TODO: Corrigir enzimas bugadas (sem calculo -> retorno 0)
 
                 return;
               }
@@ -158,7 +152,7 @@ class _CalculateExperimentSecondStepPageState
         ),
         const SizedBox(height: 16),
         EZTButton(
-          text: 'Voltar',
+          text: context.l10n.backButton,
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
             _calculateExperimentViewmodel.onBack(mounted, context);
@@ -174,53 +168,40 @@ class _CalculateExperimentSecondStepPageState
       listenable: _calculateExperimentViewmodel,
       builder: (context, child) {
         return CalculateExperimentFragmentTemplate(
-          titleOfStepIndicator: "Inserir dados no experimento",
-          messageOfStepIndicator: "Etapa 2 de 3 - Preenchimento e cálculo",
+          titleOfStepIndicator: context.l10n.insertExperimentData,
+          messageOfStepIndicator: context.l10n.stepIndicatorMessageFilling(2, 3),
           body: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(
-              parent: BouncingScrollPhysics(),
-            ),
+            physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               children: [
-                const SizedBox(
-                  height: 32,
-                ),
+                const SizedBox(height: 32),
                 SingleChildScrollView(
                   child: Stepper(
                     physics: const ClampingScrollPhysics(),
                     currentStep: _calculateExperimentViewmodel.stepPage,
-                    controlsBuilder:
-                        (BuildContext context, ControlsDetails details) {
+                    controlsBuilder: (BuildContext context, ControlsDetails details) {
                       return Row(
                         children: <Widget>[
                           if (_calculateExperimentViewmodel.stepPage <
-                              _calculateExperimentViewmodel
-                                      .experiment.repetitions -
-                                  1)
+                              _calculateExperimentViewmodel.experiment.repetitions - 1)
                             TextButton(
                               onPressed: () {
                                 if (_calculateExperimentViewmodel.stepPage <
-                                    _calculateExperimentViewmodel
-                                        .experiment.repetitions) {
-                                  _calculateExperimentViewmodel.setStepPage(
-                                      _calculateExperimentViewmodel.stepPage +
-                                          1);
+                                    _calculateExperimentViewmodel.experiment.repetitions) {
+                                  _calculateExperimentViewmodel.setStepPage(_calculateExperimentViewmodel.stepPage + 1);
                                 }
                               },
-                              child: const Text('Próximo'),
+                              child: Text(context.l10n.nextButton),
                             ),
                           if (_calculateExperimentViewmodel.stepPage > 0)
                             TextButton(
                               onPressed: () {
-                                if (_calculateExperimentViewmodel.stepPage >
-                                    0) {
-                                  _calculateExperimentViewmodel.setStepPage(
-                                      _calculateExperimentViewmodel.stepPage -
-                                          1);
+                                if (_calculateExperimentViewmodel.stepPage > 0) {
+                                  _calculateExperimentViewmodel.setStepPage(_calculateExperimentViewmodel.stepPage - 1);
                                 }
                               },
-                              child: const Text('Voltar'),
+                              child: Text(context.l10n.backButton),
                             ),
                         ],
                       );
@@ -229,35 +210,27 @@ class _CalculateExperimentSecondStepPageState
                       _calculateExperimentViewmodel.setStepPage(index);
                     },
                     type: StepperType.vertical,
-                    steps:
-                        _calculateExperimentViewmodel.listOfExperimentData.map(
-                      (map) {
-                        return Step(
-                          state: _leadWithStepState(map),
-                          title: _isMapCorrectlyFilled(map["_id"].toString())
-                              ? Text(
-                                  "Dados da ${map["_id"]!.toInt() + 1}ª repetição")
-                              : Text(
-                                  "⚠  Dados da ${map["_id"]!.toInt() + 1}ª repetição",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: context.getApplyedColorScheme.error,
-                                  ),
+                    steps: _calculateExperimentViewmodel.listOfExperimentData.map((map) {
+                      return Step(
+                        state: _leadWithStepState(map),
+                        title: _isEnzymeCorrectlyFilled(map["_id"].toString())
+                            ? Text(context.l10n.repetitionDataTitle(map["_id"]!.toInt() + 1))
+                            : Text(
+                                "⚠  ${context.l10n.repetitionDataTitle(map["_id"]!.toInt() + 1)}",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: context.getApplyedColorScheme.error,
                                 ),
-                          content: Visibility(
-                            visible: _calculateExperimentViewmodel
-                                    .textFields["sample-${map["_id"]}"] !=
-                                null,
-                            child: _textFields(map),
-                          ),
-                        );
-                      },
-                    ).toList(),
+                              ),
+                        content: Visibility(
+                          visible: _calculateExperimentViewmodel.textEditingControllers["sample-${map["_id"]}"] != null,
+                          child: _textFields(map),
+                        ),
+                      );
+                    }).toList(),
                   ),
                 ),
-                const SizedBox(
-                  height: 64,
-                ),
+                const SizedBox(height: 64),
                 _buttons,
               ],
             ),

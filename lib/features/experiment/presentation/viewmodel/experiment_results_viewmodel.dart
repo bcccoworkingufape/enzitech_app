@@ -14,18 +14,17 @@ import 'package:share_plus/share_plus.dart';
 // 🌎 Project imports:
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
+import '../../../../shared/extensions/extensions.dart';
+import '../../../../shared/ui/ui.dart';
 import '../../domain/entities/experiment_result_entity.dart';
-import '../../domain/usecases/get_result/get_result_usecase.dart';
+import '../../domain/usecases/experiments_usecases.dart';
 import 'experiment_details_viewmodel.dart';
 
 class ExperimentResultsViewmodel extends ChangeNotifier {
-  final GetResultUseCase _getExperimentResultsUseCase;
+  final ExperimentsUseCases _experimentsUseCases;
   final ExperimentDetailsViewmodel _experimentDetailsViewmodel;
 
-  ExperimentResultsViewmodel(
-    this._getExperimentResultsUseCase,
-    this._experimentDetailsViewmodel,
-  );
+  ExperimentResultsViewmodel(this._experimentsUseCases, this._experimentDetailsViewmodel);
 
   StateEnum _state = StateEnum.idle;
   StateEnum get state => _state;
@@ -47,22 +46,22 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<Excel> exportToExcel() async {
+  Future<Excel> exportToExcel(Map<String, String> translations) async {
     final excel = Excel.createExcel();
 
     final CellStyle colorTreatment = CellStyle(
-      fontColorHex: "#Ffffff",
-      backgroundColorHex: "#67252b",
+      fontColorHex: ExcelColor.fromHexString("#Ffffff"),
+      backgroundColorHex: ExcelColor.fromHexString("#67252b"),
       fontFamily: getFontFamily(FontFamily.Calibri),
     );
     final CellStyle colorHeader = CellStyle(
-      fontColorHex: "#Ffffff",
-      backgroundColorHex: "#9b7276",
+      fontColorHex: ExcelColor.fromHexString("#Ffffff"),
+      backgroundColorHex: ExcelColor.fromHexString("#9b7276"),
       fontFamily: getFontFamily(FontFamily.Calibri),
     );
     final CellStyle colorBottom = CellStyle(
-      fontColorHex: "#1b1b1b",
-      backgroundColorHex: "#c2f7cf",
+      fontColorHex: ExcelColor.fromHexString("#1b1b1b"),
+      backgroundColorHex: ExcelColor.fromHexString("#c2f7cf"),
       fontFamily: getFontFamily(FontFamily.Calibri),
     );
 
@@ -72,52 +71,42 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
 
       for (var treatment in experimentEnzyme.treatments) {
         sheet.insertRowIterables([
-          const TextCellValue('Tratamento:'),
+          TextCellValue(translations['excel_treatment_label'] ?? ""),
           TextCellValue(treatment.treatment.name),
-          const TextCellValue(''),
-          const TextCellValue(''),
-          const TextCellValue(''),
-          const TextCellValue(''),
-          const TextCellValue(''),
-          const TextCellValue(''),
-          const TextCellValue(''),
-          const TextCellValue(''),
-          const TextCellValue(''),
-          const TextCellValue(''),
+          TextCellValue(''),
+          TextCellValue(''),
+          TextCellValue(''),
+          TextCellValue(''),
+          TextCellValue(''),
+          TextCellValue(''),
+          TextCellValue(''),
+          TextCellValue(''),
+          TextCellValue(''),
+          TextCellValue(''),
         ], rowIndex);
         for (var i = 0; i < 12; i++) {
-          sheet
-              .cell(CellIndex.indexByColumnRow(
-                columnIndex: i,
-                rowIndex: rowIndex,
-              ))
-              .cellStyle = colorTreatment;
+          sheet.cell(CellIndex.indexByColumnRow(columnIndex: i, rowIndex: rowIndex)).cellStyle = colorTreatment;
         }
 
         rowIndex++;
 
         sheet.insertRowIterables([
-          const TextCellValue('Id'),
-          const TextCellValue('Abso. Amostra'),
-          const TextCellValue('Abso. Branco'),
-          const TextCellValue('Diferença A - B'),
-          const TextCellValue('a - Coeficiente Angular da Curva'),
-          const TextCellValue('b - Constante da Equação da Curva'),
-          const TextCellValue('Curva Cálculo'),
-          const TextCellValue('FC - Fator de Correção'),
-          const TextCellValue('Tempo (h)'),
-          const TextCellValue('Volume (Solução do substrato)'),
-          const TextCellValue('Peso da amostra (g)'),
-          const TextCellValue('Resultado'),
+          TextCellValue(translations['excel_col_id']!),
+          TextCellValue(translations['excel_col_sampleAbsorbance']!),
+          TextCellValue(translations['excel_col_whiteSampleAbsorbance']!),
+          TextCellValue(translations['excel_col_difference']!),
+          TextCellValue(translations['excel_col_variableA']!),
+          TextCellValue(translations['excel_col_variableB']!),
+          TextCellValue(translations['excel_col_curveCalculation']!),
+          TextCellValue(translations['excel_col_correctionFactor']!),
+          TextCellValue(translations['excel_col_time']!),
+          TextCellValue(translations['excel_col_volume']!),
+          TextCellValue(translations['excel_col_sampleWeight']!),
+          TextCellValue(translations['excel_col_result']!),
         ], rowIndex);
 
         for (var i = 0; i < 12; i++) {
-          sheet
-              .cell(CellIndex.indexByColumnRow(
-                columnIndex: i,
-                rowIndex: rowIndex,
-              ))
-              .cellStyle = colorHeader;
+          sheet.cell(CellIndex.indexByColumnRow(columnIndex: i, rowIndex: rowIndex)).cellStyle = colorHeader;
         }
 
         rowIndex++;
@@ -144,25 +133,21 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
         rowIndex++;
         rowIndex++;
         sheet.insertRowIterables([
-          const TextCellValue('Desenvovido por:'),
-          const TextCellValue('ENZITECH'),
-          const TextCellValue(''),
-          const TextCellValue('👨🏻‍💻 SAIBA MAIS:'),
-          const TextCellValue(
-              'http://bcccoworking.ufape.edu.br/show.project?idProject=6'),
-          const TextCellValue(''),
-          const TextCellValue(''),
-          const TextCellValue(''),
-          const TextCellValue(''),
-          const TextCellValue(''),
-          const TextCellValue(''),
-          const TextCellValue(''),
+          TextCellValue(translations['excel_footer_developedBy']!),
+          TextCellValue('ENZITECH'),
+          TextCellValue(''),
+          TextCellValue(translations['excel_footer_learnMore']!),
+          TextCellValue('http://bcccoworking.ufape.edu.br/show.project?idProject=6'),
+          TextCellValue(''),
+          TextCellValue(''),
+          TextCellValue(''),
+          TextCellValue(''),
+          TextCellValue(''),
+          TextCellValue(''),
+          TextCellValue(''),
         ], rowIndex);
         for (var i = 0; i < 12; i++) {
-          sheet
-              .cell(CellIndex.indexByColumnRow(
-                  columnIndex: i, rowIndex: rowIndex))
-              .cellStyle = colorBottom;
+          sheet.cell(CellIndex.indexByColumnRow(columnIndex: i, rowIndex: rowIndex)).cellStyle = colorBottom;
         }
       }
       rowIndex = 0;
@@ -173,44 +158,44 @@ class ExperimentResultsViewmodel extends ChangeNotifier {
     return excel;
   }
 
-  Future<File> saveFileToTemporaryDirectory(Excel excel) async {
+  Future<File> saveFileToTemporaryDirectory(Map<String, String> translations) async {
+    final excel = await exportToExcel(translations);
     final dir = await getTemporaryDirectory();
-    var filename =
-        '${dir.path}/${_experimentDetailsViewmodel.experiment!.name.replaceAll(' ', '-')}.xlsx';
+    var filename = '${dir.path}/${_experimentDetailsViewmodel.experiment!.name.replaceAll(' ', '-')}.xlsx';
     final file = File(filename);
     await file.writeAsBytes(excel.encode()!);
 
     return file;
   }
 
-  Future<bool> openDialogToUserSaveFile() async {
-    final file = await saveFileToTemporaryDirectory(await exportToExcel());
-
-    final params = SaveFileDialogParams(sourceFilePath: file.path);
-    final finalPath = await FlutterFileDialog.saveFile(params: params);
-
-    if (finalPath != null) {
-      return true;
+  Future<void> openDialogToUserSaveFile(Map<String, String> translations, BuildContext context) async {
+    try {
+      final file = await saveFileToTemporaryDirectory(translations);
+      final params = SaveFileDialogParams(sourceFilePath: file.path);
+      final finalPath = await FlutterFileDialog.saveFile(params: params);
+      if (finalPath != null && context.mounted) {
+        EZTSnackBar.show(context, context.l10n.spreadsheetSavedSuccess, eztSnackBarType: EZTSnackBarType.success);
+      }
+    } on Exception catch (e) {
+      _setFailure(e is Failure ? e : UnableToSaveFailure(message: e.toString()));
+      setStateEnum(StateEnum.error);
     }
-    return false;
   }
 
-  Future<bool> shareFile() async {
-    final file = await saveFileToTemporaryDirectory(await exportToExcel());
-
-    await Share.shareXFiles([
-      XFile(file.path,
-          name:
-              'Resultados do experimento "${_experimentDetailsViewmodel.experiment!.name}"')
-    ]);
-
-    return true;
+  Future<void> shareFile(Map<String, String> translations, String translatedFilename) async {
+    try {
+      final file = await saveFileToTemporaryDirectory(translations);
+      await SharePlus.instance.share(ShareParams(files: [XFile(file.path, name: translatedFilename)]));
+    } on Exception catch (e) {
+      _setFailure(e is Failure ? e : UnableToSaveFailure(message: e.toString()));
+      setStateEnum(StateEnum.error);
+    }
   }
 
-  fetch() async {
+  Future<void> fetch() async {
     setStateEnum(StateEnum.loading);
 
-    var result = await _getExperimentResultsUseCase(
+    var result = await _experimentsUseCases.getResult(
       experimentId: GetIt.I.get<ExperimentDetailsViewmodel>().experiment!.id,
     );
 

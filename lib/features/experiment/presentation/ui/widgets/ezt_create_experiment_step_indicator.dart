@@ -10,8 +10,7 @@ import '../../../../../../../shared/ui/ui.dart';
 class EZTCreateExperimentStepIndicator extends StatelessWidget {
   final String title;
   final String message;
-  const EZTCreateExperimentStepIndicator(
-      {super.key, required this.title, required this.message});
+  const EZTCreateExperimentStepIndicator({super.key, required this.title, required this.message});
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +20,7 @@ class EZTCreateExperimentStepIndicator extends StatelessWidget {
       children: [
         Align(
           alignment: Alignment.center,
-          child: SvgPicture.asset(
-            AppSvgs(context).iconLogo(),
-            alignment: Alignment.center,
-            width: 75,
-          ),
+          child: SvgPicture.asset(AppSvgs(context).iconLogo(), alignment: Alignment.center, width: 75),
         ),
         const SizedBox(width: 16),
         Column(
@@ -42,16 +37,10 @@ class EZTCreateExperimentStepIndicator extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            const SizedBox(
-              height: 8,
-            ),
+            const SizedBox(height: 8),
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.7,
-              child: Text(
-                message,
-                style: TextStyles.informationExperimentStepMessage,
-                textAlign: TextAlign.start,
-              ),
+              child: Text(message, style: TextStyles.informationExperimentStepMessage, textAlign: TextAlign.start),
             ),
           ],
         ),

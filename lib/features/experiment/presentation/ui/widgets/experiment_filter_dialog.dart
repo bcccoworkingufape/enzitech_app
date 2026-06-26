@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 // 🌎 Project imports:
-import '../../../../../shared/extensions/context_theme_mode_extensions.dart';
+import '../../../../../shared/extensions/build_context_extensions.dart';
 import '../../../../../shared/ui/ui.dart';
 import '../../../../experiment/presentation/viewmodel/experiments_viewmodel.dart';
 
@@ -21,20 +21,6 @@ class _ExperimentFilterDialogState extends State<ExperimentFilterDialog> {
 
   String? dropdownOrderByValue;
   String? dropdownOrderingValue;
-
-  Map<String, String> orderByMap = {
-    "name": "Nome",
-    "description": "Descrição",
-    "repetitions": "Repetições",
-    "progress": "Progresso",
-    "createdAt": "Data de criação",
-    "updatedAt": "Data de modificação",
-  };
-
-  Map<String, String> orderingMap = {
-    "ASC": "Crescente",
-    "DESC": "Decrescente",
-  };
 
   @override
   void initState() {
@@ -58,117 +44,98 @@ class _ExperimentFilterDialogState extends State<ExperimentFilterDialog> {
     return number;
   }
 
-  Widget get _orderByDropdown {
-    return DropdownButton<String>(
-      isExpanded: true,
-      value: dropdownOrderByValue,
-      hint: const Text("Selecionar"),
-      style: TextStyles.termRegular.copyWith(
-        fontSize: 16,
-        color: context.getApplyedColorScheme.onPrimaryContainer,
-      ),
-      icon: null,
-      elevation: 16,
-      underline: Container(
-        height: 1.1,
-      ),
-      onChanged: (String? value) {
-        setState(() {
-          dropdownOrderByValue = value!;
-        });
-      },
-      items: orderByMap.keys.toList().map<DropdownMenuItem<String>>((e) {
-        return DropdownMenuItem<String>(
-          value: e,
-          child: Text(orderByMap[e]!),
-        );
-      }).toList(),
-    );
-  }
-
-  Widget get _orderingDropdown {
-    return DropdownButton<String>(
-      isExpanded: true,
-      value: dropdownOrderingValue,
-      hint: const Text("Selecionar"),
-      style: TextStyles.termRegular.copyWith(
-        fontSize: 16,
-        color: context.getApplyedColorScheme.onPrimaryContainer,
-      ),
-      icon: null,
-      elevation: 16,
-      underline: Container(
-        height: 1.1,
-      ),
-      onChanged: (String? value) {
-        setState(() {
-          dropdownOrderingValue = value!;
-        });
-      },
-      items: orderingMap.keys.toList().map<DropdownMenuItem<String>>((e) {
-        return DropdownMenuItem<String>(
-          value: e,
-          child: Text(orderingMap[e]!),
-        );
-      }).toList(),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    final Map<String, String> orderByMap = {
+      "name": context.l10n.filter_name,
+      "description": context.l10n.filter_description,
+      "repetitions": context.l10n.repetitions,
+      "progress": context.l10n.filter_progress,
+      "createdAt": context.l10n.filter_creationDate,
+      "updatedAt": context.l10n.filter_modificationDate,
+    };
+
+    final Map<String, String> orderingMap = {
+      "ASC": context.l10n.order_ascending,
+      "DESC": context.l10n.order_descending,
+    };
+
     return AlertDialog(
-      title: Text('Filtros', style: TextStyles(context).titleBoldHeading),
+      title: Text(context.l10n.filters, style: TextStyles(context).titleBoldHeading),
       content: SingleChildScrollView(
         child: ListBody(
           children: <Widget>[
-            Text('Ordenar por: ', style: TextStyles(context).buttonBoldHeading),
-            _orderByDropdown,
-            const SizedBox(
-              height: 24,
+            Text(context.l10n.orderBy, style: TextStyles(context).buttonBoldHeading),
+            DropdownButton<String>(
+              isExpanded: true,
+              value: dropdownOrderByValue,
+              hint: Text(context.l10n.select),
+              style: TextStyles.termRegular.copyWith(
+                fontSize: 16,
+                color: context.getApplyedColorScheme.onPrimaryContainer,
+              ),
+              icon: null,
+              elevation: 16,
+              underline: Container(height: 1.1),
+              onChanged: (String? value) {
+                setState(() {
+                  dropdownOrderByValue = value!;
+                });
+              },
+              items: orderByMap.keys.toList().map<DropdownMenuItem<String>>((key) {
+                return DropdownMenuItem<String>(value: key, child: Text(orderByMap[key]!));
+              }).toList(),
             ),
-            Text('Organizar em ordem: ',
-                style: TextStyles(context).buttonBoldHeading),
-            _orderingDropdown,
+            const SizedBox(height: 24),
+            Text(context.l10n.organizeInOrder, style: TextStyles(context).buttonBoldHeading),
+            DropdownButton<String>(
+              isExpanded: true,
+              value: dropdownOrderingValue,
+              hint: Text(context.l10n.select),
+              style: TextStyles.termRegular.copyWith(
+                fontSize: 16,
+                color: context.getApplyedColorScheme.onPrimaryContainer,
+              ),
+              icon: null,
+              elevation: 16,
+              underline: Container(height: 1.1),
+              onChanged: (String? value) {
+                setState(() {
+                  dropdownOrderingValue = value!;
+                });
+              },
+              items: orderingMap.keys.toList().map<DropdownMenuItem<String>>((key) {
+                return DropdownMenuItem<String>(value: key, child: Text(orderingMap[key]!));
+              }).toList(),
+            ),
           ],
         ),
       ),
       actionsAlignment: MainAxisAlignment.spaceAround,
       actions: <Widget>[
         TextButton(
-          style: ButtonStyle(
-            overlayColor: MaterialStateProperty.all<Color>(
-              context.getApplyedColorScheme.error,
-            ),
-          ),
+          style: ButtonStyle(overlayColor: WidgetStateProperty.all<Color>(context.getApplyedColorScheme.error)),
           onPressed: () {
             _experimentsViewmodel.clearFilters();
-
             Navigator.of(context).pop();
           },
           child: Text(
-            numberOfFiltersEnabled() > 1 ? 'Limpar filtros' : 'Limpar filtro',
-            style: TextStyles(context).buttonPrimary.copyWith(
-                  color: context.getApplyedColorScheme.error,
-                ),
+            context.l10n.clearFilters(numberOfFiltersEnabled()), // Botão usa plural
+            style: TextStyles(context).buttonPrimary.copyWith(color: context.getApplyedColorScheme.error),
           ),
         ),
         TextButton(
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(
-              context.getApplyedColorScheme.primary,
-            ),
-            overlayColor: MaterialStateProperty.all<Color>(
-              context.getApplyedColorScheme.error,
-            ),
+            backgroundColor: WidgetStateProperty.all<Color>(context.getApplyedColorScheme.primary),
+            overlayColor: WidgetStateProperty.all<Color>(context.getApplyedColorScheme.error),
           ),
           child: Text(
-            numberOfFiltersEnabled() > 1 ? 'Aplicar filtros' : 'Aplicar filtro',
+            context.l10n.applyFilters(numberOfFiltersEnabled()), // Botão usa plural
             style: TextStyles(context).buttonBoldBackground,
           ),
           onPressed: () {
             _experimentsViewmodel.setOrderBy(dropdownOrderByValue);
             _experimentsViewmodel.setOrdering(dropdownOrderingValue);
-
             _experimentsViewmodel.fetch();
             Navigator.of(context).pop();
           },

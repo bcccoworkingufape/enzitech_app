@@ -52,8 +52,13 @@ app.*.map.json
 # iOS related
 ios/EZT-Runner*
 
-
 # FVM related
-.fvm/flutter_sdk
 ios/firebase_app_id_file.json
 ios/Runner/GoogleService-Info.plist
+
+# FVM Version Cache
+.fvm/
+
+# ARB generated files
+lib/shared/l10n/app_en.arb
+lib/shared/l10n/app_pt.arb

@@ -6,8 +6,5 @@ class ExperimentTreatmentResultEntity {
   final TreatmentEntity treatment;
   final List<ExperimentRepetitionResultEntity> repetitionResults;
 
-  ExperimentTreatmentResultEntity({
-    required this.treatment,
-    required this.repetitionResults,
-  });
+  ExperimentTreatmentResultEntity({required this.treatment, required this.repetitionResults});
 }

@@ -9,6 +9,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 // 🌎 Project imports:
 import '../../../../../../../core/routing/routing.dart';
+import '../../../../../../../shared/extensions/extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../../../../../shared/validator/validator.dart';
 import '../../../../../../main/presentation/viewmodel/home_viewmodel.dart';
@@ -19,17 +20,13 @@ import '../../../../viewmodel/create_experiment_viewmodel.dart';
 import '../create_experiment_fragment_template.dart';
 
 class CreateExperimentSecondStepPage extends StatefulWidget {
-  const CreateExperimentSecondStepPage({
-    super.key,
-  });
+  const CreateExperimentSecondStepPage({super.key});
 
   @override
-  State<CreateExperimentSecondStepPage> createState() =>
-      _CreateExperimentSecondStepPageState();
+  State<CreateExperimentSecondStepPage> createState() => _CreateExperimentSecondStepPageState();
 }
 
-class _CreateExperimentSecondStepPageState
-    extends State<CreateExperimentSecondStepPage> {
+class _CreateExperimentSecondStepPageState extends State<CreateExperimentSecondStepPage> {
   late final CreateExperimentViewmodel _createExperimentViewmodel;
   late final TreatmentsViewmodel _treatmentsViewmodel;
 
@@ -51,41 +48,35 @@ class _CreateExperimentSecondStepPageState
 
     _checkboxesController = GroupButtonController();
 
-    Future.delayed(const Duration(milliseconds: 1))
-        .whenComplete(() => _validateFields);
+    Future.delayed(const Duration(milliseconds: 1)).whenComplete(() => _validateFields);
 
     _initFields();
   }
 
   void _initFields() {
-    _repetitionsFieldController.text = _createExperimentViewmodel
-            .temporaryExperiment.repetitions
-            ?.toString() ??
-        '';
+    _repetitionsFieldController.text = _createExperimentViewmodel.temporaryExperiment.repetitions?.toString() ?? '';
 
-    var tempTreat =
-        _createExperimentViewmodel.temporaryExperiment.treatmentsIDs ?? [];
+    var tempTreat = _createExperimentViewmodel.temporaryExperiment.treatmentsIDs ?? [];
 
     if (tempTreat.isNotEmpty) {
       for (var id in tempTreat) {
-        _checkboxesController.selectIndex(_treatmentsViewmodel.treatments
-            .indexOf(
-                _treatmentsViewmodel.treatments.firstWhere((t) => t.id == id)));
+        _checkboxesController.selectIndex(
+          _treatmentsViewmodel.treatments.indexOf(_treatmentsViewmodel.treatments.firstWhere((t) => t.id == id)),
+        );
 
-        choosedCheckboxList
-            .add(_treatmentsViewmodel.treatments.firstWhere((t) => t.id == id));
+        choosedCheckboxList.add(_treatmentsViewmodel.treatments.firstWhere((t) => t.id == id));
       }
     }
 
     setState(() {});
   }
 
-  get _validateFields {
-    if (_repetitionsFieldController.text.isNotEmpty &&
-        choosedCheckboxList.isNotEmpty) {
+  void get _validateFields {
+    if (_repetitionsFieldController.text.isNotEmpty && choosedCheckboxList.isNotEmpty) {
       setState(() {
         _createExperimentViewmodel.setEnableNextButtonOnSecondStep(
-            _createExperimentViewmodel.formKey.currentState!.validate());
+          _createExperimentViewmodel.formKey.currentState!.validate(),
+        );
       });
     } else {
       setState(() {
@@ -96,22 +87,16 @@ class _CreateExperimentSecondStepPageState
 
   Widget get _repetitionsInput {
     final validations = <ValidateRule>[
-      ValidateRule(
-        ValidateTypes.required,
-      ),
-      ValidateRule(
-        ValidateTypes.number,
-      ),
-      ValidateRule(
-        ValidateTypes.greaterThanZero,
-      )
+      ValidateRule(ValidateTypes.required),
+      ValidateRule(ValidateTypes.number),
+      ValidateRule(ValidateTypes.greaterThanZero),
     ];
 
     final fieldValidator = FieldValidator(validations, context);
 
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,
-      labelText: "Quantidade de repetições por tratamento",
+      labelText: context.l10n.repetitionsPerTreatmentLabel,
       usePrimaryColorOnFocusedBorder: true,
       keyboardType: TextInputType.number,
       controller: _repetitionsFieldController,
@@ -123,12 +108,7 @@ class _CreateExperimentSecondStepPageState
   }
 
   Widget get _textFields {
-    return Column(
-      children: [
-        const SizedBox(height: 10),
-        _repetitionsInput,
-      ],
-    );
+    return Column(children: [const SizedBox(height: 10), _repetitionsInput]);
   }
 
   Widget get _buttons {
@@ -136,11 +116,10 @@ class _CreateExperimentSecondStepPageState
       children: [
         if (_checkboxButtons.isEmpty) ...[
           EZTButton(
-            text: 'Ir para tratamentos',
+            text: context.l10n.goToTreatmentsButton,
             onPressed: () {
               GetIt.I.get<HomeViewmodel>().setFragmentIndex(1);
-              _createExperimentViewmodel
-                  .setTemporaryExperiment(CreateExperimentDTO());
+              _createExperimentViewmodel.setTemporaryExperiment(CreateExperimentDTO());
               Navigator.of(context).popUntil(ModalRoute.withName(Routing.home));
             },
           ),
@@ -148,7 +127,7 @@ class _CreateExperimentSecondStepPageState
         ],
         EZTButton(
           enabled: _createExperimentViewmodel.enableNextButtonOnSecondStep,
-          text: 'Próximo',
+          text: context.l10n.nextButton,
           onPressed: () {
             _createExperimentViewmodel.formKey.currentState!.save();
 
@@ -160,9 +139,7 @@ class _CreateExperimentSecondStepPageState
                   name: temporary.name,
                   description: temporary.description,
                   repetitions: int.parse(_repetitionsFieldController.text),
-                  treatmentsIDs: choosedCheckboxList
-                      .map((processes) => processes.id)
-                      .toList(),
+                  treatmentsIDs: choosedCheckboxList.map((processes) => processes.id).toList(),
                   enzymes: temporary.enzymes,
                 ),
               );
@@ -173,7 +150,7 @@ class _CreateExperimentSecondStepPageState
         ),
         const SizedBox(height: 16),
         EZTButton(
-          text: 'Voltar',
+          text: context.l10n.backButton,
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
             _createExperimentViewmodel.onBack(mounted, context);
@@ -186,45 +163,31 @@ class _CreateExperimentSecondStepPageState
   @override
   Widget build(BuildContext context) {
     return CreateExperimentFragmentTemplate(
-      titleOfStepIndicator: "Cadastre um novo experimento",
-      messageOfStepIndicator: "Etapa 2 de 4 - Tratamentos e Repetições",
+      titleOfStepIndicator: context.l10n.registerNewExperiment,
+      messageOfStepIndicator: context.l10n.stepIndicatorTreatments(2, 4),
       body: SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(
-          parent: BouncingScrollPhysics(),
-        ),
+        physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           children: [
-            const SizedBox(
-              height: 17,
-            ),
+            const SizedBox(height: 17),
             Row(
               children: [
-                Icon(
-                  PhosphorIcons.flask(),
-                ),
+                Icon(PhosphorIcons.flask()),
                 const SizedBox(width: 4),
-                Text(
-                  'Dados dos tratamentos e repetições',
-                  style: TextStyles.detailBold,
-                ),
+                Text(context.l10n.treatmentsAndRepetitionsData, style: TextStyles.detailBold),
               ],
             ),
             Visibility(
               visible: _checkboxButtons.isNotEmpty,
-              replacement: const Padding(
+              replacement: Padding(
                 padding: EdgeInsets.only(top: 8.0),
-                child: EZTError(
-                  message:
-                      "Nenhum tratamento cadastrado! É necessário pelo menos um tratamento para prosseguir.",
-                ),
+                child: EZTError(message: context.l10n.noTreatmentsRegisteredError),
               ),
               child: GroupButton(
                 controller: _checkboxesController,
                 isRadio: false,
-                options: const GroupButtonOptions(
-                  groupingType: GroupingType.column,
-                ),
+                options: const GroupButtonOptions(groupingType: GroupingType.column),
                 buttons: _checkboxButtons,
                 buttonIndexedBuilder: (selected, index, context) {
                   return EZTCheckBoxTile(
@@ -233,16 +196,14 @@ class _CreateExperimentSecondStepPageState
                     onTap: () {
                       if (!selected) {
                         _checkboxesController.selectIndex(index);
-                        choosedCheckboxList
-                            .add(_treatmentsViewmodel.treatments[index]);
+                        choosedCheckboxList.add(_treatmentsViewmodel.treatments[index]);
 
                         _validateFields;
 
                         return;
                       }
                       _checkboxesController.unselectIndex(index);
-                      choosedCheckboxList
-                          .remove(_treatmentsViewmodel.treatments[index]);
+                      choosedCheckboxList.remove(_treatmentsViewmodel.treatments[index]);
 
                       _validateFields;
                     },

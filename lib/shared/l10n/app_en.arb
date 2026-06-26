@@ -1,0 +1,555 @@
+{
+  "@@locale": "en",
+  "enzymeCreatedSuccess": "Enzyme created successfully!",
+  "registerNewEnzyme": "Register a new\nenzyme",
+  "enzymeIdentification": "Enzyme Identification",
+  "chooseEnzymeType": "Choose the enzyme type",
+  "createEnzymeButton": "Create enzyme",
+  "enzymeType_acidPhosphatase": "Acid Phosphatase",
+  "enzymeType_alkalinePhosphatase": "Alkaline Phosphatase",
+  "enzymeType_arylsulfatase": "Arylsulfatase",
+  "enzymeType_betaGlucosidase": "Beta-Glucosidase",
+  "enzymeType_urease": "Urease",
+  "enzymeType_fda": "FDA",
+  "enzymeType_aryl": "Aryl",
+  "errorLoadingEnzymes": "Error loading enzymes",
+  "loadingEnzymes": "Loading enzymes...",
+  "noEnzymesRegisteredAdmin": "No enzymes registered.",
+  "noEnzymesRegisteredUser": "No enzymes registered, please contact your Administrator to solve this issue.",
+  "enzymeDeleted": "{enzymeName} deleted!",
+  "@enzymeDeleted": {
+    "placeholders": {
+      "enzymeName": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteEnzymeTitle": "Delete enzyme?",
+  "deleteEnzymeContent": "Are you sure you want to delete this enzyme?",
+  "enzymesFound": "🧬 {count, plural, =0{No enzymes found} =1{1 enzyme found} other{{count} enzymes found}}",
+  "@enzymesFound": {
+    "description": "A message that shows the number of enzymes found",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "formulaLabel": "Formula: ",
+  "variableALabel": "Variable A: ",
+  "variableBLabel": "Variable B: ",
+  "enzymesSummaryTitle": "Enzymes Summary",
+  "enzymeTagFormat": "{enzymeName} ({quantity})",
+  "@enzymeTagFormat": {
+    "description": "Format for the enzyme tag, showing name and quantity",
+    "placeholders": {
+      "enzymeName": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "int"
+      }
+    }
+  },
+  "variableA": "Variable A",
+  "variableB": "Variable B",
+  "modifiedOn": "Modified on {date}",
+  "@modifiedOn": {
+    "description": "Label to show when an experiment was last modified",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "repetitions": "Repetitions",
+  "errorLoadingExperiment": "Error loading experiment \"{experimentName}\"",
+  "@errorLoadingExperiment": {
+    "placeholders": {
+      "experimentName": {
+        "type": "String"
+      }
+    }
+  },
+  "loadingExperiment": "Loading experiment...",
+  "tapToSeeMore": "Tap to see more information",
+  "tapToHide": "Tap to hide information",
+  "enzymaticCalculation": "Enzymatic Calculation",
+  "results": "Results",
+  "experimentDetails": "Experiment Details",
+  "experimentDeleted": "{experimentName} deleted!",
+  "@experimentDeleted": {
+    "placeholders": {
+      "experimentName": {
+        "type": "String"
+      }
+    }
+  },
+  "loadingResults": "Loading results...",
+  "experimentHeader": "Experiment: {experimentName}",
+  "@experimentHeader": {
+    "placeholders": {
+      "experimentName": {
+        "type": "String"
+      }
+    }
+  },
+  "enzymeTypeHeader": "Type: {enzymeType} ({formula})",
+  "@enzymeTypeHeader": {
+    "placeholders": {
+      "enzymeType": {
+        "type": "String"
+      },
+      "formula": {
+        "type": "String"
+      }
+    }
+  },
+  "treatmentLabel": "Treatment",
+  "shareFileError": "Could not share the file, please try again.",
+  "spreadsheetSavedSuccess": "Spreadsheet saved successfully!",
+  "spreadsheetSaveError": "Could not save the spreadsheet, please try again.",
+  "columnId": "ID",
+  "columnSample": "Sample",
+  "columnWhiteSampleShort": "W. Sample",
+  "columnWhiteSampleTooltip": "White Sample",
+  "columnDifference": "Difference",
+  "columnCurve": "Curve",
+  "columnCorrectionFactorShort": "C. Factor",
+  "columnVolume": "Volume",
+  "columnSampleWeightShort": "S. Weight",
+  "columnSampleWeightTooltip": "Sample Weight",
+  "columnResult": "Result",
+  "errorLoadingExperiments": "Error loading experiments",
+  "loadingExperiments": "Loading experiments...",
+  "experimentsNotFound": "Experiments not found",
+  "allExperimentsDisplayed": "All experiments displayed!",
+  "inProgress": "In Progress",
+  "completed": "Completed",
+  "experimentsFound": "🔬 {count, plural, =0{No experiments found} =1{1 experiment found} other{{count} experiments found}}",
+  "@experimentsFound": {
+    "description": "A message that shows the number of experiments found",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "selectTreatment": "Select the treatment:",
+  "loadingAvailableEnzymes": "Loading available enzymes...",
+  "allEnzymesCalculated": "All enzymes for this treatment have already been calculated!",
+  "selectEnzyme": "Select the enzyme:",
+  "selectedEnzymeType": "Selected enzyme type: {enzymeType}",
+  "@selectedEnzymeType": {
+    "placeholders": {
+      "enzymeType": {
+        "type": "String"
+      }
+    }
+  },
+  "insertExperimentData": "Insert data into experiment",
+  "stepIndicatorMessage": "Step {currentStep} of {totalSteps} - Identification",
+  "@stepIndicatorMessage": {
+    "placeholders": {
+      "currentStep": {
+        "type": "int"
+      },
+      "totalSteps": {
+        "type": "int"
+      }
+    }
+  },
+  "invalidExperimentTitle": "Invalid experiment!",
+  "invalidExperimentMessage": "It is not possible to proceed without treatment(s) and/or enzyme(s) data",
+  "chooseTreatmentAndEnzyme": "Choose the treatment and enzyme to insert the data",
+  "calculateButton": "Calculate",
+  "stepIndicatorMessageFilling": "Step {currentStep} of {totalSteps} - Filling and calculation",
+  "@stepIndicatorMessageFilling": {
+    "placeholders": {
+      "currentStep": {
+        "type": "int"
+      },
+      "totalSteps": {
+        "type": "int"
+      }
+    }
+  },
+  "repetitionDataTitle": "Data for repetition #{repetitionNumber}",
+  "@repetitionDataTitle": {
+    "placeholders": {
+      "repetitionNumber": {
+        "type": "int"
+      }
+    }
+  },
+  "saveAndExitButton": "Save and exit",
+  "recalculateButton": "Recalculate",
+  "repetitionLabel": "Repetition {repetitionNumber}:",
+  "@repetitionLabel": {
+    "placeholders": {
+      "repetitionNumber": {
+        "type": "int"
+      }
+    }
+  },
+  "discrepantRepetitionWarning": "This repetition is discrepant!\n\nIts value differs by more than 25% from the average of all repetitions.\n\nIf you want to change it, just press \"Recalculate\".",
+  "average": "Average:",
+  "repetitionColumnTitle": "REPETITION",
+  "resultColumnTitle": "RESULT",
+  "statusColumnTitle": "STATUS",
+  "stepIndicatorMessageResults": "Step {currentStep} of {totalSteps} - Results",
+  "@stepIndicatorMessageResults": {
+    "placeholders": {
+      "currentStep": {
+        "type": "int"
+      },
+      "totalSteps": {
+        "type": "int"
+      }
+    }
+  },
+  "registerNewExperiment": "Register a new experiment",
+  "experimentIdentification": "Experiment Identification",
+  "stepIndicatorIdentification": "Step {currentStep} of {totalSteps} - Identification",
+  "@stepIndicatorIdentification": {
+    "placeholders": {
+      "currentStep": {
+        "type": "int"
+      },
+      "totalSteps": {
+        "type": "int"
+      }
+    }
+  },
+  "repetitionsPerTreatmentLabel": "Number of repetitions per treatment",
+  "goToTreatmentsButton": "Go to treatments",
+  "treatmentsAndRepetitionsData": "Treatments and Repetitions Data",
+  "noTreatmentsRegisteredError": "No treatments registered! At least one treatment is required to proceed.",
+  "stepIndicatorTreatments": "Step {currentStep} of {totalSteps} - Treatments and Repetitions",
+  "@stepIndicatorTreatments": {
+    "placeholders": {
+      "currentStep": {
+        "type": "int"
+      },
+      "totalSteps": {
+        "type": "int"
+      }
+    }
+  },
+  "experimentEnzymes": "Experiment Enzymes",
+  "enzymeTypeIs": "Enzyme type: {enzymeType}",
+  "@enzymeTypeIs": {
+    "placeholders": {
+      "enzymeType": {
+        "type": "String"
+      }
+    }
+  },
+  "stepIndicatorEnzymes": "Step {currentStep} of {totalSteps} - Enzymes",
+  "@stepIndicatorEnzymes": {
+    "placeholders": {
+      "currentStep": {
+        "type": "int"
+      },
+      "totalSteps": {
+        "type": "int"
+      }
+    }
+  },
+  "variableA_long": "Variable a - Angular Coefficient of the Curve",
+  "variableB_long": "Variable b - Constant of the Curve Equation",
+  "timeHours": "Time (h)",
+  "solutionVolume": "Solution Volume",
+  "sampleWeightGrams": "Sample Weight (g)",
+  "correctionFactor": "Correction Factor",
+  "curveInformation": "Curve Information:",
+  "otherVariables": "Other Variables:",
+  "createExperimentButton": "Create Experiment",
+  "stepIndicatorFillVariables": "Step {currentStep} of {totalSteps} - Fill variables",
+  "@stepIndicatorFillVariables": {
+    "placeholders": {
+      "currentStep": {
+        "type": "int"
+      },
+      "totalSteps": {
+        "type": "int"
+      }
+    }
+  },
+  "experimentCreatedSuccess": "Experiment created successfully!",
+  "deleteExperimentTitle": "Delete experiment?",
+  "deleteExperimentContent": "Are you sure you want to delete this experiment?",
+  "nameLabel": "Name",
+  "descriptionLabel": "Description",
+  "sample": "Sample",
+  "whiteSample": "White Sample",
+  "filters": "Filters",
+  "orderBy": "Order by:",
+  "organizeInOrder": "Organize in order:",
+  "filter_name": "Name",
+  "filter_description": "Description",
+  "filter_progress": "Progress",
+  "filter_creationDate": "Creation date",
+  "filter_modificationDate": "Modification date",
+  "order_ascending": "Ascending",
+  "order_descending": "Descending",
+  "clearFilters": "{count, plural, =0{Clear filters} =1{Clear filter} other{Clear filters}}",
+  "@clearFilters": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "applyFilters": "{count, plural, =0{Apply filters} =1{Apply filter} other{Apply filters}}",
+  "@applyFilters": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "error_serverConnectionRefused": "⚠ Server Error, please try again later.",
+  "error_statusCodeAndMessage": "⚠ SC{statusCode} - {message}",
+  "@error_statusCodeAndMessage": {
+    "placeholders": {
+      "statusCode": {},
+      "message": {}
+    }
+  },
+  "error_messageOnly": "⚠ {message}",
+  "@error_messageOnly": {
+    "placeholders": {
+      "message": {}
+    }
+  },
+  "error_400": "⚠ Incorrect data: Some field is invalid or missing.",
+  "error_401": "⚠ Not authorized: Token expired or invalid user.",
+  "error_403": "⚠ Access denied: You do not have permission to perform this action.",
+  "error_404_login": "⚠ User not found.",
+  "error_404_generic": "⚠ Not found: This information may no longer exist.",
+  "error_422": "⚠ Unprocessable entity: The server understands the content type, but was unable to process the contained instructions.",
+  "error_426": "⚠ Upgrade required: Invalid device ID.",
+  "error_500": "⚠ Server Error: The request could not be fulfilled.",
+  "error_503": "⚠ Server Error: The service is temporarily unavailable.",
+  "error_noNetwork": "⚠ No internet connection, check your network access and try again.",
+  "error_noResultQuery": "⚠ Could not get {query}.",
+  "@error_noResultQuery": {
+    "placeholders": {
+      "query": {}
+    }
+  },
+  "validation_required": "⚠ Required field",
+  "validation_strongPassword": "⚠ Password does not meet the required pattern.",
+  "validation_alfanumeric": "⚠ Field does not accept special characters",
+  "validation_name": "⚠ Invalid name",
+  "validation_phone": "⚠ Invalid number",
+  "validation_cellphone": "⚠ Invalid number",
+  "validation_passwordEquals": "⚠ The entered passwords do not match.",
+  "validation_passwordMustBeDiff": "⚠ The new password cannot be the same as the current one.",
+  "validation_notFound": "⚠ Not found",
+  "validation_emailEquals": "⚠ The entered emails do not match.",
+  "validation_email": "⚠ Invalid email",
+  "validation_cpf": "⚠ Invalid CPF",
+  "validation_cnpj": "⚠ Invalid CNPJ",
+  "validation_numeric": "⚠ Invalid number",
+  "validation_number": "⚠ Invalid number",
+  "validation_greaterThanZeroDecimal": "⚠ Enter a number greater than zero",
+  "validation_isInteger": "⚠ Enter an integer",
+  "validation_greaterThanZero": "⚠ Enter a number greater than zero",
+  "validation_maxNumber": "⚠ Number must be less than or equal to {value}.",
+  "@validation_maxNumber": {
+    "placeholders": {
+      "value": {}
+    }
+  },
+  "validation_maxChars": "⚠ This field must have a maximum of {value} character(s)",
+  "@validation_maxChars": {
+    "placeholders": {
+      "value": {}
+    }
+  },
+  "validation_maxAge": "⚠ Maximum age {value} years",
+  "@validation_maxAge": {
+    "placeholders": {
+      "value": {}
+    }
+  },
+  "validation_minAge": "⚠ Minimum age {value} years",
+  "@validation_minAge": {
+    "placeholders": {
+      "value": {}
+    }
+  },
+  "validation_minNumber": "⚠ Number must be greater than or equal to {value}.",
+  "@validation_minNumber": {
+    "placeholders": {
+      "value": {}
+    }
+  },
+  "validation_minChars": "⚠ This field must have a minimum of {value} character(s)",
+  "@validation_minChars": {
+    "placeholders": {
+      "value": {}
+    }
+  },
+  "validation_emailOrRegistration": "⚠ Invalid email or registration.",
+  "connectionRestored": "✓ Connection restored",
+  "noInternetWarning": "⚠ No connection to the server: You are viewing previously loaded and un-updated information, any offline changes will not be maintained!",
+  "experiments": "Experiments",
+  "treatments": "Treatments",
+  "enzymes": "Enzymes",
+  "settings": "Settings",
+  "nextButton": "Next",
+  "backButton": "Back",
+  "loginAgain": "Log in again.",
+  "noData": "No data!",
+  "select": "Select",
+  "tryAgain": "Try Again",
+  "undo": "Undo",
+  "delete": "Delete",
+  "deleteButton": "DELETE",
+  "cancelButton": "CANCEL",
+  "registerExperiment": "Register\n Experiment",
+  "registerTreatment": "Register\n Treatment",
+  "registerEnzyme": "Register\n Enzyme",
+  "welcomeMessage": "Welcome {userName}!",
+  "@welcomeMessage": {
+    "placeholders": {
+      "userName": {
+        "type": "String"
+      }
+    }
+  },
+  "helloWelcome": "Hello,\nwelcome!",
+  "forgotMyPassword": "I forgot my password",
+  "loginButton": "Login",
+  "dontHaveAnAccount": "Don't have an account?",
+  "createOne": " Create one",
+  "institutionLabel": "Institution",
+  "signUp": "Sign Up",
+  "personalData": "Personal Data",
+  "email": "E-mail",
+  "passwordLabel": "Password",
+  "confirmPasswordLabel": "Confirm password",
+  "access": "Access",
+  "createAccountButton": "Create account",
+  "accountCreatedSuccess": "Account created successfully!",
+  "info": "Info",
+  "about": "About Enzitech",
+  "frequentlyAskedQuestions": "FAQ",
+  "userData": "User Data",
+  "userName": "Name",
+  "userType": "User Role",
+  "roles": "{role, select, admin{Administrator} common{Common} other{Common}}",
+  "@roles": {
+    "description": "Users roles into the app",
+    "placeholders": {
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "deletionConfirmation": "Deletion confirmation",
+  "languages": "Languages",
+  "replaceLanguage": "Replace language",
+  "theme": "Theme",
+  "details": "Details about Enzitech",
+  "environment": "Environment",
+  "version": "Version",
+  "exit": "Exit",
+  "seeYouSoon": "See you soon...",
+  "environmentValue": "{env, select, dev{Development} stage{Stage} prod{Production} other{Unknown}}",
+  "@environmentValue": {
+    "description": "The translated value of the application environment",
+    "placeholders": {
+      "env": {
+        "type": "String"
+      }
+    }
+  },
+  "unableToOpenUrlError": "Could not access {url}",
+  "@unableToOpenUrlError": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "aboutTitle": "About:",
+  "idealizationTitle": "Idealization",
+  "developmentTeamTitle": "Development Team",
+  "closeButton": "Close",
+  "idealizationTextP1": " was conceived as a solution for the study and realization of experiments in the field of soil enzymatic activities, idealized in conjunction with the ",
+  "idealizationTextP2": " and the ",
+  "idealizationTextP3": ", located at the ",
+  "idealizationTextP4": ".",
+  "roleMobileDeveloper": "(Mobile developer)",
+  "roleBackendDeveloper": "(Back-end developer)",
+  "roleProjectManagement": "(Project Management)",
+  "roleProfessorBCC": "(Professor - BCC)",
+  "roleProfessorAgronomy": "(Professor - Agronomy)",
+  "question": "Question: ",
+  "question1": "I'm unable to create an enzyme. Why?",
+  "answer": "Answer: ",
+  "answer1": "Creating new enzymes is a feature limited to administrators. Currently, adding a new enzyme to the system requires implementation by our team. Should you need a new enzyme type, please send a request to the system administrator.",
+  "stringtest4": "Test4",
+  "excel_treatmentLabel": "Treatment:",
+  "excel_col_id": "Id",
+  "excel_col_sampleAbsorbance": "Sample Abs.",
+  "excel_col_whiteSampleAbsorbance": "White Abs.",
+  "excel_col_difference": "Difference",
+  "excel_col_variableA": "Variable A",
+  "excel_col_variableB": "Variable B",
+  "excel_col_curveCalculation": "Curve Calc.",
+  "excel_col_correctionFactor": "Corr. Factor",
+  "excel_col_time": "Time (h)",
+  "excel_col_volume": "Volume",
+  "excel_col_sampleWeight": "Sample Weight (g)",
+  "excel_col_result": "Result",
+  "excel_footer_developedBy": "Developed by:",
+  "excel_footer_learnMore": "👨🏻‍💻 LEARN MORE:",
+  "shareExperimentResultsFilename": "Results for experiment \"{experimentName}\"",
+  "@shareExperimentResultsFilename": {
+    "placeholders": {
+      "experimentName": {
+        "type": "String"
+      }
+    }
+  },
+  "treatmentCreatedSuccess": "Treatment created successfully!",
+  "registerNewTreatment": "Register a new\ntreatment",
+  "treatmentIdentification": "Treatment Identification",
+  "createTreatmentButton": "Create treatment",
+  "errorLoadingTreatments": "Error loading treatments",
+  "loadingTreatments": "Loading treatments...",
+  "treatmentsNotFound": "Treatments not found",
+  "treatmentDeleted": "{treatmentName} deleted!",
+  "@treatmentDeleted": {
+    "placeholders": {
+      "treatmentName": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteTreatmentTitle": "Delete treatment?",
+  "deleteTreatmentContent": "Are you sure you want to delete this treatment?",
+  "treatmentsFound": "🧪 {count, plural, =0{No treatments found} =1{1 treatment found} other{{count} treatments found}}",
+  "@treatmentsFound": {
+    "description": "A message that shows the number of treatments found",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "createdOn": "Created on {date}",
+  "@createdOn": {
+    "description": "Label to show when a treatment was created",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  }
+}

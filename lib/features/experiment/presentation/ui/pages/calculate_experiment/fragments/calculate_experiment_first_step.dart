@@ -1,4 +1,6 @@
 // 🐦 Flutter imports:
+
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -9,7 +11,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 // 🌎 Project imports:
 import '../../../../../../../core/enums/enums.dart';
-import '../../../../../../../shared/extensions/context_theme_mode_extensions.dart';
+import '../../../../../../../shared/extensions/build_context_extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../../../../../shared/utils/utils.dart';
 import '../../../../../../enzyme/domain/entities/enzyme_entity.dart';
@@ -19,17 +21,13 @@ import '../../../../viewmodel/calculate_experiment_viewmodel.dart';
 import '../calculate_experiment_fragment_template.dart';
 
 class CalculateExperimentFirstStepPage extends StatefulWidget {
-  const CalculateExperimentFirstStepPage({
-    super.key,
-  });
+  const CalculateExperimentFirstStepPage({super.key});
 
   @override
-  State<CalculateExperimentFirstStepPage> createState() =>
-      _CalculateExperimentFirstStepPageState();
+  State<CalculateExperimentFirstStepPage> createState() => _CalculateExperimentFirstStepPageState();
 }
 
-class _CalculateExperimentFirstStepPageState
-    extends State<CalculateExperimentFirstStepPage> {
+class _CalculateExperimentFirstStepPageState extends State<CalculateExperimentFirstStepPage> {
   late final CalculateExperimentViewmodel _calculateExperimentViewmodel;
   bool? enableNextButton;
   EnzymeEntity? choosedEnzyme;
@@ -40,15 +38,13 @@ class _CalculateExperimentFirstStepPageState
     super.initState();
     _calculateExperimentViewmodel = GetIt.I.get<CalculateExperimentViewmodel>();
 
-    choosedEnzyme = _calculateExperimentViewmodel
-        .temporaryChoosedExperimentCombination.enzyme;
-    choosedTreatment = _calculateExperimentViewmodel
-        .temporaryChoosedExperimentCombination.treatment;
+    choosedEnzyme = _calculateExperimentViewmodel.temporaryChoosedExperimentCombination.enzyme;
+    choosedTreatment = _calculateExperimentViewmodel.temporaryChoosedExperimentCombination.treatment;
 
     WidgetsBinding.instance.addPostFrameCallback((_) => _validateFields());
   }
 
-  _validateFields() {
+  void _validateFields() {
     if (choosedEnzyme != null && choosedTreatment != null) {
       _calculateExperimentViewmodel.setEnableNextButtonOnFirstStep(true);
     } else {
@@ -56,72 +52,60 @@ class _CalculateExperimentFirstStepPageState
     }
   }
 
-  get _treatmentChoiceChip {
-    return FormBuilderChoiceChip<TreatmentEntity>(
+  FormBuilderChoiceChips<TreatmentEntity> get _treatmentChoiceChip {
+    return FormBuilderChoiceChips<TreatmentEntity>(
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      decoration: const InputDecoration(
-        labelText: 'Selecione o tratamento:',
+      decoration: InputDecoration(
+        labelText: context.l10n.selectTreatment,
         border: InputBorder.none,
         contentPadding: EdgeInsets.all(0),
       ),
-      initialValue: _calculateExperimentViewmodel
-          .temporaryChoosedExperimentCombination.treatment,
+      initialValue: _calculateExperimentViewmodel.temporaryChoosedExperimentCombination.treatment,
       name: 'treatment',
       onChanged: (value) async {
         choosedEnzyme = null;
 
         choosedTreatment = value;
-        await _calculateExperimentViewmodel
-            .getEnzymesRemainingInExperiment(value!.id);
+        await _calculateExperimentViewmodel.getEnzymesRemainingInExperiment(value!.id);
         _validateFields();
       },
       options: _calculateExperimentViewmodel.experiment.treatments!
-          .map(
-            (e) => FormBuilderChipOption<TreatmentEntity>(
-              value: e,
-              child: Text(e.name),
-            ),
-          )
+          .map((e) => FormBuilderChipOption<TreatmentEntity>(value: e, child: Text(e.name)))
           .toList(),
       selectedColor: context.getApplyedColorScheme.primaryContainer,
       spacing: 4,
-      validator: FormBuilderValidators.compose(
-        [FormBuilderValidators.required()],
-      ),
+      validator: FormBuilderValidators.compose([FormBuilderValidators.required()]),
     );
   }
 
-  get _enzymeChoiceChip {
+  Widget get _enzymeChoiceChip {
     if (choosedTreatment != null) {
       if (_calculateExperimentViewmodel.enzymesRemaining.isEmpty) {
         if (_calculateExperimentViewmodel.state == StateEnum.loading) {
-          return const Text('Carregando enzimas disponíveis...');
+          return Text(context.l10n.loadingAvailableEnzymes);
         }
 
-        return const Text(
-            'Todas as enzimas para este tratamento já foram calculadas!');
+        return Text(context.l10n.allEnzymesCalculated);
       }
 
-      return FormBuilderChoiceChip<EnzymeEntity>(
+      return FormBuilderChoiceChips<EnzymeEntity>(
         autovalidateMode: AutovalidateMode.onUserInteraction,
-        decoration: const InputDecoration(
-          labelText: 'Selecione a enzima:',
+        decoration: InputDecoration(
+          labelText: context.l10n.selectEnzyme,
           border: InputBorder.none,
           contentPadding: EdgeInsets.all(0),
         ),
-        initialValue: _calculateExperimentViewmodel
-                .temporaryChoosedExperimentCombination.enzyme ??
-            choosedEnzyme,
+        initialValue: _calculateExperimentViewmodel.temporaryChoosedExperimentCombination.enzyme ?? choosedEnzyme,
         name: 'enzyme',
         onChanged: (value) {
           if (value != null) {
             EZTSnackBar.clear(context);
             EZTSnackBar.show(
               context,
-              "Tipo da enzima selecionada: ${Constants.typesOfEnzymesListFormmated[Constants.typesOfEnzymesList.indexOf(value.type)]}",
-              color: Constants.dealWithEnzymeChipColor(
-                value.type,
+              context.l10n.selectedEnzymeType(
+                Constants.typesOfEnzymesListFormmated[Constants.typesOfEnzymesList.indexOf(value.type)],
               ),
+              color: Constants.dealWithEnzymeChipColor(value.type),
               textStyle: TextStyles(context).titleMinBoldBackground(),
               centerTitle: true,
             );
@@ -135,18 +119,14 @@ class _CalculateExperimentFirstStepPageState
             .map(
               (e) => FormBuilderChipOption<EnzymeEntity>(
                 value: e,
-                avatar: CircleAvatar(
-                  backgroundColor: Constants.dealWithEnzymeChipColor(e.type),
-                ),
+                avatar: CircleAvatar(backgroundColor: Constants.dealWithEnzymeChipColor(e.type)),
                 child: Text(e.name),
               ),
             )
             .toList(),
         selectedColor: context.getApplyedColorScheme.primaryContainer,
         spacing: 4,
-        validator: FormBuilderValidators.compose(
-          [FormBuilderValidators.required()],
-        ),
+        validator: FormBuilderValidators.compose([FormBuilderValidators.required()]),
       );
     }
 
@@ -158,38 +138,30 @@ class _CalculateExperimentFirstStepPageState
       children: [
         EZTButton(
           enabled: _calculateExperimentViewmodel.enableNextButtonOnFirstStep,
-          text: 'Próximo',
-          loading: _calculateExperimentViewmodel.state == StateEnum.loading
-              ? true
-              : false,
+          text: context.l10n.nextButton,
+          loading: _calculateExperimentViewmodel.state == StateEnum.loading ? true : false,
           onPressed: () async {
             _calculateExperimentViewmodel.formKey.currentState?.save();
 
-            if (_calculateExperimentViewmodel.formKey.currentState!
-                .validate()) {
-              _calculateExperimentViewmodel
-                  .setTemporaryChoosedExperimentCombination(
-                ChoosedExperimentCombinationDTO(
-                  enzyme: choosedEnzyme,
-                  treatment: choosedTreatment,
-                ),
+            if (_calculateExperimentViewmodel.formKey.currentState!.validate()) {
+              _calculateExperimentViewmodel.setTemporaryChoosedExperimentCombination(
+                ChoosedExperimentCombinationDTO(enzyme: choosedEnzyme, treatment: choosedTreatment),
               );
 
-              await _calculateExperimentViewmodel
-                  .generateTextFields(context)
-                  .whenComplete(
-                    () => Future.delayed(Duration.zero, () {
-                      _calculateExperimentViewmodel.setStepPage(0);
+              await _calculateExperimentViewmodel.generateTextFields().whenComplete(
+                () => Future.delayed(Duration.zero, () {
+                  _calculateExperimentViewmodel.setStepPage(0);
 
-                      _calculateExperimentViewmodel.onNext(context);
-                    }),
-                  );
+                  if (!mounted) return;
+                  _calculateExperimentViewmodel.onNext(context);
+                }),
+              );
             }
           },
         ),
         const SizedBox(height: 16),
         EZTButton(
-          text: 'Voltar',
+          text: context.l10n.backButton,
           eztButtonType: EZTButtonType.outline,
           onPressed: () {
             _calculateExperimentViewmodel.onBack(mounted, context);
@@ -205,39 +177,32 @@ class _CalculateExperimentFirstStepPageState
       listenable: _calculateExperimentViewmodel,
       builder: (context, child) {
         return CalculateExperimentFragmentTemplate(
-          titleOfStepIndicator: "Inserir dados no experimento",
-          messageOfStepIndicator: "Etapa 1 de 3 - Identificação",
+          titleOfStepIndicator: context.l10n.insertExperimentData,
+          messageOfStepIndicator: context.l10n.stepIndicatorMessage(1, 3),
+
           body: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(
-              parent: BouncingScrollPhysics(),
-            ),
+            physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               children: [
-                const SizedBox(
-                  height: 32,
-                ),
+                const SizedBox(height: 32),
                 Visibility(
-                  visible: _calculateExperimentViewmodel
-                          .experiment.treatments!.isNotEmpty &&
-                      _calculateExperimentViewmodel
-                          .experiment.enzymes!.isNotEmpty,
-                  replacement: const EZTNotFound(
-                    title: "Experimento inválido!",
-                    message:
-                        "Não é possível prosseguir sem dados de tratamento(s) e/ou enzima(s)",
+                  visible:
+                      _calculateExperimentViewmodel.experiment.treatments!.isNotEmpty &&
+                      _calculateExperimentViewmodel.experiment.enzymes!.isNotEmpty,
+                  replacement: EZTNotFound(
+                    title: context.l10n.invalidExperimentTitle,
+                    message: context.l10n.invalidExperimentMessage,
                   ),
                   child: Column(
                     children: [
                       Row(
                         children: [
-                          Icon(
-                            PhosphorIcons.flask(),
-                          ),
+                          Icon(PhosphorIcons.flask()),
                           const SizedBox(width: 4),
                           Expanded(
                             child: Text(
-                              'Escolha o tratamento e a enzima para inserir os dados',
+                              context.l10n.chooseTreatmentAndEnzyme,
                               style: TextStyles.detailBold,
                               textAlign: TextAlign.left,
                             ),
@@ -251,8 +216,7 @@ class _CalculateExperimentFirstStepPageState
                           child: Column(
                             children: <Widget>[
                               FormBuilder(
-                                key: _calculateExperimentViewmodel
-                                    .firstStepFormKey,
+                                key: _calculateExperimentViewmodel.firstStepFormKey,
                                 autovalidateMode: AutovalidateMode.disabled,
                                 skipDisabled: true,
                                 child: Column(
@@ -270,9 +234,7 @@ class _CalculateExperimentFirstStepPageState
                     ],
                   ),
                 ),
-                const SizedBox(
-                  height: 64,
-                ),
+                const SizedBox(height: 64),
                 _buttons,
               ],
             ),
