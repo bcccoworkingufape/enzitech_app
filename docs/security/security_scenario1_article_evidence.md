@@ -45,18 +45,18 @@ Preencher ao final:
 
 | Metrica | Antes | Depois | Delta | Observacao |
 |---------|-------|--------|-------|------------|
-| M1 | 2 | a preencher | a preencher | Token removido de SharedPreferences |
-| M2 | SharedPrefs | a preencher | a preencher | flutter_secure_storage ativo |
-| M3 | 2 debugPrint | a preencher | a preencher | Removidos/guardados |
-| M4 | 5/6 parcial | a preencher | a preencher | 6/6 |
-| M5 | 0/7 | a preencher | a preencher | FLAG_SECURE aplicado |
-| M6 | ~4 | a preencher | a preencher | Erros genericos |
-| M7 | HTTP | a preencher | a preencher | Guarda HTTPS + allowlist |
-| M8 | Nao | a preencher | a preencher | 1 guarda |
-| M9 | Permitido | a preencher | a preencher | Cleartext restrito a 1 dominio |
-| M10 | Nao | a preencher | a preencher | Stub preparatorio |
-| M11 | 2 deps sensiveis | a preencher | a preencher | Guard kDebugMode |
-| M12 | 0 paginas | a preencher | a preencher | >=6 paginas de evidencia |
+| M1 | 2 | 0 | -2 | Token removido de SharedPreferences e JSON persistido |
+| M2 | SharedPrefs | flutter_secure_storage | troca | EncryptedSharedPreferences ativo |
+| M3 | 2 debugPrint + 2 interceptors latentes | 0 ativos em release | -4 | AppLogger + kDebugMode |
+| M4 | 5/6 parcial | 6/6 | +1/6 | SecurityValidators aplicado |
+| M5 | 0/7 | 6/7 | +6 | FLAG_SECURE + overlay |
+| M6 | ~4 | 0 | -4 | Erros genericos |
+| M7 | HTTP | Guarda HTTPS + allowlist | -1 (risco) | TLS backend pendente |
+| M8 | Nao | 1 | +1 | validateBaseUrl ativo |
+| M9 | Permitido | Restrito | -1 (risco) | Cleartext desligado |
+| M10 | Nao | Stub | +1 | Hook preparatorio |
+| M11 | 2 deps sensiveis | Guard kDebugMode | -2 (risco) | Auditadas via `flutter pub outdated` |
+| M12 | 0 paginas | 4 artefatos | +4 | docs/security/ pronto para IEEE |
 
 ## 5. Limitacoes e trabalhos futuros
 
@@ -71,3 +71,4 @@ Preencher ao final:
 > Lohans de Melo, A. *Hardening de seguranca mobile baseado em OWASP MASVS: estudo
 > de caso no app Enzitech (Flutter)*. Enzitech App, branch `OWASP-hardening`,
 > 2026. Artefatos em `docs/security/`.
+

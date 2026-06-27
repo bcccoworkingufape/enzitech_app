@@ -1,0 +1,32 @@
+﻿# Saida de `flutter pub outdated --no-dev-dependencies` (capturada na Fase 7)
+
+Showing outdated packages.
+[*] indicates versions that are not the latest available.
+
+Package Name                               Current   Upgradable  Resolvable  Latest
+direct dependencies:
+connectivity_plus                          6.1.5     6.1.5       6.1.5       7.2.0
+cupertino_icons                            1.0.8     1.0.9       1.0.9       1.0.9
+curl_logger_dio_interceptor                1.0.0     1.0.1       1.0.1       1.0.1
+data_table_2                               2.6.0     2.7.2       2.7.2       2.7.2
+dio                                        5.9.0     5.9.2       5.9.2       5.9.2
+firebase_core                              4.0.0     4.11.0      4.11.0      4.11.0
+firebase_crashlytics                       5.0.0     5.2.4       5.2.4       5.2.4
+flutter_file_dialog                        3.0.2     3.0.3       3.0.3       3.3.1
+flutter_form_builder                       10.2.0    10.2.0      10.2.0      10.3.0+2
+flutter_secure_storage                     9.2.4     9.2.4       10.3.1      10.3.1
+flutter_svg                                2.2.0     2.3.0       2.3.0       2.3.0
+form_builder_validators                    11.2.0    11.2.0      11.2.0      11.3.0
+get_it                                     8.2.0     8.3.0       9.2.1       9.2.1
+google_fonts                               6.3.0     6.3.3       8.1.0       8.1.0
+intl                                       0.20.2    0.20.2      0.20.2      0.20.3
+package_info_plus                          8.3.1     8.3.1       9.0.1       10.2.0
+path_provider                              2.1.5     2.1.5       2.1.5       2.1.6
+share_plus                                 11.1.0    11.1.0      12.0.2      13.2.0
+shared_preferences                         2.5.3     2.5.5       2.5.5       2.5.5
+
+Notas:
+- `flutter_secure_storage` tem major upgrade (10.x) - exige teste de migracao
+  do `AndroidOptions` antes de aplicar.
+- `dio`, `shared_preferences` e Firebase estao em minor/patch atualizaveis.
+- Acompanhar `connectivity_plus` (major) por possivel quebra de API.
