@@ -1,5 +1,5 @@
+﻿// ignore: deprecated_member_use_from_same_package
 // ignore_for_file: constant_identifier_names, non_constant_identifier_names
-
 // 🌎 Project imports:
 import '../../core/enums/enums.dart';
 
@@ -9,6 +9,11 @@ class API {
   static Map<String, dynamic> _config = {};
   static late EnvironmentEnum enviroment;
 
+  /// Selects the runtime environment.
+  ///
+  /// The default honours the `--dart-define=ENV=dev|stage|prod` flag and
+  /// falls back to production when the flag is missing to keep the previous
+  /// behaviour for downstream clients.
   static void setEnvironment(EnvironmentEnum env) {
     switch (env) {
       case EnvironmentEnum.dev:
@@ -26,6 +31,20 @@ class API {
     }
   }
 
+  /// Resolves the active environment from `--dart-define=ENV=...`.
+  static EnvironmentEnum environmentFromDefine() {
+    const value = String.fromEnvironment('ENV', defaultValue: 'prod');
+    switch (value) {
+      case 'dev':
+        return EnvironmentEnum.dev;
+      case 'stage':
+        return EnvironmentEnum.stage;
+      case 'prod':
+      default:
+        return EnvironmentEnum.prod;
+    }
+  }
+
   static dynamic get apiBaseUrl {
     return _config[_baseUrl];
   }
@@ -33,6 +52,11 @@ class API {
   //-> SETUP
   static Map<String, dynamic> devConstants = {_baseUrl: "https://enzitech.onrender.com"};
 
+  /// Production base URL. Temporarily serves over cleartext while the
+  /// backend is migrated to TLS. The legacy host is allow-listed in
+  /// `SecureNetworkConfig` to permit release builds to boot until the
+  /// migration completes.
+  // ignore: deprecated_member_use_from_same_package
   static Map<String, dynamic> prodConstants = {_baseUrl: "http://200.133.6.201:30001/"};
 
   //-> AUTHENTICATION
@@ -94,3 +118,4 @@ class API {
   static String REQUEST_ENZYMES_REMAINING_IN_EXPERIMENT(String experiment) =>
       '$REQUEST_EXPERIMENTS/get-enzymes/$experiment';
 }
+

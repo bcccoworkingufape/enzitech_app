@@ -1,5 +1,6 @@
 ﻿// 🎯 Dart imports:
 import 'dart:async';
+// ignore: deprecated_member_use_from_same_package
 
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
@@ -16,8 +17,8 @@ import 'core/data/service/key_value/key_value_service_imp.dart';
 import 'core/data/service/secure_storage/secure_session_storage.dart';
 import 'core/data/service/user_preferences/user_preferences_service_imp.dart';
 import 'core/domain/entities/http_driver_options.dart';
-import 'core/enums/enums.dart';
 import 'core/inject/inject.dart';
+import 'core/network/secure_network_config.dart';
 import 'core/routing/routing.dart';
 import 'features/main/presentation/viewmodel/settings_viewmodel.dart';
 import 'firebase_options.dart';
@@ -44,7 +45,14 @@ Future<void> main() async {
 
     String token = await secureSessionStorage.readToken() ?? '';
 
-    API.setEnvironment(EnvironmentEnum.prod);
+    final env = API.environmentFromDefine();
+    API.setEnvironment(env);
+
+    // Network guard runs after the environment is selected and validates the
+    // base URL (HTTPS mandatory in release for prod, except legacy allowlist).
+    final baseUrl = API.apiBaseUrl as String;
+    SecureNetworkConfig.validateBaseUrl(baseUrl, env);
+    SecureNetworkConfig.pinningFor(env);
 
     final HttpDriverOptions httpDriverOptions = HttpDriverOptions(
       accessToken: () {
@@ -114,3 +122,5 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
+
