@@ -1,10 +1,10 @@
-// 🐦 Flutter imports:
+﻿// ðŸ¦ Flutter imports:
 import 'package:flutter/material.dart';
 
-// 📦 Package imports:
+// ðŸ“¦ Package imports:
 import 'package:dartz/dartz.dart';
 
-// 🌎 Project imports:
+// ðŸŒŽ Project imports:
 import '../../../../core/failures/failure.dart';
 import '../../../authentication/domain/entities/user_entity.dart';
 import '../../domain/repositories/user_preferences_repository.dart';
@@ -16,8 +16,8 @@ class UserPreferencesRepositoryImp implements UserPreferencesRepository {
   UserPreferencesRepositoryImp(this._userPreferencesDataSource);
 
   @override
-  void clearUser() async {
-    return _userPreferencesDataSource.clearUser();
+  Future<void> clearUser() async {
+    await _userPreferencesDataSource.clearUser();
   }
 
   @override
@@ -73,3 +73,5 @@ class UserPreferencesRepositoryImp implements UserPreferencesRepository {
     return await _userPreferencesDataSource.saveThemeMode(themeAsString);
   }
 }
+
+

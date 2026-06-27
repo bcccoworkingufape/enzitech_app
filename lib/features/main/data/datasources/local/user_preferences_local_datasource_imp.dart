@@ -1,10 +1,11 @@
-// 🎯 Dart imports:
+﻿// 🎯 Dart imports:
 import 'dart:convert';
 
 // 📦 Package imports:
 import 'package:dartz/dartz.dart';
 
 // 🌎 Project imports:
+import '../../../../../../core/domain/service/key_value/key_value_service.dart';
 import '../../../../../../core/domain/service/user_preferences/user_preferences_service.dart';
 import '../../../../../core/failures/database_failures/no_result_query_failure.dart';
 import '../../../../../core/failures/failure.dart';
@@ -13,13 +14,23 @@ import '../../../../authentication/domain/entities/user_entity.dart';
 import '../user_preferences_datasource.dart';
 
 class UserPreferencesLocalDataSourceImp extends UserPreferencesDataSource {
-  final UserPreferencesService _userPreferencesService;
+  static const _experimentsCacheKey = 'experiments_cache';
+  static const _treatmentsCacheKey = 'treatments_cache';
+  static const _enzymesCacheKey = 'enzymes_cache';
 
-  UserPreferencesLocalDataSourceImp(this._userPreferencesService);
+  final UserPreferencesService _userPreferencesService;
+  final KeyValueService _keyValueService;
+
+  UserPreferencesLocalDataSourceImp(this._userPreferencesService, this._keyValueService);
 
   @override
   Future<void> clearUser() async {
+    // Removes user data and all known offline caches (best-effort; the
+    // secure token itself is wiped by SettingsViewmodel via SecureSessionStorage).
     await _userPreferencesService.clearAllAndKeepTheme();
+    await _keyValueService.remove(_experimentsCacheKey);
+    await _keyValueService.remove(_treatmentsCacheKey);
+    await _keyValueService.remove(_enzymesCacheKey);
   }
 
   @override
@@ -59,6 +70,14 @@ class UserPreferencesLocalDataSourceImp extends UserPreferencesDataSource {
       if (response == null) {
         throw NoResultQueryFailure(message: "os dados do usuário");
       } else {
+        // Backwards compatibility: the legacy payload also stored the
+        // accessToken. We now strip it before decoding.
+        final raw = jsonDecode(response);
+        if (raw is Map<String, dynamic>) {
+          raw.remove('accessToken');
+          var result = UserDto.fromJson(raw);
+          return Right(result);
+        }
         var result = UserDto.fromJson(jsonDecode(response));
         return Right(result);
       }

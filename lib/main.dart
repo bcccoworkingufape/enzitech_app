@@ -1,4 +1,4 @@
-// 🎯 Dart imports:
+﻿// 🎯 Dart imports:
 import 'dart:async';
 
 // 🐦 Flutter imports:
@@ -13,6 +13,7 @@ import 'package:get_it/get_it.dart';
 
 // 🌎 Project imports:
 import 'core/data/service/key_value/key_value_service_imp.dart';
+import 'core/data/service/secure_storage/secure_session_storage.dart';
 import 'core/data/service/user_preferences/user_preferences_service_imp.dart';
 import 'core/domain/entities/http_driver_options.dart';
 import 'core/enums/enums.dart';
@@ -32,8 +33,16 @@ Future<void> main() async {
 
     var keyValueService = SharedPrefsServiceImp();
     var userPreferencesService = UserPreferencesServiceImp(keyValueService);
+    var secureSessionStorage = SecureSessionStorage();
 
-    String token = await userPreferencesService.getToken() ?? '';
+    // One-shot migration of the legacy SharedPreferences-backed token into
+    // secure storage. Idempotent: subsequent boots no-op.
+    await secureSessionStorage.migrateFromLegacyIfNeeded(
+      legacyReader: () => userPreferencesService.getToken(),
+      legacyClearer: (_) => userPreferencesService.removeToken(),
+    );
+
+    String token = await secureSessionStorage.readToken() ?? '';
 
     API.setEnvironment(EnvironmentEnum.prod);
 

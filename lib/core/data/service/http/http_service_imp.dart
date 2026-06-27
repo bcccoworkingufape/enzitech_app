@@ -1,6 +1,7 @@
-// 📦 Package imports:
+﻿// 📦 Package imports:
 import 'package:curl_logger_dio_interceptor/curl_logger_dio_interceptor.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 // 🌎 Project imports:
@@ -28,11 +29,18 @@ class DioHttpServiceImp implements HttpService {
     dio.options.connectTimeout = const Duration(seconds: 60);
     dio.options.receiveTimeout = const Duration(seconds: 60);
 
+    // Reset sensitive state to avoid leaking the previous session's token
+    // after logout or login as a different user.
+    dio.options.headers.clear();
     dio.options.headers.addAll({
       'content-type': "application/json; charset=utf-8",
       'Authorization': '${httpDriverOptions.accessTokenType} $gettedToken',
     });
-    if (httpDriverOptions.useDebugLogger == true) {
+
+    // Interceptors are stateful; remove any previous instance before re-adding
+    // so a re-login doesn't stack duplicate debug loggers.
+    dio.interceptors.clear();
+    if (kDebugMode && httpDriverOptions.useDebugLogger == true) {
       dio.interceptors.addAll([
         CurlLoggerDioInterceptor(printOnSuccess: false),
         PrettyDioLogger(
@@ -46,6 +54,14 @@ class DioHttpServiceImp implements HttpService {
         ),
       ]);
     }
+  }
+
+  /// Removes the Authorization header (used by the logout flow) and clears
+  /// any stateful interceptors.
+  @override
+  Future<void> clearSession() async {
+    dio.options.headers.remove('Authorization');
+    dio.interceptors.clear();
   }
 
   Future<HttpDriverResponse> interceptRequests(Future request) async {

@@ -1,15 +1,15 @@
-// 🐦 Flutter imports:
+﻿// ðŸ¦ Flutter imports:
 import 'package:flutter/material.dart';
 
-// 📦 Package imports:
+// ðŸ“¦ Package imports:
 import 'package:dartz/dartz.dart';
 
-// 🌎 Project imports:
+// ðŸŒŽ Project imports:
 import '../../../../core/failures/failure.dart';
 import '../../../authentication/domain/entities/user_entity.dart';
 
 abstract class UserPreferencesRepository {
-  void clearUser();
+  Future<void> clearUser();
 
   Future<Either<Failure, bool>> getExcludeConfirmation();
 
@@ -25,3 +25,4 @@ abstract class UserPreferencesRepository {
 
   Future<void> saveThemeMode(ThemeMode theme);
 }
+

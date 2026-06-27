@@ -1,15 +1,17 @@
-// 🌎 Project imports:
+﻿// 🌎 Project imports:
 
 // 🌎 Project imports:
 import '../../../domain/service/key_value/key_value_service.dart';
 import '../../../domain/service/user_preferences/user_preferences_service.dart';
 
 class UserPreferencesServiceImp implements UserPreferencesService {
-  static const _tokenKey = "token";
   static const _userKey = "user";
   static const _excludeConfirmationKey = "excludeConfirmationKey";
   static const _replaceLanguageKey = "replaceLanguageKey";
   static const _themeModeKey = "themeModeKey";
+  //* Legacy token key kept for one-shot migration in main.dart. The active
+  //* session token now lives in SecureSessionStorage (FlutterSecureStorage).
+  static const legacyTokenKey = "token";
 
   final KeyValueService _keyValueService;
 
@@ -26,19 +28,22 @@ class UserPreferencesServiceImp implements UserPreferencesService {
     return await _keyValueService.getString(_userKey);
   }
 
+  //* Token persistence moved to SecureSessionStorage. These methods stay as
+  //* pass-throughs to keep the legacy contract (and migration) safe.
   @override
   Future<void> saveToken(String token) async {
-    await _keyValueService.setString(_tokenKey, token);
+    // No-op: token writes go through SecureSessionStorage.
   }
 
   @override
   Future<String?> getToken() async {
-    return await _keyValueService.getString(_tokenKey);
+    // Returns the legacy token only while the migration has not run yet.
+    return await _keyValueService.getString(legacyTokenKey);
   }
 
   @override
   Future<void> removeToken() async {
-    await _keyValueService.remove(_tokenKey);
+    await _keyValueService.remove(legacyTokenKey);
   }
 
   //* PREFERENCES
