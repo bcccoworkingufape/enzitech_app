@@ -1,16 +1,17 @@
-// 🐦 Flutter imports:
+﻿// ðŸ¦ Flutter imports:
 
-// 🐦 Flutter imports:
+// ðŸ¦ Flutter imports:
 import 'package:flutter/material.dart';
 
-// 📦 Package imports:
+// ðŸ“¦ Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
-// 🌎 Project imports:
+// ðŸŒŽ Project imports:
 import '../../../../../../../shared/extensions/build_context_extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../../../../../shared/utils/utils.dart';
+import '../../../../../../../shared/validator/security_validators.dart';
 import '../../../../../../../shared/validator/validator.dart';
 import '../../../../viewmodel/create_account_viewmodel.dart';
 
@@ -58,7 +59,7 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
   }
 
   Widget get _emailInput {
-    final validations = <ValidateRule>[ValidateRule(ValidateTypes.required), ValidateRule(ValidateTypes.email)];
+    final validations = SecurityValidators.email();
 
     final fieldValidator = FieldValidator(validations, context);
 
@@ -74,10 +75,7 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
   }
 
   Widget get _passwordInput {
-    final validations = <ValidateRule>[
-      ValidateRule(ValidateTypes.required),
-      ValidateRule(ValidateTypes.strongPassword),
-    ];
+    final validations = SecurityValidators.password();
 
     final fieldValidator = FieldValidator(validations, context);
 
@@ -216,3 +214,6 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
     );
   }
 }
+
+
+

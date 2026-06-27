@@ -1,15 +1,16 @@
-// 🐦 Flutter imports:
+﻿// ðŸ¦ Flutter imports:
 
-// 🐦 Flutter imports:
+// ðŸ¦ Flutter imports:
 import 'package:flutter/material.dart';
 
-// 📦 Package imports:
+// ðŸ“¦ Package imports:
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
-// 🌎 Project imports:
+// ðŸŒŽ Project imports:
 import '../../../../../../../shared/extensions/build_context_extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../../../../../shared/utils/utils.dart';
+import '../../../../../../../shared/validator/security_validators.dart';
 import '../../../../../../../shared/validator/validator.dart';
 
 class CreateAccountFirstStep extends StatefulWidget {
@@ -66,7 +67,7 @@ class CreateAccountFirstStepState extends State<CreateAccountFirstStep> {
   }
 
   Widget get _nameInput {
-    final validations = <ValidateRule>[ValidateRule(ValidateTypes.required), ValidateRule(ValidateTypes.name)];
+    final validations = SecurityValidators.requiredName();
 
     final fieldValidator = FieldValidator(validations, context);
 
@@ -82,7 +83,7 @@ class CreateAccountFirstStepState extends State<CreateAccountFirstStep> {
   }
 
   Widget get _institutionInput {
-    final validations = <ValidateRule>[ValidateRule(ValidateTypes.required), ValidateRule(ValidateTypes.name)];
+    final validations = SecurityValidators.requiredInstitution();
 
     final fieldValidator = FieldValidator(validations, context);
 
@@ -179,3 +180,6 @@ class CreateAccountFirstStepState extends State<CreateAccountFirstStep> {
     );
   }
 }
+
+
+

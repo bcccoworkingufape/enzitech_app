@@ -1,16 +1,17 @@
-// 🐦 Flutter imports:
+﻿// ðŸ¦ Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-// 📦 Package imports:
+// ðŸ“¦ Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:group_button/group_button.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
-// 🌎 Project imports:
+// ðŸŒŽ Project imports:
 import '../../../../../../../core/routing/routing.dart';
 import '../../../../../../../shared/extensions/extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
+import '../../../../../../../shared/validator/security_validators.dart';
 import '../../../../../../../shared/validator/validator.dart';
 import '../../../../../../main/presentation/viewmodel/home_viewmodel.dart';
 import '../../../../../../treatment/domain/entities/treatment_entity.dart';
@@ -86,11 +87,7 @@ class _CreateExperimentSecondStepPageState extends State<CreateExperimentSecondS
   }
 
   Widget get _repetitionsInput {
-    final validations = <ValidateRule>[
-      ValidateRule(ValidateTypes.required),
-      ValidateRule(ValidateTypes.number),
-      ValidateRule(ValidateTypes.greaterThanZero),
-    ];
+    final validations = SecurityValidators.repetitions();
 
     final fieldValidator = FieldValidator(validations, context);
 
@@ -220,3 +217,4 @@ class _CreateExperimentSecondStepPageState extends State<CreateExperimentSecondS
     );
   }
 }
+

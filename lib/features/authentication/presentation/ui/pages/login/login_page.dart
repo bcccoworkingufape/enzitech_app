@@ -1,17 +1,18 @@
-// 🐦 Flutter imports:
+﻿// ðŸ¦ Flutter imports:
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-// 📦 Package imports:
+// ðŸ“¦ Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 
-// 🌎 Project imports:
+// ðŸŒŽ Project imports:
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../core/routing/routing.dart';
 import '../../../../../../shared/extensions/extensions.dart';
 import '../../../../../../shared/ui/ui.dart';
+import '../../../../../../shared/validator/security_validators.dart';
 import '../../../../../../shared/validator/validator.dart';
 import '../../../../../main/presentation/viewmodel/home_viewmodel.dart';
 import '../../../viewmodel/login_viewmodel.dart';
@@ -61,7 +62,7 @@ class LoginPageState extends State<LoginPage> {
   }
 
   Widget get _emailInput {
-    final validations = <ValidateRule>[ValidateRule(ValidateTypes.required), ValidateRule(ValidateTypes.email)];
+    final validations = SecurityValidators.email();
 
     final fieldValidator = FieldValidator(validations, context);
 
@@ -181,3 +182,4 @@ class LoginPageState extends State<LoginPage> {
     );
   }
 }
+

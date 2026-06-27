@@ -1,15 +1,16 @@
-// 🐦 Flutter imports:
+﻿// ðŸ¦ Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-// 📦 Package imports:
+// ðŸ“¦ Package imports:
 import 'package:get_it/get_it.dart';
 
-// 🌎 Project imports:
+// ðŸŒŽ Project imports:
 import '../../../../../../../core/enums/state_enum.dart';
 import '../../../../../../../shared/extensions/build_context_extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../../../../../shared/utils/utils.dart';
+import '../../../../../../../shared/validator/security_validators.dart';
 import '../../../../../../../shared/validator/validator.dart';
 import '../../../../../../enzyme/domain/entities/enzyme_entity.dart';
 import '../../../../viewmodel/create_experiment_viewmodel.dart';
@@ -28,11 +29,7 @@ class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthS
 
   Map<String, TextEditingController> textEditingControllers = {};
 
-  final validations = <ValidateRule>[
-    ValidateRule(ValidateTypes.required),
-    ValidateRule(ValidateTypes.numeric),
-    ValidateRule(ValidateTypes.greaterThanZeroDecimal),
-  ];
+
 
   @override
   void initState() {
@@ -43,8 +40,8 @@ class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthS
       if (mounted) {
         _createExperimentViewmodel.setStepPage(0, notify: false);
 
-        final fieldValidator = FieldValidator(validations, context);
-        final durationFieldValidator = FieldValidator([...validations, ValidateRule(ValidateTypes.isInteger)], context);
+        final fieldValidator = FieldValidator(SecurityValidators.variableA(), context);
+        final durationFieldValidator = FieldValidator(SecurityValidators.duration(), context);
 
         setState(() {
           textEditingControllers.clear();
@@ -375,7 +372,7 @@ class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthS
                             title: _isEnzymeCorrectlyFilled(enzyme.id)
                                 ? Text(enzyme.name)
                                 : Text(
-                                    "⚠  ${enzyme.name}",
+                                    "âš   ${enzyme.name}",
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: context.getApplyedColorScheme.error,
@@ -402,3 +399,6 @@ class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthS
     );
   }
 }
+
+
+

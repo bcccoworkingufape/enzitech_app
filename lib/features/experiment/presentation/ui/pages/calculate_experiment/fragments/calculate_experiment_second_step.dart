@@ -10,6 +10,7 @@ import '../../../../../../../core/logging/app_logger.dart';
 import '../../../../../../../shared/extensions/build_context_extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../../../../../shared/utils/utils.dart';
+import '../../../../../../../shared/validator/security_validators.dart';
 import '../../../../../../../shared/validator/validator.dart';
 import '../../../../viewmodel/calculate_experiment_viewmodel.dart';
 import '../calculate_experiment_fragment_template.dart';
@@ -86,11 +87,7 @@ class _CalculateExperimentSecondStepPageState extends State<CalculateExperimentS
   }
 
   Widget _textFields(Map<String, double?> map) {
-    final validations = <ValidateRule>[
-      ValidateRule(ValidateTypes.required),
-      ValidateRule(ValidateTypes.numeric),
-      ValidateRule(ValidateTypes.greaterThanZeroDecimal),
-    ];
+    final validations = SecurityValidators.absorbance();
     final fieldValidator = FieldValidator(validations, context);
 
     return Column(
@@ -241,4 +238,5 @@ class _CalculateExperimentSecondStepPageState extends State<CalculateExperimentS
     );
   }
 }
+
 
