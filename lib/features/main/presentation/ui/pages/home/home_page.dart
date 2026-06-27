@@ -1,19 +1,20 @@
-// 🎯 Dart imports:
+﻿// ðŸŽ¯ Dart imports:
 import 'dart:async';
 import 'dart:math' as math;
 
-// 🐦 Flutter imports:
+// ðŸ¦ Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 
-// 📦 Package imports:
+// ðŸ“¦ Package imports:
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
-// 🌎 Project imports:
+// ðŸŒŽ Project imports:
 import '../../../../../../core/domain/service/connection_checker/connection_checker.dart';
+import '../../../../../../core/logging/app_logger.dart';
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../core/routing/routing.dart';
@@ -107,7 +108,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             if (_homeViewmodel.failure is ExpiredTokenOrWrongUserFailure ||
                 _homeViewmodel.failure is UserNotFoundOrWrongTokenFailure ||
                 _homeViewmodel.failure is SessionNotFoundFailure) {
-              debugPrint("SAIR :)");
+              AppLogger.info("Initiating automatic logout due to expired session");
               _accountViewmodel.logout();
 
               if (_accountViewmodel.state == StateEnum.success && mounted) {
@@ -318,3 +319,5 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     );
   }
 }
+
+

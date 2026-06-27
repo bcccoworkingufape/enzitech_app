@@ -102,7 +102,7 @@ class DioHttpServiceImp implements HttpService {
           if (message.isEmpty) {
             if (dioError.response == null) {
               if (dioError.message!.contains('Connection failed')) {
-                throw NoNetworkFailure(message: dioError.message ?? 'No Network Failure');
+                throw NoNetworkFailure();
               } else {
                 throw dioError.message!.contains('Connection timed out')
                     ? serverFailure
@@ -122,9 +122,9 @@ class DioHttpServiceImp implements HttpService {
           }
 
           if (dioError.type == DioExceptionType.connectionTimeout) {
-            throw NoNetworkFailure(message: "Connection Timeout Exception");
+            throw NoNetworkFailure();
           } else if (dioError.type == DioExceptionType.receiveTimeout) {
-            throw NoNetworkFailure(message: "Receive Timeout Exception");
+            throw NoNetworkFailure();
           }
 
           switch (dioError.response!.statusCode) {
@@ -255,3 +255,5 @@ class DioHttpServiceImp implements HttpService {
     );
   }
 }
+
+

@@ -1,8 +1,19 @@
-// 🌎 Project imports:
+﻿// 🌎 Project imports:
 import '../../shared/l10n/app_localizations.dart';
 import 'failures.dart';
 
 class HandleFailure {
+  /// Translates a [Failure] into a localized, user-facing message.
+  ///
+  /// Security policy: the default path never surfaces the raw failure
+  /// message returned by the backend (which can leak validation hints,
+  /// stack details, or internal state). Specific known failures (e.g.
+  /// "connection refused") still map to localized phrases.
+  ///
+  /// The legacy `enableStatusCode` / `overrideDefaultMessage` flags were
+  /// unsafe defaults and are now ignored; callers that previously relied on
+  /// them should use the structured fields on `Failure` (e.g. `key`) and
+  /// present only what the l10n dictionary already supports.
   static String of(
     AppLocalizations l10n,
     Failure failure, {
@@ -15,12 +26,6 @@ class HandleFailure {
       if (failure.message.contains("Connection refused")) {
         return l10n.error_serverConnectionRefused;
       }
-    }
-
-    if (overrideDefaultMessage) {
-      return enableStatusCode
-          ? l10n.error_statusCodeAndMessage(failure.key.toString(), failure.message)
-          : l10n.error_messageOnly(failure.message);
     }
 
     switch (failure.key) {
@@ -47,9 +52,8 @@ class HandleFailure {
           case NoResultQueryFailure _:
             return l10n.error_noResultQuery(failure.message.toLowerCase());
           default:
-            return enableStatusCode
-                ? l10n.error_statusCodeAndMessage(failure.key.toString(), failure.message)
-                : l10n.error_messageOnly(failure.message);
+            // Final fallback: a generic, non-leaking message.
+            return l10n.error_messageOnly('');
         }
     }
   }

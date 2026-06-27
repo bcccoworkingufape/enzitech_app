@@ -1,10 +1,10 @@
-// 🎯 Dart imports:
+﻿// ðŸŽ¯ Dart imports:
 import 'dart:convert';
 
-// 📦 Package imports:
+// ðŸ“¦ Package imports:
 import 'package:dartz/dartz.dart';
 
-// 🌎 Project imports:
+// ðŸŒŽ Project imports:
 import '../../../../../core/domain/service/http/http_service.dart';
 import '../../../../../core/failures/failures.dart';
 import '../../../../../shared/utils/api.dart';
@@ -54,7 +54,7 @@ class ExperimentsRemoteDataSourceImp implements ExperimentsDataSource {
       return Right(result);
     } catch (e) {
       if (e is TypeError) {
-        return Left(TypeFailure(message: e.toString()));
+        return Left(TypeFailure());
       }
       return Left(e as Failure);
     }
@@ -217,3 +217,5 @@ class ExperimentsRemoteDataSourceImp implements ExperimentsDataSource {
     throw UnimplementedError();
   }
 }
+
+

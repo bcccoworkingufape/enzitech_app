@@ -1,4 +1,4 @@
-// ignore: unused_import
+﻿// ignore: unused_import
 import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
 
@@ -15,7 +15,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get registerNewEnzyme => 'Cadastre uma nova\nenzima';
 
   @override
-  String get enzymeIdentification => 'Identificação da enzima';
+  String get enzymeIdentification => 'IdentificaÃ§Ã£o da enzima';
 
   @override
   String get chooseEnzymeType => 'Escolha o tipo da enzima';
@@ -24,7 +24,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get createEnzymeButton => 'Criar enzima';
 
   @override
-  String get enzymeType_acidPhosphatase => 'Fosfatase Ácida';
+  String get enzymeType_acidPhosphatase => 'Fosfatase Ãcida';
 
   @override
   String get enzymeType_alkalinePhosphatase => 'Fosfatase Alcalina';
@@ -59,7 +59,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String enzymeDeleted(String enzymeName) {
-    return '$enzymeName excluído!';
+    return '$enzymeName excluÃ­do!';
   }
 
   @override
@@ -67,7 +67,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get deleteEnzymeContent =>
-      'Você tem certeza que deseja excluir esta enzima?';
+      'VocÃª tem certeza que deseja excluir esta enzima?';
 
   @override
   String enzymesFound(int count) {
@@ -78,20 +78,20 @@ class AppLocalizationsPt extends AppLocalizations {
       one: '1 enzima encontrada',
       zero: 'Nenhuma enzima encontrada',
     );
-    return '🧬 $_temp0';
+    return 'ðŸ§¬ $_temp0';
   }
 
   @override
-  String get formulaLabel => 'Fórmula: ';
+  String get formulaLabel => 'FÃ³rmula: ';
 
   @override
-  String get variableALabel => 'Variável A: ';
+  String get variableALabel => 'VariÃ¡vel A: ';
 
   @override
-  String get variableBLabel => 'Variável B: ';
+  String get variableBLabel => 'VariÃ¡vel B: ';
 
   @override
-  String get enzymesSummaryTitle => 'Sumário de enzimas';
+  String get enzymesSummaryTitle => 'SumÃ¡rio de enzimas';
 
   @override
   String enzymeTagFormat(String enzymeName, int quantity) {
@@ -99,10 +99,10 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get variableA => 'Variável A';
+  String get variableA => 'VariÃ¡vel A';
 
   @override
-  String get variableB => 'Variável B';
+  String get variableB => 'VariÃ¡vel B';
 
   @override
   String modifiedOn(String date) {
@@ -110,7 +110,7 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get repetitions => 'Repetições';
+  String get repetitions => 'RepetiÃ§Ãµes';
 
   @override
   String errorLoadingExperiment(String experimentName) {
@@ -121,13 +121,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get loadingExperiment => 'Carregando experimento...';
 
   @override
-  String get tapToSeeMore => 'Toque para ver mais informações';
+  String get tapToSeeMore => 'Toque para ver mais informaÃ§Ãµes';
 
   @override
-  String get tapToHide => 'Toque para ocultar as informações';
+  String get tapToHide => 'Toque para ocultar as informaÃ§Ãµes';
 
   @override
-  String get enzymaticCalculation => 'Cálculo enzimático';
+  String get enzymaticCalculation => 'CÃ¡lculo enzimÃ¡tico';
 
   @override
   String get results => 'Resultados';
@@ -137,7 +137,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String experimentDeleted(String experimentName) {
-    return '$experimentName excluído!';
+    return '$experimentName excluÃ­do!';
   }
 
   @override
@@ -158,14 +158,14 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get shareFileError =>
-      'Não foi possível compartilhar o arquivo, tente novamente.';
+      'NÃ£o foi possÃ­vel compartilhar o arquivo, tente novamente.';
 
   @override
   String get spreadsheetSavedSuccess => 'Planilha salva com sucesso!';
 
   @override
   String get spreadsheetSaveError =>
-      'Não foi possível salvar a planilha, tente novamente.';
+      'NÃ£o foi possÃ­vel salvar a planilha, tente novamente.';
 
   @override
   String get columnId => 'ID';
@@ -180,13 +180,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get columnWhiteSampleTooltip => 'Amostra Branca';
 
   @override
-  String get columnDifference => 'Diferença';
+  String get columnDifference => 'DiferenÃ§a';
 
   @override
   String get columnCurve => 'Curva';
 
   @override
-  String get columnCorrectionFactorShort => 'F. de Correção';
+  String get columnCorrectionFactorShort => 'F. de CorreÃ§Ã£o';
 
   @override
   String get columnVolume => 'Volume';
@@ -207,7 +207,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get loadingExperiments => 'Carregando experimentos...';
 
   @override
-  String get experimentsNotFound => 'Experimentos não encontrados';
+  String get experimentsNotFound => 'Experimentos nÃ£o encontrados';
 
   @override
   String get allExperimentsDisplayed => 'Todos os experimentos exibidos!';
@@ -216,7 +216,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get inProgress => 'Em andamento';
 
   @override
-  String get completed => 'Concluído';
+  String get completed => 'ConcluÃ­do';
 
   @override
   String experimentsFound(int count) {
@@ -227,18 +227,18 @@ class AppLocalizationsPt extends AppLocalizations {
       one: '1 experimento encontrado',
       zero: 'Nenhum experimento encontrado',
     );
-    return '🔬 $_temp0';
+    return 'ðŸ”¬ $_temp0';
   }
 
   @override
   String get selectTreatment => 'Selecione o tratamento:';
 
   @override
-  String get loadingAvailableEnzymes => 'Carregando enzimas disponíveis...';
+  String get loadingAvailableEnzymes => 'Carregando enzimas disponÃ­veis...';
 
   @override
   String get allEnzymesCalculated =>
-      'Todas as enzimas para este tratamento já foram calculadas!';
+      'Todas as enzimas para este tratamento jÃ¡ foram calculadas!';
 
   @override
   String get selectEnzyme => 'Selecione a enzima:';
@@ -253,15 +253,15 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String stepIndicatorMessage(int currentStep, int totalSteps) {
-    return 'Etapa $currentStep de $totalSteps - Identificação';
+    return 'Etapa $currentStep de $totalSteps - IdentificaÃ§Ã£o';
   }
 
   @override
-  String get invalidExperimentTitle => 'Experimento inválido!';
+  String get invalidExperimentTitle => 'Experimento invÃ¡lido!';
 
   @override
   String get invalidExperimentMessage =>
-      'Não é possível prosseguir sem dados de tratamento(s) e/ou enzima(s)';
+      'NÃ£o Ã© possÃ­vel prosseguir sem dados de tratamento(s) e/ou enzima(s)';
 
   @override
   String get chooseTreatmentAndEnzyme =>
@@ -272,12 +272,12 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String stepIndicatorMessageFilling(int currentStep, int totalSteps) {
-    return 'Etapa $currentStep de $totalSteps - Preenchimento e cálculo';
+    return 'Etapa $currentStep de $totalSteps - Preenchimento e cÃ¡lculo';
   }
 
   @override
   String repetitionDataTitle(int repetitionNumber) {
-    return 'Dados da $repetitionNumberª repetição';
+    return 'Dados da $repetitionNumberÂª repetiÃ§Ã£o';
   }
 
   @override
@@ -288,18 +288,18 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String repetitionLabel(int repetitionNumber) {
-    return 'Repetição $repetitionNumber:';
+    return 'RepetiÃ§Ã£o $repetitionNumber:';
   }
 
   @override
   String get discrepantRepetitionWarning =>
-      'Esta repetição está discrepante!\n\nO valor dela difere acima de 25% da média de todas as repetições.\n\nCaso queira mudar, basta pressionar \"Recalcular\".';
+      'Esta repetiÃ§Ã£o estÃ¡ discrepante!\n\nO valor dela difere acima de 25% da mÃ©dia de todas as repetiÃ§Ãµes.\n\nCaso queira mudar, basta pressionar \"Recalcular\".';
 
   @override
-  String get average => 'Média:';
+  String get average => 'MÃ©dia:';
 
   @override
-  String get repetitionColumnTitle => 'REPETIÇÃO';
+  String get repetitionColumnTitle => 'REPETIÃ‡ÃƒO';
 
   @override
   String get resultColumnTitle => 'RESULTADO';
@@ -316,31 +316,31 @@ class AppLocalizationsPt extends AppLocalizations {
   String get registerNewExperiment => 'Cadastre um novo experimento';
 
   @override
-  String get experimentIdentification => 'Identificação do experimento';
+  String get experimentIdentification => 'IdentificaÃ§Ã£o do experimento';
 
   @override
   String stepIndicatorIdentification(int currentStep, int totalSteps) {
-    return 'Etapa $currentStep de $totalSteps - Identificação';
+    return 'Etapa $currentStep de $totalSteps - IdentificaÃ§Ã£o';
   }
 
   @override
   String get repetitionsPerTreatmentLabel =>
-      'Quantidade de repetições por tratamento';
+      'Quantidade de repetiÃ§Ãµes por tratamento';
 
   @override
   String get goToTreatmentsButton => 'Ir para tratamentos';
 
   @override
   String get treatmentsAndRepetitionsData =>
-      'Dados dos tratamentos e repetições';
+      'Dados dos tratamentos e repetiÃ§Ãµes';
 
   @override
   String get noTreatmentsRegisteredError =>
-      'Nenhum tratamento cadastrado! É necessário pelo menos um tratamento para prosseguir.';
+      'Nenhum tratamento cadastrado! Ã‰ necessÃ¡rio pelo menos um tratamento para prosseguir.';
 
   @override
   String stepIndicatorTreatments(int currentStep, int totalSteps) {
-    return 'Etapa $currentStep de $totalSteps - Tratamentos e Repetições';
+    return 'Etapa $currentStep de $totalSteps - Tratamentos e RepetiÃ§Ãµes';
   }
 
   @override
@@ -357,35 +357,35 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get variableA_long => 'Variável a - Coeficiente Angular da Curva';
+  String get variableA_long => 'VariÃ¡vel a - Coeficiente Angular da Curva';
 
   @override
-  String get variableB_long => 'Variável b - Constante da Equação da Curva';
+  String get variableB_long => 'VariÃ¡vel b - Constante da EquaÃ§Ã£o da Curva';
 
   @override
   String get timeHours => 'Tempo (h)';
 
   @override
-  String get solutionVolume => 'Volume da Solução';
+  String get solutionVolume => 'Volume da SoluÃ§Ã£o';
 
   @override
   String get sampleWeightGrams => 'Peso da amostra (g)';
 
   @override
-  String get correctionFactor => 'Fator de correção';
+  String get correctionFactor => 'Fator de correÃ§Ã£o';
 
   @override
-  String get curveInformation => 'Informações da Curva:';
+  String get curveInformation => 'InformaÃ§Ãµes da Curva:';
 
   @override
-  String get otherVariables => 'Demais Variáveis:';
+  String get otherVariables => 'Demais VariÃ¡veis:';
 
   @override
   String get createExperimentButton => 'Criar Experimento';
 
   @override
   String stepIndicatorFillVariables(int currentStep, int totalSteps) {
-    return 'Etapa $currentStep de $totalSteps - Preencher variáveis';
+    return 'Etapa $currentStep de $totalSteps - Preencher variÃ¡veis';
   }
 
   @override
@@ -396,13 +396,13 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get deleteExperimentContent =>
-      'Você tem certeza que deseja excluir este experimento?';
+      'VocÃª tem certeza que deseja excluir este experimento?';
 
   @override
   String get nameLabel => 'Nome';
 
   @override
-  String get descriptionLabel => 'Descrição';
+  String get descriptionLabel => 'DescriÃ§Ã£o';
 
   @override
   String get sample => 'Amostra';
@@ -423,16 +423,16 @@ class AppLocalizationsPt extends AppLocalizations {
   String get filter_name => 'Nome';
 
   @override
-  String get filter_description => 'Descrição';
+  String get filter_description => 'DescriÃ§Ã£o';
 
   @override
   String get filter_progress => 'Progresso';
 
   @override
-  String get filter_creationDate => 'Data de criação';
+  String get filter_creationDate => 'Data de criaÃ§Ã£o';
 
   @override
-  String get filter_modificationDate => 'Data de modificação';
+  String get filter_modificationDate => 'Data de modificaÃ§Ã£o';
 
   @override
   String get order_ascending => 'Crescente';
@@ -466,160 +466,163 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get error_serverConnectionRefused =>
-      '⚠ Erro de Servidor, tente novamente mais tarde.';
+      'âš  Erro de Servidor, tente novamente mais tarde.';
 
   @override
   String error_statusCodeAndMessage(Object statusCode, Object message) {
-    return '⚠ SC$statusCode - $message';
+    return 'âš  SC$statusCode - $message';
   }
 
   @override
   String error_messageOnly(Object message) {
-    return '⚠ $message';
+    if (message.toString().isEmpty) {
+      return 'âš Ocorreu um erro inesperado. Tente novamente.';
+    }
+    return 'âš  $message';
   }
 
   @override
   String get error_400 =>
-      '⚠ Dados incorretos: Algum campo inválido ou ausente.';
+      'âš  Dados incorretos: Algum campo invÃ¡lido ou ausente.';
 
   @override
   String get error_401 =>
-      '⚠ Não autorizado: Token expirado ou usuário inválido.';
+      'âš  NÃ£o autorizado: Token expirado ou usuÃ¡rio invÃ¡lido.';
 
   @override
   String get error_403 =>
-      '⚠ Acesso negado: Você não tem permissão para executar esta ação.';
+      'âš  Acesso negado: VocÃª nÃ£o tem permissÃ£o para executar esta aÃ§Ã£o.';
 
   @override
-  String get error_404_login => '⚠ Usuário não encontrado.';
+  String get error_404_login => 'âš  UsuÃ¡rio nÃ£o encontrado.';
 
   @override
   String get error_404_generic =>
-      '⚠ Não encontrado: Talvez essa informação não exista mais.';
+      'âš  NÃ£o encontrado: Talvez essa informaÃ§Ã£o nÃ£o exista mais.';
 
   @override
   String get error_422 =>
-      '⚠ Entidade não processável: Não foi possível processar as instruções presentes.';
+      'âš  Entidade nÃ£o processÃ¡vel: NÃ£o foi possÃ­vel processar as instruÃ§Ãµes presentes.';
 
   @override
-  String get error_426 => '⚠ Upgrade requerido: ID de dispositivo inválido.';
+  String get error_426 => 'âš  Upgrade requerido: ID de dispositivo invÃ¡lido.';
 
   @override
   String get error_500 =>
-      '⚠ Erro do Servidor: Não foi possível atender à solicitação.';
+      'âš  Erro do Servidor: NÃ£o foi possÃ­vel atender Ã  solicitaÃ§Ã£o.';
 
   @override
   String get error_503 =>
-      '⚠ Erro do Servidor: Não foi possível atender à solicitação neste momento.';
+      'âš  Erro do Servidor: NÃ£o foi possÃ­vel atender Ã  solicitaÃ§Ã£o neste momento.';
 
   @override
   String get error_noNetwork =>
-      '⚠ Sem conexão com a internet, verifique seu acesso à rede e tente novamente.';
+      'âš  Sem conexÃ£o com a internet, verifique seu acesso Ã  rede e tente novamente.';
 
   @override
   String error_noResultQuery(Object query) {
-    return '⚠ Não foi possível obter $query.';
+    return 'âš  NÃ£o foi possÃ­vel obter $query.';
   }
 
   @override
-  String get validation_required => '⚠ Campo obrigatório';
+  String get validation_required => 'âš  Campo obrigatÃ³rio';
 
   @override
   String get validation_strongPassword =>
-      '⚠ Senha não atende ao padrão informado.';
+      'âš  Senha nÃ£o atende ao padrÃ£o informado.';
 
   @override
   String get validation_alfanumeric =>
-      '⚠ Campo não aceita caracteres especiais';
+      'âš  Campo nÃ£o aceita caracteres especiais';
 
   @override
-  String get validation_name => '⚠ Nome inválido';
+  String get validation_name => 'âš  Nome invÃ¡lido';
 
   @override
-  String get validation_phone => '⚠ Número inválido';
+  String get validation_phone => 'âš  NÃºmero invÃ¡lido';
 
   @override
-  String get validation_cellphone => '⚠ Número inválido';
+  String get validation_cellphone => 'âš  NÃºmero invÃ¡lido';
 
   @override
   String get validation_passwordEquals =>
-      '⚠ As senhas digitadas não coincidem.';
+      'âš  As senhas digitadas nÃ£o coincidem.';
 
   @override
   String get validation_passwordMustBeDiff =>
-      '⚠ A nova senha não pode ser igual a senha atual.';
+      'âš  A nova senha nÃ£o pode ser igual a senha atual.';
 
   @override
-  String get validation_notFound => '⚠ Não encontrado';
+  String get validation_notFound => 'âš  NÃ£o encontrado';
 
   @override
-  String get validation_emailEquals => '⚠ Os e-mails digitados não coincidem.';
+  String get validation_emailEquals => 'âš  Os e-mails digitados nÃ£o coincidem.';
 
   @override
-  String get validation_email => '⚠ E-mail inválido';
+  String get validation_email => 'âš  E-mail invÃ¡lido';
 
   @override
-  String get validation_cpf => '⚠ CPF inválido';
+  String get validation_cpf => 'âš  CPF invÃ¡lido';
 
   @override
-  String get validation_cnpj => '⚠ CNPJ inválido';
+  String get validation_cnpj => 'âš  CNPJ invÃ¡lido';
 
   @override
-  String get validation_numeric => '⚠ Número inválido';
+  String get validation_numeric => 'âš  NÃºmero invÃ¡lido';
 
   @override
-  String get validation_number => '⚠ Número inválido';
+  String get validation_number => 'âš  NÃºmero invÃ¡lido';
 
   @override
   String get validation_greaterThanZeroDecimal =>
-      '⚠ Insira um número maior que zero';
+      'âš  Insira um nÃºmero maior que zero';
 
   @override
-  String get validation_isInteger => '⚠ Insira um número inteiro';
+  String get validation_isInteger => 'âš  Insira um nÃºmero inteiro';
 
   @override
-  String get validation_greaterThanZero => '⚠ Insira um número maior que zero';
+  String get validation_greaterThanZero => 'âš  Insira um nÃºmero maior que zero';
 
   @override
   String validation_maxNumber(Object value) {
-    return '⚠ Número deve ser menor ou igual a $value.';
+    return 'âš  NÃºmero deve ser menor ou igual a $value.';
   }
 
   @override
   String validation_maxChars(Object value) {
-    return '⚠ Esse campo deve ter no máximo $value caractere(s)';
+    return 'âš  Esse campo deve ter no mÃ¡ximo $value caractere(s)';
   }
 
   @override
   String validation_maxAge(Object value) {
-    return '⚠ Idade máxima $value anos';
+    return 'âš  Idade mÃ¡xima $value anos';
   }
 
   @override
   String validation_minAge(Object value) {
-    return '⚠ Idade mínima $value anos';
+    return 'âš  Idade mÃ­nima $value anos';
   }
 
   @override
   String validation_minNumber(Object value) {
-    return '⚠ Número deve ser maior ou igual a $value.';
+    return 'âš  NÃºmero deve ser maior ou igual a $value.';
   }
 
   @override
   String validation_minChars(Object value) {
-    return '⚠ Esse campo deve ter no mínimo $value caractere(s)';
+    return 'âš  Esse campo deve ter no mÃ­nimo $value caractere(s)';
   }
 
   @override
   String get validation_emailOrRegistration =>
-      '⚠ E-mail ou matrícula inválido.';
+      'âš  E-mail ou matrÃ­cula invÃ¡lido.';
 
   @override
-  String get connectionRestored => '✓ Conexão reestabelecida';
+  String get connectionRestored => 'âœ“ ConexÃ£o reestabelecida';
 
   @override
   String get noInternetWarning =>
-      '⚠ Sem conexão com o servidor: Você está visualizando informações previamente carregadas e sem atualizações, quaisquer mudanças offline não serão mantidas!';
+      'âš  Sem conexÃ£o com o servidor: VocÃª estÃ¡ visualizando informaÃ§Ãµes previamente carregadas e sem atualizaÃ§Ãµes, quaisquer mudanÃ§as offline nÃ£o serÃ£o mantidas!';
 
   @override
   String get experiments => 'Experimentos';
@@ -631,16 +634,16 @@ class AppLocalizationsPt extends AppLocalizations {
   String get enzymes => 'Enzimas';
 
   @override
-  String get settings => 'Configurações';
+  String get settings => 'ConfiguraÃ§Ãµes';
 
   @override
-  String get nextButton => 'Próximo';
+  String get nextButton => 'PrÃ³ximo';
 
   @override
   String get backButton => 'Voltar';
 
   @override
-  String get loginAgain => 'Faça seu login novamente.';
+  String get loginAgain => 'FaÃ§a seu login novamente.';
 
   @override
   String get noData => 'Sem dados!';
@@ -678,7 +681,7 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get helloWelcome => 'Olá,\nseja bem vindo(a)!';
+  String get helloWelcome => 'OlÃ¡,\nseja bem vindo(a)!';
 
   @override
   String get forgotMyPassword => 'Esqueci minha senha';
@@ -687,13 +690,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get loginButton => 'Entrar';
 
   @override
-  String get dontHaveAnAccount => 'Não possui uma conta?';
+  String get dontHaveAnAccount => 'NÃ£o possui uma conta?';
 
   @override
   String get createOne => ' Crie uma';
 
   @override
-  String get institutionLabel => 'Instituição';
+  String get institutionLabel => 'InstituiÃ§Ã£o';
 
   @override
   String get signUp => 'Cadastre-se';
@@ -720,7 +723,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get accountCreatedSuccess => 'Conta criada com sucesso!';
 
   @override
-  String get info => 'Informações';
+  String get info => 'InformaÃ§Ãµes';
 
   @override
   String get about => 'Sobre o Enzitech';
@@ -729,13 +732,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get frequentlyAskedQuestions => 'Perguntas frequentes';
 
   @override
-  String get userData => 'Dados do Usuário';
+  String get userData => 'Dados do UsuÃ¡rio';
 
   @override
   String get userName => 'Nome';
 
   @override
-  String get userType => 'Tipo de usuário';
+  String get userType => 'Tipo de usuÃ¡rio';
 
   @override
   String roles(String role) {
@@ -748,7 +751,7 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get deletionConfirmation => 'Confirmação de exclusão';
+  String get deletionConfirmation => 'ConfirmaÃ§Ã£o de exclusÃ£o';
 
   @override
   String get languages => 'Idiomas';
@@ -766,20 +769,20 @@ class AppLocalizationsPt extends AppLocalizations {
   String get environment => 'Ambiente';
 
   @override
-  String get version => 'Versão';
+  String get version => 'VersÃ£o';
 
   @override
   String get exit => 'Sair';
 
   @override
-  String get seeYouSoon => 'Até logo...';
+  String get seeYouSoon => 'AtÃ© logo...';
 
   @override
   String environmentValue(String env) {
     String _temp0 = intl.Intl.selectLogic(env, {
       'dev': 'Desenvolvimento',
       'stage': 'Teste',
-      'prod': 'Produção',
+      'prod': 'ProduÃ§Ã£o',
       'other': 'Desconhecido',
     });
     return '$_temp0';
@@ -787,14 +790,14 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String unableToOpenUrlError(String url) {
-    return 'Não foi possível acessar $url';
+    return 'NÃ£o foi possÃ­vel acessar $url';
   }
 
   @override
   String get aboutTitle => 'Sobre:';
 
   @override
-  String get idealizationTitle => 'Idealização';
+  String get idealizationTitle => 'IdealizaÃ§Ã£o';
 
   @override
   String get developmentTeamTitle => 'Equipe de desenvolvimento';
@@ -804,7 +807,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get idealizationTextP1 =>
-      ' foi concebido como uma solução para o estudo e realização de experimentos no campo das atividades enzimáticas do solo, idealizado em conjunto pelo ';
+      ' foi concebido como uma soluÃ§Ã£o para o estudo e realizaÃ§Ã£o de experimentos no campo das atividades enzimÃ¡ticas do solo, idealizado em conjunto pelo ';
 
   @override
   String get idealizationTextP2 => ' e o ';
@@ -822,7 +825,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get roleBackendDeveloper => '(Desenvolvedor back-end)';
 
   @override
-  String get roleProjectManagement => '(Gestão do Projeto)';
+  String get roleProjectManagement => '(GestÃ£o do Projeto)';
 
   @override
   String get roleProfessorBCC => '(Docente - BCC)';
@@ -834,14 +837,14 @@ class AppLocalizationsPt extends AppLocalizations {
   String get question => 'Pergunta: ';
 
   @override
-  String get question1 => 'Por que não consigo criar enzimas?';
+  String get question1 => 'Por que nÃ£o consigo criar enzimas?';
 
   @override
   String get answer => 'Resposta: ';
 
   @override
   String get answer1 =>
-      'A funcionalidade de criação de enzimas é restrita ao adminstrador do Enzitech, pois atualmente para o cadastro de uma enzima é necessário sua implementação até que a mesma possa estar disponível para uso, caso necessite de algum novo tipo de enzima solicite ao administrador do sistema.';
+      'A funcionalidade de criaÃ§Ã£o de enzimas Ã© restrita ao adminstrador do Enzitech, pois atualmente para o cadastro de uma enzima Ã© necessÃ¡rio sua implementaÃ§Ã£o atÃ© que a mesma possa estar disponÃ­vel para uso, caso necessite de algum novo tipo de enzima solicite ao administrador do sistema.';
 
   @override
   String get stringtest4 => 'Teste4';
@@ -859,19 +862,19 @@ class AppLocalizationsPt extends AppLocalizations {
   String get excel_col_whiteSampleAbsorbance => 'Abs. Branco';
 
   @override
-  String get excel_col_difference => 'Diferença';
+  String get excel_col_difference => 'DiferenÃ§a';
 
   @override
-  String get excel_col_variableA => 'Variável A';
+  String get excel_col_variableA => 'VariÃ¡vel A';
 
   @override
-  String get excel_col_variableB => 'Variável B';
+  String get excel_col_variableB => 'VariÃ¡vel B';
 
   @override
-  String get excel_col_curveCalculation => 'Cálc. Curva';
+  String get excel_col_curveCalculation => 'CÃ¡lc. Curva';
 
   @override
-  String get excel_col_correctionFactor => 'Fator Correção';
+  String get excel_col_correctionFactor => 'Fator CorreÃ§Ã£o';
 
   @override
   String get excel_col_time => 'Tempo (h)';
@@ -889,7 +892,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get excel_footer_developedBy => 'Desenvolvido por:';
 
   @override
-  String get excel_footer_learnMore => '👨🏻‍💻 SAIBA MAIS:';
+  String get excel_footer_learnMore => 'ðŸ‘¨ðŸ»â€ðŸ’» SAIBA MAIS:';
 
   @override
   String shareExperimentResultsFilename(String experimentName) {
@@ -903,7 +906,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get registerNewTreatment => 'Cadastre um novo\ntratamento';
 
   @override
-  String get treatmentIdentification => 'Identificação do tratamento';
+  String get treatmentIdentification => 'IdentificaÃ§Ã£o do tratamento';
 
   @override
   String get createTreatmentButton => 'Criar tratamento';
@@ -915,11 +918,11 @@ class AppLocalizationsPt extends AppLocalizations {
   String get loadingTreatments => 'Carregando tratamentos...';
 
   @override
-  String get treatmentsNotFound => 'Tratamentos não encontrados';
+  String get treatmentsNotFound => 'Tratamentos nÃ£o encontrados';
 
   @override
   String treatmentDeleted(String treatmentName) {
-    return '$treatmentName excluído!';
+    return '$treatmentName excluÃ­do!';
   }
 
   @override
@@ -927,7 +930,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get deleteTreatmentContent =>
-      'Você tem certeza que deseja excluir este tratamento?';
+      'VocÃª tem certeza que deseja excluir este tratamento?';
 
   @override
   String treatmentsFound(int count) {
@@ -938,7 +941,7 @@ class AppLocalizationsPt extends AppLocalizations {
       one: '1 tratamento encontrado',
       zero: 'Nenhum tratamento encontrado',
     );
-    return '🧪 $_temp0';
+    return 'ðŸ§ª $_temp0';
   }
 
   @override
@@ -946,3 +949,4 @@ class AppLocalizationsPt extends AppLocalizations {
     return 'Criado em $date';
   }
 }
+

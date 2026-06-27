@@ -1,10 +1,10 @@
-// 🐦 Flutter imports:
+﻿// ðŸ¦ Flutter imports:
 import 'package:flutter/material.dart';
 
-// 📦 Package imports:
+// ðŸ“¦ Package imports:
 import 'package:get_it/get_it.dart';
 
-// 🌎 Project imports:
+// ðŸŒŽ Project imports:
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../core/routing/routing.dart';
@@ -47,7 +47,7 @@ class CreateAccountPageState extends State<CreateAccountPage> {
       if (_createAccountViewmodel.state == StateEnum.error) {
         EZTSnackBar.show(
           context,
-          HandleFailure.of(context.l10n, _createAccountViewmodel.failure!, overrideDefaultMessage: true),
+          HandleFailure.of(context.l10n, _createAccountViewmodel.failure!),
           eztSnackBarType: EZTSnackBarType.error,
         );
       } else if (_createAccountViewmodel.state == StateEnum.success) {
@@ -75,3 +75,4 @@ class CreateAccountPageState extends State<CreateAccountPage> {
     );
   }
 }
+

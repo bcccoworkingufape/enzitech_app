@@ -1,11 +1,12 @@
-// 🐦 Flutter imports:
+﻿// ðŸ¦ Flutter imports:
 import 'package:flutter/material.dart';
 
-// 📦 Package imports:
+// ðŸ“¦ Package imports:
 import 'package:get_it/get_it.dart';
 
-// 🌎 Project imports:
+// ðŸŒŽ Project imports:
 import '../../../../../../../core/enums/enums.dart';
+import '../../../../../../../core/logging/app_logger.dart';
 import '../../../../../../../shared/extensions/build_context_extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../../../../../shared/utils/utils.dart';
@@ -141,7 +142,7 @@ class _CalculateExperimentSecondStepPageState extends State<CalculateExperimentS
                   (_calculateExperimentViewmodel.experimentCalculationEntity != null &&
                           _calculateExperimentViewmodel.experimentCalculationEntity?.average != 0)
                       ? _calculateExperimentViewmodel.onNext(context)
-                      : debugPrint('Error on calculate');
+                      : AppLogger.warn('Experiment calculation returned zero average; user-visible error suppressed.');
                 });
                 //TODO: Corrigir enzimas bugadas (sem calculo -> retorno 0)
 
@@ -216,7 +217,7 @@ class _CalculateExperimentSecondStepPageState extends State<CalculateExperimentS
                         title: _isEnzymeCorrectlyFilled(map["_id"].toString())
                             ? Text(context.l10n.repetitionDataTitle(map["_id"]!.toInt() + 1))
                             : Text(
-                                "⚠  ${context.l10n.repetitionDataTitle(map["_id"]!.toInt() + 1)}",
+                                "âš   ${context.l10n.repetitionDataTitle(map["_id"]!.toInt() + 1)}",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: context.getApplyedColorScheme.error,
@@ -240,3 +241,4 @@ class _CalculateExperimentSecondStepPageState extends State<CalculateExperimentS
     );
   }
 }
+
