@@ -6,6 +6,7 @@ import 'package:get_it/get_it.dart';
 
 // ðŸŒŽ Project imports:
 import '../../../../../../core/enums/enums.dart';
+import '../../../../../../core/platform/secure_screen_wrapper.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../core/routing/routing.dart';
 import '../../../../../../shared/extensions/build_context_extensions.dart';
@@ -21,7 +22,7 @@ class CreateAccountPage extends StatefulWidget {
   CreateAccountPageState createState() => CreateAccountPageState();
 }
 
-class CreateAccountPageState extends State<CreateAccountPage> {
+class CreateAccountPageState extends State<CreateAccountPage> with SecureScreenMixin {
   late final CreateAccountViewmodel _createAccountViewmodel;
 
   final _pageController = PageController(initialPage: 0);
@@ -60,7 +61,8 @@ class CreateAccountPageState extends State<CreateAccountPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return wrapSecureScreen(
+      child: Scaffold(
       body: Form(
         key: _formKey,
         child: PageView(
@@ -72,7 +74,9 @@ class CreateAccountPageState extends State<CreateAccountPage> {
           ],
         ),
       ),
-    );
+    ),
+  );
   }
 }
+
 

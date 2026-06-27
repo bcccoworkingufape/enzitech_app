@@ -1,4 +1,4 @@
-﻿// ignore: unused_import
+// ignore: unused_import
 import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
 
@@ -78,7 +78,7 @@ class AppLocalizationsEn extends AppLocalizations {
       one: '1 enzyme found',
       zero: 'No enzymes found',
     );
-    return 'ðŸ§¬ $_temp0';
+    return '🧬 $_temp0';
   }
 
   @override
@@ -226,7 +226,7 @@ class AppLocalizationsEn extends AppLocalizations {
       one: '1 experiment found',
       zero: 'No experiments found',
     );
-    return 'ðŸ”¬ $_temp0';
+    return '🔬 $_temp0';
   }
 
   @override
@@ -464,160 +464,157 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get error_serverConnectionRefused =>
-      'âš  Server Error, please try again later.';
+      '⚠ Server Error, please try again later.';
 
   @override
   String error_statusCodeAndMessage(Object statusCode, Object message) {
-    return 'âš  SC$statusCode - $message';
+    return '⚠ SC$statusCode - $message';
   }
 
   @override
   String error_messageOnly(Object message) {
-    if (message.toString().isEmpty) {
-      return 'âš An unexpected error occurred. Please try again.';
-    }
-    return 'âš  $message';
+    return '⚠ $message';
   }
 
   @override
-  String get error_400 => 'âš  Incorrect data: Some field is invalid or missing.';
+  String get error_400 => '⚠ Incorrect data: Some field is invalid or missing.';
 
   @override
-  String get error_401 => 'âš  Not authorized: Token expired or invalid user.';
+  String get error_401 => '⚠ Not authorized: Token expired or invalid user.';
 
   @override
   String get error_403 =>
-      'âš  Access denied: You do not have permission to perform this action.';
+      '⚠ Access denied: You do not have permission to perform this action.';
 
   @override
-  String get error_404_login => 'âš  User not found.';
+  String get error_404_login => '⚠ User not found.';
 
   @override
   String get error_404_generic =>
-      'âš  Not found: This information may no longer exist.';
+      '⚠ Not found: This information may no longer exist.';
 
   @override
   String get error_422 =>
-      'âš  Unprocessable entity: The server understands the content type, but was unable to process the contained instructions.';
+      '⚠ Unprocessable entity: The server understands the content type, but was unable to process the contained instructions.';
 
   @override
-  String get error_426 => 'âš  Upgrade required: Invalid device ID.';
+  String get error_426 => '⚠ Upgrade required: Invalid device ID.';
 
   @override
-  String get error_500 => 'âš  Server Error: The request could not be fulfilled.';
+  String get error_500 => '⚠ Server Error: The request could not be fulfilled.';
 
   @override
   String get error_503 =>
-      'âš  Server Error: The service is temporarily unavailable.';
+      '⚠ Server Error: The service is temporarily unavailable.';
 
   @override
   String get error_noNetwork =>
-      'âš  No internet connection, check your network access and try again.';
+      '⚠ No internet connection, check your network access and try again.';
 
   @override
   String error_noResultQuery(Object query) {
-    return 'âš  Could not get $query.';
+    return '⚠ Could not get $query.';
   }
 
   @override
-  String get validation_required => 'âš  Required field';
+  String get validation_required => '⚠ Required field';
 
   @override
   String get validation_strongPassword =>
-      'âš  Password does not meet the required pattern.';
+      '⚠ Password does not meet the required pattern.';
 
   @override
   String get validation_alfanumeric =>
-      'âš  Field does not accept special characters';
+      '⚠ Field does not accept special characters';
 
   @override
-  String get validation_name => 'âš  Invalid name';
+  String get validation_name => '⚠ Invalid name';
 
   @override
-  String get validation_phone => 'âš  Invalid number';
+  String get validation_phone => '⚠ Invalid number';
 
   @override
-  String get validation_cellphone => 'âš  Invalid number';
+  String get validation_cellphone => '⚠ Invalid number';
 
   @override
   String get validation_passwordEquals =>
-      'âš  The entered passwords do not match.';
+      '⚠ The entered passwords do not match.';
 
   @override
   String get validation_passwordMustBeDiff =>
-      'âš  The new password cannot be the same as the current one.';
+      '⚠ The new password cannot be the same as the current one.';
 
   @override
-  String get validation_notFound => 'âš  Not found';
+  String get validation_notFound => '⚠ Not found';
 
   @override
-  String get validation_emailEquals => 'âš  The entered emails do not match.';
+  String get validation_emailEquals => '⚠ The entered emails do not match.';
 
   @override
-  String get validation_email => 'âš  Invalid email';
+  String get validation_email => '⚠ Invalid email';
 
   @override
-  String get validation_cpf => 'âš  Invalid CPF';
+  String get validation_cpf => '⚠ Invalid CPF';
 
   @override
-  String get validation_cnpj => 'âš  Invalid CNPJ';
+  String get validation_cnpj => '⚠ Invalid CNPJ';
 
   @override
-  String get validation_numeric => 'âš  Invalid number';
+  String get validation_numeric => '⚠ Invalid number';
 
   @override
-  String get validation_number => 'âš  Invalid number';
+  String get validation_number => '⚠ Invalid number';
 
   @override
   String get validation_greaterThanZeroDecimal =>
-      'âš  Enter a number greater than zero';
+      '⚠ Enter a number greater than zero';
 
   @override
-  String get validation_isInteger => 'âš  Enter an integer';
+  String get validation_isInteger => '⚠ Enter an integer';
 
   @override
-  String get validation_greaterThanZero => 'âš  Enter a number greater than zero';
+  String get validation_greaterThanZero => '⚠ Enter a number greater than zero';
 
   @override
   String validation_maxNumber(Object value) {
-    return 'âš  Number must be less than or equal to $value.';
+    return '⚠ Number must be less than or equal to $value.';
   }
 
   @override
   String validation_maxChars(Object value) {
-    return 'âš  This field must have a maximum of $value character(s)';
+    return '⚠ This field must have a maximum of $value character(s)';
   }
 
   @override
   String validation_maxAge(Object value) {
-    return 'âš  Maximum age $value years';
+    return '⚠ Maximum age $value years';
   }
 
   @override
   String validation_minAge(Object value) {
-    return 'âš  Minimum age $value years';
+    return '⚠ Minimum age $value years';
   }
 
   @override
   String validation_minNumber(Object value) {
-    return 'âš  Number must be greater than or equal to $value.';
+    return '⚠ Number must be greater than or equal to $value.';
   }
 
   @override
   String validation_minChars(Object value) {
-    return 'âš  This field must have a minimum of $value character(s)';
+    return '⚠ This field must have a minimum of $value character(s)';
   }
 
   @override
   String get validation_emailOrRegistration =>
-      'âš  Invalid email or registration.';
+      '⚠ Invalid email or registration.';
 
   @override
-  String get connectionRestored => 'âœ“ Connection restored';
+  String get connectionRestored => '✓ Connection restored';
 
   @override
   String get noInternetWarning =>
-      'âš  No connection to the server: You are viewing previously loaded and un-updated information, any offline changes will not be maintained!';
+      '⚠ No connection to the server: You are viewing previously loaded and un-updated information, any offline changes will not be maintained!';
 
   @override
   String get experiments => 'Experiments';
@@ -887,7 +884,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get excel_footer_developedBy => 'Developed by:';
 
   @override
-  String get excel_footer_learnMore => 'ðŸ‘¨ðŸ»â€ðŸ’» LEARN MORE:';
+  String get excel_footer_learnMore => '👨🏻‍💻 LEARN MORE:';
 
   @override
   String shareExperimentResultsFilename(String experimentName) {
@@ -936,7 +933,7 @@ class AppLocalizationsEn extends AppLocalizations {
       one: '1 treatment found',
       zero: 'No treatments found',
     );
-    return 'ðŸ§ª $_temp0';
+    return '🧪 $_temp0';
   }
 
   @override
@@ -944,7 +941,3 @@ class AppLocalizationsEn extends AppLocalizations {
     return 'Created on $date';
   }
 }
-
-
-
-

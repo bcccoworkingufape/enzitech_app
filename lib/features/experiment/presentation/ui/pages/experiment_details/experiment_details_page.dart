@@ -1,15 +1,16 @@
-// 🐦 Flutter imports:
+﻿// ðŸ¦ Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
-// 📦 Package imports:
+// ðŸ“¦ Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:get_it/get_it.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
-// 🌎 Project imports:
+// ðŸŒŽ Project imports:
 import '../../../../../../core/enums/enums.dart';
+import '../../../../../../core/platform/secure_screen_wrapper.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../core/routing/routing.dart';
 import '../../../../../../shared/extensions/build_context_extensions.dart';
@@ -28,7 +29,7 @@ class ExperimentDetailsPage extends StatefulWidget {
   State<ExperimentDetailsPage> createState() => _ExperimentDetailsPageState();
 }
 
-class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
+class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> with SecureScreenMixin {
   late final ExperimentDetailsViewmodel _experimentDetailsViewmodel;
   late final ExperimentsViewmodel _experimentsViewmodel;
   late final HomeViewmodel _homeViewmodel;
@@ -245,7 +246,8 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
     return ListenableBuilder(
       listenable: _experimentDetailsViewmodel,
       builder: (context, child) {
-        return Scaffold(
+        return wrapSecureScreen(
+      child: Scaffold(
           appBar: AppBar(
             iconTheme: IconThemeData(color: context.getApplyedColorScheme.onSurface),
             title: Text(context.l10n.experimentDetails, style: TextStyles(context).titleBoldBackground()),
@@ -289,8 +291,12 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: _buildBody(MediaQuery.of(context).size.height),
           ),
-        );
-      },
-    );
+        ),
+      );
+    },
+  );
   }
 }
+
+
+

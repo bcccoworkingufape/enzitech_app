@@ -1,17 +1,18 @@
-// 🎯 Dart imports:
+﻿// ðŸŽ¯ Dart imports:
 import 'dart:math';
 
-// 🐦 Flutter imports:
+// ðŸ¦ Flutter imports:
 import 'package:flutter/material.dart';
 
-// 📦 Package imports:
+// ðŸ“¦ Package imports:
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
-// 🌎 Project imports:
+// ðŸŒŽ Project imports:
 import '../../../../../../core/enums/enums.dart';
+import '../../../../../../core/platform/secure_screen_wrapper.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../shared/extensions/build_context_extensions.dart';
 import '../../../../../../shared/extensions/double_extensions.dart';
@@ -27,7 +28,7 @@ class ExperimentResultsPage extends StatefulWidget {
   State<ExperimentResultsPage> createState() => _ExperimentResultsPageState();
 }
 
-class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
+class _ExperimentResultsPageState extends State<ExperimentResultsPage> with SecureScreenMixin {
   late final ExperimentResultsViewmodel _experimentResultsViewmodel;
   late final ExperimentDetailsViewmodel _experimentDetailsViewmodel;
   late final ExperimentEntity _experiment;
@@ -373,7 +374,8 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
     return ListenableBuilder(
       listenable: _experimentResultsViewmodel,
       builder: (context, child) {
-        return Scaffold(
+        return wrapSecureScreen(
+      child: Scaffold(
           floatingActionButtonLocation: ExpandableFab.location,
           floatingActionButton:
               _experimentResultsViewmodel.state == StateEnum.loading ||
@@ -414,9 +416,10 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                   ],
                 ),
           body: _buildBody,
-        );
-      },
-    );
+        ),
+      );
+    },
+  );
   }
 }
 
@@ -426,3 +429,4 @@ class MyBehavior extends ScrollBehavior {
     return child;
   }
 }
+
