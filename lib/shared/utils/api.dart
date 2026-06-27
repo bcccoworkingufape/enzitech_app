@@ -52,7 +52,7 @@ class API {
   //-> SETUP
   static Map<String, dynamic> devConstants = {_baseUrl: "https://enzitech.onrender.com"};
 
-  /// Production base URL. Temporarily serves over cleartext while the
+  // TODO: Production base URL. Temporarily serves over cleartext while the
   /// backend is migrated to TLS. The legacy host is allow-listed in
   /// `SecureNetworkConfig` to permit release builds to boot until the
   /// migration completes.
@@ -118,4 +118,3 @@ class API {
   static String REQUEST_ENZYMES_REMAINING_IN_EXPERIMENT(String experiment) =>
       '$REQUEST_EXPERIMENTS/get-enzymes/$experiment';
 }
-

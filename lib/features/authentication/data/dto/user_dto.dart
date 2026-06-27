@@ -5,7 +5,7 @@ import '../../domain/entities/user_entity.dart';
 extension UserDto on UserEntity {
   static UserEntity fromJson(Map json) {
     return UserEntity(
-      token: json['accessToken'],
+      token: json['accessToken'] ?? '',
       name: json['user']['name'],
       email: json['user']['email'],
       id: json['user']['id'],

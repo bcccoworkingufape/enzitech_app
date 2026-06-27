@@ -62,25 +62,30 @@ class SplashViewmodel extends ChangeNotifier {
 
     final hasToken = await secureSessionStorage.hasToken();
 
-    if (hasToken) {
-      await experimentsViewmodel.fetch();
-      await enzymesViewmodel.fetch();
-      await treatmentsViewmodel.fetch();
-      await settingsViewmodel.fetch();
+    try {
+      if (hasToken) {
+        await experimentsViewmodel.fetch();
+        await enzymesViewmodel.fetch();
+        await treatmentsViewmodel.fetch();
+        await settingsViewmodel.fetch();
 
-      if (experimentsViewmodel.state == StateEnum.error) {
-        _setFailure(experimentsViewmodel.failure);
-        setStateEnum(StateEnum.error);
-      } else if (enzymesViewmodel.state == StateEnum.error) {
-        _setFailure(enzymesViewmodel.failure);
-        setStateEnum(StateEnum.error);
-      } else if (treatmentsViewmodel.state == StateEnum.error) {
-        _setFailure(treatmentsViewmodel.failure);
-        setStateEnum(StateEnum.error);
-      } else if (settingsViewmodel.state == StateEnum.error) {
-        _setFailure(settingsViewmodel.failure);
-        setStateEnum(StateEnum.error);
+        if (experimentsViewmodel.state == StateEnum.error) {
+          _setFailure(experimentsViewmodel.failure);
+          setStateEnum(StateEnum.error);
+        } else if (enzymesViewmodel.state == StateEnum.error) {
+          _setFailure(enzymesViewmodel.failure);
+          setStateEnum(StateEnum.error);
+        } else if (treatmentsViewmodel.state == StateEnum.error) {
+          _setFailure(treatmentsViewmodel.failure);
+          setStateEnum(StateEnum.error);
+        } else if (settingsViewmodel.state == StateEnum.error) {
+          _setFailure(settingsViewmodel.failure);
+          setStateEnum(StateEnum.error);
+        }
       }
+    } on Exception catch (e) {
+      _setFailure(GenericFailure(message: e.toString()));
+      setStateEnum(StateEnum.error);
     }
 
     setStateEnum(StateEnum.success);
