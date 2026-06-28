@@ -3,11 +3,11 @@ import 'package:flutter/widgets.dart';
 
 import 'screen_protection_service.dart';
 
-/// Adds FLAG_SECURE-equivalent behaviour to a screen.
+/// Adiciona um comportamento equivalente a FLAG_SECURE para uma tela.
 ///
-/// `enable` runs in `initState`; `disable` runs in `dispose`. A neutral
-/// privacy overlay is shown while the app is paused to avoid leaking the
-/// screen via the recents thumbnail.
+/// `enable` é executado em `initState`; `disable` é executado em `dispose`. Uma
+/// sobreposição neutra de privacidade é exibida enquanto o app está em pausa para
+/// evitar o vazamento da tela pela miniatura dos aplicativos recentes.
 mixin SecureScreenMixin<T extends StatefulWidget> on State<T> {
   bool _wasEnabled = false;
   bool _showOverlay = false;
@@ -60,16 +60,13 @@ mixin SecureScreenMixin<T extends StatefulWidget> on State<T> {
     _wasEnabled = false;
   }
 
-  /// Wrap your screen body with this to apply the privacy overlay when the
-  /// app is backgrounded.
+  /// Envolva o corpo da tela com isso para aplicar a sobreposição de privacidade quando o
+  /// app for colocado em segundo plano.
   Widget wrapSecureScreen({required Widget child}) {
     return Stack(
       children: [
         child,
-        if (_showOverlay)
-          const Positioned.fill(
-            child: ColoredBox(color: Color(0xFFFAFAFA)),
-          ),
+        if (_showOverlay) const Positioned.fill(child: ColoredBox(color: Color(0xFFFAFAFA))),
       ],
     );
   }

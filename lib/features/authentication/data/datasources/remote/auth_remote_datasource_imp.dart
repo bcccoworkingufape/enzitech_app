@@ -27,15 +27,12 @@ class AuthRemoteDataSourceImp implements AuthDataSource {
       var response = await _httpService.post(API.REQUEST_LOGIN, data: {'email': email, 'password': password});
       var result = UserDto.fromJson(response.data);
 
-      // Persist a profile without the access token. The token itself goes
-      // straight to secure storage.
+      // Persiste um perfil sem o token de acesso. O próprio token vai
+      // direto para o armazenamento seguro.
       final sanitized = {
-        'user': response.data is Map && response.data['user'] is Map ? response.data['user'] : {
-          'name': result.name,
-          'email': result.email,
-          'id': result.id,
-          'role': result.userType.name,
-        },
+        'user': response.data is Map && response.data['user'] is Map
+            ? response.data['user']
+            : {'name': result.name, 'email': result.email, 'id': result.id, 'role': result.userType.name},
       };
       await _userPreferencesService.saveFullUser(jsonEncode(sanitized));
       await _secureSessionStorage.writeToken(result.token);

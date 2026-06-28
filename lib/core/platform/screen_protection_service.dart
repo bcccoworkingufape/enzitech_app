@@ -2,28 +2,28 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
-/// Thin Dart wrapper that calls the platform's secure-window API.
+/// Wrapper fino em Dart que chama a API de janela segura da plataforma.
 ///
-/// On Android we invoke `WindowManager#addFlags(FLAG_SECURE)` via the
-/// `flutter_windowmanager` plugin (added as a dependency). On other
-/// platforms the call is a no-op so the same code compiles everywhere.
+/// No Android, invocamos `WindowManager#addFlags(FLAG_SECURE)` por meio do plugin
+/// `flutter_windowmanager` (adicionado como dependência). Em outras plataformas,
+/// a chamada é um no-op, então o mesmo código compila em todos os lugares.
 class ScreenProtectionService {
   ScreenProtectionService._();
 
   static const _channel = MethodChannel('enzitech/screen_protection');
 
-  /// Enables the platform secure-window flag. Returns the platform status;
-  /// callers can decide whether to log a soft warning.
+  /// Habilita o flag de janela segura da plataforma. Retorna o status da plataforma;
+  /// os chamadores podem decidir se registram um aviso leve.
   static Future<bool> enable() async {
     if (kIsWeb) return false;
     try {
-      // The plugin exposes the method channel under the hood. We invoke the
-      // platform channel directly so we can degrade gracefully when the
-      // plugin is unavailable (e.g. unit tests, unsupported OS).
+      // O plugin expõe o canal de método internamente. Invocamos o
+      // canal da plataforma diretamente para degradar graciosamente quando o
+      // plugin estiver indisponível (por exemplo, testes unitários, SO sem suporte).
       await _channel.invokeMethod<void>('enableSecure');
       return true;
     } catch (e) {
-      // Surface the failure only in debug to avoid leaking in release logs.
+      // Exiba a falha apenas em debug para evitar vazamentos em logs de release.
       if (kDebugMode) {
         // ignore: avoid_print
         print('ScreenProtectionService.enable failed: $e');

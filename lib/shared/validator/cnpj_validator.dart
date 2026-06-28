@@ -14,13 +14,13 @@ class CNPJValidator {
     "66666666666666",
     "77777777777777",
     "88888888888888",
-    "99999999999999"
+    "99999999999999",
   ];
 
   static const STRIP_REGEX = r'[^\d]';
 
-  // Compute the Verifier Digit (or "Dígito Verificador (DV)" in PT-BR).
-  // You can learn more about the algorithm on [wikipedia (pt-br)](https://pt.wikipedia.org/wiki/D%C3%ADgito_verificador)
+  // Calcula o dígito verificador (ou "Dígito Verificador (DV)" em PT-BR).
+  // Você pode aprender mais sobre o algoritmo em [wikipedia (pt-br)](https://pt.wikipedia.org/wiki/D%C3%ADgito_verificador)
   static int _verifierDigit(String cnpj) {
     var index = 2;
 
@@ -41,8 +41,7 @@ class CNPJValidator {
   static String format(String cnpj) {
     var regExp = RegExp(r'^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$');
 
-    return strip(cnpj).replaceAllMapped(
-        regExp, (m) => "${m[1]}.${m[2]}.${m[3]}/${m[4]}-${m[5]}");
+    return strip(cnpj).replaceAllMapped(regExp, (m) => "${m[1]}.${m[2]}.${m[3]}/${m[4]}-${m[5]}");
   }
 
   static String strip(String cnpj) {
@@ -56,17 +55,17 @@ class CNPJValidator {
       cnpj = strip(cnpj);
     }
 
-    // cnpj must be defined
+    // o CNPJ deve ser definido
     if (cnpj.isEmpty) {
       return false;
     }
 
-    // cnpj must have 14 chars
+    // o CNPJ deve ter 14 caracteres
     if (cnpj.length != 14) {
       return false;
     }
 
-    // cnpj can't be blacklisted
+    // o CNPJ não pode estar na lista negra
     if (BLACKLIST.indexOf(cnpj) != -1) {
       return false;
     }
@@ -75,8 +74,7 @@ class CNPJValidator {
     numbers += _verifierDigit(numbers).toString();
     numbers += _verifierDigit(numbers).toString();
 
-    return numbers.substring(numbers.length - 2) ==
-        cnpj.substring(cnpj.length - 2);
+    return numbers.substring(numbers.length - 2) == cnpj.substring(cnpj.length - 2);
   }
 
   static String generate({bool useFormat = false}) {

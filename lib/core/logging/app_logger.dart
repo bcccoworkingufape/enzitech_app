@@ -1,8 +1,8 @@
 ﻿import 'package:flutter/foundation.dart';
 
-/// Minimal sanitized logger used across the app. Release builds compile the
-/// debug/info/warn calls into no-ops via `kDebugMode` so we never emit
-/// PII or session data to logcat.
+/// Logger sanitizado mínimo usado em todo o app. Builds de release compilam as
+/// chamadas debug/info/warn em no-ops via `kDebugMode` para nunca emitirmos
+/// PII ou dados de sessão para o logcat.
 class AppLogger {
   AppLogger._();
 
@@ -27,9 +27,9 @@ class AppLogger {
     }
   }
 
-  /// Errors keep the message+context in debug and forward a stripped version
-  /// to Crashlytics via the existing global handler (no PII redaction needed
-  /// because the source message is sanitized by callers).
+  /// Erros mantêm a mensagem + contexto em debug e encaminham uma versão limpa
+  /// para o Crashlytics via o handler global existente (não é necessária redação de PII
+  /// porque a mensagem original é sanitizada pelos chamadores).
   static void error(String message, {Object? error, StackTrace? stack, Map<String, Object?>? context}) {
     if (kDebugMode) {
       _emit('ERROR', message, context);
@@ -40,8 +40,8 @@ class AppLogger {
     }
   }
 
-  /// Public helper so sensitive inputs (Authorization headers, raw request
-  /// bodies) can be masked before being forwarded to any logger.
+  /// Auxiliar público para que entradas sensíveis (headers de autorização, corpos de requisição brutos)
+  /// possam ser mascaradas antes de serem encaminhadas a qualquer logger.
   static String maskSecret(String? value, {int visibleTail = 4}) {
     if (value == null || value.isEmpty) {
       return _redacted;

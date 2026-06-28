@@ -54,7 +54,7 @@ class SplashViewmodel extends ChangeNotifier {
   Future<void> fetch() async {
     setStateEnum(StateEnum.loading);
 
-    // One-shot migration from legacy SharedPreferences token to secure storage.
+    // Migração única do token legado do SharedPreferences para o armazenamento seguro.
     await secureSessionStorage.migrateFromLegacyIfNeeded(
       legacyReader: () => userPreferencesServices.getToken(),
       legacyClearer: (_) => userPreferencesServiceTokenCleanup(),

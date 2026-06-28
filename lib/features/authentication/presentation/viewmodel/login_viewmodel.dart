@@ -59,7 +59,7 @@ class LoginViewmodel extends ChangeNotifier {
       },
       (success) async {
         setLoggedName(success.name);
-        // Persist token in secure storage and propagate to Dio.
+        // Persiste o token no armazenamento seguro e o propaga ao Dio.
         await _secureSessionStorage.writeToken(success.token);
         GetIt.I.get<HttpService>().setConfig(token: success.token);
         setStateEnum(StateEnum.success);

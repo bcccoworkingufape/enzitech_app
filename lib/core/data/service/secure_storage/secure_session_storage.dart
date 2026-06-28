@@ -3,30 +3,29 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-/// Wrapper around `flutter_secure_storage` dedicated to session secrets
-/// (auth token). Keystore-backed on Android via EncryptedSharedPreferences,
-/// Keychain on iOS.
+/// Wrapper em torno do `flutter_secure_storage` dedicado a segredos de sessão
+/// (token de autenticação). Com suporte a Keystore no Android via EncryptedSharedPreferences,
+/// Keychain no iOS.
 ///
-/// Why a dedicated service: the legacy `UserPreferencesService` is bound to
-/// SharedPreferences (used for non-sensitive UI prefs). Funnelling session
-/// secrets through this isolated service keeps the trust boundary obvious.
+/// Por que um serviço dedicado: o `UserPreferencesService` legado é vinculado ao
+/// SharedPreferences (usado para preferências de UI não sensíveis). Canalizar os
+/// segredos de sessão por este serviço isolado mantém a fronteira de confiança explícita.
 class SecureSessionStorage {
   SecureSessionStorage({FlutterSecureStorage? storage})
-      : _storage = storage ??
-            const FlutterSecureStorage(
-              aOptions: AndroidOptions(encryptedSharedPreferences: true),
-              iOptions: IOSOptions(
-                accessibility: KeychainAccessibility.first_unlock_this_device,
-              ),
-            );
+    : _storage =
+          storage ??
+          const FlutterSecureStorage(
+            aOptions: AndroidOptions(encryptedSharedPreferences: true),
+            iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock_this_device),
+          );
 
   static const _tokenKey = 'auth_token';
 
   final FlutterSecureStorage _storage;
 
-  /// Migrates a legacy token (SharedPreferences-backed) into secure storage.
-  /// Idempotent: if no legacy token is provided or storage already has one,
-  /// it returns without changes.
+  /// Migra um token legado (baseado em SharedPreferences) para o armazenamento seguro.
+  /// Idempotente: se nenhum token legado for fornecido ou se o armazenamento já tiver um,
+  /// retorna sem alterações.
   Future<void> migrateFromLegacyIfNeeded({
     required Future<String?> Function() legacyReader,
     Future<void> Function(String)? legacyClearer,
@@ -45,7 +44,7 @@ class SecureSessionStorage {
         await legacyClearer(legacy);
       }
     } catch (e) {
-      // Best-effort: never crash app boot over a migration failure.
+      // Melhor esforço: nunca derrubar a inicialização do app por falha na migração.
       debugPrint('SecureSessionStorage migration skipped: $e');
     }
   }

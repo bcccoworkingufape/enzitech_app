@@ -12,7 +12,7 @@ import 'injections/viewmodels_injections.dart';
 GetIt getIt = GetIt.instance;
 
 class Inject {
-  //-> HttpDriverOptions is required to reset Dio's token options
+  //-> HttpDriverOptions é necessário para redefinir as opções de token do Dio.
   static void initialize(HttpDriverOptions httpDriverOptions) {
     CoreInjections(httpDriverOptions, getIt);
 

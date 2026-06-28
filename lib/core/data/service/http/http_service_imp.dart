@@ -29,16 +29,16 @@ class DioHttpServiceImp implements HttpService {
     dio.options.connectTimeout = const Duration(seconds: 60);
     dio.options.receiveTimeout = const Duration(seconds: 60);
 
-    // Reset sensitive state to avoid leaking the previous session's token
-    // after logout or login as a different user.
+    // Reinicia o estado sensível para evitar vazamento do token da sessão anterior
+    // após logout ou login como outro usuário.
     dio.options.headers.clear();
     dio.options.headers.addAll({
       'content-type': "application/json; charset=utf-8",
       'Authorization': '${httpDriverOptions.accessTokenType} $gettedToken',
     });
 
-    // Interceptors are stateful; remove any previous instance before re-adding
-    // so a re-login doesn't stack duplicate debug loggers.
+    // Os interceptadores são stateful; remova qualquer instância anterior antes de re-adicionar
+    // para que um novo login não empilhe loggers de debug duplicados.
     dio.interceptors.clear();
     if (kDebugMode && httpDriverOptions.useDebugLogger == true) {
       dio.interceptors.addAll([
@@ -56,8 +56,8 @@ class DioHttpServiceImp implements HttpService {
     }
   }
 
-  /// Removes the Authorization header (used by the logout flow) and clears
-  /// any stateful interceptors.
+  /// Remove o cabeçalho de autorização (usado no fluxo de logout) e limpa
+  /// quaisquer interceptadores stateful.
   @override
   Future<void> clearSession() async {
     dio.options.headers.remove('Authorization');
@@ -90,7 +90,7 @@ class DioHttpServiceImp implements HttpService {
             message = message;
             errorCode = dioError.response!.data['data']["errorCode"];
           } else if (data is Map<String, dynamic> && !data.containsKey('data')) {
-            //-> ENZITECH API configured with the possibility of not containing key 'data'
+            //-> API da ENZITECH configurada com a possibilidade de não conter a chave 'data'
             if (dioError.response!.data["message"] is List) {
               message = (dioError.response!.data["message"] as List).join(", ");
             } else {
@@ -255,5 +255,3 @@ class DioHttpServiceImp implements HttpService {
     );
   }
 }
-
-

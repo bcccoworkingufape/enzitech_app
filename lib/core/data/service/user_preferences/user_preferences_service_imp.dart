@@ -9,8 +9,8 @@ class UserPreferencesServiceImp implements UserPreferencesService {
   static const _excludeConfirmationKey = "excludeConfirmationKey";
   static const _replaceLanguageKey = "replaceLanguageKey";
   static const _themeModeKey = "themeModeKey";
-  //* Legacy token key kept for one-shot migration in main.dart. The active
-  //* session token now lives in SecureSessionStorage (FlutterSecureStorage).
+  //* Chave de token legado mantida para migração única em main.dart. O token de sessão ativo
+  //* agora fica em SecureSessionStorage (FlutterSecureStorage).
   static const legacyTokenKey = "token";
 
   final KeyValueService _keyValueService;
@@ -28,16 +28,16 @@ class UserPreferencesServiceImp implements UserPreferencesService {
     return await _keyValueService.getString(_userKey);
   }
 
-  //* Token persistence moved to SecureSessionStorage. These methods stay as
-  //* pass-throughs to keep the legacy contract (and migration) safe.
+  //* A persistência do token foi movida para SecureSessionStorage. Estes métodos permanecem como
+  //* pass-throughs para manter o contrato legado (e a migração) seguro.
   @override
   Future<void> saveToken(String token) async {
-    // No-op: token writes go through SecureSessionStorage.
+    // Sem efeito: as gravações de token passam por SecureSessionStorage.
   }
 
   @override
   Future<String?> getToken() async {
-    // Returns the legacy token only while the migration has not run yet.
+    // Retorna o token legado apenas enquanto a migração ainda não foi executada.
     return await _keyValueService.getString(legacyTokenKey);
   }
 

@@ -15,56 +15,56 @@ class EZTAutoScroll extends StatefulWidget {
     this.delayAfterScrollInput = const Duration(seconds: 1),
   });
 
-  /// Widget to display in loop
+  /// Widget a ser exibido em loop.
   ///
-  /// required
+  /// obrigatório
   final Widget child;
 
-  /// Duration to wait before starting animation
+  /// Duração de espera antes de iniciar a animação.
   ///
-  /// Default set to Duration(seconds: 1).
+  /// Padrão definido para Duration(seconds: 1).
   ///
   final Duration delay;
 
-  /// Duration of animation
+  /// Duração da animação.
   ///
-  /// Default set to Duration(seconds: 30).
+  /// Padrão definido para Duration(seconds: 30).
   final Duration duration;
 
-  /// Sized between end of child and beginning of next child instance
+  /// Espaço entre o fim de um child e o início do próximo.
   ///
-  /// Default set to 25.
+  /// Padrão definido para 25.
   final double gap;
 
-  /// The axis along which the scroll view scrolls.
+  /// O eixo ao longo do qual a view de rolagem é deslocada.
   ///
-  /// required
+  /// obrigatório
   final Axis scrollDirection;
 
   ///
-  /// true : Right to Left
+  /// true : da direita para a esquerda
   ///
   // |___________________________<--Scrollbar-Starting-Right-->|
   ///
-  /// fasle : Left to Right (Default)
+  /// false : da esquerda para a direita (padrão)
   ///
   // |<--Scrollbar-Starting-Left-->____________________________|
   final bool reverseScroll;
 
-  /// The number of times duplicates child. So when the user scrolls then, he can't find the end.
+  /// O número de vezes que o child é duplicado. Assim, quando o usuário rola, ele não encontra o fim.
   ///
-  /// Default set to 25.
+  /// Padrão definido para 25.
   ///
   final int duplicateChild;
 
-  ///User scroll input
+  /// Entrada de rolagem do usuário.
   ///
-  ///Default set to true
+  /// Padrão definido como true.
   final bool enableScrollInput;
 
-  /// Duration to wait before starting animation, after user scroll Input.
+  /// Duração de espera antes de iniciar a animação, após a entrada de rolagem do usuário.
   ///
-  /// Default set to Duration(seconds: 1).
+  /// Padrão definido para Duration(seconds: 1).
   ///
   final Duration delayAfterScrollInput;
   @override

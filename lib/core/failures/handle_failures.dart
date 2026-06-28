@@ -3,17 +3,17 @@ import '../../shared/l10n/app_localizations.dart';
 import 'failures.dart';
 
 class HandleFailure {
-  /// Translates a [Failure] into a localized, user-facing message.
+  /// Traduz um [Failure] em uma mensagem localizada e voltada ao usuário.
   ///
-  /// Security policy: the default path never surfaces the raw failure
-  /// message returned by the backend (which can leak validation hints,
-  /// stack details, or internal state). Specific known failures (e.g.
-  /// "connection refused") still map to localized phrases.
+  /// Política de segurança: o caminho padrão nunca expõe a mensagem bruta de falha
+  /// retornada pelo backend (que pode vazar dicas de validação,
+  /// detalhes de stack ou estado interno). Falhas conhecidas específicas (por exemplo,
+  /// "connection refused") ainda são mapeadas para frases localizadas.
   ///
-  /// The legacy `enableStatusCode` / `overrideDefaultMessage` flags were
-  /// unsafe defaults and are now ignored; callers that previously relied on
-  /// them should use the structured fields on `Failure` (e.g. `key`) and
-  /// present only what the l10n dictionary already supports.
+  /// Os flags legados `enableStatusCode` / `overrideDefaultMessage` eram padrões
+  /// inseguros e agora são ignorados; os chamadores que antes dependiam deles
+  /// devem usar os campos estruturados em `Failure` (por exemplo, `key`) e
+  /// apresentar apenas o que o dicionário de l10n já suporta.
   static String of(
     AppLocalizations l10n,
     Failure failure, {
@@ -21,7 +21,7 @@ class HandleFailure {
     bool overrideDefaultMessage = false,
     bool isLogin = false,
   }) {
-    //* EZT custom error when API is down
+    //* Erro personalizado do EZT quando a API estiver indisponível
     if (failure.runtimeType is ServerFailure) {
       if (failure.message.contains("Connection refused")) {
         return l10n.error_serverConnectionRefused;
@@ -52,7 +52,7 @@ class HandleFailure {
           case NoResultQueryFailure _:
             return l10n.error_noResultQuery(failure.message.toLowerCase());
           default:
-            // Final fallback: a generic, non-leaking message.
+            // Fallback final: uma mensagem genérica e sem vazamento de detalhes.
             return l10n.error_messageOnly('');
         }
     }

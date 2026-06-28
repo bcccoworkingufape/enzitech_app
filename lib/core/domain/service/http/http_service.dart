@@ -5,8 +5,8 @@ import '../../entities/http_driver_response.dart';
 abstract class HttpService {
   Future<void> setConfig({String? token});
 
-  /// Strips the Authorization header and any in-memory interceptors. Used by
-  /// the logout flow to avoid a residual token in the Dio instance.
+  /// Remove o cabeçalho de autorização e quaisquer interceptadores em memória. Usado
+  /// no fluxo de logout para evitar um token residual na instância do Dio.
   Future<void> clearSession();
 
   Future<HttpDriverResponse> get(
@@ -65,4 +65,3 @@ abstract class HttpService {
     HttpDriverProgressCallback? onSendProgress,
   });
 }
-

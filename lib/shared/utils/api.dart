@@ -9,11 +9,11 @@ class API {
   static Map<String, dynamic> _config = {};
   static late EnvironmentEnum enviroment;
 
-  /// Selects the runtime environment.
+  /// Seleciona o ambiente de execução.
   ///
-  /// The default honours the `--dart-define=ENV=dev|stage|prod` flag and
-  /// falls back to production when the flag is missing to keep the previous
-  /// behaviour for downstream clients.
+  /// O padrão respeita o parâmetro `--dart-define=ENV=dev|stage|prod` e
+  /// retorna para produção quando o parâmetro está ausente para manter o
+  /// comportamento anterior para clientes downstream.
   static void setEnvironment(EnvironmentEnum env) {
     switch (env) {
       case EnvironmentEnum.dev:
@@ -31,7 +31,7 @@ class API {
     }
   }
 
-  /// Resolves the active environment from `--dart-define=ENV=...`.
+  /// Resolve o ambiente ativo a partir de `--dart-define=ENV=...`.
   static EnvironmentEnum environmentFromDefine() {
     const value = String.fromEnvironment('ENV', defaultValue: 'prod');
     switch (value) {
@@ -52,69 +52,69 @@ class API {
   //-> SETUP
   static Map<String, dynamic> devConstants = {_baseUrl: "https://enzitech.onrender.com"};
 
-  // TODO: Production base URL. Temporarily serves over cleartext while the
-  /// backend is migrated to TLS. The legacy host is allow-listed in
-  /// `SecureNetworkConfig` to permit release builds to boot until the
-  /// migration completes.
+  // TODO: URL base de produção. Temporariamente é servida em texto puro enquanto o
+  /// backend é migrado para TLS. O host legado está em lista de permissões em
+  /// `SecureNetworkConfig` para permitir que builds de release iniciem até a
+  /// conclusão da migração.
   // ignore: deprecated_member_use_from_same_package
   static Map<String, dynamic> prodConstants = {_baseUrl: "http://200.133.6.201:30001/"};
 
   //-> AUTHENTICATION
-  /// Route to '/auth'
+  /// Rota para '/auth'
   static const _REQUEST_AUTH = '/auth';
 
-  /// Route to '/auth/login'
+  /// Rota para '/auth/login'
   static const REQUEST_LOGIN = '$_REQUEST_AUTH/login';
 
-  /// Route to '/auth/send-recover-email'
+  /// Rota para '/auth/send-recover-email'
   static const REQUEST_RECOVER_EMAIL = '$_REQUEST_AUTH/send-recover-email';
 
-  /// Route to '/auth/send-recover-email/$token'
+  /// Rota para '/auth/send-recover-email/$token'
   static String REQUEST_RESET_PASSWORD(String token) => '$REQUEST_RECOVER_EMAIL/$token';
 
   //-> USER
-  /// Route to '/users'
+  /// Rota para '/users'
   static const REQUEST_USERS = '/users';
 
-  /// Route to '/users/$id'
+  /// Rota para '/users/$id'
   static String REQUEST_USERS_WITH_ID(String id) => '$REQUEST_USERS/$id';
 
   //-> ENZYMES
-  /// Route to '/enzymes'
+  /// Rota para '/enzymes'
   static const REQUEST_ENZYMES = '/enzymes';
 
-  /// Route to '/enzymes/$id'
+  /// Rota para '/enzymes/$id'
   static String REQUEST_ENZYMES_WITH_ID(String id) => '$REQUEST_ENZYMES/$id';
 
   //-> TREATMENTS
-  /// Route to '/processes'
+  /// Rota para '/processes'
   static const REQUEST_TREATMENTS = '/processes';
 
-  /// Route to '/processes/$id'
+  /// Rota para '/processes/$id'
   static String REQUEST_TREATMENTS_WITH_ID(String id) => '$REQUEST_TREATMENTS/$id';
 
   //-> EXPERIMENTS
-  /// Route to '/experiments'
+  /// Rota para '/experiments'
   static const REQUEST_EXPERIMENTS = '/experiments';
 
-  /// Route to '/experiments/$id'
+  /// Rota para '/experiments/$id'
   static String REQUEST_EXPERIMENTS_WITH_ID(String id) => '$REQUEST_EXPERIMENTS/$id';
 
-  /// Route to '/experiments/calculate/$experiment'
+  /// Rota para '/experiments/calculate/$experiment'
   static String REQUEST_CALCULATE_EXPERIMENTS(String experiment) => '$REQUEST_EXPERIMENTS/calculate/$experiment';
 
-  /// Route to '/experiments/save-result/$experiment'
+  /// Rota para '/experiments/save-result/$experiment'
   static String REQUEST_SAVE_RESULT_EXPERIMENTS(String experiment) => '$REQUEST_EXPERIMENTS/save-result/$experiment';
 
-  /// Route to '/experiments/save-result/$experiment'
+  /// Rota para '/experiments/save-result/$experiment'
   static String REQUEST_GET_RESULT_EXPERIMENTS(String experiment) =>
       '$REQUEST_EXPERIMENTS/get-total-result/$experiment';
 
-  /// Route to '/experiments/get-total-result/$experiment'
+  /// Rota para '/experiments/get-total-result/$experiment'
   static String REQUEST_TOTAL_RESULTS_OF_EXPERIMENT(String experiment) =>
       '$REQUEST_EXPERIMENTS/get-total-result/$experiment';
 
-  /// Route to '/experiments/get-enzymes/$experiment'
+  /// Rota para '/experiments/get-enzymes/$experiment'
   static String REQUEST_ENZYMES_REMAINING_IN_EXPERIMENT(String experiment) =>
       '$REQUEST_EXPERIMENTS/get-enzymes/$experiment';
 }

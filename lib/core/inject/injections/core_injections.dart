@@ -24,7 +24,7 @@ class CoreInjections {
     getIt.registerLazySingleton<HttpService>(() => DioHttpServiceImp(httpDriverOptions));
     getIt.registerLazySingleton<KeyValueService>(() => SharedPrefsServiceImp());
     getIt.registerLazySingleton<PlatformService>(() => PlatformServiceImp());
-    // Session secrets live in EncryptedSharedPreferences/Keychain.
+    // Os segredos da sessão ficam em EncryptedSharedPreferences/Keychain.
     getIt.registerLazySingleton<SecureSessionStorage>(() => SecureSessionStorage());
     getIt.registerLazySingleton<UserPreferencesService>(() => UserPreferencesServiceImp(getIt()));
   }

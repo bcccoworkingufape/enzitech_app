@@ -9,40 +9,40 @@ import 'package:flutter/material.dart';
 
 const Duration _kExpand = Duration(milliseconds: 200);
 
-/// A single-line [ListTile] with an expansion arrow icon that expands or collapses
-/// the tile to reveal or hide the [children].
+/// Um [ListTile] de uma linha com um ícone de seta de expansão que expande ou recolhe
+/// o tile para revelar ou ocultar os [children].
 ///
-/// This widget is typically used with [ListView] to create an
-/// "expand / collapse" list entry. When used with scrolling widgets like
-/// [ListView], a unique [PageStorageKey] must be specified to enable the
-/// [EZTExpansionTile] to save and restore its expanded state when it is scrolled
-/// in and out of view.
+/// Este widget é tipicamente usado com [ListView] para criar uma entrada
+/// "expandir / recolher" da lista. Quando usado com widgets de rolagem como
+/// [ListView], um [PageStorageKey] único deve ser especificado para permitir que
+/// [EZTExpansionTile] salve e restaure seu estado expandido quando é rolado
+/// para dentro e para fora da visão.
 ///
-/// This class overrides the [ListTileThemeData.iconColor] and [ListTileThemeData.textColor]
-/// theme properties for its [ListTile]. These colors animate between values when
-/// the tile is expanded and collapsed: between [iconColor], [collapsedIconColor] and
-/// between [textColor] and [collapsedTextColor].
+/// Esta classe sobrescreve as propriedades de tema [ListTileThemeData.iconColor] e [ListTileThemeData.textColor]
+/// do seu [ListTile]. Essas cores animam entre valores quando
+/// o tile é expandido e recolhido: entre [iconColor], [collapsedIconColor] e
+/// entre [textColor] e [collapsedTextColor].
 ///
-/// The expansion arrow icon is shown on the right by default in left-to-right languages
-/// (i.e. the trailing edge). This can be changed using [controlAffinity]. This maps
-/// to the [leading] and [trailing] properties of [EZTExpansionTile].
+/// O ícone de seta de expansão é mostrado à direita por padrão em idiomas da esquerda para a direita
+/// (ou seja, na borda trailing). Isso pode ser alterado usando [controlAffinity]. Isso mapeia
+/// para as propriedades [leading] e [trailing] de [EZTExpansionTile].
 ///
 /// {@tool dartpad}
-/// This example demonstrates different configurations of ExpansionTile.
+/// Este exemplo demonstra diferentes configurações de ExpansionTile.
 ///
-/// ** See code in examples/api/lib/material/expansion_tile/expansion_tile.0.dart **
+/// ** Veja o código em examples/api/lib/material/expansion_tile/expansion_tile.0.dart **
 /// {@end-tool}
 ///
-/// See also:
+/// Veja também:
 ///
-///  * [ListTile], useful for creating expansion tile [children] when the
-///    expansion tile represents a sublist.
-///  * The "Expand and collapse" section of
+///  * [ListTile], útil para criar [children] de expansion tile quando o
+///    expansion tile representa uma sublista.
+///  * A seção "Expandir e recolher" de
 ///    <https://material.io/components/lists#types>
 class EZTExpansionTile extends StatefulWidget {
-  /// Creates a single-line [ListTile] with an expansion arrow icon that expands or collapses
-  /// the tile to reveal or hide the [children]. The [initiallyExpanded] property must
-  /// be non-null.
+  /// Cria um [ListTile] de uma linha com um ícone de seta de expansão que expande ou recolhe
+  /// o tile para revelar ou ocultar os [children]. A propriedade [initiallyExpanded] deve
+  /// ser não nula.
   const EZTExpansionTile({
     super.key,
     this.leading,
@@ -65,214 +65,210 @@ class EZTExpansionTile extends StatefulWidget {
     this.iconColor,
     this.collapsedIconColor,
     this.controlAffinity,
-  })  : assert(initiallyExpanded != null),
-        assert(maintainState != null),
-        assert(
-          expandedCrossAxisAlignment != CrossAxisAlignment.baseline,
-          'CrossAxisAlignment.baseline is not supported since the expanded children '
-          'are aligned in a column, not a row. Try to use another constant.',
-        );
+  }) : assert(initiallyExpanded != null),
+       assert(maintainState != null),
+       assert(
+         expandedCrossAxisAlignment != CrossAxisAlignment.baseline,
+         'CrossAxisAlignment.baseline is not supported since the expanded children '
+         'are aligned in a column, not a row. Try to use another constant.',
+       );
 
-  /// A widget to display before the title.
+  /// Um widget a ser exibido antes do título.
   ///
-  /// Typically a [CircleAvatar] widget.
+  /// Normalmente, um widget [CircleAvatar].
   ///
-  /// Note that depending on the value of [controlAffinity], the [leading] widget
-  /// may replace the rotating expansion arrow icon.
+  /// Observe que, dependendo do valor de [controlAffinity], o widget [leading]
+  /// pode substituir o ícone de seta de expansão rotativo.
   final Widget? leading;
 
-  /// The primary content of the list item.
+  /// O conteúdo principal do item da lista.
   ///
-  /// Typically a [Text] widget.
+  /// Normalmente, um widget [Text].
   final Widget title;
 
-  /// Additional content displayed below the title.
+  /// Conteúdo adicional exibido abaixo do título.
   ///
-  /// Typically a [Text] widget.
+  /// Normalmente, um widget [Text].
   final Widget? subtitle;
 
-  /// Called when the tile expands or collapses.
+  /// Chamado quando o tile é expandido ou recolhido.
   ///
-  /// When the tile starts expanding, this function is called with the value
-  /// true. When the tile starts collapsing, this function is called with
-  /// the value false.
+  /// Quando o tile começa a expandir, essa função é chamada com o valor
+  /// true. Quando o tile começa a recolher, essa função é chamada com o valor
+  /// false.
   final ValueChanged<bool>? onExpansionChanged;
 
-  /// The widgets that are displayed when the tile expands.
+  /// Os widgets exibidos quando o tile é expandido.
   ///
-  /// Typically [ListTile] widgets.
+  /// Normalmente, widgets [ListTile].
   final List<Widget> children;
 
-  /// The color to display behind the sublist when expanded.
+  /// A cor exibida atrás da sublista quando ela está expandida.
   ///
-  /// If this property is null then [ExpansionTileThemeData.backgroundColor] is used. If that
-  /// is also null then Colors.transparent is used.
+  /// Se esta propriedade for null, então [ExpansionTileThemeData.backgroundColor] é usado. Se isso
+  /// também for null, então Colors.transparent é usado.
   ///
-  /// See also:
+  /// Veja também:
   ///
-  /// * [ExpansionTileTheme.of], which returns the nearest [ExpansionTileTheme]'s
+  /// * [ExpansionTileTheme.of], que retorna o [ExpansionTileTheme] mais próximo
   ///   [ExpansionTileThemeData].
   final Color? backgroundColor;
 
-  /// When not null, defines the background color of tile when the sublist is collapsed.
+  /// Quando não nulo, define a cor de fundo do tile quando a sublista está recolhida.
   ///
-  /// If this property is null then [ExpansionTileThemeData.collapsedBackgroundColor] is used.
-  /// If that is also null then Colors.transparent is used.
+  /// Se esta propriedade for null, então [ExpansionTileThemeData.collapsedBackgroundColor] é usado.
+  /// Se isso também for null, então Colors.transparent é usado.
   ///
-  /// See also:
+  /// Veja também:
   ///
-  /// * [ExpansionTileTheme.of], which returns the nearest [ExpansionTileTheme]'s
+  /// * [ExpansionTileTheme.of], que retorna o [ExpansionTileTheme] mais próximo
   ///   [ExpansionTileThemeData].
   final Color? collapsedBackgroundColor;
 
-  /// A widget to display after the title.
+  /// Um widget a ser exibido após o título.
   ///
-  /// Note that depending on the value of [controlAffinity], the [trailing] widget
-  /// may replace the rotating expansion arrow icon.
+  /// Observe que, dependendo do valor de [controlAffinity], o widget [trailing]
+  /// pode substituir o ícone de seta de expansão rotativo.
   final Widget? trailing;
 
-  /// Specifies whether the trailing icon is show on the the tile.
+  /// Especifica se o ícone de trailing é exibido no tile.
   ///
-  /// When true, the trailing icon will not be shown.
-  /// When false (default), the trailing icon will be showed.
+  /// Quando true, o ícone de trailing não será exibido.
+  /// Quando false (padrão), o ícone de trailing será exibido.
   final bool disableTrailing;
 
-  /// Specifies if the list tile is initially expanded (true) or collapsed (false, the default).
+  /// Especifica se o tile de lista está inicialmente expandido (true) ou recolhido (false, o padrão).
   final bool initiallyExpanded;
 
-  /// Specifies whether the state of the children is maintained when the tile expands and collapses.
+  /// Especifica se o estado dos children é mantido quando o tile expande e recolhe.
   ///
-  /// When true, the children are kept in the tree while the tile is collapsed.
-  /// When false (default), the children are removed from the tree when the tile is
-  /// collapsed and recreated upon expansion.
+  /// Quando true, os children são mantidos na árvore enquanto o tile está recolhido.
+  /// Quando false (padrão), os children são removidos da árvore quando o tile é
+  /// recolhido e recriados na expansão.
   final bool maintainState;
 
-  /// Specifies padding for the [ListTile].
+  /// Especifica o padding para o [ListTile].
   ///
-  /// Analogous to [ListTile.contentPadding], this property defines the insets for
-  /// the [leading], [title], [subtitle] and [trailing] widgets. It does not inset
-  /// the expanded [children] widgets.
+  /// Análogo a [ListTile.contentPadding], esta propriedade define os insets para
+  /// os widgets [leading], [title], [subtitle] e [trailing]. Ela não aplica inset
+  /// aos widgets expandidos [children].
   ///
-  /// If this property is null then [ExpansionTileThemeData.tilePadding] is used. If that
-  /// is also null then the tile's padding is `EdgeInsets.symmetric(horizontal: 16.0)`.
+  /// Se esta propriedade for null, então [ExpansionTileThemeData.tilePadding] é usado. Se isso
+  /// também for null, então o padding do tile é `EdgeInsets.symmetric(horizontal: 16.0)`.
   ///
-  /// See also:
+  /// Veja também:
   ///
-  /// * [ExpansionTileTheme.of], which returns the nearest [ExpansionTileTheme]'s
+  /// * [ExpansionTileTheme.of], que retorna o [ExpansionTileTheme]'s mais próximo
   ///   [ExpansionTileThemeData].
   final EdgeInsetsGeometry? tilePadding;
 
-  /// Specifies the alignment of [children], which are arranged in a column when
-  /// the tile is expanded.
+  /// Especifica o alinhamento de [children], que são organizados em uma coluna quando
+  /// o tile é expandido.
   ///
-  /// The internals of the expanded tile make use of a [Column] widget for
-  /// [children], and [Align] widget to align the column. The `expandedAlignment`
-  /// parameter is passed directly into the [Align].
+  /// Os internals do tile expandido usam um widget [Column] para
+  /// [children] e um widget [Align] para alinhar a coluna. O parâmetro `expandedAlignment`
+  /// é passado diretamente para o [Align].
   ///
-  /// Modifying this property controls the alignment of the column within the
-  /// expanded tile, not the alignment of [children] widgets within the column.
-  /// To align each child within [children], see [expandedCrossAxisAlignment].
+  /// Modificar esta propriedade controla o alinhamento da coluna dentro do
+  /// tile expandido, não o alinhamento dos widgets [children] dentro da coluna.
+  /// Para alinhar cada child dentro de [children], veja [expandedCrossAxisAlignment].
   ///
-  /// The width of the column is the width of the widest child widget in [children].
+  /// A largura da coluna é a largura do widget child mais largo em [children].
   ///
-  /// If this property is null then [ExpansionTileThemeData.expandedAlignment]is used. If that
-  /// is also null then the value of `expandedAlignment` is [Alignment.center].
+  /// Se esta propriedade for null, então [ExpansionTileThemeData.expandedAlignment] é usado. Se isso
+  /// também for null, então o valor de `expandedAlignment` é [Alignment.center].
   ///
-  /// See also:
+  /// Veja também:
   ///
-  /// * [ExpansionTileTheme.of], which returns the nearest [ExpansionTileTheme]'s
+  /// * [ExpansionTileTheme.of], que retorna o [ExpansionTileTheme]'s mais próximo
   ///   [ExpansionTileThemeData].
   final Alignment? expandedAlignment;
 
-  /// Specifies the alignment of each child within [children] when the tile is expanded.
+  /// Especifica o alinhamento de cada child dentro de [children] quando o tile é expandido.
   ///
-  /// The internals of the expanded tile make use of a [Column] widget for
-  /// [children], and the `crossAxisAlignment` parameter is passed directly into the [Column].
+  /// Os internals do tile expandido usam um widget [Column] para
+  /// [children], e o parâmetro `crossAxisAlignment` é passado diretamente para o [Column].
   ///
-  /// Modifying this property controls the cross axis alignment of each child
-  /// within its [Column]. Note that the width of the [Column] that houses
-  /// [children] will be the same as the widest child widget in [children]. It is
-  /// not necessarily the width of [Column] is equal to the width of expanded tile.
+  /// Modificar esta propriedade controla o alinhamento cruzado de cada child
+  /// dentro de seu [Column]. Note que a largura do [Column] que abriga
+  /// [children] será a mesma do widget child mais largo em [children]. Não é
+  /// necessariamente a largura de [Column] igual à largura do tile expandido.
   ///
-  /// To align the [Column] along the expanded tile, use the [expandedAlignment] property
-  /// instead.
+  /// Para alinhar o [Column] ao longo do tile expandido, use a propriedade [expandedAlignment]
+  /// em vez disso.
   ///
-  /// When the value is null, the value of `expandedCrossAxisAlignment` is [CrossAxisAlignment.center].
+  /// Quando o valor é null, o valor de `expandedCrossAxisAlignment` é [CrossAxisAlignment.center].
   final CrossAxisAlignment? expandedCrossAxisAlignment;
 
-  /// Specifies padding for [children].
+  /// Especifica o padding para [children].
   ///
-  /// If this property is null then [ExpansionTileThemeData.childrenPadding] is used. If that
-  /// is also null then the value of `childrenPadding` is [EdgeInsets.zero].
+  /// Se esta propriedade for null, então [ExpansionTileThemeData.childrenPadding] é usado. Se isso
+  /// também for null, então o valor de `childrenPadding` é [EdgeInsets.zero].
   ///
-  /// See also:
+  /// Veja também:
   ///
-  /// * [ExpansionTileTheme.of], which returns the nearest [ExpansionTileTheme]'s
+  /// * [ExpansionTileTheme.of], que retorna o [ExpansionTileTheme]'s mais próximo
   ///   [ExpansionTileThemeData].
   final EdgeInsetsGeometry? childrenPadding;
 
-  /// The icon color of tile's expansion arrow icon when the sublist is expanded.
+  /// A cor do ícone de seta de expansão do tile quando a sublista está expandida.
   ///
-  /// Used to override to the [ListTileThemeData.iconColor].
+  /// Usado para sobrescrever [ListTileThemeData.iconColor].
   ///
-  /// If this property is null then [ExpansionTileThemeData.iconColor] is used. If that
-  /// is also null then the value of [ListTileThemeData.iconColor] is used.
+  /// Se esta propriedade for null, então [ExpansionTileThemeData.iconColor] é usado. Se isso
+  /// também for null, então o valor de [ListTileThemeData.iconColor] é usado.
   ///
-  /// See also:
+  /// Veja também:
   ///
-  /// * [ExpansionTileTheme.of], which returns the nearest [ExpansionTileTheme]'s
+  /// * [ExpansionTileTheme.of], que retorna o [ExpansionTileTheme]'s mais próximo
   ///   [ExpansionTileThemeData].
   final Color? iconColor;
 
-  /// The icon color of tile's expansion arrow icon when the sublist is collapsed.
+  /// A cor do ícone de seta de expansão do tile quando a sublista está recolhida.
   ///
-  /// Used to override to the [ListTileThemeData.iconColor].
+  /// Usado para sobrescrever [ListTileThemeData.iconColor].
   final Color? collapsedIconColor;
 
-  /// The color of the tile's titles when the sublist is expanded.
+  /// A cor dos títulos do tile quando a sublista está expandida.
   ///
-  /// Used to override to the [ListTileThemeData.textColor].
+  /// Usado para sobrescrever [ListTileThemeData.textColor].
   ///
-  /// If this property is null then [ExpansionTileThemeData.textColor] is used. If that
-  /// is also null then the value of [ListTileThemeData.textColor] is used.
+  /// Se esta propriedade for null, então [ExpansionTileThemeData.textColor] é usado. Se isso
+  /// também for null, então o valor de [ListTileThemeData.textColor] é usado.
   ///
-  /// See also:
+  /// Veja também:
   ///
-  /// * [ExpansionTileTheme.of], which returns the nearest [ExpansionTileTheme]'s
+  /// * [ExpansionTileTheme.of], que retorna o [ExpansionTileTheme]'s mais próximo
   ///   [ExpansionTileThemeData].
   final Color? textColor;
 
-  /// The color of the tile's titles when the sublist is collapsed.
+  /// A cor dos títulos do tile quando a sublista está recolhida.
   ///
-  /// Used to override to the [ListTileThemeData.textColor].
+  /// Usado para sobrescrever [ListTileThemeData.textColor].
   ///
-  /// If this property is null then [ExpansionTileThemeData.collapsedTextColor] is used. If that
-  /// is also null then the value of [ListTileThemeData.textColor] is used.
+  /// Se esta propriedade for null, então [ExpansionTileThemeData.collapsedTextColor] é usado. Se isso
+  /// também for null, então o valor de [ListTileThemeData.textColor] é usado.
   ///
-  /// See also:
+  /// Veja também:
   ///
-  /// * [ExpansionTileTheme.of], which returns the nearest [ExpansionTileTheme]'s
+  /// * [ExpansionTileTheme.of], que retorna o [ExpansionTileTheme]'s mais próximo
   ///   [ExpansionTileThemeData].
   final Color? collapsedTextColor;
 
-  /// Typically used to force the expansion arrow icon to the tile's leading or trailing edge.
+  /// Normalmente usado para forçar o ícone de seta de expansão para a borda leading ou trailing do tile.
   ///
-  /// By default, the value of `controlAffinity` is [ListTileControlAffinity.platform],
-  /// which means that the expansion arrow icon will appear on the tile's trailing edge.
+  /// Por padrão, o valor de `controlAffinity` é [ListTileControlAffinity.platform],
+  /// o que significa que o ícone de seta de expansão aparecerá na borda trailing do tile.
   final ListTileControlAffinity? controlAffinity;
 
   @override
   State<EZTExpansionTile> createState() => _EZTExpansionTileState();
 }
 
-class _EZTExpansionTileState extends State<EZTExpansionTile>
-    with SingleTickerProviderStateMixin {
-  static final Animatable<double> _easeOutTween =
-      CurveTween(curve: Curves.easeOut);
-  static final Animatable<double> _easeInTween =
-      CurveTween(curve: Curves.easeIn);
-  static final Animatable<double> _halfTween =
-      Tween<double>(begin: 0.0, end: 0.5);
+class _EZTExpansionTileState extends State<EZTExpansionTile> with SingleTickerProviderStateMixin {
+  static final Animatable<double> _easeOutTween = CurveTween(curve: Curves.easeOut);
+  static final Animatable<double> _easeInTween = CurveTween(curve: Curves.easeIn);
+  static final Animatable<double> _halfTween = Tween<double>(begin: 0.0, end: 0.5);
 
   final ColorTween _borderColorTween = ColorTween();
   final ColorTween _headerColorTween = ColorTween();
@@ -298,11 +294,9 @@ class _EZTExpansionTileState extends State<EZTExpansionTile>
     _borderColor = _controller.drive(_borderColorTween.chain(_easeOutTween));
     _headerColor = _controller.drive(_headerColorTween.chain(_easeInTween));
     _iconColor = _controller.drive(_iconColorTween.chain(_easeInTween));
-    _backgroundColor =
-        _controller.drive(_backgroundColorTween.chain(_easeOutTween));
+    _backgroundColor = _controller.drive(_backgroundColorTween.chain(_easeOutTween));
 
-    _isExpanded = PageStorage.of(context).readState(context) as bool? ??
-        widget.initiallyExpanded;
+    _isExpanded = PageStorage.of(context).readState(context) as bool? ?? widget.initiallyExpanded;
     if (_isExpanded) {
       _controller.value = 1.0;
     }
@@ -335,8 +329,7 @@ class _EZTExpansionTileState extends State<EZTExpansionTile>
   }
 
   // Platform or null affinity defaults to trailing.
-  ListTileControlAffinity _effectiveAffinity(
-      ListTileControlAffinity? affinity) {
+  ListTileControlAffinity _effectiveAffinity(ListTileControlAffinity? affinity) {
     switch (affinity ?? ListTileControlAffinity.trailing) {
       case ListTileControlAffinity.leading:
         return ListTileControlAffinity.leading;
@@ -347,15 +340,11 @@ class _EZTExpansionTileState extends State<EZTExpansionTile>
   }
 
   Widget? _buildIcon(BuildContext context) {
-    return RotationTransition(
-      turns: _iconTurns,
-      child: const Icon(Icons.expand_more),
-    );
+    return RotationTransition(turns: _iconTurns, child: const Icon(Icons.expand_more));
   }
 
   Widget? _buildLeadingIcon(BuildContext context) {
-    if (_effectiveAffinity(widget.controlAffinity) !=
-        ListTileControlAffinity.leading) {
+    if (_effectiveAffinity(widget.controlAffinity) != ListTileControlAffinity.leading) {
       return null;
     }
     return _buildIcon(context);
@@ -366,23 +355,19 @@ class _EZTExpansionTileState extends State<EZTExpansionTile>
       return null;
     }
 
-    if (_effectiveAffinity(widget.controlAffinity) !=
-        ListTileControlAffinity.trailing) {
+    if (_effectiveAffinity(widget.controlAffinity) != ListTileControlAffinity.trailing) {
       return null;
     }
     return _buildIcon(context);
   }
 
   Widget _buildChildren(BuildContext context, Widget? child) {
-    final ExpansionTileThemeData expansionTileTheme =
-        ExpansionTileTheme.of(context);
+    final ExpansionTileThemeData expansionTileTheme = ExpansionTileTheme.of(context);
     final Color borderSideColor = _borderColor.value ?? Colors.transparent;
 
     return Container(
       decoration: BoxDecoration(
-        color: _backgroundColor.value ??
-            expansionTileTheme.backgroundColor ??
-            Colors.transparent,
+        color: _backgroundColor.value ?? expansionTileTheme.backgroundColor ?? Colors.transparent,
         border: Border(
           top: BorderSide(color: borderSideColor),
           bottom: BorderSide(color: borderSideColor),
@@ -396,8 +381,7 @@ class _EZTExpansionTileState extends State<EZTExpansionTile>
             textColor: _headerColor.value,
             child: ListTile(
               onTap: _handleTap,
-              contentPadding:
-                  widget.tilePadding ?? expansionTileTheme.tilePadding,
+              contentPadding: widget.tilePadding ?? expansionTileTheme.tilePadding,
               leading: widget.leading ?? _buildLeadingIcon(context),
               title: widget.title,
               subtitle: widget.subtitle,
@@ -408,9 +392,7 @@ class _EZTExpansionTileState extends State<EZTExpansionTile>
           ),
           ClipRect(
             child: Align(
-              alignment: widget.expandedAlignment ??
-                  expansionTileTheme.expandedAlignment ??
-                  Alignment.center,
+              alignment: widget.expandedAlignment ?? expansionTileTheme.expandedAlignment ?? Alignment.center,
               heightFactor: _heightFactor.value,
               child: child,
             ),
@@ -423,35 +405,24 @@ class _EZTExpansionTileState extends State<EZTExpansionTile>
   @override
   void didChangeDependencies() {
     final ThemeData theme = Theme.of(context);
-    final ExpansionTileThemeData expansionTileTheme =
-        ExpansionTileTheme.of(context);
+    final ExpansionTileThemeData expansionTileTheme = ExpansionTileTheme.of(context);
     final ColorScheme colorScheme = theme.colorScheme;
     _borderColorTween.end = theme.dividerColor;
     _headerColorTween
-      ..begin = widget.collapsedTextColor ??
-          expansionTileTheme.collapsedTextColor ??
-          theme.textTheme.titleMedium!.color
-      ..end = widget.textColor ??
-          expansionTileTheme.textColor ??
-          colorScheme.primary;
+      ..begin = widget.collapsedTextColor ?? expansionTileTheme.collapsedTextColor ?? theme.textTheme.titleMedium!.color
+      ..end = widget.textColor ?? expansionTileTheme.textColor ?? colorScheme.primary;
     _iconColorTween
-      ..begin = widget.collapsedIconColor ??
-          expansionTileTheme.collapsedIconColor ??
-          theme.unselectedWidgetColor
-      ..end = widget.iconColor ??
-          expansionTileTheme.iconColor ??
-          colorScheme.primary;
+      ..begin = widget.collapsedIconColor ?? expansionTileTheme.collapsedIconColor ?? theme.unselectedWidgetColor
+      ..end = widget.iconColor ?? expansionTileTheme.iconColor ?? colorScheme.primary;
     _backgroundColorTween
-      ..begin = widget.collapsedBackgroundColor ??
-          expansionTileTheme.collapsedBackgroundColor
+      ..begin = widget.collapsedBackgroundColor ?? expansionTileTheme.collapsedBackgroundColor
       ..end = widget.backgroundColor ?? expansionTileTheme.backgroundColor;
     super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
-    final ExpansionTileThemeData expansionTileTheme =
-        ExpansionTileTheme.of(context);
+    final ExpansionTileThemeData expansionTileTheme = ExpansionTileTheme.of(context);
     final bool closed = !_isExpanded && _controller.isDismissed;
     final bool shouldRemoveChildren = closed && !widget.maintainState;
 
@@ -460,12 +431,9 @@ class _EZTExpansionTileState extends State<EZTExpansionTile>
       child: TickerMode(
         enabled: !closed,
         child: Padding(
-          padding: widget.childrenPadding ??
-              expansionTileTheme.childrenPadding ??
-              EdgeInsets.zero,
+          padding: widget.childrenPadding ?? expansionTileTheme.childrenPadding ?? EdgeInsets.zero,
           child: Column(
-            crossAxisAlignment:
-                widget.expandedCrossAxisAlignment ?? CrossAxisAlignment.center,
+            crossAxisAlignment: widget.expandedCrossAxisAlignment ?? CrossAxisAlignment.center,
             children: widget.children,
           ),
         ),

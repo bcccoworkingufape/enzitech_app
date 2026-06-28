@@ -25,8 +25,7 @@ class UserPreferencesLocalDataSourceImp extends UserPreferencesDataSource {
 
   @override
   Future<void> clearUser() async {
-    // Removes user data and all known offline caches (best-effort; the
-    // secure token itself is wiped by SettingsViewmodel via SecureSessionStorage).
+    // Remove os dados do usuário e todos os caches offline conhecidos (melhor esforço; o próprio token seguro é removido pelo SettingsViewmodel via SecureSessionStorage).
     await _userPreferencesService.clearAllAndKeepTheme();
     await _keyValueService.remove(_experimentsCacheKey);
     await _keyValueService.remove(_treatmentsCacheKey);
@@ -70,8 +69,7 @@ class UserPreferencesLocalDataSourceImp extends UserPreferencesDataSource {
       if (response == null) {
         throw NoResultQueryFailure(message: "os dados do usuário");
       } else {
-        // Backwards compatibility: the legacy payload also stored the
-        // accessToken. We now strip it before decoding.
+        // Compatibilidade com versões anteriores: o payload legado também armazenava o accessToken. Agora removemos isso antes da decodificação.
         final raw = jsonDecode(response);
         if (raw is Map<String, dynamic>) {
           raw.remove('accessToken');

@@ -36,8 +36,7 @@ Future<void> main() async {
     var userPreferencesService = UserPreferencesServiceImp(keyValueService);
     var secureSessionStorage = SecureSessionStorage();
 
-    // One-shot migration of the legacy SharedPreferences-backed token into
-    // secure storage. Idempotent: subsequent boots no-op.
+    // Migração única do token legado baseado em SharedPreferences para o armazenamento seguro. Idempotente: inicializações subsequentes não fazem nada.
     await secureSessionStorage.migrateFromLegacyIfNeeded(
       legacyReader: () => userPreferencesService.getToken(),
       legacyClearer: (_) => userPreferencesService.removeToken(),
@@ -48,8 +47,8 @@ Future<void> main() async {
     final env = API.environmentFromDefine();
     API.setEnvironment(env);
 
-    // Network guard runs after the environment is selected and validates the
-    // base URL (HTTPS mandatory in release for prod, except legacy allowlist).
+    // A proteção de rede é executada após a seleção do ambiente e valida a
+    // URL base (HTTPS obrigatório em release para produção, exceto na lista de exceções legada).
     final baseUrl = API.apiBaseUrl as String;
     SecureNetworkConfig.validateBaseUrl(baseUrl, env);
     SecureNetworkConfig.pinningFor(env);
@@ -122,5 +121,3 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
-
