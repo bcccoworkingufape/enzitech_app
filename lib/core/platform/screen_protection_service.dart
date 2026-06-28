@@ -2,6 +2,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
+// 🌎 Project imports:
+import '../logging/app_logger.dart';
+
 /// Wrapper fino em Dart que chama a API de janela segura da plataforma.
 ///
 /// No Android, invocamos `WindowManager#addFlags(FLAG_SECURE)` por meio do plugin
@@ -22,12 +25,8 @@ class ScreenProtectionService {
       // plugin estiver indisponível (por exemplo, testes unitários, SO sem suporte).
       await _channel.invokeMethod<void>('enableSecure');
       return true;
-    } catch (e) {
-      // Exiba a falha apenas em debug para evitar vazamentos em logs de release.
-      if (kDebugMode) {
-        // ignore: avoid_print
-        print('ScreenProtectionService.enable failed: $e');
-      }
+    } catch (_) {
+      AppLogger.warn('ScreenProtectionService.enable failed');
       return false;
     }
   }
@@ -37,11 +36,8 @@ class ScreenProtectionService {
     try {
       await _channel.invokeMethod<void>('disableSecure');
       return true;
-    } catch (e) {
-      if (kDebugMode) {
-        // ignore: avoid_print
-        print('ScreenProtectionService.disable failed: $e');
-      }
+    } catch (_) {
+      AppLogger.warn('ScreenProtectionService.disable failed');
       return false;
     }
   }

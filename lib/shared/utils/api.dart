@@ -5,6 +5,11 @@ import '../../core/enums/enums.dart';
 
 class API {
   static const String _baseUrl = 'baseUrl';
+  static const String _devBaseUrlDefine = String.fromEnvironment('DEV_API_BASE_URL');
+  static const String _stageBaseUrlDefine = String.fromEnvironment('STAGE_API_BASE_URL');
+  static const String _prodBaseUrlDefine = String.fromEnvironment('PROD_API_BASE_URL');
+  static const String _defaultDevBaseUrl = "https://enzitech.onrender.com";
+  static const String _defaultProdBaseUrl = "http://200.133.6.201:30001/";
 
   static Map<String, dynamic> _config = {};
   static late EnvironmentEnum enviroment;
@@ -21,7 +26,7 @@ class API {
         enviroment = EnvironmentEnum.dev;
         break;
       case EnvironmentEnum.stage:
-        _config = devConstants; //? NO STAGE API YET
+        _config = stageConstants; //? NO STAGE API YET
         enviroment = EnvironmentEnum.stage;
         break;
       case EnvironmentEnum.prod:
@@ -50,14 +55,27 @@ class API {
   }
 
   //-> SETUP
-  static Map<String, dynamic> devConstants = {_baseUrl: "https://enzitech.onrender.com"};
+  static String _baseUrlFromDefine({required String value, required String fallback}) {
+    final trimmedValue = value.trim();
+    return trimmedValue.isEmpty ? fallback : trimmedValue;
+  }
+
+  static Map<String, dynamic> devConstants = {
+    _baseUrl: _baseUrlFromDefine(value: _devBaseUrlDefine, fallback: _defaultDevBaseUrl),
+  };
+
+  static Map<String, dynamic> stageConstants = {
+    _baseUrl: _baseUrlFromDefine(value: _stageBaseUrlDefine, fallback: _defaultDevBaseUrl),
+  };
 
   // TODO: URL base de produção. Temporariamente é servida em texto puro enquanto o
   /// backend é migrado para TLS. O host legado está em lista de permissões em
   /// `SecureNetworkConfig` para permitir que builds de release iniciem até a
   /// conclusão da migração.
   // ignore: deprecated_member_use_from_same_package
-  static Map<String, dynamic> prodConstants = {_baseUrl: "http://200.133.6.201:30001/"};
+  static Map<String, dynamic> prodConstants = {
+    _baseUrl: _baseUrlFromDefine(value: _prodBaseUrlDefine, fallback: _defaultProdBaseUrl),
+  };
 
   //-> AUTHENTICATION
   /// Rota para '/auth'
