@@ -1,17 +1,18 @@
-// 🐦 Flutter imports:
+﻿// ðŸ¦ Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
-// 📦 Package imports:
+// ðŸ“¦ Package imports:
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
-// 🌎 Project imports:
+// ðŸŒŽ Project imports:
 import '../../../../../../core/domain/service/platform_service/platform_service.dart';
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../core/routing/routing.dart';
+import '../../../../../../core/platform/secure_screen_wrapper.dart';
 import '../../../../../../shared/extensions/extensions.dart';
 import '../../../../../../shared/l10n/app_localizations.dart';
 import '../../../../../../shared/ui/ui.dart';
@@ -29,7 +30,7 @@ class SettingsPage extends StatefulWidget {
   State<SettingsPage> createState() => _SettingsPageState();
 }
 
-class _SettingsPageState extends State<SettingsPage> {
+class _SettingsPageState extends State<SettingsPage> with SecureScreenMixin {
   late final SettingsViewmodel _settingsViewmodel;
   late final HomeViewmodel _homeViewmodel;
   final platformService = GetIt.I<PlatformService>();
@@ -90,17 +91,18 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     final envEnum = _settingsViewmodel.environment;
     final translatedEnvValue = context.l10n.environmentValue(envEnum.name);
-    return ListenableBuilder(
-      listenable: _settingsViewmodel,
-      builder: (context, child) {
-        return Scaffold(
-          body: Builder(
-            builder: (context) {
-              if (_settingsViewmodel.user == null && _settingsViewmodel.state != StateEnum.error) {
-                return const Center(child: CircularProgressIndicator());
-              }
+    return wrapSecureScreen(
+      child: ListenableBuilder(
+        listenable: _settingsViewmodel,
+        builder: (context, child) {
+          return Scaffold(
+            body: Builder(
+              builder: (context) {
+                if (_settingsViewmodel.user == null && _settingsViewmodel.state != StateEnum.error) {
+                  return const Center(child: CircularProgressIndicator());
+                }
 
-              return ListView(
+                return ListView(
                 children: [
                   SettingsSection(
                     title: context.l10n.info,
@@ -280,11 +282,13 @@ class _SettingsPageState extends State<SettingsPage> {
                     ],
                   ),
                 ],
-              );
-            },
-          ),
-        );
-      },
+                );
+              },
+            ),
+          );
+        },
+      ),
     );
   }
 }
+

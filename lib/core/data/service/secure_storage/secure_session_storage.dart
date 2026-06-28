@@ -1,7 +1,7 @@
 ﻿import 'dart:async';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+import '../../../logging/app_logger.dart';
 
 /// Wrapper em torno do `flutter_secure_storage` dedicado a segredos de sessão
 /// (token de autenticação). Com suporte a Keystore no Android via EncryptedSharedPreferences,
@@ -45,7 +45,7 @@ class SecureSessionStorage {
       }
     } catch (e) {
       // Melhor esforço: nunca derrubar a inicialização do app por falha na migração.
-      debugPrint('SecureSessionStorage migration skipped: $e');
+      AppLogger.warn('SecureSessionStorage migration skipped');
     }
   }
 
