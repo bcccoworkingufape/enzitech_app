@@ -1,7 +1,9 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 // 🌎 Project imports:
+import '../../../../core/domain/service/http/http_service.dart';
 import '../../../../core/domain/service/user_preferences/user_preferences_service.dart';
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
@@ -55,6 +57,8 @@ class SplashViewmodel extends ChangeNotifier {
     String token = await userPreferencesServices.getToken() ?? '';
 
     if (token.isNotEmpty) {
+      await GetIt.I.get<HttpService>().setConfig(token: token);
+
       await experimentsViewmodel.fetch();
       await enzymesViewmodel.fetch();
       await treatmentsViewmodel.fetch();

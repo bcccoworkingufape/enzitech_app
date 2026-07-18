@@ -509,6 +509,10 @@ class AppLocalizationsPt extends AppLocalizations {
       '⚠ Erro do Servidor: Não foi possível atender à solicitação.';
 
   @override
+  String get error_502 =>
+      '⚠ Bad Gateway: Não foi possível atender à solicitação.';
+
+  @override
   String get error_503 =>
       '⚠ Erro do Servidor: Não foi possível atender à solicitação neste momento.';
 
@@ -718,6 +722,37 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get accountCreatedSuccess => 'Conta criada com sucesso!';
+
+  @override
+  String get recoverEmailSent => 'E-mail de recuperação enviado com sucesso!';
+
+  @override
+  String get recoverPassword => 'Recuperar Senha';
+
+  @override
+  String get recoverPasswordInstructions =>
+      'Informe seu e-mail abaixo. Enviaremos as instruções para você redefinir a sua senha.';
+
+  @override
+  String get sendRecoverEmail => 'Enviar E-mail';
+
+  @override
+  String get resetPassword => 'Redefinir Senha';
+
+  @override
+  String get passwordResetSuccess => 'Senha redefinida com sucesso!';
+
+  @override
+  String get recoverCode => 'Código de Recuperação';
+
+  @override
+  String get passwordsDoNotMatch => 'As senhas não coincidem!';
+
+  @override
+  String get newPassword => 'Nova Senha';
+
+  @override
+  String get confirmPassword => 'Confirmar Nova Senha';
 
   @override
   String get info => 'Informações';
