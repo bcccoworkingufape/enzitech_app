@@ -52,6 +52,7 @@ class API {
 
   //-> TREATMENTS
   static const REQUEST_TREATMENTS = '/treatments';
+  static const REQUEST_TREATMENTS_USER ='$_REQUEST_AUTH/user';
   static String REQUEST_TREATMENTS_WITH_ID(String id) => '$REQUEST_TREATMENTS/$id';
   static String REQUEST_TREATMENTS_BY_EXPERIMENT(String experimentId) => '$REQUEST_TREATMENTS/experiment/$experimentId';
 
