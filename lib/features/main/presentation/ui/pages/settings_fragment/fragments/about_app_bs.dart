@@ -35,7 +35,7 @@ class AboutAppBS extends StatelessWidget {
                 TextSpan(text: 'Laboratório BCC Coworking', style: TextStyles(context).trailingRegular(isBold: true)),
                 TextSpan(text: context.l10n.idealizationTextP2, style: TextStyles(context).trailingRegular()),
                 TextSpan(
-                  text: 'Laboratório de Pesquisa em Solo',
+                  text: 'Laboratório de Enzimologia e Microbiologia Ambiental(LEMA)',
                   style: TextStyles(context).trailingRegular(isBold: true),
                 ),
                 TextSpan(text: context.l10n.idealizationTextP3, style: TextStyles(context).trailingRegular()),
