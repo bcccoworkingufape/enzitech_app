@@ -70,8 +70,11 @@ class DioHttpServiceImp implements HttpService {
             if (responseData.containsKey('message')) {
               var msg = responseData['message'];
               message = (msg is List) ? msg.join(", ") : msg.toString();
-            } 
-            
+            } else if (responseData.containsKey('error')) {
+              var msg = responseData['error'];
+              message = (msg is List) ? msg.join(", ") : msg.toString();
+            }
+
             if (responseData.containsKey('errorCode')) {
               errorCode = responseData['errorCode'];
             }
