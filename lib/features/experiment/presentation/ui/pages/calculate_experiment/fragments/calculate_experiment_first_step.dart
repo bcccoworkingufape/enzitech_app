@@ -1,12 +1,9 @@
 // 🐦 Flutter imports:
-
-// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get_it/get_it.dart';
+import 'package:group_button/group_button.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 // 🌎 Project imports:
@@ -29,108 +26,135 @@ class CalculateExperimentFirstStepPage extends StatefulWidget {
 
 class _CalculateExperimentFirstStepPageState extends State<CalculateExperimentFirstStepPage> {
   late final CalculateExperimentViewmodel _calculateExperimentViewmodel;
-  bool? enableNextButton;
-  EnzymeEntity? choosedEnzyme;
-  TreatmentEntity? choosedTreatment;
+
+  late final GroupButtonController _treatmentsController;
+  final List<TreatmentEntity> _selectedTreatments = [];
+
+  late final GroupButtonController _enzymesController;
+  final List<EnzymeEntity> _selectedEnzymes = [];
 
   @override
   void initState() {
     super.initState();
     _calculateExperimentViewmodel = GetIt.I.get<CalculateExperimentViewmodel>();
 
-    choosedEnzyme = _calculateExperimentViewmodel.temporaryChoosedExperimentCombination.enzyme;
-    choosedTreatment = _calculateExperimentViewmodel.temporaryChoosedExperimentCombination.treatment;
+    _treatmentsController = GroupButtonController();
+    _enzymesController = GroupButtonController();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) => _validateFields());
+    _initSelection();
+  }
+
+  void _initSelection() {
+    final chosen = _calculateExperimentViewmodel.temporaryChoosedExperimentCombination;
+    final treatments = _calculateExperimentViewmodel.experiment.treatments ?? [];
+    final enzymes = _calculateExperimentViewmodel.experiment.enzymes ?? [];
+
+    for (final treatment in chosen.treatments) {
+      final index = treatments.indexWhere((t) => t.id == treatment.id);
+      if (index == -1) continue;
+      _treatmentsController.selectIndex(index);
+      _selectedTreatments.add(treatment);
+    }
+
+    for (final enzyme in chosen.enzymes) {
+      final index = enzymes.indexWhere((e) => e.id == enzyme.id);
+      if (index == -1) continue;
+      _enzymesController.selectIndex(index);
+      _selectedEnzymes.add(enzyme);
+    }
+
+    _validateFields();
   }
 
   void _validateFields() {
-    if (choosedEnzyme != null && choosedTreatment != null) {
-      _calculateExperimentViewmodel.setEnableNextButtonOnFirstStep(true);
-    } else {
-      _calculateExperimentViewmodel.setEnableNextButtonOnFirstStep(false);
-    }
+    setState(() {
+      _calculateExperimentViewmodel.setEnableNextButtonOnFirstStep(
+        _selectedTreatments.isNotEmpty && _selectedEnzymes.isNotEmpty,
+      );
+    });
   }
 
-  FormBuilderChoiceChips<TreatmentEntity> get _treatmentChoiceChip {
-    return FormBuilderChoiceChips<TreatmentEntity>(
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      decoration: InputDecoration(
-        labelText: context.l10n.selectTreatment,
-        border: InputBorder.none,
-        contentPadding: EdgeInsets.all(0),
-      ),
-      initialValue: _calculateExperimentViewmodel.temporaryChoosedExperimentCombination.treatment,
-      name: 'treatment',
-      onChanged: (value) async {
-        choosedEnzyme = null;
+  Widget get _treatmentsSection {
+    final treatments = _calculateExperimentViewmodel.experiment.treatments ?? [];
 
-        choosedTreatment = value;
-        await _calculateExperimentViewmodel.getEnzymesRemainingInExperiment(value!.id);
-        _validateFields();
-      },
-      options: _calculateExperimentViewmodel.experiment.treatments!
-          .map((e) => FormBuilderChipOption<TreatmentEntity>(value: e, child: Text(e.name)))
-          .toList(),
-      selectedColor: context.getApplyedColorScheme.primaryContainer,
-      spacing: 4,
-      validator: FormBuilderValidators.compose([FormBuilderValidators.required()]),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(context.l10n.selectTreatment, style: TextStyles.detailBold),
+        const SizedBox(height: 8),
+        GroupButton(
+          controller: _treatmentsController,
+          isRadio: false,
+          options: const GroupButtonOptions(groupingType: GroupingType.column),
+          buttons: treatments.map((t) => t.name).toList(),
+          buttonIndexedBuilder: (selected, index, context) {
+            final treatment = treatments[index];
+            return EZTCheckBoxTile(
+              title: treatment.name,
+              selected: selected,
+              onTap: () {
+                if (!selected) {
+                  _treatmentsController.selectIndex(index);
+                  _selectedTreatments.add(treatment);
+                } else {
+                  _treatmentsController.unselectIndex(index);
+                  _selectedTreatments.remove(treatment);
+                }
+                _validateFields();
+              },
+            );
+          },
+        ),
+      ],
     );
   }
 
-  Widget get _enzymeChoiceChip {
-    if (choosedTreatment != null) {
-      if (_calculateExperimentViewmodel.enzymesRemaining.isEmpty) {
-        if (_calculateExperimentViewmodel.state == StateEnum.loading) {
-          return Text(context.l10n.loadingAvailableEnzymes);
-        }
+  Widget get _enzymesSection {
+    final enzymes = _calculateExperimentViewmodel.experiment.enzymes ?? [];
 
-        return Text(context.l10n.allEnzymesCalculated);
-      }
-
-      return FormBuilderChoiceChips<EnzymeEntity>(
-        autovalidateMode: AutovalidateMode.onUserInteraction,
-        decoration: InputDecoration(
-          labelText: context.l10n.selectEnzyme,
-          border: InputBorder.none,
-          contentPadding: EdgeInsets.all(0),
-        ),
-        initialValue: _calculateExperimentViewmodel.temporaryChoosedExperimentCombination.enzyme ?? choosedEnzyme,
-        name: 'enzyme',
-        onChanged: (value) {
-          if (value != null) {
-            EZTSnackBar.clear(context);
-            EZTSnackBar.show(
-              context,
-              context.l10n.selectedEnzymeType(
-                Constants.typesOfEnzymesListFormmated[Constants.typesOfEnzymesList.indexOf(value.type)],
-              ),
-              color: Constants.dealWithEnzymeChipColor(value.type),
-              textStyle: TextStyles(context).titleMinBoldBackground(),
-              centerTitle: true,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(context.l10n.selectEnzyme, style: TextStyles.detailBold),
+        const SizedBox(height: 8),
+        GroupButton(
+          controller: _enzymesController,
+          isRadio: false,
+          options: const GroupButtonOptions(groupingType: GroupingType.column),
+          buttons: enzymes.map((e) => e.name).toList(),
+          buttonIndexedBuilder: (selected, index, context) {
+            final enzyme = enzymes[index];
+            return EZTCheckBoxTile(
+              title: enzyme.name,
+              selected: selected,
+              color: Constants.dealWithEnzymeChipColor(enzyme.type),
+              onTap: () {
+                if (!selected) {
+                  _enzymesController.selectIndex(index);
+                  _selectedEnzymes.add(enzyme);
+                } else {
+                  _enzymesController.unselectIndex(index);
+                  _selectedEnzymes.remove(enzyme);
+                }
+                _validateFields();
+              },
+              onTapTrailing: () {
+                EZTSnackBar.clear(context);
+                EZTSnackBar.show(
+                  context,
+                  context.l10n.selectedEnzymeType(
+                    Constants.typesOfEnzymesListFormmated[Constants.typesOfEnzymesList.indexOf(enzyme.type)],
+                  ),
+                  color: Constants.dealWithEnzymeChipColor(enzyme.type),
+                  textStyle: TextStyles(context).titleMinBoldBackground(),
+                  centerTitle: true,
+                );
+              },
             );
-          }
-
-          choosedEnzyme = value;
-
-          _validateFields();
-        },
-        options: _calculateExperimentViewmodel.enzymesRemaining
-            .map(
-              (e) => FormBuilderChipOption<EnzymeEntity>(
-                value: e,
-                avatar: CircleAvatar(backgroundColor: Constants.dealWithEnzymeChipColor(e.type)),
-                child: Text(e.name),
-              ),
-            )
-            .toList(),
-        selectedColor: context.getApplyedColorScheme.primaryContainer,
-        spacing: 4,
-        validator: FormBuilderValidators.compose([FormBuilderValidators.required()]),
-      );
-    }
-
-    return Container();
+          },
+        ),
+      ],
+    );
   }
 
   Widget get _buttons {
@@ -139,24 +163,16 @@ class _CalculateExperimentFirstStepPageState extends State<CalculateExperimentFi
         EZTButton(
           enabled: _calculateExperimentViewmodel.enableNextButtonOnFirstStep,
           text: context.l10n.nextButton,
-          loading: _calculateExperimentViewmodel.state == StateEnum.loading ? true : false,
+          loading: _calculateExperimentViewmodel.state == StateEnum.loading,
           onPressed: () async {
-            _calculateExperimentViewmodel.formKey.currentState?.save();
+            _calculateExperimentViewmodel.setTemporaryChoosedExperimentCombination(
+              ChoosedExperimentCombinationDTO(enzymes: _selectedEnzymes, treatments: _selectedTreatments),
+            );
 
-            if (_calculateExperimentViewmodel.formKey.currentState!.validate()) {
-              _calculateExperimentViewmodel.setTemporaryChoosedExperimentCombination(
-                ChoosedExperimentCombinationDTO(enzyme: choosedEnzyme, treatment: choosedTreatment),
-              );
-
-              await _calculateExperimentViewmodel.generateTextFields().whenComplete(
-                () => Future.delayed(Duration.zero, () {
-                  _calculateExperimentViewmodel.setStepPage(0);
-
-                  if (!mounted) return;
-                  _calculateExperimentViewmodel.onNext(context);
-                }),
-              );
-            }
+            await _calculateExperimentViewmodel.fetchRepetitions().whenComplete(() {
+              if (!mounted) return;
+              _calculateExperimentViewmodel.onNext(context);
+            });
           },
         ),
         const SizedBox(height: 16),
@@ -178,8 +194,7 @@ class _CalculateExperimentFirstStepPageState extends State<CalculateExperimentFi
       builder: (context, child) {
         return CalculateExperimentFragmentTemplate(
           titleOfStepIndicator: context.l10n.insertExperimentData,
-          messageOfStepIndicator: context.l10n.stepIndicatorMessage(1, 3),
-
+          messageOfStepIndicator: context.l10n.stepIndicatorMessage(1, 2),
           body: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
             padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -188,8 +203,8 @@ class _CalculateExperimentFirstStepPageState extends State<CalculateExperimentFi
                 const SizedBox(height: 32),
                 Visibility(
                   visible:
-                      _calculateExperimentViewmodel.experiment.treatments!.isNotEmpty &&
-                      _calculateExperimentViewmodel.experiment.enzymes!.isNotEmpty,
+                      (_calculateExperimentViewmodel.experiment.treatments ?? []).isNotEmpty &&
+                      (_calculateExperimentViewmodel.experiment.enzymes ?? []).isNotEmpty,
                   replacement: EZTNotFound(
                     title: context.l10n.invalidExperimentTitle,
                     message: context.l10n.invalidExperimentMessage,
@@ -210,27 +225,9 @@ class _CalculateExperimentFirstStepPageState extends State<CalculateExperimentFi
                         ],
                       ),
                       const SizedBox(height: 32),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: <Widget>[
-                              FormBuilder(
-                                key: _calculateExperimentViewmodel.firstStepFormKey,
-                                autovalidateMode: AutovalidateMode.disabled,
-                                skipDisabled: true,
-                                child: Column(
-                                  children: <Widget>[
-                                    _treatmentChoiceChip,
-                                    const SizedBox(height: 16),
-                                    _enzymeChoiceChip,
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                      _treatmentsSection,
+                      const SizedBox(height: 24),
+                      _enzymesSection,
                     ],
                   ),
                 ),
