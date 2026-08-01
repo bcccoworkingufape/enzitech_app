@@ -4,10 +4,10 @@ import 'package:dartz/dartz.dart';
 // 🌎 Project imports:
 import '../../../../../core/failures/failures.dart';
 import '../../../../enzyme/domain/entities/enzyme_entity.dart';
-import '../../../domain/entities/experiment_calculation_entity.dart';
 import '../../../domain/entities/experiment_entity.dart';
 import '../../../domain/entities/experiment_pagination_entity.dart';
 import '../../../domain/entities/experiment_result_entity.dart';
+import '../../../domain/entities/repetition_entity.dart';
 import '../experiments_datasource.dart';
 
 abstract class ExperimentsDataSourceDecorator implements ExperimentsDataSource {
@@ -31,16 +31,41 @@ abstract class ExperimentsDataSourceDecorator implements ExperimentsDataSource {
   );
 
   @override
-  Future<Either<Failure, ExperimentCalculationEntity>> calculateExperiment({
+  Future<Either<Failure, List<RepetitionEntity>>> getRepetitions({required String experimentId}) =>
+      _experimentsDataSource.getRepetitions(experimentId: experimentId);
+
+  @override
+  Future<Either<Failure, RepetitionEntity>> previewRepetition({
     required String experimentId,
+    required String treatmentId,
     required String enzymeId,
-    required String treatmentID,
-    required List<Map<String, dynamic>> listOfExperimentData,
-  }) => _experimentsDataSource.calculateExperiment(
+    required int repetitionNumber,
+    required double sample,
+    required double whiteSample,
+  }) => _experimentsDataSource.previewRepetition(
     experimentId: experimentId,
+    treatmentId: treatmentId,
     enzymeId: enzymeId,
-    treatmentID: treatmentID,
-    listOfExperimentData: listOfExperimentData,
+    repetitionNumber: repetitionNumber,
+    sample: sample,
+    whiteSample: whiteSample,
+  );
+
+  @override
+  Future<Either<Failure, ExperimentEntity>> saveRepetition({
+    required String experimentId,
+    required String treatmentId,
+    required String enzymeId,
+    required int repetitionNumber,
+    required double sample,
+    required double whiteSample,
+  }) => _experimentsDataSource.saveRepetition(
+    experimentId: experimentId,
+    treatmentId: treatmentId,
+    enzymeId: enzymeId,
+    repetitionNumber: repetitionNumber,
+    sample: sample,
+    whiteSample: whiteSample,
   );
 
   @override
@@ -59,13 +84,24 @@ abstract class ExperimentsDataSourceDecorator implements ExperimentsDataSource {
   );
 
   @override
-  Future<Either<Failure, Unit>> deleteExperiment(String id) => _experimentsDataSource.deleteExperiment(id);
+  Future<Either<Failure, ExperimentEntity>> updateExperiment({
+    required String experimentId,
+    required String name,
+    required String description,
+    required int repetitions,
+    required List<String> treatmentsIDs,
+    required List<EnzymeEntity> enzymes,
+  }) => _experimentsDataSource.updateExperiment(
+    experimentId: experimentId,
+    name: name,
+    description: description,
+    repetitions: repetitions,
+    treatmentsIDs: treatmentsIDs,
+    enzymes: enzymes,
+  );
 
   @override
-  Future<Either<Failure, List<EnzymeEntity>>> getEnzymesRemainingInExperiment({
-    required String experimentId,
-    required String treatmentId,
-  }) => _experimentsDataSource.getEnzymesRemainingInExperiment(experimentId: experimentId, treatmentId: treatmentId);
+  Future<Either<Failure, Unit>> deleteExperiment(String id) => _experimentsDataSource.deleteExperiment(id);
 
   @override
   Future<Either<Failure, ExperimentEntity>> getExperimentById(String id) =>
@@ -74,23 +110,6 @@ abstract class ExperimentsDataSourceDecorator implements ExperimentsDataSource {
   @override
   Future<Either<Failure, ExperimentResultEntity>> getResult({required String experimentId}) =>
       _experimentsDataSource.getResult(experimentId: experimentId);
-
-  @override
-  Future<Either<Failure, ExperimentEntity>> saveResult({
-    required String experimentId,
-    required String enzymeId,
-    required String treatmentID,
-    required List<Map<String, dynamic>> listOfExperimentData,
-    required List<num> results,
-    required num average,
-  }) => _experimentsDataSource.saveResult(
-    experimentId: experimentId,
-    enzymeId: enzymeId,
-    treatmentID: treatmentID,
-    listOfExperimentData: listOfExperimentData,
-    results: results,
-    average: average,
-  );
 
   @override
   Future<void> storeExperimentsInCache(ExperimentPaginationEntity experimentPaginationEntity) =>
