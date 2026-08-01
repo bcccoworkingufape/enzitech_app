@@ -292,9 +292,10 @@ class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthS
                 if (mounted) {
                   await _createExperimentViewmodel.createExperiment();
 
-                  GetIt.I.get<ExperimentDetailsViewmodel>().getExperimentDetails(
-                    _createExperimentViewmodel.experiment!.id,
-                  );
+                  final createdExperiment = _createExperimentViewmodel.experiment;
+                  if (mounted && createdExperiment != null) {
+                    GetIt.I.get<ExperimentDetailsViewmodel>().getExperimentDetails(createdExperiment.id);
+                  }
                 }
 
                 return;
