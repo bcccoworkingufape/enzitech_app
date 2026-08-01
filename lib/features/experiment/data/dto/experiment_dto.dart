@@ -26,8 +26,30 @@ extension ExperimentDto on ExperimentEntity {
       treatments: json['processes'] != null
           ? List<TreatmentEntity>.from(json['processes']?.map((x) => TreatmentDto.fromJson(x)))
           : null,
-      enzymes: json['enzymes'] != null
-          ? List<EnzymeEntity>.from(json['enzymes']?.map((x) => EnzymeDto.fromJson(x)))
+      // Lê de `experimentEnzymes`, não de `enzymes`: é o único campo que traz, junto do
+      // snapshot da enzima, a configuração (duração, peso, volume, variáveis) já salva
+      // para este experimento — necessário para pré-preencher a tela de edição.
+      enzymes: json['experimentEnzymes'] != null
+          ? List<EnzymeEntity>.from(
+              (json['experimentEnzymes'] as List).map((x) {
+                final enzyme = EnzymeDto.fromJson(x['enzyme']);
+                return EnzymeEntity(
+                  id: enzyme.id,
+                  sourceEnzymeId: enzyme.sourceEnzymeId,
+                  name: enzyme.name,
+                  variableA: safeDouble(x['variableA']),
+                  variableB: safeDouble(x['variableB']),
+                  type: enzyme.type,
+                  formula: enzyme.formula,
+                  createdAt: enzyme.createdAt,
+                  updatedAt: enzyme.updatedAt,
+                  duration: x['duration'] != null ? double.tryParse(x['duration'].toString())?.round() : null,
+                  weightSample: x['weightSample'] != null ? double.tryParse(x['weightSample'].toString()) : null,
+                  weightGround: x['weightGround'] != null ? double.tryParse(x['weightGround'].toString()) : null,
+                  size: x['size'] != null ? double.tryParse(x['size'].toString()) : null,
+                );
+              }),
+            )
           : null,
     );
   }
