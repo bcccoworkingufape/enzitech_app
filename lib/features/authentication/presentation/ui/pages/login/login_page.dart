@@ -127,18 +127,15 @@ class LoginPageState extends State<LoginPage> {
                         ),
                         Text(context.l10n.helloWelcome, style: TextStyles.titleHomeRegular),
                         _textFields,
-                        Visibility(
-                          visible: false, // TODO: Implementar e remover Visibility
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 16.0),
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.pushNamed(context, Routing.recoverPassword);
-                                },
-                                child: Text(context.l10n.forgotMyPassword, style: TextStyles(context).captionBody()),
-                              ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 16.0),
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(context, Routing.recoverPassword);
+                              },
+                              child: Text(context.l10n.forgotMyPassword, style: TextStyles(context).captionBody()),
                             ),
                           ),
                         ),

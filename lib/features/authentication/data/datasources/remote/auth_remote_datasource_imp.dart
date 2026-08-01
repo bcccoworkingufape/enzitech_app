@@ -54,6 +54,37 @@ class AuthRemoteDataSourceImp implements AuthDataSource {
   }
 
   @override
+  Future<Either<Failure, Unit>> verifyPin({required String email, required String token}) async {
+    try {
+      await _httpService.post(API.REQUEST_VERIFY_PIN, data: {'email': email, 'token': token});
+      return const Right(unit);
+    } on Failure catch (e) {
+      return Left(e);
+    } catch (e) {
+      return Left(ServerFailure(message: 'Falha não mapeada: $e'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> resetPassword({
+    required String email,
+    required String token,
+    required String newPassword,
+  }) async {
+    try {
+      await _httpService.post(
+        API.REQUEST_RESET_PASSWORD,
+        data: {'email': email, 'token': token, 'newPassword': newPassword},
+      );
+      return const Right(unit);
+    } on Failure catch (e) {
+      return Left(e);
+    } catch (e) {
+      return Left(ServerFailure(message: 'Falha não mapeada: $e'));
+    }
+  }
+
+  @override
   Future<Either<Failure, Unit>> createAccount({
     required String name,
     required String email,
