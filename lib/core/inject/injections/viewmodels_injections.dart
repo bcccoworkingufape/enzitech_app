@@ -4,10 +4,14 @@ import 'package:get_it/get_it.dart';
 // 🌎 Project imports:
 import '../../../features/authentication/presentation/viewmodel/create_account_viewmodel.dart';
 import '../../../features/authentication/presentation/viewmodel/login_viewmodel.dart';
+import '../../../features/authentication/presentation/viewmodel/recover_password_viewmodel.dart';
+import '../../../features/authentication/presentation/viewmodel/reset_password_viewmodel.dart';
+import '../../../features/authentication/presentation/viewmodel/verify_code_viewmodel.dart';
 import '../../../features/enzyme/presentation/viewmodel/create_enzyme_viewmodel.dart';
 import '../../../features/enzyme/presentation/viewmodel/enzymes_viewmodel.dart';
 import '../../../features/experiment/presentation/viewmodel/calculate_experiment_viewmodel.dart';
 import '../../../features/experiment/presentation/viewmodel/create_experiment_viewmodel.dart';
+import '../../../features/experiment/presentation/viewmodel/edit_experiment_viewmodel.dart';
 import '../../../features/experiment/presentation/viewmodel/experiment_details_viewmodel.dart';
 import '../../../features/experiment/presentation/viewmodel/experiment_results_viewmodel.dart';
 import '../../../features/experiment/presentation/viewmodel/experiments_viewmodel.dart';
@@ -25,15 +29,19 @@ class ViewmodelsInjections {
     getIt.registerLazySingleton<CalculateExperimentViewmodel>(() => CalculateExperimentViewmodel(getIt()));
     getIt.registerLazySingleton<CreateAccountViewmodel>(() => CreateAccountViewmodel(getIt()));
     getIt.registerLazySingleton<CreateEnzymeViewmodel>(() => CreateEnzymeViewmodel(getIt()));
-    getIt.registerLazySingleton<CreateExperimentViewmodel>(() => CreateExperimentViewmodel(getIt(), getIt()));
+    getIt.registerLazySingleton<CreateExperimentViewmodel>(() => CreateExperimentViewmodel(getIt(), getIt(), getIt()));
     getIt.registerLazySingleton<CreateTreatmentViewmodel>(() => CreateTreatmentViewmodel(getIt()));
+    getIt.registerLazySingleton<EditExperimentViewmodel>(() => EditExperimentViewmodel(getIt(), getIt()));
     getIt.registerLazySingleton<EnzymesViewmodel>(() => EnzymesViewmodel(getIt()));
     getIt.registerLazySingleton<ExperimentDetailsViewmodel>(() => ExperimentDetailsViewmodel(getIt()));
     getIt.registerLazySingleton<ExperimentResultsViewmodel>(() => ExperimentResultsViewmodel(getIt(), getIt()));
     getIt.registerLazySingleton<ExperimentsViewmodel>(() => ExperimentsViewmodel(getIt(), getIt()));
     getIt.registerLazySingleton<HomeViewmodel>(() => HomeViewmodel(getIt(), getIt(), getIt(), getIt()));
     getIt.registerLazySingleton<LoginViewmodel>(() => LoginViewmodel(getIt()));
+    getIt.registerLazySingleton<RecoverPasswordViewmodel>(() => RecoverPasswordViewmodel(getIt()));
+    getIt.registerLazySingleton<ResetPasswordViewmodel>(() => ResetPasswordViewmodel(getIt()));
     getIt.registerFactory<SplashViewmodel>(() => SplashViewmodel(getIt(), getIt(), getIt(), getIt(), getIt()));
     getIt.registerLazySingleton<TreatmentsViewmodel>(() => TreatmentsViewmodel(getIt()));
+    getIt.registerLazySingleton<VerifyCodeViewmodel>(() => VerifyCodeViewmodel(getIt()));
   }
 }

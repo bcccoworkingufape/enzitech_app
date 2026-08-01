@@ -40,7 +40,8 @@ class API {
   static const _REQUEST_AUTH = '/auth';
   static const REQUEST_LOGIN = '$_REQUEST_AUTH/login';
   static const REQUEST_RECOVER_EMAIL = '$_REQUEST_AUTH/forgot-password';
-  static String REQUEST_RESET_PASSWORD(String token) => '$_REQUEST_AUTH/reset-password'; 
+  static const REQUEST_VERIFY_PIN = '$_REQUEST_AUTH/verify-pin';
+  static const REQUEST_RESET_PASSWORD = '$_REQUEST_AUTH/reset-password';
 
   //-> USER
   static const REQUEST_USERS = '/users';
@@ -59,9 +60,8 @@ class API {
   //-> EXPERIMENTS
   static const REQUEST_EXPERIMENTS = '/experiments';
   static String REQUEST_EXPERIMENTS_WITH_ID(String id) => '$REQUEST_EXPERIMENTS/$id';
-  static String REQUEST_CALCULATE_EXPERIMENTS(String experiment) => '$REQUEST_EXPERIMENTS/calculate/$experiment';
-  static String REQUEST_SAVE_RESULT_EXPERIMENTS(String experiment) => '$REQUEST_EXPERIMENTS/save-result/$experiment';
+  static String REQUEST_REPETITIONS(String experiment) => '$REQUEST_EXPERIMENTS/$experiment/repetitions';
+  static String REQUEST_PREVIEW_REPETITION(String experiment) => '$REQUEST_EXPERIMENTS/$experiment/repetitions/preview';
   static String REQUEST_GET_RESULT_EXPERIMENTS(String experiment) => '$REQUEST_EXPERIMENTS/get-total-result/$experiment';
   static String REQUEST_TOTAL_RESULTS_OF_EXPERIMENT(String experiment) => '$REQUEST_EXPERIMENTS/get-total-result/$experiment';
-  static String REQUEST_ENZYMES_REMAINING_IN_EXPERIMENT(String experiment) => '$REQUEST_EXPERIMENTS/get-enzymes/$experiment';
 }

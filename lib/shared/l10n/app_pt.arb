@@ -137,8 +137,6 @@
     }
   },
   "selectTreatment": "Selecione o tratamento:",
-  "loadingAvailableEnzymes": "Carregando enzimas disponíveis...",
-  "allEnzymesCalculated": "Todas as enzimas para este tratamento já foram calculadas!",
   "selectEnzyme": "Selecione a enzima:",
   "selectedEnzymeType": "Tipo da enzima selecionada: {enzymeType}",
   "@selectedEnzymeType": {
@@ -183,8 +181,6 @@
       }
     }
   },
-  "saveAndExitButton": "Salvar e sair",
-  "recalculateButton": "Recalcular",
   "repetitionLabel": "Repetição {repetitionNumber}:",
   "@repetitionLabel": {
     "placeholders": {
@@ -193,22 +189,15 @@
       }
     }
   },
-  "discrepantRepetitionWarning": "Esta repetição está discrepante!\n\nO valor dela difere acima de 25% da média de todas as repetições.\n\nCaso queira mudar, basta pressionar \"Recalcular\".",
-  "average": "Média:",
-  "repetitionColumnTitle": "REPETIÇÃO",
-  "resultColumnTitle": "RESULTADO",
-  "statusColumnTitle": "STATUS",
-  "stepIndicatorMessageResults": "Etapa {currentStep} de {totalSteps} - Resultados",
-  "@stepIndicatorMessageResults": {
-    "placeholders": {
-      "currentStep": {
-        "type": "int"
-      },
-      "totalSteps": {
-        "type": "int"
-      }
-    }
-  },
+  "pending": "Pendente",
+  "fillRepetitionsTitle": "Preencha os dados de cada repetição",
+  "saveRepetitionButton": "Salvar repetição",
+  "repetitionSavedMessage": "Repetição salva com sucesso!",
+  "finishButton": "Concluir",
+  "editExperimentTitle": "Editar experimento",
+  "editExperimentTooltip": "Editar experimento",
+  "saveChangesButton": "Salvar alterações",
+  "experimentUpdatedSuccess": "Experimento atualizado com sucesso!",
   "registerNewExperiment": "Cadastre um novo experimento",
   "experimentIdentification": "Identificação do experimento",
   "stepIndicatorIdentification": "Etapa {currentStep} de {totalSteps} - Identificação",
@@ -223,9 +212,10 @@
     }
   },
   "repetitionsPerTreatmentLabel": "Quantidade de repetições por tratamento",
-  "goToTreatmentsButton": "Ir para tratamentos",
   "treatmentsAndRepetitionsData": "Dados dos tratamentos e repetições",
   "noTreatmentsRegisteredError": "Nenhum tratamento cadastrado! É necessário pelo menos um tratamento para prosseguir.",
+  "addTreatmentButton": "Adicionar tratamento",
+  "noTreatmentsAddedYet": "Nenhum tratamento adicionado ainda",
   "stepIndicatorTreatments": "Etapa {currentStep} de {totalSteps} - Tratamentos e Repetições",
   "@stepIndicatorTreatments": {
     "placeholders": {
@@ -441,6 +431,9 @@
   "recoverPassword": "Recuperar Senha",
   "recoverPasswordInstructions": "Informe seu e-mail abaixo. Enviaremos as instruções para você redefinir a sua senha.",
   "sendRecoverEmail": "Enviar E-mail",
+  "verifyCodeTitle": "Verificar Código",
+  "verifyCodeInstructions": "Digite o código de 6 dígitos que enviamos para o seu e-mail.",
+  "verifyCodeButton": "Verificar",
   "resetPassword": "Redefinir Senha",
   "passwordResetSuccess": "Senha redefinida com sucesso!",
   "recoverCode": "Código de Recuperação",

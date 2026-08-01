@@ -234,13 +234,6 @@ class AppLocalizationsPt extends AppLocalizations {
   String get selectTreatment => 'Selecione o tratamento:';
 
   @override
-  String get loadingAvailableEnzymes => 'Carregando enzimas disponíveis...';
-
-  @override
-  String get allEnzymesCalculated =>
-      'Todas as enzimas para este tratamento já foram calculadas!';
-
-  @override
   String get selectEnzyme => 'Selecione a enzima:';
 
   @override
@@ -281,36 +274,36 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get saveAndExitButton => 'Salvar e sair';
-
-  @override
-  String get recalculateButton => 'Recalcular';
-
-  @override
   String repetitionLabel(int repetitionNumber) {
     return 'Repetição $repetitionNumber:';
   }
 
   @override
-  String get discrepantRepetitionWarning =>
-      'Esta repetição está discrepante!\n\nO valor dela difere acima de 25% da média de todas as repetições.\n\nCaso queira mudar, basta pressionar \"Recalcular\".';
+  String get pending => 'Pendente';
 
   @override
-  String get average => 'Média:';
+  String get fillRepetitionsTitle => 'Preencha os dados de cada repetição';
 
   @override
-  String get repetitionColumnTitle => 'REPETIÇÃO';
+  String get saveRepetitionButton => 'Salvar repetição';
 
   @override
-  String get resultColumnTitle => 'RESULTADO';
+  String get repetitionSavedMessage => 'Repetição salva com sucesso!';
 
   @override
-  String get statusColumnTitle => 'STATUS';
+  String get finishButton => 'Concluir';
 
   @override
-  String stepIndicatorMessageResults(int currentStep, int totalSteps) {
-    return 'Etapa $currentStep de $totalSteps - Resultados';
-  }
+  String get editExperimentTitle => 'Editar experimento';
+
+  @override
+  String get editExperimentTooltip => 'Editar experimento';
+
+  @override
+  String get saveChangesButton => 'Salvar alterações';
+
+  @override
+  String get experimentUpdatedSuccess => 'Experimento atualizado com sucesso!';
 
   @override
   String get registerNewExperiment => 'Cadastre um novo experimento';
@@ -328,15 +321,18 @@ class AppLocalizationsPt extends AppLocalizations {
       'Quantidade de repetições por tratamento';
 
   @override
-  String get goToTreatmentsButton => 'Ir para tratamentos';
-
-  @override
   String get treatmentsAndRepetitionsData =>
       'Dados dos tratamentos e repetições';
 
   @override
   String get noTreatmentsRegisteredError =>
       'Nenhum tratamento cadastrado! É necessário pelo menos um tratamento para prosseguir.';
+
+  @override
+  String get addTreatmentButton => 'Adicionar tratamento';
+
+  @override
+  String get noTreatmentsAddedYet => 'Nenhum tratamento adicionado ainda';
 
   @override
   String stepIndicatorTreatments(int currentStep, int totalSteps) {
@@ -735,6 +731,16 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get sendRecoverEmail => 'Enviar E-mail';
+
+  @override
+  String get verifyCodeTitle => 'Verificar Código';
+
+  @override
+  String get verifyCodeInstructions =>
+      'Digite o código de 6 dígitos que enviamos para o seu e-mail.';
+
+  @override
+  String get verifyCodeButton => 'Verificar';
 
   @override
   String get resetPassword => 'Redefinir Senha';

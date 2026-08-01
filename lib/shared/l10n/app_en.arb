@@ -136,8 +136,6 @@
     }
   },
   "selectTreatment": "Select the treatment:",
-  "loadingAvailableEnzymes": "Loading available enzymes...",
-  "allEnzymesCalculated": "All enzymes for this treatment have already been calculated!",
   "selectEnzyme": "Select the enzyme:",
   "selectedEnzymeType": "Selected enzyme type: {enzymeType}",
   "@selectedEnzymeType": {
@@ -182,8 +180,6 @@
       }
     }
   },
-  "saveAndExitButton": "Save and exit",
-  "recalculateButton": "Recalculate",
   "repetitionLabel": "Repetition {repetitionNumber}:",
   "@repetitionLabel": {
     "placeholders": {
@@ -192,22 +188,15 @@
       }
     }
   },
-  "discrepantRepetitionWarning": "This repetition is discrepant!\n\nIts value differs by more than 25% from the average of all repetitions.\n\nIf you want to change it, just press \"Recalculate\".",
-  "average": "Average:",
-  "repetitionColumnTitle": "REPETITION",
-  "resultColumnTitle": "RESULT",
-  "statusColumnTitle": "STATUS",
-  "stepIndicatorMessageResults": "Step {currentStep} of {totalSteps} - Results",
-  "@stepIndicatorMessageResults": {
-    "placeholders": {
-      "currentStep": {
-        "type": "int"
-      },
-      "totalSteps": {
-        "type": "int"
-      }
-    }
-  },
+  "pending": "Pending",
+  "fillRepetitionsTitle": "Fill in the data for each repetition",
+  "saveRepetitionButton": "Save repetition",
+  "repetitionSavedMessage": "Repetition saved successfully!",
+  "finishButton": "Finish",
+  "editExperimentTitle": "Edit experiment",
+  "editExperimentTooltip": "Edit experiment",
+  "saveChangesButton": "Save changes",
+  "experimentUpdatedSuccess": "Experiment updated successfully!",
   "registerNewExperiment": "Register a new experiment",
   "experimentIdentification": "Experiment Identification",
   "stepIndicatorIdentification": "Step {currentStep} of {totalSteps} - Identification",
@@ -222,9 +211,10 @@
     }
   },
   "repetitionsPerTreatmentLabel": "Number of repetitions per treatment",
-  "goToTreatmentsButton": "Go to treatments",
   "treatmentsAndRepetitionsData": "Treatments and Repetitions Data",
   "noTreatmentsRegisteredError": "No treatments registered! At least one treatment is required to proceed.",
+  "addTreatmentButton": "Add treatment",
+  "noTreatmentsAddedYet": "No treatments added yet",
   "stepIndicatorTreatments": "Step {currentStep} of {totalSteps} - Treatments and Repetitions",
   "@stepIndicatorTreatments": {
     "placeholders": {
@@ -440,6 +430,9 @@
   "recoverPassword": "Reset Password",
   "recoverPasswordInstructions": "Enter your email below. We will send you instructions to reset your password.",
   "sendRecoverEmail": "Send E-mail",
+  "verifyCodeTitle": "Verify Code",
+  "verifyCodeInstructions": "Enter the 6-digit code we sent to your email.",
+  "verifyCodeButton": "Verify",
   "@@Locale": "en",
   "resetPassword": "Reset Password",
   "passwordResetSuccess": "Password reset successfully!",
