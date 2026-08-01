@@ -879,6 +879,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get roleBackendDeveloper => '(Desenvolvedor back-end)';
 
   @override
+  String get roleMobileBackendDev => '(Desenvolvedor mobile & back-end)';
+
+  @override
   String get roleProjectManagement => '(Gestão do Projeto)';
 
   @override

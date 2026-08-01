@@ -104,7 +104,7 @@ class AboutAppBS extends StatelessWidget {
               text: '• Guilherme Felix ',
               style: TextStyles(context).trailingRegular(isBold: true),
               children: <TextSpan>[
-                TextSpan(text: context.l10n.roleMobileDeveloper, style: TextStyles(context).trailingRegular()),
+                TextSpan(text: context.l10n.roleMobileBackendDev, style: TextStyles(context).trailingRegular()),
               ],
             ),
           ),

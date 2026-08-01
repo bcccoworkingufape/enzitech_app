@@ -1562,6 +1562,12 @@ abstract class AppLocalizations {
   /// **'(Back-end developer)'**
   String get roleBackendDeveloper;
 
+  /// No description provided for @roleMobileBackendDev.
+  ///
+  /// In en, this message translates to:
+  /// **'(Mobile & Back-end Developer)'**
+  String get roleMobileBackendDev;
+
   /// No description provided for @roleProjectManagement.
   ///
   /// In en, this message translates to:
