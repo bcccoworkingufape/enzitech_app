@@ -34,7 +34,7 @@ class CreateTreatmentViewmodel extends ChangeNotifier {
         _setFailure(error);
         setStateEnum(StateEnum.error);
       },
-      (success) async {
+      (success) {
         setStateEnum(StateEnum.success);
       },
     );
