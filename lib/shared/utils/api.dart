@@ -13,7 +13,7 @@ class API {
         enviroment = EnvironmentEnum.dev;
         break;
       case EnvironmentEnum.stage:
-        _config = devConstants;
+        _config = stageConstants;
         enviroment = EnvironmentEnum.stage;
         break;
       case EnvironmentEnum.prod:
@@ -29,7 +29,7 @@ class API {
 
   //-> SETUP
   //STAGING SERVER
-  static Map<String, dynamic> stageConstants = {_baseUrl: "https://enzitech.api.bcccoworking.org:8082"};
+  static Map<String, dynamic> stageConstants = {_baseUrl: "https://enzitech.api.bcccoworking.org"};
   
   //LOCALHOST
   static Map<String, dynamic> devConstants = {_baseUrl: "http://10.0.2.2:8080"};
