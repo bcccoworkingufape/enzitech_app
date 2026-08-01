@@ -714,6 +714,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accountCreatedSuccess => 'Account created successfully!';
 
   @override
+  String get passwordRequirementsTitle => 'Your password must contain:';
+
+  @override
+  String get passwordRequirement_minLength => 'At least 8 characters';
+
+  @override
+  String get passwordRequirement_uppercase => 'An uppercase letter';
+
+  @override
+  String get passwordRequirement_lowercase => 'A lowercase letter';
+
+  @override
+  String get passwordRequirement_specialChar =>
+      'A special character (e.g. !@#\$%)';
+
+  @override
   String get recoverEmailSent => 'Recovery email sent successfully!';
 
   @override

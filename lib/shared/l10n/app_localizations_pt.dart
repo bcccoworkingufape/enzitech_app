@@ -720,6 +720,22 @@ class AppLocalizationsPt extends AppLocalizations {
   String get accountCreatedSuccess => 'Conta criada com sucesso!';
 
   @override
+  String get passwordRequirementsTitle => 'Sua senha deve conter:';
+
+  @override
+  String get passwordRequirement_minLength => 'Mínimo de 8 caracteres';
+
+  @override
+  String get passwordRequirement_uppercase => 'Uma letra maiúscula';
+
+  @override
+  String get passwordRequirement_lowercase => 'Uma letra minúscula';
+
+  @override
+  String get passwordRequirement_specialChar =>
+      'Um caractere especial (ex: !@#\$%)';
+
+  @override
   String get recoverEmailSent => 'E-mail de recuperação enviado com sucesso!';
 
   @override

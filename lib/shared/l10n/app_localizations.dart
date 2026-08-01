@@ -1286,6 +1286,36 @@ abstract class AppLocalizations {
   /// **'Account created successfully!'**
   String get accountCreatedSuccess;
 
+  /// No description provided for @passwordRequirementsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your password must contain:'**
+  String get passwordRequirementsTitle;
+
+  /// No description provided for @passwordRequirement_minLength.
+  ///
+  /// In en, this message translates to:
+  /// **'At least 8 characters'**
+  String get passwordRequirement_minLength;
+
+  /// No description provided for @passwordRequirement_uppercase.
+  ///
+  /// In en, this message translates to:
+  /// **'An uppercase letter'**
+  String get passwordRequirement_uppercase;
+
+  /// No description provided for @passwordRequirement_lowercase.
+  ///
+  /// In en, this message translates to:
+  /// **'A lowercase letter'**
+  String get passwordRequirement_lowercase;
+
+  /// No description provided for @passwordRequirement_specialChar.
+  ///
+  /// In en, this message translates to:
+  /// **'A special character (e.g. !@#\$%)'**
+  String get passwordRequirement_specialChar;
+
   /// No description provided for @recoverEmailSent.
   ///
   /// In en, this message translates to:

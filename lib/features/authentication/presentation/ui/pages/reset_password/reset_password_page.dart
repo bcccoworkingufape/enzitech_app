@@ -75,6 +75,10 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     );
   }
 
+  Widget get _passwordRequirementsCard {
+    return EZTPasswordRequirements(password: _newPasswordFieldController.text);
+  }
+
   Widget get _confirmPasswordInput {
     final fieldValidator = FieldValidator(
       [ValidateRule(ValidateTypes.required), ValidateRule(ValidateTypes.passwordEquals)],
@@ -119,6 +123,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                     Text(context.l10n.resetPassword, style: TextStyles.titleHome, textAlign: TextAlign.center),
                     const SizedBox(height: 32),
                     _newPasswordInput,
+                    _passwordRequirementsCard,
                     const SizedBox(height: 10),
                     _confirmPasswordInput,
                     const SizedBox(height: 64),
