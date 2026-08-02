@@ -18,6 +18,7 @@ import '../../../../../../shared/ui/ui.dart';
 import '../../../../../../shared/utils/utils.dart';
 import '../../../viewmodel/home_viewmodel.dart';
 import '../../../viewmodel/settings_viewmodel.dart';
+import '../../widgets/delete_account_dialog.dart';
 import '../../widgets/settings_section.dart';
 import 'fragments/about_app_bs.dart';
 import 'fragments/faq_bs.dart';
@@ -53,7 +54,10 @@ class _SettingsPageState extends State<SettingsPage> {
 
         if (_settingsViewmodel.state == StateEnum.success && _settingsViewmodel.user == null && mounted) {
           EZTSnackBar.clear(context);
-          EZTSnackBar.show(context, context.l10n.seeYouSoon);
+          EZTSnackBar.show(
+            context,
+            _settingsViewmodel.accountDeleted ? context.l10n.accountDeletedSuccess : context.l10n.seeYouSoon,
+          );
           await Future.delayed(const Duration(milliseconds: 250));
           if (mounted) {
             SchedulerBinding.instance.addPostFrameCallback((_) {
@@ -261,6 +265,23 @@ class _SettingsPageState extends State<SettingsPage> {
                         onTap: () {
                           _homeViewmodel.experimentsViewmodel.clearFilters();
                           _settingsViewmodel.logout();
+                        },
+                      ),
+                      SettingsTile(
+                        leading: Icon(PhosphorIcons.trash(), color: context.getApplyedColorScheme.error),
+                        title: Text(
+                          context.l10n.deleteAccount,
+                          style: TextStyle(color: context.getApplyedColorScheme.error),
+                        ),
+                        onTap: () async {
+                          final confirmed = await showDialog<bool>(
+                            context: context,
+                            builder: (BuildContext context) => const DeleteAccountDialog(),
+                          );
+
+                          if (confirmed == true) {
+                            _settingsViewmodel.deleteAccount();
+                          }
                         },
                       ),
                       GestureDetector(

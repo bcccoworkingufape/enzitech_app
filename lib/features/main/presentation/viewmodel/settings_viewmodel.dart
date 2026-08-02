@@ -11,13 +11,15 @@ import '../../../../core/failures/failures.dart';
 import '../../../../shared/l10n/app_localizations.dart';
 import '../../../../shared/utils/utils.dart';
 import '../../../authentication/domain/entities/user_entity.dart';
+import '../../../authentication/domain/usecases/auth/auth_usecase.dart';
 import '../../domain/entities/app_info_entity.dart';
 import '../../domain/usecases/user_preferences_usecases.dart';
 
 class SettingsViewmodel extends ChangeNotifier {
   final UserPreferencesUseCases _userPreferencesUseCases;
+  final AuthUseCase _authUseCase;
 
-  SettingsViewmodel(this._userPreferencesUseCases);
+  SettingsViewmodel(this._userPreferencesUseCases, this._authUseCase);
 
   bool _isReplaceLanguage = false;
   bool get isReplaceLanguage => _isReplaceLanguage;
@@ -112,9 +114,13 @@ class SettingsViewmodel extends ChangeNotifier {
     }
   }
 
+  bool _accountDeleted = false;
+  bool get accountDeleted => _accountDeleted;
+
   Future<void> logout() async {
     setStateEnum(StateEnum.loading);
     try {
+      _accountDeleted = false;
       _userPreferencesUseCases.clearUser();
 
       setStateEnum(StateEnum.success);
@@ -125,6 +131,28 @@ class SettingsViewmodel extends ChangeNotifier {
       _setFailure(e as Failure);
       setStateEnum(StateEnum.error);
     }
+  }
+
+  Future<void> deleteAccount() async {
+    setStateEnum(StateEnum.loading);
+
+    final result = await _authUseCase.deleteAccount();
+
+    result.fold(
+      (error) {
+        _setFailure(error);
+        setStateEnum(StateEnum.error);
+      },
+      (success) {
+        _accountDeleted = true;
+        _userPreferencesUseCases.clearUser();
+
+        setStateEnum(StateEnum.success);
+
+        _setUser(null);
+        _setAppInfo(null);
+      },
+    );
   }
 
   Future<void> fetch() async {

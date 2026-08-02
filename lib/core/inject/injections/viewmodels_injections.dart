@@ -25,7 +25,7 @@ class ViewmodelsInjections {
   final GetIt getIt;
 
   ViewmodelsInjections(this.getIt) {
-    getIt.registerLazySingleton<SettingsViewmodel>(() => SettingsViewmodel(getIt()));
+    getIt.registerLazySingleton<SettingsViewmodel>(() => SettingsViewmodel(getIt(), getIt()));
     getIt.registerLazySingleton<CalculateExperimentViewmodel>(() => CalculateExperimentViewmodel(getIt()));
     getIt.registerLazySingleton<CreateAccountViewmodel>(() => CreateAccountViewmodel(getIt()));
     getIt.registerLazySingleton<CreateEnzymeViewmodel>(() => CreateEnzymeViewmodel(getIt()));

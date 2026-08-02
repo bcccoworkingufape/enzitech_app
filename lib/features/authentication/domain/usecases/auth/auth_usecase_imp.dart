@@ -44,4 +44,9 @@ class AuthUseCaseImp implements AuthUseCase {
   }) async {
     return await _authRepository.resetPassword(email: email, token: token, newPassword: newPassword);
   }
+
+  @override
+  Future<Either<Failure, Unit>> deleteAccount() async {
+    return await _authRepository.deleteAccount();
+  }
 }

@@ -898,6 +898,20 @@ class AppLocalizationsEn extends AppLocalizations {
       'Creating new enzymes is a feature limited to administrators. Currently, adding a new enzyme to the system requires implementation by our team. Should you need a new enzyme type, please send a request to the system administrator.';
 
   @override
+  String get deleteAccount => 'Delete my account';
+
+  @override
+  String get deleteAccountDialogTitle => 'Permanently delete your account?';
+
+  @override
+  String get deleteAccountDialogContent =>
+      'This action is irreversible. Your account, along with your registered experiments and treatments, will be permanently deleted and cannot be recovered.';
+
+  @override
+  String get accountDeletedSuccess =>
+      'Your account has been successfully deleted.';
+
+  @override
   String get stringtest4 => 'Test4';
 
   @override

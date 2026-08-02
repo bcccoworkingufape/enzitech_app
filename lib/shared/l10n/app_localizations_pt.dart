@@ -904,6 +904,19 @@ class AppLocalizationsPt extends AppLocalizations {
       'A funcionalidade de criação de enzimas é restrita ao adminstrador do Enzitech, pois atualmente para o cadastro de uma enzima é necessário sua implementação até que a mesma possa estar disponível para uso, caso necessite de algum novo tipo de enzima solicite ao administrador do sistema.';
 
   @override
+  String get deleteAccount => 'Excluir minha conta';
+
+  @override
+  String get deleteAccountDialogTitle => 'Excluir sua conta permanentemente?';
+
+  @override
+  String get deleteAccountDialogContent =>
+      'Essa ação é irreversível. Sua conta, seus experimentos e tratamentos cadastrados serão permanentemente excluídos e não poderão ser recuperados.';
+
+  @override
+  String get accountDeletedSuccess => 'Sua conta foi excluída com sucesso.';
+
+  @override
   String get stringtest4 => 'Teste4';
 
   @override

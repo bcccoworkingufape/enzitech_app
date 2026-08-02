@@ -1610,6 +1610,30 @@ abstract class AppLocalizations {
   /// **'Creating new enzymes is a feature limited to administrators. Currently, adding a new enzyme to the system requires implementation by our team. Should you need a new enzyme type, please send a request to the system administrator.'**
   String get answer1;
 
+  /// No description provided for @deleteAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete my account'**
+  String get deleteAccount;
+
+  /// No description provided for @deleteAccountDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Permanently delete your account?'**
+  String get deleteAccountDialogTitle;
+
+  /// No description provided for @deleteAccountDialogContent.
+  ///
+  /// In en, this message translates to:
+  /// **'This action is irreversible. Your account, along with your registered experiments and treatments, will be permanently deleted and cannot be recovered.'**
+  String get deleteAccountDialogContent;
+
+  /// No description provided for @accountDeletedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account has been successfully deleted.'**
+  String get accountDeletedSuccess;
+
   /// No description provided for @stringtest4.
   ///
   /// In en, this message translates to:
