@@ -15,6 +15,14 @@ class EnzymeEntity {
   double? weightSample;
   double? weightGround;
   double? size;
+  // Fórmulas padrão da enzima (curva e cálculo final), usadas como referência/placeholder
+  // ao personalizar a fórmula de uma enzima dentro de um experimento específico.
+  String? formulaCurve;
+  String? formulaCalculation;
+  // Fórmulas customizadas para esta configuração de enzima dentro do experimento (se
+  // nulas, a fórmula padrão acima é utilizada).
+  String? customFormulaCurve;
+  String? customFormulaCalculation;
 
   EnzymeEntity({
     required this.id,
@@ -30,6 +38,10 @@ class EnzymeEntity {
     this.weightSample,
     this.weightGround,
     this.size,
+    this.formulaCurve,
+    this.formulaCalculation,
+    this.customFormulaCurve,
+    this.customFormulaCalculation,
   });
 
   @override

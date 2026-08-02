@@ -112,6 +112,19 @@ abstract class ExperimentsDataSourceDecorator implements ExperimentsDataSource {
       _experimentsDataSource.getResult(experimentId: experimentId);
 
   @override
+  Future<Either<Failure, EnzymeEntity>> updateEnzymeFormula({
+    required String experimentId,
+    required String experimentEnzymeId,
+    String? customFormulaCurve,
+    String? customFormulaCalculation,
+  }) => _experimentsDataSource.updateEnzymeFormula(
+    experimentId: experimentId,
+    experimentEnzymeId: experimentEnzymeId,
+    customFormulaCurve: customFormulaCurve,
+    customFormulaCalculation: customFormulaCalculation,
+  );
+
+  @override
   Future<void> storeExperimentsInCache(ExperimentPaginationEntity experimentPaginationEntity) =>
       _experimentsDataSource.storeExperimentsInCache(experimentPaginationEntity);
 }

@@ -250,5 +250,17 @@
         "type": "int"
       }
     }
-  }
+  },
+  "editEnzymeFormulaTitle": "Customize formula",
+  "editEnzymeFormulaDescription": "Applies only to this enzyme within this experiment — it doesn't change the global enzyme catalog nor other experiments.",
+  "curveFormulaLabel": "Curve formula",
+  "calculationFormulaLabel": "Final calculation formula",
+  "tapVariableToInsert": "Tap to insert into the formula:",
+  "restoreDefaultFormulaButton": "Restore default",
+  "saveFormulaButton": "Save formula",
+  "formulaUpdatedSuccess": "Formula updated successfully!",
+  "formulaVariable_difference": "Difference (sample - blank)",
+  "formulaVariable_curve": "Curve result",
+  "formulaVariable_variableA": "Variable A",
+  "formulaVariable_variableB": "Variable B"
 }

@@ -65,4 +65,6 @@ class API {
   static String REQUEST_PREVIEW_REPETITION(String experiment) => '$REQUEST_EXPERIMENTS/$experiment/repetitions/preview';
   static String REQUEST_GET_RESULT_EXPERIMENTS(String experiment) => '$REQUEST_EXPERIMENTS/get-total-result/$experiment';
   static String REQUEST_TOTAL_RESULTS_OF_EXPERIMENT(String experiment) => '$REQUEST_EXPERIMENTS/get-total-result/$experiment';
+  static String REQUEST_ENZYME_FORMULA(String experiment, String experimentEnzymeId) =>
+      '$REQUEST_EXPERIMENTS/$experiment/enzymes/$experimentEnzymeId/formula';
 }

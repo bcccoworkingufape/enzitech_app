@@ -19,6 +19,7 @@ import '../../../../../main/presentation/viewmodel/home_viewmodel.dart';
 import '../../../viewmodel/calculate_experiment_viewmodel.dart';
 import '../../../viewmodel/experiment_details_viewmodel.dart';
 import '../../../viewmodel/experiments_viewmodel.dart';
+import '../../widgets/edit_enzyme_formula_dialog.dart';
 import '../../widgets/experiment_exclusion_dialog.dart';
 
 class ExperimentDetailsPage extends StatefulWidget {
@@ -47,7 +48,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
         if (mounted && _experimentDetailsViewmodel.state == StateEnum.error) {
           EZTSnackBar.show(
             context,
-            HandleFailure.of(context.l10n, _experimentDetailsViewmodel.failure!),
+            HandleFailure.of(context.l10n, _experimentDetailsViewmodel.failure!, overrideDefaultMessage: true),
             eztSnackBarType: EZTSnackBarType.error,
           );
         }
@@ -70,10 +71,30 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
     );
   }
 
-  List<Text> get leadWithEnzymes {
+  List<Widget> get leadWithEnzymes {
     if (_experimentDetailsViewmodel.experiment!.enzymes != null) {
       if (_experimentDetailsViewmodel.experiment!.enzymes!.isNotEmpty) {
-        return _experimentDetailsViewmodel.experiment!.enzymes!.map((element) => Text(element.name)).toList();
+        return _experimentDetailsViewmodel.experiment!.enzymes!
+            .map(
+              (element) => GestureDetector(
+                onTap: () => showDialog(
+                  context: context,
+                  builder: (BuildContext context) => EditEnzymeFormulaDialog(enzyme: element),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 2),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(element.name),
+                      const SizedBox(width: 4),
+                      Icon(PhosphorIcons.pencilSimple(), size: 14),
+                    ],
+                  ),
+                ),
+              ),
+            )
+            .toList();
       }
     }
     return [Text(context.l10n.noData)];

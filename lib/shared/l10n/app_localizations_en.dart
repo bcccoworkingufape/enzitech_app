@@ -459,6 +459,43 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get editEnzymeFormulaTitle => 'Customize formula';
+
+  @override
+  String get editEnzymeFormulaDescription =>
+      'Applies only to this enzyme within this experiment — it doesn\'t change the global enzyme catalog nor other experiments.';
+
+  @override
+  String get curveFormulaLabel => 'Curve formula';
+
+  @override
+  String get calculationFormulaLabel => 'Final calculation formula';
+
+  @override
+  String get tapVariableToInsert => 'Tap to insert into the formula:';
+
+  @override
+  String get restoreDefaultFormulaButton => 'Restore default';
+
+  @override
+  String get saveFormulaButton => 'Save formula';
+
+  @override
+  String get formulaUpdatedSuccess => 'Formula updated successfully!';
+
+  @override
+  String get formulaVariable_difference => 'Difference (sample - blank)';
+
+  @override
+  String get formulaVariable_curve => 'Curve result';
+
+  @override
+  String get formulaVariable_variableA => 'Variable A';
+
+  @override
+  String get formulaVariable_variableB => 'Variable B';
+
+  @override
   String get error_serverConnectionRefused =>
       '⚠ Server Error, please try again later.';
 

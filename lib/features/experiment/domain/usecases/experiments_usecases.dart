@@ -61,5 +61,12 @@ abstract class ExperimentsUseCases {
 
   Future<Either<Failure, ExperimentResultEntity>> getResult({required String experimentId});
 
+  Future<Either<Failure, EnzymeEntity>> updateEnzymeFormula({
+    required String experimentId,
+    required String experimentEnzymeId,
+    String? customFormulaCurve,
+    String? customFormulaCalculation,
+  });
+
   Future<void> storeExperimentsInCache(ExperimentPaginationEntity experimentPaginationEntity);
 }

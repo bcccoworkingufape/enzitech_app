@@ -26,6 +26,45 @@ extension EnzymeDto on EnzymeEntity {
       weightSample: json['weightSample'] != null ? double.tryParse(json['weightSample'].toString())?.toPrecision(5) : null,
       weightGround: json['weightGround'] != null ? double.tryParse(json['weightGround'].toString())?.toPrecision(5) : null,
       size: json['size'] != null ? double.tryParse(json['size'].toString())?.toPrecision(5) : null,
+      formulaCurve: json['formulaCurve']?.toString(),
+      formulaCalculation: json['formulaCalculation']?.toString(),
+      customFormulaCurve: json['customFormulaCurve']?.toString(),
+      customFormulaCalculation: json['customFormulaCalculation']?.toString(),
+    );
+  }
+
+  // Analisa a resposta de PATCH .../enzymes/{experimentEnzymeId}/formula (formato
+  // ExperimentEnzymeResponseDTO), que traz a enzima aninhada em `enzyme` e a configuração
+  // (variáveis, fórmulas customizadas) no nível superior.
+  static EnzymeEntity fromExperimentEnzymeConfigJson(Map json) {
+    double safeDouble(dynamic value) {
+      if (value == null) return 0.0;
+      if (value is double) return value.toPrecision(5);
+      if (value is int) return value.toDouble().toPrecision(5);
+      if (value is String) return (double.tryParse(value) ?? 0.0).toPrecision(5);
+      return 0.0;
+    }
+
+    final enzyme = fromJson(json['enzyme']);
+
+    return EnzymeEntity(
+      id: json['id']?.toString() ?? enzyme.id,
+      sourceEnzymeId: enzyme.sourceEnzymeId,
+      name: enzyme.name,
+      variableA: safeDouble(json['variableA']),
+      variableB: safeDouble(json['variableB']),
+      type: enzyme.type,
+      formula: enzyme.formula,
+      createdAt: enzyme.createdAt,
+      updatedAt: enzyme.updatedAt,
+      duration: json['duration'] != null ? double.tryParse(json['duration'].toString())?.round() : null,
+      weightSample: json['weightSample'] != null ? double.tryParse(json['weightSample'].toString())?.toPrecision(5) : null,
+      weightGround: json['weightGround'] != null ? double.tryParse(json['weightGround'].toString())?.toPrecision(5) : null,
+      size: json['size'] != null ? double.tryParse(json['size'].toString())?.toPrecision(5) : null,
+      formulaCurve: enzyme.formulaCurve,
+      formulaCalculation: enzyme.formulaCalculation,
+      customFormulaCurve: json['customFormulaCurve']?.toString(),
+      customFormulaCalculation: json['customFormulaCalculation']?.toString(),
     );
   }
 

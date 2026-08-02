@@ -461,6 +461,43 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
+  String get editEnzymeFormulaTitle => 'Personalizar fórmula';
+
+  @override
+  String get editEnzymeFormulaDescription =>
+      'Vale apenas para esta enzima neste experimento — não altera o cadastro global nem outros experimentos.';
+
+  @override
+  String get curveFormulaLabel => 'Fórmula da curva';
+
+  @override
+  String get calculationFormulaLabel => 'Fórmula do cálculo final';
+
+  @override
+  String get tapVariableToInsert => 'Toque para inserir na fórmula:';
+
+  @override
+  String get restoreDefaultFormulaButton => 'Restaurar padrão';
+
+  @override
+  String get saveFormulaButton => 'Salvar fórmula';
+
+  @override
+  String get formulaUpdatedSuccess => 'Fórmula atualizada com sucesso!';
+
+  @override
+  String get formulaVariable_difference => 'Diferença (amostra - branco)';
+
+  @override
+  String get formulaVariable_curve => 'Resultado da curva';
+
+  @override
+  String get formulaVariable_variableA => 'Variável A';
+
+  @override
+  String get formulaVariable_variableB => 'Variável B';
+
+  @override
   String get error_serverConnectionRefused =>
       '⚠ Erro de Servidor, tente novamente mais tarde.';
 

@@ -48,4 +48,36 @@ class ExperimentDetailsViewmodel extends ChangeNotifier {
       },
     );
   }
+
+  Future<void> updateEnzymeFormula({
+    required String experimentEnzymeId,
+    String? customFormulaCurve,
+    String? customFormulaCalculation,
+  }) async {
+    if (_experiment == null) return;
+
+    setStateEnum(StateEnum.loading);
+
+    var result = await _experimentsUseCases.updateEnzymeFormula(
+      experimentId: _experiment!.id,
+      experimentEnzymeId: experimentEnzymeId,
+      customFormulaCurve: customFormulaCurve,
+      customFormulaCalculation: customFormulaCalculation,
+    );
+
+    result.fold(
+      (error) {
+        _setFailure(error);
+        setStateEnum(StateEnum.error);
+      },
+      (updatedEnzyme) {
+        final enzymes = _experiment!.enzymes ?? [];
+        final index = enzymes.indexWhere((e) => e.id == updatedEnzyme.id);
+        if (index != -1) {
+          enzymes[index] = updatedEnzyme;
+        }
+        setStateEnum(StateEnum.success);
+      },
+    );
+  }
 }

@@ -128,6 +128,21 @@ class ExperimentsRepositoryImp implements ExperimentsRepository {
   }
 
   @override
+  Future<Either<Failure, EnzymeEntity>> updateEnzymeFormula({
+    required String experimentId,
+    required String experimentEnzymeId,
+    String? customFormulaCurve,
+    String? customFormulaCalculation,
+  }) async {
+    return await _experimentsDataSource.updateEnzymeFormula(
+      experimentId: experimentId,
+      experimentEnzymeId: experimentEnzymeId,
+      customFormulaCurve: customFormulaCurve,
+      customFormulaCalculation: customFormulaCalculation,
+    );
+  }
+
+  @override
   Future<void> storeExperimentsInCache(ExperimentPaginationEntity experimentPaginationEntity) async {
     return await _experimentsDataSource.storeExperimentsInCache(experimentPaginationEntity);
   }

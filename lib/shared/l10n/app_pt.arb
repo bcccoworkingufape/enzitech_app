@@ -300,6 +300,18 @@
       }
     }
   },
+  "editEnzymeFormulaTitle": "Personalizar fórmula",
+  "editEnzymeFormulaDescription": "Vale apenas para esta enzima neste experimento — não altera o cadastro global nem outros experimentos.",
+  "curveFormulaLabel": "Fórmula da curva",
+  "calculationFormulaLabel": "Fórmula do cálculo final",
+  "tapVariableToInsert": "Toque para inserir na fórmula:",
+  "restoreDefaultFormulaButton": "Restaurar padrão",
+  "saveFormulaButton": "Salvar fórmula",
+  "formulaUpdatedSuccess": "Fórmula atualizada com sucesso!",
+  "formulaVariable_difference": "Diferença (amostra - branco)",
+  "formulaVariable_curve": "Resultado da curva",
+  "formulaVariable_variableA": "Variável A",
+  "formulaVariable_variableB": "Variável B",
   "error_serverConnectionRefused": "⚠ Erro de Servidor, tente novamente mais tarde.",
   "error_statusCodeAndMessage": "⚠ SC{statusCode} - {message}",
   "@error_statusCodeAndMessage": {

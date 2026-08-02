@@ -842,6 +842,78 @@ abstract class AppLocalizations {
   /// **'{count, plural, =0{Apply filters} =1{Apply filter} other{Apply filters}}'**
   String applyFilters(int count);
 
+  /// No description provided for @editEnzymeFormulaTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Customize formula'**
+  String get editEnzymeFormulaTitle;
+
+  /// No description provided for @editEnzymeFormulaDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Applies only to this enzyme within this experiment — it doesn\'t change the global enzyme catalog nor other experiments.'**
+  String get editEnzymeFormulaDescription;
+
+  /// No description provided for @curveFormulaLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Curve formula'**
+  String get curveFormulaLabel;
+
+  /// No description provided for @calculationFormulaLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Final calculation formula'**
+  String get calculationFormulaLabel;
+
+  /// No description provided for @tapVariableToInsert.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to insert into the formula:'**
+  String get tapVariableToInsert;
+
+  /// No description provided for @restoreDefaultFormulaButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore default'**
+  String get restoreDefaultFormulaButton;
+
+  /// No description provided for @saveFormulaButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Save formula'**
+  String get saveFormulaButton;
+
+  /// No description provided for @formulaUpdatedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Formula updated successfully!'**
+  String get formulaUpdatedSuccess;
+
+  /// No description provided for @formulaVariable_difference.
+  ///
+  /// In en, this message translates to:
+  /// **'Difference (sample - blank)'**
+  String get formulaVariable_difference;
+
+  /// No description provided for @formulaVariable_curve.
+  ///
+  /// In en, this message translates to:
+  /// **'Curve result'**
+  String get formulaVariable_curve;
+
+  /// No description provided for @formulaVariable_variableA.
+  ///
+  /// In en, this message translates to:
+  /// **'Variable A'**
+  String get formulaVariable_variableA;
+
+  /// No description provided for @formulaVariable_variableB.
+  ///
+  /// In en, this message translates to:
+  /// **'Variable B'**
+  String get formulaVariable_variableB;
+
   /// No description provided for @error_serverConnectionRefused.
   ///
   /// In en, this message translates to:

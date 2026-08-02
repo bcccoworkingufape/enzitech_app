@@ -218,6 +218,27 @@ class ExperimentsRemoteDataSourceImp implements ExperimentsDataSource {
     }
   }
 
+  @override
+  Future<Either<Failure, EnzymeEntity>> updateEnzymeFormula({
+    required String experimentId,
+    required String experimentEnzymeId,
+    String? customFormulaCurve,
+    String? customFormulaCalculation,
+  }) async {
+    try {
+      var response = await _httpService.patch(
+        API.REQUEST_ENZYME_FORMULA(experimentId, experimentEnzymeId),
+        data: {"customFormulaCurve": customFormulaCurve, "customFormulaCalculation": customFormulaCalculation},
+      );
+
+      var result = EnzymeDto.fromExperimentEnzymeConfigJson(response.data);
+
+      return Right(result);
+    } catch (e) {
+      return Left(e as Failure);
+    }
+  }
+
   /// Do not implement or use this method here!
   /// If you want to use storeInCache do using the local repository
   @override
