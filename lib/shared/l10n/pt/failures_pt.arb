@@ -22,6 +22,7 @@
   "error_422": "⚠ Entidade não processável: Não foi possível processar as instruções presentes.",
   "error_426": "⚠ Upgrade requerido: ID de dispositivo inválido.",
   "error_500": "⚠ Erro do Servidor: Não foi possível atender à solicitação.",
+  "error_502": "⚠ Bad Gateway: Não foi possível atender à solicitação.",
   "error_503": "⚠ Erro do Servidor: Não foi possível atender à solicitação neste momento.",
   "error_noNetwork": "⚠ Sem conexão com a internet, verifique seu acesso à rede e tente novamente.",
   "error_noResultQuery": "⚠ Não foi possível obter {query}.",

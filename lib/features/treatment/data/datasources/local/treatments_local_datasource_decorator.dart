@@ -18,6 +18,6 @@ abstract class TreatmentsDataSourceDecorator implements TreatmentsDataSource {
   Future<Either<Failure, Unit>> deleteTreatment(String id) => _treatmentsDataSource.deleteTreatment(id);
 
   @override
-  Future<Either<Failure, Unit>> createTreatment({required String name, required String description}) =>
+  Future<Either<Failure, TreatmentEntity>> createTreatment({required String name, required String description}) =>
       _treatmentsDataSource.createTreatment(name: name, description: description);
 }

@@ -114,12 +114,17 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
     );
   }
 
+  Widget get _passwordRequirementsCard {
+    return EZTPasswordRequirements(password: _passwordFieldController.text);
+  }
+
   Widget get _textFields {
     return Column(
       children: [
         _emailInput,
         const SizedBox(height: 10),
         _passwordInput,
+        _passwordRequirementsCard,
         const SizedBox(height: 10),
         _confirmPasswordInput,
       ],

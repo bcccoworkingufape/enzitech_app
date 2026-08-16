@@ -111,7 +111,7 @@ class _CreateExperimentFirstStepPageState extends State<CreateExperimentFirstSte
                   description: _descriptionFieldController.text,
                   enzymes: temporary.enzymes,
                   repetitions: temporary.repetitions,
-                  treatmentsIDs: temporary.treatmentsIDs,
+                  treatments: temporary.treatments,
                 ),
               );
               _createExperimentViewmodel.onNext(context);

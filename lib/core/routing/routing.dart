@@ -4,10 +4,15 @@ import 'package:flutter/material.dart';
 // 🌎 Project imports:
 import '../../features/authentication/presentation/ui/pages/create_account/create_account_page.dart';
 import '../../features/authentication/presentation/ui/pages/login/login_page.dart';
+import '../../features/authentication/presentation/dto/reset_password_args.dart';
+import '../../features/authentication/presentation/ui/pages/recover_password/recover_password_page.dart';
+import '../../features/authentication/presentation/ui/pages/reset_password/reset_password_page.dart';
+import '../../features/authentication/presentation/ui/pages/verify_code/verify_code_page.dart';
 import '../../features/enzyme/presentation/ui/pages/create_enzyme/create_enzyme_page.dart';
 import '../../features/experiment/domain/entities/experiment_entity.dart';
 import '../../features/experiment/presentation/ui/pages/calculate_experiment/calculate_experiment_page.dart';
 import '../../features/experiment/presentation/ui/pages/create_experiment/create_experiment_page.dart';
+import '../../features/experiment/presentation/ui/pages/edit_experiment/edit_experiment_page.dart';
 import '../../features/experiment/presentation/ui/pages/experiment_details/experiment_details_page.dart';
 import '../../features/experiment/presentation/ui/pages/experiment_results/experiment_results_page.dart';
 import '../../features/main/presentation/ui/pages/home/home_page.dart';
@@ -20,6 +25,7 @@ class Routing {
   static const createEnzyme = "/createEnzyme";
   static const createExperiment = "/createExperiment";
   static const createTreatment = "/createTreatment";
+  static const editExperiment = "/editExperiment";
   static const experimentDetailed = "/experimentDetailed";
   static const experimentResults = "/experimentResults";
   static const calculateExperiment = "/experimentInsertData";
@@ -27,6 +33,8 @@ class Routing {
   static const initial = "/";
   static const login = "/login";
   static const recoverPassword = "/recoverPassword";
+  static const verifyCode = "/verifyCode";
+  static const resetPassword = "/resetPassword";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
@@ -57,6 +65,38 @@ class Routing {
           settings: const RouteSettings(name: createTreatment),
           builder: (_) => const CreateTreatmentPage(),
         );
+      case recoverPassword:
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: recoverPassword),
+          builder: (_) => const RecoverPasswordPage(),
+        );
+      case verifyCode:
+        if (args is String) {
+          return MaterialPageRoute(
+            settings: const RouteSettings(name: verifyCode),
+            builder: (_) => VerifyCodePage(email: args),
+          );
+        } else {
+          return _errorRoute();
+        }
+      case resetPassword:
+        if (args is ResetPasswordArgs) {
+          return MaterialPageRoute(
+            settings: const RouteSettings(name: resetPassword),
+            builder: (_) => ResetPasswordPage(email: args.email, token: args.token),
+          );
+        } else {
+          return _errorRoute();
+        }
+      case editExperiment:
+        if (args is ExperimentEntity) {
+          return MaterialPageRoute(
+            settings: const RouteSettings(name: editExperiment),
+            builder: (_) => EditExperimentPage(experiment: args),
+          );
+        } else {
+          return _errorRoute();
+        }
       case experimentDetailed:
         return MaterialPageRoute(
           settings: const RouteSettings(name: experimentDetailed),

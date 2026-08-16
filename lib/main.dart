@@ -35,7 +35,7 @@ Future<void> main() async {
 
     String token = await userPreferencesService.getToken() ?? '';
 
-    API.setEnvironment(EnvironmentEnum.prod);
+    API.setEnvironment(EnvironmentEnum.stage);
 
     final HttpDriverOptions httpDriverOptions = HttpDriverOptions(
       accessToken: () {

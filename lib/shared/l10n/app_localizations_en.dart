@@ -233,13 +233,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get selectTreatment => 'Select the treatment:';
 
   @override
-  String get loadingAvailableEnzymes => 'Loading available enzymes...';
-
-  @override
-  String get allEnzymesCalculated =>
-      'All enzymes for this treatment have already been calculated!';
-
-  @override
   String get selectEnzyme => 'Select the enzyme:';
 
   @override
@@ -280,36 +273,36 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get saveAndExitButton => 'Save and exit';
-
-  @override
-  String get recalculateButton => 'Recalculate';
-
-  @override
   String repetitionLabel(int repetitionNumber) {
     return 'Repetition $repetitionNumber:';
   }
 
   @override
-  String get discrepantRepetitionWarning =>
-      'This repetition is discrepant!\n\nIts value differs by more than 25% from the average of all repetitions.\n\nIf you want to change it, just press \"Recalculate\".';
+  String get pending => 'Pending';
 
   @override
-  String get average => 'Average:';
+  String get fillRepetitionsTitle => 'Fill in the data for each repetition';
 
   @override
-  String get repetitionColumnTitle => 'REPETITION';
+  String get saveRepetitionButton => 'Save repetition';
 
   @override
-  String get resultColumnTitle => 'RESULT';
+  String get repetitionSavedMessage => 'Repetition saved successfully!';
 
   @override
-  String get statusColumnTitle => 'STATUS';
+  String get finishButton => 'Finish';
 
   @override
-  String stepIndicatorMessageResults(int currentStep, int totalSteps) {
-    return 'Step $currentStep of $totalSteps - Results';
-  }
+  String get editExperimentTitle => 'Edit experiment';
+
+  @override
+  String get editExperimentTooltip => 'Edit experiment';
+
+  @override
+  String get saveChangesButton => 'Save changes';
+
+  @override
+  String get experimentUpdatedSuccess => 'Experiment updated successfully!';
 
   @override
   String get registerNewExperiment => 'Register a new experiment';
@@ -327,14 +320,17 @@ class AppLocalizationsEn extends AppLocalizations {
       'Number of repetitions per treatment';
 
   @override
-  String get goToTreatmentsButton => 'Go to treatments';
-
-  @override
   String get treatmentsAndRepetitionsData => 'Treatments and Repetitions Data';
 
   @override
   String get noTreatmentsRegisteredError =>
       'No treatments registered! At least one treatment is required to proceed.';
+
+  @override
+  String get addTreatmentButton => 'Add treatment';
+
+  @override
+  String get noTreatmentsAddedYet => 'No treatments added yet';
 
   @override
   String stepIndicatorTreatments(int currentStep, int totalSteps) {
@@ -502,6 +498,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get error_500 => '⚠ Server Error: The request could not be fulfilled.';
+
+  @override
+  String get error_502 => '⚠ Bad Gateway: The service is unavailable.';
 
   @override
   String get error_503 =>
@@ -715,6 +714,63 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accountCreatedSuccess => 'Account created successfully!';
 
   @override
+  String get passwordRequirementsTitle => 'Your password must contain:';
+
+  @override
+  String get passwordRequirement_minLength => 'At least 8 characters';
+
+  @override
+  String get passwordRequirement_uppercase => 'An uppercase letter';
+
+  @override
+  String get passwordRequirement_lowercase => 'A lowercase letter';
+
+  @override
+  String get passwordRequirement_specialChar =>
+      'A special character (e.g. !@#\$%)';
+
+  @override
+  String get recoverEmailSent => 'Recovery email sent successfully!';
+
+  @override
+  String get recoverPassword => 'Reset Password';
+
+  @override
+  String get recoverPasswordInstructions =>
+      'Enter your email below. We will send you instructions to reset your password.';
+
+  @override
+  String get sendRecoverEmail => 'Send E-mail';
+
+  @override
+  String get verifyCodeTitle => 'Verify Code';
+
+  @override
+  String get verifyCodeInstructions =>
+      'Enter the 6-digit code we sent to your email.';
+
+  @override
+  String get verifyCodeButton => 'Verify';
+
+  @override
+  String get resetPassword => 'Reset Password';
+
+  @override
+  String get passwordResetSuccess => 'Password reset successfully!';
+
+  @override
+  String get recoverCode => 'Reset Code';
+
+  @override
+  String get passwordsDoNotMatch => 'Passwords do not match!';
+
+  @override
+  String get newPassword => 'New Password';
+
+  @override
+  String get confirmPassword => 'Confirm New Password';
+
+  @override
   String get info => 'Info';
 
   @override
@@ -815,6 +871,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get roleBackendDeveloper => '(Back-end developer)';
+
+  @override
+  String get roleMobileBackendDev => '(Mobile & Back-end Developer)';
 
   @override
   String get roleProjectManagement => '(Project Management)';

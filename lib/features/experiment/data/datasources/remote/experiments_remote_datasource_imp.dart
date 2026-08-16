@@ -1,6 +1,3 @@
-// 🎯 Dart imports:
-import 'dart:convert';
-
 // 📦 Package imports:
 import 'package:dartz/dartz.dart';
 
@@ -10,14 +7,14 @@ import '../../../../../core/failures/failures.dart';
 import '../../../../../shared/utils/api.dart';
 import '../../../../enzyme/data/dto/enzyme_dto.dart';
 import '../../../../enzyme/domain/entities/enzyme_entity.dart';
-import '../../../domain/entities/experiment_calculation_entity.dart';
 import '../../../domain/entities/experiment_entity.dart';
 import '../../../domain/entities/experiment_pagination_entity.dart';
 import '../../../domain/entities/experiment_result_entity.dart';
-import '../../dto/experiment_calculation_dto.dart';
+import '../../../domain/entities/repetition_entity.dart';
 import '../../dto/experiment_dto.dart';
 import '../../dto/experiment_pagination_dto.dart';
 import '../../dto/experiment_result_dto.dart';
+import '../../dto/repetition_dto.dart';
 import '../experiments_datasource.dart';
 
 class ExperimentsRemoteDataSourceImp implements ExperimentsDataSource {
@@ -26,36 +23,72 @@ class ExperimentsRemoteDataSourceImp implements ExperimentsDataSource {
   ExperimentsRemoteDataSourceImp(this._httpService);
 
   @override
-  Future<Either<Failure, ExperimentCalculationEntity>> calculateExperiment({
-    required String experimentId,
-    required String enzymeId,
-    required String treatmentID,
-    required List<Map<String, dynamic>> listOfExperimentData,
-  }) async {
+  Future<Either<Failure, List<RepetitionEntity>>> getRepetitions({required String experimentId}) async {
     try {
-      var list = jsonDecode(jsonEncode(listOfExperimentData));
-      List<Map<String, double>> listWithoutIds = [];
-      for (var i in list) {
-        i.remove('_id');
+      var response = await _httpService.get(API.REQUEST_REPETITIONS(experimentId));
 
-        listWithoutIds.add({
-          'sample': i['sample'] is String ? double.parse(i['sample']) : i['sample'],
-          'whiteSample': i['whiteSample'] is String ? double.parse(i['whiteSample']) : i['whiteSample'],
-        });
-      }
-
-      var response = await _httpService.post(
-        API.REQUEST_CALCULATE_EXPERIMENTS(experimentId),
-        data: {"enzyme": enzymeId, "process": treatmentID, "experimentData": listWithoutIds},
-      );
-
-      var result = ExperimentCalculationDto.fromJson(response.data);
+      var result = (response.data as List).map((e) => RepetitionDto.fromJson(e)).toList();
 
       return Right(result);
     } catch (e) {
-      if (e is TypeError) {
-        return Left(TypeFailure(message: e.toString()));
-      }
+      return Left(e as Failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, RepetitionEntity>> previewRepetition({
+    required String experimentId,
+    required String treatmentId,
+    required String enzymeId,
+    required int repetitionNumber,
+    required double sample,
+    required double whiteSample,
+  }) async {
+    try {
+      var response = await _httpService.post(
+        API.REQUEST_PREVIEW_REPETITION(experimentId),
+        data: {
+          "treatmentId": treatmentId,
+          "enzymeId": enzymeId,
+          "repetitionNumber": repetitionNumber,
+          "sample": sample,
+          "whiteSample": whiteSample,
+        },
+      );
+
+      var result = RepetitionDto.fromJson(response.data);
+
+      return Right(result);
+    } catch (e) {
+      return Left(e as Failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, ExperimentEntity>> saveRepetition({
+    required String experimentId,
+    required String treatmentId,
+    required String enzymeId,
+    required int repetitionNumber,
+    required double sample,
+    required double whiteSample,
+  }) async {
+    try {
+      var response = await _httpService.put(
+        API.REQUEST_REPETITIONS(experimentId),
+        data: {
+          "treatmentId": treatmentId,
+          "enzymeId": enzymeId,
+          "repetitionNumber": repetitionNumber,
+          "sample": sample,
+          "whiteSample": whiteSample,
+        },
+      );
+
+      var result = ExperimentDto.fromJson(response.data);
+
+      return Right(result);
+    } catch (e) {
       return Left(e as Failure);
     }
   }
@@ -91,29 +124,41 @@ class ExperimentsRemoteDataSourceImp implements ExperimentsDataSource {
   }
 
   @override
-  Future<Either<Failure, Unit>> deleteExperiment(String id) async {
+  Future<Either<Failure, ExperimentEntity>> updateExperiment({
+    required String experimentId,
+    required String name,
+    required String description,
+    required int repetitions,
+    required List<String> treatmentsIDs,
+    required List<EnzymeEntity> enzymes,
+  }) async {
     try {
-      await _httpService.delete(API.REQUEST_EXPERIMENTS_WITH_ID(id));
-      return const Right(unit);
+      List<Map> experimentsEnzymes = enzymes.map((enzyme) => enzyme.toJsonAsExperimentEnzyme()).toList();
+
+      var response = await _httpService.put(
+        API.REQUEST_EXPERIMENTS_WITH_ID(experimentId),
+        data: {
+          "name": name,
+          "description": description,
+          "repetitions": repetitions,
+          "processes": treatmentsIDs,
+          "experimentsEnzymes": experimentsEnzymes,
+        },
+      );
+
+      var result = ExperimentDto.fromJson(response.data);
+
+      return Right(result);
     } catch (e) {
       return Left(e as Failure);
     }
   }
 
   @override
-  Future<Either<Failure, List<EnzymeEntity>>> getEnzymesRemainingInExperiment({
-    required String experimentId,
-    required String treatmentId,
-  }) async {
+  Future<Either<Failure, Unit>> deleteExperiment(String id) async {
     try {
-      var response = await _httpService.post(
-        API.REQUEST_ENZYMES_REMAINING_IN_EXPERIMENT(experimentId),
-        data: {"process": treatmentId},
-      );
-
-      var result = (response.data["enzymes"] as List).map((e) => EnzymeDto.fromJson(e)).toList();
-
-      return Right(result);
+      await _httpService.delete(API.REQUEST_EXPERIMENTS_WITH_ID(id));
+      return const Right(unit);
     } catch (e) {
       return Left(e as Failure);
     }
@@ -153,8 +198,10 @@ class ExperimentsRemoteDataSourceImp implements ExperimentsDataSource {
       var result = ExperimentPaginationDto.fromJson(response.data);
 
       return Right(result);
+    } on Failure catch (e) {
+      return Left(e);
     } catch (e) {
-      return Left(e as Failure);
+      return Left(ServerFailure(message: 'Falha não mapeada nos Experimentos: $e'));
     }
   }
 
@@ -164,45 +211,6 @@ class ExperimentsRemoteDataSourceImp implements ExperimentsDataSource {
       var response = await _httpService.get(API.REQUEST_GET_RESULT_EXPERIMENTS(experimentId));
 
       var result = ExperimentResultDto.fromJson(response.data);
-
-      return Right(result);
-    } catch (e) {
-      return Left(e as Failure);
-    }
-  }
-
-  @override
-  Future<Either<Failure, ExperimentEntity>> saveResult({
-    required String experimentId,
-    required String enzymeId,
-    required String treatmentID,
-    required List<Map<String, dynamic>> listOfExperimentData,
-    required List<num> results,
-    required num average,
-  }) async {
-    try {
-      var list = jsonDecode(jsonEncode(listOfExperimentData));
-      List<Map<String, double>> listWithoutIds = [];
-      for (var i in list) {
-        i.remove('_id');
-
-        listWithoutIds.add({
-          'sample': i['sample'] is String ? double.parse(i['sample']) : i['sample'],
-          'whiteSample': i['whiteSample'] is String ? double.parse(i['whiteSample']) : i['whiteSample'],
-        });
-      }
-
-      var response = await _httpService.post(
-        API.REQUEST_SAVE_RESULT_EXPERIMENTS(experimentId),
-        data: {
-          "enzyme": enzymeId,
-          "process": treatmentID,
-          "experimentData": listWithoutIds,
-          "results": results,
-          "average": average,
-        },
-      );
-      var result = ExperimentDto.fromJson(response.data);
 
       return Right(result);
     } catch (e) {

@@ -21,5 +21,10 @@
   "confirmPasswordLabel": "Confirm password",
   "access": "Access",
   "createAccountButton": "Create account",
-  "accountCreatedSuccess": "Account created successfully!"
+  "accountCreatedSuccess": "Account created successfully!",
+  "passwordRequirementsTitle": "Your password must contain:",
+  "passwordRequirement_minLength": "At least 8 characters",
+  "passwordRequirement_uppercase": "An uppercase letter",
+  "passwordRequirement_lowercase": "A lowercase letter",
+  "passwordRequirement_specialChar": "A special character (e.g. !@#$%)"
 }

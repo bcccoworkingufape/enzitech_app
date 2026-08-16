@@ -4,19 +4,28 @@ import '../../domain/entities/enzyme_entity.dart';
 
 extension EnzymeDto on EnzymeEntity {
   static EnzymeEntity fromJson(Map json) {
+    double safeDouble(dynamic value) {
+      if (value == null) return 0.0;
+      if (value is double) return value.toPrecision(5);
+      if (value is int) return value.toDouble().toPrecision(5);
+      if (value is String) return (double.tryParse(value) ?? 0.0).toPrecision(5);
+      return 0.0;
+    }
+
     return EnzymeEntity(
-      id: json['id'],
-      name: json['name'],
-      variableA: json['variableA'] is String ? double.parse(json['variableA']).toPrecision(5) : json['variableA'],
-      variableB: json['variableB'] is String ? double.parse(json['variableB']).toPrecision(5) : json['variableB'],
-      type: json['type'],
-      formula: json['formula'] ?? 'Fórmula não informada',
-      createdAt: json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
-      updatedAt: json['updatedAt'] != null ? DateTime.parse(json['updatedAt']) : null,
-      duration: json['duration'] != null ? int.parse(json['duration']) : null,
-      weightSample: json['weightSample'] != null ? double.parse(json['weightSample']).toPrecision(5) : null,
-      weightGround: json['weightGround'] != null ? double.parse(json['weightGround']).toPrecision(5) : null,
-      size: json['size'] != null ? double.parse(json['size']).toPrecision(5) : null,
+      id: json['id']?.toString() ?? '',
+      sourceEnzymeId: json['sourceEnzymeId']?.toString(),
+      name: json['name']?.toString() ?? 'Sem nome',
+      variableA: safeDouble(json['variableA']),
+      variableB: safeDouble(json['variableB']),
+      type: json['type']?.toString() ?? 'Indefinido',
+      formula: json['formula']?.toString() ?? json['formulaCalculation']?.toString() ?? 'Fórmula não informada',
+      createdAt: json['createdAt'] != null ? DateTime.tryParse(json['createdAt'].toString()) : null,
+      updatedAt: json['updatedAt'] != null ? DateTime.tryParse(json['updatedAt'].toString()) : null,
+      duration: json['duration'] != null ? double.tryParse(json['duration'].toString())?.round() : null,
+      weightSample: json['weightSample'] != null ? double.tryParse(json['weightSample'].toString())?.toPrecision(5) : null,
+      weightGround: json['weightGround'] != null ? double.tryParse(json['weightGround'].toString())?.toPrecision(5) : null,
+      size: json['size'] != null ? double.tryParse(json['size'].toString())?.toPrecision(5) : null,
     );
   }
 
@@ -29,6 +38,7 @@ extension EnzymeDto on EnzymeEntity {
   }) {
     return EnzymeEntity(
       id: initialEnzyme.id,
+      sourceEnzymeId: initialEnzyme.sourceEnzymeId,
       name: initialEnzyme.name,
       variableA: initialEnzyme.variableA,
       variableB: initialEnzyme.variableB,
