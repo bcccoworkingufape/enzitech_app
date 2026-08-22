@@ -24,8 +24,8 @@ extension StringExtension on String {
     return '';
   }
 
-  /// This function will convert a valid input to a list
-  /// In case the input is invalid, it will print out a message
+  /// Esta função converterá uma entrada válida em uma lista.
+  /// Caso a entrada seja inválida, ela exibirá uma mensagem.
   List? get convertStringToList {
     List output;
     try {

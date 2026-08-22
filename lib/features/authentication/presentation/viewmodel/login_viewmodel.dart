@@ -1,10 +1,11 @@
-// 🐦 Flutter imports:
+﻿// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
 // 🌎 Project imports:
+import '../../../../core/data/service/secure_storage/secure_session_storage.dart';
 import '../../../../core/domain/service/http/http_service.dart';
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
@@ -12,8 +13,9 @@ import '../../domain/usecases/auth/auth_usecase.dart';
 
 class LoginViewmodel extends ChangeNotifier {
   final AuthUseCase _authUseCase;
+  final SecureSessionStorage _secureSessionStorage;
 
-  LoginViewmodel(this._authUseCase);
+  LoginViewmodel(this._authUseCase, this._secureSessionStorage);
 
   StateEnum _state = StateEnum.idle;
   StateEnum get state => _state;
@@ -55,8 +57,10 @@ class LoginViewmodel extends ChangeNotifier {
         _setFailure(error);
         setStateEnum(StateEnum.error);
       },
-      (success) {
+      (success) async {
         setLoggedName(success.name);
+        // Persiste o token no armazenamento seguro e o propaga ao Dio.
+        await _secureSessionStorage.writeToken(success.token);
         GetIt.I.get<HttpService>().setConfig(token: success.token);
         setStateEnum(StateEnum.success);
       },

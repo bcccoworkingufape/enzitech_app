@@ -16,8 +16,8 @@ class UserPreferencesRepositoryImp implements UserPreferencesRepository {
   UserPreferencesRepositoryImp(this._userPreferencesDataSource);
 
   @override
-  void clearUser() async {
-    return _userPreferencesDataSource.clearUser();
+  Future<void> clearUser() async {
+    await _userPreferencesDataSource.clearUser();
   }
 
   @override
@@ -73,3 +73,5 @@ class UserPreferencesRepositoryImp implements UserPreferencesRepository {
     return await _userPreferencesDataSource.saveThemeMode(themeAsString);
   }
 }
+
+

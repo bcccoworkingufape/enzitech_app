@@ -5,12 +5,12 @@ import '../../domain/entities/user_entity.dart';
 extension UserDto on UserEntity {
   static UserEntity fromJson(Map json) {
     return UserEntity(
-      token: json['token'] ?? '', 
+      token: json['token'] ?? json['accessToken'] ?? '',
       name: json['user'] != null ? json['user']['name'] ?? '' : '',
       email: json['user'] != null ? json['user']['email'] ?? '' : '',
       id: json['user'] != null ? json['user']['id'] ?? '' : '',
-      userType: (json['user'] != null && json['user']['role'].toString().toUpperCase() == 'ADMIN') 
-          ? UserTypeEnum.admin 
+      userType: (json['user'] != null && json['user']['role'].toString().toUpperCase() == 'ADMIN')
+          ? UserTypeEnum.admin
           : UserTypeEnum.user,
     );
   }

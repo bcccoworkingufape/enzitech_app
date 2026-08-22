@@ -16,6 +16,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../../../../../../core/domain/service/connection_checker/connection_checker.dart';
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
+import '../../../../../../core/logging/app_logger.dart';
 import '../../../../../../core/routing/routing.dart';
 import '../../../../../../shared/extensions/extensions.dart';
 import '../../../../../../shared/ui/ui.dart';
@@ -107,7 +108,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             if (_homeViewmodel.failure is ExpiredTokenOrWrongUserFailure ||
                 _homeViewmodel.failure is UserNotFoundOrWrongTokenFailure ||
                 _homeViewmodel.failure is SessionNotFoundFailure) {
-              debugPrint("SAIR :)");
+              AppLogger.info("Initiating automatic logout due to expired session");
               _accountViewmodel.logout();
 
               if (_accountViewmodel.state == StateEnum.success && mounted) {
@@ -318,3 +319,5 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     );
   }
 }
+
+

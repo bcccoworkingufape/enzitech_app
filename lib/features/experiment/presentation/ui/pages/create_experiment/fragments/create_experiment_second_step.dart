@@ -9,6 +9,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 // 🌎 Project imports:
 import '../../../../../../../shared/extensions/extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
+import '../../../../../../../shared/validator/security_validators.dart';
 import '../../../../../../../shared/validator/validator.dart';
 import '../../../../dto/create_experiment_dto.dart';
 import '../../../../dto/pending_treatment_dto.dart';
@@ -139,11 +140,7 @@ class _CreateExperimentSecondStepPageState extends State<CreateExperimentSecondS
   }
 
   Widget get _repetitionsInput {
-    final validations = <ValidateRule>[
-      ValidateRule(ValidateTypes.required),
-      ValidateRule(ValidateTypes.number),
-      ValidateRule(ValidateTypes.greaterThanZero),
-    ];
+    final validations = SecurityValidators.repetitions();
 
     final fieldValidator = FieldValidator(validations, context);
 
@@ -229,3 +226,4 @@ class _CreateExperimentSecondStepPageState extends State<CreateExperimentSecondS
     );
   }
 }
+

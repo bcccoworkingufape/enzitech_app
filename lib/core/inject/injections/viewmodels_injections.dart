@@ -1,4 +1,4 @@
-// 📦 Package imports:
+﻿// 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
 // 🌎 Project imports:
@@ -25,7 +25,9 @@ class ViewmodelsInjections {
   final GetIt getIt;
 
   ViewmodelsInjections(this.getIt) {
-    getIt.registerLazySingleton<SettingsViewmodel>(() => SettingsViewmodel(getIt()));
+    getIt.registerLazySingleton<SettingsViewmodel>(
+      () => SettingsViewmodel(getIt(), getIt(), getIt()),
+    );
     getIt.registerLazySingleton<CalculateExperimentViewmodel>(() => CalculateExperimentViewmodel(getIt()));
     getIt.registerLazySingleton<CreateAccountViewmodel>(() => CreateAccountViewmodel(getIt()));
     getIt.registerLazySingleton<CreateEnzymeViewmodel>(() => CreateEnzymeViewmodel(getIt()));
@@ -37,10 +39,12 @@ class ViewmodelsInjections {
     getIt.registerLazySingleton<ExperimentResultsViewmodel>(() => ExperimentResultsViewmodel(getIt(), getIt()));
     getIt.registerLazySingleton<ExperimentsViewmodel>(() => ExperimentsViewmodel(getIt(), getIt()));
     getIt.registerLazySingleton<HomeViewmodel>(() => HomeViewmodel(getIt(), getIt(), getIt(), getIt()));
-    getIt.registerLazySingleton<LoginViewmodel>(() => LoginViewmodel(getIt()));
+    getIt.registerLazySingleton<LoginViewmodel>(() => LoginViewmodel(getIt(), getIt()));
     getIt.registerLazySingleton<RecoverPasswordViewmodel>(() => RecoverPasswordViewmodel(getIt()));
     getIt.registerLazySingleton<ResetPasswordViewmodel>(() => ResetPasswordViewmodel(getIt()));
-    getIt.registerFactory<SplashViewmodel>(() => SplashViewmodel(getIt(), getIt(), getIt(), getIt(), getIt()));
+    getIt.registerFactory<SplashViewmodel>(
+      () => SplashViewmodel(getIt(), getIt(), getIt(), getIt(), getIt(), getIt()),
+    );
     getIt.registerLazySingleton<TreatmentsViewmodel>(() => TreatmentsViewmodel(getIt()));
     getIt.registerLazySingleton<VerifyCodeViewmodel>(() => VerifyCodeViewmodel(getIt()));
   }

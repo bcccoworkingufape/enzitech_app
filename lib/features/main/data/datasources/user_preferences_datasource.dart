@@ -1,4 +1,4 @@
-// 📦 Package imports:
+﻿// 📦 Package imports:
 import 'package:dartz/dartz.dart';
 
 // 🌎 Project imports:
@@ -6,7 +6,7 @@ import '../../../../core/failures/failure.dart';
 import '../../../authentication/domain/entities/user_entity.dart';
 
 abstract class UserPreferencesDataSource {
-  void clearUser();
+  Future<void> clearUser();
 
   Future<Either<Failure, bool>> getExcludeConfirmation();
 

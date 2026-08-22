@@ -13,13 +13,13 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
+import '../../../../../../core/platform/secure_screen_wrapper.dart';
 import '../../../../../../shared/extensions/build_context_extensions.dart';
 import '../../../../../../shared/extensions/double_extensions.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../../domain/entities/experiment_entity.dart';
 import '../../../viewmodel/experiment_details_viewmodel.dart';
 import '../../../viewmodel/experiment_results_viewmodel.dart';
-
 class ExperimentResultsPage extends StatefulWidget {
   const ExperimentResultsPage({super.key});
 
@@ -27,7 +27,7 @@ class ExperimentResultsPage extends StatefulWidget {
   State<ExperimentResultsPage> createState() => _ExperimentResultsPageState();
 }
 
-class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
+class _ExperimentResultsPageState extends State<ExperimentResultsPage> with SecureScreenMixin {
   late final ExperimentResultsViewmodel _experimentResultsViewmodel;
   late final ExperimentDetailsViewmodel _experimentDetailsViewmodel;
   late final ExperimentEntity _experiment;
@@ -373,7 +373,8 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
     return ListenableBuilder(
       listenable: _experimentResultsViewmodel,
       builder: (context, child) {
-        return Scaffold(
+        return wrapSecureScreen(
+      child: Scaffold(
           floatingActionButtonLocation: ExpandableFab.location,
           floatingActionButton:
               _experimentResultsViewmodel.state == StateEnum.loading ||
@@ -414,9 +415,10 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                   ],
                 ),
           body: _buildBody,
-        );
-      },
-    );
+        ),
+      );
+    },
+  );
   }
 }
 
@@ -426,3 +428,4 @@ class MyBehavior extends ScrollBehavior {
     return child;
   }
 }
+

@@ -9,16 +9,14 @@ class EZTForcedCenter extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
+        final minHeight = constraints.hasBoundedHeight
+            ? constraints.maxHeight - kBottomNavigationBarHeight - kFloatingActionButtonMargin
+            : 0.0;
+
         return SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(
-            parent: BouncingScrollPhysics(),
-          ),
+          physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
           child: Container(
-            constraints: BoxConstraints(
-              minHeight: constraints.maxHeight -
-                  kBottomNavigationBarHeight -
-                  kFloatingActionButtonMargin,
-            ),
+            constraints: BoxConstraints(minHeight: minHeight),
             child: Center(child: child),
           ),
         );

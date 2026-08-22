@@ -1,7 +1,7 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-/// Clipper for [LiquidPullToRefresh]
+/// Clipper para [LiquidPullToRefresh]
 class CurveHillClipper extends CustomClipper<Path> {
   final double centreHeight;
   double curveHeight;
@@ -27,25 +27,30 @@ class CurveHillClipper extends CustomClipper<Path> {
 
       path.lineTo(0.0, centreHeight);
 
-      path.quadraticBezierTo(size.width / 4, centreHeight + curveHeight,
-          (size.width / 2) - (peakWidth / 2), centreHeight + curveHeight);
+      path.quadraticBezierTo(
+        size.width / 4,
+        centreHeight + curveHeight,
+        (size.width / 2) - (peakWidth / 2),
+        centreHeight + curveHeight,
+      );
 
       if (!hasImage) {
         path.quadraticBezierTo(
-            (size.width / 2) - (peakWidth / 4),
-            centreHeight + curveHeight - peakHeight,
-            (size.width / 2),
-            centreHeight + curveHeight - peakHeight);
+          (size.width / 2) - (peakWidth / 4),
+          centreHeight + curveHeight - peakHeight,
+          (size.width / 2),
+          centreHeight + curveHeight - peakHeight,
+        );
 
         path.quadraticBezierTo(
-            (size.width / 2) + (peakWidth / 4),
-            centreHeight + curveHeight - peakHeight,
-            (size.width / 2) + (peakWidth / 2),
-            centreHeight + curveHeight);
+          (size.width / 2) + (peakWidth / 4),
+          centreHeight + curveHeight - peakHeight,
+          (size.width / 2) + (peakWidth / 2),
+          centreHeight + curveHeight,
+        );
       }
 
-      path.quadraticBezierTo(size.width * 3 / 4, centreHeight + curveHeight,
-          size.width, centreHeight);
+      path.quadraticBezierTo(size.width * 3 / 4, centreHeight + curveHeight, size.width, centreHeight);
 
       path.lineTo(size.width, 0.0);
 

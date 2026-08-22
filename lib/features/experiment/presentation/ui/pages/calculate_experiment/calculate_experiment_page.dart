@@ -1,4 +1,4 @@
-// 🐦 Flutter imports:
+﻿// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -7,6 +7,7 @@ import 'package:get_it/get_it.dart';
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
+import '../../../../../../core/platform/secure_screen_wrapper.dart';
 import '../../../../../../shared/extensions/build_context_extensions.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../../domain/entities/experiment_entity.dart';
@@ -23,7 +24,7 @@ class CalculateExperimentPage extends StatefulWidget {
   State<CalculateExperimentPage> createState() => _CalculateExperimentPageState();
 }
 
-class _CalculateExperimentPageState extends State<CalculateExperimentPage> {
+class _CalculateExperimentPageState extends State<CalculateExperimentPage> with SecureScreenMixin {
   late final CalculateExperimentViewmodel _calculateExperimentViewmodel;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -65,15 +66,17 @@ class _CalculateExperimentPageState extends State<CalculateExperimentPage> {
         _calculateExperimentViewmodel.onBack(mounted, context);
         return;
       },
-      child: Scaffold(
-        key: _scaffoldKey,
-        body: SafeArea(
-          child: Form(
-            key: _calculateExperimentViewmodel.formKey,
-            child: PageView(
-              controller: _calculateExperimentViewmodel.pageController,
-              physics: const NeverScrollableScrollPhysics(),
-              children: const [CalculateExperimentFirstStepPage(), CalculateExperimentSecondStepPage()],
+      child: wrapSecureScreen(
+        child: Scaffold(
+          key: _scaffoldKey,
+          body: SafeArea(
+            child: Form(
+              key: _calculateExperimentViewmodel.formKey,
+              child: PageView(
+                controller: _calculateExperimentViewmodel.pageController,
+                physics: const NeverScrollableScrollPhysics(),
+                children: const [CalculateExperimentFirstStepPage(), CalculateExperimentSecondStepPage()],
+              ),
             ),
           ),
         ),

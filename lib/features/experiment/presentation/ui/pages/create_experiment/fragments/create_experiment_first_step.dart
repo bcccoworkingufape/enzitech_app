@@ -8,6 +8,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 // 🌎 Project imports:
 import '../../../../../../../shared/extensions/extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
+import '../../../../../../../shared/validator/security_validators.dart';
 import '../../../../../../../shared/validator/validator.dart';
 import '../../../../dto/create_experiment_dto.dart';
 import '../../../../viewmodel/create_experiment_viewmodel.dart';
@@ -26,7 +27,7 @@ class _CreateExperimentFirstStepPageState extends State<CreateExperimentFirstSte
   final _nameFieldController = TextEditingController(text: '');
   final _descriptionFieldController = TextEditingController(text: '');
 
-  final _validations = <ValidateRule>[ValidateRule(ValidateTypes.required)];
+  final _validations = SecurityValidators.requiredLongText();
 
   @override
   void initState() {
@@ -158,3 +159,4 @@ class _CreateExperimentFirstStepPageState extends State<CreateExperimentFirstSte
     );
   }
 }
+

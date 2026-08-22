@@ -1,4 +1,4 @@
-// 🐦 Flutter imports:
+﻿// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -9,7 +9,7 @@ import '../../../../core/failures/failure.dart';
 import '../../../authentication/domain/entities/user_entity.dart';
 
 abstract class UserPreferencesUseCases {
-  void clearUser();
+  Future<void> clearUser();
 
   Future<Either<Failure, bool>> getExcludeConfirmation();
 

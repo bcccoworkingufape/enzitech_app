@@ -11,6 +11,7 @@ import 'package:phosphor_flutter/phosphor_flutter.dart';
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
+import '../../../../../../core/platform/secure_screen_wrapper.dart';
 import '../../../../../../core/routing/routing.dart';
 import '../../../../../../shared/extensions/build_context_extensions.dart';
 import '../../../../../../shared/ui/ui.dart';
@@ -28,7 +29,7 @@ class ExperimentDetailsPage extends StatefulWidget {
   State<ExperimentDetailsPage> createState() => _ExperimentDetailsPageState();
 }
 
-class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
+class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> with SecureScreenMixin {
   late final ExperimentDetailsViewmodel _experimentDetailsViewmodel;
   late final ExperimentsViewmodel _experimentsViewmodel;
   late final HomeViewmodel _homeViewmodel;
@@ -245,7 +246,8 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
     return ListenableBuilder(
       listenable: _experimentDetailsViewmodel,
       builder: (context, child) {
-        return Scaffold(
+        return wrapSecureScreen(
+      child: Scaffold(
           appBar: AppBar(
             iconTheme: IconThemeData(color: context.getApplyedColorScheme.onSurface),
             title: Text(context.l10n.experimentDetails, style: TextStyles(context).titleBoldBackground()),
@@ -301,8 +303,12 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: _buildBody(MediaQuery.of(context).size.height),
           ),
-        );
-      },
-    );
+        ),
+      );
+    },
+  );
   }
 }
+
+
+

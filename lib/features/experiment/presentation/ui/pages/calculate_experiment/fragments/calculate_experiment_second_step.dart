@@ -1,4 +1,4 @@
-// 🐦 Flutter imports:
+﻿// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
@@ -12,6 +12,8 @@ import '../../../../../../../shared/extensions/build_context_extensions.dart';
 import '../../../../../../../shared/extensions/num_extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../../../../../shared/utils/utils.dart';
+import '../../../../../../../shared/validator/security_validators.dart';
+import '../../../../../../../shared/validator/validator.dart';
 import '../../../../../domain/entities/repetition_entity.dart';
 import '../../../../viewmodel/calculate_experiment_viewmodel.dart';
 import '../calculate_experiment_fragment_template.dart';
@@ -123,6 +125,7 @@ class _CalculateExperimentSecondStepPageState extends State<CalculateExperimentS
   Widget _pendingForm(RepetitionEntity repetition) {
     final preview = _calculateExperimentViewmodel.previewedRepetition;
     final showingPreviewForThisRepetition = preview != null && preview.id == repetition.id;
+    final fieldValidator = FieldValidator(SecurityValidators.absorbance(), context);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -136,6 +139,7 @@ class _CalculateExperimentSecondStepPageState extends State<CalculateExperimentS
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             controller: _sampleControllerFor(repetition.id),
             inputFormatters: Constants.enzymeDecimalInputFormatters,
+            fieldValidator: fieldValidator,
             onChanged: (_) {
               _calculateExperimentViewmodel.setPreviewedRepetition(null);
               setState(() {});
@@ -149,6 +153,7 @@ class _CalculateExperimentSecondStepPageState extends State<CalculateExperimentS
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             controller: _whiteSampleControllerFor(repetition.id),
             inputFormatters: Constants.enzymeDecimalInputFormatters,
+            fieldValidator: fieldValidator,
             onChanged: (_) {
               _calculateExperimentViewmodel.setPreviewedRepetition(null);
               setState(() {});
@@ -175,9 +180,7 @@ class _CalculateExperimentSecondStepPageState extends State<CalculateExperimentS
             text: showingPreviewForThisRepetition ? context.l10n.saveRepetitionButton : context.l10n.calculateButton,
             loading: _calculateExperimentViewmodel.state == StateEnum.loading,
             enabled: _canCalculate(repetition.id),
-            onPressed: showingPreviewForThisRepetition
-                ? () => _onSave(repetition)
-                : () => _onCalculate(repetition),
+            onPressed: showingPreviewForThisRepetition ? () => _onSave(repetition) : () => _onCalculate(repetition),
           ),
         ],
       ),

@@ -9,17 +9,17 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import '../../../domain/service/connection_checker/connection_checker.dart';
 
 class ConnectionCheckerImp implements ConnectionChecker {
-  //This creates the single instance by calling the `_internal` constructor specified below
+  // Isso cria a instância única chamando o construtor `_internal` especificado abaixo.
   static final ConnectionCheckerImp _singleton = ConnectionCheckerImp._internal();
   ConnectionCheckerImp._internal();
 
-  //This is what's used to retrieve the instance through the app
+  // Isso é usado para recuperar a instância pelo app.
   static ConnectionCheckerImp getInstance() => _singleton;
-  //This tracks the current connection status
+  // Isso acompanha o status atual da conexão.
   bool hasConnection = false;
-  //This is how we'll allow subscribing to connection changes
+  // Isso permite assinar mudanças de conexão.
   StreamController connectionChangeController = StreamController.broadcast();
-  //flutter_connectivity
+  // flutter_connectivity
   final Connectivity _connectivity = Connectivity();
 
   @override
@@ -29,9 +29,9 @@ class ConnectionCheckerImp implements ConnectionChecker {
 
   ConnectionCheckerImp();
 
-  //flutter_connectivity's listener for List<ConnectivityResult>
+  // Listener do flutter_connectivity para List<ConnectivityResult>.
   void _connectionChangeList(List<ConnectivityResult> results) {
-    // You can handle multiple results if needed, here we just check the first one
+    // Você pode tratar vários resultados, se necessário; aqui apenas verificamos o primeiro.
     if (results.isNotEmpty) {
       hasInternetInternetConnection();
     }
@@ -46,23 +46,23 @@ class ConnectionCheckerImp implements ConnectionChecker {
 
     final List<ConnectivityResult> connectivityResult = await (Connectivity().checkConnectivity());
 
-    //Check if device is just connect with mobile network or wifi
+    // Verifica se o dispositivo está conectado por rede móvel ou Wi-Fi.
     if (connectivityResult.contains(ConnectivityResult.mobile) ||
         connectivityResult.contains(ConnectivityResult.wifi)) {
-      //Check there is actual internet connection with a mobile network or wifi
+      // Verifica se há conexão real com a internet por rede móvel ou Wi-Fi.
       if (await InternetConnectionChecker.createInstance().hasConnection) {
-        // Network data detected & internet connection confirmed.
+        // Dados de rede detectados e conexão com a internet confirmada.
         hasConnection = true;
       } else {
-        // Network data detected but no internet connection found.
+        // Dados de rede detectados, mas nenhuma conexão com a internet foi encontrada.
         hasConnection = false;
       }
     }
-    // device has no mobile network and wifi connection at all
+    // O dispositivo não possui rede móvel nem conexão Wi-Fi.
     else {
       hasConnection = false;
     }
-    // The connection status changed send out an update to all listeners
+    // O status da conexão mudou; enviamos uma atualização para todos os listeners.
     if (previousConnection != hasConnection) {
       connectionChangeController.add(hasConnection);
     }
