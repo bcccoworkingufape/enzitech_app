@@ -5,6 +5,30 @@
     "version": "0.2.0",
     "configurations": [
         {
+        "name": "enzitech (dev)",
+        "request": "launch",
+        "type": "dart",
+        "toolArgs": [
+            "--dart-define=ENV=dev",
+            "--dart-define=DEV_API_BASE_URL=http://10.0.2.2:8080"
+        ]
+        },
+        {
+        "name": "enzitech (stage)",
+        "request": "launch",
+        "type": "dart",
+        "toolArgs": [
+            "--dart-define=ENV=stage",
+            "--dart-define=STAGE_API_BASE_URL=https://enzitech.api.bcccoworking.org"
+        ]
+        },
+        {
+        "name": "enzitech (prod)",
+        "request": "launch",
+        "type": "dart",
+        "toolArgs": ["--dart-define=ENV=prod"]
+        },
+        /* {
             "name": "enzitech_app",
             "request": "launch",
             "type": "dart"
@@ -20,6 +44,6 @@
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
-        },
+        }, */
     ]
 }

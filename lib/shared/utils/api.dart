@@ -9,7 +9,7 @@ class API {
   static const String _devBaseUrlDefine = String.fromEnvironment('DEV_API_BASE_URL');
   static const String _stageBaseUrlDefine = String.fromEnvironment('STAGE_API_BASE_URL');
   static const String _prodBaseUrlDefine = String.fromEnvironment('PROD_API_BASE_URL');
-  static const String _defaultDevBaseUrl = "https://enzitech.onrender.com";
+  static const String _defaultDevBaseUrl = "https://enzitech.api.bcccoworking.org";
   static const String _defaultProdBaseUrl = "http://200.133.6.201:30001/";
 
   static Map<String, dynamic> _config = {};
