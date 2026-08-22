@@ -128,6 +128,18 @@ class LoginPageState extends State<LoginPage> with SecureScreenMixin {
                           ),
                           Text(context.l10n.helloWelcome, style: TextStyles.titleHomeRegular),
                           _textFields,
+                          Padding(
+                            padding: const EdgeInsets.only(top: 16.0),
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(context, Routing.recoverPassword);
+                                },
+                                child: Text(context.l10n.forgotMyPassword, style: TextStyles(context).captionBody()),
+                              ),
+                            ),
+                          ),
                           const SizedBox(height: 32),
                           Align(
                             alignment: Alignment.center,

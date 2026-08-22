@@ -1,8 +1,10 @@
 ﻿// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 // 🌎 Project imports:
 import '../../../../core/data/service/secure_storage/secure_session_storage.dart';
+import '../../../../core/domain/service/http/http_service.dart';
 import '../../../../core/domain/service/user_preferences/user_preferences_service.dart';
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
@@ -60,10 +62,12 @@ class SplashViewmodel extends ChangeNotifier {
       legacyClearer: (_) => userPreferencesServiceTokenCleanup(),
     );
 
-    final hasToken = await secureSessionStorage.hasToken();
+    final token = await secureSessionStorage.readToken() ?? '';
 
     try {
-      if (hasToken) {
+      if (token.isNotEmpty) {
+        await GetIt.I.get<HttpService>().setConfig(token: token);
+
         await experimentsViewmodel.fetch();
         await enzymesViewmodel.fetch();
         await treatmentsViewmodel.fetch();

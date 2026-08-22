@@ -94,7 +94,7 @@ class _CreateExperimentThirdStepPageState extends State<CreateExperimentThirdSte
                   description: temporary.description,
                   enzymes: _choosedCheckboxList,
                   repetitions: temporary.repetitions,
-                  treatmentsIDs: temporary.treatmentsIDs,
+                  treatments: temporary.treatments,
                 ),
               );
               _createExperimentViewmodel.onNext(context);

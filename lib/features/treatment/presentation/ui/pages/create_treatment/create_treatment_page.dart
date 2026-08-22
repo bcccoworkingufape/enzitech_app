@@ -61,7 +61,7 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
   }
 
   void get _validateFields {
-    if (_nameFieldController.text.isNotEmpty && _descriptionFieldController.text.isNotEmpty) {
+    if (_nameFieldController.text.isNotEmpty) {
       setState(() {
         enableCreate = _formKey.currentState!.validate();
       });
@@ -123,8 +123,6 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
   }
 
   Widget get _descriptionInput {
-    final fieldValidator = FieldValidator(validations, context);
-
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,
       labelText: context.l10n.descriptionLabel,
@@ -132,7 +130,6 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
       keyboardType: TextInputType.name,
       controller: _descriptionFieldController,
       onChanged: (value) => _validateFields,
-      fieldValidator: fieldValidator,
     );
   }
 

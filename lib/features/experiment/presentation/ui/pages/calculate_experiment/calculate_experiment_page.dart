@@ -14,7 +14,6 @@ import '../../../../domain/entities/experiment_entity.dart';
 import '../../../viewmodel/calculate_experiment_viewmodel.dart';
 import 'fragments/calculate_experiment_first_step.dart';
 import 'fragments/calculate_experiment_second_step.dart';
-import 'fragments/calculate_experiment_third_step.dart';
 
 class CalculateExperimentPage extends StatefulWidget {
   const CalculateExperimentPage({super.key, required this.experiment});
@@ -76,11 +75,7 @@ class _CalculateExperimentPageState extends State<CalculateExperimentPage> with 
               child: PageView(
                 controller: _calculateExperimentViewmodel.pageController,
                 physics: const NeverScrollableScrollPhysics(),
-                children: const [
-                  CalculateExperimentFirstStepPage(),
-                  CalculateExperimentSecondStepPage(),
-                  CalculateExperimentThirdStepPage(),
-                ],
+                children: const [CalculateExperimentFirstStepPage(), CalculateExperimentSecondStepPage()],
               ),
             ),
           ),

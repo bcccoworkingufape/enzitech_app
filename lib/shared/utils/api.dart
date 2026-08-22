@@ -1,4 +1,4 @@
-﻿// ignore: deprecated_member_use_from_same_package
+// ignore: deprecated_member_use_from_same_package
 // ignore_for_file: constant_identifier_names, non_constant_identifier_names
 // 🌎 Project imports:
 import '../../core/enums/enums.dart';
@@ -26,7 +26,7 @@ class API {
         enviroment = EnvironmentEnum.dev;
         break;
       case EnvironmentEnum.stage:
-        _config = stageConstants; //? NO STAGE API YET
+        _config = stageConstants;
         enviroment = EnvironmentEnum.stage;
         break;
       case EnvironmentEnum.prod:
@@ -78,61 +78,33 @@ class API {
   };
 
   //-> AUTHENTICATION
-  /// Rota para '/auth'
   static const _REQUEST_AUTH = '/auth';
-
-  /// Rota para '/auth/login'
   static const REQUEST_LOGIN = '$_REQUEST_AUTH/login';
-
-  /// Rota para '/auth/send-recover-email'
-  static const REQUEST_RECOVER_EMAIL = '$_REQUEST_AUTH/send-recover-email';
-
-  /// Rota para '/auth/send-recover-email/$token'
-  static String REQUEST_RESET_PASSWORD(String token) => '$REQUEST_RECOVER_EMAIL/$token';
+  static const REQUEST_RECOVER_EMAIL = '$_REQUEST_AUTH/forgot-password';
+  static const REQUEST_VERIFY_PIN = '$_REQUEST_AUTH/verify-pin';
+  static const REQUEST_RESET_PASSWORD = '$_REQUEST_AUTH/reset-password';
 
   //-> USER
-  /// Rota para '/users'
   static const REQUEST_USERS = '/users';
-
-  /// Rota para '/users/$id'
   static String REQUEST_USERS_WITH_ID(String id) => '$REQUEST_USERS/$id';
 
   //-> ENZYMES
-  /// Rota para '/enzymes'
   static const REQUEST_ENZYMES = '/enzymes';
-
-  /// Rota para '/enzymes/$id'
   static String REQUEST_ENZYMES_WITH_ID(String id) => '$REQUEST_ENZYMES/$id';
 
   //-> TREATMENTS
-  /// Rota para '/processes'
-  static const REQUEST_TREATMENTS = '/processes';
-
-  /// Rota para '/processes/$id'
+  static const REQUEST_TREATMENTS = '/treatments';
+  static const REQUEST_TREATMENTS_USER = '$_REQUEST_AUTH/user';
   static String REQUEST_TREATMENTS_WITH_ID(String id) => '$REQUEST_TREATMENTS/$id';
+  static String REQUEST_TREATMENTS_BY_EXPERIMENT(String experimentId) => '$REQUEST_TREATMENTS/experiment/$experimentId';
 
   //-> EXPERIMENTS
-  /// Rota para '/experiments'
   static const REQUEST_EXPERIMENTS = '/experiments';
-
-  /// Rota para '/experiments/$id'
   static String REQUEST_EXPERIMENTS_WITH_ID(String id) => '$REQUEST_EXPERIMENTS/$id';
-
-  /// Rota para '/experiments/calculate/$experiment'
-  static String REQUEST_CALCULATE_EXPERIMENTS(String experiment) => '$REQUEST_EXPERIMENTS/calculate/$experiment';
-
-  /// Rota para '/experiments/save-result/$experiment'
-  static String REQUEST_SAVE_RESULT_EXPERIMENTS(String experiment) => '$REQUEST_EXPERIMENTS/save-result/$experiment';
-
-  /// Rota para '/experiments/save-result/$experiment'
+  static String REQUEST_REPETITIONS(String experiment) => '$REQUEST_EXPERIMENTS/$experiment/repetitions';
+  static String REQUEST_PREVIEW_REPETITION(String experiment) => '$REQUEST_EXPERIMENTS/$experiment/repetitions/preview';
   static String REQUEST_GET_RESULT_EXPERIMENTS(String experiment) =>
       '$REQUEST_EXPERIMENTS/get-total-result/$experiment';
-
-  /// Rota para '/experiments/get-total-result/$experiment'
   static String REQUEST_TOTAL_RESULTS_OF_EXPERIMENT(String experiment) =>
       '$REQUEST_EXPERIMENTS/get-total-result/$experiment';
-
-  /// Rota para '/experiments/get-enzymes/$experiment'
-  static String REQUEST_ENZYMES_REMAINING_IN_EXPERIMENT(String experiment) =>
-      '$REQUEST_EXPERIMENTS/get-enzymes/$experiment';
 }

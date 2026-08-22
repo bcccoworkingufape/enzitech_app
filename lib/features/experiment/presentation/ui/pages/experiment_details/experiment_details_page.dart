@@ -254,6 +254,18 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> with Secu
             actions: [
               if (_experimentDetailsViewmodel.state == StateEnum.success)
                 IconButton(
+                  tooltip: context.l10n.editExperimentTooltip,
+                  onPressed: () {
+                    Navigator.pushNamed(
+                      context,
+                      Routing.editExperiment,
+                      arguments: _experimentDetailsViewmodel.experiment!,
+                    );
+                  },
+                  icon: Icon(PhosphorIcons.pencilSimple(), color: context.getApplyedColorScheme.onSurface, size: 25),
+                ),
+              if (_experimentDetailsViewmodel.state == StateEnum.success)
+                IconButton(
                   onPressed: () async {
                     var shouldDelete = _homeViewmodel.accountViewmodel.enableExcludeConfirmation!
                         ? await showDialog<bool>(

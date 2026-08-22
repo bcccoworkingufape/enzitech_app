@@ -476,18 +476,6 @@ abstract class AppLocalizations {
   /// **'Select the treatment:'**
   String get selectTreatment;
 
-  /// No description provided for @loadingAvailableEnzymes.
-  ///
-  /// In en, this message translates to:
-  /// **'Loading available enzymes...'**
-  String get loadingAvailableEnzymes;
-
-  /// No description provided for @allEnzymesCalculated.
-  ///
-  /// In en, this message translates to:
-  /// **'All enzymes for this treatment have already been calculated!'**
-  String get allEnzymesCalculated;
-
   /// No description provided for @selectEnzyme.
   ///
   /// In en, this message translates to:
@@ -548,59 +536,65 @@ abstract class AppLocalizations {
   /// **'Data for repetition #{repetitionNumber}'**
   String repetitionDataTitle(int repetitionNumber);
 
-  /// No description provided for @saveAndExitButton.
-  ///
-  /// In en, this message translates to:
-  /// **'Save and exit'**
-  String get saveAndExitButton;
-
-  /// No description provided for @recalculateButton.
-  ///
-  /// In en, this message translates to:
-  /// **'Recalculate'**
-  String get recalculateButton;
-
   /// No description provided for @repetitionLabel.
   ///
   /// In en, this message translates to:
   /// **'Repetition {repetitionNumber}:'**
   String repetitionLabel(int repetitionNumber);
 
-  /// No description provided for @discrepantRepetitionWarning.
+  /// No description provided for @pending.
   ///
   /// In en, this message translates to:
-  /// **'This repetition is discrepant!\n\nIts value differs by more than 25% from the average of all repetitions.\n\nIf you want to change it, just press \"Recalculate\".'**
-  String get discrepantRepetitionWarning;
+  /// **'Pending'**
+  String get pending;
 
-  /// No description provided for @average.
+  /// No description provided for @fillRepetitionsTitle.
   ///
   /// In en, this message translates to:
-  /// **'Average:'**
-  String get average;
+  /// **'Fill in the data for each repetition'**
+  String get fillRepetitionsTitle;
 
-  /// No description provided for @repetitionColumnTitle.
+  /// No description provided for @saveRepetitionButton.
   ///
   /// In en, this message translates to:
-  /// **'REPETITION'**
-  String get repetitionColumnTitle;
+  /// **'Save repetition'**
+  String get saveRepetitionButton;
 
-  /// No description provided for @resultColumnTitle.
+  /// No description provided for @repetitionSavedMessage.
   ///
   /// In en, this message translates to:
-  /// **'RESULT'**
-  String get resultColumnTitle;
+  /// **'Repetition saved successfully!'**
+  String get repetitionSavedMessage;
 
-  /// No description provided for @statusColumnTitle.
+  /// No description provided for @finishButton.
   ///
   /// In en, this message translates to:
-  /// **'STATUS'**
-  String get statusColumnTitle;
+  /// **'Finish'**
+  String get finishButton;
 
-  /// No description provided for @stepIndicatorMessageResults.
+  /// No description provided for @editExperimentTitle.
   ///
   /// In en, this message translates to:
-  /// **'Step {currentStep} of {totalSteps} - Results'**
-  String stepIndicatorMessageResults(int currentStep, int totalSteps);
+  /// **'Edit experiment'**
+  String get editExperimentTitle;
+
+  /// No description provided for @editExperimentTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit experiment'**
+  String get editExperimentTooltip;
+
+  /// No description provided for @saveChangesButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Save changes'**
+  String get saveChangesButton;
+
+  /// No description provided for @experimentUpdatedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Experiment updated successfully!'**
+  String get experimentUpdatedSuccess;
 
   /// No description provided for @registerNewExperiment.
   ///
@@ -626,12 +620,6 @@ abstract class AppLocalizations {
   /// **'Number of repetitions per treatment'**
   String get repetitionsPerTreatmentLabel;
 
-  /// No description provided for @goToTreatmentsButton.
-  ///
-  /// In en, this message translates to:
-  /// **'Go to treatments'**
-  String get goToTreatmentsButton;
-
   /// No description provided for @treatmentsAndRepetitionsData.
   ///
   /// In en, this message translates to:
@@ -643,6 +631,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No treatments registered! At least one treatment is required to proceed.'**
   String get noTreatmentsRegisteredError;
+
+  /// No description provided for @addTreatmentButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Add treatment'**
+  String get addTreatmentButton;
+
+  /// No description provided for @noTreatmentsAddedYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No treatments added yet'**
+  String get noTreatmentsAddedYet;
 
   /// No description provided for @stepIndicatorTreatments.
   ///
@@ -907,6 +907,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'⚠ Server Error: The request could not be fulfilled.'**
   String get error_500;
+
+  /// No description provided for @error_502.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ Bad Gateway: The service is unavailable.'**
+  String get error_502;
 
   /// No description provided for @error_503.
   ///
@@ -1280,6 +1286,114 @@ abstract class AppLocalizations {
   /// **'Account created successfully!'**
   String get accountCreatedSuccess;
 
+  /// No description provided for @passwordRequirementsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your password must contain:'**
+  String get passwordRequirementsTitle;
+
+  /// No description provided for @passwordRequirement_minLength.
+  ///
+  /// In en, this message translates to:
+  /// **'At least 8 characters'**
+  String get passwordRequirement_minLength;
+
+  /// No description provided for @passwordRequirement_uppercase.
+  ///
+  /// In en, this message translates to:
+  /// **'An uppercase letter'**
+  String get passwordRequirement_uppercase;
+
+  /// No description provided for @passwordRequirement_lowercase.
+  ///
+  /// In en, this message translates to:
+  /// **'A lowercase letter'**
+  String get passwordRequirement_lowercase;
+
+  /// No description provided for @passwordRequirement_specialChar.
+  ///
+  /// In en, this message translates to:
+  /// **'A special character (e.g. !@#\$%)'**
+  String get passwordRequirement_specialChar;
+
+  /// No description provided for @recoverEmailSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Recovery email sent successfully!'**
+  String get recoverEmailSent;
+
+  /// No description provided for @recoverPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Password'**
+  String get recoverPassword;
+
+  /// No description provided for @recoverPasswordInstructions.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your email below. We will send you instructions to reset your password.'**
+  String get recoverPasswordInstructions;
+
+  /// No description provided for @sendRecoverEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Send E-mail'**
+  String get sendRecoverEmail;
+
+  /// No description provided for @verifyCodeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify Code'**
+  String get verifyCodeTitle;
+
+  /// No description provided for @verifyCodeInstructions.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the 6-digit code we sent to your email.'**
+  String get verifyCodeInstructions;
+
+  /// No description provided for @verifyCodeButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify'**
+  String get verifyCodeButton;
+
+  /// No description provided for @resetPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Password'**
+  String get resetPassword;
+
+  /// No description provided for @passwordResetSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Password reset successfully!'**
+  String get passwordResetSuccess;
+
+  /// No description provided for @recoverCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Code'**
+  String get recoverCode;
+
+  /// No description provided for @passwordsDoNotMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match!'**
+  String get passwordsDoNotMatch;
+
+  /// No description provided for @newPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'New Password'**
+  String get newPassword;
+
+  /// No description provided for @confirmPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm New Password'**
+  String get confirmPassword;
+
   /// No description provided for @info.
   ///
   /// In en, this message translates to:
@@ -1447,6 +1561,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'(Back-end developer)'**
   String get roleBackendDeveloper;
+
+  /// No description provided for @roleMobileBackendDev.
+  ///
+  /// In en, this message translates to:
+  /// **'(Mobile & Back-end Developer)'**
+  String get roleMobileBackendDev;
 
   /// No description provided for @roleProjectManagement.
   ///

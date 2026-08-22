@@ -4,10 +4,10 @@ import 'package:dartz/dartz.dart';
 // 🌎 Project imports:
 import '../../../../core/failures/failure.dart';
 import '../../../enzyme/domain/entities/enzyme_entity.dart';
-import '../../domain/entities/experiment_calculation_entity.dart';
 import '../../domain/entities/experiment_entity.dart';
 import '../../domain/entities/experiment_pagination_entity.dart';
 import '../../domain/entities/experiment_result_entity.dart';
+import '../../domain/entities/repetition_entity.dart';
 import '../../domain/repositories/experiments_repository.dart';
 import '../datasources/experiments_datasource.dart';
 
@@ -17,17 +17,45 @@ class ExperimentsRepositoryImp implements ExperimentsRepository {
   ExperimentsRepositoryImp(this._experimentsDataSource);
 
   @override
-  Future<Either<Failure, ExperimentCalculationEntity>> calculateExperiment({
+  Future<Either<Failure, List<RepetitionEntity>>> getRepetitions({required String experimentId}) async {
+    return await _experimentsDataSource.getRepetitions(experimentId: experimentId);
+  }
+
+  @override
+  Future<Either<Failure, RepetitionEntity>> previewRepetition({
     required String experimentId,
+    required String treatmentId,
     required String enzymeId,
-    required String treatmentID,
-    required List<Map<String, dynamic>> listOfExperimentData,
+    required int repetitionNumber,
+    required double sample,
+    required double whiteSample,
   }) async {
-    return await _experimentsDataSource.calculateExperiment(
+    return await _experimentsDataSource.previewRepetition(
       experimentId: experimentId,
+      treatmentId: treatmentId,
       enzymeId: enzymeId,
-      treatmentID: treatmentID,
-      listOfExperimentData: listOfExperimentData,
+      repetitionNumber: repetitionNumber,
+      sample: sample,
+      whiteSample: whiteSample,
+    );
+  }
+
+  @override
+  Future<Either<Failure, ExperimentEntity>> saveRepetition({
+    required String experimentId,
+    required String treatmentId,
+    required String enzymeId,
+    required int repetitionNumber,
+    required double sample,
+    required double whiteSample,
+  }) async {
+    return await _experimentsDataSource.saveRepetition(
+      experimentId: experimentId,
+      treatmentId: treatmentId,
+      enzymeId: enzymeId,
+      repetitionNumber: repetitionNumber,
+      sample: sample,
+      whiteSample: whiteSample,
     );
   }
 
@@ -49,19 +77,27 @@ class ExperimentsRepositoryImp implements ExperimentsRepository {
   }
 
   @override
-  Future<Either<Failure, Unit>> deleteExperiment(String id) async {
-    return await _experimentsDataSource.deleteExperiment(id);
+  Future<Either<Failure, ExperimentEntity>> updateExperiment({
+    required String experimentId,
+    required String name,
+    required String description,
+    required int repetitions,
+    required List<String> treatmentsIDs,
+    required List<EnzymeEntity> enzymes,
+  }) async {
+    return await _experimentsDataSource.updateExperiment(
+      experimentId: experimentId,
+      name: name,
+      description: description,
+      repetitions: repetitions,
+      treatmentsIDs: treatmentsIDs,
+      enzymes: enzymes,
+    );
   }
 
   @override
-  Future<Either<Failure, List<EnzymeEntity>>> getEnzymesRemainingInExperiment({
-    required String experimentId,
-    required String treatmentId,
-  }) async {
-    return await _experimentsDataSource.getEnzymesRemainingInExperiment(
-      experimentId: experimentId,
-      treatmentId: treatmentId,
-    );
+  Future<Either<Failure, Unit>> deleteExperiment(String id) async {
+    return await _experimentsDataSource.deleteExperiment(id);
   }
 
   @override
@@ -89,25 +125,6 @@ class ExperimentsRepositoryImp implements ExperimentsRepository {
   @override
   Future<Either<Failure, ExperimentResultEntity>> getResult({required String experimentId}) async {
     return await _experimentsDataSource.getResult(experimentId: experimentId);
-  }
-
-  @override
-  Future<Either<Failure, ExperimentEntity>> saveResult({
-    required String experimentId,
-    required String enzymeId,
-    required String treatmentID,
-    required List<Map<String, dynamic>> listOfExperimentData,
-    required List<num> results,
-    required num average,
-  }) async {
-    return await _experimentsDataSource.saveResult(
-      experimentId: experimentId,
-      enzymeId: enzymeId,
-      treatmentID: treatmentID,
-      listOfExperimentData: listOfExperimentData,
-      results: results,
-      average: average,
-    );
   }
 
   @override

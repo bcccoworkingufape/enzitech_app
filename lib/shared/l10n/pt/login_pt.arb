@@ -21,5 +21,10 @@
   "confirmPasswordLabel": "Confirmar senha",
   "access": "Acesso",
   "createAccountButton": "Criar conta",
-  "accountCreatedSuccess": "Conta criada com sucesso!"
+  "accountCreatedSuccess": "Conta criada com sucesso!",
+  "passwordRequirementsTitle": "Sua senha deve conter:",
+  "passwordRequirement_minLength": "Mínimo de 8 caracteres",
+  "passwordRequirement_uppercase": "Uma letra maiúscula",
+  "passwordRequirement_lowercase": "Uma letra minúscula",
+  "passwordRequirement_specialChar": "Um caractere especial (ex: !@#$%)"
 }
