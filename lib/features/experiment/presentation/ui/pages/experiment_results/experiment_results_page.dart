@@ -1,26 +1,25 @@
-﻿// ðŸŽ¯ Dart imports:
+// 🎯 Dart imports:
 import 'dart:math';
 
-// ðŸ¦ Flutter imports:
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-// ðŸ“¦ Package imports:
+// 📦 Package imports:
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
-// ðŸŒŽ Project imports:
+// 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
-import '../../../../../../core/platform/secure_screen_wrapper.dart';
 import '../../../../../../core/failures/failures.dart';
+import '../../../../../../core/platform/secure_screen_wrapper.dart';
 import '../../../../../../shared/extensions/build_context_extensions.dart';
 import '../../../../../../shared/extensions/double_extensions.dart';
 import '../../../../../../shared/ui/ui.dart';
 import '../../../../domain/entities/experiment_entity.dart';
 import '../../../viewmodel/experiment_details_viewmodel.dart';
 import '../../../viewmodel/experiment_results_viewmodel.dart';
-
 class ExperimentResultsPage extends StatefulWidget {
   const ExperimentResultsPage({super.key});
 

@@ -1,13 +1,13 @@
-﻿// ðŸ¦ Flutter imports:
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-// ðŸ“¦ Package imports:
+// 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
-// ðŸŒŽ Project imports:
+// 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
-import '../../../../../../core/platform/secure_screen_wrapper.dart';
 import '../../../../../../core/failures/failures.dart';
+import '../../../../../../core/platform/secure_screen_wrapper.dart';
 import '../../../../../../core/routing/routing.dart';
 import '../../../../../../shared/extensions/build_context_extensions.dart';
 import '../../../../../../shared/ui/ui.dart';

@@ -1,5 +1,6 @@
 // ignore: deprecated_member_use_from_same_package
 // ignore_for_file: constant_identifier_names, non_constant_identifier_names
+
 // 🌎 Project imports:
 import '../../core/enums/enums.dart';
 

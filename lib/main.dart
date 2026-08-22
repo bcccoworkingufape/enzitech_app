@@ -1,6 +1,5 @@
-﻿// 🎯 Dart imports:
+// 🎯 Dart imports:
 import 'dart:async';
-// ignore: deprecated_member_use_from_same_package
 
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';

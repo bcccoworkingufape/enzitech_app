@@ -1,5 +1,7 @@
-﻿// 🐦 Flutter imports:
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
 // 🌎 Project imports:

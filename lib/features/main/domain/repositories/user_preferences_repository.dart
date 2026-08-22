@@ -1,10 +1,10 @@
-﻿// ðŸ¦ Flutter imports:
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-// ðŸ“¦ Package imports:
+// 📦 Package imports:
 import 'package:dartz/dartz.dart';
 
-// ðŸŒŽ Project imports:
+// 🌎 Project imports:
 import '../../../../core/failures/failure.dart';
 import '../../../authentication/domain/entities/user_entity.dart';
 

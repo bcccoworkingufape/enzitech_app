@@ -1,4 +1,5 @@
-﻿import 'package:flutter/foundation.dart';
+// 🐦 Flutter imports:
+import 'package:flutter/foundation.dart';
 
 /// Logger sanitizado mínimo usado em todo o app. Builds de release compilam as
 /// chamadas debug/info/warn em no-ops via `kDebugMode` para nunca emitirmos

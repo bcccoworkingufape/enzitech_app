@@ -1,8 +1,8 @@
-﻿// ðŸ¦ Flutter imports:
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-// ðŸ“¦ Package imports:
+// 📦 Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 

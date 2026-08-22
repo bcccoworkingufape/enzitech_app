@@ -1,6 +1,10 @@
-﻿import 'dart:async';
+// 🎯 Dart imports:
+import 'dart:async';
+
+// 📦 Package imports:
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+// 🌎 Project imports:
 import '../../../logging/app_logger.dart';
 
 /// Wrapper em torno do `flutter_secure_storage` dedicado a segredos de sessão

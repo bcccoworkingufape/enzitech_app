@@ -1,11 +1,11 @@
-﻿// ðŸ¦ Flutter imports:
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-// ðŸ“¦ Package imports:
+// 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
-// ðŸŒŽ Project imports:
+// 🌎 Project imports:
 import '../../../../../../../core/enums/state_enum.dart';
 import '../../../../../../../shared/extensions/build_context_extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
@@ -373,7 +373,7 @@ class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthS
                             title: _isEnzymeCorrectlyFilled(enzyme.id)
                                 ? Text(enzyme.name)
                                 : Text(
-                                    "âš   ${enzyme.name}",
+                                    "⚠ ${enzyme.name}",
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: context.getApplyedColorScheme.error,

@@ -1,22 +1,22 @@
-﻿// ðŸŽ¯ Dart imports:
+// 🎯 Dart imports:
 import 'dart:async';
 import 'dart:math' as math;
 
-// ðŸ¦ Flutter imports:
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 
-// ðŸ“¦ Package imports:
+// 📦 Package imports:
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
-// ðŸŒŽ Project imports:
+// 🌎 Project imports:
 import '../../../../../../core/domain/service/connection_checker/connection_checker.dart';
-import '../../../../../../core/logging/app_logger.dart';
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
+import '../../../../../../core/logging/app_logger.dart';
 import '../../../../../../core/routing/routing.dart';
 import '../../../../../../shared/extensions/extensions.dart';
 import '../../../../../../shared/ui/ui.dart';

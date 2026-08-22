@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
+import '../../features/authentication/presentation/dto/reset_password_args.dart';
 import '../../features/authentication/presentation/ui/pages/create_account/create_account_page.dart';
 import '../../features/authentication/presentation/ui/pages/login/login_page.dart';
-import '../../features/authentication/presentation/dto/reset_password_args.dart';
 import '../../features/authentication/presentation/ui/pages/recover_password/recover_password_page.dart';
 import '../../features/authentication/presentation/ui/pages/reset_password/reset_password_page.dart';
 import '../../features/authentication/presentation/ui/pages/verify_code/verify_code_page.dart';

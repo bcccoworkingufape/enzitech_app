@@ -1,6 +1,7 @@
-﻿// 🐦 Flutter imports:
+// 🐦 Flutter imports:
 import 'package:flutter/widgets.dart';
 
+// 🌎 Project imports:
 import 'screen_protection_service.dart';
 
 /// Adiciona um comportamento equivalente a FLAG_SECURE para uma tela.

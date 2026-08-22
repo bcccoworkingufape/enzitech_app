@@ -1,4 +1,4 @@
-﻿// 🐦 Flutter imports:
+// 🌎 Project imports:
 import 'field_validator.dart';
 
 // 🌍 Project imports:

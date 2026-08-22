@@ -1,7 +1,9 @@
-﻿// 📦 Package imports:
+// 🐦 Flutter imports:
+import 'package:flutter/foundation.dart';
+
+// 📦 Package imports:
 import 'package:curl_logger_dio_interceptor/curl_logger_dio_interceptor.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 // 🌎 Project imports:
@@ -76,7 +78,7 @@ class DioHttpServiceImp implements HttpService {
         case NoNetworkFailure _:
           rethrow;
         case DioException _:
-          var dioError = (e as DioException);
+          var dioError = e;
           var response = dioError.response;
           var responseData = response?.data;
           
