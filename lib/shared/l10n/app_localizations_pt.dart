@@ -522,6 +522,25 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
+  String get error_emailNotRegistered =>
+      '⚠ O e-mail não está cadastrado em nossa base de dados.';
+
+  @override
+  String get error_invalidCode => '⚠ Código inválido.';
+
+  @override
+  String get error_invalidOrNotFoundCode =>
+      '⚠ Código inválido ou não encontrado.';
+
+  @override
+  String get error_codeExpired =>
+      '⚠ O código expirou. Por favor, solicite um novo.';
+
+  @override
+  String get error_newPasswordSameAsCurrent =>
+      '⚠ A nova senha não pode ser igual à senha atual.';
+
+  @override
   String get validation_required => '⚠ Campo obrigatório';
 
   @override

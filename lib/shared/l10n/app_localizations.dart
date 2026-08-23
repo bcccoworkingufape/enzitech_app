@@ -932,6 +932,36 @@ abstract class AppLocalizations {
   /// **'⚠ Could not get {query}.'**
   String error_noResultQuery(Object query);
 
+  /// No description provided for @error_emailNotRegistered.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ This email is not registered in our database.'**
+  String get error_emailNotRegistered;
+
+  /// No description provided for @error_invalidCode.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ Invalid code.'**
+  String get error_invalidCode;
+
+  /// No description provided for @error_invalidOrNotFoundCode.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ Invalid or not found code.'**
+  String get error_invalidOrNotFoundCode;
+
+  /// No description provided for @error_codeExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ The code has expired. Please request a new one.'**
+  String get error_codeExpired;
+
+  /// No description provided for @error_newPasswordSameAsCurrent.
+  ///
+  /// In en, this message translates to:
+  /// **'⚠ The new password cannot be the same as your current password.'**
+  String get error_newPasswordSameAsCurrent;
+
   /// No description provided for @validation_required.
   ///
   /// In en, this message translates to:

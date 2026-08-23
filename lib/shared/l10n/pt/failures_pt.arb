@@ -31,6 +31,11 @@
       "query": {}
     }
   },
+  "error_emailNotRegistered": "⚠ O e-mail não está cadastrado em nossa base de dados.",
+  "error_invalidCode": "⚠ Código inválido.",
+  "error_invalidOrNotFoundCode": "⚠ Código inválido ou não encontrado.",
+  "error_codeExpired": "⚠ O código expirou. Por favor, solicite um novo.",
+  "error_newPasswordSameAsCurrent": "⚠ A nova senha não pode ser igual à senha atual.",
   "validation_required": "⚠ Campo obrigatório",
   "validation_strongPassword": "⚠ Senha não atende ao padrão informado.",
   "validation_alfanumeric": "⚠ Campo não aceita caracteres especiais",

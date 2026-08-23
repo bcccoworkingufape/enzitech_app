@@ -5,15 +5,15 @@ import 'failures.dart';
 class HandleFailure {
   /// Traduz um [Failure] em uma mensagem localizada e voltada ao usuário.
   ///
-  /// Política de segurança: o caminho padrão nunca expõe a mensagem bruta de falha
+  /// Política de segurança: por padrão, nunca expõe a mensagem bruta de falha
   /// retornada pelo backend (que pode vazar dicas de validação,
   /// detalhes de stack ou estado interno). Falhas conhecidas específicas (por exemplo,
   /// "connection refused") ainda são mapeadas para frases localizadas.
   ///
-  /// Os flags legados `enableStatusCode` / `overrideDefaultMessage` eram padrões
-  /// inseguros e agora são ignorados; os chamadores que antes dependiam deles
-  /// devem usar os campos estruturados em `Failure` (por exemplo, `key`) e
-  /// apresentar apenas o que o dicionário de l10n já suporta.
+  /// `overrideDefaultMessage: true` é uma exceção explícita para telas cujo
+  /// backend já retorna mensagens curadas e seguras (ex.: fluxo de recuperação
+  /// de senha) — nesse caso a mensagem real do backend é exibida no lugar do
+  /// texto genérico por status HTTP.
   static String of(
     AppLocalizations l10n,
     Failure failure, {
@@ -26,6 +26,11 @@ class HandleFailure {
       if (failure.message.contains("Connection refused")) {
         return l10n.error_serverConnectionRefused;
       }
+    }
+
+    if (overrideDefaultMessage) {
+      final knownMessage = _knownBackendMessage(l10n, failure.message);
+      if (knownMessage != null) return knownMessage;
     }
 
     switch (failure.key) {
@@ -57,6 +62,26 @@ class HandleFailure {
             // Fallback final: uma mensagem genérica e sem vazamento de detalhes.
             return l10n.error_messageOnly('');
         }
+    }
+  }
+
+  /// Mapeia mensagens curadas conhecidas retornadas pelo backend (sempre em
+  /// português, já que a API não é internacionalizada) para a string
+  /// localizada correspondente. Retorna `null` para mensagens não mapeadas.
+  static String? _knownBackendMessage(AppLocalizations l10n, String rawMessage) {
+    switch (rawMessage.trim()) {
+      case "O e-mail não está cadastrado em nossa base de dados.":
+        return l10n.error_emailNotRegistered;
+      case "Código inválido.":
+        return l10n.error_invalidCode;
+      case "Código inválido ou não encontrado.":
+        return l10n.error_invalidOrNotFoundCode;
+      case "O código expirou. Por favor, solicite um novo.":
+        return l10n.error_codeExpired;
+      case "A nova senha não pode ser igual à senha atual.":
+        return l10n.error_newPasswordSameAsCurrent;
+      default:
+        return null;
     }
   }
 }

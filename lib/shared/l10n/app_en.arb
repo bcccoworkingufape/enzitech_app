@@ -330,6 +330,11 @@
       "query": {}
     }
   },
+  "error_emailNotRegistered": "⚠ This email is not registered in our database.",
+  "error_invalidCode": "⚠ Invalid code.",
+  "error_invalidOrNotFoundCode": "⚠ Invalid or not found code.",
+  "error_codeExpired": "⚠ The code has expired. Please request a new one.",
+  "error_newPasswordSameAsCurrent": "⚠ The new password cannot be the same as your current password.",
   "validation_required": "⚠ Required field",
   "validation_strongPassword": "⚠ Password does not meet the required pattern.",
   "validation_alfanumeric": "⚠ Field does not accept special characters",
