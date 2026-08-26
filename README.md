@@ -2,8 +2,8 @@
 
 ![BCC - Coworking](https://img.shields.io/badge/BCC-Coworking-06BC67?logo=slack)
 ![last-commit](https://img.shields.io/github/last-commit/bcccoworkingufape/enzitech_app.svg)
-![Dart - 3.9.2](https://img.shields.io/badge/Dart-3.9.2-02569B?logo=dart)
-![Flutter - 3.35.7](https://img.shields.io/badge/Flutter-3.35.7-0175C2?logo=flutter)
+![Dart - 3.9.2](https://img.shields.io/badge/Dart-3.13.1-02569B?logo=dart)
+![Flutter - 3.35.7](https://img.shields.io/badge/Flutter-3.47.1-0175C2?logo=flutter)
 ![Android - Released](https://img.shields.io/badge/Android-Released-3DDC84?logo=android&logoColor=FFFFFF)
 ![iOS - In development](https://img.shields.io/badge/iOS-In_development-000000?logo=apple&logoColor=FFFFFF)
 
@@ -41,7 +41,7 @@ Para publicações, vai ser necessário o arquivo `key.properties`, que está so
 storePassword=
 keyPassword=
 keyAlias=
-storeFile=C:/Users/user/upload-keystore.jks //Caminho até a chave de upload
+storeFile=C:/Users/user/upload-keystore.jks //Caminho até a chave de upload se estiver no Windows
 ```
 > Arquivo gerado em `enzitech_app/android/key.properties`
 
