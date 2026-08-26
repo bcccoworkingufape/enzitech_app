@@ -29,8 +29,8 @@ Posteriormente este projeto tornou-se um [Trabalho de Conclusão de Curso](https
 
 ```properties
 flutter.minSdkVersion=24
-flutter.targetSdkVersion=34
-flutter.compileSdkVersion=34
+flutter.targetSdkVersion=37
+flutter.compileSdkVersion=37
 ```
 
 > Arquivo gerado em `enzitech_app/android/local.properties`
