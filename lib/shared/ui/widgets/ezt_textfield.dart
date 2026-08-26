@@ -3,7 +3,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 
 // 📦 Package imports:
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 
 // 🌎 Project imports:
 import '../../extensions/build_context_extensions.dart';
@@ -125,9 +125,9 @@ class _EZTTextFieldState extends State<EZTTextField> {
   Widget get _passwordSuffixIcon {
     final Widget iconToUse;
     if (_passwordVisibile) {
-      iconToUse = Icon(PhosphorIcons.eye());
+      iconToUse = Icon(PhosphorIcons.eye);
     } else {
-      iconToUse = Icon(PhosphorIcons.eyeClosed());
+      iconToUse = Icon(PhosphorIcons.eyeClosed);
     }
 
     return Visibility(
@@ -192,8 +192,8 @@ class _EZTTextFieldState extends State<EZTTextField> {
     }
 
     return _validationSuccess!
-        ? Icon(PhosphorIcons.check())
-        : Icon(PhosphorIcons.warningCircle(), color: context.getApplyedColorScheme.error);
+        ? Icon(PhosphorIcons.check)
+        : Icon(PhosphorIcons.warningCircle, color: context.getApplyedColorScheme.error);
   }
 
   InputDecoration get _underlinedInputDecoration {

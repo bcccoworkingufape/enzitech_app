@@ -3,7 +3,7 @@ import 'package:material_ui/material_ui.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 
 // 🌎 Project imports:
 import '../../../../../../../shared/extensions/build_context_extensions.dart';
@@ -144,7 +144,7 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
           const SizedBox(height: 64),
           Row(
             children: [
-              Icon(PhosphorIcons.at(PhosphorIconsStyle.bold)),
+              Icon(PhosphorIcons.atBold),
               const SizedBox(width: 4),
               Text(context.l10n.access, style: TextStyles.detailBold),
             ],

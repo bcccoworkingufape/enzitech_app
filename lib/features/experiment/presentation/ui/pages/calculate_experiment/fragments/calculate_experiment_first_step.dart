@@ -4,7 +4,7 @@ import 'package:material_ui/material_ui.dart';
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:group_button/group_button.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 
 // 🌎 Project imports:
 import '../../../../../../../core/enums/enums.dart';
@@ -213,7 +213,7 @@ class _CalculateExperimentFirstStepPageState extends State<CalculateExperimentFi
                     children: [
                       Row(
                         children: [
-                          Icon(PhosphorIcons.flask()),
+                          Icon(PhosphorIcons.flask),
                           const SizedBox(width: 4),
                           Expanded(
                             child: Text(

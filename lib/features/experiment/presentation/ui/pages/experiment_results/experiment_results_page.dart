@@ -8,8 +8,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:get_it/get_it.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:material_ui/material_ui.dart';
+import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
@@ -352,7 +351,7 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> with Secu
   }
 
   RotateFloatingActionButtonBuilder get _rotateFloatingActionButtonBuilder => RotateFloatingActionButtonBuilder(
-    child: Icon(PhosphorIcons.dotsThreeVertical()),
+    child: Icon(PhosphorIcons.dotsThreeVertical),
     fabSize: ExpandableFabSize.regular,
     backgroundColor: context.getApplyedColorScheme.primary,
     foregroundColor: context.getApplyedColorScheme.onPrimary,
@@ -401,7 +400,7 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> with Secu
                         backgroundColor: context.getApplyedColorScheme.primary,
                         foregroundColor: context.getApplyedColorScheme.onPrimary,
                         heroTag: null,
-                        child: Icon(PhosphorIcons.share()),
+                        child: Icon(PhosphorIcons.share),
                         onPressed: () {
                           final translations = _buildExcelTranslations();
                           final translatedFilename = context.l10n.shareExperimentResultsFilename(
@@ -416,7 +415,7 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> with Secu
                         backgroundColor: context.getApplyedColorScheme.primary,
                         foregroundColor: context.getApplyedColorScheme.onPrimary,
                         heroTag: null,
-                        child: Icon(PhosphorIcons.downloadSimple()),
+                        child: Icon(PhosphorIcons.downloadSimple),
                         onPressed: () {
                           final translations = _buildExcelTranslations();
 

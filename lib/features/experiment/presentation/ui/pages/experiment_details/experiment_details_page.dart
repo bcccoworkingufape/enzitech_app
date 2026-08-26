@@ -6,7 +6,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:get_it/get_it.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
@@ -206,7 +206,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> with Secu
               text: context.l10n.enzymaticCalculation,
               enabled: _experimentDetailsViewmodel.experiment!.progress != 1,
               icon: Icon(
-                PhosphorIcons.function(),
+                PhosphorIcons.function,
                 color: _experimentDetailsViewmodel.experiment!.progress < 1.0
                     ? context.getApplyedColorScheme.onPrimary
                     : context.getApplyedColorScheme.primary,
@@ -226,7 +226,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> with Secu
               text: context.l10n.results,
               enabled: _experimentDetailsViewmodel.experiment!.progress != 0,
               icon: Icon(
-                PhosphorIcons.fileText(),
+                PhosphorIcons.fileText,
                 color: _experimentDetailsViewmodel.experiment!.progress != 0
                     ? context.getApplyedColorScheme.onPrimary
                     : context.getApplyedColorScheme.primary,
@@ -262,7 +262,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> with Secu
                         arguments: _experimentDetailsViewmodel.experiment!,
                       );
                     },
-                    icon: Icon(PhosphorIcons.pencilSimple(), color: context.getApplyedColorScheme.onSurface, size: 25),
+                    icon: Icon(PhosphorIcons.pencilSimple, color: context.getApplyedColorScheme.onSurface, size: 25),
                   ),
                 if (_experimentDetailsViewmodel.state == StateEnum.success)
                   IconButton(
@@ -295,7 +295,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> with Secu
                         });
                       }
                     },
-                    icon: Icon(PhosphorIcons.trash(), color: context.getApplyedColorScheme.onSurface, size: 25),
+                    icon: Icon(PhosphorIcons.trash, color: context.getApplyedColorScheme.onSurface, size: 25),
                   ),
               ],
             ),

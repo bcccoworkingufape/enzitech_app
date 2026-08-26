@@ -2,7 +2,7 @@
 import 'package:material_ui/material_ui.dart';
 
 // 📦 Package imports:
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 
 // 🌎 Project imports:
 import '../../../../../../../shared/extensions/build_context_extensions.dart';
@@ -118,7 +118,7 @@ class CreateAccountFirstStepState extends State<CreateAccountFirstStep> {
           const SizedBox(height: 64),
           Row(
             children: [
-              Icon(PhosphorIcons.identificationCard()),
+              Icon(PhosphorIcons.identificationCard),
               const SizedBox(width: 4),
               Text(context.l10n.personalData, style: TextStyles.detailBold),
             ],

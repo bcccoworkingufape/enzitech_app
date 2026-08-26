@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:group_button/group_button.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
@@ -196,7 +196,7 @@ class _EditExperimentPageState extends State<EditExperimentPage> {
       children: [
         Row(
           children: [
-            Icon(PhosphorIcons.flask()),
+            Icon(PhosphorIcons.flask),
             const SizedBox(width: 4),
             Text(context.l10n.experimentIdentification, style: TextStyles.detailBold),
           ],
@@ -244,7 +244,7 @@ class _EditExperimentPageState extends State<EditExperimentPage> {
         const SizedBox(height: 32),
         Row(
           children: [
-            Icon(PhosphorIcons.testTube()),
+            Icon(PhosphorIcons.testTube),
             const SizedBox(width: 4),
             Text(context.l10n.treatmentsAndRepetitionsData, style: TextStyles.detailBold),
           ],
@@ -291,7 +291,7 @@ class _EditExperimentPageState extends State<EditExperimentPage> {
         const SizedBox(height: 32),
         Row(
           children: [
-            Icon(PhosphorIcons.flask()),
+            Icon(PhosphorIcons.flask),
             const SizedBox(width: 4),
             Text(context.l10n.experimentEnzymes, style: TextStyles.detailBold),
           ],

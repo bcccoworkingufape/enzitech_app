@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 
 // 🌎 Project imports:
 import '../../../../../../../shared/extensions/extensions.dart';
@@ -103,7 +103,7 @@ class _CreateExperimentSecondStepPageState extends State<CreateExperimentSecondS
         EZTButton(
           eztButtonType: EZTButtonType.outline,
           text: context.l10n.addTreatmentButton,
-          icon: Icon(PhosphorIcons.plus(), color: context.getApplyedColorScheme.primary),
+          icon: Icon(PhosphorIcons.plus, color: context.getApplyedColorScheme.primary),
           onPressed: _addTreatment,
         ),
       ],
@@ -130,7 +130,7 @@ class _CreateExperimentSecondStepPageState extends State<CreateExperimentSecondS
                 ? null
                 : Text(treatment.description, maxLines: 2, overflow: TextOverflow.ellipsis),
             trailing: IconButton(
-              icon: Icon(PhosphorIcons.trash(), color: context.getApplyedColorScheme.error),
+              icon: Icon(PhosphorIcons.trash, color: context.getApplyedColorScheme.error),
               onPressed: () => _removeTreatmentAt(index),
             ),
           ),
@@ -208,7 +208,7 @@ class _CreateExperimentSecondStepPageState extends State<CreateExperimentSecondS
             const SizedBox(height: 17),
             Row(
               children: [
-                Icon(PhosphorIcons.flask()),
+                Icon(PhosphorIcons.flask),
                 const SizedBox(width: 4),
                 Text(context.l10n.treatmentsAndRepetitionsData, style: TextStyles.detailBold),
               ],

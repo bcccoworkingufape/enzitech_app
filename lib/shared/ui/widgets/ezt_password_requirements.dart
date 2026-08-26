@@ -2,7 +2,7 @@
 import 'package:material_ui/material_ui.dart';
 
 // 📦 Package imports:
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 
 // 🌎 Project imports:
 import '../../extensions/build_context_extensions.dart';
@@ -24,7 +24,7 @@ class EZTPasswordRequirements extends StatelessWidget {
           AnimatedSwitcher(
             duration: const Duration(milliseconds: 200),
             child: Icon(
-              isMet ? PhosphorIcons.checkCircle(PhosphorIconsStyle.fill) : PhosphorIcons.circle(),
+              isMet ? PhosphorIcons.checkCircleFill : PhosphorIcons.circle,
               key: ValueKey(isMet),
               size: 16,
               color: color,
@@ -58,7 +58,7 @@ class EZTPasswordRequirements extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(PhosphorIcons.shieldCheck(), size: 16, color: context.getApplyedColorScheme.primary),
+              Icon(PhosphorIcons.shieldCheck, size: 16, color: context.getApplyedColorScheme.primary),
               const SizedBox(width: 6),
               Text(
                 context.l10n.passwordRequirementsTitle,

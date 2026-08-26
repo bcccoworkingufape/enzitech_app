@@ -3,7 +3,7 @@ import 'package:material_ui/material_ui.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 
 // 🌎 Project imports:
 import '../../../../../../../shared/extensions/extensions.dart';
@@ -144,7 +144,7 @@ class _CreateExperimentFirstStepPageState extends State<CreateExperimentFirstSte
             const SizedBox(height: 32),
             Row(
               children: [
-                Icon(PhosphorIcons.flask()),
+                Icon(PhosphorIcons.flask),
                 const SizedBox(width: 4),
                 Text(context.l10n.experimentIdentification, style: TextStyles.detailBold),
               ],

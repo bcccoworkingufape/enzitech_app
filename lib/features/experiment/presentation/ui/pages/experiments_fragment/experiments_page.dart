@@ -3,7 +3,7 @@ import 'package:material_ui/material_ui.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
@@ -155,10 +155,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Icon(
-                          PhosphorIcons.trash(PhosphorIconsStyle.light),
-                          color: context.getApplyedColorScheme.onError,
-                        ),
+                        Icon(PhosphorIcons.trashLight, color: context.getApplyedColorScheme.onError),
                         Text(
                           context.l10n.delete,
                           style: TextStyle(color: context.getApplyedColorScheme.onError),
@@ -269,12 +266,12 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                           ButtonSegment<int>(
                             value: 0,
                             label: Text(context.l10n.inProgress),
-                            icon: Icon(PhosphorIcons.clockClockwise()),
+                            icon: Icon(PhosphorIcons.clockClockwise),
                           ),
                           ButtonSegment<int>(
                             value: 1,
                             label: Text(context.l10n.completed),
-                            icon: Icon(PhosphorIcons.checks()),
+                            icon: Icon(PhosphorIcons.checks),
                           ),
                         ],
                         selected: <int>{selectedButtonSegment},
@@ -300,9 +297,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                       ),
                       IconButton(
                         icon: Icon(
-                          _experimentsViewmodel.anyFilterIsEnabled()
-                              ? PhosphorIcons.funnel(PhosphorIconsStyle.fill)
-                              : PhosphorIcons.funnel(),
+                          _experimentsViewmodel.anyFilterIsEnabled() ? PhosphorIcons.funnelFill : PhosphorIcons.funnel,
                           color: _experimentsViewmodel.anyFilterIsEnabled()
                               ? context.getApplyedColorScheme.primary
                               : null,

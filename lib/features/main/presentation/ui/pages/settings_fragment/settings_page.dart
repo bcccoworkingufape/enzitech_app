@@ -5,7 +5,7 @@ import 'package:flutter/scheduler.dart';
 // 📦 Package imports:
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 
 // 🌎 Project imports:
 import '../../../../../../core/domain/service/platform_service/platform_service.dart';
@@ -73,17 +73,17 @@ class _SettingsPageState extends State<SettingsPage> with SecureScreenMixin {
   Icon _getIconTheme() {
     switch (platformService.getPlatformType()) {
       case PlatformTypeEnum.web:
-        return Icon(PhosphorIcons.globe());
+        return Icon(PhosphorIcons.globe);
       case PlatformTypeEnum.android:
-        return Icon(PhosphorIcons.androidLogo());
+        return Icon(PhosphorIcons.androidLogo);
       case PlatformTypeEnum.iOS:
-        return Icon(PhosphorIcons.appleLogo());
+        return Icon(PhosphorIcons.appleLogo);
       case PlatformTypeEnum.windows:
-        return Icon(PhosphorIcons.windowsLogo());
+        return Icon(PhosphorIcons.windowsLogo);
       case PlatformTypeEnum.linux:
-        return Icon(PhosphorIcons.linuxLogo());
+        return Icon(PhosphorIcons.linuxLogo);
       case PlatformTypeEnum.macOS:
-        return Icon(PhosphorIcons.desktop());
+        return Icon(PhosphorIcons.desktop);
     }
   }
 
@@ -108,9 +108,9 @@ class _SettingsPageState extends State<SettingsPage> with SecureScreenMixin {
                       title: context.l10n.info,
                       tiles: [
                         ListTile(
-                          leading: Icon(PhosphorIcons.info()),
+                          leading: Icon(PhosphorIcons.info),
                           title: Text(context.l10n.about),
-                          trailing: Icon(PhosphorIcons.caretRight()),
+                          trailing: Icon(PhosphorIcons.caretRight),
                           onTap: () {
                             showModalBottomSheet(
                               isScrollControlled: true,
@@ -124,8 +124,8 @@ class _SettingsPageState extends State<SettingsPage> with SecureScreenMixin {
                           },
                         ),
                         ListTile(
-                          leading: Icon(PhosphorIcons.question()),
-                          trailing: Icon(PhosphorIcons.caretRight()),
+                          leading: Icon(PhosphorIcons.question),
+                          trailing: Icon(PhosphorIcons.caretRight),
                           title: Text(context.l10n.frequentlyAskedQuestions),
                           onTap: () {
                             showModalBottomSheet(
@@ -143,7 +143,7 @@ class _SettingsPageState extends State<SettingsPage> with SecureScreenMixin {
                       title: context.l10n.userData,
                       tiles: [
                         SettingsTile(
-                          leading: Icon(PhosphorIcons.user()),
+                          leading: Icon(PhosphorIcons.user),
                           title: Text(context.l10n.userName),
                           subtitle: Text(
                             _settingsViewmodel.user!.name,
@@ -152,7 +152,7 @@ class _SettingsPageState extends State<SettingsPage> with SecureScreenMixin {
                           ),
                         ),
                         SettingsTile(
-                          leading: Icon(PhosphorIcons.at()),
+                          leading: Icon(PhosphorIcons.at),
                           title: Text(context.l10n.email),
                           subtitle: Text(
                             _settingsViewmodel.user!.email,
@@ -161,7 +161,7 @@ class _SettingsPageState extends State<SettingsPage> with SecureScreenMixin {
                           ),
                         ),
                         SettingsTile(
-                          leading: Icon(PhosphorIcons.identificationBadge()),
+                          leading: Icon(PhosphorIcons.identificationBadge),
                           title: Text(context.l10n.userType),
                           subtitle: Text(
                             context.l10n.roles(_settingsViewmodel.user!.userType.name),
@@ -175,7 +175,7 @@ class _SettingsPageState extends State<SettingsPage> with SecureScreenMixin {
                       title: context.l10n.settings,
                       tiles: [
                         SwitchListTile(
-                          secondary: Icon(PhosphorIcons.globe()),
+                          secondary: Icon(PhosphorIcons.globe),
                           title: Text(context.l10n.replaceLanguage),
                           value: _settingsViewmodel.isReplaceLanguage,
                           onChanged: (bool value) => _settingsViewmodel.setReplaceLanguage(value),
@@ -185,7 +185,7 @@ class _SettingsPageState extends State<SettingsPage> with SecureScreenMixin {
                               ? 1.0
                               : 0.5, // Reduce opacity to indicate disabled state
                           child: SettingsTile(
-                            leading: Icon(PhosphorIcons.quotes()),
+                            leading: Icon(PhosphorIcons.quotes),
                             title: Text(context.l10n.languages),
                             trailing: SegmentedButton<Locale>(
                               showSelectedIcon: false,
@@ -205,14 +205,14 @@ class _SettingsPageState extends State<SettingsPage> with SecureScreenMixin {
                           ),
                         ),
                         SettingsTile(
-                          leading: Icon(PhosphorIcons.paintRoller()),
+                          leading: Icon(PhosphorIcons.paintRoller),
                           title: Text(context.l10n.theme),
                           trailing: SegmentedButton<ThemeMode>(
                             showSelectedIcon: false,
                             segments: <ButtonSegment<ThemeMode>>[
                               ButtonSegment<ThemeMode>(value: ThemeMode.system, icon: _getIconTheme()),
-                              ButtonSegment<ThemeMode>(value: ThemeMode.light, icon: Icon(PhosphorIcons.sun())),
-                              ButtonSegment<ThemeMode>(value: ThemeMode.dark, icon: Icon(PhosphorIcons.moon())),
+                              ButtonSegment<ThemeMode>(value: ThemeMode.light, icon: Icon(PhosphorIcons.sun)),
+                              ButtonSegment<ThemeMode>(value: ThemeMode.dark, icon: Icon(PhosphorIcons.moon)),
                             ],
                             selected: <ThemeMode>{_settingsViewmodel.themeMode},
                             onSelectionChanged: (Set<ThemeMode> newSelection) {
@@ -223,7 +223,7 @@ class _SettingsPageState extends State<SettingsPage> with SecureScreenMixin {
                           ),
                         ),
                         SwitchListTile(
-                          secondary: Icon(PhosphorIcons.trash()),
+                          secondary: Icon(PhosphorIcons.trash),
                           title: Text(context.l10n.deletionConfirmation),
                           value: _settingsViewmodel.enableExcludeConfirmation!,
                           onChanged: (bool value) => _settingsViewmodel.setEnableExcludeConfirmation(value),
@@ -234,7 +234,7 @@ class _SettingsPageState extends State<SettingsPage> with SecureScreenMixin {
                       title: context.l10n.details,
                       tiles: [
                         SettingsTile(
-                          leading: Icon(PhosphorIcons.computerTower()),
+                          leading: Icon(PhosphorIcons.computerTower),
                           title: Text(context.l10n.environment),
                           subtitle: Text(
                             translatedEnvValue,
@@ -243,7 +243,7 @@ class _SettingsPageState extends State<SettingsPage> with SecureScreenMixin {
                           ),
                         ),
                         SettingsTile(
-                          leading: Icon(PhosphorIcons.gitBranch()),
+                          leading: Icon(PhosphorIcons.gitBranch),
                           onTap: () async {
                             try {
                               await _settingsViewmodel.openUrl(Constants.enzitechGithubPage);
@@ -260,7 +260,7 @@ class _SettingsPageState extends State<SettingsPage> with SecureScreenMixin {
                           ),
                         ),
                         SettingsTile(
-                          leading: Icon(PhosphorIcons.signOut()),
+                          leading: Icon(PhosphorIcons.signOut),
                           title: Text(context.l10n.exit),
                           onTap: () {
                             _homeViewmodel.experimentsViewmodel.clearFilters();
