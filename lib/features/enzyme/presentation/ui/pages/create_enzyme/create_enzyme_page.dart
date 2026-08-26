@@ -1,9 +1,9 @@
 // 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
@@ -107,7 +107,7 @@ class _CreateEnzymePageState extends State<CreateEnzymePage> {
           const SizedBox(height: 64),
           Row(
             children: [
-              Icon(PhosphorIcons.flask()),
+              Icon(PhosphorIcons.flask),
               const SizedBox(width: 4),
               Text(context.l10n.enzymeIdentification, style: TextStyles.detailBold),
             ],

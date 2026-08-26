@@ -1,11 +1,11 @@
 // 🐦 Flutter imports:
 
 // 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
@@ -131,10 +131,7 @@ class _EnzymesPageState extends State<EnzymesPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Icon(
-                          PhosphorIcons.trash(PhosphorIconsStyle.light),
-                          color: context.getApplyedColorScheme.onError,
-                        ),
+                        Icon(PhosphorIcons.trashLight, color: context.getApplyedColorScheme.onError),
                         Text(
                           context.l10n.delete,
                           style: TextStyle(color: context.getApplyedColorScheme.onError),

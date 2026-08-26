@@ -6,38 +6,38 @@ import 'dart:math' as math;
 import 'dart:math';
 
 // 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 // 🌎 Project imports:
 import 'src/circular_progress.dart';
 import 'src/clipper.dart';
 
-// The over-scroll distance that moves the indicator to its maximum
-// displacement, as a percentage of the scrollable's container extent.
+// A distância de over-scroll que move o indicador até o máximo
+// de deslocamento, como percentual da extensão do contêiner rolável.
 const double _kDragContainerExtentPercentage = 0.25;
 
-// How much the scroll's drag gesture can overshoot the LiquidPullToRefresh's
-// displacement; max displacement = _kDragSizeFactorLimit * displacement.
+// Quanto o gesto de arrasto da rolagem pode ultrapassar o deslocamento do LiquidPullToRefresh;
+// deslocamento máximo = _kDragSizeFactorLimit * deslocamento.
 const double _kDragSizeFactorLimit = 1.5;
 
-// When the scroll ends, the duration of the progress indicator's animation
-// to the LiquidPullToRefresh's displacement.
+// Quando a rolagem termina, a duração da animação do indicador de progresso
+// até o deslocamento do LiquidPullToRefresh.
 // const Duration _kIndicatorSnapDuration = Duration(milliseconds: 150);
 
-// The duration of the ScaleTransitionIn of box that starts when the
-// refresh action has completed.
+// A duração da ScaleTransitionIn da caixa que começa quando a ação de
+// refresh é concluída.
 const Duration _kIndicatorScaleDuration = Duration(milliseconds: 200);
 
-/// The signature for a function that's called when the user has dragged a
-/// [LiquidPullToRefresh] far enough to demonstrate that they want the app to
-/// refresh. The returned [Future] must complete when the refresh operation is
-/// finished.
+/// A assinatura de uma função chamada quando o usuário arrasta um
+/// [LiquidPullToRefresh] o suficiente para demonstrar que deseja que o app
+/// atualize. O [Future] retornado deve completar quando a operação de refresh
+/// terminar.
 ///
-/// Used by [LiquidPullToRefresh.onRefresh].
+/// Usada por [LiquidPullToRefresh.onRefresh].
 typedef RefreshCallback = Future<void> Function();
 
-// The state machine moves through these modes only when the scrollable
-// identified by scrollableKey has been scrolled to its min or max limit.
+// A máquina de estados percorre estes modos somente quando a rolagem
+// identificada por scrollableKey foi rolada até seu limite mínimo ou máximo.
 enum _LiquidPullToRefreshMode {
   drag, // Pointer is down.
   armed, // Dragged far enough that an up event will run the onRefresh callback.
@@ -62,57 +62,57 @@ class LiquidPullToRefresh extends StatefulWidget {
     this.showChildOpacityTransition = true,
   }) : assert(animSpeedFactor >= 1.0);
 
-  /// The widget below this widget in the tree.
+  /// O widget abaixo deste widget na árvore.
   ///
-  /// The progress indicator will be stacked on top of this child. The indicator
-  /// will appear when child's Scrollable descendant is over-scrolled.
+  /// O indicador de progresso será empilhado sobre esse child. O indicador
+  /// aparecerá quando o descendente Scrollable do child for over-scrolled.
   ///
-  /// Typically a [ListView] or [CustomScrollView].
+  /// Normalmente um [ListView] ou [CustomScrollView].
   final Widget child;
 
-  /// The distance from the child's top or bottom edge to where the box
-  /// will settle after the spring effect.
+  /// A distância da borda superior ou inferior do child até onde a caixa
+  /// vai se acomodar após o efeito de mola.
   ///
-  /// default is set to 100.0
+  /// o padrão é 100.0
   final double? height;
 
-  /// Duration in milliseconds of springy effect that occurs when
-  /// we leave dragging after full drag.
+  /// Duração em milissegundos do efeito elástico que ocorre quando
+  /// deixamos de arrastar após um arrasto completo.
   ///
-  /// default to 1000
+  /// o padrão é 1000
   final int springAnimationDurationInMilliseconds;
 
-  /// To regulate the "speed of the animation" towards the end.
-  /// To hasten it give a value > 1.0 and vice versa.
+  /// Para regular a "velocidade da animação" no final.
+  /// Para acelerá-la, dê um valor > 1.0 e vice-versa.
   ///
-  /// default to 1.0
+  /// o padrão é 1.0
   final double animSpeedFactor;
 
-  /// Border width of progressing circle in Progressing Indicator
+  /// Largura da borda do círculo de progresso no indicador de progresso.
   ///
-  /// default to 2.0
+  /// o padrão é 2.0
   final double borderWidth;
 
-  /// Whether to show child opacity transition or not.
+  /// Se deve mostrar ou não a transição de opacidade do child.
   ///
-  /// default to true
+  /// o padrão é true
   final bool showChildOpacityTransition;
 
-  /// A function that's called when the user has dragged the progress indicator
-  /// far enough to demonstrate that they want the app to refresh. The returned
-  /// [Future] must complete when the refresh operation is finished.
+  /// Uma função chamada quando o usuário arrasta o indicador de progresso
+  /// o suficiente para demonstrar que quer atualizar o app. O [Future] retornado
+  /// deve completar quando a operação de refresh terminar.
   final RefreshCallback onRefresh;
 
-  /// The progress indicator's foreground color. The current theme's
-  /// [Theme.of(context).colorScheme.secondary] by default.
+  /// A cor de primeiro plano do indicador de progresso. O valor padrão é
+  /// [Theme.of(context).colorScheme.secondary] do tema atual.
   final Color? color;
 
-  /// The progress indicator's background color. The current theme's
-  /// [ThemeData.canvasColor] by default.
+  /// A cor de fundo do indicador de progresso. O valor padrão é
+  /// [ThemeData.canvasColor] do tema atual.
   final Color? backgroundColor;
 
-  /// The progress indicator's background image.
-  /// [null] by default.
+  /// A imagem de fundo do indicador de progresso.
+  /// [null] por padrão.
   final ImageProvider? backgroundImage;
 
   @override
@@ -308,9 +308,9 @@ class LiquidPullToRefreshState extends State<LiquidPullToRefresh> with TickerPro
         }
       }
       if (_mode == _LiquidPullToRefreshMode.armed && notification.dragDetails == null) {
-        // On iOS start the refresh when the Scrollable bounces back from the
-        // OverScroll (ScrollNotification indicating this don't have dragDetails
-        // because the scroll activity is not directly triggered by a drag).
+        // No iOS, inicia o refresh quando o Scrollable quica de volta do
+        // OverScroll (ScrollNotification indicando que não possui dragDetails
+        // porque a atividade de rolagem não é acionada diretamente por um arrasto).
         _show();
       }
     } else if (notification is OverscrollNotification) {
@@ -345,22 +345,22 @@ class LiquidPullToRefreshState extends State<LiquidPullToRefresh> with TickerPro
     return false;
   }
 
-  // Stop showing the progress indicator.
+  // Para de mostrar o indicador de progresso.
   Future<void> _dismiss(_LiquidPullToRefreshMode newMode) async {
     await Future<void>.value();
-    // This can only be called from _show() when refreshing and
-    // _handleScrollNotification in response to a ScrollEndNotification or
-    // direction change.
+    // Isso só pode ser chamado a partir de _show() durante o refresh e
+    // _handleScrollNotification em resposta a um ScrollEndNotification ou
+    // mudança de direção.
     assert(newMode == _LiquidPullToRefreshMode.canceled || newMode == _LiquidPullToRefreshMode.done);
     setState(() {
       _mode = newMode;
     });
     switch (_mode) {
       case _LiquidPullToRefreshMode.done:
-        //stop progressing animation
+        // interrompe a animação de progresso
         _progressingController.stop();
 
-        // progress ring disappear animation
+        // animação de desaparecimento do anel de progresso
         _ringDisappearController.animateTo(
           1.0,
           duration: Duration(
@@ -369,7 +369,7 @@ class LiquidPullToRefreshState extends State<LiquidPullToRefresh> with TickerPro
           curve: Curves.linear,
         );
 
-        // indicator translate out
+        // indicador sai em translação
         _indicatorMoveWithPeakController.animateTo(
           0.0,
           duration: Duration(
@@ -385,7 +385,7 @@ class LiquidPullToRefreshState extends State<LiquidPullToRefresh> with TickerPro
           curve: Curves.linear,
         );
 
-        //initial value of controller is 1.0
+        // o valor inicial do controller é 1.0
         await _showPeakController.animateTo(
           0.3,
           duration: Duration(
@@ -449,7 +449,7 @@ class LiquidPullToRefreshState extends State<LiquidPullToRefresh> with TickerPro
       case AxisDirection.left:
       case AxisDirection.right:
         _isIndicatorAtTop = null;
-        // we do not support horizontal scroll views.
+        // não suportamos scroll views horizontais.
         return false;
     }
     _dragOffset = 0.0;
@@ -495,21 +495,21 @@ class LiquidPullToRefreshState extends State<LiquidPullToRefresh> with TickerPro
       curve: Curves.linear,
     );
 
-    //indicator translate in with peak
+    // indicador entra em translação com pico
     _indicatorMoveWithPeakController.animateTo(
       1.0,
       duration: Duration(milliseconds: widget.springAnimationDurationInMilliseconds),
       curve: Curves.linear,
     );
 
-    //indicator move to center
+    // indicador se move para o centro
     _indicatorTranslateInOutController.animateTo(
       1.0,
       duration: Duration(milliseconds: widget.springAnimationDurationInMilliseconds),
       curve: Curves.linear,
     );
 
-    // progress ring fade in
+    // o anel de progresso entra em fade
     _ringDisappearController.animateTo(
       0.0,
       duration: Duration(milliseconds: widget.springAnimationDurationInMilliseconds),
@@ -524,11 +524,11 @@ class LiquidPullToRefreshState extends State<LiquidPullToRefresh> with TickerPro
         .then<void>((void value) {
           if (mounted && _mode == _LiquidPullToRefreshMode.snap) {
             setState(() {
-              // Show the indeterminate progress indicator.
+              // Mostra o indicador de progresso indeterminado.
               _mode = _LiquidPullToRefreshMode.refresh;
             });
 
-            //run progress animation
+            // executa a animação de progresso
             _progressingController.repeat();
 
             final Future<void> refreshResult = widget.onRefresh();
@@ -544,22 +544,22 @@ class LiquidPullToRefreshState extends State<LiquidPullToRefresh> with TickerPro
         });
   }
 
-  /// Show the progress indicator and run the refresh callback as if it had
-  /// been started interactively. If this method is called while the refresh
-  /// callback is running, it quietly does nothing.
+  /// Exibe o indicador de progresso e executa o callback de refresh como se tivesse
+  /// sido iniciado interativamente. Se este método for chamado enquanto o callback
+  /// de refresh estiver em execução, ele simplesmente não faz nada.
   ///
-  /// Creating the [LiquidPullToRefresh] with a [GlobalKey<LiquidPullToRefreshState>]
-  /// makes it possible to refer to the [LiquidPullToRefreshState].
+  /// Criar o [LiquidPullToRefresh] com um [GlobalKey<LiquidPullToRefreshState>]
+  /// torna possível se referir ao [LiquidPullToRefreshState].
   ///
-  /// The future returned from this method completes when the
-  /// [LiquidPullToRefresh.onRefresh] callback's future completes.
+  /// O futuro retornado por este método completa quando o future do callback
+  /// [LiquidPullToRefresh.onRefresh] for concluído.
   ///
-  /// If you await the future returned by this function from a [State], you
-  /// should check that the state is still [mounted] before calling [setState].
+  /// Se você aguardar o futuro retornado por esta função a partir de um [State],
+  /// deve verificar se o estado ainda está [mounted] antes de chamar [setState].
   ///
-  /// When initiated in this manner, the progress indicator is independent of any
-  /// actual scroll view. It defaults to showing the indicator at the top. To
-  /// show it at the bottom, set `atTop` to false.
+  /// Quando iniciado desta forma, o indicador de progresso é independente de qualquer
+  /// scroll view real. Por padrão, ele mostra o indicador no topo. Para
+  /// mostrá-lo na parte inferior, defina `atTop` como false.
   Future<void>? show({bool atTop = true}) {
     if (_mode != _LiquidPullToRefreshMode.refresh && _mode != _LiquidPullToRefreshMode.snap) {
       if (_mode == null) _start(atTop ? AxisDirection.down : AxisDirection.up);
@@ -574,14 +574,14 @@ class LiquidPullToRefreshState extends State<LiquidPullToRefresh> with TickerPro
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterialLocalizations(context));
 
-    // assigning default color and background color
+    // define a cor padrão e a cor de fundo padrão
     Color defaultColor = Theme.of(context).colorScheme.secondary;
     Color defaultBackgroundColor = Theme.of(context).canvasColor;
 
-    // assigning default height
+    // define a altura padrão
     double defaultHeight = 100.0;
 
-    // checking whether to take default values or not
+    // verifica se devem ser usados os valores padrão
     Color color = (widget.color != null) ? widget.color! : defaultColor;
     Color backgroundColor = (widget.backgroundColor != null) ? widget.backgroundColor! : defaultBackgroundColor;
     double height = (widget.height != null) ? widget.height! : defaultHeight;
@@ -611,7 +611,7 @@ class LiquidPullToRefreshState extends State<LiquidPullToRefresh> with TickerPro
           builder: (BuildContext buildContext, Widget? child) {
             if (widget.showChildOpacityTransition) {
               return Opacity(
-                // -0.01 is done for elasticOut curve
+                // -0.01 é usado para a curva elasticOut
                 opacity: (widget.showChildOpacityTransition)
                     ? (_childOpacityAnimation.value - (1 / 3) - 0.01).clamp(0.0, 1.0)
                     : 1.0,

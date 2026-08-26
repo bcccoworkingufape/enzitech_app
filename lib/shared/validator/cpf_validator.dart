@@ -15,16 +15,15 @@ class CPFValidator {
     "77777777777",
     "88888888888",
     "99999999999",
-    "12345678909"
+    "12345678909",
   ];
 
   static const STRIP_REGEX = r'[^\d]';
 
-  // Compute the Verifier Digit (or "Dígito Verificador (DV)" in PT-BR).
-  // You can learn more about the algorithm on [wikipedia (pt-br)](https://pt.wikipedia.org/wiki/D%C3%ADgito_verificador)
+  // Calcula o dígito verificador (ou "Dígito Verificador (DV)" em PT-BR).
+  // Você pode aprender mais sobre o algoritmo em [wikipedia (pt-br)](https://pt.wikipedia.org/wiki/D%C3%ADgito_verificador)
   static int _verifierDigit(String cpf) {
-    var numbers =
-        cpf.split("").map((number) => int.parse(number, radix: 10)).toList();
+    var numbers = cpf.split("").map((number) => int.parse(number, radix: 10)).toList();
 
     var modulus = numbers.length + 1;
 
@@ -42,8 +41,7 @@ class CPFValidator {
   static String format(String cpf) {
     var regExp = RegExp(r'^(\d{3})(\d{3})(\d{3})(\d{2})$');
 
-    return strip(cpf)
-        .replaceAllMapped(regExp, (m) => "${m[1]}.${m[2]}.${m[3]}-${m[4]}");
+    return strip(cpf).replaceAllMapped(regExp, (m) => "${m[1]}.${m[2]}.${m[3]}-${m[4]}");
   }
 
   static String strip(String cpf) {
@@ -58,17 +56,17 @@ class CPFValidator {
       cpf = strip(cpf);
     }
 
-    // CPF must be defined
+    // O CPF deve ser definido
     if (cpf.isEmpty || cpf.isEmpty) {
       return false;
     }
 
-    // CPF must have 11 chars
+    // O CPF deve ter 11 caracteres
     if (cpf.length != 11) {
       return false;
     }
 
-    // CPF can't be blacklisted
+    // O CPF não pode estar na lista negra
     if (BLACKLIST.indexOf(cpf) != -1) {
       return false;
     }
@@ -77,8 +75,7 @@ class CPFValidator {
     numbers += _verifierDigit(numbers).toString();
     numbers += _verifierDigit(numbers).toString();
 
-    return numbers.substring(numbers.length - 2) ==
-        cpf.substring(cpf.length - 2);
+    return numbers.substring(numbers.length - 2) == cpf.substring(cpf.length - 2);
   }
 
   static String generate({bool useFormat = false}) {

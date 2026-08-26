@@ -1,5 +1,5 @@
 // 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
@@ -8,12 +8,10 @@ import 'package:get_it/get_it.dart';
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
 import '../../../../shared/ui/ui.dart';
-import '../../../enzyme/domain/entities/enzyme_entity.dart';
-import '../../domain/entities/experiment_calculation_entity.dart';
 import '../../domain/entities/experiment_entity.dart';
+import '../../domain/entities/repetition_entity.dart';
 import '../../domain/usecases/experiments_usecases.dart';
 import '../dto/choosed_experiment_combination_dto.dart';
-import '../dto/number_differences_dto.dart';
 import 'experiment_details_viewmodel.dart';
 import 'experiments_viewmodel.dart';
 
@@ -41,19 +39,6 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
     _experiment = experiment;
   }
 
-  List<EnzymeEntity> _enzymesRemaining = [];
-  List<EnzymeEntity> get enzymesRemaining => _enzymesRemaining;
-  void setEnzymesRemaining(List<EnzymeEntity> enzymesRemaining) {
-    _enzymesRemaining = enzymesRemaining;
-  }
-
-  ExperimentCalculationEntity? _experimentCalculationEntity;
-  ExperimentCalculationEntity? get experimentCalculationEntity => _experimentCalculationEntity;
-  void setExperimentCalculation(ExperimentCalculationEntity? experimentCalculationEntity) {
-    _experimentCalculationEntity = experimentCalculationEntity;
-    notifyListeners();
-  }
-
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final GlobalKey<FormState> firstStepFormKey = GlobalKey<FormState>();
 
@@ -78,13 +63,6 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
     if (notify) notifyListeners();
   }
 
-  bool _enableNextButtonOnSecondStep = false;
-  bool get enableNextButtonOnSecondStep => _enableNextButtonOnSecondStep;
-  void setEnableNextButtonOnSecondStep(bool enableNextButtonOnSecondStep, {bool notify = true}) {
-    _enableNextButtonOnSecondStep = enableNextButtonOnSecondStep;
-    if (notify) notifyListeners();
-  }
-
   ChoosedExperimentCombinationDTO _temporaryChoosedExperimentCombination = ChoosedExperimentCombinationDTO();
   ChoosedExperimentCombinationDTO get temporaryChoosedExperimentCombination => _temporaryChoosedExperimentCombination;
   void setTemporaryChoosedExperimentCombination(ChoosedExperimentCombinationDTO temporaryChoosedExperimentCombination) {
@@ -92,29 +70,44 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<Map<String, double?>> _listOfExperimentData = [];
-  List<Map<String, double?>> get listOfExperimentData => _listOfExperimentData;
-  void setListOfExperimentData(List<Map<String, double?>> listOfExperimentData) {
-    _listOfExperimentData = listOfExperimentData;
-  }
-
-  Map<String, TextEditingController> _textEditingControllers = {};
-  Map<String, TextEditingController> get textEditingControllers => _textEditingControllers;
-  void setTextEditingControllers(Map<String, TextEditingController> textEditingControllers) {
-    _textEditingControllers = textEditingControllers;
+  List<RepetitionEntity> _repetitions = [];
+  List<RepetitionEntity> get repetitions => _repetitions;
+  void setRepetitions(List<RepetitionEntity> repetitions) {
+    _repetitions = repetitions;
     notifyListeners();
   }
 
-  NumberDifferencesDTO? _numberDifferencesDTO;
-  NumberDifferencesDTO? get numberDifferencesDTO => _numberDifferencesDTO;
-  void setNumberDifferencesDTO(NumberDifferencesDTO? numberDifferencesDTO) {
-    _numberDifferencesDTO = numberDifferencesDTO;
+  // Repetições (slots) de todas as combinações tratamento×enzima escolhidas no primeiro
+  // passo. Cada slot pode estar PENDING ou COMPLETED e é salvo de forma isolada, sem
+  // depender dos demais — inclusive dos de outras combinações escolhidas ao mesmo tempo.
+  List<RepetitionEntity> get repetitionsForChosenCombination {
+    final treatmentIds = temporaryChoosedExperimentCombination.treatments.map((t) => t.id).toSet();
+    final enzymeIds = temporaryChoosedExperimentCombination.enzymes.map((e) => e.id).toSet();
+
+    if (treatmentIds.isEmpty || enzymeIds.isEmpty) return [];
+
+    final filtered = _repetitions
+        .where((repetition) => treatmentIds.contains(repetition.treatmentId) && enzymeIds.contains(repetition.enzymeId))
+        .toList();
+
+    filtered.sort((a, b) {
+      final treatmentComparison = a.treatmentName.compareTo(b.treatmentName);
+      if (treatmentComparison != 0) return treatmentComparison;
+
+      final enzymeComparison = a.enzymeName.compareTo(b.enzymeName);
+      if (enzymeComparison != 0) return enzymeComparison;
+
+      return a.repetitionNumber.compareTo(b.repetitionNumber);
+    });
+
+    return filtered;
   }
 
-  List<NumberDifferencesDTO?> _listOfNumberDifferencesDTO = [];
-  List<NumberDifferencesDTO?> get listOfNumberDifferencesDTO => _listOfNumberDifferencesDTO;
-  void setListOfNumberDifferencesDTO(List<NumberDifferencesDTO?> listOfNumberDifferencesDTO) {
-    _listOfNumberDifferencesDTO = listOfNumberDifferencesDTO;
+  RepetitionEntity? _previewedRepetition;
+  RepetitionEntity? get previewedRepetition => _previewedRepetition;
+  void setPreviewedRepetition(RepetitionEntity? previewedRepetition) {
+    _previewedRepetition = previewedRepetition;
+    notifyListeners();
   }
 
   bool _alreadyPopped = false;
@@ -140,7 +133,6 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
             );
           } else {
             setEnableNextButtonOnFirstStep(false, notify: false);
-            setEnableNextButtonOnSecondStep(false, notify: false);
             setTemporaryChoosedExperimentCombination(ChoosedExperimentCombinationDTO());
             setAlreadyPopped(true);
             Navigator.pop(context);
@@ -161,106 +153,47 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
     pageController.nextPage(duration: const Duration(milliseconds: 150), curve: Curves.easeIn);
   }
 
-  void validateFields(String value, double id, String type) {
-    var isAllFilled = <bool>[];
-    textEditingControllers.forEach((key, value) {
-      isAllFilled.add(value.text.isNotEmpty);
-    });
-    var b = listOfExperimentData.firstWhere((element) => element["_id"] == id);
-    if (value != "") {
-      b[type] = double.parse(value);
-    }
-    if (isAllFilled.every((boolean) => boolean == true)) {
-      setEnableNextButtonOnSecondStep(true);
-    } else {
-      setEnableNextButtonOnSecondStep(false);
-    }
-  }
-
-  Future<void> generateTextFields() async {
-    setStateEnum(StateEnum.loading);
-
-    setTextEditingControllers({});
-
-    List<Map<String, double?>> tempList = [];
-    for (var i = 0; i < experiment.repetitions; i++) {
-      tempList.add({"sample": null, "whiteSample": null, "_id": i.toDouble()});
-    }
-
-    setListOfExperimentData(tempList);
-    textEditingControllers.clear();
-
-    for (var i = 0; i < listOfExperimentData.length; i++) {
-      TextEditingController sampleFieldController = TextEditingController(text: '');
-      textEditingControllers.putIfAbsent('sample-${i.toDouble()}', () => sampleFieldController);
-
-      TextEditingController whiteSampleFieldController = TextEditingController(text: '');
-      textEditingControllers.putIfAbsent('whiteSample-${i.toDouble()}', () => whiteSampleFieldController);
-    }
-    setStateEnum(StateEnum.idle);
-  }
-
-  double _percentOfDifference(num num1, num num2) => (((num2 - num1) / num1) * 100).abs();
-
-  void getAbsNumberFartherFromAverage() {
-    final average = experimentCalculationEntity!.average.toDouble();
-
-    final results = experimentCalculationEntity!.results;
-
-    double differenceOfFartherNumber = _percentOfDifference(average, results.first);
-
-    num fartherNumber = experimentCalculationEntity!.results.first;
-
-    for (var number in results) {
-      var diff = _percentOfDifference(average, number);
-      if (diff > differenceOfFartherNumber) {
-        differenceOfFartherNumber = diff;
-        fartherNumber = number;
-      }
-    }
-
-    setNumberDifferencesDTO(
-      NumberDifferencesDTO(differenceOfFartherNumber: differenceOfFartherNumber, fartherNumber: fartherNumber),
-    );
-  }
-
-  void calculateListOfNumbersFartherFromAverage() {
-    final average = experimentCalculationEntity!.average;
-
-    final results = experimentCalculationEntity!.results;
-
-    var list = <NumberDifferencesDTO>[];
-
-    for (var number in results) {
-      var diff = _percentOfDifference(average, number);
-      var numberWithDifference = NumberDifferencesDTO(
-        number: number,
-        isFarther: diff > 25,
-        differenceOfFartherNumber: diff,
-        fartherNumber: 0,
-      );
-      list.add(numberWithDifference);
-    }
-
-    setListOfNumberDifferencesDTO(list);
-  }
-
   void clearTemporaryInfos() {
     setEnableNextButtonOnFirstStep(false, notify: false);
-    setEnableNextButtonOnSecondStep(false, notify: false);
     setTemporaryChoosedExperimentCombination(ChoosedExperimentCombinationDTO());
-    setExperimentCalculation(null);
+    setRepetitions([]);
+    setPreviewedRepetition(null);
     setStateEnum(StateEnum.idle);
-    setListOfExperimentData([]);
-    setEnzymesRemaining([]);
   }
 
-  Future<void> getEnzymesRemainingInExperiment(String treatmentId) async {
+  Future<void> fetchRepetitions() async {
     setStateEnum(StateEnum.loading);
 
-    var result = await _experimentsUseCases.getEnzymesRemainingInExperiment(
+    var result = await _experimentsUseCases.getRepetitions(experimentId: experiment.id);
+
+    result.fold(
+      (error) {
+        _setFailure(error);
+        setStateEnum(StateEnum.error);
+      },
+      (success) {
+        setRepetitions(success);
+        setStateEnum(StateEnum.success);
+      },
+    );
+  }
+
+  Future<void> previewRepetition({
+    required String treatmentId,
+    required String enzymeId,
+    required int repetitionNumber,
+    required double sample,
+    required double whiteSample,
+  }) async {
+    setStateEnum(StateEnum.loading);
+
+    var result = await _experimentsUseCases.previewRepetition(
       experimentId: experiment.id,
       treatmentId: treatmentId,
+      enzymeId: enzymeId,
+      repetitionNumber: repetitionNumber,
+      sample: sample,
+      whiteSample: whiteSample,
     );
 
     result.fold(
@@ -268,56 +201,42 @@ class CalculateExperimentViewmodel extends ChangeNotifier {
         _setFailure(error);
         setStateEnum(StateEnum.error);
       },
-      (success) async {
-        setEnzymesRemaining(success);
+      (success) {
+        setPreviewedRepetition(success);
         setStateEnum(StateEnum.success);
       },
     );
   }
 
-  Future<void> calculateExperiment() async {
+  Future<void> saveRepetition({
+    required String treatmentId,
+    required String enzymeId,
+    required int repetitionNumber,
+    required double sample,
+    required double whiteSample,
+  }) async {
     setStateEnum(StateEnum.loading);
 
-    var result = await _experimentsUseCases.calculateExperiment(
+    var result = await _experimentsUseCases.saveRepetition(
       experimentId: experiment.id,
-      enzymeId: temporaryChoosedExperimentCombination.enzyme!.id,
-      treatmentID: temporaryChoosedExperimentCombination.treatment!.id,
-      listOfExperimentData: listOfExperimentData,
+      treatmentId: treatmentId,
+      enzymeId: enzymeId,
+      repetitionNumber: repetitionNumber,
+      sample: sample,
+      whiteSample: whiteSample,
     );
 
-    result.fold(
-      (error) {
+    await result.fold(
+      (error) async {
         _setFailure(error);
         setStateEnum(StateEnum.error);
       },
-      (success) async {
-        setExperimentCalculation(success);
-        setStateEnum(StateEnum.success);
-      },
-    );
-  }
-
-  Future<void> saveResult() async {
-    setStateEnum(StateEnum.loading);
-
-    var result = await _experimentsUseCases.saveResult(
-      experimentId: experiment.id,
-      enzymeId: temporaryChoosedExperimentCombination.enzyme!.id,
-      treatmentID: temporaryChoosedExperimentCombination.treatment!.id,
-      listOfExperimentData: listOfExperimentData,
-      results: experimentCalculationEntity!.results,
-      average: experimentCalculationEntity!.average,
-    );
-
-    result.fold(
-      (error) {
-        _setFailure(error);
-        setStateEnum(StateEnum.error);
-      },
-      (success) async {
-        GetIt.I.get<ExperimentDetailsViewmodel>().setExperiment(success);
+      (updatedExperiment) async {
+        setExperiment(updatedExperiment);
+        GetIt.I.get<ExperimentDetailsViewmodel>().setExperiment(updatedExperiment);
         GetIt.I.get<ExperimentsViewmodel>().fetch();
-        setStateEnum(StateEnum.success);
+        setPreviewedRepetition(null);
+        await fetchRepetitions();
       },
     );
   }

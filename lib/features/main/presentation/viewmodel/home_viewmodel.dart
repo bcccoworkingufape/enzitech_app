@@ -1,5 +1,5 @@
 // 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 // 🌎 Project imports:
 import '../../../../core/enums/enums.dart';
@@ -52,22 +52,27 @@ class HomeViewmodel extends ChangeNotifier {
 
   Future<void> fetch() async {
     setStateEnum(StateEnum.loading);
-    await experimentsViewmodel.fetch();
-    await enzymesViewmodel.fetch();
-    await treatmentsViewmodel.fetch();
-    await accountViewmodel.fetch();
+    try {
+      await experimentsViewmodel.fetch();
+      await enzymesViewmodel.fetch();
+      await treatmentsViewmodel.fetch();
+      await accountViewmodel.fetch();
 
-    if (experimentsViewmodel.state == StateEnum.error) {
-      _setFailure(experimentsViewmodel.failure);
-      setStateEnum(StateEnum.error);
-    } else if (enzymesViewmodel.state == StateEnum.error) {
-      _setFailure(enzymesViewmodel.failure);
-      setStateEnum(StateEnum.error);
-    } else if (treatmentsViewmodel.state == StateEnum.error) {
-      _setFailure(treatmentsViewmodel.failure);
-      setStateEnum(StateEnum.error);
-    } else if (accountViewmodel.state == StateEnum.error) {
-      _setFailure(accountViewmodel.failure);
+      if (experimentsViewmodel.state == StateEnum.error) {
+        _setFailure(experimentsViewmodel.failure);
+        setStateEnum(StateEnum.error);
+      } else if (enzymesViewmodel.state == StateEnum.error) {
+        _setFailure(enzymesViewmodel.failure);
+        setStateEnum(StateEnum.error);
+      } else if (treatmentsViewmodel.state == StateEnum.error) {
+        _setFailure(treatmentsViewmodel.failure);
+        setStateEnum(StateEnum.error);
+      } else if (accountViewmodel.state == StateEnum.error) {
+        _setFailure(accountViewmodel.failure);
+        setStateEnum(StateEnum.error);
+      }
+    } on Exception catch (e) {
+      _setFailure(GenericFailure(message: e.toString()));
       setStateEnum(StateEnum.error);
     }
 

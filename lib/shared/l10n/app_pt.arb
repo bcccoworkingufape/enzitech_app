@@ -137,8 +137,6 @@
     }
   },
   "selectTreatment": "Selecione o tratamento:",
-  "loadingAvailableEnzymes": "Carregando enzimas disponíveis...",
-  "allEnzymesCalculated": "Todas as enzimas para este tratamento já foram calculadas!",
   "selectEnzyme": "Selecione a enzima:",
   "selectedEnzymeType": "Tipo da enzima selecionada: {enzymeType}",
   "@selectedEnzymeType": {
@@ -183,8 +181,6 @@
       }
     }
   },
-  "saveAndExitButton": "Salvar e sair",
-  "recalculateButton": "Recalcular",
   "repetitionLabel": "Repetição {repetitionNumber}:",
   "@repetitionLabel": {
     "placeholders": {
@@ -193,22 +189,15 @@
       }
     }
   },
-  "discrepantRepetitionWarning": "Esta repetição está discrepante!\n\nO valor dela difere acima de 25% da média de todas as repetições.\n\nCaso queira mudar, basta pressionar \"Recalcular\".",
-  "average": "Média:",
-  "repetitionColumnTitle": "REPETIÇÃO",
-  "resultColumnTitle": "RESULTADO",
-  "statusColumnTitle": "STATUS",
-  "stepIndicatorMessageResults": "Etapa {currentStep} de {totalSteps} - Resultados",
-  "@stepIndicatorMessageResults": {
-    "placeholders": {
-      "currentStep": {
-        "type": "int"
-      },
-      "totalSteps": {
-        "type": "int"
-      }
-    }
-  },
+  "pending": "Pendente",
+  "fillRepetitionsTitle": "Preencha os dados de cada repetição",
+  "saveRepetitionButton": "Salvar repetição",
+  "repetitionSavedMessage": "Repetição salva com sucesso!",
+  "finishButton": "Concluir",
+  "editExperimentTitle": "Editar experimento",
+  "editExperimentTooltip": "Editar experimento",
+  "saveChangesButton": "Salvar alterações",
+  "experimentUpdatedSuccess": "Experimento atualizado com sucesso!",
   "registerNewExperiment": "Cadastre um novo experimento",
   "experimentIdentification": "Identificação do experimento",
   "stepIndicatorIdentification": "Etapa {currentStep} de {totalSteps} - Identificação",
@@ -223,9 +212,10 @@
     }
   },
   "repetitionsPerTreatmentLabel": "Quantidade de repetições por tratamento",
-  "goToTreatmentsButton": "Ir para tratamentos",
   "treatmentsAndRepetitionsData": "Dados dos tratamentos e repetições",
   "noTreatmentsRegisteredError": "Nenhum tratamento cadastrado! É necessário pelo menos um tratamento para prosseguir.",
+  "addTreatmentButton": "Adicionar tratamento",
+  "noTreatmentsAddedYet": "Nenhum tratamento adicionado ainda",
   "stepIndicatorTreatments": "Etapa {currentStep} de {totalSteps} - Tratamentos e Repetições",
   "@stepIndicatorTreatments": {
     "placeholders": {
@@ -332,6 +322,7 @@
   "error_422": "⚠ Entidade não processável: Não foi possível processar as instruções presentes.",
   "error_426": "⚠ Upgrade requerido: ID de dispositivo inválido.",
   "error_500": "⚠ Erro do Servidor: Não foi possível atender à solicitação.",
+  "error_502": "⚠ Bad Gateway: Não foi possível atender à solicitação.",
   "error_503": "⚠ Erro do Servidor: Não foi possível atender à solicitação neste momento.",
   "error_noNetwork": "⚠ Sem conexão com a internet, verifique seu acesso à rede e tente novamente.",
   "error_noResultQuery": "⚠ Não foi possível obter {query}.",
@@ -340,6 +331,11 @@
       "query": {}
     }
   },
+  "error_emailNotRegistered": "⚠ O e-mail não está cadastrado em nossa base de dados.",
+  "error_invalidCode": "⚠ Código inválido.",
+  "error_invalidOrNotFoundCode": "⚠ Código inválido ou não encontrado.",
+  "error_codeExpired": "⚠ O código expirou. Por favor, solicite um novo.",
+  "error_newPasswordSameAsCurrent": "⚠ A nova senha não pode ser igual à senha atual.",
   "validation_required": "⚠ Campo obrigatório",
   "validation_strongPassword": "⚠ Senha não atende ao padrão informado.",
   "validation_alfanumeric": "⚠ Campo não aceita caracteres especiais",
@@ -436,6 +432,24 @@
   "access": "Acesso",
   "createAccountButton": "Criar conta",
   "accountCreatedSuccess": "Conta criada com sucesso!",
+  "passwordRequirementsTitle": "Sua senha deve conter:",
+  "passwordRequirement_minLength": "Mínimo de 8 caracteres",
+  "passwordRequirement_uppercase": "Uma letra maiúscula",
+  "passwordRequirement_lowercase": "Uma letra minúscula",
+  "passwordRequirement_specialChar": "Um caractere especial (ex: !@#$%)",
+  "recoverEmailSent": "E-mail de recuperação enviado com sucesso!",
+  "recoverPassword": "Recuperar Senha",
+  "recoverPasswordInstructions": "Informe seu e-mail abaixo. Enviaremos as instruções para você redefinir a sua senha.",
+  "sendRecoverEmail": "Enviar E-mail",
+  "verifyCodeTitle": "Verificar Código",
+  "verifyCodeInstructions": "Digite o código de 6 dígitos que enviamos para o seu e-mail.",
+  "verifyCodeButton": "Verificar",
+  "resetPassword": "Redefinir Senha",
+  "passwordResetSuccess": "Senha redefinida com sucesso!",
+  "recoverCode": "Código de Recuperação",
+  "passwordsDoNotMatch": "As senhas não coincidem!",
+  "newPassword": "Nova Senha",
+  "confirmPassword": "Confirmar Nova Senha",
   "info": "Informações",
   "about": "Sobre o Enzitech",
   "frequentlyAskedQuestions": "Perguntas frequentes",
@@ -487,6 +501,7 @@
   "idealizationTextP4": ".",
   "roleMobileDeveloper": "(Desenvolvedor mobile)",
   "roleBackendDeveloper": "(Desenvolvedor back-end)",
+  "roleMobileBackendDev": "(Desenvolvedor mobile & back-end)",
   "roleProjectManagement": "(Gestão do Projeto)",
   "roleProfessorBCC": "(Docente - BCC)",
   "roleProfessorAgronomy": "(Docente - Agronomia)",

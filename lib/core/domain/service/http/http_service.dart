@@ -1,9 +1,13 @@
-// 🌎 Project imports:
+﻿// 🌎 Project imports:
 import '../../entities/http_driver_options.dart';
 import '../../entities/http_driver_response.dart';
 
 abstract class HttpService {
   Future<void> setConfig({String? token});
+
+  /// Remove o cabeçalho de autorização e quaisquer interceptadores em memória. Usado
+  /// no fluxo de logout para evitar um token residual na instância do Dio.
+  Future<void> clearSession();
 
   Future<HttpDriverResponse> get(
     String path, {

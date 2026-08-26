@@ -1,15 +1,20 @@
-// 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+﻿// 🐦 Flutter imports:
+import 'package:material_ui/material_ui.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
+import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 
 // 🌎 Project imports:
 import '../../../../../../../core/enums/enums.dart';
+import '../../../../../../../core/routing/routing.dart';
 import '../../../../../../../shared/extensions/build_context_extensions.dart';
+import '../../../../../../../shared/extensions/num_extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../../../../../shared/utils/utils.dart';
+import '../../../../../../../shared/validator/security_validators.dart';
 import '../../../../../../../shared/validator/validator.dart';
+import '../../../../../domain/entities/repetition_entity.dart';
 import '../../../../viewmodel/calculate_experiment_viewmodel.dart';
 import '../calculate_experiment_fragment_template.dart';
 
@@ -23,143 +28,211 @@ class CalculateExperimentSecondStepPage extends StatefulWidget {
 class _CalculateExperimentSecondStepPageState extends State<CalculateExperimentSecondStepPage> {
   late final CalculateExperimentViewmodel _calculateExperimentViewmodel;
 
+  final Map<String, TextEditingController> _sampleControllers = {};
+  final Map<String, TextEditingController> _whiteSampleControllers = {};
+  String? _expandedRepetitionId;
+
   @override
   void initState() {
     super.initState();
     _calculateExperimentViewmodel = GetIt.I.get<CalculateExperimentViewmodel>();
   }
 
-  bool _checkIfTextIsGTZAndNumeric(dynamic text) {
-    //* Numeric
-    if (text == null) {
-      return false;
+  @override
+  void dispose() {
+    for (final controller in _sampleControllers.values) {
+      controller.dispose();
     }
-
-    if (double.tryParse(text) == null) {
-      return false;
+    for (final controller in _whiteSampleControllers.values) {
+      controller.dispose();
     }
-
-    //* GTZ
-    var number = double.parse(text);
-    if (number <= 0) {
-      return false;
-    }
-
-    return true;
+    super.dispose();
   }
 
-  bool _isEnzymeStillEmpty(String enzymeId) {
-    final sampleController = _calculateExperimentViewmodel.textEditingControllers['sample-$enzymeId'];
-    final whiteSampleController = _calculateExperimentViewmodel.textEditingControllers['whiteSample-$enzymeId'];
+  TextEditingController _sampleControllerFor(String repetitionId) =>
+      _sampleControllers.putIfAbsent(repetitionId, () => TextEditingController());
 
-    if (sampleController == null || whiteSampleController == null) return true;
+  TextEditingController _whiteSampleControllerFor(String repetitionId) =>
+      _whiteSampleControllers.putIfAbsent(repetitionId, () => TextEditingController());
 
-    return sampleController.text.isEmpty || whiteSampleController.text.isEmpty;
+  bool _canCalculate(String repetitionId) {
+    final sample = double.tryParse(_sampleControllerFor(repetitionId).text);
+    final whiteSample = double.tryParse(_whiteSampleControllerFor(repetitionId).text);
+    return sample != null && sample > 0 && whiteSample != null && whiteSample > 0;
   }
 
-  bool _isEnzymeCorrectlyFilled(String enzymeId) {
-    final sampleController = _calculateExperimentViewmodel.textEditingControllers['sample-$enzymeId'];
-    final whiteSampleController = _calculateExperimentViewmodel.textEditingControllers['whiteSample-$enzymeId'];
+  Future<void> _onCalculate(RepetitionEntity repetition) async {
+    final sample = double.parse(_sampleControllerFor(repetition.id).text);
+    final whiteSample = double.parse(_whiteSampleControllerFor(repetition.id).text);
 
-    if (sampleController == null || whiteSampleController == null) return false;
+    await _calculateExperimentViewmodel.previewRepetition(
+      treatmentId: repetition.treatmentId,
+      enzymeId: repetition.enzymeId,
+      repetitionNumber: repetition.repetitionNumber,
+      sample: sample,
+      whiteSample: whiteSample,
+    );
+  }
 
-    if (sampleController.text.isEmpty && whiteSampleController.text.isEmpty) {
-      return true;
+  Future<void> _onSave(RepetitionEntity repetition) async {
+    final sample = double.parse(_sampleControllerFor(repetition.id).text);
+    final whiteSample = double.parse(_whiteSampleControllerFor(repetition.id).text);
+
+    await _calculateExperimentViewmodel.saveRepetition(
+      treatmentId: repetition.treatmentId,
+      enzymeId: repetition.enzymeId,
+      repetitionNumber: repetition.repetitionNumber,
+      sample: sample,
+      whiteSample: whiteSample,
+    );
+
+    if (!mounted) return;
+
+    if (_calculateExperimentViewmodel.state != StateEnum.error) {
+      setState(() {
+        _expandedRepetitionId = null;
+      });
+
+      EZTSnackBar.clear(context);
+      EZTSnackBar.show(context, context.l10n.repetitionSavedMessage, eztSnackBarType: EZTSnackBarType.success);
     }
-
-    return _checkIfTextIsGTZAndNumeric(sampleController.text) &&
-        _checkIfTextIsGTZAndNumeric(whiteSampleController.text);
   }
 
-  StepState _leadWithStepState(Map<String, double?> map) {
-    if (_calculateExperimentViewmodel.stepPage ==
-        _calculateExperimentViewmodel.listOfExperimentData.toList().indexOf(map)) {
-      return StepState.editing;
-    } else if (_isEnzymeStillEmpty(map["_id"].toString())) {
-      return StepState.indexed;
-    } else if (_isEnzymeCorrectlyFilled(map["_id"].toString())) {
-      return StepState.complete;
-    } else {
-      return StepState.error;
-    }
+  Widget _statusChip(RepetitionEntity repetition) {
+    return Chip(
+      label: Text(repetition.isCompleted ? context.l10n.completed : context.l10n.pending),
+      backgroundColor: repetition.isCompleted
+          ? context.getApplyedColorScheme.primaryContainer
+          : context.getApplyedColorScheme.surface,
+    );
   }
 
-  Widget _textFields(Map<String, double?> map) {
-    final validations = <ValidateRule>[
-      ValidateRule(ValidateTypes.required),
-      ValidateRule(ValidateTypes.numeric),
-      ValidateRule(ValidateTypes.greaterThanZeroDecimal),
-    ];
-    final fieldValidator = FieldValidator(validations, context);
+  Widget _completedSummary(RepetitionEntity repetition) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('${context.l10n.sample}: ${repetition.sample?.formmatedNumber}'),
+          Text('${context.l10n.whiteSample}: ${repetition.whiteSample?.formmatedNumber}'),
+          Text('${context.l10n.columnCurve}: ${repetition.curve?.formmatedNumber}'),
+          Text('${context.l10n.columnResult}: ${repetition.result?.formmatedNumber}'),
+        ],
+      ),
+    );
+  }
 
+  Widget _pendingForm(RepetitionEntity repetition) {
+    final preview = _calculateExperimentViewmodel.previewedRepetition;
+    final showingPreviewForThisRepetition = preview != null && preview.id == repetition.id;
+    final fieldValidator = FieldValidator(SecurityValidators.absorbance(), context);
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          EZTTextField(
+            eztTextFieldType: EZTTextFieldType.underline,
+            labelText: context.l10n.sample,
+            usePrimaryColorOnFocusedBorder: true,
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            controller: _sampleControllerFor(repetition.id),
+            inputFormatters: Constants.enzymeDecimalInputFormatters,
+            fieldValidator: fieldValidator,
+            onChanged: (_) {
+              _calculateExperimentViewmodel.setPreviewedRepetition(null);
+              setState(() {});
+            },
+          ),
+          const SizedBox(height: 10),
+          EZTTextField(
+            eztTextFieldType: EZTTextFieldType.underline,
+            labelText: context.l10n.whiteSample,
+            usePrimaryColorOnFocusedBorder: true,
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            controller: _whiteSampleControllerFor(repetition.id),
+            inputFormatters: Constants.enzymeDecimalInputFormatters,
+            fieldValidator: fieldValidator,
+            onChanged: (_) {
+              _calculateExperimentViewmodel.setPreviewedRepetition(null);
+              setState(() {});
+            },
+          ),
+          const SizedBox(height: 16),
+          if (showingPreviewForThisRepetition)
+            Card(
+              margin: EdgeInsets.zero,
+              color: context.getApplyedColorScheme.surface,
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('${context.l10n.columnCurve}: ${preview.curve?.formmatedNumber}'),
+                    Text('${context.l10n.columnResult}: ${preview.result?.formmatedNumber}'),
+                  ],
+                ),
+              ),
+            ),
+          const SizedBox(height: 16),
+          EZTButton(
+            text: showingPreviewForThisRepetition ? context.l10n.saveRepetitionButton : context.l10n.calculateButton,
+            loading: _calculateExperimentViewmodel.state == StateEnum.loading,
+            enabled: _canCalculate(repetition.id),
+            onPressed: showingPreviewForThisRepetition ? () => _onSave(repetition) : () => _onCalculate(repetition),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _repetitionTile(RepetitionEntity repetition) {
+    return EZTExpansionTile(
+      key: ValueKey(repetition.id),
+      initiallyExpanded: _expandedRepetitionId == repetition.id,
+      onExpansionChanged: (expanded) {
+        setState(() {
+          _expandedRepetitionId = expanded ? repetition.id : null;
+        });
+        if (expanded) _calculateExperimentViewmodel.setPreviewedRepetition(null);
+      },
+      title: Text(context.l10n.repetitionDataTitle(repetition.repetitionNumber)),
+      trailing: _statusChip(repetition),
+      children: [repetition.isCompleted ? _completedSummary(repetition) : _pendingForm(repetition)],
+    );
+  }
+
+  Widget _combinationSection(String title, List<RepetitionEntity> repetitions) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        EZTTextField(
-          eztTextFieldType: EZTTextFieldType.underline,
-          labelText: context.l10n.sample,
-          usePrimaryColorOnFocusedBorder: true,
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          controller: _calculateExperimentViewmodel.textEditingControllers["sample-${map["_id"]}"]!,
-          onChanged: (value) {
-            _calculateExperimentViewmodel.validateFields(value, map["_id"] as double, "sample");
-          },
-          fieldValidator: fieldValidator,
-          inputFormatters: Constants.enzymeDecimalInputFormatters,
-        ),
-        const SizedBox(height: 10),
-        EZTTextField(
-          eztTextFieldType: EZTTextFieldType.underline,
-          labelText: context.l10n.whiteSample,
-          usePrimaryColorOnFocusedBorder: true,
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          controller: _calculateExperimentViewmodel.textEditingControllers["whiteSample-${map["_id"]}"]!,
-          onChanged: (value) {
-            _calculateExperimentViewmodel.validateFields(value, map["_id"] as double, "whiteSample");
-          },
-          fieldValidator: fieldValidator,
-          inputFormatters: Constants.enzymeDecimalInputFormatters,
+        const SizedBox(height: 24),
+        Text(title, style: TextStyles.detailBold),
+        const SizedBox(height: 8),
+        ListView.separated(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: repetitions.length,
+          separatorBuilder: (_, _) => const SizedBox(height: 8),
+          itemBuilder: (context, index) => _repetitionTile(repetitions[index]),
         ),
       ],
     );
   }
 
-  Widget get _buttons {
-    return Column(
-      children: [
-        EZTButton(
-          enabled: _calculateExperimentViewmodel.enableNextButtonOnSecondStep,
-          text: context.l10n.calculateButton,
-          loading: _calculateExperimentViewmodel.state == StateEnum.loading,
-          onPressed: () async {
-            if (_calculateExperimentViewmodel.formKey.currentState != null) {
-              _calculateExperimentViewmodel.formKey.currentState!.save();
+  List<Widget> _combinationSections(List<RepetitionEntity> repetitions) {
+    final grouped = <String, List<RepetitionEntity>>{};
 
-              if (_calculateExperimentViewmodel.formKey.currentState!.validate()) {
-                await _calculateExperimentViewmodel.calculateExperiment().whenComplete(() {
-                  if (!mounted) return;
-                  (_calculateExperimentViewmodel.experimentCalculationEntity != null &&
-                          _calculateExperimentViewmodel.experimentCalculationEntity?.average != 0)
-                      ? _calculateExperimentViewmodel.onNext(context)
-                      : debugPrint('Error on calculate');
-                });
-                //TODO: Corrigir enzimas bugadas (sem calculo -> retorno 0)
+    for (final repetition in repetitions) {
+      final key = '${repetition.treatmentId}|${repetition.enzymeId}';
+      grouped.putIfAbsent(key, () => []).add(repetition);
+    }
 
-                return;
-              }
-            }
-          },
-        ),
-        const SizedBox(height: 16),
-        EZTButton(
-          text: context.l10n.backButton,
-          eztButtonType: EZTButtonType.outline,
-          onPressed: () {
-            _calculateExperimentViewmodel.onBack(mounted, context);
-          },
-        ),
-      ],
-    );
+    return grouped.values.map((group) {
+      final first = group.first;
+      return _combinationSection('${first.treatmentName} — ${first.enzymeName}', group);
+    }).toList();
   }
 
   @override
@@ -167,71 +240,45 @@ class _CalculateExperimentSecondStepPageState extends State<CalculateExperimentS
     return ListenableBuilder(
       listenable: _calculateExperimentViewmodel,
       builder: (context, child) {
+        final repetitions = _calculateExperimentViewmodel.repetitionsForChosenCombination;
+        final loadingRepetitions = _calculateExperimentViewmodel.state == StateEnum.loading && repetitions.isEmpty;
+
         return CalculateExperimentFragmentTemplate(
           titleOfStepIndicator: context.l10n.insertExperimentData,
-          messageOfStepIndicator: context.l10n.stepIndicatorMessageFilling(2, 3),
+          messageOfStepIndicator: context.l10n.stepIndicatorMessageFilling(2, 2),
           body: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               children: [
                 const SizedBox(height: 32),
-                SingleChildScrollView(
-                  child: Stepper(
-                    physics: const ClampingScrollPhysics(),
-                    currentStep: _calculateExperimentViewmodel.stepPage,
-                    controlsBuilder: (BuildContext context, ControlsDetails details) {
-                      return Row(
-                        children: <Widget>[
-                          if (_calculateExperimentViewmodel.stepPage <
-                              _calculateExperimentViewmodel.experiment.repetitions - 1)
-                            TextButton(
-                              onPressed: () {
-                                if (_calculateExperimentViewmodel.stepPage <
-                                    _calculateExperimentViewmodel.experiment.repetitions) {
-                                  _calculateExperimentViewmodel.setStepPage(_calculateExperimentViewmodel.stepPage + 1);
-                                }
-                              },
-                              child: Text(context.l10n.nextButton),
-                            ),
-                          if (_calculateExperimentViewmodel.stepPage > 0)
-                            TextButton(
-                              onPressed: () {
-                                if (_calculateExperimentViewmodel.stepPage > 0) {
-                                  _calculateExperimentViewmodel.setStepPage(_calculateExperimentViewmodel.stepPage - 1);
-                                }
-                              },
-                              child: Text(context.l10n.backButton),
-                            ),
-                        ],
-                      );
-                    },
-                    onStepTapped: (int index) {
-                      _calculateExperimentViewmodel.setStepPage(index);
-                    },
-                    type: StepperType.vertical,
-                    steps: _calculateExperimentViewmodel.listOfExperimentData.map((map) {
-                      return Step(
-                        state: _leadWithStepState(map),
-                        title: _isEnzymeCorrectlyFilled(map["_id"].toString())
-                            ? Text(context.l10n.repetitionDataTitle(map["_id"]!.toInt() + 1))
-                            : Text(
-                                "⚠  ${context.l10n.repetitionDataTitle(map["_id"]!.toInt() + 1)}",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: context.getApplyedColorScheme.error,
-                                ),
-                              ),
-                        content: Visibility(
-                          visible: _calculateExperimentViewmodel.textEditingControllers["sample-${map["_id"]}"] != null,
-                          child: _textFields(map),
-                        ),
-                      );
-                    }).toList(),
-                  ),
+                Row(
+                  children: [
+                    Icon(PhosphorIcons.flask),
+                    const SizedBox(width: 4),
+                    Expanded(child: Text(context.l10n.fillRepetitionsTitle, style: TextStyles.detailBold)),
+                  ],
                 ),
+                if (loadingRepetitions)
+                  const Padding(padding: EdgeInsets.symmetric(vertical: 32), child: EZTProgressIndicator())
+                else
+                  ..._combinationSections(repetitions),
                 const SizedBox(height: 64),
-                _buttons,
+                EZTButton(
+                  text: context.l10n.finishButton,
+                  onPressed: () {
+                    Navigator.popUntil(context, ModalRoute.withName(Routing.experimentDetailed));
+                  },
+                ),
+                const SizedBox(height: 16),
+                EZTButton(
+                  text: context.l10n.backButton,
+                  eztButtonType: EZTButtonType.outline,
+                  onPressed: () {
+                    _calculateExperimentViewmodel.onBack(mounted, context);
+                  },
+                ),
+                const SizedBox(height: 16),
               ],
             ),
           ),

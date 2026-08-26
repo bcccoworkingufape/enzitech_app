@@ -1,16 +1,17 @@
 // 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/scheduler.dart';
 
 // 📦 Package imports:
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:get_it/get_it.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
+import '../../../../../../core/platform/secure_screen_wrapper.dart';
 import '../../../../../../core/routing/routing.dart';
 import '../../../../../../shared/extensions/build_context_extensions.dart';
 import '../../../../../../shared/ui/ui.dart';
@@ -28,7 +29,7 @@ class ExperimentDetailsPage extends StatefulWidget {
   State<ExperimentDetailsPage> createState() => _ExperimentDetailsPageState();
 }
 
-class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
+class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> with SecureScreenMixin {
   late final ExperimentDetailsViewmodel _experimentDetailsViewmodel;
   late final ExperimentsViewmodel _experimentsViewmodel;
   late final HomeViewmodel _homeViewmodel;
@@ -205,7 +206,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
               text: context.l10n.enzymaticCalculation,
               enabled: _experimentDetailsViewmodel.experiment!.progress != 1,
               icon: Icon(
-                PhosphorIcons.function(),
+                PhosphorIcons.function,
                 color: _experimentDetailsViewmodel.experiment!.progress < 1.0
                     ? context.getApplyedColorScheme.onPrimary
                     : context.getApplyedColorScheme.primary,
@@ -225,7 +226,7 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
               text: context.l10n.results,
               enabled: _experimentDetailsViewmodel.experiment!.progress != 0,
               icon: Icon(
-                PhosphorIcons.fileText(),
+                PhosphorIcons.fileText,
                 color: _experimentDetailsViewmodel.experiment!.progress != 0
                     ? context.getApplyedColorScheme.onPrimary
                     : context.getApplyedColorScheme.primary,
@@ -245,49 +246,63 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> {
     return ListenableBuilder(
       listenable: _experimentDetailsViewmodel,
       builder: (context, child) {
-        return Scaffold(
-          appBar: AppBar(
-            iconTheme: IconThemeData(color: context.getApplyedColorScheme.onSurface),
-            title: Text(context.l10n.experimentDetails, style: TextStyles(context).titleBoldBackground()),
-            actions: [
-              if (_experimentDetailsViewmodel.state == StateEnum.success)
-                IconButton(
-                  onPressed: () async {
-                    var shouldDelete = _homeViewmodel.accountViewmodel.enableExcludeConfirmation!
-                        ? await showDialog<bool>(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return const ExperimentExclusionDialog();
-                            },
-                          )
-                        : null;
+        return wrapSecureScreen(
+          child: Scaffold(
+            appBar: AppBar(
+              iconTheme: IconThemeData(color: context.getApplyedColorScheme.onSurface),
+              title: Text(context.l10n.experimentDetails, style: TextStyles(context).titleBoldBackground()),
+              actions: [
+                if (_experimentDetailsViewmodel.state == StateEnum.success)
+                  IconButton(
+                    tooltip: context.l10n.editExperimentTooltip,
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        Routing.editExperiment,
+                        arguments: _experimentDetailsViewmodel.experiment!,
+                      );
+                    },
+                    icon: Icon(PhosphorIcons.pencilSimple, color: context.getApplyedColorScheme.onSurface, size: 25),
+                  ),
+                if (_experimentDetailsViewmodel.state == StateEnum.success)
+                  IconButton(
+                    onPressed: () async {
+                      var shouldDelete = _homeViewmodel.accountViewmodel.enableExcludeConfirmation!
+                          ? await showDialog<bool>(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return const ExperimentExclusionDialog();
+                              },
+                            )
+                          : null;
 
-                    if (shouldDelete != null) {
-                      if (!shouldDelete) return;
-                    }
+                      if (shouldDelete != null) {
+                        if (!shouldDelete) return;
+                      }
 
-                    _experimentsViewmodel.deleteExperiment(_experimentDetailsViewmodel.experiment!.id);
+                      _experimentsViewmodel.deleteExperiment(_experimentDetailsViewmodel.experiment!.id);
 
-                    if (mounted) {
-                      SchedulerBinding.instance.addPostFrameCallback((_) {
-                        Navigator.pop(context);
+                      if (mounted) {
+                        SchedulerBinding.instance.addPostFrameCallback((_) {
+                          Navigator.pop(context);
 
-                        EZTSnackBar.clear(context);
-                        EZTSnackBar.show(
-                          context,
-                          context.l10n.experimentDeleted(_experimentDetailsViewmodel.experiment!.name),
-                          eztSnackBarType: EZTSnackBarType.error,
-                        );
-                      });
-                    }
-                  },
-                  icon: Icon(PhosphorIcons.trash(), color: context.getApplyedColorScheme.onSurface, size: 25),
-                ),
-            ],
-          ),
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: _buildBody(MediaQuery.of(context).size.height),
+                          EZTSnackBar.clear(context);
+                          EZTSnackBar.show(
+                            context,
+                            context.l10n.experimentDeleted(_experimentDetailsViewmodel.experiment!.name),
+                            eztSnackBarType: EZTSnackBarType.error,
+                          );
+                        });
+                      }
+                    },
+                    icon: Icon(PhosphorIcons.trash, color: context.getApplyedColorScheme.onSurface, size: 25),
+                  ),
+              ],
+            ),
+            body: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: _buildBody(MediaQuery.of(context).size.height),
+            ),
           ),
         );
       },

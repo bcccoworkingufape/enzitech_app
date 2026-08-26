@@ -1,7 +1,7 @@
 // import 'package:enzitech_app/features/home/data/datasources/get_enzymes_datasource.dart';
 
 // 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 // 🌎 Project imports:
 import '../../../../core/domain/service/connection_checker/connection_checker.dart';

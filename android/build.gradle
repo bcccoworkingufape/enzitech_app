@@ -12,6 +12,14 @@ subprojects {
 subprojects {
     project.evaluationDependsOn(':app')
 }
+//! ATENÇÃO: Talvez este bloco seja necessário para que o Flutter possa compilar o projeto corretamente, se houver o erro de não conseguir encontrar os arquivos de build do Flutter em local.properties
+// subprojects { subproject ->
+//     subproject.plugins.withId("com.android.library") {
+//         subproject.extensions.getByName("androidComponents").finalizeDsl { androidExtension ->
+//             androidExtension.compileSdk = 37
+//         }
+//     }
+// }
 
 tasks.register("clean", Delete) {
     delete rootProject.buildDir

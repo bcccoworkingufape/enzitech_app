@@ -1,5 +1,5 @@
 // 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 // 📦 Package imports:
 import 'package:google_fonts/google_fonts.dart';
@@ -154,7 +154,7 @@ class TextStyles {
   static final captionBoldShape = GoogleFonts.ubuntu(fontSize: 13, fontWeight: FontWeight.w600);
   static final captionBoldBody = GoogleFonts.ubuntu(fontSize: 13, fontWeight: FontWeight.w600);
 
-  // Card Expandable
+  // Cartão expansível
   static final titleCardExp = GoogleFonts.ubuntu(fontSize: 15, fontWeight: FontWeight.w600);
 
   static final bodyCardExp = GoogleFonts.ubuntu(fontSize: 15, fontWeight: FontWeight.w400);

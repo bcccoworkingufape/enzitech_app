@@ -1,7 +1,12 @@
 // 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
+
+// 📦 Package imports:
+import 'package:get_it/get_it.dart';
 
 // 🌎 Project imports:
+import '../../../../core/data/service/secure_storage/secure_session_storage.dart';
+import '../../../../core/domain/service/http/http_service.dart';
 import '../../../../core/domain/service/user_preferences/user_preferences_service.dart';
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
@@ -17,6 +22,7 @@ class SplashViewmodel extends ChangeNotifier {
   final TreatmentsViewmodel treatmentsViewmodel;
   final SettingsViewmodel settingsViewmodel;
   final UserPreferencesService userPreferencesServices;
+  final SecureSessionStorage secureSessionStorage;
 
   SplashViewmodel(
     this.experimentsViewmodel,
@@ -24,6 +30,7 @@ class SplashViewmodel extends ChangeNotifier {
     this.treatmentsViewmodel,
     this.settingsViewmodel,
     this.userPreferencesServices,
+    this.secureSessionStorage,
   ) {
     fetch();
   }
@@ -51,30 +58,46 @@ class SplashViewmodel extends ChangeNotifier {
   Future<void> fetch() async {
     setStateEnum(StateEnum.loading);
 
-    // TODO: check to fix backuped token: https://stackoverflow.com/a/35517411/10023840
-    String token = await userPreferencesServices.getToken() ?? '';
+    // Migração única do token legado do SharedPreferences para o armazenamento seguro.
+    await secureSessionStorage.migrateFromLegacyIfNeeded(
+      legacyReader: () => userPreferencesServices.getToken(),
+      legacyClearer: (_) => userPreferencesServiceTokenCleanup(),
+    );
 
-    if (token.isNotEmpty) {
-      await experimentsViewmodel.fetch();
-      await enzymesViewmodel.fetch();
-      await treatmentsViewmodel.fetch();
-      await settingsViewmodel.fetch();
+    final token = await secureSessionStorage.readToken() ?? '';
 
-      if (experimentsViewmodel.state == StateEnum.error) {
-        _setFailure(experimentsViewmodel.failure);
-        setStateEnum(StateEnum.error);
-      } else if (enzymesViewmodel.state == StateEnum.error) {
-        _setFailure(enzymesViewmodel.failure);
-        setStateEnum(StateEnum.error);
-      } else if (treatmentsViewmodel.state == StateEnum.error) {
-        _setFailure(treatmentsViewmodel.failure);
-        setStateEnum(StateEnum.error);
-      } else if (settingsViewmodel.state == StateEnum.error) {
-        _setFailure(settingsViewmodel.failure);
-        setStateEnum(StateEnum.error);
+    try {
+      if (token.isNotEmpty) {
+        await GetIt.I.get<HttpService>().setConfig(token: token);
+
+        await experimentsViewmodel.fetch();
+        await enzymesViewmodel.fetch();
+        await treatmentsViewmodel.fetch();
+        await settingsViewmodel.fetch();
+
+        if (experimentsViewmodel.state == StateEnum.error) {
+          _setFailure(experimentsViewmodel.failure);
+          setStateEnum(StateEnum.error);
+        } else if (enzymesViewmodel.state == StateEnum.error) {
+          _setFailure(enzymesViewmodel.failure);
+          setStateEnum(StateEnum.error);
+        } else if (treatmentsViewmodel.state == StateEnum.error) {
+          _setFailure(treatmentsViewmodel.failure);
+          setStateEnum(StateEnum.error);
+        } else if (settingsViewmodel.state == StateEnum.error) {
+          _setFailure(settingsViewmodel.failure);
+          setStateEnum(StateEnum.error);
+        }
       }
+    } on Exception catch (e) {
+      _setFailure(GenericFailure(message: e.toString()));
+      setStateEnum(StateEnum.error);
     }
 
     setStateEnum(StateEnum.success);
+  }
+
+  Future<void> userPreferencesServiceTokenCleanup() async {
+    await userPreferencesServices.removeToken();
   }
 }

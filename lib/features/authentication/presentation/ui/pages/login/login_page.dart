@@ -1,6 +1,6 @@
-// 🐦 Flutter imports:
+﻿// 🐦 Flutter imports:
 import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 // 📦 Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,9 +9,11 @@ import 'package:get_it/get_it.dart';
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
+import '../../../../../../core/platform/secure_screen_wrapper.dart';
 import '../../../../../../core/routing/routing.dart';
 import '../../../../../../shared/extensions/extensions.dart';
 import '../../../../../../shared/ui/ui.dart';
+import '../../../../../../shared/validator/security_validators.dart';
 import '../../../../../../shared/validator/validator.dart';
 import '../../../../../main/presentation/viewmodel/home_viewmodel.dart';
 import '../../../viewmodel/login_viewmodel.dart';
@@ -24,7 +26,7 @@ class LoginPage extends StatefulWidget {
   LoginPageState createState() => LoginPageState();
 }
 
-class LoginPageState extends State<LoginPage> {
+class LoginPageState extends State<LoginPage> with SecureScreenMixin {
   late final LoginViewmodel _loginViewmodel;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -49,7 +51,7 @@ class LoginPageState extends State<LoginPage> {
             if (GetIt.I.get<HomeViewmodel>().state == StateEnum.success && mounted) {
               EZTSnackBar.show(
                 context,
-                context.l10n.welcomeMessage(_loginViewmodel.loggedName ?? ''), // _loginViewmodel! talvez crashe o app
+                context.l10n.welcomeMessage(_loginViewmodel.loggedName ?? ''),
                 eztSnackBarType: EZTSnackBarType.success,
               );
               Navigator.pushReplacementNamed(context, Routing.home);
@@ -61,8 +63,7 @@ class LoginPageState extends State<LoginPage> {
   }
 
   Widget get _emailInput {
-    final validations = <ValidateRule>[ValidateRule(ValidateTypes.required), ValidateRule(ValidateTypes.email)];
-
+    final validations = SecurityValidators.email();
     final fieldValidator = FieldValidator(validations, context);
 
     return EZTTextField(
@@ -78,8 +79,7 @@ class LoginPageState extends State<LoginPage> {
   }
 
   Widget get _passwordInput {
-    final validations = <ValidateRule>[ValidateRule(ValidateTypes.required)];
-
+    final validations = SecurityValidators.password();
     final fieldValidator = FieldValidator(validations, context);
 
     return EZTTextField(
@@ -99,37 +99,36 @@ class LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Form(
-        key: _formKey,
-        child: CustomScrollView(
-          scrollDirection: Axis.vertical,
-          slivers: [
-            SliverFillRemaining(
-              hasScrollBody: false,
-              fillOverscroll: true,
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Align(
-                          alignment: Alignment.center,
-                          child: SvgPicture.asset(
-                            AppSvgs(context).fullLogo(),
+    return wrapSecureScreen(
+      child: Scaffold(
+        body: Form(
+          key: _formKey,
+          child: CustomScrollView(
+            scrollDirection: Axis.vertical,
+            slivers: [
+              SliverFillRemaining(
+                hasScrollBody: false,
+                fillOverscroll: true,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Align(
                             alignment: Alignment.center,
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height / 3.33,
+                            child: SvgPicture.asset(
+                              AppSvgs(context).fullLogo(),
+                              alignment: Alignment.center,
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.height / 3.33,
+                            ),
                           ),
-                        ),
-                        Text(context.l10n.helloWelcome, style: TextStyles.titleHomeRegular),
-                        _textFields,
-                        Visibility(
-                          visible: false, // TODO: Implementar e remover Visibility
-                          child: Padding(
+                          Text(context.l10n.helloWelcome, style: TextStyles.titleHomeRegular),
+                          _textFields,
+                          Padding(
                             padding: const EdgeInsets.only(top: 16.0),
                             child: Align(
                               alignment: Alignment.centerRight,
@@ -141,41 +140,41 @@ class LoginPageState extends State<LoginPage> {
                               ),
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 32),
-                        Align(
-                          alignment: Alignment.center,
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width / 1.75,
-                            child: LoginButton(formKey: _formKey, loginViewmodel: _loginViewmodel),
-                          ),
-                        ),
-                        const SizedBox(height: 32),
-                        Center(
-                          child: RichText(
-                            text: TextSpan(
-                              text: context.l10n.dontHaveAnAccount,
-                              style: TextStyles(context).detailRegular,
-                              children: <TextSpan>[
-                                TextSpan(
-                                  text: context.l10n.createOne,
-                                  style: TextStyles(context).link(),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      Navigator.pushNamed(context, Routing.createAccount);
-                                    },
-                                ),
-                              ],
+                          const SizedBox(height: 32),
+                          Align(
+                            alignment: Alignment.center,
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width / 1.75,
+                              child: LoginButton(formKey: _formKey, loginViewmodel: _loginViewmodel),
                             ),
                           ),
-                        ),
-                      ],
+                          const SizedBox(height: 32),
+                          Center(
+                            child: RichText(
+                              text: TextSpan(
+                                text: context.l10n.dontHaveAnAccount,
+                                style: TextStyles(context).detailRegular,
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: context.l10n.createOne,
+                                    style: TextStyles(context).link(),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        Navigator.pushNamed(context, Routing.createAccount);
+                                      },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

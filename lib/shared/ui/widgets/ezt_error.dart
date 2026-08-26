@@ -1,5 +1,5 @@
 // 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 // 📦 Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
@@ -26,13 +26,9 @@ class EZTError extends StatelessWidget {
           if (message != null) ...[
             Padding(
               padding: const EdgeInsets.all(16),
-              child: Text(
-                message!,
-                style: TextStyles.termRegular,
-                textAlign: TextAlign.center,
-              ),
+              child: Text(message!, style: TextStyles.termRegular, textAlign: TextAlign.center),
             ),
-          ]
+          ],
         ],
       ),
     );

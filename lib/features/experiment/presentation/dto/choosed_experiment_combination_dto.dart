@@ -3,13 +3,13 @@ import '../../../enzyme/domain/entities/enzyme_entity.dart';
 import '../../../treatment/domain/entities/treatment_entity.dart';
 
 class ChoosedExperimentCombinationDTO {
-  EnzymeEntity? enzyme;
-  TreatmentEntity? treatment;
+  List<EnzymeEntity> enzymes;
+  List<TreatmentEntity> treatments;
 
-  ChoosedExperimentCombinationDTO({this.enzyme, this.treatment});
+  ChoosedExperimentCombinationDTO({this.enzymes = const [], this.treatments = const []});
 
   @override
   String toString() {
-    return "{enzyme: $enzyme, treatment: $treatment}";
+    return "{enzymes: $enzymes, treatments: $treatments}";
   }
 }

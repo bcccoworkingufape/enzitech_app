@@ -3,19 +3,20 @@ import 'dart:async';
 import 'dart:math' as math;
 
 // 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 
 // 📦 Package imports:
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 
 // 🌎 Project imports:
 import '../../../../../../core/domain/service/connection_checker/connection_checker.dart';
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
+import '../../../../../../core/logging/app_logger.dart';
 import '../../../../../../core/routing/routing.dart';
 import '../../../../../../shared/extensions/extensions.dart';
 import '../../../../../../shared/ui/ui.dart';
@@ -107,7 +108,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             if (_homeViewmodel.failure is ExpiredTokenOrWrongUserFailure ||
                 _homeViewmodel.failure is UserNotFoundOrWrongTokenFailure ||
                 _homeViewmodel.failure is SessionNotFoundFailure) {
-              debugPrint("SAIR :)");
+              AppLogger.info("Initiating automatic logout due to expired session");
               _accountViewmodel.logout();
 
               if (_accountViewmodel.state == StateEnum.success && mounted) {
@@ -211,7 +212,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     backgroundColor: context.getApplyedColorScheme.secondaryContainer,
     onPressed: onPressed,
     label: Text(text, style: TextStyles(context).captionBody()),
-    icon: Icon(PhosphorIcons.pencilLine(), color: context.getApplyedColorScheme.onSecondaryContainer),
+    icon: Icon(PhosphorIcons.pencilLine, color: context.getApplyedColorScheme.onSecondaryContainer),
   );
 
   Widget? get dealWithFloatingActionButton {
@@ -307,10 +308,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             },
             selectedIndex: _homeViewmodel.fragmentIndex,
             destinations: [
-              NavigationDestination(icon: Icon(PhosphorIcons.flask()), label: context.l10n.experiments),
-              NavigationDestination(icon: Icon(PhosphorIcons.testTube()), label: context.l10n.treatments),
-              NavigationDestination(icon: Icon(PhosphorIcons.atom()), label: context.l10n.enzymes),
-              NavigationDestination(icon: Icon(PhosphorIcons.gear()), label: context.l10n.settings),
+              NavigationDestination(icon: Icon(PhosphorIcons.flask), label: context.l10n.experiments),
+              NavigationDestination(icon: Icon(PhosphorIcons.testTube), label: context.l10n.treatments),
+              NavigationDestination(icon: Icon(PhosphorIcons.atom), label: context.l10n.enzymes),
+              NavigationDestination(icon: Icon(PhosphorIcons.gear), label: context.l10n.settings),
             ],
           ),
         );

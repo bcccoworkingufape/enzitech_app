@@ -1,21 +1,18 @@
 // 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
-import 'package:group_button/group_button.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 
 // 🌎 Project imports:
-import '../../../../../../../core/routing/routing.dart';
 import '../../../../../../../shared/extensions/extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
+import '../../../../../../../shared/validator/security_validators.dart';
 import '../../../../../../../shared/validator/validator.dart';
-import '../../../../../../main/presentation/viewmodel/home_viewmodel.dart';
-import '../../../../../../treatment/domain/entities/treatment_entity.dart';
-import '../../../../../../treatment/presentation/viewmodel/treatments_viewmodel.dart';
 import '../../../../dto/create_experiment_dto.dart';
+import '../../../../dto/pending_treatment_dto.dart';
 import '../../../../viewmodel/create_experiment_viewmodel.dart';
 import '../create_experiment_fragment_template.dart';
 
@@ -28,69 +25,122 @@ class CreateExperimentSecondStepPage extends StatefulWidget {
 
 class _CreateExperimentSecondStepPageState extends State<CreateExperimentSecondStepPage> {
   late final CreateExperimentViewmodel _createExperimentViewmodel;
-  late final TreatmentsViewmodel _treatmentsViewmodel;
 
   final _repetitionsFieldController = TextEditingController(text: '');
-  late GroupButtonController _checkboxesController;
+  final _treatmentNameFieldController = TextEditingController(text: '');
+  final _treatmentDescriptionFieldController = TextEditingController(text: '');
 
-  late final _checkboxButtons = [];
-  List<TreatmentEntity> choosedCheckboxList = <TreatmentEntity>[];
+  final List<PendingTreatmentDTO> _addedTreatments = [];
 
   @override
   void initState() {
     super.initState();
     _createExperimentViewmodel = GetIt.I.get<CreateExperimentViewmodel>();
-    _treatmentsViewmodel = GetIt.I.get<TreatmentsViewmodel>();
-
-    for (var treat in _treatmentsViewmodel.treatments) {
-      _checkboxButtons.add(treat.name);
-    }
-
-    _checkboxesController = GroupButtonController();
-
-    Future.delayed(const Duration(milliseconds: 1)).whenComplete(() => _validateFields);
 
     _initFields();
   }
 
   void _initFields() {
     _repetitionsFieldController.text = _createExperimentViewmodel.temporaryExperiment.repetitions?.toString() ?? '';
-
-    var tempTreat = _createExperimentViewmodel.temporaryExperiment.treatmentsIDs ?? [];
-
-    if (tempTreat.isNotEmpty) {
-      for (var id in tempTreat) {
-        _checkboxesController.selectIndex(
-          _treatmentsViewmodel.treatments.indexOf(_treatmentsViewmodel.treatments.firstWhere((t) => t.id == id)),
-        );
-
-        choosedCheckboxList.add(_treatmentsViewmodel.treatments.firstWhere((t) => t.id == id));
-      }
-    }
+    _addedTreatments.addAll(_createExperimentViewmodel.temporaryExperiment.treatments ?? []);
 
     setState(() {});
   }
 
-  void get _validateFields {
-    if (_repetitionsFieldController.text.isNotEmpty && choosedCheckboxList.isNotEmpty) {
-      setState(() {
-        _createExperimentViewmodel.setEnableNextButtonOnSecondStep(
-          _createExperimentViewmodel.formKey.currentState!.validate(),
-        );
-      });
-    } else {
-      setState(() {
-        _createExperimentViewmodel.setEnableNextButtonOnSecondStep(false);
-      });
+  void _validateFields() {
+    setState(() {
+      _createExperimentViewmodel.setEnableNextButtonOnSecondStep(
+        _repetitionsFieldController.text.isNotEmpty && _addedTreatments.isNotEmpty,
+      );
+    });
+  }
+
+  void _addTreatment() {
+    if (_treatmentNameFieldController.text.trim().isEmpty) {
+      return;
     }
+
+    setState(() {
+      _addedTreatments.add(
+        PendingTreatmentDTO(
+          name: _treatmentNameFieldController.text.trim(),
+          description: _treatmentDescriptionFieldController.text.trim(),
+        ),
+      );
+      _treatmentNameFieldController.clear();
+      _treatmentDescriptionFieldController.clear();
+    });
+
+    _validateFields();
+  }
+
+  void _removeTreatmentAt(int index) {
+    setState(() {
+      _addedTreatments.removeAt(index);
+    });
+
+    _validateFields();
+  }
+
+  Widget get _addTreatmentForm {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        EZTTextField(
+          eztTextFieldType: EZTTextFieldType.underline,
+          labelText: context.l10n.nameLabel,
+          usePrimaryColorOnFocusedBorder: true,
+          controller: _treatmentNameFieldController,
+        ),
+        const SizedBox(height: 10),
+        EZTTextField(
+          eztTextFieldType: EZTTextFieldType.underline,
+          labelText: context.l10n.descriptionLabel,
+          usePrimaryColorOnFocusedBorder: true,
+          controller: _treatmentDescriptionFieldController,
+        ),
+        const SizedBox(height: 10),
+        EZTButton(
+          eztButtonType: EZTButtonType.outline,
+          text: context.l10n.addTreatmentButton,
+          icon: Icon(PhosphorIcons.plus, color: context.getApplyedColorScheme.primary),
+          onPressed: _addTreatment,
+        ),
+      ],
+    );
+  }
+
+  Widget get _addedTreatmentsList {
+    if (_addedTreatments.isEmpty) {
+      return Padding(
+        padding: const EdgeInsets.only(top: 16.0),
+        child: Text(context.l10n.noTreatmentsAddedYet, style: TextStyles(context).bodyRegular),
+      );
+    }
+
+    return Column(
+      children: List.generate(_addedTreatments.length, (index) {
+        final treatment = _addedTreatments[index];
+        return Card(
+          margin: const EdgeInsets.only(top: 8),
+          color: context.getApplyedColorScheme.surface,
+          child: ListTile(
+            title: Text(treatment.name, style: TextStyles.detailBold),
+            subtitle: treatment.description.isEmpty
+                ? null
+                : Text(treatment.description, maxLines: 2, overflow: TextOverflow.ellipsis),
+            trailing: IconButton(
+              icon: Icon(PhosphorIcons.trash, color: context.getApplyedColorScheme.error),
+              onPressed: () => _removeTreatmentAt(index),
+            ),
+          ),
+        );
+      }),
+    );
   }
 
   Widget get _repetitionsInput {
-    final validations = <ValidateRule>[
-      ValidateRule(ValidateTypes.required),
-      ValidateRule(ValidateTypes.number),
-      ValidateRule(ValidateTypes.greaterThanZero),
-    ];
+    final validations = SecurityValidators.repetitions();
 
     final fieldValidator = FieldValidator(validations, context);
 
@@ -100,31 +150,16 @@ class _CreateExperimentSecondStepPageState extends State<CreateExperimentSecondS
       usePrimaryColorOnFocusedBorder: true,
       keyboardType: TextInputType.number,
       controller: _repetitionsFieldController,
-      onChanged: (value) => _validateFields,
+      onChanged: (value) => _validateFields(),
       fieldValidator: fieldValidator,
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
       disableSuffixIcon: true,
     );
   }
 
-  Widget get _textFields {
-    return Column(children: [const SizedBox(height: 10), _repetitionsInput]);
-  }
-
   Widget get _buttons {
     return Column(
       children: [
-        if (_checkboxButtons.isEmpty) ...[
-          EZTButton(
-            text: context.l10n.goToTreatmentsButton,
-            onPressed: () {
-              GetIt.I.get<HomeViewmodel>().setFragmentIndex(1);
-              _createExperimentViewmodel.setTemporaryExperiment(CreateExperimentDTO());
-              Navigator.of(context).popUntil(ModalRoute.withName(Routing.home));
-            },
-          ),
-          const SizedBox(height: 16),
-        ],
         EZTButton(
           enabled: _createExperimentViewmodel.enableNextButtonOnSecondStep,
           text: context.l10n.nextButton,
@@ -139,7 +174,7 @@ class _CreateExperimentSecondStepPageState extends State<CreateExperimentSecondS
                   name: temporary.name,
                   description: temporary.description,
                   repetitions: int.parse(_repetitionsFieldController.text),
-                  treatmentsIDs: choosedCheckboxList.map((processes) => processes.id).toList(),
+                  treatments: _addedTreatments,
                   enzymes: temporary.enzymes,
                 ),
               );
@@ -173,45 +208,16 @@ class _CreateExperimentSecondStepPageState extends State<CreateExperimentSecondS
             const SizedBox(height: 17),
             Row(
               children: [
-                Icon(PhosphorIcons.flask()),
+                Icon(PhosphorIcons.flask),
                 const SizedBox(width: 4),
                 Text(context.l10n.treatmentsAndRepetitionsData, style: TextStyles.detailBold),
               ],
             ),
-            Visibility(
-              visible: _checkboxButtons.isNotEmpty,
-              replacement: Padding(
-                padding: EdgeInsets.only(top: 8.0),
-                child: EZTError(message: context.l10n.noTreatmentsRegisteredError),
-              ),
-              child: GroupButton(
-                controller: _checkboxesController,
-                isRadio: false,
-                options: const GroupButtonOptions(groupingType: GroupingType.column),
-                buttons: _checkboxButtons,
-                buttonIndexedBuilder: (selected, index, context) {
-                  return EZTCheckBoxTile(
-                    title: _checkboxButtons[index],
-                    selected: selected,
-                    onTap: () {
-                      if (!selected) {
-                        _checkboxesController.selectIndex(index);
-                        choosedCheckboxList.add(_treatmentsViewmodel.treatments[index]);
-
-                        _validateFields;
-
-                        return;
-                      }
-                      _checkboxesController.unselectIndex(index);
-                      choosedCheckboxList.remove(_treatmentsViewmodel.treatments[index]);
-
-                      _validateFields;
-                    },
-                  );
-                },
-              ),
-            ),
-            _textFields,
+            const SizedBox(height: 8),
+            _addTreatmentForm,
+            _addedTreatmentsList,
+            const SizedBox(height: 24),
+            _repetitionsInput,
             const SizedBox(height: 64),
             _buttons,
           ],

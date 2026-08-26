@@ -1,8 +1,19 @@
-// 🌎 Project imports:
+﻿// 🌎 Project imports:
 import '../../shared/l10n/app_localizations.dart';
 import 'failures.dart';
 
 class HandleFailure {
+  /// Traduz um [Failure] em uma mensagem localizada e voltada ao usuário.
+  ///
+  /// Política de segurança: por padrão, nunca expõe a mensagem bruta de falha
+  /// retornada pelo backend (que pode vazar dicas de validação,
+  /// detalhes de stack ou estado interno). Falhas conhecidas específicas (por exemplo,
+  /// "connection refused") ainda são mapeadas para frases localizadas.
+  ///
+  /// `overrideDefaultMessage: true` é uma exceção explícita para telas cujo
+  /// backend já retorna mensagens curadas e seguras (ex.: fluxo de recuperação
+  /// de senha) — nesse caso a mensagem real do backend é exibida no lugar do
+  /// texto genérico por status HTTP.
   static String of(
     AppLocalizations l10n,
     Failure failure, {
@@ -10,7 +21,7 @@ class HandleFailure {
     bool overrideDefaultMessage = false,
     bool isLogin = false,
   }) {
-    //* EZT custom error when API is down
+    //* Erro personalizado do EZT quando a API estiver indisponível
     if (failure.runtimeType is ServerFailure) {
       if (failure.message.contains("Connection refused")) {
         return l10n.error_serverConnectionRefused;
@@ -18,9 +29,8 @@ class HandleFailure {
     }
 
     if (overrideDefaultMessage) {
-      return enableStatusCode
-          ? l10n.error_statusCodeAndMessage(failure.key.toString(), failure.message)
-          : l10n.error_messageOnly(failure.message);
+      final knownMessage = _knownBackendMessage(l10n, failure.message);
+      if (knownMessage != null) return knownMessage;
     }
 
     switch (failure.key) {
@@ -38,6 +48,8 @@ class HandleFailure {
         return l10n.error_426;
       case 500:
         return l10n.error_500;
+      case 502:
+        return l10n.error_502;
       case 503:
         return l10n.error_503;
       default:
@@ -47,10 +59,29 @@ class HandleFailure {
           case NoResultQueryFailure _:
             return l10n.error_noResultQuery(failure.message.toLowerCase());
           default:
-            return enableStatusCode
-                ? l10n.error_statusCodeAndMessage(failure.key.toString(), failure.message)
-                : l10n.error_messageOnly(failure.message);
+            // Fallback final: uma mensagem genérica e sem vazamento de detalhes.
+            return l10n.error_messageOnly('');
         }
+    }
+  }
+
+  /// Mapeia mensagens curadas conhecidas retornadas pelo backend (sempre em
+  /// português, já que a API não é internacionalizada) para a string
+  /// localizada correspondente. Retorna `null` para mensagens não mapeadas.
+  static String? _knownBackendMessage(AppLocalizations l10n, String rawMessage) {
+    switch (rawMessage.trim()) {
+      case "O e-mail não está cadastrado em nossa base de dados.":
+        return l10n.error_emailNotRegistered;
+      case "Código inválido.":
+        return l10n.error_invalidCode;
+      case "Código inválido ou não encontrado.":
+        return l10n.error_invalidOrNotFoundCode;
+      case "O código expirou. Por favor, solicite um novo.":
+        return l10n.error_codeExpired;
+      case "A nova senha não pode ser igual à senha atual.":
+        return l10n.error_newPasswordSameAsCurrent;
+      default:
+        return null;
     }
   }
 }

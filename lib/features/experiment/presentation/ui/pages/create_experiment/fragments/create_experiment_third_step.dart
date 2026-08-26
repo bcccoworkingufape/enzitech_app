@@ -1,10 +1,10 @@
 // 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:group_button/group_button.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 
 // 🌎 Project imports:
 import '../../../../../../../shared/extensions/extensions.dart';
@@ -94,7 +94,7 @@ class _CreateExperimentThirdStepPageState extends State<CreateExperimentThirdSte
                   description: temporary.description,
                   enzymes: _choosedCheckboxList,
                   repetitions: temporary.repetitions,
-                  treatmentsIDs: temporary.treatmentsIDs,
+                  treatments: temporary.treatments,
                 ),
               );
               _createExperimentViewmodel.onNext(context);
@@ -126,7 +126,7 @@ class _CreateExperimentThirdStepPageState extends State<CreateExperimentThirdSte
             const SizedBox(height: 32),
             Row(
               children: [
-                Icon(PhosphorIcons.flask()),
+                Icon(PhosphorIcons.flask),
                 const SizedBox(width: 4),
                 Text(context.l10n.experimentEnzymes, style: TextStyles.detailBold),
               ],

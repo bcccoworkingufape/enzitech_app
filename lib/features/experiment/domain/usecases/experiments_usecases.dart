@@ -4,17 +4,30 @@ import 'package:dartz/dartz.dart';
 // 🌎 Project imports:
 import '../../../../../core/failures/failures.dart';
 import '../../../enzyme/domain/entities/enzyme_entity.dart';
-import '../entities/experiment_calculation_entity.dart';
 import '../entities/experiment_entity.dart';
 import '../entities/experiment_pagination_entity.dart';
 import '../entities/experiment_result_entity.dart';
+import '../entities/repetition_entity.dart';
 
 abstract class ExperimentsUseCases {
-  Future<Either<Failure, ExperimentCalculationEntity>> calculateExperiment({
+  Future<Either<Failure, List<RepetitionEntity>>> getRepetitions({required String experimentId});
+
+  Future<Either<Failure, RepetitionEntity>> previewRepetition({
     required String experimentId,
+    required String treatmentId,
     required String enzymeId,
-    required String treatmentID,
-    required List<Map<String, dynamic>> listOfExperimentData,
+    required int repetitionNumber,
+    required double sample,
+    required double whiteSample,
+  });
+
+  Future<Either<Failure, ExperimentEntity>> saveRepetition({
+    required String experimentId,
+    required String treatmentId,
+    required String enzymeId,
+    required int repetitionNumber,
+    required double sample,
+    required double whiteSample,
   });
 
   Future<Either<Failure, ExperimentEntity>> createExperiment({
@@ -25,12 +38,16 @@ abstract class ExperimentsUseCases {
     required List<EnzymeEntity> enzymes,
   });
 
-  Future<Either<Failure, Unit>> deleteExperiment(String id);
-
-  Future<Either<Failure, List<EnzymeEntity>>> getEnzymesRemainingInExperiment({
+  Future<Either<Failure, ExperimentEntity>> updateExperiment({
     required String experimentId,
-    required String treatmentId,
+    required String name,
+    required String description,
+    required int repetitions,
+    required List<String> treatmentsIDs,
+    required List<EnzymeEntity> enzymes,
   });
+
+  Future<Either<Failure, Unit>> deleteExperiment(String id);
 
   Future<Either<Failure, ExperimentEntity>> getExperimentById(String id);
 
@@ -43,15 +60,6 @@ abstract class ExperimentsUseCases {
   });
 
   Future<Either<Failure, ExperimentResultEntity>> getResult({required String experimentId});
-
-  Future<Either<Failure, ExperimentEntity>> saveResult({
-    required String experimentId,
-    required String enzymeId,
-    required String treatmentID,
-    required List<Map<String, dynamic>> listOfExperimentData,
-    required List<num> results,
-    required num average,
-  });
 
   Future<void> storeExperimentsInCache(ExperimentPaginationEntity experimentPaginationEntity);
 }

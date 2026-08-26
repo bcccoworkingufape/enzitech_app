@@ -1,11 +1,13 @@
-// 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+﻿// 🐦 Flutter imports:
+import 'package:material_ui/material_ui.dart';
 
 // 📦 Package imports:
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // 🌎 Project imports:
+import '../../../../core/data/service/secure_storage/secure_session_storage.dart';
+import '../../../../core/domain/service/http/http_service.dart';
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
 import '../../../../shared/l10n/app_localizations.dart';
@@ -16,8 +18,10 @@ import '../../domain/usecases/user_preferences_usecases.dart';
 
 class SettingsViewmodel extends ChangeNotifier {
   final UserPreferencesUseCases _userPreferencesUseCases;
+  final SecureSessionStorage _secureSessionStorage;
+  final HttpService _httpService;
 
-  SettingsViewmodel(this._userPreferencesUseCases);
+  SettingsViewmodel(this._userPreferencesUseCases, this._secureSessionStorage, this._httpService);
 
   bool _isReplaceLanguage = false;
   bool get isReplaceLanguage => _isReplaceLanguage;
@@ -115,7 +119,13 @@ class SettingsViewmodel extends ChangeNotifier {
   Future<void> logout() async {
     setStateEnum(StateEnum.loading);
     try {
-      _userPreferencesUseCases.clearUser();
+      //* Clear every trace of the previous session, in order:
+      //  - Secure storage (auth token)
+      //  - Dio Authorization header + interceptors
+      //  - SharedPreferences user/cache entries (keeps theme)
+      await _secureSessionStorage.removeToken();
+      await _httpService.clearSession();
+      await _userPreferencesUseCases.clearUser();
 
       setStateEnum(StateEnum.success);
 

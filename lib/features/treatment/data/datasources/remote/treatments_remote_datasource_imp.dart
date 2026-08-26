@@ -35,11 +35,11 @@ class TreatmentsRemoteDataSourceImp implements TreatmentsDataSource {
   }
 
   @override
-  Future<Either<Failure, Unit>> createTreatment({required String name, required String description}) async {
+  Future<Either<Failure, TreatmentEntity>> createTreatment({required String name, required String description}) async {
     try {
-      await _httpService.post(API.REQUEST_TREATMENTS, data: {"name": name, "description": description});
+      var response = await _httpService.post(API.REQUEST_TREATMENTS, data: {"name": name, "description": description});
 
-      return const Right(unit);
+      return Right(TreatmentDto.fromJson(response.data));
     } catch (e) {
       return Left(e as Failure);
     }

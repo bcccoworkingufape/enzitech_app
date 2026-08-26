@@ -1,9 +1,9 @@
 // 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
@@ -61,7 +61,7 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
   }
 
   void get _validateFields {
-    if (_nameFieldController.text.isNotEmpty && _descriptionFieldController.text.isNotEmpty) {
+    if (_nameFieldController.text.isNotEmpty) {
       setState(() {
         enableCreate = _formKey.currentState!.validate();
       });
@@ -92,7 +92,7 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
           const SizedBox(height: 64),
           Row(
             children: [
-              Icon(PhosphorIcons.flask()),
+              Icon(PhosphorIcons.flask),
               const SizedBox(width: 4),
               Text(context.l10n.treatmentIdentification, style: TextStyles.detailBold),
             ],
@@ -123,8 +123,6 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
   }
 
   Widget get _descriptionInput {
-    final fieldValidator = FieldValidator(validations, context);
-
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,
       labelText: context.l10n.descriptionLabel,
@@ -132,7 +130,6 @@ class _CreateTreatmentPageState extends State<CreateTreatmentPage> {
       keyboardType: TextInputType.name,
       controller: _descriptionFieldController,
       onChanged: (value) => _validateFields,
-      fieldValidator: fieldValidator,
     );
   }
 

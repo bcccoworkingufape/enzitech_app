@@ -1,5 +1,5 @@
 // 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 
 // 📦 Package imports:
@@ -10,6 +10,7 @@ import '../../../../../../../core/enums/state_enum.dart';
 import '../../../../../../../shared/extensions/build_context_extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../../../../../shared/utils/utils.dart';
+import '../../../../../../../shared/validator/security_validators.dart';
 import '../../../../../../../shared/validator/validator.dart';
 import '../../../../../../enzyme/domain/entities/enzyme_entity.dart';
 import '../../../../viewmodel/create_experiment_viewmodel.dart';
@@ -28,12 +29,6 @@ class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthS
 
   Map<String, TextEditingController> textEditingControllers = {};
 
-  final validations = <ValidateRule>[
-    ValidateRule(ValidateTypes.required),
-    ValidateRule(ValidateTypes.numeric),
-    ValidateRule(ValidateTypes.greaterThanZeroDecimal),
-  ];
-
   @override
   void initState() {
     super.initState();
@@ -43,8 +38,8 @@ class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthS
       if (mounted) {
         _createExperimentViewmodel.setStepPage(0, notify: false);
 
-        final fieldValidator = FieldValidator(validations, context);
-        final durationFieldValidator = FieldValidator([...validations, ValidateRule(ValidateTypes.isInteger)], context);
+        final fieldValidator = FieldValidator(SecurityValidators.variableA(), context);
+        final durationFieldValidator = FieldValidator(SecurityValidators.duration(), context);
 
         setState(() {
           textEditingControllers.clear();
@@ -292,9 +287,10 @@ class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthS
                 if (mounted) {
                   await _createExperimentViewmodel.createExperiment();
 
-                  GetIt.I.get<ExperimentDetailsViewmodel>().getExperimentDetails(
-                    _createExperimentViewmodel.experiment!.id,
-                  );
+                  final createdExperiment = _createExperimentViewmodel.experiment;
+                  if (mounted && createdExperiment != null) {
+                    GetIt.I.get<ExperimentDetailsViewmodel>().getExperimentDetails(createdExperiment.id);
+                  }
                 }
 
                 return;
@@ -375,7 +371,7 @@ class _CreateExperimentFourthStepPageState extends State<CreateExperimentFourthS
                             title: _isEnzymeCorrectlyFilled(enzyme.id)
                                 ? Text(enzyme.name)
                                 : Text(
-                                    "⚠  ${enzyme.name}",
+                                    "⚠ ${enzyme.name}",
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: context.getApplyedColorScheme.error,

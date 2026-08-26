@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 // 🌎 Project imports:
 import '../../../../../core/domain/service/http/http_service.dart';
 import '../../../../../core/failures/failure.dart';
+import '../../../../../core/failures/server_failures/server_failure.dart';
 import '../../../../../shared/utils/api.dart';
 import '../../../domain/entities/enzyme_entity.dart';
 import '../../dto/enzyme_dto.dart';
@@ -46,10 +47,13 @@ class EnzymesRemoteDataSourceImp implements EnzymesDataSource {
   Future<Either<Failure, List<EnzymeEntity>>> getEnzymes() async {
     try {
       var response = await _httpService.get(API.REQUEST_ENZYMES);
-      var result = (response.data as List).map((e) => EnzymeDto.fromJson(e)).toList();
+      List<dynamic> enzymesList = response.data['content'] ?? response.data;
+      var result = enzymesList.map((e) => EnzymeDto.fromJson(e)).toList();
       return Right(result);
+    } on Failure catch (e) {
+      return Left(e);
     } catch (e) {
-      return Left(e as Failure);
+      return Left(ServerFailure(message: 'Falha não mapeada nas Enzimas: $e'));
     }
   }
 }

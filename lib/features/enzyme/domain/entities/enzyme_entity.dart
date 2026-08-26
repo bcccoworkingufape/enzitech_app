@@ -1,5 +1,9 @@
 class EnzymeEntity {
   String id;
+  // Id da enzima no cadastro global. Igual a [id] quando este objeto já representa o
+  // próprio cadastro global; diferente quando representa um snapshot vinculado a um
+  // experimento (usado para pré-marcar a seleção correta na tela de edição).
+  String? sourceEnzymeId;
   String name;
   double variableA;
   double variableB;
@@ -14,6 +18,7 @@ class EnzymeEntity {
 
   EnzymeEntity({
     required this.id,
+    this.sourceEnzymeId,
     required this.name,
     required this.variableA,
     required this.variableB,

@@ -6,6 +6,7 @@ export 'ezt_expansion_tile.dart';
 export 'ezt_forced_center.dart';
 export 'ezt_marquee_on_demand.dart';
 export 'ezt_not_found.dart';
+export 'ezt_password_requirements.dart';
 export 'ezt_progress_indicator.dart';
 export 'ezt_pull_to_refresh.dart';
 export 'ezt_snack_bar.dart';

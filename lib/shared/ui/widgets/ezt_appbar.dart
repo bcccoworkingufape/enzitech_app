@@ -1,10 +1,10 @@
 // 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 // 📦 Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 
 // 🌎 Project imports:
 import '../../../features/main/presentation/viewmodel/home_viewmodel.dart';
@@ -63,9 +63,9 @@ class _EZTAppBarState extends State<EZTAppBar> {
                       child: EZTBlink(
                         interval: 750,
                         children: <Widget>[
-                          Icon(PhosphorIcons.cloudSlash(), color: Colors.white),
+                          Icon(PhosphorIcons.cloudSlash, color: Colors.white),
 
-                          Icon(PhosphorIcons.cloudSlash(), color: context.getApplyedColorScheme.error),
+                          Icon(PhosphorIcons.cloudSlash, color: context.getApplyedColorScheme.error),
                         ],
                       ),
                     ),

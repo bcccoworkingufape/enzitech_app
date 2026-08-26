@@ -2,17 +2,18 @@
 import 'dart:math';
 
 // 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 // 📦 Package imports:
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:get_it/get_it.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 
 // 🌎 Project imports:
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
+import '../../../../../../core/platform/secure_screen_wrapper.dart';
 import '../../../../../../shared/extensions/build_context_extensions.dart';
 import '../../../../../../shared/extensions/double_extensions.dart';
 import '../../../../../../shared/ui/ui.dart';
@@ -27,7 +28,7 @@ class ExperimentResultsPage extends StatefulWidget {
   State<ExperimentResultsPage> createState() => _ExperimentResultsPageState();
 }
 
-class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
+class _ExperimentResultsPageState extends State<ExperimentResultsPage> with SecureScreenMixin {
   late final ExperimentResultsViewmodel _experimentResultsViewmodel;
   late final ExperimentDetailsViewmodel _experimentDetailsViewmodel;
   late final ExperimentEntity _experiment;
@@ -190,33 +191,42 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
                                                     columnSpacing: 12,
                                                     minWidth: 1200,
                                                     columns: [
-                                                      DataColumn(label: Text(context.l10n.columnId), numeric: true),
-                                                      DataColumn(label: Text(context.l10n.columnSample), numeric: true),
-                                                      DataColumn(
+                                                      DataColumn2(label: Text(context.l10n.columnId), numeric: true),
+                                                      DataColumn2(
+                                                        label: Text(context.l10n.columnSample),
+                                                        numeric: true,
+                                                      ),
+                                                      DataColumn2(
                                                         label: Text(context.l10n.columnWhiteSampleShort),
                                                         numeric: true,
                                                         tooltip: context.l10n.columnWhiteSampleTooltip,
                                                       ),
-                                                      DataColumn(
+                                                      DataColumn2(
                                                         label: Text(context.l10n.columnDifference),
                                                         numeric: true,
                                                       ),
-                                                      DataColumn(label: Text(context.l10n.variableA), numeric: true),
-                                                      DataColumn(label: Text(context.l10n.variableB), numeric: true),
-                                                      DataColumn(label: Text(context.l10n.columnCurve), numeric: true),
-                                                      DataColumn(
+                                                      DataColumn2(label: Text(context.l10n.variableA), numeric: true),
+                                                      DataColumn2(label: Text(context.l10n.variableB), numeric: true),
+                                                      DataColumn2(label: Text(context.l10n.columnCurve), numeric: true),
+                                                      DataColumn2(
                                                         label: Text(context.l10n.columnCorrectionFactorShort),
                                                         numeric: true,
                                                         tooltip: context.l10n.correctionFactor,
                                                       ),
-                                                      DataColumn(label: Text(context.l10n.timeHours), numeric: true),
-                                                      DataColumn(label: Text(context.l10n.columnVolume), numeric: true),
-                                                      DataColumn(
+                                                      DataColumn2(label: Text(context.l10n.timeHours), numeric: true),
+                                                      DataColumn2(
+                                                        label: Text(context.l10n.columnVolume),
+                                                        numeric: true,
+                                                      ),
+                                                      DataColumn2(
                                                         label: Text(context.l10n.columnSampleWeightShort),
                                                         numeric: true,
                                                         tooltip: context.l10n.columnSampleWeightTooltip,
                                                       ),
-                                                      DataColumn(label: Text(context.l10n.columnResult), numeric: true),
+                                                      DataColumn2(
+                                                        label: Text(context.l10n.columnResult),
+                                                        numeric: true,
+                                                      ),
                                                     ],
                                                     rows: List<DataRow2>.generate(
                                                       treatment.repetitionResults.length,
@@ -341,7 +351,7 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
   }
 
   RotateFloatingActionButtonBuilder get _rotateFloatingActionButtonBuilder => RotateFloatingActionButtonBuilder(
-    child: Icon(PhosphorIcons.dotsThreeVertical()),
+    child: Icon(PhosphorIcons.dotsThreeVertical),
     fabSize: ExpandableFabSize.regular,
     backgroundColor: context.getApplyedColorScheme.primary,
     foregroundColor: context.getApplyedColorScheme.onPrimary,
@@ -373,47 +383,49 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> {
     return ListenableBuilder(
       listenable: _experimentResultsViewmodel,
       builder: (context, child) {
-        return Scaffold(
-          floatingActionButtonLocation: ExpandableFab.location,
-          floatingActionButton:
-              _experimentResultsViewmodel.state == StateEnum.loading ||
-                  _experimentResultsViewmodel.state == StateEnum.error
-              ? null
-              : ExpandableFab(
-                  type: ExpandableFabType.up,
-                  openButtonBuilder: _rotateFloatingActionButtonBuilder,
-                  closeButtonBuilder: _rotateFloatingActionButtonBuilder,
-                  children: [
-                    FloatingActionButton.small(
-                      shape: const CircleBorder(),
-                      backgroundColor: context.getApplyedColorScheme.primary,
-                      foregroundColor: context.getApplyedColorScheme.onPrimary,
-                      heroTag: null,
-                      child: Icon(PhosphorIcons.share()),
-                      onPressed: () {
-                        final translations = _buildExcelTranslations();
-                        final translatedFilename = context.l10n.shareExperimentResultsFilename(
-                          _experimentDetailsViewmodel.experiment!.name,
-                        );
+        return wrapSecureScreen(
+          child: Scaffold(
+            floatingActionButtonLocation: ExpandableFab.location,
+            floatingActionButton:
+                _experimentResultsViewmodel.state == StateEnum.loading ||
+                    _experimentResultsViewmodel.state == StateEnum.error
+                ? null
+                : ExpandableFab(
+                    type: ExpandableFabType.up,
+                    openButtonBuilder: _rotateFloatingActionButtonBuilder,
+                    closeButtonBuilder: _rotateFloatingActionButtonBuilder,
+                    children: [
+                      FloatingActionButton.small(
+                        shape: const CircleBorder(),
+                        backgroundColor: context.getApplyedColorScheme.primary,
+                        foregroundColor: context.getApplyedColorScheme.onPrimary,
+                        heroTag: null,
+                        child: Icon(PhosphorIcons.share),
+                        onPressed: () {
+                          final translations = _buildExcelTranslations();
+                          final translatedFilename = context.l10n.shareExperimentResultsFilename(
+                            _experimentDetailsViewmodel.experiment!.name,
+                          );
 
-                        _experimentResultsViewmodel.shareFile(translations, translatedFilename);
-                      },
-                    ),
-                    FloatingActionButton.small(
-                      shape: const CircleBorder(),
-                      backgroundColor: context.getApplyedColorScheme.primary,
-                      foregroundColor: context.getApplyedColorScheme.onPrimary,
-                      heroTag: null,
-                      child: Icon(PhosphorIcons.downloadSimple()),
-                      onPressed: () {
-                        final translations = _buildExcelTranslations();
+                          _experimentResultsViewmodel.shareFile(translations, translatedFilename);
+                        },
+                      ),
+                      FloatingActionButton.small(
+                        shape: const CircleBorder(),
+                        backgroundColor: context.getApplyedColorScheme.primary,
+                        foregroundColor: context.getApplyedColorScheme.onPrimary,
+                        heroTag: null,
+                        child: Icon(PhosphorIcons.downloadSimple),
+                        onPressed: () {
+                          final translations = _buildExcelTranslations();
 
-                        _experimentResultsViewmodel.openDialogToUserSaveFile(translations, context);
-                      },
-                    ),
-                  ],
-                ),
-          body: _buildBody,
+                          _experimentResultsViewmodel.openDialogToUserSaveFile(translations, context);
+                        },
+                      ),
+                    ],
+                  ),
+            body: _buildBody,
+          ),
         );
       },
     );

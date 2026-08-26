@@ -1,4 +1,4 @@
-// 📦 Package imports:
+﻿// 📦 Package imports:
 import 'package:get_it/get_it.dart';
 
 // 🌎 Project imports:
@@ -32,8 +32,12 @@ class DataSourcesInjections {
       () => ExperimentsDataSourceDecoratorImp(ExperimentsRemoteDataSourceImp(getIt()), getIt()),
     );
 
-    getIt.registerLazySingleton<UserPreferencesDataSource>(() => UserPreferencesLocalDataSourceImp(getIt()));
+    getIt.registerLazySingleton<UserPreferencesDataSource>(
+      () => UserPreferencesLocalDataSourceImp(getIt(), getIt()),
+    );
 
-    getIt.registerLazySingleton<AuthDataSource>(() => AuthRemoteDataSourceImp(getIt(), getIt()));
+    getIt.registerLazySingleton<AuthDataSource>(
+      () => AuthRemoteDataSourceImp(getIt(), getIt(), getIt()),
+    );
   }
 }

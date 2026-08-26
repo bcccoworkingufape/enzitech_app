@@ -1,13 +1,14 @@
 // 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 
 // 🌎 Project imports:
 import '../../../../../../../shared/extensions/extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
+import '../../../../../../../shared/validator/security_validators.dart';
 import '../../../../../../../shared/validator/validator.dart';
 import '../../../../dto/create_experiment_dto.dart';
 import '../../../../viewmodel/create_experiment_viewmodel.dart';
@@ -26,7 +27,7 @@ class _CreateExperimentFirstStepPageState extends State<CreateExperimentFirstSte
   final _nameFieldController = TextEditingController(text: '');
   final _descriptionFieldController = TextEditingController(text: '');
 
-  final _validations = <ValidateRule>[ValidateRule(ValidateTypes.required)];
+  final _validations = SecurityValidators.requiredLongText();
 
   @override
   void initState() {
@@ -111,7 +112,7 @@ class _CreateExperimentFirstStepPageState extends State<CreateExperimentFirstSte
                   description: _descriptionFieldController.text,
                   enzymes: temporary.enzymes,
                   repetitions: temporary.repetitions,
-                  treatmentsIDs: temporary.treatmentsIDs,
+                  treatments: temporary.treatments,
                 ),
               );
               _createExperimentViewmodel.onNext(context);
@@ -143,7 +144,7 @@ class _CreateExperimentFirstStepPageState extends State<CreateExperimentFirstSte
             const SizedBox(height: 32),
             Row(
               children: [
-                Icon(PhosphorIcons.flask()),
+                Icon(PhosphorIcons.flask),
                 const SizedBox(width: 4),
                 Text(context.l10n.experimentIdentification, style: TextStyles.detailBold),
               ],

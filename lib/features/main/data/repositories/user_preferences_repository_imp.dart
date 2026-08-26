@@ -1,5 +1,5 @@
 // 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 // 📦 Package imports:
 import 'package:dartz/dartz.dart';
@@ -16,8 +16,8 @@ class UserPreferencesRepositoryImp implements UserPreferencesRepository {
   UserPreferencesRepositoryImp(this._userPreferencesDataSource);
 
   @override
-  void clearUser() async {
-    return _userPreferencesDataSource.clearUser();
+  Future<void> clearUser() async {
+    await _userPreferencesDataSource.clearUser();
   }
 
   @override

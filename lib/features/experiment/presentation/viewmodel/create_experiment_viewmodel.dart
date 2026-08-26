@@ -1,11 +1,16 @@
 // 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
+
+// 📦 Package imports:
+import 'package:get_it/get_it.dart';
 
 // 🌎 Project imports:
 import '../../../../core/enums/enums.dart';
 import '../../../../core/failures/failures.dart';
 import '../../../../shared/ui/ui.dart';
 import '../../../enzyme/data/dto/enzyme_dto.dart';
+import '../../../treatment/domain/usecases/treatments_usecases.dart';
+import '../../../treatment/presentation/viewmodel/treatments_viewmodel.dart';
 import '../../domain/entities/experiment_entity.dart';
 import '../../domain/usecases/experiments_usecases.dart';
 import '../dto/create_experiment_dto.dart';
@@ -14,8 +19,9 @@ import 'experiments_viewmodel.dart';
 class CreateExperimentViewmodel extends ChangeNotifier {
   final ExperimentsUseCases _experimentsUseCases;
   final ExperimentsViewmodel _experimentsViewmodel;
+  final TreatmentsUseCases _treatmentsUseCases;
 
-  CreateExperimentViewmodel(this._experimentsUseCases, this._experimentsViewmodel);
+  CreateExperimentViewmodel(this._experimentsUseCases, this._experimentsViewmodel, this._treatmentsUseCases);
 
   StateEnum _state = StateEnum.idle;
   StateEnum get state => _state;
@@ -158,7 +164,7 @@ class CreateExperimentViewmodel extends ChangeNotifier {
           description: temporaryExperiment.description,
           enzymes: enzymes,
           repetitions: temporaryExperiment.repetitions,
-          treatmentsIDs: temporaryExperiment.treatmentsIDs,
+          treatments: temporaryExperiment.treatments,
         ),
       );
     } on Exception catch (e) {
@@ -167,11 +173,35 @@ class CreateExperimentViewmodel extends ChangeNotifier {
       return;
     }
 
+    // Cada tratamento adicionado no passo 2 ainda não existe de verdade — é criado agora,
+    // vinculado ao usuário logado, para só então poder ser referenciado pelo experimento.
+    List<String> treatmentIds = [];
+    for (final pendingTreatment in _temporaryExperiment.treatments!) {
+      var treatmentResult = await _treatmentsUseCases.createTreatment(
+        name: pendingTreatment.name,
+        description: pendingTreatment.description,
+      );
+
+      var stoppedWithError = false;
+      treatmentResult.fold(
+        (error) {
+          _setFailure(error);
+          setStateEnum(StateEnum.error);
+          stoppedWithError = true;
+        },
+        (createdTreatment) {
+          treatmentIds.add(createdTreatment.id);
+        },
+      );
+
+      if (stoppedWithError) return;
+    }
+
     var result = await _experimentsUseCases.createExperiment(
       name: _temporaryExperiment.name!,
       description: _temporaryExperiment.description!,
       repetitions: _temporaryExperiment.repetitions!,
-      treatmentsIDs: _temporaryExperiment.treatmentsIDs!,
+      treatmentsIDs: treatmentIds,
       enzymes: _temporaryExperiment.enzymes!,
     );
 
@@ -182,6 +212,7 @@ class CreateExperimentViewmodel extends ChangeNotifier {
       },
       (success) async {
         setExperiment(success);
+        await GetIt.I.get<TreatmentsViewmodel>().fetch();
         await _experimentsViewmodel.fetch();
         setStateEnum(StateEnum.success);
       },

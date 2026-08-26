@@ -1,16 +1,15 @@
 // 🐦 Flutter imports:
-
-// 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 
 // 🌎 Project imports:
 import '../../../../../../../shared/extensions/build_context_extensions.dart';
 import '../../../../../../../shared/ui/ui.dart';
 import '../../../../../../../shared/utils/utils.dart';
+import '../../../../../../../shared/validator/security_validators.dart';
 import '../../../../../../../shared/validator/validator.dart';
 import '../../../../viewmodel/create_account_viewmodel.dart';
 
@@ -58,7 +57,7 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
   }
 
   Widget get _emailInput {
-    final validations = <ValidateRule>[ValidateRule(ValidateTypes.required), ValidateRule(ValidateTypes.email)];
+    final validations = SecurityValidators.email();
 
     final fieldValidator = FieldValidator(validations, context);
 
@@ -74,10 +73,7 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
   }
 
   Widget get _passwordInput {
-    final validations = <ValidateRule>[
-      ValidateRule(ValidateTypes.required),
-      ValidateRule(ValidateTypes.strongPassword),
-    ];
+    final validations = SecurityValidators.password();
 
     final fieldValidator = FieldValidator(validations, context);
 
@@ -114,12 +110,17 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
     );
   }
 
+  Widget get _passwordRequirementsCard {
+    return EZTPasswordRequirements(password: _passwordFieldController.text);
+  }
+
   Widget get _textFields {
     return Column(
       children: [
         _emailInput,
         const SizedBox(height: 10),
         _passwordInput,
+        _passwordRequirementsCard,
         const SizedBox(height: 10),
         _confirmPasswordInput,
       ],
@@ -143,7 +144,7 @@ class CreateAccountSecondStepState extends State<CreateAccountSecondStep> {
           const SizedBox(height: 64),
           Row(
             children: [
-              Icon(PhosphorIcons.at(PhosphorIconsStyle.bold)),
+              Icon(PhosphorIcons.atBold),
               const SizedBox(width: 4),
               Text(context.l10n.access, style: TextStyles.detailBold),
             ],

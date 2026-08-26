@@ -136,8 +136,6 @@
     }
   },
   "selectTreatment": "Select the treatment:",
-  "loadingAvailableEnzymes": "Loading available enzymes...",
-  "allEnzymesCalculated": "All enzymes for this treatment have already been calculated!",
   "selectEnzyme": "Select the enzyme:",
   "selectedEnzymeType": "Selected enzyme type: {enzymeType}",
   "@selectedEnzymeType": {
@@ -182,8 +180,6 @@
       }
     }
   },
-  "saveAndExitButton": "Save and exit",
-  "recalculateButton": "Recalculate",
   "repetitionLabel": "Repetition {repetitionNumber}:",
   "@repetitionLabel": {
     "placeholders": {
@@ -192,22 +188,15 @@
       }
     }
   },
-  "discrepantRepetitionWarning": "This repetition is discrepant!\n\nIts value differs by more than 25% from the average of all repetitions.\n\nIf you want to change it, just press \"Recalculate\".",
-  "average": "Average:",
-  "repetitionColumnTitle": "REPETITION",
-  "resultColumnTitle": "RESULT",
-  "statusColumnTitle": "STATUS",
-  "stepIndicatorMessageResults": "Step {currentStep} of {totalSteps} - Results",
-  "@stepIndicatorMessageResults": {
-    "placeholders": {
-      "currentStep": {
-        "type": "int"
-      },
-      "totalSteps": {
-        "type": "int"
-      }
-    }
-  },
+  "pending": "Pending",
+  "fillRepetitionsTitle": "Fill in the data for each repetition",
+  "saveRepetitionButton": "Save repetition",
+  "repetitionSavedMessage": "Repetition saved successfully!",
+  "finishButton": "Finish",
+  "editExperimentTitle": "Edit experiment",
+  "editExperimentTooltip": "Edit experiment",
+  "saveChangesButton": "Save changes",
+  "experimentUpdatedSuccess": "Experiment updated successfully!",
   "registerNewExperiment": "Register a new experiment",
   "experimentIdentification": "Experiment Identification",
   "stepIndicatorIdentification": "Step {currentStep} of {totalSteps} - Identification",
@@ -222,9 +211,10 @@
     }
   },
   "repetitionsPerTreatmentLabel": "Number of repetitions per treatment",
-  "goToTreatmentsButton": "Go to treatments",
   "treatmentsAndRepetitionsData": "Treatments and Repetitions Data",
   "noTreatmentsRegisteredError": "No treatments registered! At least one treatment is required to proceed.",
+  "addTreatmentButton": "Add treatment",
+  "noTreatmentsAddedYet": "No treatments added yet",
   "stepIndicatorTreatments": "Step {currentStep} of {totalSteps} - Treatments and Repetitions",
   "@stepIndicatorTreatments": {
     "placeholders": {
@@ -331,6 +321,7 @@
   "error_422": "⚠ Unprocessable entity: The server understands the content type, but was unable to process the contained instructions.",
   "error_426": "⚠ Upgrade required: Invalid device ID.",
   "error_500": "⚠ Server Error: The request could not be fulfilled.",
+  "error_502": "⚠ Bad Gateway: The service is unavailable.",
   "error_503": "⚠ Server Error: The service is temporarily unavailable.",
   "error_noNetwork": "⚠ No internet connection, check your network access and try again.",
   "error_noResultQuery": "⚠ Could not get {query}.",
@@ -339,6 +330,11 @@
       "query": {}
     }
   },
+  "error_emailNotRegistered": "⚠ This email is not registered in our database.",
+  "error_invalidCode": "⚠ Invalid code.",
+  "error_invalidOrNotFoundCode": "⚠ Invalid or not found code.",
+  "error_codeExpired": "⚠ The code has expired. Please request a new one.",
+  "error_newPasswordSameAsCurrent": "⚠ The new password cannot be the same as your current password.",
   "validation_required": "⚠ Required field",
   "validation_strongPassword": "⚠ Password does not meet the required pattern.",
   "validation_alfanumeric": "⚠ Field does not accept special characters",
@@ -435,6 +431,25 @@
   "access": "Access",
   "createAccountButton": "Create account",
   "accountCreatedSuccess": "Account created successfully!",
+  "passwordRequirementsTitle": "Your password must contain:",
+  "passwordRequirement_minLength": "At least 8 characters",
+  "passwordRequirement_uppercase": "An uppercase letter",
+  "passwordRequirement_lowercase": "A lowercase letter",
+  "passwordRequirement_specialChar": "A special character (e.g. !@#$%)",
+  "recoverEmailSent": "Recovery email sent successfully!",
+  "recoverPassword": "Reset Password",
+  "recoverPasswordInstructions": "Enter your email below. We will send you instructions to reset your password.",
+  "sendRecoverEmail": "Send E-mail",
+  "verifyCodeTitle": "Verify Code",
+  "verifyCodeInstructions": "Enter the 6-digit code we sent to your email.",
+  "verifyCodeButton": "Verify",
+  "@@Locale": "en",
+  "resetPassword": "Reset Password",
+  "passwordResetSuccess": "Password reset successfully!",
+  "recoverCode": "Reset Code",
+  "passwordsDoNotMatch": "Passwords do not match!",
+  "newPassword": "New Password",
+  "confirmPassword": "Confirm New Password",
   "info": "Info",
   "about": "About Enzitech",
   "frequentlyAskedQuestions": "FAQ",
@@ -486,6 +501,7 @@
   "idealizationTextP4": ".",
   "roleMobileDeveloper": "(Mobile developer)",
   "roleBackendDeveloper": "(Back-end developer)",
+  "roleMobileBackendDev": "(Mobile & Back-end Developer)",
   "roleProjectManagement": "(Project Management)",
   "roleProfessorBCC": "(Professor - BCC)",
   "roleProfessorAgronomy": "(Professor - Agronomy)",

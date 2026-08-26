@@ -1,7 +1,7 @@
-// 🌎 Project imports:
+﻿// 🌎 Project imports:
 
 // 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 // 📦 Package imports:
 import 'package:dartz/dartz.dart';
@@ -18,8 +18,8 @@ class UserPreferencesUseCasesImp implements UserPreferencesUseCases {
   UserPreferencesUseCasesImp(this._userPreferencesRepository);
 
   @override
-  void clearUser() async {
-    return _userPreferencesRepository.clearUser();
+  Future<void> clearUser() async {
+    await _userPreferencesRepository.clearUser();
   }
 
   @override
@@ -44,16 +44,16 @@ class UserPreferencesUseCasesImp implements UserPreferencesUseCases {
 
   @override
   Future<void> saveExcludeConfirmation(bool value) async {
-    return await _userPreferencesRepository.saveExcludeConfirmation(value);
+    await _userPreferencesRepository.saveExcludeConfirmation(value);
   }
 
   @override
   Future<void> saveReplaceLanguage(bool value) async {
-    return await _userPreferencesRepository.saveReplaceLanguage(value);
+    await _userPreferencesRepository.saveReplaceLanguage(value);
   }
 
   @override
   Future<void> saveThemeMode(ThemeMode theme) async {
-    return await _userPreferencesRepository.saveThemeMode(theme);
+    await _userPreferencesRepository.saveThemeMode(theme);
   }
 }

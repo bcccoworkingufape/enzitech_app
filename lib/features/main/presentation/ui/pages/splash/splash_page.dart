@@ -1,12 +1,12 @@
-// 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+﻿// 🐦 Flutter imports:
+import 'package:material_ui/material_ui.dart';
 
 // 📦 Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 
 // 🌎 Project imports:
-import '../../../../../../core/domain/service/user_preferences/user_preferences_service.dart';
+import '../../../../../../core/data/service/secure_storage/secure_session_storage.dart';
 import '../../../../../../core/enums/enums.dart';
 import '../../../../../../core/failures/failures.dart';
 import '../../../../../../core/routing/routing.dart';
@@ -45,7 +45,7 @@ class _SplashPageState extends State<SplashPage> {
           if (_splashViewmodel.failure is ExpiredTokenOrWrongUserFailure ||
               _splashViewmodel.failure is UserNotFoundOrWrongTokenFailure ||
               _splashViewmodel.failure is SessionNotFoundFailure) {
-            accountViewmodel.logout();
+            await accountViewmodel.logout();
 
             if (accountViewmodel.state == StateEnum.success && mounted) {
               EZTSnackBar.show(context, context.l10n.loginAgain);
@@ -65,11 +65,11 @@ class _SplashPageState extends State<SplashPage> {
 
   Future<void> _checkAuth() async {
     await Future.delayed(const Duration(seconds: 1)).then((_) async {
-      String token = await GetIt.I.get<UserPreferencesService>().getToken() ?? '';
+      final hasToken = await GetIt.I.get<SecureSessionStorage>().hasToken();
 
       if (!mounted) return;
 
-      if (token.isEmpty) {
+      if (!hasToken) {
         Navigator.pushReplacementNamed(context, Routing.login);
       } else {
         Navigator.pushReplacementNamed(context, Routing.home);

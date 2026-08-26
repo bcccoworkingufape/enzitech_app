@@ -5,6 +5,7 @@ extension TreatmentDto on TreatmentEntity {
   static TreatmentEntity fromJson(Map json) {
     return TreatmentEntity(
       id: json['id'],
+      sourceTreatmentId: json['sourceTreatmentId']?.toString(),
       name: json['name'],
       description: json['description'],
       createdAt:

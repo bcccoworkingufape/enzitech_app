@@ -2,9 +2,9 @@
 import 'dart:math';
 
 // 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
-/// Progress Indicator for [LiquidPullToRefresh]
+/// Indicador de progresso para [LiquidPullToRefresh]
 class CircularProgress extends StatefulWidget {
   final double innerCircleRadius;
   final double progressPercent;
@@ -34,8 +34,7 @@ class CircularProgress extends StatefulWidget {
 class CircularProgressState extends State<CircularProgress> {
   @override
   Widget build(BuildContext context) {
-    double containerLength =
-        2 * max(widget.progressCircleRadius, widget.innerCircleRadius);
+    double containerLength = 2 * max(widget.progressCircleRadius, widget.innerCircleRadius);
 
     return SizedBox(
       height: containerLength,
@@ -64,18 +63,13 @@ class CircularProgressState extends State<CircularProgress> {
               height: widget.innerCircleRadius * 2,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: widget.backgroundImage == null
-                    ? widget.backgroundColor
-                    : null,
+                color: widget.backgroundImage == null ? widget.backgroundColor : null,
                 image: widget.backgroundImage == null
                     ? null
-                    : DecorationImage(
-                        fit: BoxFit.fill,
-                        image: widget.backgroundImage!,
-                      ),
+                    : DecorationImage(fit: BoxFit.fill, image: widget.backgroundImage!),
               ),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -86,8 +80,7 @@ class CircularProgressIndicator extends StatefulWidget {
   const CircularProgressIndicator({super.key});
 
   @override
-  CircularProgressIndicatorState createState() =>
-      CircularProgressIndicatorState();
+  CircularProgressIndicatorState createState() => CircularProgressIndicatorState();
 }
 
 class CircularProgressIndicatorState extends State<CircularProgressIndicator> {
@@ -110,10 +103,10 @@ class RingPainter extends CustomPainter {
     required this.progressPercent,
     required this.trackColor,
   }) : trackPaint = Paint()
-          ..color = trackColor
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = paintWidth
-          ..strokeCap = StrokeCap.square;
+         ..color = trackColor
+         ..style = PaintingStyle.stroke
+         ..strokeWidth = paintWidth
+         ..strokeCap = StrokeCap.square;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -122,15 +115,7 @@ class RingPainter extends CustomPainter {
 
     final progressAngle = 2 * pi * progressPercent;
 
-    canvas.drawArc(
-        Rect.fromCircle(
-          center: center,
-          radius: radius,
-        ),
-        startAngle,
-        progressAngle,
-        false,
-        trackPaint);
+    canvas.drawArc(Rect.fromCircle(center: center, radius: radius), startAngle, progressAngle, false, trackPaint);
   }
 
   @override

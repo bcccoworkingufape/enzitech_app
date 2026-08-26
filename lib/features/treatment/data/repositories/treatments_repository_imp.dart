@@ -13,7 +13,7 @@ class TreatmentsRepositoryImp implements TreatmentsRepository {
   TreatmentsRepositoryImp(this._treatmentsDataSource);
 
   @override
-  Future<Either<Failure, Unit>> createTreatment({required String name, required String description}) async {
+  Future<Either<Failure, TreatmentEntity>> createTreatment({required String name, required String description}) async {
     return await _treatmentsDataSource.createTreatment(name: name, description: description);
   }
 
