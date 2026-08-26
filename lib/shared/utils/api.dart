@@ -89,6 +89,7 @@ class API {
   //-> USER
   static const REQUEST_USERS = '/users';
   static String REQUEST_USERS_WITH_ID(String id) => '$REQUEST_USERS/$id';
+  static const REQUEST_DELETE_MY_ACCOUNT = '$REQUEST_USERS/me';
 
   //-> ENZYMES
   static const REQUEST_ENZYMES = '/enzymes';

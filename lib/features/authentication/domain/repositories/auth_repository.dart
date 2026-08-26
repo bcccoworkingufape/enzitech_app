@@ -11,4 +11,5 @@ abstract class AuthRepository {
   Future<Either<Failure, Unit>> recoverPassword({required String email});
   Future<Either<Failure, Unit>> verifyPin({required String email, required String token});
   Future<Either<Failure, Unit>> resetPassword({required String email, required String token, required String newPassword});
+  Future<Either<Failure, Unit>> deleteAccount();
 }

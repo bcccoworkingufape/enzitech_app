@@ -13,6 +13,7 @@ import '../../../../core/failures/failures.dart';
 import '../../../../shared/l10n/app_localizations.dart';
 import '../../../../shared/utils/utils.dart';
 import '../../../authentication/domain/entities/user_entity.dart';
+import '../../../authentication/domain/usecases/auth/auth_usecase.dart';
 import '../../domain/entities/app_info_entity.dart';
 import '../../domain/usecases/user_preferences_usecases.dart';
 
@@ -20,8 +21,12 @@ class SettingsViewmodel extends ChangeNotifier {
   final UserPreferencesUseCases _userPreferencesUseCases;
   final SecureSessionStorage _secureSessionStorage;
   final HttpService _httpService;
+  final AuthUseCase _authUseCase;
 
-  SettingsViewmodel(this._userPreferencesUseCases, this._secureSessionStorage, this._httpService);
+  SettingsViewmodel(this._userPreferencesUseCases, this._secureSessionStorage, this._httpService, this._authUseCase);
+
+  bool _accountDeleted = false;
+  bool get accountDeleted => _accountDeleted;
 
   bool _isReplaceLanguage = false;
   bool get isReplaceLanguage => _isReplaceLanguage;
@@ -119,13 +124,7 @@ class SettingsViewmodel extends ChangeNotifier {
   Future<void> logout() async {
     setStateEnum(StateEnum.loading);
     try {
-      //* Clear every trace of the previous session, in order:
-      //  - Secure storage (auth token)
-      //  - Dio Authorization header + interceptors
-      //  - SharedPreferences user/cache entries (keeps theme)
-      await _secureSessionStorage.removeToken();
-      await _httpService.clearSession();
-      await _userPreferencesUseCases.clearUser();
+      await _clearSession();
 
       setStateEnum(StateEnum.success);
 
@@ -135,6 +134,38 @@ class SettingsViewmodel extends ChangeNotifier {
       _setFailure(e as Failure);
       setStateEnum(StateEnum.error);
     }
+  }
+
+  Future<void> deleteAccount() async {
+    setStateEnum(StateEnum.loading);
+
+    final result = await _authUseCase.deleteAccount();
+
+    await result.fold(
+      (failure) async {
+        _setFailure(failure);
+        setStateEnum(StateEnum.error);
+      },
+      (_) async {
+        await _clearSession();
+
+        _accountDeleted = true;
+        setStateEnum(StateEnum.success);
+
+        _setUser(null);
+        _setAppInfo(null);
+      },
+    );
+  }
+
+  //* Clear every trace of the previous session, in order:
+  //  - Secure storage (auth token)
+  //  - Dio Authorization header + interceptors
+  //  - SharedPreferences user/cache entries (keeps theme)
+  Future<void> _clearSession() async {
+    await _secureSessionStorage.removeToken();
+    await _httpService.clearSession();
+    await _userPreferencesUseCases.clearUser();
   }
 
   Future<void> fetch() async {

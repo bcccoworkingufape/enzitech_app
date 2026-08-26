@@ -44,4 +44,9 @@ class AuthRepositoryImp implements AuthRepository {
   }) async {
     return await _authDataSource.resetPassword(email: email, token: token, newPassword: newPassword);
   }
+
+  @override
+  Future<Either<Failure, Unit>> deleteAccount() async {
+    return await _authDataSource.deleteAccount();
+  }
 }

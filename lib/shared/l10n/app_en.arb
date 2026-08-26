@@ -567,5 +567,16 @@
         "type": "String"
       }
     }
-  }
+  },
+  "deleteAccount": "Delete my account",
+  "deleteAccountTitle": "Delete my account",
+  "deleteAccountDescription": "This action is permanent and cannot be undone.",
+  "deleteAccountItemExperiments": "All your experiments, repetitions and results will be deleted",
+  "deleteAccountItemTreatments": "All your treatments will be deleted",
+  "deleteAccountItemAccess": "You will lose access immediately and the data cannot be recovered",
+  "deleteAccountConfirmationLabel": "To confirm, type your e-mail",
+  "deleteAccountConfirmationMismatch": "The e-mail does not match your account.",
+  "deleteAccountConfirmButton": "DELETE MY ACCOUNT",
+  "deleteAccountSuccess": "Your account has been deleted.",
+  "deleteAccountNoConnection": "Connect to the internet to delete your account."
 }

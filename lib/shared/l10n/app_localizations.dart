@@ -1813,6 +1813,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Created on {date}'**
   String createdOn(String date);
+
+  /// No description provided for @deleteAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete my account'**
+  String get deleteAccount;
+
+  /// No description provided for @deleteAccountTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete my account'**
+  String get deleteAccountTitle;
+
+  /// No description provided for @deleteAccountDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'This action is permanent and cannot be undone.'**
+  String get deleteAccountDescription;
+
+  /// No description provided for @deleteAccountItemExperiments.
+  ///
+  /// In en, this message translates to:
+  /// **'All your experiments, repetitions and results will be deleted'**
+  String get deleteAccountItemExperiments;
+
+  /// No description provided for @deleteAccountItemTreatments.
+  ///
+  /// In en, this message translates to:
+  /// **'All your treatments will be deleted'**
+  String get deleteAccountItemTreatments;
+
+  /// No description provided for @deleteAccountItemAccess.
+  ///
+  /// In en, this message translates to:
+  /// **'You will lose access immediately and the data cannot be recovered'**
+  String get deleteAccountItemAccess;
+
+  /// No description provided for @deleteAccountConfirmationLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'To confirm, type your e-mail'**
+  String get deleteAccountConfirmationLabel;
+
+  /// No description provided for @deleteAccountConfirmationMismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'The e-mail does not match your account.'**
+  String get deleteAccountConfirmationMismatch;
+
+  /// No description provided for @deleteAccountConfirmButton.
+  ///
+  /// In en, this message translates to:
+  /// **'DELETE MY ACCOUNT'**
+  String get deleteAccountConfirmButton;
+
+  /// No description provided for @deleteAccountSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account has been deleted.'**
+  String get deleteAccountSuccess;
+
+  /// No description provided for @deleteAccountNoConnection.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect to the internet to delete your account.'**
+  String get deleteAccountNoConnection;
 }
 
 class _AppLocalizationsDelegate

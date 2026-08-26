@@ -21,6 +21,7 @@ import '../../../viewmodel/home_viewmodel.dart';
 import '../../../viewmodel/settings_viewmodel.dart';
 import '../../widgets/settings_section.dart';
 import 'fragments/about_app_bs.dart';
+import 'fragments/delete_account_bs.dart';
 import 'fragments/faq_bs.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -54,7 +55,10 @@ class _SettingsPageState extends State<SettingsPage> with SecureScreenMixin {
 
         if (_settingsViewmodel.state == StateEnum.success && _settingsViewmodel.user == null && mounted) {
           EZTSnackBar.clear(context);
-          EZTSnackBar.show(context, context.l10n.seeYouSoon);
+          EZTSnackBar.show(
+            context,
+            _settingsViewmodel.accountDeleted ? context.l10n.deleteAccountSuccess : context.l10n.seeYouSoon,
+          );
           await Future.delayed(const Duration(milliseconds: 250));
           if (mounted) {
             SchedulerBinding.instance.addPostFrameCallback((_) {
@@ -64,6 +68,28 @@ class _SettingsPageState extends State<SettingsPage> with SecureScreenMixin {
           }
         }
       });
+    }
+  }
+
+  Future<void> _onDeleteAccountTap() async {
+    if (!_homeViewmodel.hasInternetConnection) {
+      EZTSnackBar.show(context, context.l10n.deleteAccountNoConnection, eztSnackBarType: EZTSnackBarType.error);
+      return;
+    }
+
+    final confirmed = await showModalBottomSheet<bool>(
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+      context: context,
+      builder: (BuildContext context) => SizedBox(
+        height: MediaQuery.of(context).size.height * 0.75,
+        child: DeleteAccountBS(email: _settingsViewmodel.user!.email),
+      ),
+    );
+
+    if (confirmed == true) {
+      _homeViewmodel.experimentsViewmodel.clearFilters();
+      await _settingsViewmodel.deleteAccount();
     }
   }
 
@@ -266,6 +292,14 @@ class _SettingsPageState extends State<SettingsPage> with SecureScreenMixin {
                             _homeViewmodel.experimentsViewmodel.clearFilters();
                             _settingsViewmodel.logout();
                           },
+                        ),
+                        SettingsTile(
+                          leading: Icon(PhosphorIcons.trash, color: Theme.of(context).colorScheme.error),
+                          title: Text(
+                            context.l10n.deleteAccount,
+                            style: TextStyle(color: Theme.of(context).colorScheme.error),
+                          ),
+                          onTap: _onDeleteAccountTap,
                         ),
                         GestureDetector(
                           onTap: () => _settingsViewmodel.openUrl(Constants.bccCoworkingLink),
