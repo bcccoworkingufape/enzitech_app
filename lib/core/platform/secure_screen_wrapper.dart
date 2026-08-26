@@ -2,6 +2,7 @@
 import 'package:flutter/widgets.dart';
 
 // 🌎 Project imports:
+import '../../shared/ui/ui.dart';
 import 'screen_protection_service.dart';
 
 /// Adiciona um comportamento equivalente a FLAG_SECURE para uma tela.
@@ -67,7 +68,7 @@ mixin SecureScreenMixin<T extends StatefulWidget> on State<T> {
     return Stack(
       children: [
         child,
-        if (_showOverlay) const Positioned.fill(child: ColoredBox(color: Color(0xFFFAFAFA))),
+        if (_showOverlay) const Positioned.fill(child: ColoredBox(color: AppColors.primary)),
       ],
     );
   }
