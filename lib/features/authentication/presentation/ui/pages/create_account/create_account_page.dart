@@ -1,5 +1,5 @@
 // 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
@@ -63,20 +63,18 @@ class CreateAccountPageState extends State<CreateAccountPage> with SecureScreenM
   Widget build(BuildContext context) {
     return wrapSecureScreen(
       child: Scaffold(
-      body: Form(
-        key: _formKey,
-        child: PageView(
-          controller: _pageController,
-          physics: const NeverScrollableScrollPhysics(),
-          children: [
-            CreateAccountFirstStep(pageController: _pageController, formKey: _formKey, userDataCache: userDataCache),
-            CreateAccountSecondStep(pageController: _pageController, formKey: _formKey, userDataCache: userDataCache),
-          ],
+        body: Form(
+          key: _formKey,
+          child: PageView(
+            controller: _pageController,
+            physics: const NeverScrollableScrollPhysics(),
+            children: [
+              CreateAccountFirstStep(pageController: _pageController, formKey: _formKey, userDataCache: userDataCache),
+              CreateAccountSecondStep(pageController: _pageController, formKey: _formKey, userDataCache: userDataCache),
+            ],
+          ),
         ),
       ),
-    ),
-  );
+    );
   }
 }
-
-

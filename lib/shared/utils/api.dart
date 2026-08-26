@@ -10,7 +10,8 @@ class API {
   static const String _stageBaseUrlDefine = String.fromEnvironment('STAGE_API_BASE_URL');
   static const String _prodBaseUrlDefine = String.fromEnvironment('PROD_API_BASE_URL');
   static const String _defaultDevBaseUrl = "https://enzitech.api.bcccoworking.org";
-  static const String _defaultProdBaseUrl = "http://200.133.6.201:30001/";
+  //! TODO: Atualizar URL de produção quando houver uma URL própria para o ambiente de produção. Atualmente, a URL de produção é a mesma que a de desenvolvimento.
+  static const String _defaultProdBaseUrl = "https://enzitech.api.bcccoworking.org";
 
   static Map<String, dynamic> _config = {};
   static late EnvironmentEnum enviroment;

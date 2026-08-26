@@ -1,5 +1,5 @@
 ﻿// 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 // 📦 Package imports:
 import 'package:package_info_plus/package_info_plus.dart';
@@ -221,5 +221,3 @@ class SettingsViewmodel extends ChangeNotifier {
     }
   }
 }
-
-

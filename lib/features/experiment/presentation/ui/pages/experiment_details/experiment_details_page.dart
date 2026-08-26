@@ -1,5 +1,5 @@
 // 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/scheduler.dart';
 
 // 📦 Package imports:
@@ -247,68 +247,65 @@ class _ExperimentDetailsPageState extends State<ExperimentDetailsPage> with Secu
       listenable: _experimentDetailsViewmodel,
       builder: (context, child) {
         return wrapSecureScreen(
-      child: Scaffold(
-          appBar: AppBar(
-            iconTheme: IconThemeData(color: context.getApplyedColorScheme.onSurface),
-            title: Text(context.l10n.experimentDetails, style: TextStyles(context).titleBoldBackground()),
-            actions: [
-              if (_experimentDetailsViewmodel.state == StateEnum.success)
-                IconButton(
-                  tooltip: context.l10n.editExperimentTooltip,
-                  onPressed: () {
-                    Navigator.pushNamed(
-                      context,
-                      Routing.editExperiment,
-                      arguments: _experimentDetailsViewmodel.experiment!,
-                    );
-                  },
-                  icon: Icon(PhosphorIcons.pencilSimple(), color: context.getApplyedColorScheme.onSurface, size: 25),
-                ),
-              if (_experimentDetailsViewmodel.state == StateEnum.success)
-                IconButton(
-                  onPressed: () async {
-                    var shouldDelete = _homeViewmodel.accountViewmodel.enableExcludeConfirmation!
-                        ? await showDialog<bool>(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return const ExperimentExclusionDialog();
-                            },
-                          )
-                        : null;
+          child: Scaffold(
+            appBar: AppBar(
+              iconTheme: IconThemeData(color: context.getApplyedColorScheme.onSurface),
+              title: Text(context.l10n.experimentDetails, style: TextStyles(context).titleBoldBackground()),
+              actions: [
+                if (_experimentDetailsViewmodel.state == StateEnum.success)
+                  IconButton(
+                    tooltip: context.l10n.editExperimentTooltip,
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        Routing.editExperiment,
+                        arguments: _experimentDetailsViewmodel.experiment!,
+                      );
+                    },
+                    icon: Icon(PhosphorIcons.pencilSimple(), color: context.getApplyedColorScheme.onSurface, size: 25),
+                  ),
+                if (_experimentDetailsViewmodel.state == StateEnum.success)
+                  IconButton(
+                    onPressed: () async {
+                      var shouldDelete = _homeViewmodel.accountViewmodel.enableExcludeConfirmation!
+                          ? await showDialog<bool>(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return const ExperimentExclusionDialog();
+                              },
+                            )
+                          : null;
 
-                    if (shouldDelete != null) {
-                      if (!shouldDelete) return;
-                    }
+                      if (shouldDelete != null) {
+                        if (!shouldDelete) return;
+                      }
 
-                    _experimentsViewmodel.deleteExperiment(_experimentDetailsViewmodel.experiment!.id);
+                      _experimentsViewmodel.deleteExperiment(_experimentDetailsViewmodel.experiment!.id);
 
-                    if (mounted) {
-                      SchedulerBinding.instance.addPostFrameCallback((_) {
-                        Navigator.pop(context);
+                      if (mounted) {
+                        SchedulerBinding.instance.addPostFrameCallback((_) {
+                          Navigator.pop(context);
 
-                        EZTSnackBar.clear(context);
-                        EZTSnackBar.show(
-                          context,
-                          context.l10n.experimentDeleted(_experimentDetailsViewmodel.experiment!.name),
-                          eztSnackBarType: EZTSnackBarType.error,
-                        );
-                      });
-                    }
-                  },
-                  icon: Icon(PhosphorIcons.trash(), color: context.getApplyedColorScheme.onSurface, size: 25),
-                ),
-            ],
+                          EZTSnackBar.clear(context);
+                          EZTSnackBar.show(
+                            context,
+                            context.l10n.experimentDeleted(_experimentDetailsViewmodel.experiment!.name),
+                            eztSnackBarType: EZTSnackBarType.error,
+                          );
+                        });
+                      }
+                    },
+                    icon: Icon(PhosphorIcons.trash(), color: context.getApplyedColorScheme.onSurface, size: 25),
+                  ),
+              ],
+            ),
+            body: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: _buildBody(MediaQuery.of(context).size.height),
+            ),
           ),
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: _buildBody(MediaQuery.of(context).size.height),
-          ),
-        ),
-      );
-    },
-  );
+        );
+      },
+    );
   }
 }
-
-
-

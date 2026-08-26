@@ -1,5 +1,5 @@
 // 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
@@ -159,4 +159,3 @@ class _CreateExperimentFirstStepPageState extends State<CreateExperimentFirstSte
     );
   }
 }
-

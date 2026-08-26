@@ -1,5 +1,5 @@
 // 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 // 🌎 Project imports:
 import 'ezt_auto_scroll.dart';
@@ -9,19 +9,14 @@ class EZTMarqueeOnDemand extends StatelessWidget {
   final TextStyle textStyle;
   final double? switchWidth;
 
-  const EZTMarqueeOnDemand({
-    super.key,
-    required this.text,
-    required this.textStyle,
-    this.switchWidth,
-  });
+  const EZTMarqueeOnDemand({super.key, required this.text, required this.textStyle, this.switchWidth});
 
   Size _textSize(String text, TextStyle style) {
     final TextPainter textPainter = TextPainter(
-        text: TextSpan(text: text, style: style),
-        maxLines: 1,
-        textDirection: TextDirection.ltr)
-      ..layout(minWidth: 0, maxWidth: double.infinity);
+      text: TextSpan(text: text, style: style),
+      maxLines: 1,
+      textDirection: TextDirection.ltr,
+    )..layout(minWidth: 0, maxWidth: double.infinity);
     return textPainter.size;
   }
 
@@ -31,27 +26,21 @@ class EZTMarqueeOnDemand extends StatelessWidget {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         return textWidth < (switchWidth ?? constraints.maxWidth)
-            ? Text(
-                text,
-                style: textStyle,
-              )
+            ? Text(text, style: textStyle)
             : EZTAutoScroll(
                 delayAfterScrollInput: const Duration(seconds: 3),
                 delay: const Duration(seconds: 0),
                 duration: text.length > 30
                     ? text.length > 60
-                        ? const Duration(seconds: 800)
-                        : const Duration(seconds: 400)
+                          ? const Duration(seconds: 800)
+                          : const Duration(seconds: 400)
                     : text.length < 15
-                        ? const Duration(seconds: 180)
-                        : const Duration(seconds: 320),
+                    ? const Duration(seconds: 180)
+                    : const Duration(seconds: 320),
                 gap: 64,
                 scrollDirection: Axis.horizontal,
                 enableScrollInput: true,
-                child: Text(
-                  text,
-                  style: textStyle,
-                ),
+                child: Text(text, style: textStyle),
               );
       },
     );

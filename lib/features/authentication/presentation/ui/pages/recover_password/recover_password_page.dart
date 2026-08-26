@@ -1,5 +1,5 @@
 // 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
@@ -55,10 +55,10 @@ class _RecoverPasswordPageState extends State<RecoverPasswordPage> {
   }
 
   Widget get _emailInput {
-    final fieldValidator = FieldValidator(
-      [ValidateRule(ValidateTypes.required), ValidateRule(ValidateTypes.email)],
-      context,
-    );
+    final fieldValidator = FieldValidator([
+      ValidateRule(ValidateTypes.required),
+      ValidateRule(ValidateTypes.email),
+    ], context);
 
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,

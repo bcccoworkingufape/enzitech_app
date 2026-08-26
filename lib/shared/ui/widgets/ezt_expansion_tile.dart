@@ -5,7 +5,7 @@
 // ignore_for_file: unnecessary_null_comparison
 
 // 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 const Duration _kExpand = Duration(milliseconds: 200);
 

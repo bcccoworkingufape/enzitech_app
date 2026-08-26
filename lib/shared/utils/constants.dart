@@ -1,5 +1,5 @@
 // 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 
 // 🌎 Project imports:
@@ -7,10 +7,7 @@ import '../input_formatters/input_formatters.dart';
 import '../ui/ui.dart';
 
 class Constants {
-  static const padding16all = EdgeInsets.symmetric(
-    horizontal: 16.0,
-    vertical: 16.0,
-  );
+  static const padding16all = EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0);
 
   static const bccCoworkingLink = 'http://app.uag.ufrpe.br/bcccoworking/home';
   static const enzitechGithubPage =

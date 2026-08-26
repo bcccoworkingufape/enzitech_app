@@ -1,5 +1,5 @@
 // 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class EZTCheckBoxTile extends StatelessWidget {
   const EZTCheckBoxTile({
@@ -25,11 +25,7 @@ class EZTCheckBoxTile extends StatelessWidget {
               onTap: onTapTrailing,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Icon(
-                  Icons.circle,
-                  color: color,
-                  size: 20,
-                ),
+                child: Icon(Icons.circle, color: color, size: 20),
               ),
             )
           : null,

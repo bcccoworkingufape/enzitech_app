@@ -1,5 +1,5 @@
 // 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 // 📦 Package imports:
 import 'package:get_it/get_it.dart';
@@ -59,10 +59,10 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
   }
 
   Widget get _newPasswordInput {
-    final fieldValidator = FieldValidator(
-      [ValidateRule(ValidateTypes.required), ValidateRule(ValidateTypes.strongPassword)],
-      context,
-    );
+    final fieldValidator = FieldValidator([
+      ValidateRule(ValidateTypes.required),
+      ValidateRule(ValidateTypes.strongPassword),
+    ], context);
 
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,
@@ -80,10 +80,10 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
   }
 
   Widget get _confirmPasswordInput {
-    final fieldValidator = FieldValidator(
-      [ValidateRule(ValidateTypes.required), ValidateRule(ValidateTypes.passwordEquals)],
-      context,
-    );
+    final fieldValidator = FieldValidator([
+      ValidateRule(ValidateTypes.required),
+      ValidateRule(ValidateTypes.passwordEquals),
+    ], context);
 
     return EZTTextField(
       eztTextFieldType: EZTTextFieldType.underline,

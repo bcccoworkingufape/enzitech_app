@@ -1,5 +1,5 @@
 // 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 
 // 📦 Package imports:
@@ -115,10 +115,7 @@ class _VerifyCodePageState extends State<VerifyCodePage> {
                       loading: _verifyCodeViewmodel.state == StateEnum.loading,
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          _verifyCodeViewmodel.verifyPin(
-                            email: widget.email,
-                            token: _codeFieldController.text.trim(),
-                          );
+                          _verifyCodeViewmodel.verifyPin(email: widget.email, token: _codeFieldController.text.trim());
                         }
                       },
                     ),

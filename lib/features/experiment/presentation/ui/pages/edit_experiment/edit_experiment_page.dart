@@ -1,5 +1,5 @@
 // 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 
 // 📦 Package imports:
@@ -226,10 +226,10 @@ class _EditExperimentPageState extends State<EditExperimentPage> {
           usePrimaryColorOnFocusedBorder: true,
           keyboardType: TextInputType.number,
           controller: _repetitionsController,
-          fieldValidator: FieldValidator(
-            [ValidateRule(ValidateTypes.required), ValidateRule(ValidateTypes.greaterThanZero)],
-            context,
-          ),
+          fieldValidator: FieldValidator([
+            ValidateRule(ValidateTypes.required),
+            ValidateRule(ValidateTypes.greaterThanZero),
+          ], context),
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           onChanged: (_) => setState(() {}),
         ),
@@ -326,14 +326,14 @@ class _EditExperimentPageState extends State<EditExperimentPage> {
   }
 
   Widget _enzymeConfigCard(EnzymeEntity enzyme) {
-    final requiredNumberValidator = FieldValidator(
-      [ValidateRule(ValidateTypes.required), ValidateRule(ValidateTypes.greaterThanZeroDecimal)],
-      context,
-    );
-    final requiredIntegerValidator = FieldValidator(
-      [ValidateRule(ValidateTypes.required), ValidateRule(ValidateTypes.isInteger)],
-      context,
-    );
+    final requiredNumberValidator = FieldValidator([
+      ValidateRule(ValidateTypes.required),
+      ValidateRule(ValidateTypes.greaterThanZeroDecimal),
+    ], context);
+    final requiredIntegerValidator = FieldValidator([
+      ValidateRule(ValidateTypes.required),
+      ValidateRule(ValidateTypes.isInteger),
+    ], context);
 
     return Card(
       margin: const EdgeInsets.only(top: 16),

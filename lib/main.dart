@@ -2,12 +2,11 @@
 import 'dart:async';
 
 // 🐦 Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 // 📦 Package imports:
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get_it/get_it.dart';
 
@@ -107,9 +106,7 @@ class _MyAppState extends State<MyApp> {
             onGenerateRoute: Routing.generateRoute,
             localizationsDelegates: [
               AppLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
+              ...GlobalMaterialLocalizations.delegates,
               FormBuilderLocalizations.delegate,
             ],
             supportedLocales: [const Locale('pt'), const Locale('en')],
