@@ -20,12 +20,39 @@ class DeleteAccountBS extends StatefulWidget {
 
 class _DeleteAccountBSState extends State<DeleteAccountBS> {
   final _controller = TextEditingController();
+  final _fieldFocus = FocusNode();
+  final _fieldKey = GlobalKey();
   bool _touched = false;
 
   @override
+  void initState() {
+    super.initState();
+    _fieldFocus.addListener(_ensureFieldVisible);
+  }
+
+  @override
   void dispose() {
+    _fieldFocus.removeListener(_ensureFieldVisible);
+    _fieldFocus.dispose();
     _controller.dispose();
     super.dispose();
+  }
+
+  //* Aguarda a animação do teclado antes de rolar até o campo.
+  Future<void> _ensureFieldVisible() async {
+    if (!_fieldFocus.hasFocus) return;
+
+    await Future.delayed(const Duration(milliseconds: 300));
+
+    final fieldContext = _fieldKey.currentContext;
+    if (fieldContext == null || !fieldContext.mounted) return;
+
+    await Scrollable.ensureVisible(
+      fieldContext,
+      duration: const Duration(milliseconds: 250),
+      curve: Curves.easeOut,
+      alignment: 0.5,
+    );
   }
 
   bool get _matches => _controller.text.trim().toLowerCase() == widget.email.trim().toLowerCase();
@@ -76,7 +103,9 @@ class _DeleteAccountBSState extends State<DeleteAccountBS> {
           Text(context.l10n.deleteAccountConfirmationLabel, style: TextStyles(context).titleBoldHeading),
           const SizedBox(height: 8),
           EZTTextField(
+            key: _fieldKey,
             eztTextFieldType: EZTTextFieldType.underline,
+            focusNode: _fieldFocus,
             controller: _controller,
             hintText: widget.email,
             usePrimaryColorOnFocusedBorder: true,

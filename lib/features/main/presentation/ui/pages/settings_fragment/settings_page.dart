@@ -81,9 +81,12 @@ class _SettingsPageState extends State<SettingsPage> with SecureScreenMixin {
       isScrollControlled: true,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
       context: context,
-      builder: (BuildContext context) => SizedBox(
-        height: MediaQuery.of(context).size.height * 0.75,
-        child: DeleteAccountBS(email: _settingsViewmodel.user!.email),
+      builder: (BuildContext context) => Padding(
+        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.75),
+          child: DeleteAccountBS(email: _settingsViewmodel.user!.email),
+        ),
       ),
     );
 
