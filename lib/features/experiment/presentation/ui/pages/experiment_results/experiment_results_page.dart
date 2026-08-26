@@ -385,7 +385,7 @@ class _ExperimentResultsPageState extends State<ExperimentResultsPage> with Secu
       builder: (context, child) {
         return wrapSecureScreen(
           child: Scaffold(
-            floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+            floatingActionButtonLocation: ExpandableFab.location,
             floatingActionButton:
                 _experimentResultsViewmodel.state == StateEnum.loading ||
                     _experimentResultsViewmodel.state == StateEnum.error
