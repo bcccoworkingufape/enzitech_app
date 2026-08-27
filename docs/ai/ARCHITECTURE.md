@@ -18,6 +18,8 @@ Monólito Spring Boot 4.1 / Java 21 com Spring MVC, Validation, Data JPA/Hiberna
 
 Banco atual: PostgreSQL configurado por `.env`; `spring.jpa.hibernate.ddl-auto=update`. Não foram encontrados migrations versionados. Docker Compose usa PostgreSQL 13 e uma imagem placeholder `ghcr.io/seu_usuario/seu_repositorio:latest`.
 
+O código Java e os testes compilam com OpenJDK 21.0.12 usando o Maven Wrapper 3.9.16. O teste de contexto existente não é hermético: ao ser executado sem `.env`, falha na inicialização do MailSender por ausência de `SMTP_HOST`; também requer infraestrutura de banco para uma execução completa.
+
 ## Domínio
 
 `User` (USER/ADMIN), `Enzyme`, `Treatment`, `Experiment`, snapshots `ExperimentEnzyme`/`ExperimentTreatment`, `ResultExperiment` (slot de repetição PENDING/COMPLETED) e `PasswordResetToken`. Um experimento possui usuário, número de repetições, progresso, tratamentos e configurações/snapshots de enzimas; resultados referenciam IDs dos snapshots, não os IDs globais.

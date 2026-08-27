@@ -16,7 +16,7 @@ Prioridades são relativas ao Deep Scan; não são autorização para implementa
 - DTOs usam `Map` dinâmico e defaults silenciosos; parse de números/strings e campos nulos pode mascarar contrato quebrado.
 - Contrato de paginação/query diverge parcialmente (Flutter envia `limit/orderBy/ordering`; API usa paginação Spring), e há constantes legadas não usadas (`/auth/user`).
 - Entidade `User` redeclara campos de `BaseEntity`; `EnzymeService` duplica branches de fórmula Urease e `update` altera `createdAt`.
-- Não há workflow CI no app; Maven/Java e Flutter toolchain devem ser fixados e executados em pipeline.
+- Não há workflow CI no app; Maven/Java e Flutter toolchain devem ser fixados e executados em pipeline. A compilação Java/testes foi revalidada localmente em 2026-08-27; a suíte ainda depende de `.env`/PostgreSQL/SMTP.
 
 ## P3
 
