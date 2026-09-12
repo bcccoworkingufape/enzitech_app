@@ -222,7 +222,7 @@ class SettingsViewmodel extends ChangeNotifier {
 
       setStateEnum(StateEnum.success);
     } catch (e) {
-      _setFailure(e as Failure);
+      _setFailure(GenericFailure(message: e.toString()));
       setStateEnum(StateEnum.error);
     }
   }

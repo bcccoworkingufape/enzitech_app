@@ -25,9 +25,7 @@ class ViewmodelsInjections {
   final GetIt getIt;
 
   ViewmodelsInjections(this.getIt) {
-    getIt.registerLazySingleton<SettingsViewmodel>(
-      () => SettingsViewmodel(getIt(), getIt(), getIt(), getIt()),
-    );
+    getIt.registerLazySingleton<SettingsViewmodel>(() => SettingsViewmodel(getIt(), getIt(), getIt(), getIt()));
     getIt.registerLazySingleton<CalculateExperimentViewmodel>(() => CalculateExperimentViewmodel(getIt()));
     getIt.registerLazySingleton<CreateAccountViewmodel>(() => CreateAccountViewmodel(getIt()));
     getIt.registerLazySingleton<CreateEnzymeViewmodel>(() => CreateEnzymeViewmodel(getIt()));
@@ -43,7 +41,7 @@ class ViewmodelsInjections {
     getIt.registerLazySingleton<RecoverPasswordViewmodel>(() => RecoverPasswordViewmodel(getIt()));
     getIt.registerLazySingleton<ResetPasswordViewmodel>(() => ResetPasswordViewmodel(getIt()));
     getIt.registerFactory<SplashViewmodel>(
-      () => SplashViewmodel(getIt(), getIt(), getIt(), getIt(), getIt(), getIt()),
+      () => SplashViewmodel(getIt(), getIt(), getIt(), getIt(), getIt(), getIt(), getIt()),
     );
     getIt.registerLazySingleton<TreatmentsViewmodel>(() => TreatmentsViewmodel(getIt()));
     getIt.registerLazySingleton<VerifyCodeViewmodel>(() => VerifyCodeViewmodel(getIt()));

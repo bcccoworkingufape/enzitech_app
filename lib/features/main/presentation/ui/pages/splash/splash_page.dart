@@ -31,57 +31,59 @@ class _SplashPageState extends State<SplashPage> {
     super.initState();
     _splashViewmodel = GetIt.I.get<SplashViewmodel>();
 
-    if (mounted) {
-      _splashViewmodel.addListener(() async {
-        if (_splashViewmodel.state == StateEnum.error && mounted) {
-          EZTSnackBar.clear(context);
-          EZTSnackBar.show(
-            context,
-            HandleFailure.of(context.l10n, _splashViewmodel.failure!),
-            eztSnackBarType: EZTSnackBarType.error,
-          );
+    _splashViewmodel.addListener(_handleSplashState);
+    _splashViewmodel.fetch();
+  }
 
-          var accountViewmodel = GetIt.I.get<SettingsViewmodel>();
-          if (_splashViewmodel.failure is ExpiredTokenOrWrongUserFailure ||
-              _splashViewmodel.failure is UserNotFoundOrWrongTokenFailure ||
-              _splashViewmodel.failure is SessionNotFoundFailure) {
-            await accountViewmodel.logout();
+  void _handleSplashState() {
+    if (!mounted) return;
 
-            if (accountViewmodel.state == StateEnum.success && mounted) {
-              EZTSnackBar.show(context, context.l10n.loginAgain);
-              await Future.delayed(const Duration(milliseconds: 500));
+    if (_splashViewmodel.state == StateEnum.error) {
+      EZTSnackBar.clear(context);
+      EZTSnackBar.show(
+        context,
+        HandleFailure.of(context.l10n, _splashViewmodel.failure!),
+        eztSnackBarType: EZTSnackBarType.error,
+      );
+
+      final accountViewmodel = GetIt.I.get<SettingsViewmodel>();
+      if (_splashViewmodel.failure is ExpiredTokenOrWrongUserFailure ||
+          _splashViewmodel.failure is UserNotFoundOrWrongTokenFailure ||
+          _splashViewmodel.failure is SessionNotFoundFailure) {
+        accountViewmodel.logout().then((_) {
+          if (!mounted) return;
+          if (accountViewmodel.state == StateEnum.success) {
+            EZTSnackBar.show(context, context.l10n.loginAgain);
+            Future.delayed(const Duration(milliseconds: 500), () {
               if (mounted) {
                 Navigator.pushReplacementNamed(context, Routing.login);
                 GetIt.I.get<HomeViewmodel>().setFragmentIndex(0);
               }
-            }
+            });
           }
-        }
-
-        _checkAuth();
-      });
-    }
-  }
-
-  Future<void> _checkAuth() async {
-    await Future.delayed(const Duration(seconds: 1)).then((_) async {
-      final hasToken = await GetIt.I.get<SecureSessionStorage>().hasToken();
-
-      if (!mounted) return;
-
-      if (!hasToken) {
-        Navigator.pushReplacementNamed(context, Routing.login);
-      } else {
-        Navigator.pushReplacementNamed(context, Routing.home);
+        });
       }
-    });
+
+      return;
+    }
+
+    if (_splashViewmodel.state == StateEnum.success && mounted) {
+      final route = _splashViewmodel.destinationRoute;
+      if (route != Routing.initial) {
+        Future.delayed(const Duration(milliseconds: 300), () {
+          if (mounted) {
+            Navigator.pushReplacementNamed(context, route);
+          }
+        });
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: context.getApplyedColorScheme.primary,
-      body: SvgPicture.asset(AppSvgs(context).splash(), fit: BoxFit.contain, alignment: Alignment.center),
+      body: SvgPicture.asset(AppSvgs(context).splash()),
     );
   }
 }
