@@ -1024,4 +1024,44 @@ class AppLocalizationsPt extends AppLocalizations {
   String createdOn(String date) {
     return 'Criado em $date';
   }
+
+  @override
+  String get deleteAccount => 'Excluir minha conta';
+
+  @override
+  String get deleteAccountTitle => 'Excluir minha conta';
+
+  @override
+  String get deleteAccountDescription =>
+      'Esta ação é permanente e não poderá ser desfeita.';
+
+  @override
+  String get deleteAccountItemExperiments =>
+      'Todos os seus experimentos, repetições e resultados serão excluídos';
+
+  @override
+  String get deleteAccountItemTreatments =>
+      'Todos os seus tratamentos serão excluídos';
+
+  @override
+  String get deleteAccountItemAccess =>
+      'Você perderá o acesso imediatamente e os dados não poderão ser recuperados';
+
+  @override
+  String get deleteAccountConfirmationLabel =>
+      'Para confirmar, digite seu e-mail';
+
+  @override
+  String get deleteAccountConfirmationMismatch =>
+      'O e-mail digitado não corresponde ao da sua conta.';
+
+  @override
+  String get deleteAccountConfirmButton => 'EXCLUIR MINHA CONTA';
+
+  @override
+  String get deleteAccountSuccess => 'Sua conta foi excluída.';
+
+  @override
+  String get deleteAccountNoConnection =>
+      'Conecte-se à internet para excluir sua conta.';
 }

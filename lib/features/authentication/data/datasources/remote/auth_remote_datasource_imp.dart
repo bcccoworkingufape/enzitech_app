@@ -106,4 +106,16 @@ class AuthRemoteDataSourceImp implements AuthDataSource {
       return Left(e as Failure);
     }
   }
+
+  @override
+  Future<Either<Failure, Unit>> deleteAccount() async {
+    try {
+      await _httpService.delete(API.REQUEST_DELETE_MY_ACCOUNT);
+      return const Right(unit);
+    } on Failure catch (e) {
+      return Left(e);
+    } catch (e) {
+      return Left(ServerFailure(message: 'Falha não mapeada: $e'));
+    }
+  }
 }

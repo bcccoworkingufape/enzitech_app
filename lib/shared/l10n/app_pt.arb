@@ -567,5 +567,16 @@
         "type": "String"
       }
     }
-  }
+  },
+  "deleteAccount": "Excluir minha conta",
+  "deleteAccountTitle": "Excluir minha conta",
+  "deleteAccountDescription": "Esta ação é permanente e não poderá ser desfeita.",
+  "deleteAccountItemExperiments": "Todos os seus experimentos, repetições e resultados serão excluídos",
+  "deleteAccountItemTreatments": "Todos os seus tratamentos serão excluídos",
+  "deleteAccountItemAccess": "Você perderá o acesso imediatamente e os dados não poderão ser recuperados",
+  "deleteAccountConfirmationLabel": "Para confirmar, digite seu e-mail",
+  "deleteAccountConfirmationMismatch": "O e-mail digitado não corresponde ao da sua conta.",
+  "deleteAccountConfirmButton": "EXCLUIR MINHA CONTA",
+  "deleteAccountSuccess": "Sua conta foi excluída.",
+  "deleteAccountNoConnection": "Conecte-se à internet para excluir sua conta."
 }

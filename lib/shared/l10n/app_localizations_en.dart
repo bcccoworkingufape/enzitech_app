@@ -1017,4 +1017,43 @@ class AppLocalizationsEn extends AppLocalizations {
   String createdOn(String date) {
     return 'Created on $date';
   }
+
+  @override
+  String get deleteAccount => 'Delete my account';
+
+  @override
+  String get deleteAccountTitle => 'Delete my account';
+
+  @override
+  String get deleteAccountDescription =>
+      'This action is permanent and cannot be undone.';
+
+  @override
+  String get deleteAccountItemExperiments =>
+      'All your experiments, repetitions and results will be deleted';
+
+  @override
+  String get deleteAccountItemTreatments =>
+      'All your treatments will be deleted';
+
+  @override
+  String get deleteAccountItemAccess =>
+      'You will lose access immediately and the data cannot be recovered';
+
+  @override
+  String get deleteAccountConfirmationLabel => 'To confirm, type your e-mail';
+
+  @override
+  String get deleteAccountConfirmationMismatch =>
+      'The e-mail does not match your account.';
+
+  @override
+  String get deleteAccountConfirmButton => 'DELETE MY ACCOUNT';
+
+  @override
+  String get deleteAccountSuccess => 'Your account has been deleted.';
+
+  @override
+  String get deleteAccountNoConnection =>
+      'Connect to the internet to delete your account.';
 }
