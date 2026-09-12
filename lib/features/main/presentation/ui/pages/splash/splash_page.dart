@@ -81,9 +81,20 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.sizeOf(context);
+
     return Scaffold(
       backgroundColor: context.getApplyedColorScheme.primary,
-      body: SvgPicture.asset(AppSvgs(context).splash()),
+      body: SizedBox.expand(
+        child: Center(
+          child: SvgPicture.asset(
+            AppSvgs(context).splash(),
+            width: screenSize.width,
+            height: screenSize.height,
+            fit: BoxFit.contain,
+          ),
+        ),
+      ),
     );
   }
 }
